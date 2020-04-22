@@ -1,0 +1,5 @@
+LIBRARY	"StrainIndex"
+DESCRIPTION "Function needed to calculate the Strain Index"
+VERSION 1.0
+EXPORTS
+   StrainIndex @1

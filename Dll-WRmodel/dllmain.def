@@ -1,0 +1,7 @@
+LIBRARY	"WRmodel"
+DESCRIPTION "Functions needed to calculate the Work-rest model curves"
+VERSION 1.0
+EXPORTS
+   Sjogaard @1
+   Curva @2
+   FreeMemory @3

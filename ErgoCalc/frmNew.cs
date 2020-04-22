@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace ErgoCalc
+{
+    public partial class frmNew : Form
+    {
+        public Int32 _nOption;
+        private String[] _strArray = { "WR model", "CLM model", "NIOSH equation", "Revised strain index", "Metabolic rate" };
+        private RadioButton[] radioButtons = new RadioButton[5];
+        
+        public frmNew()
+        {
+            InitializeComponent();
+
+                       
+            for (Int32 i = 0; i < _strArray.Length; ++i)
+            {
+                radioButtons[i] = new RadioButton
+                {
+                    Text = _strArray[i],
+                    Location = new System.Drawing.Point(63, 158 + i * 33),
+                    Tag = i,
+                    Width = 450
+                };
+                // https://www.cyotek.com/blog/creating-a-windows-forms-radiobutton-that-supports-the-double-click-event
+                radioButtons[i].MouseDoubleClick += radioButtons_DoubleClick;
+                this.Controls.Add(radioButtons[i]);
+            }
+
+        }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+            for (Int32 i = 0; i < _strArray.Length; i++)
+            {
+                if (radioButtons[i].Checked == true)
+                {
+                    _nOption = i + 1;
+                    break;
+                }
+            }
+            return;
+        }
+        private void radioButtons_DoubleClick(object sender, EventArgs e)
+        {
+            this.btnAccept_Click(btnAccept, EventArgs.Empty);
+            this.DialogResult = DialogResult.OK;
+        }
+    }
+
+
+}

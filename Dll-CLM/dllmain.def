@@ -1,0 +1,5 @@
+LIBRARY	"Clm"
+DESCRIPTION "Function needed to calculate the CLM index"
+VERSION 1.0
+EXPORTS
+   CalculateLSI @1

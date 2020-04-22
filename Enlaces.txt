@@ -1,0 +1,10 @@
+Marshall struct
+https://stackoverflow.com/questions/30975451/marshal-struct-in-struct-from-c-sharp-to-c
+https://stackoverflow.com/questions/11490087/marshall-array-of-struct-containing-string-array
+ 
+Toolstrip
+https://docs.microsoft.com/es-es/dotnet/framework/winforms/controls/how-to-create-an-mdi-form-with-toolstrippanel-controls
+https://docs.microsoft.com/es-es/dotnet/framework/winforms/controls/walkthrough-creating-an-mdi-form-with-menu-merging-and-toolstrip-controls
+https://docs.microsoft.com/es-es/dotnet/framework/winforms/controls/how-to-create-an-mdi-form-with-menu-merging-and-toolstrip-controls
+
+https://www.codeproject.com/Questions/183070/Mdi-Application-Toolstrip-Merging
