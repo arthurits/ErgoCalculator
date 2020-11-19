@@ -21,7 +21,7 @@ namespace ErgoCalc
             this.textBoxDescription.Text = AssemblyDescription;
 
             var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            if (System.IO.File.Exists(path + @"\images\logoAbout.png")) this.logoPictureBox.Image = Image.FromFile(path + @"\images\logoAbout.png", false);
+            if (System.IO.File.Exists(path + @"\images\logo@256.png")) this.logoPictureBox.Image = Image.FromFile(path + @"\images\logo@256.png", false);
 
         }
 

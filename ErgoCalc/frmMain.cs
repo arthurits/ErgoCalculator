@@ -42,6 +42,8 @@ namespace ErgoCalc
             //this.Controls.Add(tspTop);
             //this.Controls.Add(tspBottom);
             var path = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            // Set form icon
+            if (File.Exists(path + @"\images\logo.ico")) this.Icon = new Icon(path + @"\images\logo.ico");
 
             if (File.Exists(path + @"\images\log_off.ico")) this.toolStripMain_Exit.Image = new Icon(path + @"\images\log_off.ico", 48, 48).ToBitmap();
             if (File.Exists(path + @"\images\open.ico")) this.toolStripMain_Open.Image = new Icon(path + @"\images\open.ico", 48, 48).ToBitmap();
