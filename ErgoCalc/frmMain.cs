@@ -27,6 +27,7 @@ namespace ErgoCalc
         //private frmSplash _frmSplash;
         //private ToolStripPanel tspTop;
         //private ToolStripPanel tspBottom;
+        private string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         public frmMain()
         {
@@ -41,30 +42,30 @@ namespace ErgoCalc
             //tspBottom.Dock = DockStyle.Bottom;
             //this.Controls.Add(tspTop);
             //this.Controls.Add(tspBottom);
-            var path = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            
             // Set form icon
-            if (File.Exists(path + @"\images\logo.ico")) this.Icon = new Icon(path + @"\images\logo.ico");
+            if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
 
-            if (File.Exists(path + @"\images\log_off.ico")) this.toolStripMain_Exit.Image = new Icon(path + @"\images\log_off.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\open.ico")) this.toolStripMain_Open.Image = new Icon(path + @"\images\open.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\save.ico")) this.toolStripMain_Save.Image = new Icon(path + @"\images\save.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\charts_folder_badged.ico")) this.toolStripMain_SaveChart.Image = new Icon(path + @"\images\charts_folder_badged.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\log_off.ico")) this.toolStripMain_Exit.Image = new Icon(_strPath + @"\images\log_off.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\open.ico")) this.toolStripMain_Open.Image = new Icon(_strPath + @"\images\open.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\save.ico")) this.toolStripMain_Save.Image = new Icon(_strPath + @"\images\save.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\charts_folder_badged.ico")) this.toolStripMain_SaveChart.Image = new Icon(_strPath + @"\images\charts_folder_badged.ico", 48, 48).ToBitmap();
             //this.toolStripMain_SaveChart.Enabled = false;
 
-            if (File.Exists(path + @"\images\new.ico")) this.toolStripMain_New.Image = new Icon(path + @"\images\new.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\copy.ico")) this.toolStripMain_Copy.Image = new Icon(path + @"\images\copy.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\write.ico")) this.toolStripMain_EditData.Image = new Icon(path + @"\images\write.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\new.ico")) this.toolStripMain_New.Image = new Icon(_strPath + @"\images\new.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\copy.ico")) this.toolStripMain_Copy.Image = new Icon(_strPath + @"\images\copy.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\write.ico")) this.toolStripMain_EditData.Image = new Icon(_strPath + @"\images\write.ico", 48, 48).ToBitmap();
 
-            if (File.Exists(path + @"\images\Awicons-Vista-Artistic-Chart-add.ico")) this.toolStripMain_AddLine.Image = new Icon(path + @"\images\Awicons-Vista-Artistic-Chart-add.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\Awicons-Vista-Artistic-Chart-add.ico")) this.toolStripMain_AddLine.Image = new Icon(_strPath + @"\images\Awicons-Vista-Artistic-Chart-add.ico", 48, 48).ToBitmap();
             //this.toolStripMain_AddLine.Enabled = false;
-            if (File.Exists(path + @"\images\Awicons-Vista-Artistic-Chart-delete.ico")) this.toolStripMain_RemoveLine.Image = new Icon(path + @"\images\Awicons-Vista-Artistic-Chart-delete.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\Awicons-Vista-Artistic-Chart-delete.ico")) this.toolStripMain_RemoveLine.Image = new Icon(_strPath + @"\images\Awicons-Vista-Artistic-Chart-delete.ico", 48, 48).ToBitmap();
             //this.toolStripMain_RemoveLine.Enabled = false;
 
-            if (File.Exists(path + @"\images\settings.ico")) this.toolStripMain_Settings.Image = new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\settings.ico")) this.toolStripMain_Settings.Image = new Icon(_strPath + @"\images\settings.ico", 48, 48).ToBitmap();
             this.toolStripMain_Settings.CheckOnClick = true;
             //this.toolStripMain_Settings.Enabled = false;
 
-            if (File.Exists(path + @"\images\about.ico")) this.toolStripMain_About.Image = new Icon(path + @"\images\about.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\about.ico")) this.toolStripMain_About.Image = new Icon(_strPath + @"\images\about.ico", 48, 48).ToBitmap();
 
             this.ToolBarEnable();
 
@@ -181,6 +182,7 @@ namespace ErgoCalc
                         // Mostrar la ventana de resultados
                         frmWRmodel frmWR = new frmWRmodel(frmDatosWR.getData());
                         frmWR.MdiParent = this;
+                        if (File.Exists(_strPath + @"\images\logo.ico")) frmWR.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmWR.Show();
                         
                         // Cerrar el formulario de entrada de datos
@@ -200,6 +202,7 @@ namespace ErgoCalc
                         // Mostrar la ventaja de resultados
                         frmCLMmodel frmCLM = new frmCLMmodel(frmDatosCLM.getData());
                         frmCLM.MdiParent = this;
+                        if (File.Exists(_strPath + @"\images\logo.ico")) frmCLM.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmCLM.Show();
 
                         // Cerrar el formulario de entrada de datos
@@ -219,6 +222,7 @@ namespace ErgoCalc
                         // Mostrar la ventana de resultados
                         frmResultNIOSHmodel frmNIOSH = new frmResultNIOSHmodel(frmDatosNIOSH.getData(), frmDatosNIOSH.getComposite());
                         frmNIOSH.MdiParent = this;
+                        if (File.Exists(_strPath + @"\images\logo.ico")) frmNIOSH.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmNIOSH.Show();
 
                         // Cerrar el formulario de entrada de datos
@@ -238,6 +242,7 @@ namespace ErgoCalc
                         // Mostrar la ventana de resultados
                         frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.getData());
                         frmStrainIndex.MdiParent = this;
+                        if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmStrainIndex.Show();
 
                         // Cerrar el formulario de entrada de datos
@@ -259,6 +264,7 @@ namespace ErgoCalc
                         // Mostrar el formulario con los resultados del cálculo
                         frmMetResult frmResult = new frmMetResult(nDatos);
                         frmResult.MdiParent = this;
+                        if (File.Exists(_strPath + @"\images\logo.ico")) frmResult.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmResult.Show();
                     }
                     break;

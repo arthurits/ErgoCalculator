@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ErgoCalc")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Calculator implementing some ergonomics assessment indexes")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Arthurits Ltd.")]
 [assembly: AssemblyProduct("ErgoCalc")]
-[assembly: AssemblyCopyright("Copyright © 2009-2018")]
+[assembly: AssemblyCopyright("Copyright © 2009-2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
