@@ -1,0 +1,3 @@
+images/splash.png
+ErgoCalc.exe
+500

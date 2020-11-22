@@ -91,7 +91,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationIcon>images\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
@@ -311,49 +311,45 @@
       <Link>dlls\wrmodel.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ErgoCalc.ico" />
-    <Content Include="images\about 1.ico">
+    <Content Include="ErgoCalcLauncher.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\about 1.ico" />
     <Content Include="images\about.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\application_x_desktop.ico">
+    <Content Include="images\add_file.ico" />
+    <Content Include="images\add_new.ico" />
+    <Content Include="images\application_x_desktop.ico" />
+    <Content Include="images\Bokehlicia-Captiva-Properties.ico" />
+    <Content Include="images\chart-add.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Bokehlicia-Captiva-Properties.ico">
+    <Content Include="images\chart-delete.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Close.ico">
+    <Content Include="images\chart-save.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\close.ico" />
     <Content Include="images\copy.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Custom-Icon-Design-Pretty-Office-9-Open-file.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\Double-J-Design-Ravenna-3d-File-Copy.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\gnome_settings_default_applications.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\help.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\Hopstarter-Soft-Scraps-Save.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\Kyo-Tux-Delikate-Info.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="images\Custom-Icon-Design-Pretty-Office-9-Open-file.ico" />
+    <Content Include="images\delete.ico" />
+    <Content Include="images\Double-J-Design-Ravenna-3d-File-Copy.ico" />
+    <Content Include="images\file-export.ico" />
+    <Content Include="images\file_new.ico" />
+    <Content Include="images\gnome_settings_default_applications.ico" />
+    <Content Include="images\help.ico" />
+    <Content Include="images\Hopstarter-Soft-Scraps-Save.ico" />
+    <Content Include="images\ifolder_add.ico" />
+    <Content Include="images\Kyo-Tux-Delikate-Info.ico" />
+    <Content Include="images\line_chart.ico" />
     <Content Include="images\logo%40256.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\logo%40512.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="images\logo%40512.png" />
     <Content Include="images\logo.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -363,34 +359,31 @@
     <Content Include="images\new.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Notes.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\open 1.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="images\Notes.ico" />
+    <Content Include="images\open 1.ico" />
     <Content Include="images\open.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Oxygen-Icons.org-Oxygen-Actions-window-close.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\Oxygen-Icons.org-Oxygen-Apps-system-software-update.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="images\Oxygen-Icons.org-Oxygen-Categories-applications-system.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="images\Oxygen-Icons.org-Oxygen-Actions-window-close.ico" />
+    <Content Include="images\Oxygen-Icons.org-Oxygen-Apps-system-software-update.ico" />
+    <Content Include="images\Oxygen-Icons.org-Oxygen-Categories-applications-system.ico" />
     <Content Include="images\save.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\shutdown.ico">
+    <Content Include="images\settings.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\shutdown.ico" />
     <Content Include="images\splash.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="images\write.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="logo.ico" />
+    <Content Include="settings.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

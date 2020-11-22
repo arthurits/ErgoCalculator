@@ -49,16 +49,16 @@ namespace ErgoCalc
             if (File.Exists(_strPath + @"\images\log_off.ico")) this.toolStripMain_Exit.Image = new Icon(_strPath + @"\images\log_off.ico", 48, 48).ToBitmap();
             if (File.Exists(_strPath + @"\images\open.ico")) this.toolStripMain_Open.Image = new Icon(_strPath + @"\images\open.ico", 48, 48).ToBitmap();
             if (File.Exists(_strPath + @"\images\save.ico")) this.toolStripMain_Save.Image = new Icon(_strPath + @"\images\save.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\charts_folder_badged.ico")) this.toolStripMain_SaveChart.Image = new Icon(_strPath + @"\images\charts_folder_badged.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\chart-save.ico")) this.toolStripMain_SaveChart.Image = new Icon(_strPath + @"\images\chart-save.ico", 48, 48).ToBitmap();
             //this.toolStripMain_SaveChart.Enabled = false;
 
             if (File.Exists(_strPath + @"\images\new.ico")) this.toolStripMain_New.Image = new Icon(_strPath + @"\images\new.ico", 48, 48).ToBitmap();
             if (File.Exists(_strPath + @"\images\copy.ico")) this.toolStripMain_Copy.Image = new Icon(_strPath + @"\images\copy.ico", 48, 48).ToBitmap();
             if (File.Exists(_strPath + @"\images\write.ico")) this.toolStripMain_EditData.Image = new Icon(_strPath + @"\images\write.ico", 48, 48).ToBitmap();
 
-            if (File.Exists(_strPath + @"\images\Awicons-Vista-Artistic-Chart-add.ico")) this.toolStripMain_AddLine.Image = new Icon(_strPath + @"\images\Awicons-Vista-Artistic-Chart-add.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\chart-add.ico")) this.toolStripMain_AddLine.Image = new Icon(_strPath + @"\images\chart-add.ico", 48, 48).ToBitmap();
             //this.toolStripMain_AddLine.Enabled = false;
-            if (File.Exists(_strPath + @"\images\Awicons-Vista-Artistic-Chart-delete.ico")) this.toolStripMain_RemoveLine.Image = new Icon(_strPath + @"\images\Awicons-Vista-Artistic-Chart-delete.ico", 48, 48).ToBitmap();
+            if (File.Exists(_strPath + @"\images\chart-delete.ico")) this.toolStripMain_RemoveLine.Image = new Icon(_strPath + @"\images\chart-delete.ico", 48, 48).ToBitmap();
             //this.toolStripMain_RemoveLine.Enabled = false;
 
             if (File.Exists(_strPath + @"\images\settings.ico")) this.toolStripMain_Settings.Image = new Icon(_strPath + @"\images\settings.ico", 48, 48).ToBitmap();
@@ -127,6 +127,7 @@ namespace ErgoCalc
         }
         */
 
+        #region Form events
         private void frmMain_Load(object sender, EventArgs e)
         {
             // Load any saved program settings.
@@ -141,6 +142,32 @@ namespace ErgoCalc
 
         }
 
+        private void frmMain_Shown(object sender, EventArgs e)
+        {
+            // signal the native process (that launched us) to close the splash screen
+            using (var closeSplashEvent = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "CloseSplashScreenEvent"))
+            {
+                closeSplashEvent.Set();
+            }
+        }
+
+        private void frmMain_ControlAdded(object sender, ControlEventArgs e)
+        {
+            //if (e.Control is MdiClient)
+
+        }
+
+        private void frmMain_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            if (e.Control is MdiClient)
+            {
+                if (this.MdiChildren.Length == 0)
+                {
+                    toolStripMain.Items["Save"].Enabled = false;
+                    //Reset toolbar visibility
+                }
+            }
+        }
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             using (new CenterWinDialog(this))
@@ -163,6 +190,7 @@ namespace ErgoCalc
             SaveProgramSettings();
             
         }
+        #endregion Form events
 
         #region Main menu
 
@@ -438,23 +466,7 @@ namespace ErgoCalc
 
         #endregion
 
-        private void frmMain_ControlAdded(object sender, ControlEventArgs e)
-        {
-            //if (e.Control is MdiClient)
 
-        }
-
-        private void frmMain_ControlRemoved(object sender, ControlEventArgs e)
-        {
-            if (e.Control is MdiClient)
-            {
-                if (this.MdiChildren.Length==0)
-                {
-                    toolStripMain.Items["Save"].Enabled = false;
-                    //Reset toolbar visibility
-                }
-            }
-        }
 
         #region Private routines
 
