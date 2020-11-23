@@ -33,9 +33,13 @@
             this.lblTasks = new System.Windows.Forms.Label();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkComposite = new System.Windows.Forms.CheckBox();
+            this.groupIndex = new System.Windows.Forms.GroupBox();
+            this.radCUSI = new System.Windows.Forms.RadioButton();
+            this.radCOSI = new System.Windows.Forms.RadioButton();
+            this.radRSI = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).BeginInit();
+            this.groupIndex.SuspendLayout();
             this.SuspendLayout();
             // 
             // updTasks
@@ -115,18 +119,57 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // chkComposite
+            // groupIndex
             // 
-            this.chkComposite.AutoSize = true;
-            this.chkComposite.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkComposite.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkComposite.Location = new System.Drawing.Point(19, 436);
-            this.chkComposite.Margin = new System.Windows.Forms.Padding(4);
-            this.chkComposite.Name = "chkComposite";
-            this.chkComposite.Size = new System.Drawing.Size(167, 21);
-            this.chkComposite.TabIndex = 2;
-            this.chkComposite.Text = "Composite lifting index";
-            this.chkComposite.UseVisualStyleBackColor = true;
+            this.groupIndex.Controls.Add(this.radCUSI);
+            this.groupIndex.Controls.Add(this.radCOSI);
+            this.groupIndex.Controls.Add(this.radRSI);
+            this.groupIndex.Location = new System.Drawing.Point(19, 435);
+            this.groupIndex.Name = "groupIndex";
+            this.groupIndex.Size = new System.Drawing.Size(328, 61);
+            this.groupIndex.TabIndex = 6;
+            this.groupIndex.TabStop = false;
+            this.groupIndex.Text = "Index type";
+            // 
+            // radCUSI
+            // 
+            this.radCUSI.AutoSize = true;
+            this.radCUSI.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radCUSI.Location = new System.Drawing.Point(215, 30);
+            this.radCUSI.Name = "radCUSI";
+            this.radCUSI.Size = new System.Drawing.Size(57, 21);
+            this.radCUSI.TabIndex = 2;
+            this.radCUSI.TabStop = true;
+            this.radCUSI.Text = "CUSI";
+            this.radCUSI.UseVisualStyleBackColor = true;
+            this.radCUSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radCOSI
+            // 
+            this.radCOSI.AutoSize = true;
+            this.radCOSI.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radCOSI.Location = new System.Drawing.Point(120, 30);
+            this.radCOSI.Name = "radCOSI";
+            this.radCOSI.Size = new System.Drawing.Size(58, 21);
+            this.radCOSI.TabIndex = 1;
+            this.radCOSI.TabStop = true;
+            this.radCOSI.Text = "COSI";
+            this.radCOSI.UseVisualStyleBackColor = true;
+            this.radCOSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radRSI
+            // 
+            this.radRSI.AutoSize = true;
+            this.radRSI.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radRSI.Checked = true;
+            this.radRSI.Location = new System.Drawing.Point(38, 30);
+            this.radRSI.Name = "radRSI";
+            this.radRSI.Size = new System.Drawing.Size(48, 21);
+            this.radRSI.TabIndex = 0;
+            this.radRSI.TabStop = true;
+            this.radRSI.Text = "RSI";
+            this.radRSI.UseVisualStyleBackColor = true;
+            this.radRSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // frmDataStrainIndex
             // 
@@ -135,7 +178,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(774, 511);
-            this.Controls.Add(this.chkComposite);
+            this.Controls.Add(this.groupIndex);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblTasks);
@@ -152,6 +195,8 @@
             this.Text = "Strain index data";
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).EndInit();
+            this.groupIndex.ResumeLayout(false);
+            this.groupIndex.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,6 +209,9 @@
         private System.Windows.Forms.Label lblTasks;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chkComposite;
+        private System.Windows.Forms.GroupBox groupIndex;
+        private System.Windows.Forms.RadioButton radCUSI;
+        private System.Windows.Forms.RadioButton radCOSI;
+        private System.Windows.Forms.RadioButton radRSI;
     }
 }

@@ -11,10 +11,16 @@ using ErgoCalc.DLL.Strain;
 
 namespace ErgoCalc
 {
+    enum Index
+    {
+        RSI,    // 0
+        COSI,   // 1
+        CUSI    // 2
+    }
     public partial class frmDataStrainIndex : Form
     {
         public modelStrain[] _data;
-        public Boolean _composite;
+        private Index _index;
 
         // Default constructor
         public frmDataStrainIndex()
@@ -79,6 +85,36 @@ namespace ErgoCalc
             updTasks.Value = data.Length;
         }
 
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            // Check of the raiser of the event is a checked Checkbox.
+            // Of course we also need to to cast it first.
+            if (((System.Windows.Forms.RadioButton)sender).Checked)
+            {
+                // This is the correct control.
+                System.Windows.Forms.RadioButton rb = (System.Windows.Forms.RadioButton)sender;
+            }
+
+            if (radRSI.Checked) _index = Index.RSI;
+            if (radCOSI.Checked) _index = Index.COSI;
+            if (radCUSI.Checked) _index = Index.CUSI;
+            
+            if (_index== Index.RSI)
+            {
+                foreach (DataGridViewColumn col in gridVariables.Columns)
+                {
+                    col.HeaderText = "Task " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                }
+            }
+            else
+            {
+                foreach (DataGridViewColumn col in gridVariables.Columns)
+                {
+                    col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                }
+            }
+        }
+
         private void updTasks_ValueChanged(object sender, EventArgs e)
         {
             Int32 col = Convert.ToInt32(updTasks.Value);
@@ -92,12 +128,14 @@ namespace ErgoCalc
             // Modify the chkComposite state
             if (col > 1)
             {
-                chkComposite.Enabled = true;
+                this.groupIndex.Enabled = true;
+                //chkComposite.Enabled = true;
             }
             else
             {
-                chkComposite.Checked = false;
-                chkComposite.Enabled = false;
+                this.groupIndex.Enabled = false;
+                //chkComposite.Checked = false;
+                //chkComposite.Enabled = false;
             }
             
             return;
@@ -123,7 +161,7 @@ namespace ErgoCalc
             }
 
             // Save the composite option
-            _composite = chkComposite.Checked;
+            //_index = chkComposite.Checked;
 
             return;
         }
@@ -306,6 +344,6 @@ namespace ErgoCalc
             return _data;
         }
 
-       
+
     }
 }
