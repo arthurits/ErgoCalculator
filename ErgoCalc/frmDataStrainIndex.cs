@@ -82,7 +82,7 @@ namespace ErgoCalc
             }
 
             // Update the control's value
-            updTasks.Value = data.Length;
+            updSubtasks.Value = data.Length;
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -104,6 +104,7 @@ namespace ErgoCalc
                 foreach (DataGridViewColumn col in gridVariables.Columns)
                 {
                     col.HeaderText = "Task " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                    lblSubtasks.Text = "Number of tasks";
                 }
             }
             else
@@ -111,13 +112,14 @@ namespace ErgoCalc
                 foreach (DataGridViewColumn col in gridVariables.Columns)
                 {
                     col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                    lblSubtasks.Text = "Number of subtasks";
                 }
             }
         }
 
         private void updTasks_ValueChanged(object sender, EventArgs e)
         {
-            Int32 col = Convert.ToInt32(updTasks.Value);
+            Int32 col = Convert.ToInt32(updSubtasks.Value);
             
             // Add or remove columns
             if (col > gridVariables.ColumnCount)
@@ -144,7 +146,7 @@ namespace ErgoCalc
         private void btnOK_Click(object sender, EventArgs e)
         {
             // Save the values entered
-            _data = new modelStrain[Convert.ToInt32(updTasks.Value)];
+            _data = new modelStrain[Convert.ToInt32(updSubtasks.Value)];
             for (Int32 i = 0; i < _data.Length; i++)
             {
                 _data[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
@@ -299,7 +301,7 @@ namespace ErgoCalc
             }
 
             // Update the control's value
-            updTasks.Value = data.Length;
+            updSubtasks.Value = data.Length;
         }
 
         /// <summary>
@@ -321,7 +323,7 @@ namespace ErgoCalc
             }
 
             // Update the control's value
-            updTasks.Value = _data.Length;
+            updSubtasks.Value = _data.Length;
         }
 
         #endregion

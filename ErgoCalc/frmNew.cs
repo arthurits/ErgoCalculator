@@ -22,7 +22,7 @@ namespace ErgoCalc
                        
             for (Int32 i = 0; i < _strArray.Length; ++i)
             {
-                radioButtons[i] = new RadioButton
+                radioButtons[i] = new RadioButtonClick
                 {
                     Text = _strArray[i],
                     Location = new System.Drawing.Point(63, 158 + i * 33),
