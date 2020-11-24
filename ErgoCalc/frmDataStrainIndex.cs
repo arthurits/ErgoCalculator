@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.DLL.Strain;
+using ErgoCalc;
 
 namespace ErgoCalc
 {
@@ -22,14 +23,21 @@ namespace ErgoCalc
         public modelStrain[] _data;
         private Index _index;
 
+        ListViewItem heldDownItem;
+        Point heldDownPoint;
+
         // Default constructor
         public frmDataStrainIndex()
         {
             // VS Designer initialization routine
             InitializeComponent();
+            typeof(Control).GetProperty("DoubleBuffered",
+                             System.Reflection.BindingFlags.NonPublic |
+                             System.Reflection.BindingFlags.Instance)
+               .SetValue(listViewA, true, null);
 
             // Create the first column (zero index base)
-                AddColumn(0);
+            AddColumn(0);
 
             // Create the header rows
                 gridVariables.RowCount = 5;
@@ -117,10 +125,10 @@ namespace ErgoCalc
             }
         }
 
-        private void updTasks_ValueChanged(object sender, EventArgs e)
+        private void updSubtasks_ValueChanged(object sender, EventArgs e)
         {
             Int32 col = Convert.ToInt32(updSubtasks.Value);
-            
+
             // Add or remove columns
             if (col > gridVariables.ColumnCount)
                 for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
@@ -139,7 +147,38 @@ namespace ErgoCalc
                 //chkComposite.Checked = false;
                 //chkComposite.Enabled = false;
             }
-            
+
+            return;
+        }
+
+        private void updTasks_ValueChanged(object sender, EventArgs e)
+        {
+            Int32 tasks = Convert.ToInt32(updTasks.Value);
+            if (tasks > listViewA.Groups.Count)
+            {
+                var index = listViewA.Groups.Add(new ListViewGroup("Task " + ((char)('A' + tasks - 1)).ToString()));
+                var emptyItem = new ListViewItem(String.Empty)
+                {
+                    Group = listViewA.Groups[index],
+                    Name = "Dummy",
+                    Tag = listViewA.Groups[index].Name
+                };
+                listViewA.Items.Add(emptyItem);
+            }
+            else if (tasks < listViewA.Groups.Count)
+            {
+                var lastGroupIndex = listViewA.Groups.Count - 1;
+                listViewA.Groups[lastGroupIndex].Items.RemoveByKey("Dummy");
+                
+                
+                foreach (var item in listViewA.Groups[listViewA.Groups.Count-1].Items)
+                {
+                   listViewA.Items.RemoveByKey("Dummy");
+                }
+
+                listViewA.Groups.RemoveAt(lastGroupIndex);
+
+            }
             return;
         }
 
@@ -346,6 +385,63 @@ namespace ErgoCalc
             return _data;
         }
 
+        private void listViewA_DragDrop(object sender, DragEventArgs e)
+        {
+            var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
+            var group = listViewA.GetItemAt(localPoint.X, localPoint.Y);
+            var item = e.Data.GetData(DataFormats.Text).ToString();
+            listViewA.Items.Add(new ListViewItem { Group = group.Group, Text = item });
+        }
 
+        private void listViewA_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        // https://www.codeproject.com/articles/14487/manual-reordering-of-items-inside-a-listview
+        // 
+        private void listViewA_MouseDown(object sender, MouseEventArgs e)
+        {
+            //listView1.AutoArrange = false;
+            heldDownItem = listViewA.GetItemAt(e.X, e.Y);
+            if (heldDownItem != null)
+            {
+                heldDownPoint = new Point(e.X - heldDownItem.Position.X,
+                                          e.Y - heldDownItem.Position.Y);
+            }
+        }
+
+        private void listViewA_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (heldDownItem != null)
+            {
+                heldDownItem.Position = new Point(e.Location.X - heldDownPoint.X,
+                                                  e.Location.Y - heldDownPoint.Y);
+            }
+        }
+
+        private void listViewA_MouseUp(object sender, MouseEventArgs e)
+        {
+            //var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
+            if (heldDownItem != null)
+            {
+                var group = listViewA.GetItemAt(e.X, e.Y);
+                if (group != null)
+                {
+                    if (heldDownItem.Group.Items.Count==1)
+                    {
+                        var emptyItem = new ListViewItem(String.Empty);
+                        emptyItem.Group = heldDownItem.Group;
+                        //emptyItem.Tag = heldDownItem.Group.Name;
+                        listViewA.Items.Add(emptyItem);
+                    }
+                    heldDownItem.Group = group.Group;
+                    heldDownItem.Group.Items.RemoveByKey(String.Empty);
+                    //listViewA.Groups[listViewA.Groups.Count - 1].Items.RemoveByKey(String.Empty);
+                }
+            }
+            heldDownItem = null;
+            //listView1.AutoArrange = true; 
+        }
     }
 }
