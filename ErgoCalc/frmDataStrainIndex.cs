@@ -12,35 +12,34 @@ using ErgoCalc;
 
 namespace ErgoCalc
 {
-    enum Index
-    {
-        RSI,    // 0
-        COSI,   // 1
-        CUSI    // 2
-    }
+
     public partial class frmDataStrainIndex : Form
     {
-        public modelStrain[] _data;
+        private modelRSI[] _subtasks;
+        private int[][] _tasks;
         private Index _index;
 
-        ListViewItem heldDownItem;
-        Point heldDownPoint;
+        
 
         // Default constructor
         public frmDataStrainIndex()
         {
             // VS Designer initialization routine
             InitializeComponent();
-            typeof(Control).GetProperty("DoubleBuffered",
-                             System.Reflection.BindingFlags.NonPublic |
-                             System.Reflection.BindingFlags.Instance)
-               .SetValue(listViewA, true, null);
 
             // Create the first column (zero index base)
             AddColumn(0);
 
+            listViewC.Items.Add(new ListViewItem("SubTask A", listViewC.Groups[0]));
+            listViewC.Items.Add(new ListViewItem("SubTask B", listViewC.Groups[0]));
+            listViewC.Items.Add(new ListViewItem("SubTask C", listViewC.Groups[0]));
+            listViewC.Items.Add(new ListViewItem("SubTask D", listViewC.Groups[0]));
+            listViewC.Items.Add(new ListViewItem("SubTask E", listViewC.Groups[0]));
+            //listViewA = (ListViewEx)listViewA;
+            listViewC.DeleteEmptyItems();
+
             // Create the header rows
-                gridVariables.RowCount = 5;
+            gridVariables.RowCount = 5;
                 gridVariables.Rows[0].HeaderCell.Value = "Intensity of exertion";
                 gridVariables.Rows[1].HeaderCell.Value = "Efforts per minute";
                 gridVariables.Rows[2].HeaderCell.Value = "Duration per exertion";
@@ -69,7 +68,7 @@ namespace ErgoCalc
         }
 
         // Overloaded constructor
-        public frmDataStrainIndex(modelStrain[] data)
+        public frmDataStrainIndex(modelRSI[] data)
             : this() // Call the base constructor
         {
          
@@ -92,6 +91,21 @@ namespace ErgoCalc
             // Update the control's value
             updSubtasks.Value = data.Length;
         }
+
+        /// <summary>
+        /// Returns the data introduced by the user. Data is updated after user has clicked OK button
+        /// </summary>
+        /// <returns>Array of Model NIOSH data</returns>
+        public modelRSI[] getSubTasks()
+        {
+            return _subtasks;
+        }
+
+        public void getTasks()
+        {
+
+        }
+
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
@@ -148,36 +162,24 @@ namespace ErgoCalc
                 //chkComposite.Enabled = false;
             }
 
+            // Set the maximum tasks
+            this.updTasks.Value = col;
+
             return;
         }
 
         private void updTasks_ValueChanged(object sender, EventArgs e)
         {
             Int32 tasks = Convert.ToInt32(updTasks.Value);
-            if (tasks > listViewA.Groups.Count)
+            if (tasks > listViewC.Groups.Count)
             {
-                var index = listViewA.Groups.Add(new ListViewGroup("Task " + ((char)('A' + tasks - 1)).ToString()));
-                var emptyItem = new ListViewItem(String.Empty)
-                {
-                    Group = listViewA.Groups[index],
-                    Name = "Dummy",
-                    Tag = listViewA.Groups[index].Name
-                };
-                listViewA.Items.Add(emptyItem);
+                for (int i = listViewC.Groups.Count; i < tasks; i++)
+                    listViewC.AddGroup(i);
             }
-            else if (tasks < listViewA.Groups.Count)
+            else if (tasks < listViewC.Groups.Count)
             {
-                var lastGroupIndex = listViewA.Groups.Count - 1;
-                listViewA.Groups[lastGroupIndex].Items.RemoveByKey("Dummy");
-                
-                
-                foreach (var item in listViewA.Groups[listViewA.Groups.Count-1].Items)
-                {
-                   listViewA.Items.RemoveByKey("Dummy");
-                }
-
-                listViewA.Groups.RemoveAt(lastGroupIndex);
-
+                for (int i = tasks; i < listViewC.Groups.Count; i++)
+                    listViewC.RemoveGroup();
             }
             return;
         }
@@ -185,20 +187,20 @@ namespace ErgoCalc
         private void btnOK_Click(object sender, EventArgs e)
         {
             // Save the values entered
-            _data = new modelStrain[Convert.ToInt32(updSubtasks.Value)];
-            for (Int32 i = 0; i < _data.Length; i++)
+            _subtasks = new modelRSI[Convert.ToInt32(updSubtasks.Value)];
+            for (Int32 i = 0; i < _subtasks.Length; i++)
             {
-                _data[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
-                _data[i].data.e = Convert.ToDouble(gridVariables[i, 1].Value);
-                _data[i].data.d = Convert.ToDouble(gridVariables[i, 2].Value);
-                _data[i].data.p = Convert.ToDouble(gridVariables[i, 3].Value);
-                _data[i].data.h = Convert.ToDouble(gridVariables[i, 4].Value);
-                //_data[i].data.td = Convert.ToDouble(gridVariables[i, 5].Value);
-                //_data[i].data.a = Convert.ToDouble(gridVariables[i, 6].Value);
-                //_data[i].data.c = Convert.ToInt32(gridVariables[i, 7].Value);
+                _subtasks[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
+                _subtasks[i].data.e = Convert.ToDouble(gridVariables[i, 1].Value);
+                _subtasks[i].data.d = Convert.ToDouble(gridVariables[i, 2].Value);
+                _subtasks[i].data.p = Convert.ToDouble(gridVariables[i, 3].Value);
+                _subtasks[i].data.h = Convert.ToDouble(gridVariables[i, 4].Value);
+                //_subtasks[i].data.td = Convert.ToDouble(gridVariables[i, 5].Value);
+                //_subtasks[i].data.a = Convert.ToDouble(gridVariables[i, 6].Value);
+                //_subtasks[i].data.c = Convert.ToInt32(gridVariables[i, 7].Value);
 
                 //if (!String.IsNullOrEmpty(txtConstanteLC.Text))
-                //    _data[i].factors.LC = Convert.ToDouble(txtConstanteLC.Text);
+                //    _subtasks[i].factors.LC = Convert.ToDouble(txtConstanteLC.Text);
             }
 
             // Save the composite option
@@ -210,7 +212,7 @@ namespace ErgoCalc
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Return empty array
-            _data = new modelStrain[0];
+            _subtasks = new modelRSI[0];
         }
 
         #region Private routines
@@ -238,93 +240,93 @@ namespace ErgoCalc
         /// </summary>
         private void DataExample()
         {
-            _data = new modelStrain[8];
+            _subtasks = new modelRSI[8];
 
-            _data[0].data.i = 0.2;
-            _data[0].data.e = 5;
-            _data[0].data.d = 3;
-            _data[0].data.p = 5;
-            _data[0].data.h = 4;
+            _subtasks[0].data.i = 0.2;
+            _subtasks[0].data.e = 5;
+            _subtasks[0].data.d = 3;
+            _subtasks[0].data.p = 5;
+            _subtasks[0].data.h = 4;
 
-            _data[1].data.i = 0.2;
-            _data[1].data.e = 5;
-            _data[1].data.d = 3;
-            _data[1].data.p = -5;
-            _data[1].data.h = 4;
+            _subtasks[1].data.i = 0.2;
+            _subtasks[1].data.e = 5;
+            _subtasks[1].data.d = 3;
+            _subtasks[1].data.p = -5;
+            _subtasks[1].data.h = 4;
 
-            _data[2].data.i = 0.4;
-            _data[2].data.e = 6;
-            _data[2].data.d = 3;
-            _data[2].data.p = -10;
-            _data[2].data.h = 3;
+            _subtasks[2].data.i = 0.4;
+            _subtasks[2].data.e = 6;
+            _subtasks[2].data.d = 3;
+            _subtasks[2].data.p = -10;
+            _subtasks[2].data.h = 3;
 
-            _data[3].data.i = 0.4;
-            _data[3].data.e = 4;
-            _data[3].data.d = 2;
-            _data[3].data.p = 10;
-            _data[3].data.h = 3;
+            _subtasks[3].data.i = 0.4;
+            _subtasks[3].data.e = 4;
+            _subtasks[3].data.d = 2;
+            _subtasks[3].data.p = 10;
+            _subtasks[3].data.h = 3;
 
-            _data[4].data.i = 0.4;
-            _data[4].data.e = 4;
-            _data[4].data.d = 2;
-            _data[4].data.p = -10;
-            _data[4].data.h = 3;
+            _subtasks[4].data.i = 0.4;
+            _subtasks[4].data.e = 4;
+            _subtasks[4].data.d = 2;
+            _subtasks[4].data.p = -10;
+            _subtasks[4].data.h = 3;
 
-            _data[5].data.i = 0.4;
-            _data[5].data.e = 4;
-            _data[5].data.d = 2;
-            _data[5].data.p = 0;
-            _data[5].data.h = 1;
+            _subtasks[5].data.i = 0.4;
+            _subtasks[5].data.e = 4;
+            _subtasks[5].data.d = 2;
+            _subtasks[5].data.p = 0;
+            _subtasks[5].data.h = 1;
 
-            _data[6].data.i = 0.15;
-            _data[6].data.e = 2;
-            _data[6].data.d = 10;
-            _data[6].data.p = 5;
-            _data[6].data.h = 8;
+            _subtasks[6].data.i = 0.15;
+            _subtasks[6].data.e = 2;
+            _subtasks[6].data.d = 10;
+            _subtasks[6].data.p = 5;
+            _subtasks[6].data.h = 8;
 
-            _data[7].data.i = 0.15;
-            _data[7].data.e = 2;
-            _data[7].data.d = 10;
-            _data[7].data.p = 5;
-            _data[7].data.h = 8;
+            _subtasks[7].data.i = 0.15;
+            _subtasks[7].data.e = 2;
+            _subtasks[7].data.d = 10;
+            _subtasks[7].data.p = 5;
+            _subtasks[7].data.h = 8;
 
             /*
-            _data = new modelNIOSH[3];
+            _subtasks = new modelNIOSH[3];
 
-            _data[0].data.weight = 20.0;
-            _data[0].data.h = 25;
-            _data[0].data.v = 75;
-            _data[0].data.d = 5;
-            _data[0].data.a = 0;
-            _data[0].data.f = 1;
-            _data[0].data.td = 2;
-            _data[0].data.c = 2;
+            _subtasks[0].data.weight = 20.0;
+            _subtasks[0].data.h = 25;
+            _subtasks[0].data.v = 75;
+            _subtasks[0].data.d = 5;
+            _subtasks[0].data.a = 0;
+            _subtasks[0].data.f = 1;
+            _subtasks[0].data.td = 2;
+            _subtasks[0].data.c = 2;
 
-            _data[1].data.weight = 25.0;
-            _data[1].data.h = 30;
-            _data[1].data.v = 75;
-            _data[1].data.d = 5;
-            _data[1].data.a = 0;
-            _data[1].data.f = 2;
-            _data[1].data.td = 2;
-            _data[1].data.c = 3;
+            _subtasks[1].data.weight = 25.0;
+            _subtasks[1].data.h = 30;
+            _subtasks[1].data.v = 75;
+            _subtasks[1].data.d = 5;
+            _subtasks[1].data.a = 0;
+            _subtasks[1].data.f = 2;
+            _subtasks[1].data.td = 2;
+            _subtasks[1].data.c = 3;
 
-            _data[2].data.weight = 15.0;
-            _data[2].data.h = 30;
-            _data[2].data.v = 75;
-            _data[2].data.d = 5;
-            _data[2].data.a = 45;
-            _data[2].data.f = 2;
-            _data[2].data.td = 2;
-            _data[2].data.c = 2;
+            _subtasks[2].data.weight = 15.0;
+            _subtasks[2].data.h = 30;
+            _subtasks[2].data.v = 75;
+            _subtasks[2].data.d = 5;
+            _subtasks[2].data.a = 45;
+            _subtasks[2].data.f = 2;
+            _subtasks[2].data.td = 2;
+            _subtasks[2].data.c = 2;
             */
         }
-
+        
         /// <summary>
         /// Shows the data into the grid control
         /// </summary>
         /// <param name="data">Array of Model NIOSH data</param>
-        private void DataToGrid(modelStrain[] data)
+        private void DataToGrid(modelRSI[] data)
         {
             for (Int32 i = 0; i < data.Length; i++)
             {
@@ -348,21 +350,21 @@ namespace ErgoCalc
         /// </summary>
         private void DataToGrid()
         {
-            for (Int32 i = 0; i < _data.Length; i++)
+            for (Int32 i = 0; i < _subtasks.Length; i++)
             {
                 // Add one column whenever necessary
                 if (i > 0) AddColumn(i);
 
                 // Populate the DataGridView with data
-                gridVariables[i, 0].Value = _data[i].data.i.ToString();
-                gridVariables[i, 1].Value = _data[i].data.e.ToString();
-                gridVariables[i, 2].Value = _data[i].data.d.ToString();
-                gridVariables[i, 3].Value = _data[i].data.p.ToString();
-                gridVariables[i, 4].Value = _data[i].data.h.ToString();
+                gridVariables[i, 0].Value = _subtasks[i].data.i.ToString();
+                gridVariables[i, 1].Value = _subtasks[i].data.e.ToString();
+                gridVariables[i, 2].Value = _subtasks[i].data.d.ToString();
+                gridVariables[i, 3].Value = _subtasks[i].data.p.ToString();
+                gridVariables[i, 4].Value = _subtasks[i].data.h.ToString();
             }
 
             // Update the control's value
-            updSubtasks.Value = _data.Length;
+            updSubtasks.Value = _subtasks.Length;
         }
 
         #endregion
@@ -376,72 +378,5 @@ namespace ErgoCalc
             return;
         }
 
-        /// <summary>
-        /// Returns the data introduced by the user. Data is updated after user has clicked OK button
-        /// </summary>
-        /// <returns>Array of Model NIOSH data</returns>
-        public modelStrain[] getData()
-        {
-            return _data;
-        }
-
-        private void listViewA_DragDrop(object sender, DragEventArgs e)
-        {
-            var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
-            var group = listViewA.GetItemAt(localPoint.X, localPoint.Y);
-            var item = e.Data.GetData(DataFormats.Text).ToString();
-            listViewA.Items.Add(new ListViewItem { Group = group.Group, Text = item });
-        }
-
-        private void listViewA_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Move;
-        }
-
-        // https://www.codeproject.com/articles/14487/manual-reordering-of-items-inside-a-listview
-        // 
-        private void listViewA_MouseDown(object sender, MouseEventArgs e)
-        {
-            //listView1.AutoArrange = false;
-            heldDownItem = listViewA.GetItemAt(e.X, e.Y);
-            if (heldDownItem != null)
-            {
-                heldDownPoint = new Point(e.X - heldDownItem.Position.X,
-                                          e.Y - heldDownItem.Position.Y);
-            }
-        }
-
-        private void listViewA_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (heldDownItem != null)
-            {
-                heldDownItem.Position = new Point(e.Location.X - heldDownPoint.X,
-                                                  e.Location.Y - heldDownPoint.Y);
-            }
-        }
-
-        private void listViewA_MouseUp(object sender, MouseEventArgs e)
-        {
-            //var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
-            if (heldDownItem != null)
-            {
-                var group = listViewA.GetItemAt(e.X, e.Y);
-                if (group != null)
-                {
-                    if (heldDownItem.Group.Items.Count==1)
-                    {
-                        var emptyItem = new ListViewItem(String.Empty);
-                        emptyItem.Group = heldDownItem.Group;
-                        //emptyItem.Tag = heldDownItem.Group.Name;
-                        listViewA.Items.Add(emptyItem);
-                    }
-                    heldDownItem.Group = group.Group;
-                    heldDownItem.Group.Items.RemoveByKey(String.Empty);
-                    //listViewA.Groups[listViewA.Groups.Count - 1].Items.RemoveByKey(String.Empty);
-                }
-            }
-            heldDownItem = null;
-            //listView1.AutoArrange = true; 
-        }
     }
 }

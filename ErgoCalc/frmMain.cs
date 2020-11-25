@@ -268,7 +268,7 @@ namespace ErgoCalc
                     if (frmDataStrain.ShowDialog(this)==DialogResult.OK)
                     {
                         // Mostrar la ventana de resultados
-                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.getData());
+                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.getSubTasks());
                         frmStrainIndex.MdiParent = this;
                         if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmStrainIndex.Show();

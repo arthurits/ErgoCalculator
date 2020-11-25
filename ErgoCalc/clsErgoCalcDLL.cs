@@ -571,6 +571,13 @@ namespace ErgoCalc
 
         namespace Strain
         {
+            public enum Index
+            {
+                RSI,    // 0
+                COSI,   // 1
+                CUSI    // 2
+            }
+
             // Definición de tipos
             [StructLayout(LayoutKind.Sequential)]
             public struct dataStrain
@@ -593,7 +600,7 @@ namespace ErgoCalc
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelStrain
+            public struct modelRSI
             {
                 [MarshalAs(UnmanagedType.Struct)]
                 public dataStrain data;
@@ -602,33 +609,52 @@ namespace ErgoCalc
                 public double index;
             };
 
+            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            public struct modelCOSI
+            {
+                [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+                public modelRSI[] subtasks;
+                public double h;       // Duración de la tarea
+                public int nSubTasks; 
+                public double index;
+            };
+
+            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            public struct modelCUSI
+            {
+                [MarshalAs(UnmanagedType.Struct)]
+                public dataStrain data;
+                [MarshalAs(UnmanagedType.Struct)]
+                public multipliersStrain factors;
+                public double index;
+            };
+
+            public class cModelCOSI
+            {
+                private int _nSubTasks;
+                private int[] _arraySubTasks;
+
+                public int NumberSubTasks { get => _nSubTasks; set => _nSubTasks = value; }
+            }
+
             // Definición de la clase que encapsula la llamada a la DLL
             public class cModelStrain
             {
-                private modelStrain[] _sData;
+                private modelRSI[] _sData;
+                public modelRSI[] SubTasks { get => _sData; set => _sData = value; }
 
-                public modelStrain[] Parameters
-                {
-                    get
-                    {
-                        return _sData;
-                    }
-
-                    set
-                    {
-                        _sData = value;
-                    }
-                }
+                private int[][] _nTasks;
+                public int[][] Tasks { get => _nTasks; set => _nTasks = value; }
 
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double StrainIndex_DLL([In, Out] modelStrain[] datos, int[] orden, ref int nSize);
+                private static extern double StrainIndex_DLL([In, Out] modelRSI[] datos, int[] orden, ref int nSize);
 
                 public double StrainIndex()
                 {
                     int length = _sData.Length;
                     return StrainIndex_DLL(_sData, new int[] { }, ref length);
                 }
-                public double StrainIndex(modelStrain[] datos, int[] orden, ref int nSize)
+                public double StrainIndex(modelRSI[] datos, int[] orden, ref int nSize)
                 {
                     return StrainIndex_DLL(datos, orden, ref nSize);
                 }

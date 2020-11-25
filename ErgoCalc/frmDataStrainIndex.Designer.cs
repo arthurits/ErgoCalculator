@@ -28,12 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("ListViewGroup", System.Windows.Forms.HorizontalAlignment.Left);
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("SubTask A");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("SubTask B");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("SubTask C");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("SubTask D");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("SubTask E");
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabDataStrain = new System.Windows.Forms.TabControl();
@@ -46,18 +40,16 @@
             this.updSubtasks = new System.Windows.Forms.NumericUpDown();
             this.gridVariables = new System.Windows.Forms.DataGridView();
             this.tabTasks = new System.Windows.Forms.TabPage();
-            this.panelTasks = new System.Windows.Forms.Panel();
-            this.listViewA = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listViewC = new System.Windows.Forms.ListViewEx();
             this.lblTasks = new System.Windows.Forms.Label();
             this.updTasks = new System.Windows.Forms.NumericUpDown();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabDataStrain.SuspendLayout();
             this.tabSubtasks.SuspendLayout();
             this.groupIndex.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updSubtasks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).BeginInit();
             this.tabTasks.SuspendLayout();
-            this.panelTasks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).BeginInit();
             this.SuspendLayout();
             // 
@@ -193,6 +185,7 @@
             0,
             0,
             0});
+            this.updSubtasks.ValueChanged += new System.EventHandler(this.updSubtasks_ValueChanged);
             // 
             // gridVariables
             // 
@@ -213,7 +206,7 @@
             // tabTasks
             // 
             this.tabTasks.BackColor = System.Drawing.SystemColors.Control;
-            this.tabTasks.Controls.Add(this.panelTasks);
+            this.tabTasks.Controls.Add(this.listViewC);
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
             this.tabTasks.Location = new System.Drawing.Point(4, 25);
@@ -223,51 +216,17 @@
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 
-            // panelTasks
+            // listViewC
             // 
-            this.panelTasks.AutoScroll = true;
-            this.panelTasks.Controls.Add(this.listViewA);
-            this.panelTasks.Location = new System.Drawing.Point(6, 42);
-            this.panelTasks.Name = "panelTasks";
-            this.panelTasks.Size = new System.Drawing.Size(725, 416);
-            this.panelTasks.TabIndex = 3;
-            // 
-            // listViewA
-            // 
-            this.listViewA.AllowDrop = true;
-            this.listViewA.AutoArrange = false;
-            this.listViewA.BackColor = System.Drawing.SystemColors.Window;
-            this.listViewA.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.listViewA.FullRowSelect = true;
-            listViewGroup1.Header = "ListViewGroup";
-            listViewGroup1.Name = "listViewGroup1";
-            this.listViewA.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1});
-            this.listViewA.HideSelection = false;
-            listViewItem5.Group = listViewGroup1;
-            this.listViewA.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5});
-            this.listViewA.Location = new System.Drawing.Point(15, 12);
-            this.listViewA.Name = "listViewA";
-            this.listViewA.Size = new System.Drawing.Size(381, 244);
-            this.listViewA.TabIndex = 1;
-            this.listViewA.UseCompatibleStateImageBehavior = false;
-            this.listViewA.View = System.Windows.Forms.View.Details;
-            this.listViewA.DragDrop += new System.Windows.Forms.DragEventHandler(this.listViewA_DragDrop);
-            this.listViewA.DragEnter += new System.Windows.Forms.DragEventHandler(this.listViewA_DragEnter);
-            this.listViewA.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listViewA_MouseDown);
-            this.listViewA.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listViewA_MouseMove);
-            this.listViewA.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listViewA_MouseUp);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Task A";
-            this.columnHeader1.Width = 189;
+            this.listViewC.AllowDrop = true;
+            this.listViewC.FullRowSelect = true;
+            this.listViewC.HideSelection = false;
+            this.listViewC.Location = new System.Drawing.Point(21, 53);
+            this.listViewC.Name = "listViewC";
+            this.listViewC.Size = new System.Drawing.Size(514, 264);
+            this.listViewC.TabIndex = 4;
+            this.listViewC.UseCompatibleStateImageBehavior = false;
+            this.listViewC.View = System.Windows.Forms.View.Details;
             // 
             // lblTasks
             // 
@@ -295,6 +254,11 @@
             0,
             0});
             this.updTasks.ValueChanged += new System.EventHandler(this.updTasks_ValueChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Task A";
+            this.columnHeader1.Width = 189;
             // 
             // frmDataStrainIndex
             // 
@@ -325,7 +289,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).EndInit();
             this.tabTasks.ResumeLayout(false);
             this.tabTasks.PerformLayout();
-            this.panelTasks.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).EndInit();
             this.ResumeLayout(false);
 
@@ -335,7 +298,7 @@
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TabControl tabDataStrain;
-        //private ErgoCalc.TablessTabControl tabDataStrain;
+        //private System.Windows.Forms.TablessTabControl tabDataStrain;
         private System.Windows.Forms.TabPage tabSubtasks;
         private System.Windows.Forms.TabPage tabTasks;
         private System.Windows.Forms.GroupBox groupIndex;
@@ -347,8 +310,7 @@
         private System.Windows.Forms.DataGridView gridVariables;
         private System.Windows.Forms.Label lblTasks;
         private System.Windows.Forms.NumericUpDown updTasks;
-        private System.Windows.Forms.Panel panelTasks;
-        private System.Windows.Forms.ListView listViewA;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ListViewEx listViewC;
     }
 }

@@ -15,7 +15,7 @@ namespace ErgoCalc
     public partial class frmResultsStrainIndex : Form, IChildResults
     {
         // Variable definition
-        private modelStrain [] _sData;
+        private modelRSI [] _sData;
         private cModelStrain _classDLL;
         private ResultsOptions _options;
 
@@ -40,10 +40,10 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(modelStrain[] datos)
+        public frmResultsStrainIndex(modelRSI[] datos)
             :this()
         {
-            _classDLL.Parameters = datos;
+            _classDLL.SubTasks = datos;
             //_sData = datos;
         }
 
@@ -62,7 +62,7 @@ namespace ErgoCalc
                 // Retrieve data from the dialog
                 //_sDatosCLM = frm._sData;
                 //nSize = _sData.Length;
-                nSize = _classDLL.Parameters.Length;
+                nSize = _classDLL.SubTasks.Length;
                 orden = new Int32[nSize];
                 for (Int32 i = 0; i < nSize; i++) orden[i] = i;
 
@@ -76,8 +76,8 @@ namespace ErgoCalc
                 {
                     error = true;
                     MessageBox.Show(
-                        "The program calculation kernel's been tampered with.\nThe LSI could not be computed.",
-                        "LSI index error",
+                        "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
+                        "RSI index error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -86,7 +86,7 @@ namespace ErgoCalc
                     error = true;
                     MessageBox.Show(
                         "Some files are missing. Please\nreinstall the application.",
-                        "LSI index error",
+                        "RSI index error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
@@ -125,7 +125,7 @@ namespace ErgoCalc
         /// Shows the numerical results in the RTF control
         /// </summary>
         /// <param name="sData">Data and results array</param>
-        private void ShowResults(modelStrain [] sData)
+        private void ShowResults(modelRSI [] sData)
         {
             rtbShowResult.Text = _classDLL.ToString();
             FormatText();
