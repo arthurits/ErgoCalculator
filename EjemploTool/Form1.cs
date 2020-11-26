@@ -67,7 +67,7 @@ namespace EjemploTool
 
             DialogResult dialogResult = MessageBox.Show(this, "Ejemplo");
 
-            UnsafeNativeMethods.SetParent(new HandleRef(null, UnsafeNativeMethods.GetActiveWindow()), new HandleRef(this, Handle);
+            UnsafeNativeMethods.SetParent(new HandleRef(null, UnsafeNativeMethods.GetActiveWindow()), new HandleRef(this, Handle));
 
             UnsafeNativeMethods.SetWindowLong(new HandleRef(this, UnsafeNativeMethods.GetActiveWindow()), -8, new HandleRef(this, Handle));
 

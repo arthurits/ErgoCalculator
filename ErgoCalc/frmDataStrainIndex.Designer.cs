@@ -44,6 +44,7 @@
             this.lblTasks = new System.Windows.Forms.Label();
             this.updTasks = new System.Windows.Forms.NumericUpDown();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.listView1 = new System.Windows.Forms.ListView();
             this.tabDataStrain.SuspendLayout();
             this.tabSubtasks.SuspendLayout();
             this.groupIndex.SuspendLayout();
@@ -86,6 +87,7 @@
             this.tabDataStrain.SelectedIndex = 0;
             this.tabDataStrain.Size = new System.Drawing.Size(745, 493);
             this.tabDataStrain.TabIndex = 7;
+            this.tabDataStrain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabDataStrain_Selected);
             // 
             // tabSubtasks
             // 
@@ -206,6 +208,7 @@
             // tabTasks
             // 
             this.tabTasks.BackColor = System.Drawing.SystemColors.Control;
+            this.tabTasks.Controls.Add(this.listView1);
             this.tabTasks.Controls.Add(this.listViewC);
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
@@ -223,10 +226,10 @@
             this.listViewC.HideSelection = false;
             this.listViewC.Location = new System.Drawing.Point(21, 53);
             this.listViewC.Name = "listViewC";
-            this.listViewC.Size = new System.Drawing.Size(514, 264);
+            this.listViewC.Size = new System.Drawing.Size(401, 392);
             this.listViewC.TabIndex = 4;
             this.listViewC.UseCompatibleStateImageBehavior = false;
-            this.listViewC.View = System.Windows.Forms.View.Details;
+            this.listViewC.View = System.Windows.Forms.View.LargeIcon;
             // 
             // lblTasks
             // 
@@ -259,6 +262,18 @@
             // 
             this.columnHeader1.Text = "Task A";
             this.columnHeader1.Width = 189;
+            // 
+            // listView1
+            // 
+            this.listView1.AllowDrop = true;
+            this.listView1.FullRowSelect = true;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(458, 53);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(263, 392);
+            this.listView1.TabIndex = 5;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.LargeIcon;
             // 
             // frmDataStrainIndex
             // 
@@ -312,5 +327,6 @@
         private System.Windows.Forms.NumericUpDown updTasks;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ListViewEx listViewC;
+        private System.Windows.Forms.ListView listView1;
     }
 }

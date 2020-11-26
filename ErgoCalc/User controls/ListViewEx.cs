@@ -9,12 +9,14 @@ using System.Windows.Forms;
 
 namespace System.Windows.Forms
 {
-    [System.ComponentModel.Designer("System.Windows.Forms.Design.DocumentDesigner, System.Windows.Forms.Design",
-    typeof(System.ComponentModel.Design.IRootDesigner)),
-    System.ComponentModel.DesignerCategory("")]
+    //[System.ComponentModel.Designer("System.Windows.Forms.Design.DocumentDesigner, System.Windows.Forms.Design",
+    //typeof(System.ComponentModel.Design.IRootDesigner)),
+    //System.ComponentModel.DesignerCategory("")]
+    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner)), System.ComponentModel.DesignerCategory("")]
     public class ListViewEx : System.Windows.Forms.ListView
     {
         private System.Windows.Forms.ListViewItem heldDownItem;
+        private System.Windows.Forms.ListViewGroup heldDownGroup;
         private System.Drawing.Point heldDownPoint;
 
         public ListViewEx()
@@ -23,6 +25,17 @@ namespace System.Windows.Forms
                              System.Reflection.BindingFlags.NonPublic |
                              System.Reflection.BindingFlags.Instance)
                .SetValue(this, true, null);
+
+
+            this.AllowDrop = true;
+            this.FullRowSelect = true;
+            this.HideSelection = false;
+            //this.listViewC.Location = new System.Drawing.Point(21, 53);
+            //this.listViewC.Name = "listViewC";
+            //this.listViewC.Size = new System.Drawing.Size(401, 392);
+            //this.listViewC.TabIndex = 4;
+            this.UseCompatibleStateImageBehavior = false;
+            this.View = System.Windows.Forms.View.Details;
 
             // Set 1 group
             AddGroup();
@@ -47,6 +60,7 @@ namespace System.Windows.Forms
         {
             //listView1.AutoArrange = false;
             heldDownItem = this.GetItemAt(e.X, e.Y);
+            //heldDownGroup = this.gett
             if (heldDownItem != null)
             {
                 heldDownPoint = new System.Drawing.Point(e.X - heldDownItem.Position.X,
@@ -71,7 +85,7 @@ namespace System.Windows.Forms
                 var group = this.GetItemAt(e.X, e.Y);
                 if (group != null)
                 {
-                    if (heldDownItem.Group.Items.Count == 1)
+                    if (this.Groups[heldDownItem.Group.Header].Items.Count == 1)
                     {
                         var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty);
                         emptyItem.Group = heldDownItem.Group;
@@ -103,7 +117,9 @@ namespace System.Windows.Forms
 
         public void AddGroup(int index)
         {
-            var _index = this.Groups.Add(new ListViewGroup("Task " + ((char)('A' + index)).ToString()));
+            var strHeader = "Task " + ((char)('A' + index)).ToString();
+            var _index = this.Groups.Add(new ListViewGroup(strHeader, strHeader));
+            //var _index = this.Groups.Add(new ListViewGroup(strHeader) { Name = strHeader });
             var emptyItem = new ListViewItem(String.Empty)
             {
                 Group = this.Groups[_index],
@@ -115,7 +131,13 @@ namespace System.Windows.Forms
 
         public void RemoveGroup()
         {
-            RemoveGroup(this.Groups.Count - 1);
+            if (this.Groups.Count >= 1)
+                RemoveGroup(this.Groups.Count - 1);
+        }
+
+        public void RemoveGroups()
+        {
+
         }
 
         public void RemoveGroup(int index)

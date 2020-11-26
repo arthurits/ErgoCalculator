@@ -19,7 +19,7 @@ namespace ErgoCalc
         private int[][] _tasks;
         private Index _index;
 
-        
+
 
         // Default constructor
         public frmDataStrainIndex()
@@ -30,21 +30,13 @@ namespace ErgoCalc
             // Create the first column (zero index base)
             AddColumn(0);
 
-            listViewC.Items.Add(new ListViewItem("SubTask A", listViewC.Groups[0]));
-            listViewC.Items.Add(new ListViewItem("SubTask B", listViewC.Groups[0]));
-            listViewC.Items.Add(new ListViewItem("SubTask C", listViewC.Groups[0]));
-            listViewC.Items.Add(new ListViewItem("SubTask D", listViewC.Groups[0]));
-            listViewC.Items.Add(new ListViewItem("SubTask E", listViewC.Groups[0]));
-            //listViewA = (ListViewEx)listViewA;
-            listViewC.DeleteEmptyItems();
-
             // Create the header rows
             gridVariables.RowCount = 5;
-                gridVariables.Rows[0].HeaderCell.Value = "Intensity of exertion";
-                gridVariables.Rows[1].HeaderCell.Value = "Efforts per minute";
-                gridVariables.Rows[2].HeaderCell.Value = "Duration per exertion";
-                gridVariables.Rows[3].HeaderCell.Value = "Hand/wrist posture";
-                gridVariables.Rows[4].HeaderCell.Value = "Duration of task per day";
+            gridVariables.Rows[0].HeaderCell.Value = "Intensity of exertion";
+            gridVariables.Rows[1].HeaderCell.Value = "Efforts per minute";
+            gridVariables.Rows[2].HeaderCell.Value = "Duration per exertion";
+            gridVariables.Rows[3].HeaderCell.Value = "Hand/wrist posture";
+            gridVariables.Rows[4].HeaderCell.Value = "Duration of task per day";
 
             /*
                 gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
@@ -71,12 +63,12 @@ namespace ErgoCalc
         public frmDataStrainIndex(modelRSI[] data)
             : this() // Call the base constructor
         {
-         
+
             for (Int32 i = 0; i < data.Length; i++)
             {
                 // Add one column whenever necessary
                 if (i > 0) AddColumn(i);
-                
+
                 // Populate the DataGridView with data
                 gridVariables[i, 0].Value = data[i].data.i.ToString();
                 gridVariables[i, 1].Value = data[i].data.e.ToString();
@@ -120,8 +112,8 @@ namespace ErgoCalc
             if (radRSI.Checked) _index = Index.RSI;
             if (radCOSI.Checked) _index = Index.COSI;
             if (radCUSI.Checked) _index = Index.CUSI;
-            
-            if (_index== Index.RSI)
+
+            if (_index == Index.RSI)
             {
                 foreach (DataGridViewColumn col in gridVariables.Columns)
                 {
@@ -163,7 +155,7 @@ namespace ErgoCalc
             }
 
             // Set the maximum tasks
-            this.updTasks.Value = col;
+            //this.updTasks.Value = col;
 
             return;
         }
@@ -225,7 +217,7 @@ namespace ErgoCalc
             String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
 
             // Create the new column
-            gridVariables.Columns.Add("Column" + (col+1).ToString() , "Task " + strTasks[col]);
+            gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 70;
 
@@ -321,7 +313,7 @@ namespace ErgoCalc
             _subtasks[2].data.c = 2;
             */
         }
-        
+
         /// <summary>
         /// Shows the data into the grid control
         /// </summary>
@@ -378,5 +370,33 @@ namespace ErgoCalc
             return;
         }
 
+        private void tabDataStrain_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPageIndex == 1) // tabTasks
+            {
+                listView1.Groups.Add(new ListViewGroup("Test group", HorizontalAlignment.Center));
+                listView1.Items.Add(new ListViewItem("SubTask " + ((char)('A')).ToString(), listView1.Groups[0]));
+                
+
+                // Clear all items and remove all groups but one
+                listViewC.Items.Clear();
+                for (int i = 1; i < listViewC.Groups.Count; i++)
+                    listViewC.RemoveGroup();
+
+                updTasks.Value = updSubtasks.Value; // This also creates as many groups as tasks
+
+                // Create the subtasks, as many as subtasks
+                for (int i = 0; i < updSubtasks.Value; i++)
+                    listViewC.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewC.Groups[1]));
+
+                //listViewC.Items.Add(new ListViewItem("SubTask A", listViewC.Groups[0]));
+                //listViewC.Items.Add(new ListViewItem("SubTask B", listViewC.Groups[0]));
+                //listViewC.Items.Add(new ListViewItem("SubTask C", listViewC.Groups[0]));
+                //listViewC.Items.Add(new ListViewItem("SubTask D", listViewC.Groups[0]));
+                //listViewC.Items.Add(new ListViewItem("SubTask E", listViewC.Groups[0]));
+                //listViewA = (ListViewEx)listViewA;
+                //listViewC.DeleteEmptyItems();
+            }
+        }
     }
 }

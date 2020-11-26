@@ -222,6 +222,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User controls\CenterDialog.cs" />
     <Compile Include="User controls\ListViewEx.cs" />
+    <Compile Include="User controls\ListViewExt.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="User controls\RadioButtonClick.cs">
       <SubType>Component</SubType>
     </Compile>
