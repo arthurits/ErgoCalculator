@@ -171,7 +171,7 @@ namespace ErgoCalc
             else if (tasks < listViewC.Groups.Count)
             {
                 for (int i = tasks; i < listViewC.Groups.Count; i++)
-                    listViewC.RemoveGroup();
+                    listViewC.RemoveGroup(listViewC.Groups.Count - 1);
             }
             return;
         }
@@ -379,15 +379,24 @@ namespace ErgoCalc
                 
 
                 // Clear all items and remove all groups but one
-                listViewC.Items.Clear();
-                for (int i = 1; i < listViewC.Groups.Count; i++)
-                    listViewC.RemoveGroup();
+                //listViewC.Items.Clear();
+                //for (int i = 1; i < listViewC.Groups.Count; i++)
+                //    listViewC.RemoveGroup();
 
-                updTasks.Value = updSubtasks.Value; // This also creates as many groups as tasks
+                //updTasks.Value = updSubtasks.Value; // This also creates as many groups as tasks
 
                 // Create the subtasks, as many as subtasks
                 for (int i = 0; i < updSubtasks.Value; i++)
-                    listViewC.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewC.Groups[1]));
+                    listViewC.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewC.Groups[0]));
+
+                listViewC.DeleteEmptyItems(0);
+
+                /*
+                foreach (var item in listViewC.Groups[0].Items)
+                {
+                    if (((ListViewItem)item).Name == "Dummy") listViewC.Items.RemoveAt(((ListViewItem)item).Index);
+                }
+                */
 
                 //listViewC.Items.Add(new ListViewItem("SubTask A", listViewC.Groups[0]));
                 //listViewC.Items.Add(new ListViewItem("SubTask B", listViewC.Groups[0]));
