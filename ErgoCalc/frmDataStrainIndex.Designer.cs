@@ -40,11 +40,11 @@
             this.updSubtasks = new System.Windows.Forms.NumericUpDown();
             this.gridVariables = new System.Windows.Forms.DataGridView();
             this.tabTasks = new System.Windows.Forms.TabPage();
-            this.listViewC = new System.Windows.Forms.ListViewEx();
+            this.listViewTasks = new System.Windows.Forms.ListViewEx();
             this.lblTasks = new System.Windows.Forms.Label();
             this.updTasks = new System.Windows.Forms.NumericUpDown();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.tabDummy = new System.Windows.Forms.TabControl();
             this.tabDataStrain.SuspendLayout();
             this.tabSubtasks.SuspendLayout();
             this.groupIndex.SuspendLayout();
@@ -57,7 +57,7 @@
             // btnOK
             // 
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(464, 462);
+            this.btnOK.Location = new System.Drawing.Point(468, 464);
             this.btnOK.Margin = new System.Windows.Forms.Padding(4);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(133, 34);
@@ -69,7 +69,7 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(620, 462);
+            this.btnCancel.Location = new System.Drawing.Point(624, 464);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(133, 34);
@@ -85,7 +85,7 @@
             this.tabDataStrain.Location = new System.Drawing.Point(16, 3);
             this.tabDataStrain.Name = "tabDataStrain";
             this.tabDataStrain.SelectedIndex = 0;
-            this.tabDataStrain.Size = new System.Drawing.Size(745, 493);
+            this.tabDataStrain.Size = new System.Drawing.Size(745, 454);
             this.tabDataStrain.TabIndex = 7;
             this.tabDataStrain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabDataStrain_Selected);
             // 
@@ -99,7 +99,7 @@
             this.tabSubtasks.Location = new System.Drawing.Point(4, 25);
             this.tabSubtasks.Name = "tabSubtasks";
             this.tabSubtasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSubtasks.Size = new System.Drawing.Size(737, 464);
+            this.tabSubtasks.Size = new System.Drawing.Size(737, 425);
             this.tabSubtasks.TabIndex = 0;
             this.tabSubtasks.Text = "Subtasks data";
             // 
@@ -108,7 +108,7 @@
             this.groupIndex.Controls.Add(this.radCUSI);
             this.groupIndex.Controls.Add(this.radCOSI);
             this.groupIndex.Controls.Add(this.radRSI);
-            this.groupIndex.Location = new System.Drawing.Point(6, 366);
+            this.groupIndex.Location = new System.Drawing.Point(6, 316);
             this.groupIndex.Name = "groupIndex";
             this.groupIndex.Size = new System.Drawing.Size(278, 61);
             this.groupIndex.TabIndex = 9;
@@ -126,6 +126,7 @@
             this.radCUSI.TabStop = true;
             this.radCUSI.Text = "CUSI";
             this.radCUSI.UseVisualStyleBackColor = true;
+            this.radCUSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // radCOSI
             // 
@@ -138,6 +139,7 @@
             this.radCOSI.TabStop = true;
             this.radCOSI.Text = "COSI";
             this.radCOSI.UseVisualStyleBackColor = true;
+            this.radCOSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // radRSI
             // 
@@ -151,12 +153,13 @@
             this.radRSI.TabStop = true;
             this.radRSI.Text = "RSI";
             this.radRSI.UseVisualStyleBackColor = true;
+            this.radRSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // lblSubtasks
             // 
             this.lblSubtasks.AutoSize = true;
             this.lblSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSubtasks.Location = new System.Drawing.Point(3, 438);
+            this.lblSubtasks.Location = new System.Drawing.Point(3, 389);
             this.lblSubtasks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtasks.Name = "lblSubtasks";
             this.lblSubtasks.Size = new System.Drawing.Size(111, 17);
@@ -167,7 +170,7 @@
             // 
             this.updSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.updSubtasks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.updSubtasks.Location = new System.Drawing.Point(139, 438);
+            this.updSubtasks.Location = new System.Drawing.Point(139, 389);
             this.updSubtasks.Margin = new System.Windows.Forms.Padding(4);
             this.updSubtasks.Maximum = new decimal(new int[] {
             8,
@@ -202,34 +205,32 @@
             this.gridVariables.RowHeadersWidth = 220;
             this.gridVariables.RowTemplate.Height = 25;
             this.gridVariables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridVariables.Size = new System.Drawing.Size(745, 374);
+            this.gridVariables.Size = new System.Drawing.Size(745, 293);
             this.gridVariables.TabIndex = 1;
             // 
             // tabTasks
             // 
             this.tabTasks.BackColor = System.Drawing.SystemColors.Control;
-            this.tabTasks.Controls.Add(this.listView1);
-            this.tabTasks.Controls.Add(this.listViewC);
+            this.tabTasks.Controls.Add(this.listViewTasks);
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
             this.tabTasks.Location = new System.Drawing.Point(4, 25);
             this.tabTasks.Name = "tabTasks";
             this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTasks.Size = new System.Drawing.Size(737, 464);
+            this.tabTasks.Size = new System.Drawing.Size(737, 425);
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 
-            // listViewC
+            // listViewTasks
             // 
-            this.listViewC.AllowDrop = true;
-            this.listViewC.FullRowSelect = true;
-            this.listViewC.HideSelection = false;
-            this.listViewC.Location = new System.Drawing.Point(21, 53);
-            this.listViewC.Name = "listViewC";
-            this.listViewC.Size = new System.Drawing.Size(401, 392);
-            this.listViewC.TabIndex = 4;
-            this.listViewC.UseCompatibleStateImageBehavior = false;
-            this.listViewC.View = System.Windows.Forms.View.LargeIcon;
+            this.listViewTasks.AllowDrop = true;
+            this.listViewTasks.FullRowSelect = true;
+            this.listViewTasks.HideSelection = false;
+            this.listViewTasks.Location = new System.Drawing.Point(6, 42);
+            this.listViewTasks.Name = "listViewTasks";
+            this.listViewTasks.Size = new System.Drawing.Size(725, 377);
+            this.listViewTasks.TabIndex = 4;
+            this.listViewTasks.UseCompatibleStateImageBehavior = false;
             // 
             // lblTasks
             // 
@@ -263,17 +264,14 @@
             this.columnHeader1.Text = "Task A";
             this.columnHeader1.Width = 189;
             // 
-            // listView1
+            // tabDummy
             // 
-            this.listView1.AllowDrop = true;
-            this.listView1.FullRowSelect = true;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(458, 53);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(263, 392);
-            this.listView1.TabIndex = 5;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.LargeIcon;
+            this.tabDummy.Location = new System.Drawing.Point(4, 13);
+            this.tabDummy.Name = "tabDummy";
+            this.tabDummy.SelectedIndex = 0;
+            this.tabDummy.Size = new System.Drawing.Size(88, 77);
+            this.tabDummy.TabIndex = 8;
+            this.tabDummy.Visible = false;
             // 
             // frmDataStrainIndex
             // 
@@ -283,6 +281,7 @@
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(774, 511);
             this.Controls.Add(this.tabDataStrain);
+            this.Controls.Add(this.tabDummy);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -326,7 +325,7 @@
         private System.Windows.Forms.Label lblTasks;
         private System.Windows.Forms.NumericUpDown updTasks;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ListViewEx listViewC;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListViewEx listViewTasks;
+        private System.Windows.Forms.TabControl tabDummy;
     }
 }

@@ -19,7 +19,9 @@ namespace ErgoCalc
         private int[][] _tasks;
         private Index _index;
 
-
+        public modelRSI[] SubTasks { get => _subtasks; }
+        public int[][] Tasks { get => _tasks;}
+        public Index Index { get => _index;}
 
         // Default constructor
         public frmDataStrainIndex()
@@ -27,8 +29,13 @@ namespace ErgoCalc
             // VS Designer initialization routine
             InitializeComponent();
 
+            // Simulate a click on radRSI
+            radioButton_CheckedChanged(radRSI, null);
+
             // Create the first column (zero index base)
             AddColumn(0);
+
+            this.listViewTasks.AddGroup();
 
             // Create the header rows
             gridVariables.RowCount = 5;
@@ -84,30 +91,13 @@ namespace ErgoCalc
             updSubtasks.Value = data.Length;
         }
 
-        /// <summary>
-        /// Returns the data introduced by the user. Data is updated after user has clicked OK button
-        /// </summary>
-        /// <returns>Array of Model NIOSH data</returns>
-        public modelRSI[] getSubTasks()
-        {
-            return _subtasks;
-        }
-
-        public void getTasks()
-        {
-
-        }
-
-
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
             // Check of the raiser of the event is a checked Checkbox.
             // Of course we also need to to cast it first.
-            if (((System.Windows.Forms.RadioButton)sender).Checked)
-            {
-                // This is the correct control.
-                System.Windows.Forms.RadioButton rb = (System.Windows.Forms.RadioButton)sender;
-            }
+            RadioButton rb = sender as RadioButton;
+            if (rb == null) return;
+            if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
 
             if (radRSI.Checked) _index = Index.RSI;
             if (radCOSI.Checked) _index = Index.COSI;
@@ -120,6 +110,8 @@ namespace ErgoCalc
                     col.HeaderText = "Task " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
                     lblSubtasks.Text = "Number of tasks";
                 }
+                tabDataStrain.TabPages[0].Text = "Tasks";
+                tabDataStrain.TabPages[1].Parent = tabDummy;
             }
             else
             {
@@ -128,6 +120,8 @@ namespace ErgoCalc
                     col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
                     lblSubtasks.Text = "Number of subtasks";
                 }
+                tabDataStrain.TabPages[0].Text = "SubTasks";
+                if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabDataStrain;
             }
         }
 
@@ -155,7 +149,7 @@ namespace ErgoCalc
             }
 
             // Set the maximum tasks
-            //this.updTasks.Value = col;
+            this.updTasks.Maximum = col - 1;
 
             return;
         }
@@ -163,15 +157,15 @@ namespace ErgoCalc
         private void updTasks_ValueChanged(object sender, EventArgs e)
         {
             Int32 tasks = Convert.ToInt32(updTasks.Value);
-            if (tasks > listViewC.Groups.Count)
+            if (tasks > listViewTasks.Groups.Count)
             {
-                for (int i = listViewC.Groups.Count; i < tasks; i++)
-                    listViewC.AddGroup(i);
+                for (int i = listViewTasks.Groups.Count; i < tasks; i++)
+                    listViewTasks.AddGroup(i);
             }
-            else if (tasks < listViewC.Groups.Count)
+            else if (tasks < listViewTasks.Groups.Count)
             {
-                for (int i = tasks; i < listViewC.Groups.Count; i++)
-                    listViewC.RemoveGroup(listViewC.Groups.Count - 1);
+                for (int i = tasks; i < listViewTasks.Groups.Count; i++)
+                    listViewTasks.RemoveGroup(listViewTasks.Groups.Count - 1);
             }
             return;
         }
@@ -193,6 +187,18 @@ namespace ErgoCalc
 
                 //if (!String.IsNullOrEmpty(txtConstanteLC.Text))
                 //    _subtasks[i].factors.LC = Convert.ToDouble(txtConstanteLC.Text);
+            }
+
+            // Save the tasks grouping values
+            listViewTasks.RemoveEmptyGroups();
+            _tasks= new int[listViewTasks.Groups.Count][];
+            for (int i=0; i<_tasks.Length; i++)
+            {
+                _tasks[i] = new int[listViewTasks.Groups[i].Items.Count];
+                for (int j = 0; j < _tasks[i].Length; j++)
+                {
+                    _tasks[i][j] = listViewTasks.Groups[i].Items[j].Index;
+                }
             }
 
             // Save the composite option
@@ -374,37 +380,12 @@ namespace ErgoCalc
         {
             if (e.TabPageIndex == 1) // tabTasks
             {
-                listView1.Groups.Add(new ListViewGroup("Test group", HorizontalAlignment.Center));
-                listView1.Items.Add(new ListViewItem("SubTask " + ((char)('A')).ToString(), listView1.Groups[0]));
-                
-
-                // Clear all items and remove all groups but one
-                //listViewC.Items.Clear();
-                //for (int i = 1; i < listViewC.Groups.Count; i++)
-                //    listViewC.RemoveGroup();
-
-                //updTasks.Value = updSubtasks.Value; // This also creates as many groups as tasks
-
+                int nDummy = (listViewTasks.Items.Find("Dummy", false)).Count();
                 // Create the subtasks, as many as subtasks
-                for (int i = 0; i < updSubtasks.Value; i++)
-                    listViewC.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewC.Groups[0]));
+                for (int i = listViewTasks.Items.Count - nDummy; i < updSubtasks.Value; i++)
+                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
 
-                listViewC.DeleteEmptyItems(0);
-
-                /*
-                foreach (var item in listViewC.Groups[0].Items)
-                {
-                    if (((ListViewItem)item).Name == "Dummy") listViewC.Items.RemoveAt(((ListViewItem)item).Index);
-                }
-                */
-
-                //listViewC.Items.Add(new ListViewItem("SubTask A", listViewC.Groups[0]));
-                //listViewC.Items.Add(new ListViewItem("SubTask B", listViewC.Groups[0]));
-                //listViewC.Items.Add(new ListViewItem("SubTask C", listViewC.Groups[0]));
-                //listViewC.Items.Add(new ListViewItem("SubTask D", listViewC.Groups[0]));
-                //listViewC.Items.Add(new ListViewItem("SubTask E", listViewC.Groups[0]));
-                //listViewA = (ListViewEx)listViewA;
-                //listViewC.DeleteEmptyItems();
+                listViewTasks.RemoveEmptyItems(0);
             }
         }
     }

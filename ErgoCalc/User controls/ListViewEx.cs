@@ -35,10 +35,8 @@ namespace System.Windows.Forms
             //this.listViewC.Size = new System.Drawing.Size(401, 392);
             //this.listViewC.TabIndex = 4;
             this.UseCompatibleStateImageBehavior = false;
-            this.View = System.Windows.Forms.View.Details;
+            this.View = System.Windows.Forms.View.LargeIcon;
 
-            // Set 1 group
-            AddGroup();
         }
 
         protected override void OnDragDrop(DragEventArgs e)
@@ -93,7 +91,7 @@ namespace System.Windows.Forms
                         this.Items.Add(emptyItem);
                     }
                     heldDownItem.Group = group.Group;
-                    this.DeleteEmptyItems(group.Group.Header);
+                    this.RemoveEmptyItems(group.Group.Header);
 
                     //heldDownItem.Group.Items.RemoveByKey(System.String.Empty);
                     //listViewA.Groups[listViewA.Groups.Count - 1].Items.RemoveByKey(String.Empty);
@@ -103,44 +101,18 @@ namespace System.Windows.Forms
             //listView1.AutoArrange = true; 
         }
 
-        public void DeleteEmptyItems()
-        {
-            this.Items.RemoveByKey("Dummy");
-        }
-        public void DeleteEmptyItems(int GroupIndex)
-        {
-            Collections.Generic.List<int> temp = new Collections.Generic.List<int>();
-
-            foreach (System.Windows.Forms.ListViewItem item in this.Groups[GroupIndex].Items)
-                if (item.Name == "Dummy") temp.Add(item.Index);
-            
-            foreach (int i in temp)
-                this.Items.RemoveAt(i);
-            
-            //this.Groups[GroupIndex].Items.RemoveByKey("Dummy");
-        }
-        public void DeleteEmptyItems(string header)
-        {
-            Collections.Generic.List<int> temp = new Collections.Generic.List<int>();
-
-            foreach (System.Windows.Forms.ListViewItem item in this.Groups[header].Items)
-                if (item.Name == "Dummy") temp.Add(item.Index);
-
-            foreach (int i in temp)
-                this.Items.RemoveAt(i);
-
-            //this.Groups[GroupIndex].Items.RemoveByKey("Dummy");
-        }
-
+        /// <summary>
+        /// Append a group to the list view with a generic header name
+        /// </summary>
         public void AddGroup()
         {
             AddGroup(this.Groups.Count);
         }
 
         /// <summary>
-        /// 
+        /// Append a group to the list view with a specific header name
         /// </summary>
-        /// <param name="index"></param>
+        /// <param name="index">Group number</param>
         public void AddGroup(int index)
         {
             var strHeader = "Task " + ((char)('A' + index)).ToString();
@@ -155,6 +127,61 @@ namespace System.Windows.Forms
             this.Items.Add(emptyItem);
         }
 
+        /// <summary>
+        /// Deletes all empty items in the ListView
+        /// </summary>
+        public void RemoveEmptyItems()
+        {
+            for (int i = 0; i < this.Groups.Count; i++)
+                RemoveEmptyItems(i);
+            // this.Items.RemoveByKey("Dummy");
+        }
+        /// <summary>
+        /// Delete any empty item in a given group
+        /// </summary>
+        /// <param name="GroupIndex">Group index</param>
+        public void RemoveEmptyItems(int GroupIndex)
+        {
+            for (int i = this.Groups[GroupIndex].Items.Count; i > 0; i--)
+            {
+                if (this.Groups[GroupIndex].Items[i - 1].Name == "Dummy")
+                    this.Items.Remove(this.Groups[GroupIndex].Items[i - 1]);
+            }
+        }
+
+        /// <summary>
+        /// Delete any empty item in a given group
+        /// </summary>
+        /// <param name="header">Group header</param>
+        public void RemoveEmptyItems(string header)
+        {
+            for (int i = 0; i < this.Groups.Count; i++)
+            {
+                if (this.Groups[i].Header == header)
+                {
+                    RemoveEmptyItems(i);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes all groups in the Groups collection containing only "Dummy" items
+        /// </summary>
+        public void RemoveEmptyGroups()
+        {
+            for (int i = this.Groups.Count; i > 0; i--)
+            {
+                if (this.Groups[i - 1].Items.Count <= 1)
+                {
+                    if (this.Groups[i - 1].Items[0].Name == "Dummy")
+                        this.RemoveGroup(i - 1);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the last group in the Groups collection
+        /// </summary>
         public void RemoveLastGroup()
         {
             if (this.Groups.Count >= 1)
@@ -176,17 +203,21 @@ namespace System.Windows.Forms
         /// <param name="index">0-based index of the group to be deleted</param>
         public void RemoveGroup(int index)
         {
-            // // Move items to the previous group if there is at least 2 groups
+            // First, move items to the previous group if there is at least 2 groups
             if (index > 0)
             {
-                foreach (System.Windows.Forms.ListViewItem item in this.Groups[index].Items)
+                for (int i = this.Groups[index].Items.Count; i > 0; i--)
                 {
-                    item.Group = this.Groups[index - 1];
+                    // If a "Dummy" item, delete. Otherwise, move it to the lower group
+                    if (this.Groups[index].Items[i - 1].Name == "Dummy")
+                        this.Items.Remove(this.Groups[index].Items[i - 1]);
+                    else
+                        this.Groups[index].Items[i - 1].Group = this.Groups[index - 1];
                 }
-                DeleteEmptyItems(index - 1);
+                //DeleteEmptyItems(index - 1);
             }
 
-            // Delete group
+            // Finally, delete group
             this.Groups.RemoveAt(index);
         }
     }

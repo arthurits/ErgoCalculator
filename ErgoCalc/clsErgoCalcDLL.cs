@@ -640,23 +640,51 @@ namespace ErgoCalc
             // Definición de la clase que encapsula la llamada a la DLL
             public class cModelStrain
             {
+                private Index index;
+                public Index IndexType { get => index; set => index = value; }
+
                 private modelRSI[] _sData;
                 public modelRSI[] SubTasks { get => _sData; set => _sData = value; }
 
                 private int[][] _nTasks;
                 public int[][] Tasks { get => _nTasks; set => _nTasks = value; }
 
-                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double StrainIndex_DLL([In, Out] modelRSI[] datos, int[] orden, ref int nSize);
 
-                public double StrainIndex()
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
+                private static extern double RSI([In, Out] modelRSI[] datos, int[] orden, ref int nSize);
+
+                /// <summary>
+                /// Calculates the RSI index
+                /// </summary>
+                /// <returns>Value of the RSI index</returns>
+                public double RSI()
                 {
                     int length = _sData.Length;
-                    return StrainIndex_DLL(_sData, new int[] { }, ref length);
+                    return RSI(_sData, new int[] { }, ref length);
                 }
                 public double StrainIndex(modelRSI[] datos, int[] orden, ref int nSize)
                 {
-                    return StrainIndex_DLL(datos, orden, ref nSize);
+                    return RSI(datos, orden, ref nSize);
+                }
+
+                /// <summary>
+                /// Calculates the COSI index
+                /// </summary>
+                /// <returns>Value of the COSI index</returns>
+                public double COSI()
+                {
+                    int length = _sData.Length;
+                    return RSI(_sData, new int[] { }, ref length);
+                }
+
+                /// <summary>
+                /// Calculates the CUSI index
+                /// </summary>
+                /// <returns>Value of the CUSI index</returns>
+                public double CUSI()
+                {
+                    int length = _sData.Length;
+                    return RSI(_sData, new int[] { }, ref length);
                 }
 
                 public override string ToString()

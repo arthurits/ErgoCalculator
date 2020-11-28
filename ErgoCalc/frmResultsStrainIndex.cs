@@ -40,10 +40,12 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(modelRSI[] datos)
+        public frmResultsStrainIndex(Index index, modelRSI[] subtasks, int[][] tasks)
             :this()
         {
-            _classDLL.SubTasks = datos;
+            _classDLL.IndexType = index;
+            _classDLL.SubTasks = subtasks;
+            _classDLL.Tasks = tasks;
             //_sData = datos;
         }
 
@@ -70,7 +72,7 @@ namespace ErgoCalc
             try
                 {
                 //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
-                _classDLL.StrainIndex();
+                _classDLL.RSI();
                 }
                 catch (EntryPointNotFoundException)
                 {
