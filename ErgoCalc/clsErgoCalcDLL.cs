@@ -651,7 +651,7 @@ namespace ErgoCalc
 
 
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double RSI([In, Out] modelRSI[] datos, ref int nSize);
+                private static extern double RSI([In, Out] modelRSI[] datos, int[] orden, ref int nSize);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
                 private static extern double COSI([In, Out] modelRSI[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
@@ -665,11 +665,12 @@ namespace ErgoCalc
                 public double RSI()
                 {
                     int length = _sData.Length;
-                    return RSI(_sData, ref length);
+                    return RSI(_sData, new int[] { }, ref length);
                 }
                 public double StrainIndex(modelRSI[] datos, ref int nSize)
                 {
-                    return RSI(datos, ref nSize);
+                    //return RSI(datos, ref nSize);
+                    return 0.0;
                 }
 
                 /// <summary>
@@ -689,7 +690,8 @@ namespace ErgoCalc
                 public double CUSI()
                 {
                     int length = _sData.Length;
-                    return RSI(_sData, new int[] { }, ref length);
+                    //return RSI(_sData, new int[] { }, ref length);
+                    return 0.0;
                 }
 
                 public override string ToString()
