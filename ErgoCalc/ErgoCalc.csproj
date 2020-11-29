@@ -134,6 +134,14 @@
     <Compile Include="clsApplicationSettings.cs" />
     <Compile Include="clsErgoCalcDLL.cs" />
     <Compile Include="clsUtilities.cs" />
+    <Compile Include="controls\ListViewEx.cs" />
+    <Compile Include="controls\ListViewEx.Designer.cs">
+      <DependentUpon>ListViewEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TablessTabControl.cs" />
+    <Compile Include="controls\TablessTabControl.Designer.cs">
+      <DependentUpon>TablessTabControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmResultsStrainIndex.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,16 +228,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User controls\CenterDialog.cs" />
-    <Compile Include="User controls\ListViewEx.cs" />
-    <Compile Include="User controls\ListViewExt.cs">
+    <Compile Include="controls\CenterDialog.cs" />
+    <Compile Include="controls\RadioButtonClick.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="User controls\RadioButtonClick.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="User controls\TablessTabControl.cs" />
-    <Compile Include="User controls\ToolStripCustomRenderer.cs" />
+    <Compile Include="controls\ToolStripCustomRenderer.cs" />
     <Compile Include="Win32.cs" />
     <EmbeddedResource Include="frmResultsStrainIndex.resx">
       <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>

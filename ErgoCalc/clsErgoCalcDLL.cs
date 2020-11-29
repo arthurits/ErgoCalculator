@@ -651,7 +651,12 @@ namespace ErgoCalc
 
 
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double RSI([In, Out] modelRSI[] datos, int[] orden, ref int nSize);
+                private static extern double RSI([In, Out] modelRSI[] datos, ref int nSize);
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
+                private static extern double COSI([In, Out] modelRSI[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
+                private static extern double CUSI([In, Out] modelRSI[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
+
 
                 /// <summary>
                 /// Calculates the RSI index
@@ -660,11 +665,11 @@ namespace ErgoCalc
                 public double RSI()
                 {
                     int length = _sData.Length;
-                    return RSI(_sData, new int[] { }, ref length);
+                    return RSI(_sData, ref length);
                 }
-                public double StrainIndex(modelRSI[] datos, int[] orden, ref int nSize)
+                public double StrainIndex(modelRSI[] datos, ref int nSize)
                 {
-                    return RSI(datos, orden, ref nSize);
+                    return RSI(datos, ref nSize);
                 }
 
                 /// <summary>

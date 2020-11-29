@@ -1,7 +1,7 @@
 ﻿
 namespace System.Windows.Forms
 {
-    partial class ListViewExt2
+    partial class TablessTabControl
     {
         /// <summary>
         /// Required designer variable.
