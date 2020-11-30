@@ -15,7 +15,7 @@ namespace System.Windows.Forms
     //[System.ComponentModel.Designer("System.Windows.Forms.Design.DocumentDesigner, System.Windows.Forms.Design",
     //typeof(System.ComponentModel.Design.IRootDesigner)),
     //System.ComponentModel.DesignerCategory("")]
-    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner)), System.ComponentModel.DesignerCategory("")]
+    //[Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner)), System.ComponentModel.DesignerCategory("")]
     public partial class ListViewEx : System.Windows.Forms.ListView
     {
         private System.Windows.Forms.ListViewItem heldDownItem;

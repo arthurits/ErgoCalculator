@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace System.Windows.Forms
 {
-    [System.ComponentModel.Designer("System.Windows.Forms.Design.DocumentDesigner, System.Windows.Forms.Design",
-    typeof(System.ComponentModel.Design.IRootDesigner)),
-    System.ComponentModel.DesignerCategory("")]
+    //[System.ComponentModel.Designer("System.Windows.Forms.Design.DocumentDesigner, System.Windows.Forms.Design",
+    //typeof(System.ComponentModel.Design.IRootDesigner)),
+    //System.ComponentModel.DesignerCategory("")]
     /// <summary>
     /// TablessTabControl: shows tabs at design time and hides them at runtime
     /// https://github.com/coroiu/CustomControls/blob/master/CustomControls/TablessTabControl.cs

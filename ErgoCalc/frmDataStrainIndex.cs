@@ -194,8 +194,9 @@ namespace ErgoCalc
             _tasks= new int[listViewTasks.Groups.Count][];
             for (int i=0; i<_tasks.Length; i++)
             {
-                _tasks[i] = new int[listViewTasks.Groups[i].Items.Count];
-                for (int j = 0; j < _tasks[i].Length; j++)
+                _tasks[i] = new int[listViewTasks.Groups[i].Items.Count + 1];
+                _tasks[i][0] = listViewTasks.Groups[i].Items.Count;
+                for (int j = 1; j < _tasks[i].Length; j++)
                 {
                     _tasks[i][j] = listViewTasks.Groups[i].Items[j].Index;
                 }
