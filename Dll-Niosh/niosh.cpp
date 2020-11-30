@@ -236,13 +236,13 @@ double FactorCM(const int* const agarre, const double* const v)
 
 
 
-	////////////////////////////////////////////////////////////////////////
-	//                                                                    //
-	// Funciones internas                                                 //
-	//                                                                    //
-	////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+//                                                                    //
+// Funciones internas                                                 //
+//                                                                    //
+////////////////////////////////////////////////////////////////////////
 
-	/* Función interna que realiza una interpolación lineal*/
+/* Función interna que realiza una interpolación lineal*/
 double InterpolacionLineal(const double* const x, const double* const x1, const double* const x2, const double* const y1, const double* const y2)
 {
 	double resultado = 0.0;
@@ -257,7 +257,7 @@ double InterpolacionLineal(const double* const x, const double* const x1, const 
 	return resultado;
 }
 
-	/* Función interna que localiza un valor en una matriz*/
+/* Función interna que localiza un valor en una matriz*/
 int locate(double xx[], int n, double x)
 /*Given an array xx[1..n], and given a value x, returns a value j such that x is between xx[j]
 and xx[j+1]. xx must be monotonic, either increasing or decreasing. j=0 or j=n is returned
@@ -297,7 +297,7 @@ to indicate that x is out of range.*/
 	return jl;
 }
 
-	/* Ordenación Heapsort con una tabla índice */
+/* Ordenación Heapsort con una tabla índice */
 void HeapSortIndex(double ra[], int ind[], const int* const n)
 /*Sorts an array ra[1..n] into ascending numerical order using the Heapsort algorithm. n is
 input; ra is replaced on output by its sorted rearrangement.

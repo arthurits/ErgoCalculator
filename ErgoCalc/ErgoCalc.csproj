@@ -134,13 +134,29 @@
     <Compile Include="clsApplicationSettings.cs" />
     <Compile Include="clsErgoCalcDLL.cs" />
     <Compile Include="clsUtilities.cs" />
-    <Compile Include="controls\ListViewEx.cs" />
+    <Compile Include="controls\CustomControl1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\CustomControl1.Designer.cs">
+      <DependentUpon>CustomControl1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="controls\ListViewEx.Designer.cs">
       <DependentUpon>ListViewEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\TablessTabControl.cs" />
+    <Compile Include="controls\TablessTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="controls\TablessTabControl.Designer.cs">
       <DependentUpon>TablessTabControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\UserControl1.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="controls\UserControl1.Designer.cs">
+      <DependentUpon>UserControl1.cs</DependentUpon>
     </Compile>
     <Compile Include="frmResultsStrainIndex.cs">
       <SubType>Form</SubType>
