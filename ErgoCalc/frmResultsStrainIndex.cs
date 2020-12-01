@@ -15,7 +15,9 @@ namespace ErgoCalc
     public partial class frmResultsStrainIndex : Form, IChildResults
     {
         // Variable definition
-        private modelRSI [] _sData;
+        private modelSubTask[] _subtasks;
+        private modelTask[] _tasks;
+        private Index _index;
         private cModelStrain _classDLL;
         private ResultsOptions _options;
 
@@ -40,12 +42,15 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(Index index, modelRSI[] subtasks, int[][] tasks)
+        public frmResultsStrainIndex(Index index, modelSubTask[] subtasks, modelTask[] tasks)
             :this()
         {
-            _classDLL.IndexType = index;
-            _classDLL.SubTasks = subtasks;
-            _classDLL.Tasks = tasks;
+            _index = index;
+            _subtasks = subtasks;
+            _tasks = tasks;
+            //_classDLL.IndexType = index;
+            //_classDLL.SubTasks = subtasks;
+            //_classDLL.Tasks = tasks;
             //_sData = datos;
         }
 
@@ -64,7 +69,7 @@ namespace ErgoCalc
                 // Retrieve data from the dialog
                 //_sDatosCLM = frm._sData;
                 //nSize = _sData.Length;
-                nSize = _classDLL.SubTasks.Length;
+                nSize = _subtasks.Length;
                 orden = new Int32[nSize];
                 for (Int32 i = 0; i < nSize; i++) orden[i] = i;
 
@@ -72,7 +77,7 @@ namespace ErgoCalc
             try
                 {
                 //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
-                _classDLL.RSI();
+                _classDLL.RSI(_subtasks, orden, ref nSize);
                 }
                 catch (EntryPointNotFoundException)
                 {
@@ -103,7 +108,7 @@ namespace ErgoCalc
                 }
 
                 // Call the routine that shows the results
-                if (error == false) ShowResults(_sData);
+                if (error == false) ShowResults(_subtasks);
             //}
             //else
                 // When this method is called artificially from code, don't do anything
@@ -127,7 +132,7 @@ namespace ErgoCalc
         /// Shows the numerical results in the RTF control
         /// </summary>
         /// <param name="sData">Data and results array</param>
-        private void ShowResults(modelRSI [] sData)
+        private void ShowResults(modelSubTask [] sData)
         {
             rtbShowResult.Text = _classDLL.ToString();
             FormatText();

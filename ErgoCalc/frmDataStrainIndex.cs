@@ -15,11 +15,11 @@ namespace ErgoCalc
 
     public partial class frmDataStrainIndex : Form
     {
-        private modelRSI[] _subtasks;
+        private modelSubTask[] _subtasks;
         private int[][] _tasks;
         private Index _index;
 
-        public modelRSI[] SubTasks { get => _subtasks; }
+        public modelSubTask[] SubTasks { get => _subtasks; }
         public int[][] Tasks { get => _tasks;}
         public Index Index { get => _index;}
 
@@ -67,7 +67,7 @@ namespace ErgoCalc
         }
 
         // Overloaded constructor
-        public frmDataStrainIndex(modelRSI[] data)
+        public frmDataStrainIndex(modelSubTask[] data)
             : this() // Call the base constructor
         {
 
@@ -173,7 +173,7 @@ namespace ErgoCalc
         private void btnOK_Click(object sender, EventArgs e)
         {
             // Save the values entered
-            _subtasks = new modelRSI[Convert.ToInt32(updSubtasks.Value)];
+            _subtasks = new modelSubTask[Convert.ToInt32(updSubtasks.Value)];
             for (Int32 i = 0; i < _subtasks.Length; i++)
             {
                 _subtasks[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
@@ -211,7 +211,7 @@ namespace ErgoCalc
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Return empty array
-            _subtasks = new modelRSI[0];
+            _subtasks = new modelSubTask[0];
         }
 
         #region Private routines
@@ -239,7 +239,7 @@ namespace ErgoCalc
         /// </summary>
         private void DataExample()
         {
-            _subtasks = new modelRSI[8];
+            _subtasks = new modelSubTask[8];
 
             _subtasks[0].data.i = 0.2;
             _subtasks[0].data.e = 5;
@@ -325,7 +325,7 @@ namespace ErgoCalc
         /// Shows the data into the grid control
         /// </summary>
         /// <param name="data">Array of Model NIOSH data</param>
-        private void DataToGrid(modelRSI[] data)
+        private void DataToGrid(modelSubTask[] data)
         {
             for (Int32 i = 0; i < data.Length; i++)
             {

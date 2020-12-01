@@ -1,7 +1,7 @@
 // Niosh.h - Contains declarations of Niosh lifting index functions
 #pragma once
 
-#ifdef Niosh_EXPORTS
+#ifdef NIOSH_EXPORTS
 #define Niosh_API __declspec(dllexport)
 #else
 #define Niosh_API __declspec(dllimport)

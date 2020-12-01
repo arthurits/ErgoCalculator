@@ -580,53 +580,55 @@ namespace ErgoCalc
 
             // Definición de tipos
             [StructLayout(LayoutKind.Sequential)]
-            public struct dataStrain
+            public struct dataRSI
             {
                 public double i;       // Intensidad del esfuerzo
                 public double e;       // Esfuerzos por minuto
                 public double d;       // Duración del esfuerzo
                 public double p;       // Posición de la mano
                 public double h;       // Duración de la tarea
+                public double ea;       // Esfuerzos acumulados a
+                public double eb;       // Esfuerzos acumulados b
             };
 
             [StructLayout(LayoutKind.Sequential)]
-            public struct multipliersStrain
+            public struct multipliersRSI
             {
                 public double IM;   // Factor de intensidad del esfuerzo [0, 1]
                 public double EM;   // Factor de esfuerzos por minuto
                 public double DM;   // Factor de duración del esfuerzo
                 public double PM;   // Factor de posición de la mano
                 public double HM;   // Factor de duración de la tarea
+                public double EMa;  // Factor de esfuerzos acumulados a
+                public double EMb;  // Factor de esfuerzos acumulados a
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelRSI
+            public struct modelSubTask
             {
                 [MarshalAs(UnmanagedType.Struct)]
-                public dataStrain data;
+                public dataRSI data;
                 [MarshalAs(UnmanagedType.Struct)]
-                public multipliersStrain factors;
-                public double index;
+                public multipliersRSI factors;
+                public double index;                    // The RSI index for this subtask
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelCOSI
+            public struct modelTask
             {
-                [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-                public modelRSI[] subtasks;
-                public double h;       // Duración de la tarea
-                public int nSubTasks; 
-                public double index;
+                public int[] subtasks; // Set of subtasks in the job
+                public double ha;               // Duración de la tarea acumulada a
+                public double hb;               // Duración de la tarea acumulada b
+                public double HMa;              // Factor de duración de la tarea acumulada a
+                public double HMb;              // Factor de duración de la tarea acumulada b
+                public double index;            // The COSI index for this task
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct modelCUSI
             {
-                [MarshalAs(UnmanagedType.Struct)]
-                public dataStrain data;
-                [MarshalAs(UnmanagedType.Struct)]
-                public multipliersStrain factors;
-                public double index;
+                public modelTask[] tasks;   // Set of tasks in the job
+                public double index;        // The CUSI index for this job
             };
 
             public class cModelCOSI
@@ -640,34 +642,40 @@ namespace ErgoCalc
             // Definición de la clase que encapsula la llamada a la DLL
             public class cModelStrain
             {
+                /*
                 private Index index;
                 public Index IndexType { get => index; set => index = value; }
 
-                private modelRSI[] _sData;
-                public modelRSI[] SubTasks { get => _sData; set => _sData = value; }
+                // Array of all of the subtasks
+                private modelSubTask[] _subTasks;
+                public modelSubTask[] SubTasks { get => _subTasks; set => _subTasks = value; }
+
+                // Array of all of the tasks
+                private modelTask[] _tasks;
+                public modelTask[] Tasks { get => _tasks; set => _tasks = value; }
 
                 private int[][] _nTasks;
-                public int[][] Tasks { get => _nTasks; set => _nTasks = value; }
-
+                public int[][] nTasks { get => _nTasks; set => _nTasks = value; }
+                */
 
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double RSI([In, Out] modelRSI[] datos, int[] orden, ref int nSize);
+                private static extern double RSI_index([In, Out] modelSubTask[] subtasks, int[] orden, ref int nSize);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
-                private static extern double COSI([In, Out] modelRSI[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
+                private static extern double COSI_index([In, Out] modelSubTask[] AllSubTasks, int[] subtasks, int[] orden, int nSubTasks);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
-                private static extern double CUSI([In, Out] modelRSI[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
+                private static extern double CUSI_index([In, Out] modelSubTask[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
 
 
                 /// <summary>
                 /// Calculates the RSI index
                 /// </summary>
                 /// <returns>Value of the RSI index</returns>
-                public double RSI()
+                public double RSI(modelSubTask[] AllSubTasks, int[] orden, ref int nSize)
                 {
-                    int length = _sData.Length;
-                    return RSI(_sData, new int[] { }, ref length);
+                    //int length = AllSubTasks.Length;
+                    return RSI_index(AllSubTasks, orden, ref nSize);
                 }
-                public double StrainIndex(modelRSI[] datos, ref int nSize)
+                public double StrainIndex(modelSubTask[] datos, ref int nSize)
                 {
                     //return RSI(datos, ref nSize);
                     return 0.0;
@@ -677,10 +685,14 @@ namespace ErgoCalc
                 /// Calculates the COSI index
                 /// </summary>
                 /// <returns>Value of the COSI index</returns>
-                public double COSI()
+                public double COSI(modelSubTask[] AllSubTasks, modelTask[] Tasks, int[] orden)
                 {
-                    int length = _sData.Length;
-                    return RSI(_sData, new int[] { }, ref length);
+                    for (int i = 0; i < Tasks.Length; i++)
+                    {
+                        Tasks[i].index = COSI_index(AllSubTasks, Tasks[i].subtasks, orden, Tasks[i].subtasks.Length);
+                    }
+                    int length = AllSubTasks.Length;
+                    return RSI_index(AllSubTasks, new int[] { }, ref length);
                 }
 
                 /// <summary>
@@ -689,14 +701,14 @@ namespace ErgoCalc
                 /// <returns>Value of the CUSI index</returns>
                 public double CUSI()
                 {
-                    int length = _sData.Length;
+                    int length = _subTasks.Length;
                     //return RSI(_sData, new int[] { }, ref length);
                     return 0.0;
                 }
 
                 public override string ToString()
                 {
-                    int i, length = _sData.Length;
+                    int i, length = _subTasks.Length;
                     string[] strLineD = new string[6];
                     string[] strLineR = new string[7];
                     string[] strTasks = new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O" };
@@ -719,19 +731,19 @@ namespace ErgoCalc
                     for (i = 0; i < length; i++)
                     {
                         strLineD[0] += "\t\t" + "Task " + strTasks[i];
-                        strLineD[1] += "\t\t" + _sData[i].data.i.ToString();
-                        strLineD[2] += "\t\t" + _sData[i].data.e.ToString();
-                        strLineD[3] += "\t\t" + _sData[i].data.d.ToString();
-                        strLineD[4] += "\t" + _sData[i].data.p.ToString() + "\t";
-                        strLineD[5] += "\t" + _sData[i].data.h.ToString() + "\t";
+                        strLineD[1] += "\t\t" + _subTasks[i].data.i.ToString();
+                        strLineD[2] += "\t\t" + _subTasks[i].data.e.ToString();
+                        strLineD[3] += "\t\t" + _subTasks[i].data.d.ToString();
+                        strLineD[4] += "\t" + _subTasks[i].data.p.ToString() + "\t";
+                        strLineD[5] += "\t" + _subTasks[i].data.h.ToString() + "\t";
 
                         strLineR[0] += "\t\t" + "Task " + strTasks[i];
-                        strLineR[1] += "\t\t" + _sData[i].factors.IM.ToString("0.####");
-                        strLineR[2] += "\t\t" + _sData[i].factors.EM.ToString("0.####");
-                        strLineR[3] += "\t\t" + _sData[i].factors.DM.ToString("0.####");
-                        strLineR[4] += "\t" + _sData[i].factors.PM.ToString("0.####") + "\t";
-                        strLineR[5] += "\t\t" + _sData[i].factors.HM.ToString("0.####");
-                        strLineR[6] += "\t\t" + _sData[i].index.ToString("0.####");
+                        strLineR[1] += "\t\t" + _subTasks[i].factors.IM.ToString("0.####");
+                        strLineR[2] += "\t\t" + _subTasks[i].factors.EM.ToString("0.####");
+                        strLineR[3] += "\t\t" + _subTasks[i].factors.DM.ToString("0.####");
+                        strLineR[4] += "\t" + _subTasks[i].factors.PM.ToString("0.####") + "\t";
+                        strLineR[5] += "\t\t" + _subTasks[i].factors.HM.ToString("0.####");
+                        strLineR[6] += "\t\t" + _subTasks[i].index.ToString("0.####");
                     }
 
                     strLineD[4].TrimEnd(new char[] { '\t' });
