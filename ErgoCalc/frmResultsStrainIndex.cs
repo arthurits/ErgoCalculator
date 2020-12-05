@@ -17,6 +17,7 @@ namespace ErgoCalc
         // Variable definition
         private modelSubTask[] _subtasks;
         private modelTask[] _tasks;
+        private modelJob _job;
         private Index _index;
         private cModelStrain _classDLL;
         private ResultsOptions _options;
@@ -28,7 +29,7 @@ namespace ErgoCalc
             //rtbShowResult.Size = this.ClientSize;
             
             // Initialize private variables
-            _classDLL = new cModelStrain();
+            // _classDLL = new cModelStrain();
             _options = new ResultsOptions(rtbShowResult);
 
             propertyGrid1.SelectedObject = _options;
@@ -42,12 +43,14 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(Index index, modelSubTask[] subtasks, modelTask[] tasks)
+        public frmResultsStrainIndex(Index index, modelJob job)
             :this()
         {
             _index = index;
-            _subtasks = subtasks;
-            _tasks = tasks;
+            _job = job;
+            _classDLL = new cModelStrain(job, index);
+            //_subtasks = subtasks;
+            //_tasks = tasks;
             //_classDLL.IndexType = index;
             //_classDLL.SubTasks = subtasks;
             //_classDLL.Tasks = tasks;
@@ -58,57 +61,46 @@ namespace ErgoCalc
         {
             //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
             // Variable definition
-            Int32[] orden;
-            Int32 nSize;
             Boolean error = false;
-            //frmDataCLMmodel frm = new frmDataCLMmodel(_sDatosCLM);
-
-            // Show dialog
-            //if (frm.ShowDialog() == DialogResult.OK)
-            //{
-                // Retrieve data from the dialog
-                //_sDatosCLM = frm._sData;
-                //nSize = _sData.Length;
-                nSize = _subtasks.Length;
-                orden = new Int32[nSize];
-                for (Int32 i = 0; i < nSize; i++) orden[i] = i;
 
             // Call the DLL function
             try
-                {
+            {
                 //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
-                _classDLL.RSI(_subtasks, orden, ref nSize);
-                }
-                catch (EntryPointNotFoundException)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
-                        "RSI index error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                catch (DllNotFoundException)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "Some files are missing. Please\nreinstall the application.",
-                        "RSI index error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "Error in the calculation kernel:\n" + ex.ToString(),
-                        "Unexpected error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
+                //_classDLL.RSI(_subtasks, orden, ref nSize);
+                _classDLL.StrainIndex();
+            }
+            catch (EntryPointNotFoundException)
+            {
+                error = true;
+                MessageBox.Show(
+                    "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
+                    "RSI index error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (DllNotFoundException)
+            {
+                error = true;
+                MessageBox.Show(
+                    "Some files are missing. Please\nreinstall the application.",
+                    "RSI index error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                error = true;
+                MessageBox.Show(
+                    "Error in the calculation kernel:\n" + ex.ToString(),
+                    "Unexpected error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
 
-                // Call the routine that shows the results
-                if (error == false) ShowResults(_subtasks);
+            // Call the routine that shows the results
+            if (error == false) ShowResults(_subtasks);
+
             //}
             //else
                 // When this method is called artificially from code, don't do anything

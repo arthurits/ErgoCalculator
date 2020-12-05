@@ -17,10 +17,12 @@ namespace ErgoCalc
     {
         private modelSubTask[] _subtasks;
         private int[][] _tasks;
+        private modelJob _job;
         private Index _index;
 
         public modelSubTask[] SubTasks { get => _subtasks; }
         public int[][] Tasks { get => _tasks;}
+        public modelJob Job { get => _job; }
         public Index Index { get => _index;}
 
         // Default constructor
@@ -202,9 +204,36 @@ namespace ErgoCalc
                 }
             }
 
+
+
+            // Save the job definition
+            _job.numberTasks = _index == Index.RSI ? 1 : listViewTasks.Groups.Count;
+            _job.order = new int[_job.numberTasks];
+            _job.JobTasks = new modelTask[_job.numberTasks];
+            for (int i = 0; i < _job.numberTasks; i++)
+            {
+                _job.order[i] = i + 1;
+
+                _job.JobTasks[i].numberSubTasks = _index == Index.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
+                _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
+                _job.JobTasks[i].SubTasks = new modelSubTask[_job.JobTasks[i].numberSubTasks];
+                for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
+                {
+                    _job.JobTasks[i].order[j] = j + 1;
+
+                    _job.JobTasks[i].SubTasks[j].data.i = Convert.ToDouble(gridVariables[j, 0].Value);
+                    _job.JobTasks[i].SubTasks[j].data.e = Convert.ToDouble(gridVariables[j, 1].Value);
+                    _job.JobTasks[i].SubTasks[j].data.d = Convert.ToDouble(gridVariables[j, 2].Value);
+                    _job.JobTasks[i].SubTasks[j].data.p = Convert.ToDouble(gridVariables[j, 3].Value);
+                    _job.JobTasks[i].SubTasks[j].data.h = Convert.ToDouble(gridVariables[j, 4].Value);  // This should be the same for these subtasks
+                    _job.JobTasks[i].h += _job.JobTasks[i].SubTasks[j].data.h;
+                }
+
+                _job.JobTasks[i].h /= _job.JobTasks[i].numberSubTasks;
+            }
+
             // Save the composite option
             //_index = chkComposite.Checked;
-
             return;
         }
 

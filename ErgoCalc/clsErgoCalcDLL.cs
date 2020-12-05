@@ -607,110 +607,33 @@ namespace ErgoCalc
             public struct modelSubTask
             {
                 [MarshalAs(UnmanagedType.Struct)]
-                public dataRSI data;
+                public dataRSI data;                // Subtask data
                 [MarshalAs(UnmanagedType.Struct)]
-                public multipliersRSI factors;
-                public double index;                    // The RSI index for this subtask
+                public multipliersRSI factors;      // Subtask factors
+                public double index;                // The RSI index for this subtask
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct modelTask
             {
-                public int[] subtasks; // Set of subtasks in the job
+                public modelSubTask[] SubTasks; // Set of subtasks in the task
+                public int[] order;             // Reordering of the subtasks from lower RSI to higher RSI
+                public int numberSubTasks;      // Number of subtasks in the tasks
+                public double h;                // The total time (in hours) that the task is performed per day
                 public double ha;               // Duración de la tarea acumulada a
                 public double hb;               // Duración de la tarea acumulada b
+                public double HM;               // Factor of the total time
                 public double HMa;              // Factor de duración de la tarea acumulada a
                 public double HMb;              // Factor de duración de la tarea acumulada b
                 public double index;            // The COSI index for this task
-            };
-
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelCUSI
-            {
-                public modelTask[] tasks;   // Set of tasks in the job
-                public double index;        // The CUSI index for this job
-            };
-
-            public class cModelCOSI
-            {
-                private int _nSubTasks;
-                private int[] _arraySubTasks;
-
-                public int NumberSubTasks { get => _nSubTasks; set => _nSubTasks = value; }
-            }
-
-            // Definición de la clase que encapsula la llamada a la DLL
-            public class cModelStrain
-            {
-                /*
-                private Index index;
-                public Index IndexType { get => index; set => index = value; }
-
-                // Array of all of the subtasks
-                private modelSubTask[] _subTasks;
-                public modelSubTask[] SubTasks { get => _subTasks; set => _subTasks = value; }
-
-                // Array of all of the tasks
-                private modelTask[] _tasks;
-                public modelTask[] Tasks { get => _tasks; set => _tasks = value; }
-
-                private int[][] _nTasks;
-                public int[][] nTasks { get => _nTasks; set => _nTasks = value; }
-                */
-
-                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double RSI_index([In, Out] modelSubTask[] subtasks, int[] orden, ref int nSize);
-                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
-                private static extern double COSI_index([In, Out] modelSubTask[] AllSubTasks, int[] subtasks, int[] orden, int nSubTasks);
-                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
-                private static extern double CUSI_index([In, Out] modelSubTask[] datos, ref int nSubTasks, int[] orden, ref int nTasks);
-
-
-                /// <summary>
-                /// Calculates the RSI index
-                /// </summary>
-                /// <returns>Value of the RSI index</returns>
-                public double RSI(modelSubTask[] AllSubTasks, int[] orden, ref int nSize)
-                {
-                    //int length = AllSubTasks.Length;
-                    return RSI_index(AllSubTasks, orden, ref nSize);
-                }
-                public double StrainIndex(modelSubTask[] datos, ref int nSize)
-                {
-                    //return RSI(datos, ref nSize);
-                    return 0.0;
-                }
-
-                /// <summary>
-                /// Calculates the COSI index
-                /// </summary>
-                /// <returns>Value of the COSI index</returns>
-                public double COSI(modelSubTask[] AllSubTasks, modelTask[] Tasks, int[] orden)
-                {
-                    for (int i = 0; i < Tasks.Length; i++)
-                    {
-                        Tasks[i].index = COSI_index(AllSubTasks, Tasks[i].subtasks, orden, Tasks[i].subtasks.Length);
-                    }
-                    int length = AllSubTasks.Length;
-                    return RSI_index(AllSubTasks, new int[] { }, ref length);
-                }
-
-                /// <summary>
-                /// Calculates the CUSI index
-                /// </summary>
-                /// <returns>Value of the CUSI index</returns>
-                public double CUSI()
-                {
-                    int length = _subTasks.Length;
-                    //return RSI(_sData, new int[] { }, ref length);
-                    return 0.0;
-                }
 
                 public override string ToString()
                 {
-                    int i, length = _subTasks.Length;
+                    int i;
+                    int length = SubTasks.Length;
+
                     string[] strLineD = new string[6];
-                    string[] strLineR = new string[7];
+                    string[] strLineR = new string[8];
                     string[] strTasks = new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O" };
 
                     strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
@@ -726,34 +649,134 @@ namespace ErgoCalc
                     strLineR[3] = string.Concat(System.Environment.NewLine, "Duration multiplier");
                     strLineR[4] = string.Concat(System.Environment.NewLine, "Hand/wrist posture multiplier");
                     strLineR[5] = string.Concat(System.Environment.NewLine, "Task multiplier", "\t");
-                    strLineR[6] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The Strain Index is:");
+                    strLineR[6] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The RSI index is:");
+                    strLineR[7] = string.Empty;
 
                     for (i = 0; i < length; i++)
                     {
                         strLineD[0] += "\t\t" + "Task " + strTasks[i];
-                        strLineD[1] += "\t\t" + _subTasks[i].data.i.ToString();
-                        strLineD[2] += "\t\t" + _subTasks[i].data.e.ToString();
-                        strLineD[3] += "\t\t" + _subTasks[i].data.d.ToString();
-                        strLineD[4] += "\t" + _subTasks[i].data.p.ToString() + "\t";
-                        strLineD[5] += "\t" + _subTasks[i].data.h.ToString() + "\t";
+                        strLineD[1] += "\t\t" + SubTasks[i].data.i.ToString();
+                        strLineD[2] += "\t\t" + SubTasks[i].data.e.ToString();
+                        strLineD[3] += "\t\t" + SubTasks[i].data.d.ToString();
+                        strLineD[4] += "\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
+                        strLineD[5] += "\t" + SubTasks[i].data.h.ToString();
 
                         strLineR[0] += "\t\t" + "Task " + strTasks[i];
-                        strLineR[1] += "\t\t" + _subTasks[i].factors.IM.ToString("0.####");
-                        strLineR[2] += "\t\t" + _subTasks[i].factors.EM.ToString("0.####");
-                        strLineR[3] += "\t\t" + _subTasks[i].factors.DM.ToString("0.####");
-                        strLineR[4] += "\t" + _subTasks[i].factors.PM.ToString("0.####") + "\t";
-                        strLineR[5] += "\t\t" + _subTasks[i].factors.HM.ToString("0.####");
-                        strLineR[6] += "\t\t" + _subTasks[i].index.ToString("0.####");
+                        strLineR[1] += "\t\t" + SubTasks[i].factors.IM.ToString("0.####");
+                        strLineR[2] += "\t\t" + SubTasks[i].factors.EM.ToString("0.####");
+                        strLineR[3] += "\t\t" + SubTasks[i].factors.DM.ToString("0.####");
+                        strLineR[4] += "\t" + SubTasks[i].factors.PM.ToString("0.####");
+                        strLineR[5] += "\t\t" + SubTasks[i].factors.HM.ToString("0.####");
+                        strLineR[6] += "\t\t" + SubTasks[i].index.ToString("0.####");
                     }
 
-                    strLineD[4].TrimEnd(new char[] { '\t' });
-                    strLineD[5].TrimEnd(new char[] { '\t' });
-                    strLineR[4].TrimEnd(new char[] { '\t' });
+                    if (index == -1)
+                    {
+                        strLineR[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The COSI index is:");
+                        strLineR[7] += "\t\t" + index.ToString("0.####");
+                    }
 
                     return string.Concat("These are the results obtained from the Revised Strain Index:",
                                         System.Environment.NewLine,
                                         string.Concat(strLineD),
                                         string.Concat(strLineR));
+                }
+            };
+
+            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            public struct modelJob
+            {
+                public modelTask[] JobTasks;    // Set of tasks in the job
+                public int[] order;             // Reordering of the subtasks from lower COSI to higher COSI
+                public int numberTasks;         // Number of tasks in the job
+                public double index;            // The CUSI index for this job
+
+                public override string ToString()
+                {
+                    string [] strTasks = new string[numberTasks];
+                    for (int i=0; i<numberTasks;i++)
+                    {
+                        strTasks[i]=JobTasks[i].ToString(); ;
+                    }
+                    string strJob;
+                    strJob = System.Environment.NewLine;
+                    strJob += System.Environment.NewLine;
+                    strJob += "The CUSI index is: " + index.ToString("0.####");
+                    return string.Concat(string.Concat(strTasks), strJob);
+                }
+            };
+
+
+            // Definición de la clase que encapsula la llamada a la DLL
+            public class cModelStrain
+            {
+                private modelJob _job;
+                private Index _index;
+
+                public modelJob Job { get => _job; set => _job = value; }
+                public Index Index { get => _index; set => _index = value; }
+
+                // https://docs.microsoft.com/en-us/dotnet/framework/interop/marshaling-different-types-of-arrays
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
+                private static extern double RSI_index([In, Out] modelSubTask[] subtasks, ref int nSize);
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
+                private static extern double COSI_index(ref modelTask Task, ref int nSubTasks);
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
+                private static extern double CUSI_index(ref modelJob Job, ref int nTasks);
+
+                public cModelStrain(modelJob job, Index index)
+                {
+                    _job = job;
+                    _index = index;
+                }
+
+                /// <summary>
+                /// Calculates the RSI, COSI or CUSI index
+                /// </summary>
+                /// <returns></returns>
+                public double StrainIndex()
+                {
+                    switch (_index)
+                    {
+                        case Index.RSI:
+                            RSI_index(_job.JobTasks[0].SubTasks, ref _job.JobTasks[0].numberSubTasks);
+                            _job.JobTasks[0].index = -1;    // Indicate that we only want the RSI and not the COSI index in the ToString()
+                            break;
+                        case Index.COSI:
+                            int nSubTasks = 0;
+                            for (int i = 0; i < _job.JobTasks.Length; i++)
+                            {
+                                nSubTasks = _job.JobTasks[i].SubTasks.Length;
+                                _job.JobTasks[i].index = COSI_index(ref _job.JobTasks[i], ref nSubTasks);
+                            };
+                            break;
+                        case Index.CUSI:
+                            CUSI_index(ref _job, ref _job.numberTasks);
+                            break;
+                        default:
+                            break;
+                    }
+                    //return RSI(datos, ref nSize);
+                    return 0.0;
+                }
+
+                public override string ToString()
+                {
+                    switch (_index)
+                    {
+                        case Index.RSI:
+                            return ToStringRSI();
+                        case Index.COSI:
+                            return string.Empty;
+                        case Index.CUSI:
+                            return string.Empty;
+                        default:
+                            return string.Empty;
+                    }
+                }
+                private string ToStringRSI()
+                {
+                    return _job.JobTasks[0].ToString();
                 }   // ToString()
             }   // class cModelStrain
         }   // namespace Strain
