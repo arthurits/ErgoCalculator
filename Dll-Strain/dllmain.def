@@ -2,6 +2,6 @@ LIBRARY	"Strain index"
 DESCRIPTION "Functions needed to calculate the Strain index model"
 VERSION 1.0
 EXPORTS
-   Sjogaard @1
-   Curva @2
-   FreeMemory @3
+   StrainIndex @1
+   StrainIndexCOSI @2
+   StrainIndexCUSI @3

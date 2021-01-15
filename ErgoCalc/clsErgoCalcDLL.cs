@@ -616,7 +616,9 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct modelTask
             {
+                [MarshalAs(UnmanagedType.SafeArray)]
                 public modelSubTask[] SubTasks; // Set of subtasks in the task
+                [MarshalAs(UnmanagedType.LPArray)]
                 public int[] order;             // Reordering of the subtasks from lower RSI to higher RSI
                 public int numberSubTasks;      // Number of subtasks in the tasks
                 public double h;                // The total time (in hours) that the task is performed per day
@@ -686,7 +688,9 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct modelJob
             {
+                [MarshalAs(UnmanagedType.SafeArray)]
                 public modelTask[] JobTasks;    // Set of tasks in the job
+                [MarshalAs(UnmanagedType.SafeArray)]
                 public int[] order;             // Reordering of the subtasks from lower COSI to higher COSI
                 public int numberTasks;         // Number of tasks in the job
                 public double index;            // The CUSI index for this job
@@ -747,11 +751,13 @@ namespace ErgoCalc
                             for (int i = 0; i < _job.JobTasks.Length; i++)
                             {
                                 nSubTasks = _job.JobTasks[i].SubTasks.Length;
-                                _job.JobTasks[i].index = COSI_index(ref _job.JobTasks[i], ref nSubTasks);
+                                modelTask tarea = _job.JobTasks[i];
+                                _job.JobTasks[i].index = COSI_index(ref tarea, ref nSubTasks);
+                                //_job.JobTasks[i].index = COSI_index(ref (_job.JobTasks[i]), ref nSubTasks);
                             };
                             break;
                         case Index.CUSI:
-                            CUSI_index(ref _job, ref _job.numberTasks);
+                            double resultado = CUSI_index(ref _job, ref _job.numberTasks);
                             break;
                         default:
                             break;
