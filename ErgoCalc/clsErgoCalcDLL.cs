@@ -571,6 +571,8 @@ namespace ErgoCalc
 
         namespace Strain
         {
+            using System;
+
             public enum Index
             {
                 RSI,    // 0
@@ -579,7 +581,7 @@ namespace ErgoCalc
             }
 
             // Definición de tipos
-            [StructLayout(LayoutKind.Sequential)]
+            [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct dataRSI
             {
                 public double i;       // Intensidad del esfuerzo
@@ -591,7 +593,7 @@ namespace ErgoCalc
                 public double eb;       // Esfuerzos acumulados b
             };
 
-            [StructLayout(LayoutKind.Sequential)]
+            [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct multipliersRSI
             {
                 public double IM;   // Factor de intensidad del esfuerzo [0, 1]
@@ -613,12 +615,13 @@ namespace ErgoCalc
                 public double index;                // The RSI index for this subtask
             };
 
+            // https://docs.microsoft.com/es-es/dotnet/standard/native-interop/customize-struct-marshaling
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
             public struct modelTask
             {
                 [MarshalAs(UnmanagedType.SafeArray)]
                 public modelSubTask[] SubTasks; // Set of subtasks in the task
-                [MarshalAs(UnmanagedType.LPArray)]
+                [MarshalAs(UnmanagedType.SafeArray)]
                 public int[] order;             // Reordering of the subtasks from lower RSI to higher RSI
                 public int numberSubTasks;      // Number of subtasks in the tasks
                 public double h;                // The total time (in hours) that the task is performed per day
@@ -660,14 +663,14 @@ namespace ErgoCalc
                         strLineD[1] += "\t\t" + SubTasks[i].data.i.ToString();
                         strLineD[2] += "\t\t" + SubTasks[i].data.e.ToString();
                         strLineD[3] += "\t\t" + SubTasks[i].data.d.ToString();
-                        strLineD[4] += "\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
-                        strLineD[5] += "\t" + SubTasks[i].data.h.ToString();
+                        strLineD[4] += "\t\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
+                        strLineD[5] += "\t\t" + SubTasks[i].data.h.ToString();
 
                         strLineR[0] += "\t\t" + "Task " + strTasks[i];
                         strLineR[1] += "\t\t" + SubTasks[i].factors.IM.ToString("0.####");
                         strLineR[2] += "\t\t" + SubTasks[i].factors.EM.ToString("0.####");
                         strLineR[3] += "\t\t" + SubTasks[i].factors.DM.ToString("0.####");
-                        strLineR[4] += "\t" + SubTasks[i].factors.PM.ToString("0.####");
+                        strLineR[4] += "\t\t" + SubTasks[i].factors.PM.ToString("0.####");
                         strLineR[5] += "\t\t" + SubTasks[i].factors.HM.ToString("0.####");
                         strLineR[6] += "\t\t" + SubTasks[i].index.ToString("0.####");
                     }
@@ -710,7 +713,6 @@ namespace ErgoCalc
                 }
             };
 
-
             // Definición de la clase que encapsula la llamada a la DLL
             public class cModelStrain
             {
@@ -727,6 +729,9 @@ namespace ErgoCalc
                 private static extern double COSI_index(ref modelTask Task, ref int nSubTasks);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
                 private static extern double CUSI_index(ref modelJob Job, ref int nTasks);
+
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexEX")]
+                private static extern double RSI_test([In, Out] modelTask Task, ref int nTasks);
 
                 public cModelStrain(modelJob job, Index index)
                 {
@@ -751,9 +756,9 @@ namespace ErgoCalc
                             for (int i = 0; i < _job.JobTasks.Length; i++)
                             {
                                 nSubTasks = _job.JobTasks[i].SubTasks.Length;
-                                modelTask tarea = _job.JobTasks[i];
-                                _job.JobTasks[i].index = COSI_index(ref tarea, ref nSubTasks);
-                                //_job.JobTasks[i].index = COSI_index(ref (_job.JobTasks[i]), ref nSubTasks);
+                                //double resultadoTest = RSI_test(_job.JobTasks[i], ref nSubTasks);
+                                _job.JobTasks[i].index = COSI_index(ref (_job.JobTasks[i]), ref nSubTasks);
+                                //_job.JobTasks[i].index = COSI_index(TaskToMarshal(_job.JobTasks[i]), ref nSubTasks);
                             };
                             break;
                         case Index.CUSI:
@@ -784,6 +789,75 @@ namespace ErgoCalc
                 {
                     return _job.JobTasks[0].ToString();
                 }   // ToString()
+
+                #region Marshalling private routines
+                private IntPtr TaskToMarshal(modelTask task)
+                {
+                    Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
+                    Int32 sizeofDouble = Marshal.SizeOf(typeof(double));
+
+                    int subtask = Marshal.SizeOf(typeof(modelSubTask));
+                    int SubTasksSize = task.SubTasks.Length * subtask;
+                    IntPtr ptrSubTasks = Marshal.AllocCoTaskMem(SubTasksSize);
+                    
+                    byte[] arr = new byte[subtask];
+                    IntPtr ptr = Marshal.AllocHGlobal(subtask);
+                    for (int i=0; i<task.SubTasks.Length; i++)
+                    {
+                        Marshal.StructureToPtr(task.SubTasks[i], ptr, true);
+                        Marshal.Copy(ptr, arr, 0, subtask);
+                        Marshal.Copy(arr, 0, IntPtr.Add(ptrSubTasks, i * subtask), subtask);
+                    }
+                    Marshal.FreeHGlobal(ptr);
+                    
+                    int orderSize = task.order.Length * Marshal.SizeOf(typeof(int));
+                    IntPtr ptrOrder = Marshal.AllocCoTaskMem(orderSize);
+                    Marshal.Copy(task.order, 0, ptrOrder, task.order.Length);
+                    
+                    // Allocate memory for modelTask struct
+                    IntPtr p1 = Marshal.AllocCoTaskMem(SubTasksSize + orderSize + Marshal.SizeOf(typeof(int)) + 7 * Marshal.SizeOf(typeof(int)));
+
+                    // Construct the struct in unmanaged memory
+                    int memoffset = 0;
+                    Marshal.WriteIntPtr(p1, 0, ptrSubTasks);
+                    memoffset += Marshal.SizeOf(typeof(IntPtr));
+                    Marshal.WriteIntPtr(p1, memoffset, ptrOrder);
+                    memoffset += Marshal.SizeOf(typeof(IntPtr));
+                    Marshal.WriteInt32(p1, memoffset, task.numberSubTasks);
+                    memoffset += Marshal.SizeOf(typeof(Int32));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.h);
+                    memoffset += Marshal.SizeOf(typeof(double));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.ha);
+                    memoffset += Marshal.SizeOf(typeof(double));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.hb);
+                    memoffset += Marshal.SizeOf(typeof(double));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.HM);
+                    memoffset += Marshal.SizeOf(typeof(double));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.HMa);
+                    memoffset += Marshal.SizeOf(typeof(double));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.HMb);
+                    memoffset += Marshal.SizeOf(typeof(double));
+                    Marshal.WriteInt64(p1, memoffset, (long)task.index);
+                    memoffset += Marshal.SizeOf(typeof(double));
+
+                    return p1;
+                }
+
+                private void TaskFreeMemory(IntPtr task)
+                {
+                    // Definición de variables
+                    IntPtr ptr;
+                    Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
+
+                    ptr = Marshal.ReadIntPtr(task, 0);
+                    Marshal.FreeCoTaskMem(ptr);
+                    ptr = Marshal.ReadIntPtr(task, sizeofPtr);
+                    Marshal.FreeCoTaskMem(ptr);
+
+                    // Se libera la memoria del struct
+                    Marshal.FreeCoTaskMem(task);
+                }
+                #endregion Marshalling private routines
             }   // class cModelStrain
         }   // namespace Strain
     }   // namespace DLL
