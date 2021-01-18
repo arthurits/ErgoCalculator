@@ -775,10 +775,11 @@ namespace ErgoCalc
                                     double resultadoTest = RSI_Dummy(task, ref nSubTasks);
                                     //_job.JobTasks[i].index = COSI_index(ref (_job.JobTasks[i]), ref nSubTasks);
                                     //_job.JobTasks[i].index = COSI_index(TaskToMarshal(_job.JobTasks[i]), ref nSubTasks);
+                                    //_job.JobTasks[i].index = COSI_index(task, ref nSubTasks);
+                                    _job.JobTasks[i] = TaskfromMarshal(task, _job.JobTasks[i]);
                                 }
                                 finally
                                 {
-                                    _job.JobTasks[i] = TaskfromMarshal(task, _job.JobTasks[i]);
                                     TaskFreeMemory(task);
                                 }
                             };
@@ -841,7 +842,7 @@ namespace ErgoCalc
 
                     // Construct the struct in unmanaged memory
                     int memoffset = 0;
-                    Marshal.WriteIntPtr(p1, 0, ptrSubTasks);
+                    Marshal.WriteIntPtr(p1, memoffset, ptrSubTasks);
                     memoffset += sizePtr;
                     Marshal.WriteIntPtr(p1, memoffset, ptrOrder);
                     memoffset += sizePtr;
@@ -865,21 +866,23 @@ namespace ErgoCalc
                     return p1;
                 }
 
-                private modelTask TaskfromMarshal(IntPtr ptrTask,modelTask task1)
+                private modelTask TaskfromMarshal(IntPtr ptrTask, modelTask task1)
                 {
                     // Definición de variables
                     IntPtr ptrSubT;
                     int sizePtr = Marshal.SizeOf(typeof(IntPtr));
-                    modelTask task =new modelTask();
+                    modelTask task = new modelTask();
                     int memoffset = 0;
                     int nSubT = Marshal.ReadInt32(ptrTask, 2 * sizePtr);
 
                     // Get subtasks array
-                    ptrSubT = Marshal.ReadIntPtr(ptrTask, 0);
+                    ptrSubT = Marshal.ReadIntPtr(ptrTask, memoffset);
                     task.SubTasks = new modelSubTask[nSubT];
                     for (int i = 0; i < nSubT; i++)
                     {
-                        task.SubTasks[i] = Marshal.PtrToStructure<modelSubTask>(IntPtr.Add(ptrSubT, i * nSubT));
+                        IntPtr ptr = Marshal.ReadIntPtr(ptrSubT, i * sizePtr);
+                        task.SubTasks[i] = Marshal.PtrToStructure<modelSubTask>(ptr);
+                        //task.SubTasks[i] = Marshal.PtrToStructure<modelSubTask>(IntPtr.Add(ptrSubT, i * sizePtr));
                     }
                     memoffset += sizePtr;
 
