@@ -5,3 +5,4 @@ EXPORTS
    StrainIndex @1
    StrainIndexCOSI @2
    StrainIndexCUSI @3
+   DummyTest @4
