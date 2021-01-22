@@ -776,7 +776,7 @@ namespace ErgoCalc
                                     //_job.JobTasks[i].index = COSI_index(ref (_job.JobTasks[i]), ref nSubTasks);
                                     //_job.JobTasks[i].index = COSI_index(TaskToMarshal(_job.JobTasks[i]), ref nSubTasks);
                                     //_job.JobTasks[i].index = COSI_index(task, ref nSubTasks);
-                                    _job.JobTasks[i] = TaskfromMarshal2(task, _job.JobTasks[i]);
+                                    _job.JobTasks[i] = TaskfromMarshal2(task);
                                 }
                                 finally
                                 {
@@ -871,19 +871,19 @@ namespace ErgoCalc
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
                     Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
+                    IntPtr ptrTask;
 
-                    
                     int nSubT = Marshal.SizeOf(typeof(modelSubTask));
                     byte[] arrSubT = new byte[nSubT];
                     int SubTasksSize = task.SubTasks.Length * nSubT;
 
-                    // Marshal array of subtasks (pointers to subtasks)
-                    IntPtr ptrSubTasks = Marshal.AllocCoTaskMem(SubTasksSize);
+                    // Marshal array of subtasks
+                    IntPtr ptrSubTasks = Marshal.AllocHGlobal(SubTasksSize);
                     for (int i = 0; i < task.SubTasks.Length; i++)
                     {
                         //IntPtr ptr = Marshal.AllocHGlobal(nSubT);
                         //Marshal.StructureToPtr(task.SubTasks[i], ptr, true);
-                        Marshal.StructureToPtr(task.SubTasks[i], IntPtr.Add(ptrSubTasks, i * nSubT), true);
+                        Marshal.StructureToPtr(task.SubTasks[i], IntPtr.Add(ptrSubTasks, i * nSubT), false);
                         //Marshal.Copy(ptr, arrSubT, 0, nSubT);
                         //Marshal.Copy(arrSubT, 0, IntPtr.Add(ptrSubTasks, i * nSubT), nSubT);
                         //Marshal.WriteIntPtr(ptrSubTasks, i * sizePtr, ptr);
@@ -892,48 +892,48 @@ namespace ErgoCalc
 
                     // Marshal array of ints
                     int orderSize = task.order.Length * sizeInt;
-                    IntPtr ptrOrder = Marshal.AllocCoTaskMem(orderSize);
+                    IntPtr ptrOrder = Marshal.AllocHGlobal(orderSize);
                     Marshal.Copy(task.order, 0, ptrOrder, task.order.Length);
 
                     // Allocate memory for modelTask struct
-                    IntPtr p1 = Marshal.AllocCoTaskMem(2 * sizePtr + sizeInt + 7 * sizeDouble);
+                    ptrTask = Marshal.AllocHGlobal(2 * sizePtr + sizeInt + 7 * sizeDouble);
 
                     // Construct the struct in unmanaged memory
                     int memoffset = 0;
-                    Marshal.WriteIntPtr(p1, memoffset, ptrSubTasks);
+                    Marshal.WriteIntPtr(ptrTask, memoffset, ptrSubTasks);
                     memoffset += sizePtr;
-                    Marshal.WriteIntPtr(p1, memoffset, ptrOrder);
+                    Marshal.WriteIntPtr(ptrTask, memoffset, ptrOrder);
                     memoffset += sizePtr;
-                    Marshal.WriteInt32(p1, memoffset, task.numberSubTasks);
+                    Marshal.WriteInt32(ptrTask, memoffset, task.numberSubTasks);
                     memoffset += sizeInt;
 
 
                     byte[] byteDouble = BitConverter.GetBytes(task.h);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
                     
                     byteDouble = BitConverter.GetBytes(task.ha);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
                     
                     byteDouble = BitConverter.GetBytes(task.hb);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
 
                     byteDouble = BitConverter.GetBytes(task.HM);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
 
                     byteDouble = BitConverter.GetBytes(task.HMa);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
 
                     byteDouble = BitConverter.GetBytes(task.HMb);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
 
                     byteDouble = BitConverter.GetBytes(task.index);
-                    Marshal.Copy(byteDouble, 0, IntPtr.Add(p1, memoffset), byteDouble.Length);
+                    Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
 
                     /*
@@ -953,7 +953,7 @@ namespace ErgoCalc
                     memoffset += sizeDouble;
                     */
 
-                    return p1;
+                    return ptrTask;
                 }
 
                 private modelTask TaskfromMarshal(IntPtr ptrTask, modelTask task1)
@@ -1003,7 +1003,7 @@ namespace ErgoCalc
                     return task;
                 }
 
-                private modelTask TaskfromMarshal2(IntPtr ptrTask, modelTask task1)
+                private modelTask TaskfromMarshal2(IntPtr ptrTask)
                 {
                     // Definición de variables
                     IntPtr ptrSubT;
@@ -1064,14 +1064,14 @@ namespace ErgoCalc
                         IntPtr subT = Marshal.ReadIntPtr(ptrSubT, i * sizePtr);
                         Marshal.FreeCoTaskMem(subT);
                     }*/
-                    Marshal.FreeCoTaskMem(ptrSubT);
+                    Marshal.FreeHGlobal(ptrSubT);
                     
                     // Delete order array
                     IntPtr ptrOrder = Marshal.ReadIntPtr(task, sizePtr);
-                    Marshal.FreeCoTaskMem(ptrOrder);
+                    Marshal.FreeHGlobal(ptrOrder);
 
                     // Se libera la memoria del struct
-                    Marshal.FreeCoTaskMem(task);
+                    Marshal.FreeHGlobal(task);
                 }
 
                 private double ReadDouble(IntPtr mem1)
