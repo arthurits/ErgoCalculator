@@ -6,3 +6,4 @@ EXPORTS
    StrainIndexCOSI @2
    StrainIndexCUSI @3
    DummyTest @4
+   DummySubTask @5

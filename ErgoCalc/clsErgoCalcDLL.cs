@@ -746,6 +746,9 @@ namespace ErgoCalc
                 [DllImport("dlls/strain.dll", EntryPoint = "DummyTest")]
                 private static extern double RSI_Dummy(IntPtr Task, ref int nTasks);
 
+                [DllImport("dlls/strain.dll", EntryPoint = "DummySubTask")]
+                private static extern double RSI_DummySubTask(IntPtr SubTask);
+
                 public cModelStrain(modelJob job, Index index)
                 {
                     _job = job;
@@ -769,6 +772,11 @@ namespace ErgoCalc
                             for (int i = 0; i < _job.JobTasks.Length; i++)
                             {
                                 IntPtr task = TaskToMarshal2(_job.JobTasks[i]);
+
+                                IntPtr ptrSubTask = SubTaskToMarshal(_job.JobTasks[i].SubTasks[i]);
+                                double resultadoST = RSI_DummySubTask(ptrSubTask);
+                                modelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
+
                                 try
                                 {
                                     nSubTasks = _job.JobTasks[i].SubTasks.Length;
@@ -954,6 +962,26 @@ namespace ErgoCalc
                     */
 
                     return ptrTask;
+                }
+
+                private IntPtr SubTaskToMarshal(modelSubTask subTask)
+                {
+                    int SubTaskSize = Marshal.SizeOf(typeof(modelSubTask));
+                    IntPtr ptrSubTask = Marshal.AllocHGlobal(SubTaskSize);
+
+                    Marshal.StructureToPtr(subTask, ptrSubTask, true);
+
+                    return ptrSubTask;
+                }
+
+                private modelSubTask SubTaskFromMarshal(IntPtr ptrSubTask)
+                {
+                    modelSubTask subTask = Marshal.PtrToStructure<modelSubTask>(ptrSubTask);
+
+                    // Se libera la memoria del struct
+                    Marshal.FreeHGlobal(ptrSubTask);
+
+                    return subTask;
                 }
 
                 private modelTask TaskfromMarshal(IntPtr ptrTask, modelTask task1)
