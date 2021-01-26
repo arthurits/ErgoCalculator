@@ -15,9 +15,9 @@ namespace ErgoCalc
     public partial class frmResultsStrainIndex : Form, IChildResults
     {
         // Variable definition
-        private modelSubTask[] _subtasks;
-        private modelTask[] _tasks;
-        private modelJob _job;
+        private ModelSubTask[] _subtasks;
+        private ModelTask[] _tasks;
+        private ModelJob _job;
         private Index _index;
         private cModelStrain _classDLL;
         private ResultsOptions _options;
@@ -43,7 +43,7 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(Index index, modelJob job)
+        public frmResultsStrainIndex(Index index, ModelJob job)
             :this()
         {
             _index = index;
@@ -124,7 +124,7 @@ namespace ErgoCalc
         /// Shows the numerical results in the RTF control
         /// </summary>
         /// <param name="sData">Data and results array</param>
-        private void ShowResults(modelSubTask [] sData)
+        private void ShowResults(ModelSubTask [] sData)
         {
             rtbShowResult.Text = _classDLL.ToString();
             FormatText();

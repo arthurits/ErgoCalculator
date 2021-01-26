@@ -15,14 +15,14 @@ namespace ErgoCalc
 
     public partial class frmDataStrainIndex : Form
     {
-        private modelSubTask[] _subtasks;
+        private ModelSubTask[] _subtasks;
         private int[][] _tasks;
-        private modelJob _job;
+        private ModelJob _job;
         private Index _index;
 
-        public modelSubTask[] SubTasks { get => _subtasks; }
+        public ModelSubTask[] SubTasks { get => _subtasks; }
         public int[][] Tasks { get => _tasks;}
-        public modelJob Job { get => _job; }
+        public ModelJob Job { get => _job; }
         public Index Index { get => _index;}
 
         // Default constructor
@@ -69,7 +69,7 @@ namespace ErgoCalc
         }
 
         // Overloaded constructor
-        public frmDataStrainIndex(modelSubTask[] data)
+        public frmDataStrainIndex(ModelSubTask[] data)
             : this() // Call the base constructor
         {
 
@@ -175,7 +175,7 @@ namespace ErgoCalc
         private void btnOK_Click(object sender, EventArgs e)
         {
             // Save the values entered
-            _subtasks = new modelSubTask[Convert.ToInt32(updSubtasks.Value)];
+            _subtasks = new ModelSubTask[Convert.ToInt32(updSubtasks.Value)];
             for (Int32 i = 0; i < _subtasks.Length; i++)
             {
                 _subtasks[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
@@ -209,14 +209,14 @@ namespace ErgoCalc
             // Save the job definition
             _job.numberTasks = _index == Index.RSI ? 1 : listViewTasks.Groups.Count;
             _job.order = new int[_job.numberTasks];
-            _job.JobTasks = new modelTask[_job.numberTasks];
+            _job.JobTasks = new ModelTask[_job.numberTasks];
             for (int i = 0; i < _job.numberTasks; i++)
             {
                 _job.order[i] = i + 1;
 
                 _job.JobTasks[i].numberSubTasks = _index == Index.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
                 _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
-                _job.JobTasks[i].SubTasks = new modelSubTask[_job.JobTasks[i].numberSubTasks];
+                _job.JobTasks[i].SubTasks = new ModelSubTask[_job.JobTasks[i].numberSubTasks];
                 for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
                 {
                     _job.JobTasks[i].order[j] = j + 1;
@@ -240,7 +240,7 @@ namespace ErgoCalc
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Return empty array
-            _subtasks = new modelSubTask[0];
+            _subtasks = new ModelSubTask[0];
         }
 
         #region Private routines
@@ -268,7 +268,7 @@ namespace ErgoCalc
         /// </summary>
         private void DataExample()
         {
-            _subtasks = new modelSubTask[8];
+            _subtasks = new ModelSubTask[8];
 
             _subtasks[0].data.i = 0.2;
             _subtasks[0].data.e = 5;
@@ -354,7 +354,7 @@ namespace ErgoCalc
         /// Shows the data into the grid control
         /// </summary>
         /// <param name="data">Array of Model NIOSH data</param>
-        private void DataToGrid(modelSubTask[] data)
+        private void DataToGrid(ModelSubTask[] data)
         {
             for (Int32 i = 0; i < data.Length; i++)
             {

@@ -582,7 +582,7 @@ namespace ErgoCalc
 
             // Definición de tipos
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct dataRSI
+            public struct DataRSI
             {
                 public double i;       // Intensidad del esfuerzo
                 public double e;       // Esfuerzos por minuto
@@ -594,7 +594,7 @@ namespace ErgoCalc
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct multipliersRSI
+            public struct MultipliersRSI
             {
                 public double IM;   // Factor de intensidad del esfuerzo [0, 1]
                 public double EM;   // Factor de esfuerzos por minuto
@@ -606,24 +606,23 @@ namespace ErgoCalc
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelSubTask
+            public struct ModelSubTask
             {
                 [MarshalAs(UnmanagedType.Struct)]
-                public dataRSI data;                // Subtask data
+                public DataRSI data;                // Subtask data
                 [MarshalAs(UnmanagedType.Struct)]
-                public multipliersRSI factors;      // Subtask factors
+                public MultipliersRSI factors;      // Subtask factors
                 public double index;                // The RSI index for this subtask
             };
 
             // https://docs.microsoft.com/es-es/dotnet/standard/native-interop/customize-struct-marshaling
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelTask
+            public struct ModelTask
             {
                 //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
-                public modelSubTask[] SubTasks; // Set of subtasks in the task
+                public ModelSubTask[] SubTasks; // Set of subtasks in the task
                 //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
                 public int[] order;             // Reordering of the subtasks from lower RSI to higher RSI
-                public int numberSubTasks;      // Number of subtasks in the tasks
                 public double h;                // The total time (in hours) that the task is performed per day
                 public double ha;               // Duración de la tarea acumulada a
                 public double hb;               // Duración de la tarea acumulada b
@@ -631,6 +630,7 @@ namespace ErgoCalc
                 public double HMa;              // Factor de duración de la tarea acumulada a
                 public double HMb;              // Factor de duración de la tarea acumulada b
                 public double index;            // The COSI index for this task
+                public int numberSubTasks;      // Number of subtasks in the tasks
 
                 public override string ToString()
                 {
@@ -689,11 +689,9 @@ namespace ErgoCalc
             };
 
             [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelJob
+            public struct ModelJob
             {
-                //[MarshalAs(UnmanagedType.SafeArray)]
-                public modelTask[] JobTasks;    // Set of tasks in the job
-                //[MarshalAs(UnmanagedType.SafeArray)]
+                public ModelTask[] JobTasks;    // Set of tasks in the job
                 public int[] order;             // Reordering of the subtasks from lower COSI to higher COSI
                 public int numberTasks;         // Number of tasks in the job
                 public double index;            // The CUSI index for this job
@@ -716,10 +714,10 @@ namespace ErgoCalc
             // Definición de la clase que encapsula la llamada a la DLL
             public class cModelStrain
             {
-                private modelJob _job;
+                private ModelJob _job;
                 private Index _index;
 
-                public modelJob Job { get => _job; set => _job = value; }
+                public ModelJob Job { get => _job; set => _job = value; }
                 public Index Index { get => _index; set => _index = value; }
 
                 /* https://docs.microsoft.com/en-us/dotnet/framework/interop/marshaling-different-types-of-arrays
@@ -737,11 +735,11 @@ namespace ErgoCalc
                 */
 
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
-                private static extern double RSI_index([In, Out] modelSubTask[] subtasks, ref int nSize);
+                private static extern double RSI_index([In, Out] ModelSubTask[] subtasks, ref int nSize);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
                 private static extern double COSI_index(IntPtr Task, ref int nSubTasks);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
-                private static extern double CUSI_index(ref modelJob Job, ref int nTasks);
+                private static extern double CUSI_index(ref ModelJob Job, ref int nTasks);
 
                 [DllImport("dlls/strain.dll", EntryPoint = "DummyTest")]
                 private static extern double RSI_Dummy(IntPtr Task, ref int nTasks);
@@ -749,7 +747,7 @@ namespace ErgoCalc
                 [DllImport("dlls/strain.dll", EntryPoint = "DummySubTask")]
                 private static extern double RSI_DummySubTask(IntPtr SubTask);
 
-                public cModelStrain(modelJob job, Index index)
+                public cModelStrain(ModelJob job, Index index)
                 {
                     _job = job;
                     _index = index;
@@ -775,7 +773,7 @@ namespace ErgoCalc
 
                                 IntPtr ptrSubTask = SubTaskToMarshal(_job.JobTasks[i].SubTasks[i]);
                                 double resultadoST = RSI_DummySubTask(ptrSubTask);
-                                modelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
+                                ModelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
 
                                 try
                                 {
@@ -822,13 +820,13 @@ namespace ErgoCalc
                 }   // ToString()
 
                 #region Marshalling private routines
-                private IntPtr TaskToMarshal(modelTask task)
+                private IntPtr TaskToMarshal(ModelTask task)
                 {
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
                     Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
 
-                    int subtask = Marshal.SizeOf(typeof(modelSubTask));
+                    int subtask = Marshal.SizeOf(typeof(ModelSubTask));
                     int SubTasksSize = task.SubTasks.Length * sizePtr;
 
                     // Marshal array of subtasks (pointers to subtasks)
@@ -874,15 +872,15 @@ namespace ErgoCalc
                     return p1;
                 }
 
-                private IntPtr TaskToMarshal2(modelTask task)
+                private IntPtr TaskToMarshal2(ModelTask task)
                 {
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
                     Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
                     IntPtr ptrTask;
 
-                    int nSubT = Marshal.SizeOf(typeof(modelSubTask));
-                    byte[] arrSubT = new byte[nSubT];
+                    int nSubT = Marshal.SizeOf(typeof(ModelSubTask));
+                    //byte[] arrSubT = new byte[nSubT];
                     int SubTasksSize = task.SubTasks.Length * nSubT;
 
                     // Marshal array of subtasks
@@ -891,7 +889,7 @@ namespace ErgoCalc
                     {
                         //IntPtr ptr = Marshal.AllocHGlobal(nSubT);
                         //Marshal.StructureToPtr(task.SubTasks[i], ptr, true);
-                        Marshal.StructureToPtr(task.SubTasks[i], IntPtr.Add(ptrSubTasks, i * nSubT), false);
+                        Marshal.StructureToPtr(task.SubTasks[i], IntPtr.Add(ptrSubTasks, i * nSubT), true);
                         //Marshal.Copy(ptr, arrSubT, 0, nSubT);
                         //Marshal.Copy(arrSubT, 0, IntPtr.Add(ptrSubTasks, i * nSubT), nSubT);
                         //Marshal.WriteIntPtr(ptrSubTasks, i * sizePtr, ptr);
@@ -904,7 +902,7 @@ namespace ErgoCalc
                     Marshal.Copy(task.order, 0, ptrOrder, task.order.Length);
 
                     // Allocate memory for modelTask struct
-                    ptrTask = Marshal.AllocHGlobal(2 * sizePtr + sizeInt + 7 * sizeDouble);
+                    ptrTask = Marshal.AllocHGlobal(2 * sizePtr + 7 * sizeDouble + sizeInt);
 
                     // Construct the struct in unmanaged memory
                     int memoffset = 0;
@@ -912,9 +910,6 @@ namespace ErgoCalc
                     memoffset += sizePtr;
                     Marshal.WriteIntPtr(ptrTask, memoffset, ptrOrder);
                     memoffset += sizePtr;
-                    Marshal.WriteInt32(ptrTask, memoffset, task.numberSubTasks);
-                    memoffset += sizeInt;
-
 
                     byte[] byteDouble = BitConverter.GetBytes(task.h);
                     Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
@@ -944,6 +939,9 @@ namespace ErgoCalc
                     Marshal.Copy(byteDouble, 0, IntPtr.Add(ptrTask, memoffset), byteDouble.Length);
                     memoffset += sizeDouble;
 
+                    Marshal.WriteInt32(ptrTask, memoffset, task.numberSubTasks);
+                    memoffset += sizeInt;
+
                     /*
                     Marshal.WriteInt64(p1, memoffset, (long)task.h);
                     memoffset += sizeDouble;
@@ -964,9 +962,9 @@ namespace ErgoCalc
                     return ptrTask;
                 }
 
-                private IntPtr SubTaskToMarshal(modelSubTask subTask)
+                private IntPtr SubTaskToMarshal(ModelSubTask subTask)
                 {
-                    int SubTaskSize = Marshal.SizeOf(typeof(modelSubTask));
+                    int SubTaskSize = Marshal.SizeOf(typeof(ModelSubTask));
                     IntPtr ptrSubTask = Marshal.AllocHGlobal(SubTaskSize);
 
                     Marshal.StructureToPtr(subTask, ptrSubTask, true);
@@ -974,9 +972,9 @@ namespace ErgoCalc
                     return ptrSubTask;
                 }
 
-                private modelSubTask SubTaskFromMarshal(IntPtr ptrSubTask)
+                private ModelSubTask SubTaskFromMarshal(IntPtr ptrSubTask)
                 {
-                    modelSubTask subTask = Marshal.PtrToStructure<modelSubTask>(ptrSubTask);
+                    ModelSubTask subTask = Marshal.PtrToStructure<ModelSubTask>(ptrSubTask);
 
                     // Se libera la memoria del struct
                     Marshal.FreeHGlobal(ptrSubTask);
@@ -984,22 +982,22 @@ namespace ErgoCalc
                     return subTask;
                 }
 
-                private modelTask TaskfromMarshal(IntPtr ptrTask, modelTask task1)
+                private ModelTask TaskfromMarshal(IntPtr ptrTask, ModelTask task1)
                 {
                     // Definición de variables
                     IntPtr ptrSubT;
                     int sizePtr = Marshal.SizeOf(typeof(IntPtr));
-                    modelTask task = new modelTask();
+                    ModelTask task = new ModelTask();
                     int memoffset = 0;
                     int nSubT = Marshal.ReadInt32(ptrTask, 2 * sizePtr);
 
                     // Get subtasks array
                     ptrSubT = Marshal.ReadIntPtr(ptrTask, memoffset);
-                    task.SubTasks = new modelSubTask[nSubT];
+                    task.SubTasks = new ModelSubTask[nSubT];
                     for (int i = 0; i < nSubT; i++)
                     {
                         IntPtr ptr = Marshal.ReadIntPtr(ptrSubT, i * sizePtr);
-                        task.SubTasks[i] = Marshal.PtrToStructure<modelSubTask>(ptr);
+                        task.SubTasks[i] = Marshal.PtrToStructure<ModelSubTask>(ptr);
                         //task.SubTasks[i] = Marshal.PtrToStructure<modelSubTask>(IntPtr.Add(ptrSubT, i * sizePtr));
                     }
                     memoffset += sizePtr;
@@ -1031,22 +1029,25 @@ namespace ErgoCalc
                     return task;
                 }
 
-                private modelTask TaskfromMarshal2(IntPtr ptrTask)
+                private ModelTask TaskfromMarshal2(IntPtr ptrTask)
                 {
                     // Definición de variables
                     IntPtr ptrSubT;
-                    int sizePtr = Marshal.SizeOf(typeof(IntPtr));
-                    modelTask task = new modelTask();
+                    Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
+                    Int32 sizeInt = Marshal.SizeOf(typeof(int));
+                    Int32 sizeDouble = Marshal.SizeOf(typeof(double));
+                    ModelTask task = new ModelTask();
                     int memoffset = 0;
-                    int nSubT = Marshal.ReadInt32(ptrTask, 2 * sizePtr);
-                    int nSubTask = Marshal.SizeOf(typeof(modelSubTask));
+
+                    int nSubT = Marshal.ReadInt32(ptrTask, 2 * sizePtr + 7 * sizeDouble);
+                    int nSubTask = Marshal.SizeOf(typeof(ModelSubTask));
 
                     // Get subtasks array
                     ptrSubT = Marshal.ReadIntPtr(ptrTask, memoffset);
-                    task.SubTasks = new modelSubTask[nSubT];
+                    task.SubTasks = new ModelSubTask[nSubT];
                     for (int i = 0; i < nSubT; i++)
                     {
-                        task.SubTasks[i] = Marshal.PtrToStructure<modelSubTask>(IntPtr.Add(ptrSubT, i * nSubTask));
+                        task.SubTasks[i] = Marshal.PtrToStructure<ModelSubTask>(IntPtr.Add(ptrSubT, i * nSubTask));
                     }
                     memoffset += sizePtr;
 
@@ -1059,21 +1060,22 @@ namespace ErgoCalc
                     // Fill in the "regular" struct members
                     //task.numberSubTasks = Marshal.ReadInt32(ptrTask, 2 * sizePtr);
                     task.numberSubTasks = nSubT;
-                    memoffset += Marshal.SizeOf(typeof(Int32));
+                    //memoffset += sizeInt;
+                    //memoffset = 24;
                     task.h = ReadDouble(IntPtr.Add(ptrTask, memoffset));
-                    task.h = (double)Marshal.ReadInt64(ptrTask, memoffset);
-                    memoffset += Marshal.SizeOf(typeof(double));
-                    task.ha = (double)Marshal.ReadInt64(ptrTask, memoffset);
-                    memoffset += Marshal.SizeOf(typeof(double));
-                    task.hb = (double)Marshal.ReadInt64(ptrTask, memoffset);
-                    memoffset += Marshal.SizeOf(typeof(double));
-                    task.HM = (double)Marshal.ReadInt64(ptrTask, memoffset);
-                    memoffset += Marshal.SizeOf(typeof(double));
-                    task.HMa = (double)Marshal.ReadInt64(ptrTask, memoffset);
-                    memoffset += Marshal.SizeOf(typeof(double));
-                    task.HMb = (double)Marshal.ReadInt64(ptrTask, memoffset);
-                    memoffset += Marshal.SizeOf(typeof(double));
-                    task.index = (double)Marshal.ReadInt64(ptrTask, memoffset);
+                    task.h = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    memoffset += sizeDouble;
+                    task.ha = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    memoffset += sizeDouble;
+                    task.hb = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    memoffset += sizeDouble;
+                    task.HM = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    memoffset += sizeDouble;
+                    task.HMa = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    memoffset += sizeDouble;
+                    task.HMb = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    memoffset += sizeDouble;
+                    task.index = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
 
                     return task;
                 }
