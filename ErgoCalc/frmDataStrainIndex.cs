@@ -194,7 +194,7 @@ namespace ErgoCalc
             // Save the tasks grouping values
             listViewTasks.RemoveEmptyGroups();
             _tasks= new int[listViewTasks.Groups.Count][];
-            for (int i=0; i<_tasks.Length; i++)
+            for (int i = 0; i < _tasks.Length; i++)
             {
                 _tasks[i] = new int[listViewTasks.Groups[i].Items.Count + 1];
                 _tasks[i][0] = listViewTasks.Groups[i].Items.Count; // The first element is the #subtasks in that task
@@ -207,9 +207,12 @@ namespace ErgoCalc
 
 
             // Save the job definition
+            int ItemIndex;
             _job.numberTasks = _index == Index.RSI ? 1 : listViewTasks.Groups.Count;
             _job.order = new int[_job.numberTasks];
             _job.JobTasks = new ModelTask[_job.numberTasks];
+            _job.index = -1;
+            
             for (int i = 0; i < _job.numberTasks; i++)
             {
                 _job.order[i] = i + 1;
@@ -217,16 +220,19 @@ namespace ErgoCalc
                 _job.JobTasks[i].numberSubTasks = _index == Index.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
                 _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
                 _job.JobTasks[i].SubTasks = new ModelSubTask[_job.JobTasks[i].numberSubTasks];
+                _job.JobTasks[i].index = -1;
                 for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
                 {
+                    ItemIndex = listViewTasks.Groups[i].Items[j].Index;
+                    _job.JobTasks[i].SubTasks[j].ItemIndex = ItemIndex;
+                    _job.JobTasks[i].SubTasks[j].data.i = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
+                    _job.JobTasks[i].SubTasks[j].data.e = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
+                    _job.JobTasks[i].SubTasks[j].data.d = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
+                    _job.JobTasks[i].SubTasks[j].data.p = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
+                    _job.JobTasks[i].SubTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);  // This should be the same for these subtasks
+                    
+                    _job.JobTasks[i].h += _job.JobTasks[i].SubTasks[j].data.h;  // Calculate mean
                     _job.JobTasks[i].order[j] = j + 1;
-
-                    _job.JobTasks[i].SubTasks[j].data.i = Convert.ToDouble(gridVariables[j, 0].Value);
-                    _job.JobTasks[i].SubTasks[j].data.e = Convert.ToDouble(gridVariables[j, 1].Value);
-                    _job.JobTasks[i].SubTasks[j].data.d = Convert.ToDouble(gridVariables[j, 2].Value);
-                    _job.JobTasks[i].SubTasks[j].data.p = Convert.ToDouble(gridVariables[j, 3].Value);
-                    _job.JobTasks[i].SubTasks[j].data.h = Convert.ToDouble(gridVariables[j, 4].Value);  // This should be the same for these subtasks
-                    _job.JobTasks[i].h += _job.JobTasks[i].SubTasks[j].data.h;
                 }
 
                 _job.JobTasks[i].h /= _job.JobTasks[i].numberSubTasks;

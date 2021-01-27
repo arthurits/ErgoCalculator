@@ -581,7 +581,7 @@ namespace ErgoCalc
             }
 
             // Definición de tipos
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            [StructLayout(LayoutKind.Sequential)]
             public struct DataRSI
             {
                 public double i;       // Intensidad del esfuerzo
@@ -593,7 +593,7 @@ namespace ErgoCalc
                 public double eb;       // Esfuerzos acumulados b
             };
 
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            [StructLayout(LayoutKind.Sequential)]
             public struct MultipliersRSI
             {
                 public double IM;   // Factor de intensidad del esfuerzo [0, 1]
@@ -605,7 +605,7 @@ namespace ErgoCalc
                 public double EMb;  // Factor de esfuerzos acumulados a
             };
 
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            [StructLayout(LayoutKind.Sequential)]
             public struct ModelSubTask
             {
                 [MarshalAs(UnmanagedType.Struct)]
@@ -613,10 +613,11 @@ namespace ErgoCalc
                 [MarshalAs(UnmanagedType.Struct)]
                 public MultipliersRSI factors;      // Subtask factors
                 public double index;                // The RSI index for this subtask
+                public int ItemIndex;
             };
 
             // https://docs.microsoft.com/es-es/dotnet/standard/native-interop/customize-struct-marshaling
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            [StructLayout(LayoutKind.Sequential)]
             public struct ModelTask
             {
                 //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
@@ -636,6 +637,7 @@ namespace ErgoCalc
                 {
                     int i;
                     int length = SubTasks.Length;
+                    String strName = index == -1 ? "Task " : "SubT ";
 
                     string[] strLineD = new string[6];
                     string[] strLineR = new string[8];
@@ -659,14 +661,14 @@ namespace ErgoCalc
 
                     for (i = 0; i < length; i++)
                     {
-                        strLineD[0] += "\t\t" + "Task " + strTasks[i];
+                        strLineD[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
                         strLineD[1] += "\t\t" + SubTasks[i].data.i.ToString();
                         strLineD[2] += "\t\t" + SubTasks[i].data.e.ToString();
                         strLineD[3] += "\t\t" + SubTasks[i].data.d.ToString();
                         strLineD[4] += "\t\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
                         strLineD[5] += "\t\t" + SubTasks[i].data.h.ToString();
 
-                        strLineR[0] += "\t\t" + "Task " + strTasks[i];
+                        strLineR[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
                         strLineR[1] += "\t\t" + SubTasks[i].factors.IM.ToString("0.####");
                         strLineR[2] += "\t\t" + SubTasks[i].factors.EM.ToString("0.####");
                         strLineR[3] += "\t\t" + SubTasks[i].factors.DM.ToString("0.####");
@@ -675,7 +677,7 @@ namespace ErgoCalc
                         strLineR[6] += "\t\t" + SubTasks[i].index.ToString("0.####");
                     }
 
-                    if (index == -1)
+                    if (index != -1)
                     {
                         strLineR[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The COSI index is:");
                         strLineR[7] += "\t\t" + index.ToString("0.####");
@@ -684,11 +686,12 @@ namespace ErgoCalc
                     return string.Concat("These are the results obtained from the Revised Strain Index:",
                                         System.Environment.NewLine,
                                         string.Concat(strLineD),
-                                        string.Concat(strLineR));
+                                        string.Concat(strLineR),
+                                        System.Environment.NewLine);
                 }
             };
 
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
+            [StructLayout(LayoutKind.Sequential)]
             public struct ModelJob
             {
                 public ModelTask[] JobTasks;    // Set of tasks in the job
@@ -701,12 +704,17 @@ namespace ErgoCalc
                     string [] strTasks = new string[numberTasks];
                     for (int i=0; i<numberTasks;i++)
                     {
-                        strTasks[i]=JobTasks[i].ToString(); ;
+                        strTasks[i] = string.Concat(JobTasks[i].ToString() + System.Environment.NewLine);
                     }
-                    string strJob;
-                    strJob = System.Environment.NewLine;
-                    strJob += System.Environment.NewLine;
-                    strJob += "The CUSI index is: " + index.ToString("0.####");
+
+                    string strJob = string.Empty;
+                    if (index != -1)
+                    {
+                        strJob = System.Environment.NewLine;
+                        strJob += System.Environment.NewLine;
+                        strJob += "The CUSI index is: " + index.ToString("0.####");
+                    }
+
                     return string.Concat(string.Concat(strTasks), strJob);
                 }
             };
@@ -763,7 +771,6 @@ namespace ErgoCalc
                     {
                         case Index.RSI:
                             RSI_index(_job.JobTasks[0].SubTasks, ref _job.JobTasks[0].numberSubTasks);
-                            _job.JobTasks[0].index = -1;    // Indicate that we only want the RSI and not the COSI index in the ToString()
                             break;
                         case Index.COSI:
                             int nSubTasks = 0;
@@ -771,17 +778,17 @@ namespace ErgoCalc
                             {
                                 IntPtr task = TaskToMarshal2(_job.JobTasks[i]);
 
-                                IntPtr ptrSubTask = SubTaskToMarshal(_job.JobTasks[i].SubTasks[i]);
-                                double resultadoST = RSI_DummySubTask(ptrSubTask);
-                                ModelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
+                                //IntPtr ptrSubTask = SubTaskToMarshal(_job.JobTasks[i].SubTasks[i]);
+                                //double resultadoST = RSI_DummySubTask(ptrSubTask);
+                                //ModelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
 
                                 try
                                 {
                                     nSubTasks = _job.JobTasks[i].SubTasks.Length;
-                                    double resultadoTest = RSI_Dummy(task, ref nSubTasks);
+                                    //double resultadoTest = RSI_Dummy(task, ref nSubTasks);
                                     //_job.JobTasks[i].index = COSI_index(ref (_job.JobTasks[i]), ref nSubTasks);
                                     //_job.JobTasks[i].index = COSI_index(TaskToMarshal(_job.JobTasks[i]), ref nSubTasks);
-                                    //_job.JobTasks[i].index = COSI_index(task, ref nSubTasks);
+                                    _job.JobTasks[i].index = COSI_index(task, ref nSubTasks);
                                     _job.JobTasks[i] = TaskfromMarshal2(task);
                                 }
                                 finally
@@ -807,9 +814,9 @@ namespace ErgoCalc
                         case Index.RSI:
                             return ToStringRSI();
                         case Index.COSI:
-                            return string.Empty;
+                            return ToStringCOSI();
                         case Index.CUSI:
-                            return string.Empty;
+                            return ToStringCUSI();
                         default:
                             return string.Empty;
                     }
@@ -818,6 +825,17 @@ namespace ErgoCalc
                 {
                     return _job.JobTasks[0].ToString();
                 }   // ToString()
+
+                private string ToStringCOSI()
+                {
+                    return _job.ToString();
+                }
+
+                private string ToStringCUSI()
+                {
+                    return _job.JobTasks[0].ToString();
+                }
+
 
                 #region Marshalling private routines
                 private IntPtr TaskToMarshal(ModelTask task)
@@ -1119,6 +1137,7 @@ namespace ErgoCalc
                 }
 
                 #endregion Marshalling private routines
+            
             }   // class cModelStrain
         }   // namespace Strain
     }   // namespace DLL
