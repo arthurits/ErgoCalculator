@@ -139,7 +139,7 @@ namespace ErgoCalc
 
             for (i=0; i<length;i++)
             {
-                strLineD[0] += "\t\t" + "Task " + strTasks[i];
+                strLineD[0] += "\t\t" + "Task " + ((char)('A' + i)).ToString();
                 strLineD[1] += "\t\t" + sModel[i].data.weight.ToString();
                 strLineD[2] += "\t\t" + sModel[i].data.h.ToString();
                 strLineD[3] += "\t\t" + sModel[i].data.v.ToString();
@@ -151,7 +151,7 @@ namespace ErgoCalc
                 strLineD[9] += "\t\t" + sModel[i].data.a.ToString();
                 strLineD[10] += "\t" + coupling[sModel[i].data.c - 1];
 
-                strLineR[0] += "\t\t" + "Task " + strTasks[i];
+                strLineR[0] += "\t\t" + "Task " + ((char)('A' + i)).ToString();
                 strLineR[1] += "\t\t" + sModel[i].factors.LC.ToString("0.####");
                 strLineR[2] += "\t\t" + sModel[i].factors.HM.ToString("0.####");
                 strLineR[3] += "\t\t" + sModel[i].factors.VM.ToString("0.####");
@@ -236,11 +236,11 @@ namespace ErgoCalc
             {
                 if (composite == true)
                 {
-                    strEquationT = "CLI = Index(" + strTasks[ordenacion[0]] + ")";
+                    strEquationT = "CLI = Index(" + strTasks[ordenacion[0]] + ")"; //((char)('A' + i)).ToString()
                     strEquationN = "CLI = " + sModel[ordenacion[0]].index.ToString("0.####");
                     for (i = 1; i < length; i++)
                     {
-                        strEquationT += " + IndexIF (" + strTasks[ordenacion[i]] + ") * (1/FMa(" + strTasks[ordenacion[i]] + ") - 1/FMb(" + strTasks[ordenacion[i]] + "))";
+                        strEquationT += " + IndexIF(" + strTasks[ordenacion[i]] + ") * (1/FMa(" + strTasks[ordenacion[i]] + ") - 1/FMb(" + strTasks[ordenacion[i]] + "))";
                         strEquationN += " + " + sModel[ordenacion[i]].indexIF.ToString("0.####") + " * (1/" + sModel[ordenacion[i]].factors.FMa.ToString("0.####") + " - 1/" + sModel[ordenacion[i]].factors.FMb.ToString("0.####") + ")";
                     }
                     strEquationN += " = " + resultado.ToString("0.####");

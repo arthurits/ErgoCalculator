@@ -256,10 +256,11 @@ namespace ErgoCalc
         /// <param name="col">Column number (zero based)</param>
         private void AddColumn(Int32 col)
         {
-            String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+            //String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
 
             // Create the new column
-            gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
+            //gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
+            gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 70;
 
@@ -324,36 +325,6 @@ namespace ErgoCalc
             _subtasks[7].data.p = 5;
             _subtasks[7].data.h = 8;
 
-            /*
-            _subtasks = new modelNIOSH[3];
-
-            _subtasks[0].data.weight = 20.0;
-            _subtasks[0].data.h = 25;
-            _subtasks[0].data.v = 75;
-            _subtasks[0].data.d = 5;
-            _subtasks[0].data.a = 0;
-            _subtasks[0].data.f = 1;
-            _subtasks[0].data.td = 2;
-            _subtasks[0].data.c = 2;
-
-            _subtasks[1].data.weight = 25.0;
-            _subtasks[1].data.h = 30;
-            _subtasks[1].data.v = 75;
-            _subtasks[1].data.d = 5;
-            _subtasks[1].data.a = 0;
-            _subtasks[1].data.f = 2;
-            _subtasks[1].data.td = 2;
-            _subtasks[1].data.c = 3;
-
-            _subtasks[2].data.weight = 15.0;
-            _subtasks[2].data.h = 30;
-            _subtasks[2].data.v = 75;
-            _subtasks[2].data.d = 5;
-            _subtasks[2].data.a = 45;
-            _subtasks[2].data.f = 2;
-            _subtasks[2].data.td = 2;
-            _subtasks[2].data.c = 2;
-            */
         }
 
         /// <summary>

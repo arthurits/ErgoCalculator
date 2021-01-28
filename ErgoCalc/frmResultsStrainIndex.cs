@@ -203,23 +203,33 @@ namespace ErgoCalc
         public void FormatText()
         {
             int nStart = 0, nEnd = 0;
-            
-            // Underline
-            nStart = rtbShowResult.Find("Description", 0, RichTextBoxFinds.MatchCase);
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
 
-            nStart = rtbShowResult.Find("Description", nStart + 1, RichTextBoxFinds.MatchCase);
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            while (true)
+            {
+                // Underline
+                nStart = rtbShowResult.Find("Description", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            } 
+
+            //nStart = rtbShowResult.Find("Description", nStart + 1, RichTextBoxFinds.MatchCase);
+            //nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            //rtbShowResult.Select(nStart, nEnd - nStart);
+            //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
 
             // Bold results
-            nStart = rtbShowResult.Find("The", nStart + 1, RichTextBoxFinds.MatchCase);
-            nEnd = rtbShowResult.Text.Length;
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+            nStart = 0;
+            while (true)
+            {
+                nStart = rtbShowResult.Find("The ", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                //nEnd = rtbShowResult.Text.Length;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+            }
 
             // Set the cursor at the beginning of the text
             rtbShowResult.SelectionStart = 0;

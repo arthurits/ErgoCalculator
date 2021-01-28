@@ -639,54 +639,127 @@ namespace ErgoCalc
                     int length = SubTasks.Length;
                     String strName = index == -1 ? "Task " : "SubT ";
 
-                    string[] strLineD = new string[6];
-                    string[] strLineR = new string[8];
-                    string[] strTasks = new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O" };
+                    string[] strLineD = new string[8];
+                    string[] strLineF = new string[10];
+                    string strEqT;
+                    string strEqR;
+                    //string[] strTasks = new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O" };
 
                     strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
                     strLineD[1] = string.Concat(System.Environment.NewLine, "Intensity of exertion");
                     strLineD[2] = string.Concat(System.Environment.NewLine, "Efforts per minute");
-                    strLineD[3] = string.Concat(System.Environment.NewLine, "Duration per exertion (s)");
-                    strLineD[4] = string.Concat(System.Environment.NewLine, "Hand/wrist posture (-fl +ex)");
-                    strLineD[5] = string.Concat(System.Environment.NewLine, "Task duration of task per day (h)");
+                    if (index != -1)
+                    {
+                        strLineD[3] = string.Concat(System.Environment.NewLine, "Efforts per minute A");
+                        strLineD[4] = string.Concat(System.Environment.NewLine, "Efforts per minute B");
+                    }
+                    strLineD[5] = string.Concat(System.Environment.NewLine, "Duration per exertion (s)");
+                    strLineD[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture (-f +e)");
+                    strLineD[7] = string.Concat(System.Environment.NewLine, strName, "duration per day (h)");
 
-                    strLineR[0] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Description", "\t");
-                    strLineR[1] = string.Concat(System.Environment.NewLine, "Intensity multiplier");
-                    strLineR[2] = string.Concat(System.Environment.NewLine, "Efforts multiplier", "\t");
-                    strLineR[3] = string.Concat(System.Environment.NewLine, "Duration multiplier");
-                    strLineR[4] = string.Concat(System.Environment.NewLine, "Hand/wrist posture multiplier");
-                    strLineR[5] = string.Concat(System.Environment.NewLine, "Task multiplier", "\t");
-                    strLineR[6] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The RSI index is:");
-                    strLineR[7] = string.Empty;
+                    strLineF[0] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Description", "\t");
+                    strLineF[1] = string.Concat(System.Environment.NewLine, "Intensity multiplier");
+                    strLineF[2] = string.Concat(System.Environment.NewLine, "Efforts multiplier", "\t");
+                    if (index != -1)
+                    {
+                        strLineF[3] = string.Concat(System.Environment.NewLine, "Efforts A multiplier");
+                        strLineF[4] = string.Concat(System.Environment.NewLine, "Efforts B multiplier");
+                    }
+                    strLineF[5] = string.Concat(System.Environment.NewLine, "Duration multiplier");
+                    strLineF[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture mult.");
+                    strLineF[7] = string.Concat(System.Environment.NewLine, strName, "multiplier", "\t");
+
+                    if (index == -1)
+                    {
+                        strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The RSI index is:");
+                    }
+                    else
+                    {
+                        strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Subtask RSI index:");
+                        strLineF[9] = string.Concat(System.Environment.NewLine, "Subtasks order:", "\t");
+                    }
 
                     for (i = 0; i < length; i++)
                     {
-                        strLineD[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
+                        // "SubTask " + ((char)('A' + SubTasks[i].ItemIndex)).ToString()
+                        //strLineD[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
+                        strLineD[0] += "\t\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
                         strLineD[1] += "\t\t" + SubTasks[i].data.i.ToString();
                         strLineD[2] += "\t\t" + SubTasks[i].data.e.ToString();
-                        strLineD[3] += "\t\t" + SubTasks[i].data.d.ToString();
-                        strLineD[4] += "\t\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
-                        strLineD[5] += "\t\t" + SubTasks[i].data.h.ToString();
+                        if (index != -1)
+                        {
+                            strLineD[3] += "\t\t" + SubTasks[i].data.ea.ToString();
+                            strLineD[4] += "\t\t" + SubTasks[i].data.eb.ToString();
+                        }
+                        strLineD[5] += "\t\t" + SubTasks[i].data.d.ToString();
+                        strLineD[6] += "\t\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
+                        strLineD[7] += "\t\t" + SubTasks[i].data.h.ToString();
 
-                        strLineR[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
-                        strLineR[1] += "\t\t" + SubTasks[i].factors.IM.ToString("0.####");
-                        strLineR[2] += "\t\t" + SubTasks[i].factors.EM.ToString("0.####");
-                        strLineR[3] += "\t\t" + SubTasks[i].factors.DM.ToString("0.####");
-                        strLineR[4] += "\t\t" + SubTasks[i].factors.PM.ToString("0.####");
-                        strLineR[5] += "\t\t" + SubTasks[i].factors.HM.ToString("0.####");
-                        strLineR[6] += "\t\t" + SubTasks[i].index.ToString("0.####");
+                        //strLineR[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
+                        strLineF[0] += "\t\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
+                        strLineF[1] += "\t\t" + SubTasks[i].factors.IM.ToString("0.####");
+                        strLineF[2] += "\t\t" + SubTasks[i].factors.EM.ToString("0.####");
+                        if (index != -1)
+                        {
+                            strLineF[3] += "\t\t" + SubTasks[i].factors.EMa.ToString();
+                            strLineF[4] += "\t\t" + SubTasks[i].factors.EMb.ToString();
+                        }
+                        strLineF[5] += "\t\t" + SubTasks[i].factors.DM.ToString("0.####");
+                        strLineF[6] += "\t\t" + SubTasks[i].factors.PM.ToString("0.####");
+                        strLineF[7] += "\t\t" + SubTasks[i].factors.HM.ToString("0.####");
+                        strLineF[8] += "\t\t" + SubTasks[i].index.ToString("0.####");
+                        if (index != -1)
+                            strLineF[9] += "\t\t" + order[i].ToString("0.####");
                     }
 
-                    if (index != -1)
+                    strEqT = string.Concat(System.Environment.NewLine, System.Environment.NewLine);
+                    strEqR = string.Empty;
+                    if (index == -1)
                     {
-                        strLineR[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The COSI index is:");
-                        strLineR[7] += "\t\t" + index.ToString("0.####");
+                        strEqT += string.Concat("The RSI index is computed as follows:", System.Environment.NewLine, System.Environment.NewLine);
+                        strEqT += "RSI = IM * EM * DM * PM * HM";
+                        
+                        strEqR = string.Empty;
+                        for (i = 0; i < SubTasks.Length; i++)
+                        {
+                            strEqR += string.Concat(System.Environment.NewLine, "RSI (", ((char)('A' + i)).ToString(), ") = ");
+                            strEqR += string.Concat(SubTasks[i].factors.IM.ToString("0.####"), " * ");
+                            strEqR += string.Concat(SubTasks[i].factors.EM.ToString("0.####"), " * ");
+                            strEqR += string.Concat(SubTasks[i].factors.DM.ToString("0.####"), " * ");
+                            strEqR += string.Concat(SubTasks[i].factors.PM.ToString("0.####"), " * ");
+                            strEqR += string.Concat(SubTasks[i].factors.HM.ToString("0.####"), " = ");
+                            strEqR += SubTasks[i].index.ToString("0.####");
+                        }
+                        
+                    }
+                    else
+                    {
+                        strEqT += string.Concat("The COSI index is computed as follows:", System.Environment.NewLine, System.Environment.NewLine);
+                        strEqT += string.Concat("COSI = ", "RSI(", ((char)('A' + order[0] - 1)).ToString(), ")");
+                        strEqR += string.Concat("COSI = ", SubTasks[order[0] - 1].index.ToString("0.####"));
+                        
+                        string strLetter;
+                        for (i = 1; i < SubTasks.Length; i++)
+                        {
+                            strLetter = ((char)('A' + order[i] - 1)).ToString();
+                            strEqT += string.Concat(" + ", "RSI(", strLetter, ") * (EMa(", strLetter, ") - EMb(", strLetter, ")) / (EM(", strLetter, "))");
+                            strEqR += string.Concat(" + ", SubTasks[order[i] - 1].index.ToString("0.####"), " * (", SubTasks[order[i] - 1].factors.EMa.ToString("0.####"), " - ", SubTasks[order[i] - 1].factors.EMa.ToString("0.####"), ") / ", SubTasks[order[i] - 1].factors.EM.ToString("0.####"));
+                        }
+                        strEqR += string.Concat(" = ", index.ToString("0.####"));
+
+                        strEqR += string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The COSI index is: ", index.ToString("0.####"));
+
+                        //strEqT += string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The COSI index is:");
+                        //strEqT += "\t\t" + index.ToString("0.####");
                     }
 
-                    return string.Concat("These are the results obtained from the Revised Strain Index:",
+                    return string.Concat("These are the results obtained from the Revised Strain Index model:",
                                         System.Environment.NewLine,
                                         string.Concat(strLineD),
-                                        string.Concat(strLineR),
+                                        string.Concat(strLineF),
+                                        strEqT,
+                                        System.Environment.NewLine,
+                                        strEqR,
                                         System.Environment.NewLine);
                 }
             };
