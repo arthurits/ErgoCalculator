@@ -636,7 +636,8 @@ namespace ErgoCalc
                 public override string ToString()
                 {
                     int i;
-                    int length = SubTasks.Length;
+                    int subLength = SubTasks.Length;
+                    int[] ordenacion = new int[subLength];
                     String strName = index == -1 ? "Task " : "SubT ";
 
                     string[] strLineD = new string[8];
@@ -679,7 +680,9 @@ namespace ErgoCalc
                         strLineF[9] = string.Concat(System.Environment.NewLine, "Subtasks order:", "\t");
                     }
 
-                    for (i = 0; i < length; i++)
+                    for (i = 0; i < subLength; i++) ordenacion[order[i]] = subLength - 1 - i;
+
+                    for (i = 0; i < subLength; i++)
                     {
                         // "SubTask " + ((char)('A' + SubTasks[i].ItemIndex)).ToString()
                         //strLineD[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
@@ -692,8 +695,8 @@ namespace ErgoCalc
                             strLineD[4] += "\t\t" + SubTasks[i].data.eb.ToString();
                         }
                         strLineD[5] += "\t\t" + SubTasks[i].data.d.ToString();
-                        strLineD[6] += "\t\t" + SubTasks[i].data.p.ToString();    //strLineD[4].TrimEnd(new char[] { '\t' });
-                        strLineD[7] += "\t\t" + SubTasks[i].data.h.ToString();
+                        strLineD[6] += "\t" + SubTasks[i].data.p.ToString() + "\t";    //strLineD[4].TrimEnd(new char[] { '\t' });
+                        strLineD[7] += "\t" + SubTasks[i].data.h.ToString() + "\t";
 
                         //strLineR[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
                         strLineF[0] += "\t\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
@@ -705,11 +708,11 @@ namespace ErgoCalc
                             strLineF[4] += "\t\t" + SubTasks[i].factors.EMb.ToString();
                         }
                         strLineF[5] += "\t\t" + SubTasks[i].factors.DM.ToString("0.####");
-                        strLineF[6] += "\t\t" + SubTasks[i].factors.PM.ToString("0.####");
+                        strLineF[6] += "\t" + SubTasks[i].factors.PM.ToString("0.####") + "\t";
                         strLineF[7] += "\t\t" + SubTasks[i].factors.HM.ToString("0.####");
                         strLineF[8] += "\t\t" + SubTasks[i].index.ToString("0.####");
                         if (index != -1)
-                            strLineF[9] += "\t\t" + order[i].ToString("0.####");
+                            strLineF[9] += "\t\t" + (ordenacion[i] + 1).ToString("0.####");
                     }
 
                     strEqT = string.Concat(System.Environment.NewLine, System.Environment.NewLine);
@@ -720,7 +723,7 @@ namespace ErgoCalc
                         strEqT += "RSI = IM * EM * DM * PM * HM";
                         
                         strEqR = string.Empty;
-                        for (i = 0; i < SubTasks.Length; i++)
+                        for (i = 0; i < subLength; i++)
                         {
                             strEqR += string.Concat(System.Environment.NewLine, "RSI (", ((char)('A' + i)).ToString(), ") = ");
                             strEqR += string.Concat(SubTasks[i].factors.IM.ToString("0.####"), " * ");
@@ -735,15 +738,15 @@ namespace ErgoCalc
                     else
                     {
                         strEqT += string.Concat("The COSI index is computed as follows:", System.Environment.NewLine, System.Environment.NewLine);
-                        strEqT += string.Concat("COSI = ", "RSI(", ((char)('A' + order[0] - 1)).ToString(), ")");
-                        strEqR += string.Concat("COSI = ", SubTasks[order[0] - 1].index.ToString("0.####"));
+                        strEqT += string.Concat("COSI = ", "RSI(", ((char)('A' + SubTasks[order[subLength - 1]].ItemIndex)).ToString(), ")");
+                        strEqR += string.Concat("COSI = ", SubTasks[order[subLength-1]].index.ToString("0.####"));
                         
                         string strLetter;
-                        for (i = 1; i < SubTasks.Length; i++)
+                        for (i = 1; i < subLength; i++)
                         {
-                            strLetter = ((char)('A' + order[i] - 1)).ToString();
+                            strLetter = ((char)('A' + SubTasks[order[subLength - 1 - i]].ItemIndex)).ToString();
                             strEqT += string.Concat(" + ", "RSI(", strLetter, ") * (EMa(", strLetter, ") - EMb(", strLetter, ")) / (EM(", strLetter, "))");
-                            strEqR += string.Concat(" + ", SubTasks[order[i] - 1].index.ToString("0.####"), " * (", SubTasks[order[i] - 1].factors.EMa.ToString("0.####"), " - ", SubTasks[order[i] - 1].factors.EMa.ToString("0.####"), ") / ", SubTasks[order[i] - 1].factors.EM.ToString("0.####"));
+                            strEqR += string.Concat(" + ", SubTasks[order[subLength - 1 - i]].index.ToString("0.####"), " * (", SubTasks[order[subLength - 1 - i]].factors.EMa.ToString("0.####"), " - ", SubTasks[order[subLength - 1 - i]].factors.EMb.ToString("0.####"), ") / ", SubTasks[order[subLength - 1 - i]].factors.EM.ToString("0.####"));
                         }
                         strEqR += string.Concat(" = ", index.ToString("0.####"));
 

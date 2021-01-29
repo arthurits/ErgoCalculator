@@ -12,7 +12,7 @@ namespace ErgoCalc
     public partial class frmNew : Form
     {
         public Int32 _nOption;
-        private String[] _strArray = { "WR model", "CLM model", "NIOSH equation", "Revised strain index", "Metabolic rate" };
+        private String[] _strArray = { "WR model", "CLM model", "NIOSH equation (LI, CLI, SLI, VLI)", "Revised strain index (RSI, COSI, CUSI)", "Metabolic rate" };
         private RadioButton[] radioButtons = new RadioButton[5];
         
         public frmNew()

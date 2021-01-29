@@ -223,7 +223,7 @@ namespace ErgoCalc
                 _job.JobTasks[i].index = -1;
                 for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
                 {
-                    ItemIndex = listViewTasks.Groups[i].Items[j].Index;
+                    ItemIndex = _index == Index.RSI ? j : listViewTasks.Groups[i].Items[j].Index;
                     _job.JobTasks[i].SubTasks[j].ItemIndex = ItemIndex;
                     _job.JobTasks[i].SubTasks[j].data.i = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
                     _job.JobTasks[i].SubTasks[j].data.e = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
