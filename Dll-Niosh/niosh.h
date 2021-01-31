@@ -21,7 +21,7 @@ typedef struct dataNIOSH
 	double fb;      // Frecuencia acumulada b
 	double td;      // Duración de la tarea
 	int c;          // Agarre
-} dataNIOSH;
+};
 
 typedef struct multipliersNIOSH
 {
@@ -34,7 +34,7 @@ typedef struct multipliersNIOSH
 	double FMa;  // Factor de frecuencia acumulada a
 	double FMb;  // Factor de frecuencia acumulada b
 	double CM;   // Factor de agarre
-} multipliersNIOSH;
+};
 
 typedef struct modelNIOSH
 {
@@ -42,7 +42,7 @@ typedef struct modelNIOSH
 	multipliersNIOSH factors;
 	double indexIF;
 	double index;
-} modelNIOSH;
+};
 
 
 /* Prototipos de función a exportar*/
