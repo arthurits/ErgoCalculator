@@ -620,9 +620,9 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct ModelTask
             {
-                [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
+                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
                 public ModelSubTask[] SubTasks; // Set of subtasks in the task
-                [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
+                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
                 public int[] order;             // Reordering of the subtasks from lower RSI to higher RSI
                 public double h;                // The total time (in hours) that the task is performed per day
                 public double ha;               // Duración de la tarea acumulada a
@@ -771,9 +771,9 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct ModelJob
             {
-                [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
+                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
                 public ModelTask[] JobTasks;    // Set of tasks in the job
-                [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
+                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
                 public int[] order;             // Reordering of the subtasks from lower COSI to higher COSI
                 public double index;            // The CUSI index for this job
                 public int numberTasks;         // Number of tasks in the job
@@ -858,7 +858,6 @@ namespace ErgoCalc
                                 //IntPtr ptrSubTask = SubTaskToMarshal(_job.JobTasks[i].SubTasks[i]);
                                 //double resultadoST = RSI_DummySubTask(ptrSubTask);
                                 //ModelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
-                                
                                 IntPtr task = TaskToMarshal(_job.JobTasks[i]);
 
                                 try
@@ -923,7 +922,7 @@ namespace ErgoCalc
 
                 #region Marshalling private routines
                 
-                private IntPtr TaskToMarshal(ModelTask task)
+                private IntPtr TaskToMarshal(ModelTask task, IntPtr ptr = default(IntPtr))
                 {
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
                     Int32 sizeInt = Marshal.SizeOf(typeof(int));
@@ -953,7 +952,11 @@ namespace ErgoCalc
                     Marshal.Copy(task.order, 0, ptrOrder, task.order.Length);
 
                     // Allocate memory for modelTask struct
-                    ptrTask = Marshal.AllocHGlobal(2 * sizePtr + 7 * sizeDouble + sizeInt);
+                    //ptrTask = Marshal.AllocHGlobal(2 * sizePtr + 7 * sizeDouble + sizeInt);
+                    if (ptr != IntPtr.Zero)
+                        ptrTask = ptr;
+                    else
+                        ptrTask = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ModelTask)));  // So we get the same alignment as in the dll struct definition
 
                     // Construct the struct in unmanaged memory
                     int memoffset = 0;
@@ -1057,11 +1060,12 @@ namespace ErgoCalc
 
                     // Marshal array of tasks
                     int nTask = Marshal.SizeOf(typeof(ModelTask));
-                    nTask = 2 * sizePtr + 7 * sizeDouble + sizeInt;
+                    //nTask = 2 * sizePtr + 7 * sizeDouble + sizeInt;
                     int TasksSize = job.JobTasks.Length * nTask;
                     IntPtr ptrTasks = Marshal.AllocHGlobal(TasksSize);
                     for (int i = 0; i < job.JobTasks.Length; i++)
                     {
+                        TaskToMarshal(job.JobTasks[i], IntPtr.Add(ptrTasks, i * nTask));
                         Marshal.StructureToPtr(job.JobTasks[i], IntPtr.Add(ptrTasks, i * nTask), true);
                     }
 
@@ -1071,7 +1075,7 @@ namespace ErgoCalc
                     Marshal.Copy(job.order, 0, ptrOrder, job.order.Length);
 
                     // Allocate memory for modelTask struct
-                    ptrJob = Marshal.AllocHGlobal(2 * sizePtr + sizeDouble + sizeInt);
+                    ptrJob = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ModelJob)));    // So we get the same alignment as in the dll struct definition
 
                     // Construct the struct in unmanaged memory
                     int memoffset = 0;
