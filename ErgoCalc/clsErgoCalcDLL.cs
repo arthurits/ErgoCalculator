@@ -826,7 +826,8 @@ namespace ErgoCalc
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
                 private static extern double COSI_index(IntPtr Task, ref int nSubTasks);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCUSI")]
-                private static extern double CUSI_index(ref ModelJob Job, ref int nTasks);
+                //private static extern double CUSI_index(ref ModelJob Job, ref int nTasks);
+                private static extern double CUSI_index(IntPtr Job, ref int nTasks);
 
                 [DllImport("dlls/strain.dll", EntryPoint = "DummyTest")]
                 private static extern double RSI_Dummy(IntPtr Task, ref int nTasks);
@@ -873,14 +874,16 @@ namespace ErgoCalc
                             };
                             break;
                         case Index.CUSI:
-                            double resultado = CUSI_index(ref _job, ref _job.numberTasks);
+                            IntPtr ptrJob = JobToMarshal(_job);
+                            //double resultado = CUSI_index(job, ref _job.numberTasks);
                             try
                             {
-                                //double resultado = CUSI_index(ref _job, ref _job.numberTasks);
+                                double resultado = CUSI_index(ptrJob, ref _job.numberTasks);
+                                _job = JobFromMarshal(ptrJob);
                             }
                             finally
                             {
-                                
+                                JobFreeMemory(ptrJob);
                             }
                             break;
                         default:
@@ -1115,12 +1118,6 @@ namespace ErgoCalc
 
                     // Delete subtasks array
                     ptrSubT = Marshal.ReadIntPtr(task, 0);
-                    /*int numSubT = Marshal.ReadInt32(task, 2 * sizePtr);
-                    for (int i = 0; i < numSubT; i++)
-                    {
-                        IntPtr subT = Marshal.ReadIntPtr(ptrSubT, i * sizePtr);
-                        Marshal.FreeCoTaskMem(subT);
-                    }*/
                     Marshal.FreeHGlobal(ptrSubT);
                     
                     // Delete order array
@@ -1129,6 +1126,35 @@ namespace ErgoCalc
 
                     // Se libera la memoria del struct
                     Marshal.FreeHGlobal(task);
+                }
+
+                private void JobFreeMemory(IntPtr ptrJob)
+                {
+                    // Definición de variables
+                    IntPtr ptrSubT;
+                    IntPtr ptrTask;
+                    IntPtr ptrOrder;
+                    int sizePtr = Marshal.SizeOf(typeof(IntPtr));
+                    int nTasks = Marshal.ReadInt32(ptrJob, 24);
+
+                    // Delete each task in the array
+                    for (int i = 0; i < nTasks; i++)
+                    {
+                        ptrTask = Marshal.ReadIntPtr(ptrJob, i * sizePtr);
+                        ptrSubT = Marshal.ReadIntPtr(ptrTask, 0);
+                        ptrOrder = Marshal.ReadIntPtr(ptrTask, sizePtr);
+
+                        Marshal.FreeHGlobal(ptrOrder);
+                        Marshal.FreeHGlobal(ptrSubT);
+                        Marshal.FreeHGlobal(ptrTask);
+                    }
+
+                    // Delete order array
+                    ptrOrder = Marshal.ReadIntPtr(ptrJob, sizePtr);
+                    Marshal.FreeHGlobal(ptrOrder);
+
+                    // Se libera la memoria del struct
+                    Marshal.FreeHGlobal(ptrJob);
                 }
 
                 private double ReadDouble(IntPtr mem1)
