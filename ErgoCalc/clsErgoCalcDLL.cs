@@ -1064,8 +1064,7 @@ namespace ErgoCalc
                     // Marshal array of tasks
                     int nTask = Marshal.SizeOf(typeof(ModelTask));
                     //nTask = 2 * sizePtr + 7 * sizeDouble + sizeInt;
-                    int TasksSize = job.JobTasks.Length * nTask;
-                    IntPtr ptrTasks = Marshal.AllocHGlobal(TasksSize);
+                    IntPtr ptrTasks = Marshal.AllocHGlobal(job.JobTasks.Length * nTask);
                     for (int i = 0; i < job.JobTasks.Length; i++)
                     {
                         TaskToMarshal(job.JobTasks[i], IntPtr.Add(ptrTasks, i * nTask));
@@ -1100,12 +1099,39 @@ namespace ErgoCalc
                 private ModelJob JobFromMarshal(IntPtr ptrJob)
                 {
                     // Definición de variables
+                    IntPtr ptrTask;
                     IntPtr ptrSubT;
+                    ModelJob job = new ModelJob();
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
                     Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
-                    ModelJob job = new ModelJob();
+                    Int32 sizeTask = Marshal.SizeOf(typeof(ModelTask));
                     int memoffset = 0;
+
+                    // We first get the number of tasks within the Job
+                    job = Marshal.PtrToStructure<ModelJob>(IntPtr.Add(ptrJob, 0));
+                    int nTasks = job.numberTasks;
+                    job.JobTasks = new ModelTask[nTasks];
+
+                    // We get the Tasks
+                    ptrTask = Marshal.ReadIntPtr(ptrJob);
+                    for (int i=0; i< nTasks; i++)
+                    {
+                        //ptrTask = Marshal.ReadIntPtr(IntPtr.Add(ptrTask, i * sizeTask));
+                        job.JobTasks[i] = Marshal.PtrToStructure<ModelTask>(IntPtr.Add(ptrTask, i * sizeTask));
+                    }
+                    memoffset += sizePtr;
+
+                    // We get back the order array
+                    job.order = new int[nTasks];
+                    Marshal.Copy(Marshal.ReadIntPtr(ptrTask, memoffset), job.order, 0, nTasks);
+                    memoffset += sizePtr;
+
+                    // We get back the index value
+                    job.index = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+
+                    int nSubT = Marshal.ReadInt32(ptrTask, 2 * sizePtr + 7 * sizeDouble);
+                    int nSubTask = Marshal.SizeOf(typeof(ModelSubTask));
 
                     return job;
                 }
