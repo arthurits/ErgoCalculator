@@ -1106,6 +1106,7 @@ namespace ErgoCalc
                     Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
                     Int32 sizeTask = Marshal.SizeOf(typeof(ModelTask));
+                    Int32 sizeSubT = Marshal.SizeOf(typeof(ModelSubTask));
                     int memoffset = 0;
 
                     // We first get the number of tasks within the Job
@@ -1118,6 +1119,7 @@ namespace ErgoCalc
                     for (int i=0; i< nTasks; i++)
                     {
                         //ptrTask = Marshal.ReadIntPtr(IntPtr.Add(ptrTask, i * sizeTask));
+                        job.JobTasks[i] = TaskfromMarshal(IntPtr.Add(ptrTask, i * sizeTask));
                         job.JobTasks[i] = Marshal.PtrToStructure<ModelTask>(IntPtr.Add(ptrTask, i * sizeTask));
                     }
                     memoffset += sizePtr;
@@ -1129,9 +1131,6 @@ namespace ErgoCalc
 
                     // We get back the index value
                     job.index = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
-
-                    int nSubT = Marshal.ReadInt32(ptrTask, 2 * sizePtr + 7 * sizeDouble);
-                    int nSubTask = Marshal.SizeOf(typeof(ModelSubTask));
 
                     return job;
                 }
