@@ -1068,7 +1068,7 @@ namespace ErgoCalc
                     for (int i = 0; i < job.JobTasks.Length; i++)
                     {
                         TaskToMarshal(job.JobTasks[i], IntPtr.Add(ptrTasks, i * nTask));
-                        Marshal.StructureToPtr(job.JobTasks[i], IntPtr.Add(ptrTasks, i * nTask), true);
+                        //Marshal.StructureToPtr(job.JobTasks[i], IntPtr.Add(ptrTasks, i * nTask), true);
                     }
 
                     // Marshal array of ints
@@ -1099,38 +1099,36 @@ namespace ErgoCalc
                 private ModelJob JobFromMarshal(IntPtr ptrJob)
                 {
                     // Definición de variables
-                    IntPtr ptrTask;
-                    IntPtr ptrSubT;
+                    IntPtr ptrTasks;
                     ModelJob job = new ModelJob();
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
-                    Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
                     Int32 sizeTask = Marshal.SizeOf(typeof(ModelTask));
-                    Int32 sizeSubT = Marshal.SizeOf(typeof(ModelSubTask));
                     int memoffset = 0;
 
                     // We first get the number of tasks within the Job
-                    job = Marshal.PtrToStructure<ModelJob>(IntPtr.Add(ptrJob, 0));
-                    int nTasks = job.numberTasks;
+                    //job = Marshal.PtrToStructure<ModelJob>(IntPtr.Add(ptrJob, 0));
+                    int nTasks = Marshal.ReadInt32(ptrJob, 2 * sizePtr + 1 * sizeDouble);
+                    job.numberTasks = nTasks;
                     job.JobTasks = new ModelTask[nTasks];
 
                     // We get the Tasks
-                    ptrTask = Marshal.ReadIntPtr(ptrJob);
+                    ptrTasks = Marshal.ReadIntPtr(ptrJob);
                     for (int i=0; i< nTasks; i++)
                     {
                         //ptrTask = Marshal.ReadIntPtr(IntPtr.Add(ptrTask, i * sizeTask));
-                        job.JobTasks[i] = TaskfromMarshal(IntPtr.Add(ptrTask, i * sizeTask));
-                        job.JobTasks[i] = Marshal.PtrToStructure<ModelTask>(IntPtr.Add(ptrTask, i * sizeTask));
+                        job.JobTasks[i] = TaskfromMarshal(IntPtr.Add(ptrTasks, i * sizeTask));
+                        //job.JobTasks[i] = Marshal.PtrToStructure<ModelTask>(IntPtr.Add(ptrTask, i * sizeTask));
                     }
                     memoffset += sizePtr;
 
                     // We get back the order array
                     job.order = new int[nTasks];
-                    Marshal.Copy(Marshal.ReadIntPtr(ptrTask, memoffset), job.order, 0, nTasks);
+                    Marshal.Copy(Marshal.ReadIntPtr(ptrJob, memoffset), job.order, 0, nTasks);
                     memoffset += sizePtr;
 
                     // We get back the index value
-                    job.index = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrTask, memoffset));
+                    job.index = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrJob, memoffset));
 
                     return job;
                 }
@@ -1158,21 +1156,26 @@ namespace ErgoCalc
                     // Definición de variables
                     IntPtr ptrSubT;
                     IntPtr ptrTask;
+                    IntPtr ptrTasks;
                     IntPtr ptrOrder;
                     int sizePtr = Marshal.SizeOf(typeof(IntPtr));
+                    int sizeTask = Marshal.SizeOf(typeof(ModelTask));
                     int nTasks = Marshal.ReadInt32(ptrJob, 24);
 
                     // Delete each task in the array
+                    ptrTasks = Marshal.ReadIntPtr(ptrJob, 0);
                     for (int i = 0; i < nTasks; i++)
                     {
-                        ptrTask = Marshal.ReadIntPtr(ptrJob, i * sizePtr);
+                        //ptrTask = Marshal.ReadIntPtr(ptrTasks, i * sizeTask);
+                        ptrTask = IntPtr.Add(ptrTasks, i * sizeTask);
                         ptrSubT = Marshal.ReadIntPtr(ptrTask, 0);
                         ptrOrder = Marshal.ReadIntPtr(ptrTask, sizePtr);
 
                         Marshal.FreeHGlobal(ptrOrder);
                         Marshal.FreeHGlobal(ptrSubT);
-                        Marshal.FreeHGlobal(ptrTask);
+                        //Marshal.FreeHGlobal(ptrTask);
                     }
+                    Marshal.FreeHGlobal(ptrTasks);
 
                     // Delete order array
                     ptrOrder = Marshal.ReadIntPtr(ptrJob, sizePtr);
