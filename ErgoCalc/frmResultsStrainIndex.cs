@@ -83,7 +83,7 @@ namespace ErgoCalc
             {
                 error = true;
                 MessageBox.Show(
-                    "Some files are missing. Please\nreinstall the application.",
+                    "DLL files are missing. Please\nreinstall the application.",
                     "RSI index error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
