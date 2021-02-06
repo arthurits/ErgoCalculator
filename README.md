@@ -7,4 +7,4 @@ Copyright © 2020 by arthurits
 
 Sponsor this project!
 
-[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypal.me/arthurits)
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/arthurits)
