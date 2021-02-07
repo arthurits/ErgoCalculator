@@ -804,7 +804,7 @@ namespace ErgoCalc
                         strLineF[2] = string.Concat(System.Environment.NewLine, "Duration A multiplier");
                         strLineF[3] = string.Concat(System.Environment.NewLine, "Duration B multiplier");
                         
-                        strLineF[4] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "COSI index");
+                        strLineF[4] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Task COSI index");
                         strLineF[5] = string.Concat(System.Environment.NewLine, "Task order");
 
                         for (int i = 0; i < numberTasks; i++) ordenacion[order[i]] = numberTasks - 1 - i;
@@ -835,7 +835,7 @@ namespace ErgoCalc
                         for (int i = 1; i < numberTasks; i++)
                         {
                             strLetter = ((char)('A' + order[numberTasks - 1 - i])).ToString();
-                            strEqT += string.Concat(" + ", "RSI(", strLetter, ") * (HMa(", strLetter, ") - HMb(", strLetter, ")) / (HM(", strLetter, "))");
+                            strEqT += string.Concat(" + ", "COSI(", strLetter, ") * (HMa(", strLetter, ") - HMb(", strLetter, ")) / (HM(", strLetter, "))");
                             strEqR += string.Concat(" + ", JobTasks[order[numberTasks - 1 - i]].index.ToString("0.####"), " * (", JobTasks[order[numberTasks - 1 - i]].HMa.ToString("0.####"), " - ", JobTasks[order[numberTasks - 1 - i]].HMb.ToString("0.####"), ") / ", JobTasks[order[numberTasks - 1 - i]].HM.ToString("0.####"));
                         }
                         strEqR += string.Concat(" = ", index.ToString("0.####"));
@@ -849,7 +849,8 @@ namespace ErgoCalc
                             System.Environment.NewLine,
                             strEqT,
                             System.Environment.NewLine,
-                            strEqR);
+                            strEqR,
+                            System.Environment.NewLine);
 
                     }
 
