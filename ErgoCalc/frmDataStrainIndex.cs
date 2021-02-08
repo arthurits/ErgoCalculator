@@ -16,12 +16,12 @@ namespace ErgoCalc
     public partial class frmDataStrainIndex : Form
     {
         private ModelSubTask[] _subtasks;
-        private int[][] _tasks;
+        //private int[][] _tasks;
         private ModelJob _job;
         private Index _index;
 
-        public ModelSubTask[] SubTasks { get => _subtasks; }
-        public int[][] Tasks { get => _tasks;}
+        //public ModelSubTask[] SubTasks { get => _subtasks; }
+        //public int[][] Tasks { get => _tasks;}
         public ModelJob Job { get => _job; }
         public Index Index { get => _index;}
 
@@ -174,38 +174,6 @@ namespace ErgoCalc
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            // Save the values entered
-            _subtasks = new ModelSubTask[Convert.ToInt32(updSubtasks.Value)];
-            for (Int32 i = 0; i < _subtasks.Length; i++)
-            {
-                _subtasks[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
-                _subtasks[i].data.e = Convert.ToDouble(gridVariables[i, 1].Value);
-                _subtasks[i].data.d = Convert.ToDouble(gridVariables[i, 2].Value);
-                _subtasks[i].data.p = Convert.ToDouble(gridVariables[i, 3].Value);
-                _subtasks[i].data.h = Convert.ToDouble(gridVariables[i, 4].Value);
-                //_subtasks[i].data.td = Convert.ToDouble(gridVariables[i, 5].Value);
-                //_subtasks[i].data.a = Convert.ToDouble(gridVariables[i, 6].Value);
-                //_subtasks[i].data.c = Convert.ToInt32(gridVariables[i, 7].Value);
-
-                //if (!String.IsNullOrEmpty(txtConstanteLC.Text))
-                //    _subtasks[i].factors.LC = Convert.ToDouble(txtConstanteLC.Text);
-            }
-
-            // Save the tasks grouping values
-            listViewTasks.RemoveEmptyGroups();
-            _tasks= new int[listViewTasks.Groups.Count][];
-            for (int i = 0; i < _tasks.Length; i++)
-            {
-                _tasks[i] = new int[listViewTasks.Groups[i].Items.Count + 1];
-                _tasks[i][0] = listViewTasks.Groups[i].Items.Count; // The first element is the #subtasks in that task
-                for (int j = 1; j < _tasks[i].Length; j++)
-                {
-                    _tasks[i][j] = listViewTasks.Groups[i].Items[j - 1].Index;  // j-1 because there is the #subtasks at [i][0]
-                }
-            }
-
-
-
             // Save the job definition
             int ItemIndex;
             _job.numberTasks = _index == Index.RSI ? 1 : listViewTasks.Groups.Count;
@@ -215,7 +183,7 @@ namespace ErgoCalc
             
             for (int i = 0; i < _job.numberTasks; i++)
             {
-                _job.order[i] = i + 1;
+                _job.order[i] = i;
 
                 _job.JobTasks[i].numberSubTasks = _index == Index.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
                 _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
@@ -232,7 +200,7 @@ namespace ErgoCalc
                     _job.JobTasks[i].SubTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);  // This should be the same for these subtasks
                     
                     _job.JobTasks[i].h += _job.JobTasks[i].SubTasks[j].data.h;  // Calculate mean
-                    _job.JobTasks[i].order[j] = j + 1;
+                    _job.JobTasks[i].order[j] = j;
                 }
 
                 _job.JobTasks[i].h /= _job.JobTasks[i].numberSubTasks;
@@ -246,7 +214,7 @@ namespace ErgoCalc
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Return empty array
-            _subtasks = new ModelSubTask[0];
+            //_subtasks = new ModelSubTask[0];
         }
 
         #region Private routines

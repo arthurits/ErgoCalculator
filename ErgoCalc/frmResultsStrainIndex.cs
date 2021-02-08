@@ -128,6 +128,12 @@ namespace ErgoCalc
         {
             rtbShowResult.Text = _classDLL.ToString();
             FormatText();
+
+            /*
+            image img = Image.FromFile(fname)
+            Clipboard.SetImage(img)
+            rtbShowResult.Paste()
+             */
         }
 
         #endregion
