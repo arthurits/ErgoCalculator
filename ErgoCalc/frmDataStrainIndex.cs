@@ -15,13 +15,13 @@ namespace ErgoCalc
 
     public partial class frmDataStrainIndex : Form
     {
-        private ModelSubTask[] _subtasks;
-        private int[][] _tasks;
+        //private ModelSubTask[] _subtasks;
+        //private int[][] _tasks;
         private ModelJob _job;
         private Index _index;
 
-        public ModelSubTask[] SubTasks { get => _subtasks; }
-        public int[][] Tasks { get => _tasks;}
+        //public ModelSubTask[] SubTasks { get => _subtasks; }
+        //public int[][] Tasks { get => _tasks;}
         public ModelJob Job { get => _job; }
         public Index Index { get => _index;}
 
@@ -174,38 +174,6 @@ namespace ErgoCalc
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            // Save the values entered
-            _subtasks = new ModelSubTask[Convert.ToInt32(updSubtasks.Value)];
-            for (Int32 i = 0; i < _subtasks.Length; i++)
-            {
-                _subtasks[i].data.i = Convert.ToDouble(gridVariables[i, 0].Value);
-                _subtasks[i].data.e = Convert.ToDouble(gridVariables[i, 1].Value);
-                _subtasks[i].data.d = Convert.ToDouble(gridVariables[i, 2].Value);
-                _subtasks[i].data.p = Convert.ToDouble(gridVariables[i, 3].Value);
-                _subtasks[i].data.h = Convert.ToDouble(gridVariables[i, 4].Value);
-                //_subtasks[i].data.td = Convert.ToDouble(gridVariables[i, 5].Value);
-                //_subtasks[i].data.a = Convert.ToDouble(gridVariables[i, 6].Value);
-                //_subtasks[i].data.c = Convert.ToInt32(gridVariables[i, 7].Value);
-
-                //if (!String.IsNullOrEmpty(txtConstanteLC.Text))
-                //    _subtasks[i].factors.LC = Convert.ToDouble(txtConstanteLC.Text);
-            }
-
-            // Save the tasks grouping values
-            listViewTasks.RemoveEmptyGroups();
-            _tasks= new int[listViewTasks.Groups.Count][];
-            for (int i = 0; i < _tasks.Length; i++)
-            {
-                _tasks[i] = new int[listViewTasks.Groups[i].Items.Count + 1];
-                _tasks[i][0] = listViewTasks.Groups[i].Items.Count; // The first element is the #subtasks in that task
-                for (int j = 1; j < _tasks[i].Length; j++)
-                {
-                    _tasks[i][j] = listViewTasks.Groups[i].Items[j - 1].Index;  // j-1 because there is the #subtasks at [i][0]
-                }
-            }
-
-
-
             // Save the job definition
             int ItemIndex;
             _job.numberTasks = _index == Index.RSI ? 1 : listViewTasks.Groups.Count;
@@ -246,7 +214,7 @@ namespace ErgoCalc
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Return empty array
-            _subtasks = new ModelSubTask[0];
+            //_subtasks = new ModelSubTask[0];
         }
 
         #region Private routines
@@ -275,55 +243,60 @@ namespace ErgoCalc
         /// </summary>
         private void DataExample()
         {
-            _subtasks = new ModelSubTask[8];
+            _job.numberTasks = 1;
+            _job.JobTasks = new ModelTask[_job.numberTasks];
+            _job.JobTasks[0].numberSubTasks = 8;
+            _job.JobTasks[0].SubTasks = new ModelSubTask[_job.JobTasks[0].numberSubTasks];
+            //_job.JobTasks[1].numberSubTasks = 2;
+            //_job.JobTasks[1].SubTasks = new ModelSubTask[_job.JobTasks[1].numberSubTasks];
 
-            _subtasks[0].data.i = 0.2;
-            _subtasks[0].data.e = 5;
-            _subtasks[0].data.d = 3;
-            _subtasks[0].data.p = 5;
-            _subtasks[0].data.h = 4;
+            _job.JobTasks[0].SubTasks[0].data.i = 0.2;
+            _job.JobTasks[0].SubTasks[0].data.e = 5;
+            _job.JobTasks[0].SubTasks[0].data.d = 3;
+            _job.JobTasks[0].SubTasks[0].data.p = 5;
+            _job.JobTasks[0].SubTasks[0].data.h = 4;
 
-            _subtasks[1].data.i = 0.2;
-            _subtasks[1].data.e = 5;
-            _subtasks[1].data.d = 3;
-            _subtasks[1].data.p = -5;
-            _subtasks[1].data.h = 4;
+            _job.JobTasks[0].SubTasks[1].data.i = 0.2;
+            _job.JobTasks[0].SubTasks[1].data.e = 5;
+            _job.JobTasks[0].SubTasks[1].data.d = 3;
+            _job.JobTasks[0].SubTasks[1].data.p = -5;
+            _job.JobTasks[0].SubTasks[1].data.h = 4;
 
-            _subtasks[2].data.i = 0.4;
-            _subtasks[2].data.e = 6;
-            _subtasks[2].data.d = 3;
-            _subtasks[2].data.p = -10;
-            _subtasks[2].data.h = 3;
+            _job.JobTasks[0].SubTasks[2].data.i = 0.4;
+            _job.JobTasks[0].SubTasks[2].data.e = 6;
+            _job.JobTasks[0].SubTasks[2].data.d = 3;
+            _job.JobTasks[0].SubTasks[2].data.p = -10;
+            _job.JobTasks[0].SubTasks[2].data.h = 3;
 
-            _subtasks[3].data.i = 0.4;
-            _subtasks[3].data.e = 4;
-            _subtasks[3].data.d = 2;
-            _subtasks[3].data.p = 10;
-            _subtasks[3].data.h = 3;
+            _job.JobTasks[0].SubTasks[3].data.i = 0.4;
+            _job.JobTasks[0].SubTasks[3].data.e = 4;
+            _job.JobTasks[0].SubTasks[3].data.d = 2;
+            _job.JobTasks[0].SubTasks[3].data.p = 10;
+            _job.JobTasks[0].SubTasks[3].data.h = 3;
 
-            _subtasks[4].data.i = 0.4;
-            _subtasks[4].data.e = 4;
-            _subtasks[4].data.d = 2;
-            _subtasks[4].data.p = -10;
-            _subtasks[4].data.h = 3;
+            _job.JobTasks[0].SubTasks[4].data.i = 0.4;
+            _job.JobTasks[0].SubTasks[4].data.e = 4;
+            _job.JobTasks[0].SubTasks[4].data.d = 2;
+            _job.JobTasks[0].SubTasks[4].data.p = -10;
+            _job.JobTasks[0].SubTasks[4].data.h = 3;
 
-            _subtasks[5].data.i = 0.4;
-            _subtasks[5].data.e = 4;
-            _subtasks[5].data.d = 2;
-            _subtasks[5].data.p = 0;
-            _subtasks[5].data.h = 1;
+            _job.JobTasks[0].SubTasks[5].data.i = 0.4;
+            _job.JobTasks[0].SubTasks[5].data.e = 4;
+            _job.JobTasks[0].SubTasks[5].data.d = 2;
+            _job.JobTasks[0].SubTasks[5].data.p = 0;
+            _job.JobTasks[0].SubTasks[5].data.h = 1;
 
-            _subtasks[6].data.i = 0.15;
-            _subtasks[6].data.e = 2;
-            _subtasks[6].data.d = 10;
-            _subtasks[6].data.p = 5;
-            _subtasks[6].data.h = 8;
+            _job.JobTasks[0].SubTasks[6].data.i = 0.15;
+            _job.JobTasks[0].SubTasks[6].data.e = 2;
+            _job.JobTasks[0].SubTasks[6].data.d = 10;
+            _job.JobTasks[0].SubTasks[6].data.p = 5;
+            _job.JobTasks[0].SubTasks[6].data.h = 8;
 
-            _subtasks[7].data.i = 0.15;
-            _subtasks[7].data.e = 2;
-            _subtasks[7].data.d = 10;
-            _subtasks[7].data.p = 5;
-            _subtasks[7].data.h = 8;
+            _job.JobTasks[0].SubTasks[7].data.i = 0.15;
+            _job.JobTasks[0].SubTasks[7].data.e = 2;
+            _job.JobTasks[0].SubTasks[7].data.d = 10;
+            _job.JobTasks[0].SubTasks[7].data.p = 5;
+            _job.JobTasks[0].SubTasks[7].data.h = 8;
 
         }
 
@@ -355,21 +328,21 @@ namespace ErgoCalc
         /// </summary>
         private void DataToGrid()
         {
-            for (Int32 i = 0; i < _subtasks.Length; i++)
+            for (Int32 i = 0; i < _job.JobTasks[0].SubTasks.Length; i++)
             {
                 // Add one column whenever necessary
                 if (i > 0) AddColumn(i);
 
                 // Populate the DataGridView with data
-                gridVariables[i, 0].Value = _subtasks[i].data.i.ToString();
-                gridVariables[i, 1].Value = _subtasks[i].data.e.ToString();
-                gridVariables[i, 2].Value = _subtasks[i].data.d.ToString();
-                gridVariables[i, 3].Value = _subtasks[i].data.p.ToString();
-                gridVariables[i, 4].Value = _subtasks[i].data.h.ToString();
+                gridVariables[i, 0].Value = _job.JobTasks[0].SubTasks[i].data.i.ToString();
+                gridVariables[i, 1].Value = _job.JobTasks[0].SubTasks[i].data.e.ToString();
+                gridVariables[i, 2].Value = _job.JobTasks[0].SubTasks[i].data.d.ToString();
+                gridVariables[i, 3].Value = _job.JobTasks[0].SubTasks[i].data.p.ToString();
+                gridVariables[i, 4].Value = _job.JobTasks[0].SubTasks[i].data.h.ToString();
             }
 
             // Update the control's value
-            updSubtasks.Value = _subtasks.Length;
+            updSubtasks.Value = _job.JobTasks[0].SubTasks.Length;
         }
 
         #endregion
