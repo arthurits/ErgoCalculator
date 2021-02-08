@@ -183,7 +183,7 @@ namespace ErgoCalc
             
             for (int i = 0; i < _job.numberTasks; i++)
             {
-                _job.order[i] = i + 1;
+                _job.order[i] = i;
 
                 _job.JobTasks[i].numberSubTasks = _index == Index.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
                 _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
@@ -200,7 +200,7 @@ namespace ErgoCalc
                     _job.JobTasks[i].SubTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);  // This should be the same for these subtasks
                     
                     _job.JobTasks[i].h += _job.JobTasks[i].SubTasks[j].data.h;  // Calculate mean
-                    _job.JobTasks[i].order[j] = j + 1;
+                    _job.JobTasks[i].order[j] = j;
                 }
 
                 _job.JobTasks[i].h /= _job.JobTasks[i].numberSubTasks;
