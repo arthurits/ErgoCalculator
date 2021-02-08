@@ -129,11 +129,31 @@ namespace ErgoCalc
             rtbShowResult.Text = _classDLL.ToString();
             FormatText();
 
+            double[] dataX = new double[] { 1, 2, 3, 4, 5 };
+            double[] dataY = new double[] { 1, 4, 9, 16, 25 };
+
+            var plot = new ScottPlot.Plot(800, 600);
+            //var formsplot2 = new ScottPlot.FormsPlot(plot);
+            plot.PlotScatter(dataX, dataY);
+            //formsplot2.Render();
+            
+            using (var plotImage = plot.GetBitmap())
+            {
+                Clipboard.SetImage(plotImage);
+            }
+            plot.Clear();
+            var read = rtbShowResult.ReadOnly;
+            rtbShowResult.ReadOnly = false;
+            rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+            rtbShowResult.Paste();
+            rtbShowResult.ReadOnly = read;
+            rtbShowResult.SelectionStart = 0;
+
             /*
             image img = Image.FromFile(fname)
             Clipboard.SetImage(img)
             rtbShowResult.Paste()
-             */
+            */
         }
 
         #endregion
