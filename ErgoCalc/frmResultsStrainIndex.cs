@@ -69,6 +69,7 @@ namespace ErgoCalc
                 //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
                 //_classDLL.RSI(_subtasks, orden, ref nSize);
                 _classDLL.StrainIndex();
+                _job = _classDLL.Job;
             }
             catch (EntryPointNotFoundException)
             {
@@ -99,7 +100,7 @@ namespace ErgoCalc
             }
 
             // Call the routine that shows the results
-            if (error == false) ShowResults(_subtasks);
+            if (error == false) ShowResults(_job);
 
             //}
             //else
@@ -124,19 +125,46 @@ namespace ErgoCalc
         /// Shows the numerical results in the RTF control
         /// </summary>
         /// <param name="sData">Data and results array</param>
-        private void ShowResults(ModelSubTask [] sData)
+        private void ShowResults(ModelJob jobModel)
         {
             rtbShowResult.Text = _classDLL.ToString();
             FormatText();
 
-            double[] dataX = new double[] { 1, 2, 3, 4, 5 };
-            double[] dataY = new double[] { 1, 4, 9, 16, 25 };
+            int nOrder;
+            double nCOSI = 0.0;
+            double[] dataX = new double[_job.JobTasks[0].numberSubTasks];
+            double[] dataRSI = new double[_job.JobTasks[0].numberSubTasks];
+            double[] dataCOSI = new double[_job.JobTasks[0].numberSubTasks];
+            string[] labels = new string[_job.JobTasks[0].numberSubTasks];
 
-            var plot = new ScottPlot.Plot(800, 600);
+            for (int i=0; i< _job.JobTasks[0].numberSubTasks;i++)
+            {
+                dataX[i] = i + 1;
+                nOrder = _job.JobTasks[0].order[_job.JobTasks[0].numberSubTasks - 1 - i];
+                dataRSI[i] = _job.JobTasks[0].SubTasks[nOrder].index;
+                if (i == 0)
+                    nCOSI = _job.JobTasks[0].SubTasks[nOrder].index;
+                else
+                    nCOSI += _job.JobTasks[0].SubTasks[nOrder].index * (_job.JobTasks[0].SubTasks[nOrder].factors.EMa - _job.JobTasks[0].SubTasks[nOrder].factors.EMb) / _job.JobTasks[0].SubTasks[nOrder].factors.EM;
+                dataCOSI[i] = nCOSI;
+                labels[i] = string.Concat("Subtask ", ((char)('A' + _job.JobTasks[0].SubTasks[nOrder].ItemIndex)).ToString());
+            }
+
+            var plot = new ScottPlot.Plot(1200, 900);
             //var formsplot2 = new ScottPlot.FormsPlot(plot);
-            plot.PlotScatter(dataX, dataY);
+            plot.Title("RSI results", fontSize: 22);
+            plot.YLabel("Index value", fontSize: 22);
+            plot.XLabel("Tasks", fontSize: 22);
+
+            plot.PlotBar(dataX, dataRSI, label: "RSI");
+            plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+            plot.AxisAuto();
+            plot.XTicks(dataX, labels);
+            plot.Ticks(fontSize: 18);
+            plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
             //formsplot2.Render();
-            
+
+            var orgdata = Clipboard.GetDataObject();
             using (var plotImage = plot.GetBitmap())
             {
                 Clipboard.SetImage(plotImage);
@@ -146,14 +174,12 @@ namespace ErgoCalc
             rtbShowResult.ReadOnly = false;
             rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
             rtbShowResult.Paste();
+            Clipboard.SetDataObject(orgdata);
             rtbShowResult.ReadOnly = read;
             rtbShowResult.SelectionStart = 0;
+            string code = rtbShowResult.Rtf;
 
-            /*
-            image img = Image.FromFile(fname)
-            Clipboard.SetImage(img)
-            rtbShowResult.Paste()
-            */
+            // https://stackoverflow.com/questions/542850/how-can-i-insert-an-image-into-a-richtextbox
         }
 
         #endregion
@@ -166,7 +192,7 @@ namespace ErgoCalc
             // assigned to Button2.  
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
-                DefaultExt = "*.txt",
+                DefaultExt = "*.rtf",
                 Filter = "RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
                 FilterIndex = 2,
                 Title = "Save Strain Index results",
