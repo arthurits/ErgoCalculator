@@ -100,7 +100,12 @@ namespace ErgoCalc
             }
 
             // Call the routine that shows the results
-            if (error == false) ShowResults(_job);
+            if (error == false)
+            {
+                rtbShowResult.Text = _classDLL.ToString();
+                CreatePlots();
+                FormatText();
+            }
 
             //}
             //else
@@ -125,59 +130,60 @@ namespace ErgoCalc
         /// Shows the numerical results in the RTF control
         /// </summary>
         /// <param name="sData">Data and results array</param>
-        private void ShowResults(ModelJob jobModel)
+        private void CreatePlots()
         {
-            rtbShowResult.Text = _classDLL.ToString();
-            FormatText();
-
             int nOrder;
             double nCOSI = 0.0;
-            double[] dataX = new double[_job.JobTasks[0].numberSubTasks];
-            double[] dataRSI = new double[_job.JobTasks[0].numberSubTasks];
-            double[] dataCOSI = new double[_job.JobTasks[0].numberSubTasks];
-            string[] labels = new string[_job.JobTasks[0].numberSubTasks];
 
-            for (int i=0; i< _job.JobTasks[0].numberSubTasks;i++)
+            for (int j = 0; j < 1; j++)
             {
-                dataX[i] = i + 1;
-                nOrder = _job.JobTasks[0].order[_job.JobTasks[0].numberSubTasks - 1 - i];
-                dataRSI[i] = _job.JobTasks[0].SubTasks[nOrder].index;
-                if (i == 0)
-                    nCOSI = _job.JobTasks[0].SubTasks[nOrder].index;
-                else
-                    nCOSI += _job.JobTasks[0].SubTasks[nOrder].index * (_job.JobTasks[0].SubTasks[nOrder].factors.EMa - _job.JobTasks[0].SubTasks[nOrder].factors.EMb) / _job.JobTasks[0].SubTasks[nOrder].factors.EM;
-                dataCOSI[i] = nCOSI;
-                labels[i] = string.Concat("Subtask ", ((char)('A' + _job.JobTasks[0].SubTasks[nOrder].ItemIndex)).ToString());
+                double[] dataX = new double[_job.JobTasks[j].numberSubTasks];
+                double[] dataRSI = new double[_job.JobTasks[j].numberSubTasks];
+                double[] dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
+                string[] labels = new string[_job.JobTasks[j].numberSubTasks];
+
+                for (int i = 0; i < _job.JobTasks[j].numberSubTasks; i++)
+                {
+                    dataX[i] = i + 1;
+                    nOrder = _job.JobTasks[0].order[_job.JobTasks[j].numberSubTasks - 1 - i];
+                    dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].index;
+                    if (i == 0)
+                        nCOSI = _job.JobTasks[j].SubTasks[nOrder].index;
+                    else
+                        nCOSI += _job.JobTasks[j].SubTasks[nOrder].index * (_job.JobTasks[j].SubTasks[nOrder].factors.EMa - _job.JobTasks[j].SubTasks[nOrder].factors.EMb) / _job.JobTasks[j].SubTasks[nOrder].factors.EM;
+                    dataCOSI[i] = nCOSI;
+                    labels[i] = string.Concat("Subtask ", ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
+                }
+
+                var plot = new ScottPlot.Plot(1200, 900);
+                //var formsplot2 = new ScottPlot.FormsPlot(plot);
+                plot.Title("RSI results", fontSize: 22);
+                plot.YLabel("Index value", fontSize: 22);
+                plot.XLabel("Tasks", fontSize: 22);
+
+                plot.PlotBar(dataX, dataRSI, label: "RSI");
+                plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                plot.AxisAuto();
+                plot.XTicks(dataX, labels);
+                plot.Ticks(fontSize: 18);
+                plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+                //formsplot2.Render();
+
+                var orgdata = Clipboard.GetDataObject();
+                using (var plotImage = plot.GetBitmap())
+                {
+                    Clipboard.SetImage(plotImage);
+                }
+                plot.Clear();
+                var read = rtbShowResult.ReadOnly;
+                rtbShowResult.ReadOnly = false;
+                rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+                rtbShowResult.Paste();
+                Clipboard.SetDataObject(orgdata);
+                rtbShowResult.ReadOnly = read;
+                rtbShowResult.SelectionStart = 0;
+                string code = rtbShowResult.Rtf;
             }
-
-            var plot = new ScottPlot.Plot(1200, 900);
-            //var formsplot2 = new ScottPlot.FormsPlot(plot);
-            plot.Title("RSI results", fontSize: 22);
-            plot.YLabel("Index value", fontSize: 22);
-            plot.XLabel("Tasks", fontSize: 22);
-
-            plot.PlotBar(dataX, dataRSI, label: "RSI");
-            plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
-            plot.AxisAuto();
-            plot.XTicks(dataX, labels);
-            plot.Ticks(fontSize: 18);
-            plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
-            //formsplot2.Render();
-
-            var orgdata = Clipboard.GetDataObject();
-            using (var plotImage = plot.GetBitmap())
-            {
-                Clipboard.SetImage(plotImage);
-            }
-            plot.Clear();
-            var read = rtbShowResult.ReadOnly;
-            rtbShowResult.ReadOnly = false;
-            rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
-            rtbShowResult.Paste();
-            Clipboard.SetDataObject(orgdata);
-            rtbShowResult.ReadOnly = read;
-            rtbShowResult.SelectionStart = 0;
-            string code = rtbShowResult.Rtf;
 
             // https://stackoverflow.com/questions/542850/how-can-i-insert-an-image-into-a-richtextbox
         }

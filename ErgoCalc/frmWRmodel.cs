@@ -47,52 +47,7 @@ namespace ErgoCalc
             chartA.Series[0].Values.Add(new ObservablePoint(0, 100));
             chartA.Series[0].Values.Add(new ObservablePoint(1, 90));
             chartA.Series[0].Values.Add(new ObservablePoint(2, 80));
-            //chartA.Series[1].Values.Add(new ObservablePoint(0, 95));
-            //chartA.Series[1].Values.Add(new ObservablePoint(0.5, 90));
-            //chartA.Series[1].Values.Add(new ObservablePoint(1, 85));
-            //chartA.Series[0].Values.AddRange({ (0,1),(1,2)});
-
-            int[] vals = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            ObservablePoint[] value = { new ObservablePoint(0, 80), new ObservablePoint(0.5, 88), new ObservablePoint(1.0, 84) };
-
-            //ObservablePoint puntos = new ObservablePoint();
-            //ChartValues<Point> puntos = new ChartValues<Point> { new Point(0, 80), new Point(5, 88), new Point(10, 75) };
-            //chartA.Series[1].Values = puntos;
-
-            //chartA.Series[1].Values.Add(new LineSeries { Values = new ChartPoint<int>(vals) });
-            //chartA.Series[1].Values.Add(new ObservablePoint);
-
-            /*
-            chartA.Series = new SeriesCollection
-            {
-                new LineSeries
-                {
-                    Values = new ChartValues<double> { 3, 5, 7, 4 }
-                },
-                new LineSeries
-                {
-                    Values = new ChartValues<decimal> { 5, 6, 2, 7 }
-                }
-            };
-            chartA.AxisX.Add(new Axis
-            {
-                Title = "Time (s)"
-            });
-
-            chartA.AxisY.Add(new Axis
-            {
-                Title = "% Maximum holding time"
-            });
-            chartA.Series.Add(new LineSeries
-            {
-                Values = new ChartValues<double> { 5, 3, 2, 4, 5 },
-                LineSmoothness = 0, //straight lines, 1 really smooth lines
-                //PointGeometry = Geometry.Parse("m 25 70.36218 20 -28 -20 22 -8 -6 z"),
-                PointGeometrySize = 50,
-                //PointForeground = Brushes.Gray
-            });
-            */
-
+            
         }
 
         public frmWRmodel(datosWR datos)
@@ -154,7 +109,14 @@ namespace ErgoCalc
                 }
             };
 
-            
+            this.chartB.plt.Title("WR model", fontSize: 16);
+            this.chartB.plt.YLabel("% Maximum holding time", fontSize: 14);
+            this.chartB.plt.XLabel("Time / s", fontSize: 14);
+            this.chartB.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            this.chartB.plt.Axis(0, null, 0, 100);
+            this.chartB.plt.Grid(lineWidth: 1, color: Color.FromArgb(234,234,234), lineStyle: ScottPlot.LineStyle.Solid);
+            this.chartB.plt.Legend(location: ScottPlot.legendLocation.upperCenter);
+
         }
         
         private void CalcularCurva()
@@ -174,15 +136,20 @@ namespace ErgoCalc
                 puntos.Add(new System.Windows.Point(valores[0][i], valores[1][i]));
             }
 
-            chartA.Series[1].Values = puntos;
+            //chartA.Series[1].Values = puntos;
+            chartB.plt.PlotScatter(valores[0], valores[1], label: "4 3 2", lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+            chartB.Render();
+            chartB.plt.AxisAutoX();
 
+            /*
             this.chart1.DataSource = valores;
-            //this.chart1.Series.Add("Ejemplo");
+            this.chart1.Series.Add("Ejemplo");
             this.chart1.Series["Ejemplo"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             this.chart1.Series["Ejemplo"].BorderWidth = 2;
             this.chart1.Series["Ejemplo"].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chart1.Series["Ejemplo"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.chart1.Series["Ejemplo"].Points.DataBindXY(valores[0], valores[1]);
+            */
         }
 
         private void chartA_DataClick(object sender, ChartPoint chartPoint)
@@ -222,10 +189,53 @@ namespace ErgoCalc
             //algoToolStripMenuItem_Click(null, null);
         }
 
+        private void toolStripWR_SaveChart_Click(object sender, EventArgs e)
+        {
+            // Displays a SaveFileDialog so the user can save the Image  
+            SaveFileDialog saveFileDlg = new SaveFileDialog
+            {
+                DefaultExt = "*.png",
+                Filter = "PNG file (*.png)|*.png|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                FilterIndex = 2,
+                Title = "Save plot image",
+                OverwritePrompt = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+            DialogResult result = saveFileDlg.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.  
+            if (result == DialogResult.OK && saveFileDlg.FileName != "")
+            {
+                chartB.plt.SaveFig(saveFileDlg.FileName);
+            }
+        }
+
         #region IChildResults interface
 
         public void Save(string path)
-        {
+        {   
+            // Displays a SaveFileDialog so the user can save the Image  
+            SaveFileDialog saveFileDlg = new SaveFileDialog
+            {
+                DefaultExt = "*.csv",
+                Filter = "CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                FilterIndex = 2,
+                Title = "Save scatter-plot data",
+                OverwritePrompt = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+            DialogResult result = saveFileDlg.ShowDialog();
+
+            // If the file name is not an empty string open it for saving.  
+            if (result == DialogResult.OK && saveFileDlg.FileName != "")
+            {   
+                foreach (var plot in chartB.plt.GetPlottables())
+                {
+                    if (plot.GetType() == typeof(ScottPlot.PlottableScatter))
+                        ((ScottPlot.PlottableScatter)plot).SaveCSV(saveFileDlg.FileName);
+                }
+            }
+
             return;
         }
         public bool[] GetToolbarEnabledState()
@@ -249,5 +259,7 @@ namespace ErgoCalc
             return;
         }
         #endregion
+
+
     }
 }

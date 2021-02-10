@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmWRmodel));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.mnuSub = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setupPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,20 +38,19 @@
             this.algoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.chartB = new ScottPlot.FormsPlot();
             this.chartA = new LiveCharts.WinForms.CartesianChart();
             this.toolStripWR = new System.Windows.Forms.ToolStrip();
             this.toolStripWR_SaveChart = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_AddLine = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_RemoveLine = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_Settings = new System.Windows.Forms.ToolStripButton();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.mnuSub.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.toolStripWR.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuSub
@@ -83,7 +80,7 @@
             this.setupPageToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.setupPageToolStripMenuItem.MergeIndex = 2;
             this.setupPageToolStripMenuItem.Name = "setupPageToolStripMenuItem";
-            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setupPageToolStripMenuItem.Text = "&Setup page";
             // 
             // toolStripSeparator1
@@ -91,7 +88,7 @@
             this.toolStripSeparator1.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator1.MergeIndex = 3;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // editToolStripMenuItem
             // 
@@ -106,7 +103,7 @@
             // algoToolStripMenuItem
             // 
             this.algoToolStripMenuItem.Name = "algoToolStripMenuItem";
-            this.algoToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.algoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.algoToolStripMenuItem.Text = "Algo";
             this.algoToolStripMenuItem.Click += new System.EventHandler(this.algoToolStripMenuItem_Click);
             // 
@@ -123,9 +120,9 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.chart1);
+            this.splitContainer1.Panel2.Controls.Add(this.chartB);
             this.splitContainer1.Panel2.Controls.Add(this.chartA);
-            this.splitContainer1.Size = new System.Drawing.Size(577, 443);
+            this.splitContainer1.Size = new System.Drawing.Size(577, 387);
             this.splitContainer1.SplitterDistance = 170;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -134,8 +131,16 @@
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(170, 443);
+            this.propertyGrid1.Size = new System.Drawing.Size(170, 387);
             this.propertyGrid1.TabIndex = 0;
+            // 
+            // chartB
+            // 
+            this.chartB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartB.Location = new System.Drawing.Point(0, 0);
+            this.chartB.Name = "chartB";
+            this.chartB.Size = new System.Drawing.Size(403, 387);
+            this.chartB.TabIndex = 2;
             // 
             // chartA
             // 
@@ -172,6 +177,7 @@
             this.toolStripWR_SaveChart.Text = "Save chart";
             this.toolStripWR_SaveChart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripWR_SaveChart.ToolTipText = "Save the chart as an image";
+            this.toolStripWR_SaveChart.Click += new System.EventHandler(this.toolStripWR_SaveChart_Click);
             // 
             // toolStripWR_AddLine
             // 
@@ -207,50 +213,11 @@
             this.toolStripWR_Settings.ToolTipText = "Toggle settings";
             this.toolStripWR_Settings.CheckedChanged += new System.EventHandler(this.toolStripMain_Settings_CheckedChanged);
             // 
-            // chart1
-            // 
-            this.chart1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisX.MajorTickMark.Interval = 0D;
-            chartArea1.AxisX.MajorTickMark.IntervalOffset = 0D;
-            chartArea1.AxisX.MajorTickMark.IntervalOffsetType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisX.MajorTickMark.IntervalType = System.Windows.Forms.DataVisualization.Charting.DateTimeIntervalType.Auto;
-            chartArea1.AxisX.MajorTickMark.Size = 4F;
-            chartArea1.AxisX.MajorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
-            chartArea1.AxisX.MinorTickMark.Enabled = true;
-            chartArea1.AxisX.Title = "Time / s";
-            chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
-            chartArea1.AxisY.MajorTickMark.Size = 4F;
-            chartArea1.AxisY.MajorTickMark.TickMarkStyle = System.Windows.Forms.DataVisualization.Charting.TickMarkStyle.AcrossAxis;
-            chartArea1.AxisY.Maximum = 100D;
-            chartArea1.AxisY.Minimum = 0D;
-            chartArea1.AxisY.MinorTickMark.Enabled = true;
-            chartArea1.AxisY.Title = "% Maximum holding time";
-            chartArea1.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.IsSameFontSizeForAllAxes = true;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Alignment = System.Drawing.StringAlignment.Center;
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 272);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            series1.Legend = "Legend1";
-            series1.LegendText = "4 3 2";
-            series1.Name = "Ejemplo";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(236, 171);
-            this.chart1.TabIndex = 1;
-            this.chart1.Text = "chart1";
-            // 
             // frmWRmodel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(577, 467);
+            this.ClientSize = new System.Drawing.Size(577, 411);
             this.Controls.Add(this.toolStripWR);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mnuSub);
@@ -265,7 +232,6 @@
             this.splitContainer1.ResumeLayout(false);
             this.toolStripWR.ResumeLayout(false);
             this.toolStripWR.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,6 +253,6 @@
         private System.Windows.Forms.ToolStripButton toolStripWR_AddLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_RemoveLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_SaveChart;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private ScottPlot.FormsPlot chartB;
     }
 }
