@@ -80,7 +80,7 @@
             this.setupPageToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.setupPageToolStripMenuItem.MergeIndex = 2;
             this.setupPageToolStripMenuItem.Name = "setupPageToolStripMenuItem";
-            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.setupPageToolStripMenuItem.Text = "&Setup page";
             // 
             // toolStripSeparator1
@@ -88,7 +88,7 @@
             this.toolStripSeparator1.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator1.MergeIndex = 3;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // editToolStripMenuItem
             // 
@@ -103,7 +103,7 @@
             // algoToolStripMenuItem
             // 
             this.algoToolStripMenuItem.Name = "algoToolStripMenuItem";
-            this.algoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.algoToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.algoToolStripMenuItem.Text = "Algo";
             this.algoToolStripMenuItem.Click += new System.EventHandler(this.algoToolStripMenuItem_Click);
             // 
@@ -176,7 +176,7 @@
             this.toolStripWR_SaveChart.Size = new System.Drawing.Size(65, 67);
             this.toolStripWR_SaveChart.Text = "Save chart";
             this.toolStripWR_SaveChart.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripWR_SaveChart.ToolTipText = "Save the chart as an image";
+            this.toolStripWR_SaveChart.ToolTipText = "5Save the chart as an image";
             this.toolStripWR_SaveChart.Click += new System.EventHandler(this.toolStripWR_SaveChart_Click);
             // 
             // toolStripWR_AddLine

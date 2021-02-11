@@ -216,6 +216,12 @@ namespace ErgoCalc
             return new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true };
         }
 
+        public ToolStrip ChildToolStrip
+        {
+            get => null;
+            set { }
+        }
+
         public void ShowHideSettings()
         {
             splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;

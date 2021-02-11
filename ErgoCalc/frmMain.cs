@@ -367,18 +367,18 @@ namespace ErgoCalc
 
         private void frmMain_MdiChildActivate(object sender, EventArgs e)
         {
-            //ToolStripManager.RevertMerge(this.toolStripMain);
-            /*if (ActiveMdiChild is frmWRmodel)
+            ToolStripManager.RevertMerge(this.toolStripMain);
+            if (ActiveMdiChild is frmWRmodel)
             {
                 // The frmChild.FormToolStrip is a property that exposes the
                 // toolstrip on your child form
                 // ToolStripManager.Merge(frmChild.toolStripWR, this.toolStripMain);
-                ToolStripManager.Merge(((frmWRmodel)ActiveMdiChild).toolStripWR, this.toolStripMain);
+                ToolStripManager.Merge(((frmWRmodel)ActiveMdiChild).ChildToolStrip, this.toolStripMain);
                 //this.Controls.Add(frmChild.toolStripWR);
                 //((frmWRmodel)ActiveMdiChild).toolStripWR.Visible = true;
                 //this.tspTop.Join(((frmWRmodel)ActiveMdiChild).toolStripWR, 1);
                 
-            }*/
+            }
 
             /*if (ActiveMdiChild is frmWRmodel frmChild)
             {

@@ -38,9 +38,9 @@ namespace ErgoCalc
             var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             if (File.Exists(path + @"\images\settings.ico")) this.toolStripWR_Settings.Image=new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
             this.toolStripWR_Settings.CheckOnClick = true;
-            if (File.Exists(path + @"\images\Awicons-Vista-Artistic-Chart-add.ico")) this.toolStripWR_AddLine.Image = new Icon(path + @"\images\Awicons-Vista-Artistic-Chart-add.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\Awicons-Vista-Artistic-Chart-delete.ico")) this.toolStripWR_RemoveLine.Image = new Icon(path + @"\images\Awicons-Vista-Artistic-Chart-delete.ico", 48, 48).ToBitmap();
-            if (File.Exists(path + @"\images\charts_folder_badged.ico")) this.toolStripWR_SaveChart.Image = new Icon(path + @"\images\charts_folder_badged.ico", 48, 48).ToBitmap();
+            if (File.Exists(path + @"\images\chart-add.ico")) this.toolStripWR_AddLine.Image = new Icon(path + @"\images\chart-add.ico", 48, 48).ToBitmap();
+            if (File.Exists(path + @"\images\chart-delete.ico")) this.toolStripWR_RemoveLine.Image = new Icon(path + @"\images\chart-delete.ico", 48, 48).ToBitmap();
+            if (File.Exists(path + @"\images\chart-save.ico")) this.toolStripWR_SaveChart.Image = new Icon(path + @"\images\chart-save.ico", 48, 48).ToBitmap();
 
             // https://lvcharts.net/App/examples/v1/wf/Series
 
@@ -196,7 +196,7 @@ namespace ErgoCalc
             {
                 DefaultExt = "*.png",
                 Filter = "PNG file (*.png)|*.png|Text file (*.txt)|*.txt|All files (*.*)|*.*",
-                FilterIndex = 2,
+                FilterIndex = 1,
                 Title = "Save plot image",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -219,7 +219,7 @@ namespace ErgoCalc
             {
                 DefaultExt = "*.csv",
                 Filter = "CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
-                FilterIndex = 2,
+                FilterIndex = 1,
                 Title = "Save scatter-plot data",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -242,6 +242,12 @@ namespace ErgoCalc
         {
             bool[] toolbar = new bool[] { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
             return toolbar;
+        }
+
+        public ToolStrip ChildToolStrip
+        {
+            get => toolStripWR;
+            set => toolStripWR = value;
         }
 
         public void ShowHideSettings()

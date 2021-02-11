@@ -134,47 +134,76 @@ namespace ErgoCalc
         {
             int nOrder;
             double nCOSI = 0.0;
+            double[] dataX;
+            double[] dataRSI;
+            double[] dataCOSI;
+            string[] labels;
+            string strTaskText = string.Empty;
+            string strPlotTitle = string.Empty;
 
-            for (int j = 0; j < 1; j++)
+            for (int j = 0; j < _job.numberTasks; j++)
             {
-                double[] dataX = new double[_job.JobTasks[j].numberSubTasks];
-                double[] dataRSI = new double[_job.JobTasks[j].numberSubTasks];
-                double[] dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
-                string[] labels = new string[_job.JobTasks[j].numberSubTasks];
+                dataX = new double[_job.JobTasks[j].numberSubTasks];
+                dataRSI = new double[_job.JobTasks[j].numberSubTasks];
+                dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
+                labels = new string[_job.JobTasks[j].numberSubTasks];
+
+                if (_job.JobTasks[j].index == -1)
+                {
+                    strTaskText = "Tasks";
+                    strPlotTitle = "RSI results";
+                }
+                else
+                {
+                    strTaskText = "SubTasks";
+                    strPlotTitle = string.Concat("RSI & COSI results for Task ", ((char)('A' + j)).ToString());
+                }
 
                 for (int i = 0; i < _job.JobTasks[j].numberSubTasks; i++)
                 {
+
+                    if(_job.JobTasks[j].index == -1)
+                        nOrder = _job.JobTasks[j].order[i];
+                    else
+                        nOrder = _job.JobTasks[j].order[_job.JobTasks[j].numberSubTasks - 1 - i];
+
                     dataX[i] = i + 1;
-                    nOrder = _job.JobTasks[0].order[_job.JobTasks[j].numberSubTasks - 1 - i];
                     dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].index;
                     if (i == 0)
                         nCOSI = _job.JobTasks[j].SubTasks[nOrder].index;
                     else
                         nCOSI += _job.JobTasks[j].SubTasks[nOrder].index * (_job.JobTasks[j].SubTasks[nOrder].factors.EMa - _job.JobTasks[j].SubTasks[nOrder].factors.EMb) / _job.JobTasks[j].SubTasks[nOrder].factors.EM;
                     dataCOSI[i] = nCOSI;
-                    labels[i] = string.Concat("Subtask ", ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
+                    //labels[i] = string.Concat(strTaskText, ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
+                    labels[i] = ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString();
                 }
 
-                var plot = new ScottPlot.Plot(1200, 900);
+                //var plot = new ScottPlot.Plot(1200, 900);
+                var plot = new ScottPlot.Plot(600, 450);
                 //var formsplot2 = new ScottPlot.FormsPlot(plot);
-                plot.Title("RSI results", fontSize: 22);
+
+                plot.Title(strPlotTitle, fontSize: 22);
                 plot.YLabel("Index value", fontSize: 22);
-                plot.XLabel("Tasks", fontSize: 22);
+                plot.XLabel(strTaskText.TrimEnd(), fontSize: 22); ;
 
                 plot.PlotBar(dataX, dataRSI, label: "RSI");
-                plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                if (_job.JobTasks[j].index != -1)
+                    plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
                 plot.AxisAuto();
                 plot.XTicks(dataX, labels);
                 plot.Ticks(fontSize: 18);
                 plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
                 //formsplot2.Render();
-
+                
+                //plot.CoordinateFromPixel();
+                
                 var orgdata = Clipboard.GetDataObject();
                 using (var plotImage = plot.GetBitmap())
                 {
                     Clipboard.SetImage(plotImage);
                 }
                 plot.Clear();
+                rtbShowResult.AppendText(Environment.NewLine);
                 var read = rtbShowResult.ReadOnly;
                 rtbShowResult.ReadOnly = false;
                 rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
@@ -185,10 +214,78 @@ namespace ErgoCalc
                 string code = rtbShowResult.Rtf;
             }
 
+            if (_job.index != -1)
+            {
+                dataX = new double[_job.numberTasks];
+                dataRSI = new double[_job.numberTasks];
+                dataCOSI = new double[_job.numberTasks];
+                labels = new string[_job.numberTasks];
+                strPlotTitle = string.Empty;
+
+                for (int i = 0; i < _job.numberTasks; i++)
+                {
+                    nOrder = _job.order[_job.numberTasks - 1 - i];
+                    dataX[i] = i + 1;
+                    dataRSI[i] = _job.JobTasks[nOrder].index;
+                    if (i == 0)
+                        nCOSI = _job.JobTasks[nOrder].index;
+                    else
+                        nCOSI += _job.JobTasks[nOrder].index * (_job.JobTasks[nOrder].HMa - _job.JobTasks[nOrder].HMb) / _job.JobTasks[nOrder].HM;
+                    dataCOSI[i] = nCOSI;
+                    //labels[i] = string.Concat("Task ", ((char)('A' + nOrder)).ToString());
+                    labels[i] = ((char)('A' + nOrder)).ToString();
+                    strPlotTitle += string.Concat(((char)('A' + i)).ToString(), " & ");
+                }
+                strPlotTitle = strPlotTitle.Remove(strPlotTitle.Length - 3, 3);
+
+                var plot = new ScottPlot.Plot(600, 450);
+                plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
+                plot.YLabel("Index value", fontSize: 22);
+                plot.XLabel("Tasks", fontSize: 22); ;
+
+                plot.PlotBar(dataX, dataRSI, label: "COSI");
+                plot.PlotScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                plot.AxisAuto();
+                plot.XTicks(dataX, labels);
+                plot.Ticks(fontSize: 18);
+                plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+
+                var orgdata = Clipboard.GetDataObject();
+                using (var plotImage = plot.GetBitmap())
+                {
+                    Clipboard.SetImage(plotImage);
+                }
+                plot.Clear();
+                rtbShowResult.AppendText(Environment.NewLine);
+                var read = rtbShowResult.ReadOnly;
+                rtbShowResult.ReadOnly = false;
+                rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+                rtbShowResult.Paste();
+                Clipboard.SetDataObject(orgdata);
+                rtbShowResult.ReadOnly = read;
+                rtbShowResult.SelectionStart = 0;
+
+            }
+
+            /*
+            // Resize image
+            int positionW = 0;
+            int positionH = 0;
+
+            positionW = rtbShowResult.Rtf.IndexOf("picwgoal", positionW);
+            //if (positionW == -1) break;
+            //var algo = rtbShowResult.Rtf.Substring(positionW + 8, 4);
+            rtbShowResult.Rtf = rtbShowResult.Rtf.Replace(rtbShowResult.Rtf.Substring(positionW + 8, 4), @"9000");
+        
+            positionH = rtbShowResult.Rtf.IndexOf("pichgoal", positionH);
+            //if (positionH == -1) break;
+            rtbShowResult.Rtf = rtbShowResult.Rtf.Replace(rtbShowResult.Rtf.Substring(positionH + 8, 4), @"6750");
+            */
+
             // https://stackoverflow.com/questions/542850/how-can-i-insert-an-image-into-a-richtextbox
         }
 
-        #endregion
+        #endregion Private routines
 
         #region IChildResults
         public void Save(string path)
@@ -200,7 +297,7 @@ namespace ErgoCalc
             {
                 DefaultExt = "*.rtf",
                 Filter = "RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
-                FilterIndex = 2,
+                FilterIndex = 1,
                 Title = "Save Strain Index results",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -245,6 +342,12 @@ namespace ErgoCalc
         public bool[] GetToolbarEnabledState()
         {
             return new bool[] { true, true, true, false, true, true, false, false, true, false, false, true, true, true };
+        }
+
+        public ToolStrip ChildToolStrip
+        {
+            get => null;
+            set { }
         }
 
         public void ShowHideSettings()

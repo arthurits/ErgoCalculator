@@ -489,6 +489,11 @@ namespace ErgoCalc
         bool[] GetToolbarEnabledState();
 
         /// <summary>
+        /// Gets and set the child's ToolStrip control in order to be merged with the parent's
+        /// </summary>
+        ToolStrip ChildToolStrip { get; set; }
+
+        /// <summary>
         /// Sets the enabled/disabled state of the ToolStripButtons in the parent MDI form
         /// </summary>
         void ShowHideSettings();

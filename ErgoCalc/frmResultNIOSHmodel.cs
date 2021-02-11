@@ -304,7 +304,7 @@ namespace ErgoCalc
             {
                 DefaultExt = "*.txt",
                 Filter = "RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
-                FilterIndex=2,
+                FilterIndex = 2,
                 Title = "Save NIOSH model results",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -344,7 +344,6 @@ namespace ErgoCalc
             }
 
             return;
-            return;
         }
 
         public bool[] GetToolbarEnabledState()
@@ -353,6 +352,11 @@ namespace ErgoCalc
             return toolbar;
         }
 
+        public ToolStrip ChildToolStrip
+        {
+            get => toolStripNIOSH;
+            set => toolStripNIOSH = value;
+        }
         public void ShowHideSettings()
         {
             splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
