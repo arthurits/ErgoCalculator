@@ -252,7 +252,8 @@ namespace ErgoCalc
             if (i > 0)
             { 
                 chartB.plt.Remove(chartB.plt.GetPlottables()[i - 1]);
-                _chartOptions.NúmeroCurva = i - 1;
+                chartB.Render();
+                _chartOptions.NúmeroCurva = i - 2;
             }
         }
 
