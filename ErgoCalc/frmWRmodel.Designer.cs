@@ -80,7 +80,7 @@
             this.setupPageToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.setupPageToolStripMenuItem.MergeIndex = 2;
             this.setupPageToolStripMenuItem.Name = "setupPageToolStripMenuItem";
-            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setupPageToolStripMenuItem.Text = "&Setup page";
             // 
             // toolStripSeparator1
@@ -88,7 +88,7 @@
             this.toolStripSeparator1.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator1.MergeIndex = 3;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // editToolStripMenuItem
             // 
@@ -102,8 +102,9 @@
             // 
             // algoToolStripMenuItem
             // 
+            this.algoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.algoToolStripMenuItem.Name = "algoToolStripMenuItem";
-            this.algoToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.algoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.algoToolStripMenuItem.Text = "Algo";
             this.algoToolStripMenuItem.Click += new System.EventHandler(this.algoToolStripMenuItem_Click);
             // 
@@ -141,6 +142,7 @@
             this.chartB.Name = "chartB";
             this.chartB.Size = new System.Drawing.Size(403, 387);
             this.chartB.TabIndex = 2;
+            this.chartB.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartB_MouseClick);
             // 
             // chartA
             // 
@@ -189,6 +191,7 @@
             this.toolStripWR_AddLine.Text = "Add line";
             this.toolStripWR_AddLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripWR_AddLine.ToolTipText = "Add serie to chart";
+            this.toolStripWR_AddLine.Click += new System.EventHandler(this.toolStripWR_AddLine_Click);
             // 
             // toolStripWR_RemoveLine
             // 
@@ -200,6 +203,7 @@
             this.toolStripWR_RemoveLine.Text = "Remove line";
             this.toolStripWR_RemoveLine.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripWR_RemoveLine.ToolTipText = "Remove selected serie from chart";
+            this.toolStripWR_RemoveLine.Click += new System.EventHandler(this.toolStripWR_RemoveLine_Click);
             // 
             // toolStripWR_Settings
             // 

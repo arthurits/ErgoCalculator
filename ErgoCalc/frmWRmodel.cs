@@ -24,16 +24,18 @@ namespace ErgoCalc
         public frmWRmodel()
         {
             InitializeComponent();
-            InitializeCharts();
+            InitializeChart();
 
             this.mnuSub.Visible = false;
-            _chartOptions = new ChartOptions(this.chartA, 1);     
+            _chartOptions = new ChartOptions(chartB, 1)
+            {
+                NúmeroCurva = chartB.plt.GetPlottables().Count - 1
+            };
 
-            // Panel de propiedades
-            _chartOptions.NúmeroCurva = this.chartA.Series.Count - 1;
             propertyGrid1.SelectedObject = _chartOptions;
-            splitContainer1.Panel1Collapsed = true;
-
+            splitContainer1.Panel1Collapsed = false;
+            splitContainer1.SplitterDistance = 0;
+            
             // ToolStrip
             var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             if (File.Exists(path + @"\images\settings.ico")) this.toolStripWR_Settings.Image=new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
@@ -43,10 +45,9 @@ namespace ErgoCalc
             if (File.Exists(path + @"\images\chart-save.ico")) this.toolStripWR_SaveChart.Image = new Icon(path + @"\images\chart-save.ico", 48, 48).ToBitmap();
 
             // https://lvcharts.net/App/examples/v1/wf/Series
-
-            chartA.Series[0].Values.Add(new ObservablePoint(0, 100));
-            chartA.Series[0].Values.Add(new ObservablePoint(1, 90));
-            chartA.Series[0].Values.Add(new ObservablePoint(2, 80));
+            //chartA.Series[0].Values.Add(new ObservablePoint(0, 100));
+            //chartA.Series[0].Values.Add(new ObservablePoint(1, 90));
+            //chartA.Series[0].Values.Add(new ObservablePoint(2, 80));
             
         }
 
@@ -55,6 +56,21 @@ namespace ErgoCalc
         {
             _datos = datos;
             CalcularCurva();
+            _chartOptions.NúmeroCurva = chartB.plt.GetPlottables().Count - 1;
+        }
+
+        /// <summary>
+        /// Initializes the chart objets
+        /// </summary>
+        private void InitializeChart()
+        {
+            chartB.plt.Title("WR model", fontSize: 16);
+            chartB.plt.YLabel("% Maximum holding time", fontSize: 14);
+            chartB.plt.XLabel("Time / s", fontSize: 14);
+            chartB.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            chartB.plt.Axis(0, null, 0, 100);
+            chartB.plt.Grid(lineWidth: 1, color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
+            chartB.plt.Legend(location: ScottPlot.legendLocation.upperCenter);
         }
 
         /// <summary>
@@ -109,14 +125,6 @@ namespace ErgoCalc
                 }
             };
 
-            this.chartB.plt.Title("WR model", fontSize: 16);
-            this.chartB.plt.YLabel("% Maximum holding time", fontSize: 14);
-            this.chartB.plt.XLabel("Time / s", fontSize: 14);
-            this.chartB.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            this.chartB.plt.Axis(0, null, 0, 100);
-            this.chartB.plt.Grid(lineWidth: 1, color: Color.FromArgb(234,234,234), lineStyle: ScottPlot.LineStyle.Solid);
-            this.chartB.plt.Legend(location: ScottPlot.legendLocation.upperCenter);
-
         }
         
         private void CalcularCurva()
@@ -130,16 +138,20 @@ namespace ErgoCalc
             if (valores.Length == 0)
                 return;
 
-            ChartValues<System.Windows.Point> puntos = new ChartValues<System.Windows.Point>();
-            for (int i=0; i<valores[0].Length; i++)
-            {
-                puntos.Add(new System.Windows.Point(valores[0][i], valores[1][i]));
-            }
-
-            //chartA.Series[1].Values = puntos;
+            //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
             chartB.plt.PlotScatter(valores[0], valores[1], label: "4 3 2", lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
             chartB.Render();
             chartB.plt.AxisAutoX();
+
+            /*
+           ChartValues<System.Windows.Point> puntos = new ChartValues<System.Windows.Point>();
+           for (int i=0; i<valores[0].Length; i++)
+           {
+               puntos.Add(new System.Windows.Point(valores[0][i], valores[1][i]));
+           }
+            */
+
+            //chartA.Series[1].Values = puntos;
 
             /*
             this.chart1.DataSource = valores;
@@ -151,6 +163,19 @@ namespace ErgoCalc
             this.chart1.Series["Ejemplo"].Points.DataBindXY(valores[0], valores[1]);
             */
         }
+
+        private void chartB_MouseClick(object sender, MouseEventArgs e)
+        {
+            // https://github.com/ScottPlot/ScottPlot/discussions/645
+            double x = chartB.plt.CoordinateFromPixelX(e.X);
+            double y = chartB.plt.CoordinateFromPixelY(e.Y);
+            using (var bmp = chartB.plt.GetBitmap(false))
+            {
+                var algo = bmp.GetPixel(e.X, e.Y);
+            }
+            //Text = $"Clicked X={x} Y={y}";
+        }
+
 
         private void chartA_DataClick(object sender, ChartPoint chartPoint)
         {
@@ -171,22 +196,20 @@ namespace ErgoCalc
 
         public void algoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.SuspendLayout();
-            //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-            //splitContainer1.SplitterWidth = splitContainer1.Panel1Collapsed ? 4 : 0;
-
-            splitContainer1.Panel1Collapsed = false;
-            if (splitContainer1.SplitterDistance>0)
-                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
-            else
-                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 170, new Transitions.TransitionType_Linear(200));
-            this.ResumeLayout();
         }
 
         private void toolStripMain_Settings_CheckedChanged(object sender, EventArgs e)
         {
-            algoToolStripMenuItem.PerformClick();
-            //algoToolStripMenuItem_Click(null, null);
+            this.SuspendLayout();
+            //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            //splitContainer1.SplitterWidth = splitContainer1.Panel1Collapsed ? 4 : 0;
+            //splitContainer1.Panel1Collapsed = false;
+
+            if (splitContainer1.SplitterDistance > 0)
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
+            else
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 170, new Transitions.TransitionType_Linear(200));
+            this.ResumeLayout();
         }
 
         private void toolStripWR_SaveChart_Click(object sender, EventArgs e)
@@ -195,7 +218,7 @@ namespace ErgoCalc
             SaveFileDialog saveFileDlg = new SaveFileDialog
             {
                 DefaultExt = "*.png",
-                Filter = "PNG file (*.png)|*.png|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                Filter = "PNG file (*.png)|*.png|All files (*.*)|*.*",
                 FilterIndex = 1,
                 Title = "Save plot image",
                 OverwritePrompt = true,
@@ -207,6 +230,29 @@ namespace ErgoCalc
             if (result == DialogResult.OK && saveFileDlg.FileName != "")
             {
                 chartB.plt.SaveFig(saveFileDlg.FileName);
+            }
+        }
+        private void toolStripWR_AddLine_Click(object sender, EventArgs e)
+        {
+            // Llamar al formulario para introducir los datos
+            frmDataWRmodel frmDatosWR = new frmDataWRmodel();
+            if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
+            {
+                _datos = frmDatosWR.getData();
+                CalcularCurva();
+                _chartOptions.NúmeroCurva = chartB.plt.GetPlottables().Count - 1;
+            }
+            // Cerrar el formulario de entrada de datos
+            frmDatosWR.Dispose();
+        }
+
+        private void toolStripWR_RemoveLine_Click(object sender, EventArgs e)
+        {
+            var i = chartB.plt.GetPlottables().Count;
+            if (i > 0)
+            { 
+                chartB.plt.Remove(chartB.plt.GetPlottables()[i - 1]);
+                _chartOptions.NúmeroCurva = i - 1;
             }
         }
 
@@ -264,8 +310,8 @@ namespace ErgoCalc
         {
             return;
         }
+
+
         #endregion
-
-
     }
 }

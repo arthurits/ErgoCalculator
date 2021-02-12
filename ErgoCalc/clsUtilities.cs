@@ -59,10 +59,11 @@ namespace ErgoCalc
     public class ChartOptions
     {
         #region Propiedades de la clase
-        private LiveCharts.WinForms.CartesianChart _chart;
-        private LiveCharts.Wpf.AxesCollection _axisX;
-        private LiveCharts.Wpf.AxesCollection _axisY;
-        LiveCharts.Wpf.LineSeries _serie;
+        private ScottPlot.FormsPlot _plot;
+        private ScottPlot.PlottableScatter _serie;
+        //private LiveCharts.WinForms.CartesianChart _chart;
+        //private LiveCharts.Wpf.AxesCollection _axisX;
+        //private LiveCharts.Wpf.AxesCollection _axisY;
         //private ZedGraph.GraphPane _zedG;
         private Int32 _nCurva;
         #endregion
@@ -70,16 +71,16 @@ namespace ErgoCalc
         /// <summary>
         /// Constructor de la clase. Inicializar propiedades.
         /// </summary>
-        public ChartOptions(LiveCharts.WinForms.CartesianChart chart, Int32 i)
+        public ChartOptions(ScottPlot.FormsPlot plot, Int32 i)
         {
-            _chart = chart;
+            _plot = plot;
             _nCurva = i;
         }
 
         [Browsable(false)]
-        public LiveCharts.WinForms.CartesianChart chart
+        public ScottPlot.FormsPlot plot
         {
-            set { _chart = value; }
+            set { _plot = value; }
         }
 
         [Browsable(false)]
@@ -89,7 +90,11 @@ namespace ErgoCalc
             set
             {
                 _nCurva = value;
-                if (value > 0) _serie = (LiveCharts.Wpf.LineSeries)_chart.Series[_nCurva];
+                if (value > -1)
+                {
+                    var plots = _plot.plt.GetPlottables()[_nCurva];
+                    _serie = (ScottPlot.PlottableScatter)_plot.plt.GetPlottables()[_nCurva];
+                }
             }
         }
 
@@ -98,20 +103,77 @@ namespace ErgoCalc
         /// </summary>
         [Browsable(true),
         ReadOnly(false),
-        Description("Texto del eje de abscisas"),
+        Description("Color palette"),
+        Category("Plot options")]
+        public ScottPlot.Drawing.Colorset ColorPalette
+        {
+            get => _plot.plt.Colorset();
+            set
+            {
+                _plot.plt.Colorset(value);
+                _plot.Render();
+            }
+        }
+
+        /// <summary>
+        /// Propiedades públicas de la clase
+        /// </summary>
+        [Browsable(true),
+        ReadOnly(false),
+        Description("Show / hide grid"),
+        Category("Plot options")]
+        public bool ShowGrid
+        {
+            get => _plot.plt.GetSettings().HorizontalGridLines.Visible;
+            set
+            {
+                _plot.plt.GetSettings().HorizontalGridLines.Visible = value;
+                _plot.plt.GetSettings().VerticalGridLines.Visible = value;
+                _plot.Render();
+            }
+        }
+
+        // <summary>
+        /// Propiedades públicas de la clase
+        /// </summary>
+        [Browsable(true),
+        ReadOnly(false),
+        Description("Show / hide legend"),
+        Category("Plot options")]
+        public bool LegendGrid
+        {
+            get => _plot.plt.GetSettings().Legend.Visible;
+            set
+            {
+                _plot.plt.GetSettings().Legend.Visible = value;
+                _plot.Render();
+            }
+        }
+
+        /// <summary>
+        /// Propiedades públicas de la clase
+        /// </summary>
+        [Browsable(true),
+        ReadOnly(false),
+        Description("Plot title"),
+        Category("Text and labels")]
+        public string PlotTitle
+        {
+            get => _plot.plt.GetSettings().title.text;
+            set { _plot.plt.Title(value); _plot.Render(); }
+        }
+
+        /// <summary>
+        /// Propiedades públicas de la clase
+        /// </summary>
+        [Browsable(true),
+        ReadOnly(false),
+        Description("Abscissa title"),
         Category("Text and labels")]
         public string AxisXTitle
         {
-            get
-            {
-                LiveCharts.Wpf.AxesCollection axis = _chart.AxisX;
-                return ((LiveCharts.Wpf.AxesCollection)_chart.AxisX)[0].Title;
-                //return axis[0].Title;
-            }
-            set
-            {
-                ((LiveCharts.Wpf.AxesCollection)_chart.AxisX)[0].Title = value;
-            }
+            get => _plot.plt.GetSettings().xLabel.text;
+            set { _plot.plt.XLabel(value); _plot.Render(); }
         }
 
         /// <summary>
@@ -119,18 +181,12 @@ namespace ErgoCalc
         /// </summary>
         [Browsable(true),
         ReadOnly(false),
-        Description("Texto del eje de ordenadas"),
+        Description("Ordinate title"),
         Category("Text and labels")]
         public string AxisYTitle
         {
-            get
-            {
-                return ((LiveCharts.Wpf.AxesCollection)_chart.AxisY)[0].Title;
-            }
-            set
-            {
-                ((LiveCharts.Wpf.AxesCollection)_chart.AxisY)[0].Title = value;
-            }
+            get => _plot.plt.GetSettings().yLabel.text;
+            set { _plot.plt.YLabel(value); _plot.Render(); }
         }
 
 
@@ -139,29 +195,20 @@ namespace ErgoCalc
         /// </summary>
         [Browsable(true),
         ReadOnly(false),
-        Description("Color de la serie de datos"),
+        Description("Serie's color"),
         Category("Series options")]
         public Color CurvaColor
         {
-            get
-            {
-                LiveCharts.Wpf.LineSeries serie = (LiveCharts.Wpf.LineSeries)_chart.Series[_nCurva];
-                var drawingcolor = System.Drawing.Color.Red;
-                if (serie.Stroke!=null)
-                {
-                    System.Windows.Media.Color mediacolor = ((System.Windows.Media.SolidColorBrush)serie.Stroke).Color;
-                    drawingcolor = System.Drawing.Color.FromArgb(mediacolor.A, mediacolor.R, mediacolor.G, mediacolor.B);
-                }
-                
-
-                return _nCurva == -1 ? Color.Red : drawingcolor; //.CurveList[_nCurva].Color;
-            }
+            get => _nCurva == -1 ? Color.Red : _serie.color;
             set
             {
                 if (_nCurva == -1) ;
                 //errorNoCurveSelected();
                 else
-                    ((LiveCharts.Wpf.LineSeries)_chart.Series[_nCurva]).Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromArgb(value.A, value.R, value.G, value.B));
+                {
+                    _serie.color = Color.FromArgb(value.A, value.R, value.G, value.B);
+                    _plot.Render();
+                }
             }
         }
 
@@ -170,25 +217,12 @@ namespace ErgoCalc
         /// </summary>
         [Browsable(true),
         ReadOnly(false),
-        Description("Line width"),
+        Description("Serie's thickness"),
         Category("Series options")]
         public double Width
         {
-            get { return _serie.StrokeThickness; }
-            set { _serie.StrokeThickness = value; }
-        }
-
-        /// <summary>
-        /// Propiedades públicas de la clase
-        /// </summary>
-        [Browsable(true),
-        ReadOnly(false),
-        Description("Line smoothness"),
-        Category("Series options")]
-        public double Smoothness
-        {
-            get { return _serie.LineSmoothness; }
-            set { _serie.LineSmoothness = value; }
+            get => _serie == null ? 0.0 : _serie.lineWidth;
+            set { _serie.lineWidth = value; _plot.Render(); }
         }
 
         /// <summary>
@@ -200,8 +234,8 @@ namespace ErgoCalc
         Category("Series options")]
         public string Name
         {
-            get { return _serie.Title; }
-            set { _serie.Title = value; }
+            get => _serie == null ? String.Empty : _serie.label;
+            set { _serie.label = value; _plot.Render(); }
         }
 
         /// <summary>
@@ -211,134 +245,12 @@ namespace ErgoCalc
         ReadOnly(false),
         Description("Serie's Visibility"),
         Category("Series options")]
-        public System.Windows.Visibility Visibility
+        public bool Visibility
         {
-            get { return _serie.Visibility; }
-            set { _serie.Visibility = value; }
+            get => _serie == null ? true : _serie.visible;
+            set { _serie.visible = value; _plot.Render(); }
         }
 
-
-        /* [DescriptionAttribute("Color de la serie de datos"),
-        CategoryAttribute("Series options")]
-        public Color SerieColor
-        {
-            get
-            {
-                return _nCurva == -1 ? Color.Red : ((LineItem)_zedG.CurveList[_nCurva]).Color;
-            }
-            set { ((LineItem)_zedG.CurveList[_nCurva]).Color = value; }
-        }*/
-        /*
-        [SRDescriptionAttribute("PropertyDescriptionWidth"),
-        SRCategoryAttribute("PropertyCategorySerie")]
-        public float SerieGrueso
-        {
-            get
-            {
-                return _nCurva == -1 ? -1 : ((LineItem)_zedG.CurveList[_nCurva]).Line.Width;
-            }
-            set
-            {
-                if (_nCurva == -1)
-                    errorNoCurveSelected();
-                else
-                    ((LineItem)_zedG.CurveList[_nCurva]).Line.Width = value;
-            }
-        }
-
-        [SRDescriptionAttribute("PropertyDescriptionStyle"),
-        SRCategoryAttribute("PropertyCategorySerie")]
-        public DashStyle SerieEstilo
-        {
-            get
-            {
-                return _nCurva == -1 ? DashStyle.Solid : ((LineItem)_zedG.CurveList[_nCurva]).Line.Style;
-            }
-            set
-            {
-                if (_nCurva == -1)
-                    errorNoCurveSelected();
-                else
-                    ((LineItem)_zedG.CurveList[_nCurva]).Line.Style = value;
-            }
-        }
-        */
-        /* [DescriptionAttribute("Símbolo de la serie de datos"),
-        CategoryAttribute("Series options")]
-        public SymbolType Símbolo
-        {
-            get
-            {
-                return _nCurva == -1 ? SymbolType.Default : ((LineItem)_zedG.CurveList[_nCurva]).Symbol.Type;
-            }
-            set { ((LineItem) _zedG.CurveList[_nCurva]).Symbol.Type = value; }
-        }*/
-
-        /* [DescriptionAttribute("Color del símbolo de la serie de datos"),
-        CategoryAttribute("Series options")]
-        public Color SímboloColor
-        {
-            get
-            {
-                return _nCurva == -1 ? Color.Red : ((LineItem)_zedG.CurveList[_nCurva]).Symbol.Fill.Color;
-            }
-            set { ((LineItem)_zedG.CurveList[_nCurva]).Symbol.Fill.Color = value; }
-        } */
-
-        /* [DescriptionAttribute("Tamaño del símbolo de la serie de datos"),
-        CategoryAttribute("Series options")]
-        public float SímboloTamaño
-        {
-            get
-            {
-                return _nCurva == -1 ? -1 : ((LineItem)_zedG.CurveList[_nCurva]).Symbol.Size;
-            }
-            set { ((LineItem)_zedG.CurveList[_nCurva]).Symbol.Size  = value; }
-        } */
-        /*
-        [SRDescriptionAttribute("PropertyDescriptionLabelSerie"),
-        SRCategoryAttribute("PropertyCategorySerie")]
-        public String SerieEtiqueta
-        {
-            get
-            {
-                return _nCurva == -1 ? String.Empty : _zedG.CurveList[_nCurva].Label.Text;
-            }
-            set
-            {
-                if (_nCurva == -1)
-                    errorNoCurveSelected();
-                else
-                    _zedG.CurveList[_nCurva].Label.Text = value;
-            }
-        }
-
-        [SRDescriptionAttribute("PropertyDescriptionLabelGraph"),
-        SRCategoryAttribute("PropertyCategoryGraph")]
-        public String TítuloGráfico
-        {
-            get { return _zedG.Title.Text; }
-            set { _zedG.Title.Text = value; }
-        }
-
-        [SRDescriptionAttribute("PropertyDescriptionLabelXAxis"),
-        SRCategoryAttribute("PropertyCategoryGraph")]
-        public String TítuloEjeX
-        {
-            get { return _zedG.XAxis.Title.Text; }
-            set { _zedG.XAxis.Title.Text = value; }
-        }
-
-        [SRDescriptionAttribute("PropertyDescriptionLabelYAxis"),
-        SRCategoryAttribute("PropertyCategoryGraph")]
-        public String TítuloEjeY
-        {
-            get { return _zedG.YAxis.Title.Text; }
-            set { _zedG.YAxis.Title.Text = value; }
-        }
-        */
-        //[DescriptionAttribute("Valor mínimo del eje de abscisas"),
-        //CategoryAttribute("Ejes")]
 
         /// <summary>
         /// MessageBox de que no hay curvas seleccionadas

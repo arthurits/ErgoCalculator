@@ -8,3 +8,9 @@ Copyright © 2020 by arthurits
 Sponsor this project!
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/arthurits)
+
+
+## External dependencies
+This project uses the ScottPlot control, from the following Git:
+
+[ScottPlot](https://github.com/ScottPlot/ScottPlot)
