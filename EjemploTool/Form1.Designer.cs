@@ -32,6 +32,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msgBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripPanel1 = new System.Windows.Forms.ToolStripPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripPanel2 = new System.Windows.Forms.ToolStripPanel();
@@ -50,7 +51,6 @@
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripPanel4 = new System.Windows.Forms.ToolStripPanel();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
-            this.msgBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStripPanel1.SuspendLayout();
             this.toolStripPanel2.SuspendLayout();
@@ -82,9 +82,16 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+            // 
+            // msgBoxToolStripMenuItem
+            // 
+            this.msgBoxToolStripMenuItem.Name = "msgBoxToolStripMenuItem";
+            this.msgBoxToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+            this.msgBoxToolStripMenuItem.Text = "MsgBox";
+            this.msgBoxToolStripMenuItem.Click += new System.EventHandler(this.msgBoxToolStripMenuItem_Click);
             // 
             // toolStripPanel1
             // 
@@ -252,13 +259,6 @@
             this.toolStrip4.Name = "toolStrip4";
             this.toolStrip4.Size = new System.Drawing.Size(111, 25);
             this.toolStrip4.TabIndex = 0;
-            // 
-            // msgBoxToolStripMenuItem
-            // 
-            this.msgBoxToolStripMenuItem.Name = "msgBoxToolStripMenuItem";
-            this.msgBoxToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.msgBoxToolStripMenuItem.Text = "MsgBox";
-            this.msgBoxToolStripMenuItem.Click += new System.EventHandler(this.msgBoxToolStripMenuItem_Click);
             // 
             // Form1
             // 

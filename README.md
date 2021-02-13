@@ -12,5 +12,4 @@ Sponsor this project!
 
 ## External dependencies
 This project uses the ScottPlot control, from the following Git:
-
 [ScottPlot](https://github.com/ScottPlot/ScottPlot)

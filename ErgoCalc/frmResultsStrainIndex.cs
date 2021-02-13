@@ -33,7 +33,10 @@ namespace ErgoCalc
             _options = new ResultsOptions(rtbShowResult);
 
             propertyGrid1.SelectedObject = _options;
-            splitContainer1.Panel1Collapsed = true;
+            splitContainer1.Panel1Collapsed = false;
+            splitContainer1.SplitterDistance = 0;
+            splitContainer1.SplitterWidth = 1;
+            splitContainer1.IsSplitterFixed = true;
 
             //ToolStrip botón = ((frmMain)MdiParent).Controls["toolStripMain"] as ToolStrip;
             //ToolStripButton bot = botón.Items["toolStripMain_Settings"] as ToolStripButton;
@@ -352,13 +355,28 @@ namespace ErgoCalc
 
         public void ShowHideSettings()
         {
-            splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            
+            this.SuspendLayout();
+            if (splitContainer1.SplitterDistance > 0)
+            {
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
+                splitContainer1.SplitterWidth = 1;
+                splitContainer1.IsSplitterFixed = true;
+            }
+            else
+            {
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
+                splitContainer1.SplitterWidth = 4;
+                splitContainer1.IsSplitterFixed = false;
+            }
+            this.ResumeLayout();
             return;
         }
 
         public bool PanelCollapsed ()
         {
-            return this.splitContainer1.Panel1Collapsed;
+            return splitContainer1.SplitterDistance == 0 ? true : false;
         }
 
         public void FormatText()
@@ -374,11 +392,6 @@ namespace ErgoCalc
                 rtbShowResult.Select(nStart, nEnd - nStart);
                 rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
             } 
-
-            //nStart = rtbShowResult.Find("Description", nStart + 1, RichTextBoxFinds.MatchCase);
-            //nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            //rtbShowResult.Select(nStart, nEnd - nStart);
-            //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
 
             // Bold results
             nStart = 0;

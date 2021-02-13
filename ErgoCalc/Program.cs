@@ -15,8 +15,6 @@ namespace ErgoCalc
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //frmSplash s = new frmSplash();
-            //s.Show();
             Application.Run(new frmMain());
         }
     }

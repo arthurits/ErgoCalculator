@@ -38,8 +38,7 @@
             this.algoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.chartB = new ScottPlot.FormsPlot();
-            this.chartA = new LiveCharts.WinForms.CartesianChart();
+            this.chart = new ScottPlot.FormsPlot();
             this.toolStripWR = new System.Windows.Forms.ToolStrip();
             this.toolStripWR_SaveChart = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_AddLine = new System.Windows.Forms.ToolStripButton();
@@ -80,7 +79,7 @@
             this.setupPageToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.setupPageToolStripMenuItem.MergeIndex = 2;
             this.setupPageToolStripMenuItem.Name = "setupPageToolStripMenuItem";
-            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setupPageToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.setupPageToolStripMenuItem.Text = "&Setup page";
             // 
             // toolStripSeparator1
@@ -88,7 +87,7 @@
             this.toolStripSeparator1.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.toolStripSeparator1.MergeIndex = 3;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(130, 6);
             // 
             // editToolStripMenuItem
             // 
@@ -104,7 +103,7 @@
             // 
             this.algoToolStripMenuItem.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.algoToolStripMenuItem.Name = "algoToolStripMenuItem";
-            this.algoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.algoToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.algoToolStripMenuItem.Text = "Algo";
             this.algoToolStripMenuItem.Click += new System.EventHandler(this.algoToolStripMenuItem_Click);
             // 
@@ -121,8 +120,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.chartB);
-            this.splitContainer1.Panel2.Controls.Add(this.chartA);
+            this.splitContainer1.Panel2.Controls.Add(this.chart);
             this.splitContainer1.Size = new System.Drawing.Size(577, 387);
             this.splitContainer1.SplitterDistance = 170;
             this.splitContainer1.TabIndex = 1;
@@ -135,23 +133,15 @@
             this.propertyGrid1.Size = new System.Drawing.Size(170, 387);
             this.propertyGrid1.TabIndex = 0;
             // 
-            // chartB
+            // chart
             // 
-            this.chartB.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartB.Location = new System.Drawing.Point(0, 0);
-            this.chartB.Name = "chartB";
-            this.chartB.Size = new System.Drawing.Size(403, 387);
-            this.chartB.TabIndex = 2;
-            this.chartB.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chartB_MouseClick);
-            // 
-            // chartA
-            // 
-            this.chartA.Location = new System.Drawing.Point(0, 0);
-            this.chartA.Name = "chartA";
-            this.chartA.Size = new System.Drawing.Size(403, 266);
-            this.chartA.TabIndex = 0;
-            this.chartA.Text = "cartesianChart1";
-            this.chartA.DataClick += new LiveCharts.Events.DataClickHandler(this.chartA_DataClick);
+            this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chart.Location = new System.Drawing.Point(0, 0);
+            this.chart.Name = "chart";
+            this.chart.Size = new System.Drawing.Size(403, 387);
+            this.chart.TabIndex = 2;
+            this.chart.Click += new System.EventHandler(this.chart_Click);
+            this.chart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chart_MouseClick);
             // 
             // toolStripWR
             // 
@@ -209,7 +199,7 @@
             // 
             this.toolStripWR_Settings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripWR_Settings.Image")));
             this.toolStripWR_Settings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripWR_Settings.MergeAction = System.Windows.Forms.MergeAction.Replace;
+            this.toolStripWR_Settings.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.toolStripWR_Settings.Name = "toolStripWR_Settings";
             this.toolStripWR_Settings.Size = new System.Drawing.Size(53, 67);
             this.toolStripWR_Settings.Text = "Settings";
@@ -250,13 +240,12 @@
         private System.Windows.Forms.ToolStripMenuItem algoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private LiveCharts.WinForms.CartesianChart chartA;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.ToolStrip toolStripWR;
         private System.Windows.Forms.ToolStripButton toolStripWR_Settings;
         private System.Windows.Forms.ToolStripButton toolStripWR_AddLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_RemoveLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_SaveChart;
-        private ScottPlot.FormsPlot chartB;
+        private ScottPlot.FormsPlot chart;
     }
 }

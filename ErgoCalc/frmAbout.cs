@@ -48,7 +48,14 @@ namespace ErgoCalc
                 {
                     return "";
                 }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                return String.Concat(((AssemblyDescriptionAttribute)attributes[0]).Description,
+                    ".",
+                    System.Environment.NewLine,
+                    System.Environment.NewLine,
+                    "No commercial use allowed whatsoever. Contact the author for any inquires.",
+                    System.Environment.NewLine,
+                    System.Environment.NewLine,
+                    "If you find this software useful, please consider supporting it!");
             }
         }
 

@@ -52,7 +52,7 @@
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.ReadOnly = true;
             this.rtbShowResult.ShowSelectionMargin = true;
-            this.rtbShowResult.Size = new System.Drawing.Size(771, 538);
+            this.rtbShowResult.Size = new System.Drawing.Size(771, 468);
             this.rtbShowResult.TabIndex = 0;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
@@ -61,17 +61,19 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 70);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Control;
             this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
+            this.splitContainer1.Panel1MinSize = 0;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.rtbShowResult);
-            this.splitContainer1.Size = new System.Drawing.Size(975, 538);
+            this.splitContainer1.Size = new System.Drawing.Size(975, 468);
             this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -79,8 +81,9 @@
             // 
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(200, 538);
+            this.propertyGrid1.Size = new System.Drawing.Size(200, 468);
             this.propertyGrid1.TabIndex = 0;
             // 
             // toolStripNIOSH
@@ -110,12 +113,11 @@
             // 
             this.toolStripNIOSH_Settings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNIOSH_Settings.Image")));
             this.toolStripNIOSH_Settings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripNIOSH_Settings.MergeAction = System.Windows.Forms.MergeAction.Replace;
+            this.toolStripNIOSH_Settings.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
             this.toolStripNIOSH_Settings.Name = "toolStripNIOSH_Settings";
             this.toolStripNIOSH_Settings.Size = new System.Drawing.Size(53, 67);
             this.toolStripNIOSH_Settings.Text = "Settings";
             this.toolStripNIOSH_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripNIOSH_Settings.CheckedChanged += new System.EventHandler(this.toolStripNIOSH_Settings_CheckedChanged);
             // 
             // frmResultNIOSHmodel
             // 

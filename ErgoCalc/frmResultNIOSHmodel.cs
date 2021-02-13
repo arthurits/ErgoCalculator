@@ -33,10 +33,13 @@ namespace ErgoCalc
             var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             if (File.Exists(path + @"\images\save.ico")) this.toolStripNIOSH_Save.Image = new Icon(path + @"\images\save.ico", 48, 48).ToBitmap();
             if (File.Exists(path + @"\images\settings.ico")) this.toolStripNIOSH_Settings.Image = new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
-            this.toolStripNIOSH_Settings.CheckOnClick = true;
+            //this.toolStripNIOSH_Settings.CheckOnClick = true;
 
             propertyGrid1.SelectedObject = _options;
-            splitContainer1.Panel1Collapsed = true;
+            splitContainer1.Panel1Collapsed = false;
+            splitContainer1.SplitterDistance = 0;
+            splitContainer1.SplitterWidth = 1;
+            splitContainer1.IsSplitterFixed = true;
         }
 
         public frmResultNIOSHmodel(modelNIOSH[] datos, bool composite)
@@ -359,12 +362,26 @@ namespace ErgoCalc
         }
         public void ShowHideSettings()
         {
-            splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            this.SuspendLayout();
+            if (splitContainer1.SplitterDistance > 0)
+            {
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
+                splitContainer1.SplitterWidth = 1;
+                splitContainer1.IsSplitterFixed = true;
+            }
+            else
+            {
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
+                splitContainer1.SplitterWidth = 4;
+                splitContainer1.IsSplitterFixed = false;
+            }
+            this.ResumeLayout();
         }
 
         public bool PanelCollapsed()
         {
-            return this.splitContainer1.Panel1Collapsed;
+            return this.splitContainer1.SplitterDistance == 0 ? true: false;
         }
 
         public void FormatText()
@@ -392,10 +409,5 @@ namespace ErgoCalc
         }
         #endregion
 
-
-        private void toolStripNIOSH_Settings_CheckedChanged(object sender, EventArgs e)
-        {
-            splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-        }
     }
 }

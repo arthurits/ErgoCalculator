@@ -72,6 +72,21 @@ namespace EjemploTool
             UnsafeNativeMethods.SetWindowLong(new HandleRef(this, UnsafeNativeMethods.GetActiveWindow()), -8, new HandleRef(this, Handle));
 
         }
+
+        private void formsPlot1_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void formsPlot1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void formsPlot1_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class ChildForm : Form

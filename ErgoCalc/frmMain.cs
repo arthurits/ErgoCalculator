@@ -72,12 +72,6 @@ namespace ErgoCalc
             // https://stackoverflow.com/questions/6389722/toolstrip-with-check-button-group
         }
 
-        public frmMain(frmSplash frmS)
-            : this() // Call the base constructor
-        {
-            //_frmSplash = frmS;
-        }
-
         /*
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern int GetClassName(IntPtr hWnd, StringBuilder buffer, int buflen);

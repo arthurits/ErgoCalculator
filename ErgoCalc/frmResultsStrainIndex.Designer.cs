@@ -46,12 +46,13 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
+            this.splitContainer1.Panel1MinSize = 0;
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.rtbShowResult);
             this.splitContainer1.Size = new System.Drawing.Size(892, 440);
-            this.splitContainer1.SplitterDistance = 185;
+            this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -60,7 +61,7 @@
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(185, 440);
+            this.propertyGrid1.Size = new System.Drawing.Size(200, 440);
             this.propertyGrid1.TabIndex = 0;
             // 
             // rtbShowResult
@@ -73,7 +74,7 @@
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.ReadOnly = true;
             this.rtbShowResult.ShowSelectionMargin = true;
-            this.rtbShowResult.Size = new System.Drawing.Size(702, 440);
+            this.rtbShowResult.Size = new System.Drawing.Size(687, 440);
             this.rtbShowResult.TabIndex = 1;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
