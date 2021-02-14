@@ -307,7 +307,7 @@ namespace ErgoCalc
             {
                 DefaultExt = "*.txt",
                 Filter = "RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
-                FilterIndex = 2,
+                FilterIndex = 1,
                 Title = "Save NIOSH model results",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)

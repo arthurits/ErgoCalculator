@@ -328,19 +328,21 @@ namespace ErgoCalc
         /// </summary>
         private void DataToGrid()
         {
-            for (Int32 i = 0; i < _job.JobTasks[0].SubTasks.Length; i++)
+            for (var j = 0; j < _job.numberTasks; j++)
             {
-                // Add one column whenever necessary
-                if (i > 0) AddColumn(i);
+                for (var i = 0; i < _job.JobTasks[0].SubTasks.Length; i++)
+                {
+                    // Add one column whenever necessary
+                    if (i > 0) AddColumn(i);
 
-                // Populate the DataGridView with data
-                gridVariables[i, 0].Value = _job.JobTasks[0].SubTasks[i].data.i.ToString();
-                gridVariables[i, 1].Value = _job.JobTasks[0].SubTasks[i].data.e.ToString();
-                gridVariables[i, 2].Value = _job.JobTasks[0].SubTasks[i].data.d.ToString();
-                gridVariables[i, 3].Value = _job.JobTasks[0].SubTasks[i].data.p.ToString();
-                gridVariables[i, 4].Value = _job.JobTasks[0].SubTasks[i].data.h.ToString();
+                    // Populate the DataGridView with data
+                    gridVariables[i, 0].Value = _job.JobTasks[j].SubTasks[i].data.i.ToString();
+                    gridVariables[i, 1].Value = _job.JobTasks[j].SubTasks[i].data.e.ToString();
+                    gridVariables[i, 2].Value = _job.JobTasks[j].SubTasks[i].data.d.ToString();
+                    gridVariables[i, 3].Value = _job.JobTasks[j].SubTasks[i].data.p.ToString();
+                    gridVariables[i, 4].Value = _job.JobTasks[j].SubTasks[i].data.h.ToString();
+                }
             }
-
             // Update the control's value
             updSubtasks.Value = _job.JobTasks[0].SubTasks.Length;
         }
@@ -363,7 +365,10 @@ namespace ErgoCalc
                 int nDummy = (listViewTasks.Items.Find("Dummy", false)).Count();
                 // Create the subtasks, as many as subtasks
                 for (int i = listViewTasks.Items.Count - nDummy; i < updSubtasks.Value; i++)
-                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
+                {
+                    if (listViewTasks.Groups.Count != 0)
+                        listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
+                }
 
                 listViewTasks.RemoveEmptyItems(0);
             }

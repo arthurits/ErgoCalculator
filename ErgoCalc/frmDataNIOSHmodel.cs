@@ -21,6 +21,7 @@ namespace ErgoCalc
         {
             // VS Designer initialization routine
             InitializeComponent();
+            txtConstanteLC.Text = "25";
 
             // Create the first column (zero index base)
                 AddColumn(0);
