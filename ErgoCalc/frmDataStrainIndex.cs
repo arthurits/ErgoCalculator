@@ -12,7 +12,6 @@ using ErgoCalc;
 
 namespace ErgoCalc
 {
-
     public partial class frmDataStrainIndex : Form
     {
         //private ModelSubTask[] _subtasks;
@@ -91,6 +90,12 @@ namespace ErgoCalc
 
             // Update the control's value
             updSubtasks.Value = data.Length;
+        }
+        // Overloaded constructor
+        public frmDataStrainIndex(ModelJob job)
+            : this() // Call the base constructor
+        {
+            _job = job;
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -217,6 +222,8 @@ namespace ErgoCalc
             //_subtasks = new ModelSubTask[0];
         }
 
+
+
         #region Private routines
         /// <summary>
         /// Adds a column to the DataGrid View and formates it
@@ -300,6 +307,47 @@ namespace ErgoCalc
 
         }
 
+        private void DataExample2()
+        {
+            _job.numberTasks = 2;
+            _job.JobTasks = new ModelTask[_job.numberTasks];
+            _job.JobTasks[0].numberSubTasks = 3;
+            _job.JobTasks[0].SubTasks = new ModelSubTask[_job.JobTasks[0].numberSubTasks];
+            _job.JobTasks[1].numberSubTasks = 2;
+            _job.JobTasks[1].SubTasks = new ModelSubTask[_job.JobTasks[1].numberSubTasks];
+
+            _job.JobTasks[0].SubTasks[0].data.i = 0.7;
+            _job.JobTasks[0].SubTasks[0].data.e = 1;
+            _job.JobTasks[0].SubTasks[0].data.d = 1;
+            _job.JobTasks[0].SubTasks[0].data.p = 0;
+            _job.JobTasks[0].SubTasks[0].data.h = 4;
+
+            _job.JobTasks[0].SubTasks[1].data.i = 0.4;
+            _job.JobTasks[0].SubTasks[1].data.e = 2.6;
+            _job.JobTasks[0].SubTasks[1].data.d = 1.2;
+            _job.JobTasks[0].SubTasks[1].data.p = 0;
+            _job.JobTasks[0].SubTasks[1].data.h = 4;
+
+            _job.JobTasks[0].SubTasks[2].data.i = 0.2;
+            _job.JobTasks[0].SubTasks[2].data.e = 5;
+            _job.JobTasks[0].SubTasks[2].data.d = 3;
+            _job.JobTasks[0].SubTasks[2].data.p = 0;
+            _job.JobTasks[0].SubTasks[2].data.h = 4;
+
+            _job.JobTasks[1].SubTasks[0].data.i = 0.1;
+            _job.JobTasks[1].SubTasks[0].data.e = 0.5;
+            _job.JobTasks[1].SubTasks[0].data.d = 1;
+            _job.JobTasks[1].SubTasks[0].data.p = -15;
+            _job.JobTasks[1].SubTasks[0].data.h = 4;
+
+            _job.JobTasks[1].SubTasks[1].data.i = 0.5;
+            _job.JobTasks[1].SubTasks[1].data.e = 2;
+            _job.JobTasks[1].SubTasks[1].data.d = 3;
+            _job.JobTasks[1].SubTasks[1].data.p = -15;
+            _job.JobTasks[1].SubTasks[1].data.h = 4;
+
+        }
+        
         /// <summary>
         /// Shows the data into the grid control
         /// </summary>
@@ -328,10 +376,13 @@ namespace ErgoCalc
         /// </summary>
         private void DataToGrid()
         {
+            Int32 nCol = -1;
             for (var j = 0; j < _job.numberTasks; j++)
             {
+                nCol++;
                 for (var i = 0; i < _job.JobTasks[0].SubTasks.Length; i++)
                 {
+                    nCol++;
                     // Add one column whenever necessary
                     if (i > 0) AddColumn(i);
 
@@ -341,10 +392,17 @@ namespace ErgoCalc
                     gridVariables[i, 2].Value = _job.JobTasks[j].SubTasks[i].data.d.ToString();
                     gridVariables[i, 3].Value = _job.JobTasks[j].SubTasks[i].data.p.ToString();
                     gridVariables[i, 4].Value = _job.JobTasks[j].SubTasks[i].data.h.ToString();
+
+                    // Classify
+                    //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
                 }
             }
             // Update the control's value
-            updSubtasks.Value = _job.JobTasks[0].SubTasks.Length;
+            //updSubtasks.Value = _job.JobTasks[0].SubTasks.Length;
+            updSubtasks.Value = nCol;
+            updTasks.Value = _job.numberTasks;
+
+
         }
 
         #endregion

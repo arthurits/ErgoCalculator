@@ -135,9 +135,9 @@
             this.lblConstanteLC.AutoSize = true;
             this.lblConstanteLC.Location = new System.Drawing.Point(16, 464);
             this.lblConstanteLC.Name = "lblConstanteLC";
-            this.lblConstanteLC.Size = new System.Drawing.Size(166, 17);
+            this.lblConstanteLC.Size = new System.Drawing.Size(152, 17);
             this.lblConstanteLC.TabIndex = 6;
-            this.lblConstanteLC.Text = "Constante carga (LC, kg)";
+            this.lblConstanteLC.Text = "Load constant (LC, kg)";
             // 
             // txtConstanteLC
             // 
