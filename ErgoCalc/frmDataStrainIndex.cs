@@ -33,10 +33,10 @@ namespace ErgoCalc
             // Simulate a click on radRSI
             radioButton_CheckedChanged(radRSI, null);
 
-            // Create the first column (zero index base)
-            AddColumn(0);
+            listViewTasks.AddGroup();
 
-            this.listViewTasks.AddGroup();
+            // Create the first column (zero index base)
+            AddColumn();
 
             // Create the header rows
             gridVariables.RowCount = 5;
@@ -46,56 +46,14 @@ namespace ErgoCalc
             gridVariables.Rows[3].HeaderCell.Value = "Hand/wrist posture";
             gridVariables.Rows[4].HeaderCell.Value = "Duration of task per day";
 
-            /*
-                gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
-                gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (º)";
-                gridVariables.Rows[7].HeaderCell.Value = "Coupling";
-
-            // Create custom cells with combobox display
-                DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-                DataTable tableC = new DataTable();
-
-                tableC.Columns.Add("Display", typeof(String));
-                tableC.Columns.Add("Value", typeof(Int32));
-                tableC.Rows.Add("Good", 1);
-                tableC.Rows.Add("Poor", 2);
-                tableC.Rows.Add("No handle", 3);
-                celdaC.DataSource = tableC;
-                celdaC.DisplayMember = "Display";
-                celdaC.ValueMember = "Value";
-
-                gridVariables.Rows[7].Cells[0] = celdaC;*/
         }
 
-        // Overloaded constructor
-        public frmDataStrainIndex(ModelSubTask[] data)
-            : this() // Call the base constructor
-        {
-
-            for (Int32 i = 0; i < data.Length; i++)
-            {
-                // Add one column whenever necessary
-                if (i > 0) AddColumn(i);
-
-                // Populate the DataGridView with data
-                gridVariables[i, 0].Value = data[i].data.i.ToString();
-                gridVariables[i, 1].Value = data[i].data.e.ToString();
-                gridVariables[i, 2].Value = data[i].data.d.ToString();
-                gridVariables[i, 3].Value = data[i].data.p.ToString();
-                gridVariables[i, 4].Value = data[i].data.h.ToString();
-                //gridVariables[i, 5].Value = data[i].data.td.ToString();
-                //gridVariables[i, 6].Value = data[i].data.a.ToString();
-                //gridVariables[i, 7].Value = data[i].data.c;
-            }
-
-            // Update the control's value
-            updSubtasks.Value = data.Length;
-        }
         // Overloaded constructor
         public frmDataStrainIndex(ModelJob job)
             : this() // Call the base constructor
         {
             _job = job;
+            DataToGrid();
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -233,9 +191,16 @@ namespace ErgoCalc
         {
             //String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
 
+            // By default, the DataGrid always contains a single column
+            //if (col == 0) return;
+            if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+
+            string strName = "Task ";
+            if (_index != Index.RSI) strName = "SubTask ";
+
             // Create the new column
             //gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
-            gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + ((char)('A' + col)).ToString());
+            gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 70;
 
@@ -243,6 +208,14 @@ namespace ErgoCalc
             // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
 
             return;
+        }
+
+        /// <summary>
+        /// Adds a column to the DataGrid View and formates it
+        /// </summary>
+        private void AddColumn()
+        {
+            AddColumn(gridVariables.Columns.Count);
         }
 
         /// <summary>
@@ -351,58 +324,35 @@ namespace ErgoCalc
         /// <summary>
         /// Shows the data into the grid control
         /// </summary>
-        /// <param name="data">Array of Model NIOSH data</param>
-        private void DataToGrid(ModelSubTask[] data)
-        {
-            for (Int32 i = 0; i < data.Length; i++)
-            {
-                // Add one column whenever necessary
-                if (i > 0) AddColumn(i);
-
-                // Populate the DataGridView with data
-                gridVariables[i, 0].Value = data[i].data.i.ToString();
-                gridVariables[i, 1].Value = data[i].data.e.ToString();
-                gridVariables[i, 2].Value = data[i].data.d.ToString();
-                gridVariables[i, 3].Value = data[i].data.p.ToString();
-                gridVariables[i, 4].Value = data[i].data.h.ToString();
-            }
-
-            // Update the control's value
-            updSubtasks.Value = data.Length;
-        }
-
-        /// <summary>
-        /// Shows the data into the grid control
-        /// </summary>
         private void DataToGrid()
         {
-            Int32 nCol = -1;
+            updTasks.Value = _job.numberTasks;
+            Int32 nCol = 0;
             for (var j = 0; j < _job.numberTasks; j++)
             {
-                nCol++;
-                for (var i = 0; i < _job.JobTasks[0].SubTasks.Length; i++)
+                //nCol++;
+                for (var i = 0; i < _job.JobTasks[j].SubTasks.Length; i++)
                 {
-                    nCol++;
-                    // Add one column whenever necessary
-                    if (i > 0) AddColumn(i);
+                    //AddColumn(nCol);
+                    AddColumn();
 
                     // Populate the DataGridView with data
-                    gridVariables[i, 0].Value = _job.JobTasks[j].SubTasks[i].data.i.ToString();
-                    gridVariables[i, 1].Value = _job.JobTasks[j].SubTasks[i].data.e.ToString();
-                    gridVariables[i, 2].Value = _job.JobTasks[j].SubTasks[i].data.d.ToString();
-                    gridVariables[i, 3].Value = _job.JobTasks[j].SubTasks[i].data.p.ToString();
-                    gridVariables[i, 4].Value = _job.JobTasks[j].SubTasks[i].data.h.ToString();
+                    gridVariables[nCol, 0].Value = _job.JobTasks[j].SubTasks[i].data.i.ToString();
+                    gridVariables[nCol, 1].Value = _job.JobTasks[j].SubTasks[i].data.e.ToString();
+                    gridVariables[nCol, 2].Value = _job.JobTasks[j].SubTasks[i].data.d.ToString();
+                    gridVariables[nCol, 3].Value = _job.JobTasks[j].SubTasks[i].data.p.ToString();
+                    gridVariables[nCol, 4].Value = _job.JobTasks[j].SubTasks[i].data.h.ToString();
 
                     // Classify
+                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + nCol)).ToString(), listViewTasks.Groups[j]));
                     //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
+
+                    nCol++;
                 }
             }
             // Update the control's value
-            //updSubtasks.Value = _job.JobTasks[0].SubTasks.Length;
             updSubtasks.Value = nCol;
             updTasks.Value = _job.numberTasks;
-
-
         }
 
         #endregion
@@ -410,7 +360,7 @@ namespace ErgoCalc
         public void LoadExample()
         {
             // Load some data example
-            DataExample();
+            DataExample2();
             DataToGrid();
 
             return;
@@ -427,8 +377,12 @@ namespace ErgoCalc
                     if (listViewTasks.Groups.Count != 0)
                         listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
                 }
-
-                listViewTasks.RemoveEmptyItems(0);
+                for (int i = listViewTasks.Items.Count - nDummy; i > updSubtasks.Value; i--)
+                {
+                    listViewTasks.Items.RemoveAt(i - 1);
+                }
+                
+                listViewTasks.RemoveEmptyItems();
             }
         }
     }
