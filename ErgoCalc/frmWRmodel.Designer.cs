@@ -59,7 +59,8 @@
             this.editToolStripMenuItem});
             this.mnuSub.Location = new System.Drawing.Point(0, 0);
             this.mnuSub.Name = "mnuSub";
-            this.mnuSub.Size = new System.Drawing.Size(577, 24);
+            this.mnuSub.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.mnuSub.Size = new System.Drawing.Size(673, 24);
             this.mnuSub.TabIndex = 0;
             this.mnuSub.Text = "menuStrip1";
             // 
@@ -111,6 +112,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -121,31 +123,34 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.chart);
-            this.splitContainer1.Size = new System.Drawing.Size(577, 387);
-            this.splitContainer1.SplitterDistance = 170;
+            this.splitContainer1.Size = new System.Drawing.Size(673, 450);
+            this.splitContainer1.SplitterDistance = 198;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
             // 
             // propertyGrid1
             // 
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(170, 387);
+            this.propertyGrid1.Size = new System.Drawing.Size(198, 450);
             this.propertyGrid1.TabIndex = 0;
             // 
             // chart
             // 
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chart.Location = new System.Drawing.Point(0, 0);
+            this.chart.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.chart.Name = "chart";
-            this.chart.Size = new System.Drawing.Size(403, 387);
+            this.chart.Size = new System.Drawing.Size(470, 450);
             this.chart.TabIndex = 2;
             this.chart.Click += new System.EventHandler(this.chart_Click);
             this.chart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chart_MouseClick);
             // 
             // toolStripWR
             // 
-            this.toolStripWR.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.toolStripWR.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.toolStripWR.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.toolStripWR.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripWR_SaveChart,
@@ -154,10 +159,9 @@
             this.toolStripWR_Settings});
             this.toolStripWR.Location = new System.Drawing.Point(0, 24);
             this.toolStripWR.Name = "toolStripWR";
-            this.toolStripWR.Size = new System.Drawing.Size(577, 70);
+            this.toolStripWR.Size = new System.Drawing.Size(673, 70);
             this.toolStripWR.TabIndex = 2;
             this.toolStripWR.Text = "toolStrip1";
-            this.toolStripWR.Visible = false;
             // 
             // toolStripWR_SaveChart
             // 
@@ -209,13 +213,14 @@
             // 
             // frmWRmodel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(577, 411);
+            this.ClientSize = new System.Drawing.Size(673, 474);
             this.Controls.Add(this.toolStripWR);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mnuSub);
             this.MainMenuStrip = this.mnuSub;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "frmWRmodel";
             this.Text = "WR model";
             this.mnuSub.ResumeLayout(false);

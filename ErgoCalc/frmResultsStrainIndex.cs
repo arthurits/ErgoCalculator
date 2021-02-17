@@ -18,7 +18,7 @@ namespace ErgoCalc
         private ModelSubTask[] _subtasks;
         private ModelTask[] _tasks;
         private ModelJob _job;
-        private Index _index;
+        private IndexType _index;
         private cModelStrain _classDLL;
         private ResultsOptions _options;
 
@@ -46,7 +46,7 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(Index index, ModelJob job)
+        public frmResultsStrainIndex(IndexType index, ModelJob job)
             :this()
         {
             _index = index;

@@ -573,7 +573,7 @@ namespace ErgoCalc
         {
             using System;
 
-            public enum Index
+            public enum IndexType
             {
                 RSI,    // 0
                 COSI,   // 1
@@ -862,10 +862,10 @@ namespace ErgoCalc
             public class cModelStrain
             {
                 private ModelJob _job;
-                private Index _index;
+                private IndexType _index;
 
                 public ModelJob Job { get => _job; set => _job = value; }
-                public Index Index { get => _index; set => _index = value; }
+                public IndexType Index { get => _index; set => _index = value; }
 
                 /* https://docs.microsoft.com/en-us/dotnet/framework/interop/marshaling-different-types-of-arrays
                 
@@ -895,7 +895,7 @@ namespace ErgoCalc
                 [DllImport("dlls/strain.dll", EntryPoint = "DummySubTask")]
                 private static extern double RSI_DummySubTask(IntPtr SubTask);
 
-                public cModelStrain(ModelJob job, Index index)
+                public cModelStrain(ModelJob job, IndexType index)
                 {
                     _job = job;
                     _index = index;
@@ -909,10 +909,10 @@ namespace ErgoCalc
                 {
                     switch (_index)
                     {
-                        case Index.RSI:
+                        case Strain.IndexType.RSI:
                             RSI_index(_job.JobTasks[0].SubTasks, ref _job.JobTasks[0].numberSubTasks);
                             break;
-                        case Index.COSI:
+                        case Strain.IndexType.COSI:
                             int nSubTasks = 0;
                             for (int i = 0; i < _job.JobTasks.Length; i++)
                             {
@@ -933,7 +933,7 @@ namespace ErgoCalc
                                 }
                             };
                             break;
-                        case Index.CUSI:
+                        case Strain.IndexType.CUSI:
                             IntPtr ptrJob = JobToMarshal(_job);
                             //double resultado = CUSI_index(job, ref _job.numberTasks);
                             try
@@ -957,11 +957,11 @@ namespace ErgoCalc
                 {
                     switch (_index)
                     {
-                        case Index.RSI:
+                        case Strain.IndexType.RSI:
                             return ToStringRSI();
-                        case Index.COSI:
+                        case Strain.IndexType.COSI:
                             return ToStringCOSI();
-                        case Index.CUSI:
+                        case Strain.IndexType.CUSI:
                             return ToStringCUSI();
                         default:
                             return string.Empty;

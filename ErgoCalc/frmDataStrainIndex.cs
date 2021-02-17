@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.DLL.Strain;
-using ErgoCalc;
+//using ErgoCalc;
 
 namespace ErgoCalc
 {
@@ -17,12 +17,12 @@ namespace ErgoCalc
         //private ModelSubTask[] _subtasks;
         //private int[][] _tasks;
         private ModelJob _job;
-        private Index _index;
+        private IndexType _index;
 
         //public ModelSubTask[] SubTasks { get => _subtasks; }
         //public int[][] Tasks { get => _tasks;}
         public ModelJob Job { get => _job; }
-        public Index Index { get => _index;}
+        public IndexType Index { get => _index;}
 
         // Default constructor
         public frmDataStrainIndex()
@@ -64,11 +64,11 @@ namespace ErgoCalc
             if (rb == null) return;
             if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
 
-            if (radRSI.Checked) _index = Index.RSI;
-            if (radCOSI.Checked) _index = Index.COSI;
-            if (radCUSI.Checked) _index = Index.CUSI;
+            if (radRSI.Checked) _index = IndexType.RSI;
+            if (radCOSI.Checked) _index = IndexType.COSI;
+            if (radCUSI.Checked) _index = IndexType.CUSI;
 
-            if (_index == Index.RSI)
+            if (_index == IndexType.RSI)
             {
                 foreach (DataGridViewColumn col in gridVariables.Columns)
                 {
@@ -139,7 +139,7 @@ namespace ErgoCalc
         {
             // Save the job definition
             int ItemIndex;
-            _job.numberTasks = _index == Index.RSI ? 1 : listViewTasks.Groups.Count;
+            _job.numberTasks = _index == IndexType.RSI ? 1 : listViewTasks.Groups.Count;
             _job.order = new int[_job.numberTasks];
             _job.JobTasks = new ModelTask[_job.numberTasks];
             _job.index = -1;
@@ -148,13 +148,13 @@ namespace ErgoCalc
             {
                 _job.order[i] = i;
 
-                _job.JobTasks[i].numberSubTasks = _index == Index.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
+                _job.JobTasks[i].numberSubTasks = _index == IndexType.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
                 _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
                 _job.JobTasks[i].SubTasks = new ModelSubTask[_job.JobTasks[i].numberSubTasks];
                 _job.JobTasks[i].index = -1;
                 for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
                 {
-                    ItemIndex = _index == Index.RSI ? j : listViewTasks.Groups[i].Items[j].Index;
+                    ItemIndex = _index == IndexType.RSI ? j : listViewTasks.Groups[i].Items[j].Index;
                     _job.JobTasks[i].SubTasks[j].ItemIndex = ItemIndex;
                     _job.JobTasks[i].SubTasks[j].data.i = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
                     _job.JobTasks[i].SubTasks[j].data.e = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
@@ -196,7 +196,7 @@ namespace ErgoCalc
             if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
             string strName = "Task ";
-            if (_index != Index.RSI) strName = "SubTask ";
+            if (_index != IndexType.RSI) strName = "SubTask ";
 
             // Create the new column
             //gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);

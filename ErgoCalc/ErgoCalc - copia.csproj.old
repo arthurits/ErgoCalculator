@@ -1,10 +1,22 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C5B4639E-3CAD-477A-8EC1-E182930CE89A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-<UseWindowsForms>true</UseWindowsForms>
-<UseWPF>true</UseWPF>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ErgoCalc</RootNamespace>
+    <AssemblyName>ErgoCalc</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publicar\</PublishUrl>
     <Install>true</Install>
@@ -20,210 +32,282 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisLogFile>bin\Debug\ErgoCalc.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisLogFile>bin\Release\ErgoCalc.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>images\logo.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>false</Optimize>
-    <WarningsAsErrors>NU1605</WarningsAsErrors>
-  </PropertyGroup>
-
   <ItemGroup>
-    <Compile Update="controls\CustomControl1.cs">
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ScottPlot, Version=4.0.48.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.4.0.48\lib\netstandard2.0\ScottPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="ScottPlot.WinForms, Version=4.0.48.0, Culture=neutral, PublicKeyToken=5df1dfa5321e734b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.WinForms.4.0.48\lib\net472\ScottPlot.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.5.0.1\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Transitions, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\dot-net-transitions.1.2.1.0\lib\net40-full\Transitions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="clsApplicationSettings.cs" />
+    <Compile Include="clsErgoCalcDLL.cs" />
+    <Compile Include="clsUtilities.cs" />
+    <Compile Include="controls\CustomControl1.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="controls\CustomControl1.Designer.cs">
+    <Compile Include="controls\CustomControl1.Designer.cs">
       <DependentUpon>CustomControl1.cs</DependentUpon>
     </Compile>
-    <Compile Update="controls\ListViewEx.cs">
+    <Compile Include="controls\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="controls\ListViewEx.Designer.cs">
+    <Compile Include="controls\ListViewEx.Designer.cs">
       <DependentUpon>ListViewEx.cs</DependentUpon>
     </Compile>
-    <Compile Update="controls\TablessTabControl.cs">
+    <Compile Include="controls\TablessTabControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="controls\TablessTabControl.Designer.cs">
+    <Compile Include="controls\TablessTabControl.Designer.cs">
       <DependentUpon>TablessTabControl.cs</DependentUpon>
     </Compile>
-    <Compile Update="controls\UserControl1.cs">
+    <Compile Include="controls\UserControl1.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="controls\UserControl1.Designer.cs">
+    <Compile Include="controls\UserControl1.Designer.cs">
       <DependentUpon>UserControl1.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsStrainIndex.cs">
+    <Compile Include="frmResultsStrainIndex.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmResultsStrainIndex.Designer.cs">
+    <Compile Include="frmResultsStrainIndex.Designer.cs">
       <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataStrainIndex.cs">
+    <Compile Include="frmDataStrainIndex.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataStrainIndex.Designer.cs">
+    <Compile Include="frmDataStrainIndex.Designer.cs">
       <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataWRmodel.cs">
+    <Compile Include="frmDataWRmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataWRmodel.Designer.cs">
+    <Compile Include="frmDataWRmodel.Designer.cs">
       <DependentUpon>frmDataWRmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMet.cs">
+    <Compile Include="frmMet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmMet.Designer.cs">
+    <Compile Include="frmMet.Designer.cs">
       <DependentUpon>frmMet.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmAbout.cs">
+    <Compile Include="frmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmAbout.Designer.cs">
+    <Compile Include="frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmCLMmodel.cs">
+    <Compile Include="frmCLMmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmCLMmodel.Designer.cs">
+    <Compile Include="frmCLMmodel.Designer.cs">
       <DependentUpon>frmCLMmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataCLMmodel.cs">
+    <Compile Include="frmDataCLMmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataCLMmodel.Designer.cs">
+    <Compile Include="frmDataCLMmodel.Designer.cs">
       <DependentUpon>frmDataCLMmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataNIOSHmodel.cs">
+    <Compile Include="frmDataNIOSHmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataNIOSHmodel.Designer.cs">
+    <Compile Include="frmDataNIOSHmodel.Designer.cs">
       <DependentUpon>frmDataNIOSHmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMain.cs">
+    <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmMain.Designer.cs">
+    <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMetResult.cs">
+    <Compile Include="frmMetResult.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmMetResult.Designer.cs">
+    <Compile Include="frmMetResult.Designer.cs">
       <DependentUpon>frmMetResult.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmNew.cs">
+    <Compile Include="frmNew.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmNew.Designer.cs">
+    <Compile Include="frmNew.Designer.cs">
       <DependentUpon>frmNew.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultNIOSHmodel.cs">
+    <Compile Include="frmResultNIOSHmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmResultNIOSHmodel.Designer.cs">
+    <Compile Include="frmResultNIOSHmodel.Designer.cs">
       <DependentUpon>frmResultNIOSHmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmWRmodel.cs">
+    <Compile Include="frmWRmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmWRmodel.Designer.cs">
+    <Compile Include="frmWRmodel.Designer.cs">
       <DependentUpon>frmWRmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="controls\RadioButtonClick.cs">
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="controls\CenterDialog.cs" />
+    <Compile Include="controls\RadioButtonClick.cs">
       <SubType>Component</SubType>
     </Compile>
-    <EmbeddedResource Update="frmResultsStrainIndex.resx">
+    <Compile Include="controls\ToolStripCustomRenderer.cs" />
+    <Compile Include="Win32.cs" />
+    <EmbeddedResource Include="frmResultsStrainIndex.resx">
       <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataStrainIndex.resx">
+    <EmbeddedResource Include="frmDataStrainIndex.resx">
       <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataWRmodel.resx">
+    <EmbeddedResource Include="frmDataWRmodel.resx">
       <DependentUpon>frmDataWRmodel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmMet.resx">
+    <EmbeddedResource Include="frmMet.resx">
       <DependentUpon>frmMet.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmAbout.resx">
+    <EmbeddedResource Include="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmCLMmodel.resx">
+    <EmbeddedResource Include="frmCLMmodel.resx">
       <DependentUpon>frmCLMmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataCLMmodel.resx">
+    <EmbeddedResource Include="frmDataCLMmodel.resx">
       <DependentUpon>frmDataCLMmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataNIOSHmodel.resx">
+    <EmbeddedResource Include="frmDataNIOSHmodel.resx">
       <DependentUpon>frmDataNIOSHmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmMain.resx">
+    <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmMetResult.resx">
+    <EmbeddedResource Include="frmMetResult.resx">
       <DependentUpon>frmMetResult.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmNew.resx">
+    <EmbeddedResource Include="frmNew.resx">
       <DependentUpon>frmNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultNIOSHmodel.resx">
+    <EmbeddedResource Include="frmResultNIOSHmodel.resx">
       <DependentUpon>frmResultNIOSHmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmWRmodel.resx">
+    <EmbeddedResource Include="frmWRmodel.resx">
       <DependentUpon>frmWRmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="Properties\Resources.resx">
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Compile Update="Properties\Resources.Designer.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Update="Properties\Settings.settings">
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Update="Properties\Settings.Designer.cs">
+    <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -321,20 +405,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="dot-net-transitions" Version="1.2.1" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ScottPlot" Version="4.0.48" />
-    <PackageReference Include="ScottPlot.WinForms" Version="4.0.48" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="old - frmAbout.cs" />
-    <Compile Remove="old - frmAbout.Designer.cs" />
-    <Compile Remove="TablessTabControl.cs" />
-    <EmbeddedResource Remove="controls\ListViewEx.resx" />
-    <EmbeddedResource Remove="controls\TablessTabControl.resx" />
-    <EmbeddedResource Remove="old - frmAbout.resx" />
-  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

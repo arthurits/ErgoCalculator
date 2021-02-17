@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErgoCalc", "ErgoCalc\ErgoCalc.csproj", "{C5B4639E-3CAD-477A-8EC1-E182930CE89A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErgoCalc", "ErgoCalc\ErgoCalc.csproj", "{C5B4639E-3CAD-477A-8EC1-E182930CE89A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C9E7272F-FAFF-4D67-A6AC-38718D2C4CB6} = {C9E7272F-FAFF-4D67-A6AC-38718D2C4CB6}
 		{624C783A-147A-451B-802D-C8CA97539EF5} = {624C783A-147A-451B-802D-C8CA97539EF5}
@@ -19,7 +19,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-WRmodel", "Dll-WRmodel\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-Strain", "Dll-Strain\Dll-Strain.vcxproj", "{624C783A-147A-451B-802D-C8CA97539EF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EjemploTool", "EjemploTool\EjemploTool.csproj", "{82121D04-64FB-405A-9EE3-405260BA8882}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EjemploTool", "EjemploTool\EjemploTool.csproj", "{82121D04-64FB-405A-9EE3-405260BA8882}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +33,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x64.ActiveCfg = Debug|x64
-		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x64.Build.0 = Debug|x64
+		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x64.Build.0 = Debug|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x86.Build.0 = Debug|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,7 +86,6 @@ Global
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{82121D04-64FB-405A-9EE3-405260BA8882}.Debug|x64.Build.0 = Debug|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Debug|x86.Build.0 = Debug|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Release|Any CPU.ActiveCfg = Release|Any CPU
