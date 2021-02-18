@@ -11,6 +11,9 @@ using System.Windows.Forms;
 //using System.Runtime.Serialization.Formatters.Soap;
 using System.Runtime.InteropServices;
 
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 // Namespaces personales
 using Utilidades;
 
@@ -27,7 +30,7 @@ namespace ErgoCalc
         //private frmSplash _frmSplash;
         //private ToolStripPanel tspTop;
         //private ToolStripPanel tspBottom;
-        private string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        private readonly string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         public frmMain()
         {
@@ -139,10 +142,8 @@ namespace ErgoCalc
         private void frmMain_Shown(object sender, EventArgs e)
         {
             // signal the native process (that launched us) to close the splash screen
-            using (var closeSplashEvent = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "CloseSplashScreenEvent"))
-            {
-                closeSplashEvent.Set();
-            }
+            using var closeSplashEvent = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "CloseSplashScreenEvent");
+            closeSplashEvent.Set();
         }
 
         private void frmMain_ControlAdded(object sender, ControlEventArgs e)
@@ -179,6 +180,16 @@ namespace ErgoCalc
                 else
                     Win32.Win32API.AnimateWindow(this.Handle, 200, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_HIDE);
             }
+
+            // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-apis/
+            // https://docs.microsoft.com/es-es/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
+            /*var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            using FileStream createStream = File.Create(_programSettingsFileName);
+            System.Diagnostics.Debug.Print(JsonSerializer.Serialize<clsApplicationSettings>(_programSettings, options));
+            */
 
             // Guardar los datos de configuración
             SaveProgramSettings();
@@ -431,20 +442,22 @@ namespace ErgoCalc
             mnuMainFrm_File_New_Click(null, null);
         }
 
-        private void toolStripMain_About_Click(object sender, EventArgs e)
+        private void toolStripMain_Save_Click(object sender, EventArgs e)
         {
-            mnuMainFrm_Help_About_Click(null, null);
+            if (this.ActiveMdiChild != null)
+                ((IChildResults)this.ActiveMdiChild).Save("");
         }
 
-        private void toolStripMain_Settings_CheckedChanged(object sender, EventArgs e)
+        private void toolStripMain_Copy_Click(object sender, EventArgs e)
         {
-            //if (this.ActiveMdiChild != null)
-            //    ((IChildResults)this.ActiveMdiChild).ShowHideSettings();
+            if (this.ActiveMdiChild != null)
+                ((IChildResults)this.ActiveMdiChild).Duplicate();
         }
 
-        private void toolStripMain_Settings_EnabledChanged(object sender, EventArgs e)
+        private void toolStripMain_EditData_Click(object sender, EventArgs e)
         {
-            if (this.toolStripMain_Settings.Enabled == false) this.toolStripMain_Settings.Checked = false;
+            if (this.ActiveMdiChild != null)
+                ((IChildResults)this.ActiveMdiChild).EditData();
         }
 
         private void toolStripMain_Settings_Click(object sender, EventArgs e)
@@ -453,12 +466,17 @@ namespace ErgoCalc
                 ((IChildResults)this.ActiveMdiChild).ShowHideSettings();
         }
 
-        private void toolStripMain_Save_Click(object sender, EventArgs e)
+        private void toolStripMain_Settings_EnabledChanged(object sender, EventArgs e)
         {
-            ((IChildResults)this.ActiveMdiChild).Save("");
+            if (this.toolStripMain_Settings.Enabled == false) this.toolStripMain_Settings.Checked = false;
         }
 
-        #endregion
+        private void toolStripMain_About_Click(object sender, EventArgs e)
+        {
+            mnuMainFrm_Help_About_Click(null, null);
+        }
+
+        #endregion toolStripMain events
 
 
 

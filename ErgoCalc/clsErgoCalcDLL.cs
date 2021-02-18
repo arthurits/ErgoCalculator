@@ -172,8 +172,7 @@ namespace ErgoCalc
 
                 public override string ToString()
                 {
-                    string strCadena ="[Maximum holding time]: {0}";
-                    strCadena = string.Format("[Maximum holding time]:\t{0:0.###}\r\n[Paso]:\t{1:0.###}\r\n[Número de ciclos]:\t{2:0.###}\r\n[Número de puntos]:\t{3:0.###}", dMHT, dPaso, nCiclos,nPuntos);
+                    string strCadena = string.Format("[Maximum holding time]:\t{0:0.###}\r\n[Paso]:\t{1:0.###}\r\n[Número de ciclos]:\t{2:0.###}\r\n[Número de puntos]:\t{3:0.###}", dMHT, dPaso, nCiclos,nPuntos);
                     return strCadena;
                 }
             }
@@ -265,7 +264,7 @@ namespace ErgoCalc
                     // Definición de variables
                     // La matriz arrayCurva se inicializa a "empty" porque la función puede devolver
                     //   una matriz "empty" si no ha podido realizar el cálculo.
-                    Double[][] arrayCurva = new double[0][];
+                    Double[][] arrayCurva = Array.Empty<double[]>();
                     //Double[][] arrayIntermedia = new Double[2][];
                     IntPtr ptrTiempos = IntPtr.Zero;
                     IntPtr ptrResultado = IntPtr.Zero;
@@ -352,7 +351,7 @@ namespace ErgoCalc
                     Int32 sizeofDouble = Marshal.SizeOf(typeof(double));
 
                     IntPtr p1 = Marshal.AllocCoTaskMem(array.Length * sizeofPtr);
-                    IntPtr v1 = IntPtr.Zero;
+                    IntPtr v1;
                     for (Int32 i = 0; i < array.Length; i++)
                     {
                         v1 = Marshal.AllocCoTaskMem(array[i].Length * sizeofDouble);
@@ -375,7 +374,7 @@ namespace ErgoCalc
                 /// <returns>Managed jagged matrix</returns>
                 private double[][] marshalJuggedFromC(IntPtr carray, int nI, int nJ)
                 {
-                    IntPtr v1 = IntPtr.Zero;
+                    IntPtr v1;
                     int sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
                     double[][] retval = new double[nI][];
                     for (int i = 0; i < retval.Length; i++)
@@ -386,7 +385,6 @@ namespace ErgoCalc
                         // Marshal.FreeCoTaskMem(v1);    // Se libera este puntero creado en la rutina marshalJuggedToC
                     }
 
-                    v1 = IntPtr.Zero;
                     // Marshal.FreeCoTaskMem(carray);  // Se libera la memoria del puntero a punteros (opcional)
                     return retval;
                 }
@@ -399,14 +397,14 @@ namespace ErgoCalc
                 private void marshalFreeMemory(IntPtr matriz, Int32 nElementos)
                 {
                     // Definición de variables
-                    IntPtr puntero = IntPtr.Zero;
+                    IntPtr ptr;
                     Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
 
                     // Se libera la memoria de cada una de las filas de la matriz
                     for (Int32 i = 0; i < nElementos; i++)
                     {
-                        puntero = Marshal.ReadIntPtr(matriz, i * sizeofPtr);
-                        Marshal.FreeCoTaskMem(puntero);
+                        ptr = Marshal.ReadIntPtr(matriz, i * sizeofPtr);
+                        Marshal.FreeCoTaskMem(ptr);
                     }
 
                     // Se libera la memoria de la matriz

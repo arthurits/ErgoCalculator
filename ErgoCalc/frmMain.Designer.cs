@@ -232,6 +232,7 @@
             this.toolStripMain_Copy.Text = "Duplicate";
             this.toolStripMain_Copy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Copy.ToolTipText = "Duplicate window";
+            this.toolStripMain_Copy.Click += new System.EventHandler(this.toolStripMain_Copy_Click);
             // 
             // toolStripMain_EditData
             // 
@@ -242,6 +243,7 @@
             this.toolStripMain_EditData.Text = "Edit data";
             this.toolStripMain_EditData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_EditData.ToolTipText = "Edit model data";
+            this.toolStripMain_EditData.Click += new System.EventHandler(this.toolStripMain_EditData_Click);
             // 
             // toolStripSeparator4
             // 
@@ -277,7 +279,6 @@
             this.toolStripMain_Settings.Text = "Settings";
             this.toolStripMain_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Settings.ToolTipText = "Toggle settings";
-            this.toolStripMain_Settings.CheckedChanged += new System.EventHandler(this.toolStripMain_Settings_CheckedChanged);
             this.toolStripMain_Settings.Click += new System.EventHandler(this.toolStripMain_Settings_Click);
             this.toolStripMain_Settings.EnabledChanged += new System.EventHandler(this.toolStripMain_Settings_EnabledChanged);
             // 
@@ -324,7 +325,7 @@
             this.Controls.Add(this.mnuMainFrm);
             this.Controls.Add(this.tspTop);
             this.Controls.Add(this.tspBottom);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.mnuMainFrm;
             this.Margin = new System.Windows.Forms.Padding(4);

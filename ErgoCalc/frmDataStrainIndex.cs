@@ -370,7 +370,7 @@ namespace ErgoCalc
         {
             if (e.TabPageIndex == 1) // tabTasks
             {
-                int nDummy = (listViewTasks.Items.Find("Dummy", false)).Count();
+                int nDummy = (listViewTasks.Items.Find("Dummy", false)).Length;
                 // Create the subtasks, as many as subtasks
                 for (int i = listViewTasks.Items.Count - nDummy; i < updSubtasks.Value; i++)
                 {

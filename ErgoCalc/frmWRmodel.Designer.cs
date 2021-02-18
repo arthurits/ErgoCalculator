@@ -162,6 +162,7 @@
             this.toolStripWR.Size = new System.Drawing.Size(673, 70);
             this.toolStripWR.TabIndex = 2;
             this.toolStripWR.Text = "toolStrip1";
+            this.toolStripWR.Visible = false;
             // 
             // toolStripWR_SaveChart
             // 

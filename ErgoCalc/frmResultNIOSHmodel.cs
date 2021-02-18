@@ -302,7 +302,7 @@ namespace ErgoCalc
         {
             // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
             // Displays a SaveFileDialog so the user can save the Image  
-            // assigned to Button2.  
+            // assigned to Button2
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
                 DefaultExt = "*.txt",
@@ -312,7 +312,12 @@ namespace ErgoCalc
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
-            DialogResult result = saveFileDialog1.ShowDialog();
+
+            DialogResult result;
+            using (new CenterWinDialog(this))
+            {
+                result = saveFileDialog1.ShowDialog();
+            }
 
             // If the file name is not an empty string open it for saving.  
             if (result == DialogResult.OK && saveFileDialog1.FileName != "")
@@ -347,6 +352,24 @@ namespace ErgoCalc
             }
 
             return;
+        }
+
+        public void EditData()
+        {
+            return;
+        }
+
+        public void Duplicate()
+        {
+            string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Mostrar la ventana de resultados
+            frmResultNIOSHmodel frmResults = new frmResultNIOSHmodel(_sDatosNIOSH, _composite)
+            {
+                MdiParent = this.MdiParent
+            };
+            if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResults.Show();
         }
 
         public bool[] GetToolbarEnabledState()
@@ -407,7 +430,8 @@ namespace ErgoCalc
             rtbShowResult.SelectionStart = 0;
             rtbShowResult.SelectionLength = 0;
         }
-        #endregion
+
+        #endregion IChild interface
 
     }
 }

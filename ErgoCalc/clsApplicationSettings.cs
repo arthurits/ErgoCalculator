@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Drawing;
 using System.Xml;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Utilidades
 {
     class clsApplicationSettings
     {
         // Nombre del archivo que almacena los datos.
-        private string _fileName;
+        private readonly string _fileName;
 
         // Documento XML para guardar los datos.
-        private XmlDocument _document;
+        private readonly XmlDocument _document;
 
         public clsApplicationSettings(string fileName)
         {

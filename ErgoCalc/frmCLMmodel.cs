@@ -208,7 +208,17 @@ namespace ErgoCalc
         #region IChildResults
         public void Save(string path)
         {
-            return;
+            throw new NotImplementedException();
+        }
+
+        public void EditData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Duplicate()
+        {
+            throw new NotImplementedException();
         }
 
         public bool[] GetToolbarEnabledState()
@@ -256,7 +266,7 @@ namespace ErgoCalc
             rtbShowResult.SelectionStart = 0;
             rtbShowResult.SelectionLength = 0;
         }
-        #endregion
+        #endregion IChildResults
 
         private void frmCLMmodel_Load(object sender, EventArgs e)
         {
@@ -267,5 +277,6 @@ namespace ErgoCalc
         {
             //Win32.Win32API.AnimateWindow(this.Handle, 100, Win32.Win32API.AnimateWindowFlags.AW_HIDE | Win32.Win32API.AnimateWindowFlags.AW_BLEND);
         }
+
     }
 }

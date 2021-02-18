@@ -56,6 +56,7 @@ namespace ErgoCalc
     /// <summary>
     /// Defines the properties of the chart to be displayed in the ProperyGrid control
     /// </summary>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public class ChartOptions
     {
         #region Propiedades de la clase
@@ -92,7 +93,7 @@ namespace ErgoCalc
                 _nCurva = value;
                 if (value > -1)
                 {
-                    var plots = _plot.plt.GetPlottables()[_nCurva];
+                    //var plots = _plot.plt.GetPlottables()[_nCurva];
                     _serie = (ScottPlot.PlottableScatter)_plot.plt.GetPlottables()[_nCurva];
                 }
             }
@@ -202,8 +203,8 @@ namespace ErgoCalc
             get => _nCurva == -1 ? Color.Red : _serie.color;
             set
             {
-                if (_nCurva == -1) ;
-                //errorNoCurveSelected();
+                if (_nCurva == -1)
+                 errorNoCurveSelected();
                 else
                 {
                     _serie.color = Color.FromArgb(value.A, value.R, value.G, value.B);
@@ -420,6 +421,16 @@ namespace ErgoCalc
         /// Formats the text shown in the RichtTextBox
         /// </summary>
         void FormatText();
+
+        /// <summary>
+        /// Edits the original data of the child window
+        /// </summary>
+        void EditData();
+
+        /// <summary>
+        /// Duplicates the current child window
+        /// </summary>
+        void Duplicate();
     }
 
 }

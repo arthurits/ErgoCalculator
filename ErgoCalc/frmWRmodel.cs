@@ -16,6 +16,7 @@ using ErgoCalc.DLL.WRmodel;
 
 namespace ErgoCalc
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public partial class frmWRmodel : Form, IChildResults
     {
         private datosWR _datos;
@@ -89,6 +90,7 @@ namespace ErgoCalc
 
             //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
             chart.plt.PlotScatter(valores[0], valores[1], label: "4 3 2", lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+            chart.plt.Axis(0, null, 0, 100);
             chart.plt.AxisAutoX();
             chart.Render();
 
@@ -155,12 +157,16 @@ namespace ErgoCalc
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
-            DialogResult result = saveFileDlg.ShowDialog();
 
-            // If the file name is not an empty string open it for saving.  
-            if (result == DialogResult.OK && saveFileDlg.FileName != "")
+            using (new CenterWinDialog(this))
             {
-                chart.plt.SaveFig(saveFileDlg.FileName);
+                DialogResult result = saveFileDlg.ShowDialog();
+
+                // If the file name is not an empty string open it for saving.  
+                if (result == DialogResult.OK && saveFileDlg.FileName != "")
+                {
+                    chart.plt.SaveFig(saveFileDlg.FileName);
+                }
             }
         }
         private void toolStripWR_AddLine_Click(object sender, EventArgs e)
@@ -218,6 +224,36 @@ namespace ErgoCalc
 
             return;
         }
+
+        public void EditData()
+        {
+            // Show the form with the data in order to edit it
+            frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos);
+            if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
+            {
+                // Get the edited input data
+                _datos = (frmDatosWR.getData());
+                chart.plt.Clear();
+                CalcularCurva();
+                _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+            }
+            return;
+        }
+
+        public void Duplicate()
+        {
+            string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Mostrar la ventana de resultados
+            frmWRmodel frmResults = new frmWRmodel(_datos)
+            {
+                MdiParent = this.MdiParent
+            };
+            if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResults.Show();
+
+        }
+
         public bool[] GetToolbarEnabledState()
         {
             bool[] toolbar = new bool[] { true, true, true, true, true, true, true, true, true, true, true, true, true, true };

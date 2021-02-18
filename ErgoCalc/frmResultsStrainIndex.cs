@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -15,8 +16,8 @@ namespace ErgoCalc
     public partial class frmResultsStrainIndex : Form, IChildResults
     {
         // Variable definition
-        private ModelSubTask[] _subtasks;
-        private ModelTask[] _tasks;
+        //private ModelSubTask[] _subtasks;
+        //private ModelTask[] _tasks;
         private ModelJob _job;
         private IndexType _index;
         private cModelStrain _classDLL;
@@ -305,7 +306,12 @@ namespace ErgoCalc
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
-            DialogResult result = saveFileDialog1.ShowDialog();
+
+            DialogResult result;
+            using (new CenterWinDialog(this))
+            { 
+                result = saveFileDialog1.ShowDialog();
+            }
 
             // If the file name is not an empty string open it for saving.  
             if (result==DialogResult.OK && saveFileDialog1.FileName != "")
@@ -340,6 +346,24 @@ namespace ErgoCalc
             }
 
             return;
+        }
+
+        public void EditData()
+        {
+            return;
+        }
+
+        public void Duplicate()
+        {
+            string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Mostrar la ventana de resultados
+            frmResultsStrainIndex frmResults = new frmResultsStrainIndex(_index,_job)
+            {
+                MdiParent = this.MdiParent
+            };
+            if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResults.Show();
         }
 
         public bool[] GetToolbarEnabledState()
@@ -420,5 +444,7 @@ namespace ErgoCalc
         {
             //Win32.Win32API.AnimateWindow(this.Handle, 3000, Win32.Win32API.AnimateWindowFlags.AW_HIDE | Win32.Win32API.AnimateWindowFlags.AW_BLEND);
         }
+
+
     }
 }
