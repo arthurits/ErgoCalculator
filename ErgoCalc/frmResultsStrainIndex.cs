@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Forms;
 
 // Para llamar a la DLL
@@ -294,6 +295,18 @@ namespace ErgoCalc
         #region IChildResults
         public void Save(string path)
         {
+
+            // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-apis/
+            // https://docs.microsoft.com/es-es/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            //using FileStream createStream = File.Create(_programSettingsFileName);
+            var str = JsonSerializer.Serialize<ModelJob>(_job, options);
+            
+
+
             // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
             // Displays a SaveFileDialog so the user can save the Image  
             // assigned to Button2.  
