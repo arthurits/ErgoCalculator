@@ -6,8 +6,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Windows.Forms;
+
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 // Para llamar a la DLL
 using ErgoCalc.DLL.Strain;
@@ -298,11 +300,13 @@ namespace ErgoCalc
 
             // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-apis/
             // https://docs.microsoft.com/es-es/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
+            // https://docs.microsoft.com/es-es/dotnet/standard/serialization/write-custom-serializer-deserializer
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
             //using FileStream createStream = File.Create(_programSettingsFileName);
+
             var str = JsonSerializer.Serialize<ModelJob>(_job, options);
             
 

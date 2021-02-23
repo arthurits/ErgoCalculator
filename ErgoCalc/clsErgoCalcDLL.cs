@@ -1055,7 +1055,6 @@ namespace ErgoCalc
                     memoffset += sizeDouble;
 
                     Marshal.WriteInt32(ptrTask, memoffset, task.numberSubTasks);
-                    memoffset += sizeInt;
 
                     return ptrTask;
                 }
@@ -1149,7 +1148,6 @@ namespace ErgoCalc
                     memoffset += sizeDouble;
 
                     Marshal.WriteInt32(ptrJob, memoffset, Job.numberTasks);
-                    memoffset += sizeInt;
 
                     return ptrJob;
                 }

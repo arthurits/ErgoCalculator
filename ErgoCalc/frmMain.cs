@@ -25,9 +25,11 @@ namespace ErgoCalc
 
         // For loading and saving program settings.
         //private ApplicationSettingsData _settings = new ApplicationSettingsData();
+        private AppSettings _settings = new AppSettings();
+        private static readonly string _settingsFileName = "Configuration.json";
         private clsApplicationSettings _programSettings;
         private static readonly string _programSettingsFileName = "Configuration.xml";
-        //private frmSplash _frmSplash;
+        
         //private ToolStripPanel tspTop;
         //private ToolStripPanel tspBottom;
         private readonly string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
@@ -129,8 +131,9 @@ namespace ErgoCalc
         {
             // Load any saved program settings.
             _programSettings = new clsApplicationSettings(_programSettingsFileName);
-            LoadProgramSettings();
-
+            //LoadProgramSettingsXML();
+            LoadProgramSettingsJSON();
+            
             // Creates the fade in animation of the form
             Win32.Win32API.AnimateWindow(this.Handle, 200, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_CENTER);
             
@@ -192,7 +195,8 @@ namespace ErgoCalc
             */
 
             // Guardar los datos de configuración
-            SaveProgramSettings();
+            //SaveProgramSettingsXML();
+            SaveProgramSettingsJSON();
             
         }
         #endregion Form events
@@ -323,7 +327,7 @@ namespace ErgoCalc
         /// <summary>
         /// Loads any saved program settings.
         /// </summary>
-        private void LoadProgramSettings()
+        private void LoadProgramSettingsXML()
         {
             // Load the saved window settings and resize the window.
             try
@@ -345,13 +349,48 @@ namespace ErgoCalc
             }
             catch (Exception ex)
             {
+                using (new CenterWinDialog(this))
+                {
+                    MessageBox.Show(this,
+                        "Error loading settings file\n\n" + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
 
+        private void LoadProgramSettingsJSON()
+        {
+            try
+            {
+                var jsonString = File.ReadAllText(_settingsFileName);
+                _settings = JsonSerializer.Deserialize<AppSettings>(jsonString);
+
+                this.StartPosition = FormStartPosition.Manual;
+                this.DesktopLocation = new Point(_settings.Left, _settings.Top);
+                this.ClientSize = new Size(_settings.Width, _settings.Height);
+            }
+            catch (Exception ex)
+            {
+                using (new CenterWinDialog(this))
+                {
+                    MessageBox.Show(this,
+                        "Error loading settings file\n\n" + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+            finally
+            {
+                
+            }
+        }
         /// <summary>
         /// Saves the current program settings.
         /// </summary>
-        private void SaveProgramSettings()
+        private void SaveProgramSettingsXML()
         {
             // Save window settings.      
             _programSettings.SetValue("Window", "Left", this.DesktopLocation.X.ToString());
@@ -366,6 +405,20 @@ namespace ErgoCalc
             _programSettings.Save();
         }
 
+        private void SaveProgramSettingsJSON()
+        {
+            _settings.Left = DesktopLocation.X;
+            _settings.Top = DesktopLocation.Y;
+            _settings.Width = ClientSize.Width;
+            _settings.Height = ClientSize.Height;
+
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            var jsonString = JsonSerializer.Serialize(_settings, options);
+            File.WriteAllText(_settingsFileName, jsonString);
+        }
 
 
         #endregion Application settings
