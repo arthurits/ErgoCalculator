@@ -301,13 +301,114 @@ namespace ErgoCalc
             // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-apis/
             // https://docs.microsoft.com/es-es/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
             // https://docs.microsoft.com/es-es/dotnet/standard/serialization/write-custom-serializer-deserializer
-            var options = new JsonSerializerOptions
+            // https://docs.microsoft.com/es-es/dotnet/api/system.text.json.jsonelement?view=net-5.0
+            // https://stackoverflow.com/questions/37665240/howto-serialize-a-nested-collection-using-jsonwriter-in-c-sharp
+            var writerOptions = new JsonWriterOptions
             {
-                WriteIndented = true
+                Indented = true
             };
-            //using FileStream createStream = File.Create(_programSettingsFileName);
+            using FileStream createStream = File.Create("StrainIndex.json");
+            using var writer = new Utf8JsonWriter(createStream, options: writerOptions);
+            writer.WriteStartObject();
 
-            var str = JsonSerializer.Serialize<ModelJob>(_job, options);
+            writer.WritePropertyName("Tasks");
+            writer.WriteStartArray();
+            //writer.WriteStartObject("Tasks");
+            for (int i = 0; i < _job.numberTasks; i++)
+            {
+                //writer.WriteNumber("Algo", 0);
+                writer.WriteStartArray();
+                writer.WriteStartObject();
+                for (int j=0;j<_job.JobTasks[i].numberSubTasks; j++)
+                {
+                    writer.WriteStartArray("Sub task");
+                    writer.WriteStartObject();
+                        writer.WriteNumber("i", _job.JobTasks[i].SubTasks[j].data.i);
+                        writer.WriteNumber("e", _job.JobTasks[i].SubTasks[j].data.e);
+                        writer.WriteNumber("ea", _job.JobTasks[i].SubTasks[j].data.ea);
+                        writer.WriteNumber("eb", _job.JobTasks[i].SubTasks[j].data.eb);
+                        writer.WriteNumber("d", _job.JobTasks[i].SubTasks[j].data.d);
+                        writer.WriteNumber("p", _job.JobTasks[i].SubTasks[j].data.p);
+                        writer.WriteNumber("h", _job.JobTasks[i].SubTasks[j].data.h);
+                    writer.WriteEndObject();
+
+                    writer.WriteStartObject();
+                        writer.WriteNumber("I multiplier", _job.JobTasks[i].SubTasks[j].factors.IM);
+                        writer.WriteNumber("E multiplier", _job.JobTasks[i].SubTasks[j].factors.EM);
+                        writer.WriteNumber("Ea multiplier", _job.JobTasks[i].SubTasks[j].factors.EMa);
+                        writer.WriteNumber("Eb multiplier", _job.JobTasks[i].SubTasks[j].factors.EMb);
+                        writer.WriteNumber("D multiplier", _job.JobTasks[i].SubTasks[j].factors.DM);
+                        writer.WriteNumber("P multiplier", _job.JobTasks[i].SubTasks[j].factors.PM);
+                        writer.WriteNumber("H multiplier", _job.JobTasks[i].SubTasks[j].factors.HM);
+                    writer.WriteEndObject();
+
+                    writer.WriteStartObject();
+                    writer.WriteNumber("RSI index", _job.JobTasks[i].SubTasks[j].index);
+                    writer.WriteEndObject();
+
+                    writer.WriteStartObject();
+                    writer.WriteNumber("Item index", _job.JobTasks[i].SubTasks[j].ItemIndex);
+                    writer.WriteEndObject();
+
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
+                writer.WriteEndArray();
+
+
+                writer.WriteStartArray();                
+                writer.WriteStartObject();
+                for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
+                {
+                    writer.WriteNumber("Order", _job.JobTasks[i].order[j]);
+                }
+                writer.WriteEndObject();
+                writer.WriteEndArray();
+
+                writer.WriteStartObject();
+                writer.WriteNumber("h factor", _job.JobTasks[i].h);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("ha factor", _job.JobTasks[i].ha);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("hb factor", _job.JobTasks[i].hb);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("H multiplier", _job.JobTasks[i].HM);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("Ha multiplier", _job.JobTasks[i].HMa);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("Hb multiplier", _job.JobTasks[i].HMb);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("COSI index", _job.JobTasks[i].index);
+                writer.WriteEndObject();
+                writer.WriteStartObject();
+                writer.WriteNumber("Number of sub-tasks", _job.JobTasks[i].numberSubTasks);
+                writer.WriteEndObject();
+            }
+            //writer.WriteEndObject();
+            writer.WriteEndArray();
+
+            writer.WriteStartArray("Tasks order");
+            for (int i = 0; i < _job.numberTasks; i++)
+            {
+                writer.WriteNumberValue(_job.order[i]);
+            }
+            writer.WriteEndArray();
+
+            writer.WriteNumber("CUSI index", _job.index);
+            writer.WriteNumber("Number of tasks", _job.numberTasks);
+
+
+            writer.WriteEndObject();
+            writer.Flush();
+
+
+            //var str = JsonSerializer.Serialize<ModelJob>(_job, options);
             
 
 

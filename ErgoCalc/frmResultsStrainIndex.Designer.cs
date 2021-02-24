@@ -69,7 +69,7 @@
             this.rtbShowResult.AcceptsTab = true;
             this.rtbShowResult.BackColor = System.Drawing.SystemColors.Window;
             this.rtbShowResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbShowResult.Font = new System.Drawing.Font("Lucida Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbShowResult.Font = new System.Drawing.Font("Lucida Sans", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtbShowResult.Location = new System.Drawing.Point(0, 0);
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.ReadOnly = true;
@@ -85,7 +85,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(892, 440);
             this.Controls.Add(this.splitContainer1);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "frmResultsStrainIndex";
             this.Text = "Strain Index results";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmResultsStrainIndex_FormClosing);

@@ -347,6 +347,9 @@ namespace ErgoCalc
                 // Load saved options.
                 //_idioma = (Language)Int32.Parse(_programSettings.GetValue("Options", "LanguageLCID"));
             }
+            catch (FileNotFoundException)
+            {
+            }
             catch (Exception ex)
             {
                 using (new CenterWinDialog(this))
@@ -371,6 +374,9 @@ namespace ErgoCalc
                 this.DesktopLocation = new Point(_settings.Left, _settings.Top);
                 this.ClientSize = new Size(_settings.Width, _settings.Height);
             }
+            catch (FileNotFoundException)
+            {
+            }
             catch (Exception ex)
             {
                 using (new CenterWinDialog(this))
@@ -381,10 +387,6 @@ namespace ErgoCalc
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }
-            }
-            finally
-            {
-                
             }
         }
         /// <summary>
