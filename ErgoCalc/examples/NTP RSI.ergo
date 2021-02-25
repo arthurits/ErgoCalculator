@@ -1,0 +1,135 @@
+{
+  "Document type": "Strain index",
+  "Tasks": [
+    {
+      "Sub-tasks": [
+        {
+          "Intensity": 0.7,
+          "Efforts": 1,
+          "EffortsA": 8.6,
+          "EffortsB": 7.6,
+          "Duration": 1,
+          "Posture": 0,
+          "Hours": 4,
+          "I multiplier": 11.51,
+          "E multiplier": 0.35,
+          "Ea multiplier": 2.25,
+          "Eb multiplier": 2,
+          "D multiplier": 0.76,
+          "P multiplier": 1,
+          "H multiplier": 0.7697664925007901,
+          "RSI index": 2.3567632794299684,
+          "Item index": 0
+        },
+        {
+          "Intensity": 0.4,
+          "Efforts": 2.6,
+          "EffortsA": 7.6,
+          "EffortsB": 5,
+          "Duration": 1.2,
+          "Posture": 0,
+          "Hours": 4,
+          "I multiplier": 5.024000000000001,
+          "E multiplier": 0.75,
+          "Ea multiplier": 2,
+          "Eb multiplier": 1.35,
+          "D multiplier": 0.8220000000000001,
+          "P multiplier": 1,
+          "H multiplier": 0.7697664925007901,
+          "RSI index": 2.384194678156728,
+          "Item index": 1
+        },
+        {
+          "Intensity": 0.2,
+          "Efforts": 5,
+          "EffortsA": 5,
+          "EffortsB": 5,
+          "Duration": 3,
+          "Posture": 0,
+          "Hours": 4,
+          "I multiplier": 2.616,
+          "E multiplier": 1.35,
+          "Ea multiplier": 0,
+          "Eb multiplier": 0,
+          "D multiplier": 1.38,
+          "P multiplier": 1,
+          "H multiplier": 0.7697664925007901,
+          "RSI index": 3.7515401359837908,
+          "Item index": 2
+        }
+      ],
+      "Sub-tasks order": [
+        0,
+        1,
+        2
+      ],
+      "h factor": 4,
+      "ha factor": 4,
+      "hb factor": 4,
+      "H multiplier": 0.7697664925007901,
+      "Ha multiplier": 0,
+      "Hb multiplier": 0,
+      "COSI index": 7.5012445328362665,
+      "Number of sub-tasks": 3
+    },
+    {
+      "Sub-tasks": [
+        {
+          "Intensity": 0.1,
+          "Efforts": 0.5,
+          "EffortsA": 2.5,
+          "EffortsB": 2,
+          "Duration": 1,
+          "Posture": -15,
+          "Hours": 4,
+          "I multiplier": 1.5739999999999998,
+          "E multiplier": 0.225,
+          "Ea multiplier": 0.725,
+          "Eb multiplier": 0.6,
+          "D multiplier": 0.76,
+          "P multiplier": 1.1734441412215775,
+          "H multiplier": 0.7697664925007901,
+          "RSI index": 0.2431208816264078,
+          "Item index": 3
+        },
+        {
+          "Intensity": 0.5,
+          "Efforts": 2,
+          "EffortsA": 2,
+          "EffortsB": 2,
+          "Duration": 3,
+          "Posture": -15,
+          "Hours": 4,
+          "I multiplier": 6.7,
+          "E multiplier": 0.6,
+          "Ea multiplier": 0,
+          "Eb multiplier": 0,
+          "D multiplier": 1.38,
+          "P multiplier": 1.1734441412215775,
+          "H multiplier": 0.7697664925007901,
+          "RSI index": 5.011024925918471,
+          "Item index": 4
+        }
+      ],
+      "Sub-tasks order": [
+        0,
+        1
+      ],
+      "h factor": 4,
+      "ha factor": 8,
+      "hb factor": 4,
+      "H multiplier": 0.7697664925007901,
+      "Ha multiplier": 1.000149738751185,
+      "Hb multiplier": 0.7697664925007901,
+      "COSI index": 5.146092082377586,
+      "Number of sub-tasks": 2
+    }
+  ],
+  "Tasks order": [
+    1,
+    0
+  ],
+  "CUSI index": 9.041417313792156,
+  "Number of tasks": 2,
+  "Index type": 2
+}

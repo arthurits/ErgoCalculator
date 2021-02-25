@@ -219,6 +219,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Update="examples\NTP RSI.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -336,5 +339,8 @@
     <EmbeddedResource Remove="controls\ListViewEx.resx" />
     <EmbeddedResource Remove="controls\TablessTabControl.resx" />
     <EmbeddedResource Remove="old - frmAbout.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="examples\" />
   </ItemGroup>
 </Project>

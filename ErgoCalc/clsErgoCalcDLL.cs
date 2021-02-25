@@ -573,9 +573,9 @@ namespace ErgoCalc
 
             public enum IndexType
             {
-                RSI,    // 0
-                COSI,   // 1
-                CUSI    // 2
+                RSI = 0,
+                COSI = 1,
+                CUSI = 2
             }
 
             // Definición de tipos
@@ -775,6 +775,7 @@ namespace ErgoCalc
                 public int[] order;             // Reordering of the subtasks from lower COSI to higher COSI
                 public double index;            // The CUSI index for this job
                 public int numberTasks;         // Number of tasks in the job
+                public IndexType model;         // RSI, COSI or CUSI
 
                 public override string ToString()
                 {
@@ -982,7 +983,13 @@ namespace ErgoCalc
 
 
                 #region Marshalling private routines
-                
+
+                /// <summary>
+                /// Copies a ModelTask struct to unmanaged memory
+                /// </summary>
+                /// <param name="task">Struct to copy</param>
+                /// <param name="ptr">If already allocated, pointer to unmanaged memory</param>
+                /// <returns>Pointer to unmanaged memory</returns>
                 private IntPtr TaskToMarshal(ModelTask task, IntPtr ptr = default(IntPtr))
                 {
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
@@ -1059,6 +1066,11 @@ namespace ErgoCalc
                     return ptrTask;
                 }
 
+                /// <summary>
+                /// Gets a ModelTask struct from unmanaged memory
+                /// </summary>
+                /// <param name="ptrTask">Pointer to ModelTask in unmanaged memory</param>
+                /// <returns>ModelTask struct</returns>
                 private ModelTask TaskfromMarshal(IntPtr ptrTask)
                 {
                     // Definición de variables
@@ -1110,6 +1122,11 @@ namespace ErgoCalc
                     return task;
                 }
 
+                /// <summary>
+                /// Copies a ModelJob struct to unmanaged memory
+                /// </summary>
+                /// <param name="job">Struct to copy</param>
+                /// <returns>Pointer to unmanaged memory</returns>
                 private IntPtr JobToMarshal(ModelJob job)
                 {
                     // Variable definition
@@ -1148,10 +1165,18 @@ namespace ErgoCalc
                     memoffset += sizeDouble;
 
                     Marshal.WriteInt32(ptrJob, memoffset, Job.numberTasks);
+                    memoffset += sizeInt;
+
+                    Marshal.WriteInt32(ptrJob, memoffset, (int)Job.model);
 
                     return ptrJob;
                 }
 
+                /// <summary>
+                /// Gets a ModelJob struct from unmanaged memory
+                /// </summary>
+                /// <param name="ptrJob">Pointer to ModelJob in unmanaged memory</param>
+                /// <returns>ModelJob struct</returns>
                 private ModelJob JobFromMarshal(IntPtr ptrJob)
                 {
                     // Definición de variables
@@ -1159,6 +1184,7 @@ namespace ErgoCalc
                     ModelJob job = new ModelJob();
                     Int32 sizePtr = Marshal.SizeOf(typeof(IntPtr));
                     Int32 sizeDouble = Marshal.SizeOf(typeof(double));
+                    Int32 sizeInt = Marshal.SizeOf(typeof(int));
                     Int32 sizeTask = Marshal.SizeOf(typeof(ModelTask));
                     int memoffset = 0;
 
@@ -1185,10 +1211,19 @@ namespace ErgoCalc
 
                     // We get back the index value
                     job.index = BitConverter.Int64BitsToDouble(Marshal.ReadInt64(ptrJob, memoffset));
+                    memoffset += sizeDouble;
+
+                    memoffset += sizeInt;
+
+                    job.model = (IndexType)Marshal.ReadInt32(ptrJob, memoffset);
 
                     return job;
                 }
 
+                /// <summary>
+                /// Frees allocated unmanaged memory for ModelTask
+                /// </summary>
+                /// <param name="task">Pointer to ModelTask in unmanaged memory</param>
                 private void TaskFreeMemory(IntPtr task)
                 {
                     // Definición de variables
@@ -1207,6 +1242,10 @@ namespace ErgoCalc
                     Marshal.FreeHGlobal(task);
                 }
 
+                /// <summary>
+                /// Frees allocated unmanaged memory for ModelJob
+                /// </summary>
+                /// <param name="ptrJob">Pointer to ModelJob in unmanaged memory</param>
                 private void JobFreeMemory(IntPtr ptrJob)
                 {
                     // Definición de variables
@@ -1241,14 +1280,19 @@ namespace ErgoCalc
                     Marshal.FreeHGlobal(ptrJob);
                 }
 
-                private double ReadDouble(IntPtr mem1)
+                /// <summary>
+                /// Gets a Double var from unmanaged memory
+                /// </summary>
+                /// <param name="ptr">Pointer to memory</param>
+                /// <returns>Value</returns>
+                private double ReadDouble(IntPtr ptr)
                 {
-                    if (mem1 != IntPtr.Zero)
+                    if (ptr != IntPtr.Zero)
                     {
                         byte[] ba = new byte[sizeof(double)];
 
                         for (int i = 0; i < ba.Length; i++)
-                            ba[i] = Marshal.ReadByte(mem1, i);
+                            ba[i] = Marshal.ReadByte(ptr, i);
                         double v = BitConverter.ToDouble(ba, 0);
                         return v;
                     }

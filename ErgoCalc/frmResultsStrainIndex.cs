@@ -292,105 +292,76 @@ namespace ErgoCalc
             // https://stackoverflow.com/questions/542850/how-can-i-insert-an-image-into-a-richtextbox
         }
 
-        #endregion Private routines
-
-        #region IChildResults
-        public void Save(string path)
+        /// <summary>
+        /// Serialize ModelJob structure to JSON
+        /// </summary>
+        /// <param name="writer">The already created writer</param>
+        private void SerializeToJSON(Utf8JsonWriter writer)
         {
-
             // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-apis/
             // https://docs.microsoft.com/es-es/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
             // https://docs.microsoft.com/es-es/dotnet/standard/serialization/write-custom-serializer-deserializer
             // https://docs.microsoft.com/es-es/dotnet/api/system.text.json.jsonelement?view=net-5.0
             // https://stackoverflow.com/questions/37665240/howto-serialize-a-nested-collection-using-jsonwriter-in-c-sharp
-            var writerOptions = new JsonWriterOptions
-            {
-                Indented = true
-            };
-            using FileStream createStream = File.Create("StrainIndex.json");
-            using var writer = new Utf8JsonWriter(createStream, options: writerOptions);
+            //var writerOptions = new JsonWriterOptions
+            //{
+            //    Indented = true
+            //};
+            //using FileStream createStream = File.Create(strFileName);
+            //using var writer = new Utf8JsonWriter(createStream, options: writerOptions);
             writer.WriteStartObject();
+            writer.WriteString("Document type", "Strain index");
 
             writer.WritePropertyName("Tasks");
             writer.WriteStartArray();
-            //writer.WriteStartObject("Tasks");
             for (int i = 0; i < _job.numberTasks; i++)
             {
-                //writer.WriteNumber("Algo", 0);
+                writer.WriteStartObject();
+
+                writer.WritePropertyName("Sub-tasks");
                 writer.WriteStartArray();
-                writer.WriteStartObject();
-                for (int j=0;j<_job.JobTasks[i].numberSubTasks; j++)
-                {
-                    writer.WriteStartArray("Sub task");
-                    writer.WriteStartObject();
-                        writer.WriteNumber("i", _job.JobTasks[i].SubTasks[j].data.i);
-                        writer.WriteNumber("e", _job.JobTasks[i].SubTasks[j].data.e);
-                        writer.WriteNumber("ea", _job.JobTasks[i].SubTasks[j].data.ea);
-                        writer.WriteNumber("eb", _job.JobTasks[i].SubTasks[j].data.eb);
-                        writer.WriteNumber("d", _job.JobTasks[i].SubTasks[j].data.d);
-                        writer.WriteNumber("p", _job.JobTasks[i].SubTasks[j].data.p);
-                        writer.WriteNumber("h", _job.JobTasks[i].SubTasks[j].data.h);
-                    writer.WriteEndObject();
-
-                    writer.WriteStartObject();
-                        writer.WriteNumber("I multiplier", _job.JobTasks[i].SubTasks[j].factors.IM);
-                        writer.WriteNumber("E multiplier", _job.JobTasks[i].SubTasks[j].factors.EM);
-                        writer.WriteNumber("Ea multiplier", _job.JobTasks[i].SubTasks[j].factors.EMa);
-                        writer.WriteNumber("Eb multiplier", _job.JobTasks[i].SubTasks[j].factors.EMb);
-                        writer.WriteNumber("D multiplier", _job.JobTasks[i].SubTasks[j].factors.DM);
-                        writer.WriteNumber("P multiplier", _job.JobTasks[i].SubTasks[j].factors.PM);
-                        writer.WriteNumber("H multiplier", _job.JobTasks[i].SubTasks[j].factors.HM);
-                    writer.WriteEndObject();
-
-                    writer.WriteStartObject();
-                    writer.WriteNumber("RSI index", _job.JobTasks[i].SubTasks[j].index);
-                    writer.WriteEndObject();
-
-                    writer.WriteStartObject();
-                    writer.WriteNumber("Item index", _job.JobTasks[i].SubTasks[j].ItemIndex);
-                    writer.WriteEndObject();
-
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndObject();
-                writer.WriteEndArray();
-
-
-                writer.WriteStartArray();                
-                writer.WriteStartObject();
                 for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
                 {
-                    writer.WriteNumber("Order", _job.JobTasks[i].order[j]);
+                    writer.WriteStartObject();
+                    writer.WriteNumber("Intensity", _job.JobTasks[i].SubTasks[j].data.i);
+                    writer.WriteNumber("Efforts", _job.JobTasks[i].SubTasks[j].data.e);
+                    writer.WriteNumber("EffortsA", _job.JobTasks[i].SubTasks[j].data.ea);
+                    writer.WriteNumber("EffortsB", _job.JobTasks[i].SubTasks[j].data.eb);
+                    writer.WriteNumber("Duration", _job.JobTasks[i].SubTasks[j].data.d);
+                    writer.WriteNumber("Posture", _job.JobTasks[i].SubTasks[j].data.p);
+                    writer.WriteNumber("Hours", _job.JobTasks[i].SubTasks[j].data.h);
+
+                    writer.WriteNumber("I multiplier", _job.JobTasks[i].SubTasks[j].factors.IM);
+                    writer.WriteNumber("E multiplier", _job.JobTasks[i].SubTasks[j].factors.EM);
+                    writer.WriteNumber("Ea multiplier", _job.JobTasks[i].SubTasks[j].factors.EMa);
+                    writer.WriteNumber("Eb multiplier", _job.JobTasks[i].SubTasks[j].factors.EMb);
+                    writer.WriteNumber("D multiplier", _job.JobTasks[i].SubTasks[j].factors.DM);
+                    writer.WriteNumber("P multiplier", _job.JobTasks[i].SubTasks[j].factors.PM);
+                    writer.WriteNumber("H multiplier", _job.JobTasks[i].SubTasks[j].factors.HM);
+
+                    writer.WriteNumber("RSI index", _job.JobTasks[i].SubTasks[j].index);
+                    writer.WriteNumber("Item index", _job.JobTasks[i].SubTasks[j].ItemIndex);
+                    writer.WriteEndObject();
                 }
-                writer.WriteEndObject();
                 writer.WriteEndArray();
 
-                writer.WriteStartObject();
+                writer.WritePropertyName("Sub-tasks order");
+                writer.WriteStartArray();
+                for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
+                    writer.WriteNumberValue(_job.JobTasks[i].order[j]);
+                writer.WriteEndArray();
+
                 writer.WriteNumber("h factor", _job.JobTasks[i].h);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("ha factor", _job.JobTasks[i].ha);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("hb factor", _job.JobTasks[i].hb);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("H multiplier", _job.JobTasks[i].HM);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("Ha multiplier", _job.JobTasks[i].HMa);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("Hb multiplier", _job.JobTasks[i].HMb);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("COSI index", _job.JobTasks[i].index);
-                writer.WriteEndObject();
-                writer.WriteStartObject();
                 writer.WriteNumber("Number of sub-tasks", _job.JobTasks[i].numberSubTasks);
+
                 writer.WriteEndObject();
             }
-            //writer.WriteEndObject();
             writer.WriteEndArray();
 
             writer.WriteStartArray("Tasks order");
@@ -402,24 +373,26 @@ namespace ErgoCalc
 
             writer.WriteNumber("CUSI index", _job.index);
             writer.WriteNumber("Number of tasks", _job.numberTasks);
-
+            writer.WriteNumber("Index type", (int)_job.model);
+            //object val = Convert.ChangeType(_job.model, _job.model.GetTypeCode());
 
             writer.WriteEndObject();
             writer.Flush();
+        }
 
+        #endregion Private routines
 
-            //var str = JsonSerializer.Serialize<ModelJob>(_job, options);
-            
-
-
+        #region IChildResults
+        public void Save(string path)
+        {
             // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
             // Displays a SaveFileDialog so the user can save the Image  
             // assigned to Button2.  
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
                 DefaultExt = "*.rtf",
-                Filter = "RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
-                FilterIndex = 1,
+                Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                FilterIndex = 2,
                 Title = "Save Strain Index results",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -444,12 +417,18 @@ namespace ErgoCalc
                     switch (saveFileDialog1.FilterIndex)
                     {
                         case 1:
-                            rtbShowResult.SaveFile(fs,RichTextBoxStreamType.RichText);
+                            using (var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true }))
+                            {
+                                SerializeToJSON(writer);
+                            }
                             break;
                         case 2:
-                            rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                            rtbShowResult.SaveFile(fs,RichTextBoxStreamType.RichText);
                             break;
                         case 3:
+                            rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                            break;
+                        case 4:
                             rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
                             break;
                     }

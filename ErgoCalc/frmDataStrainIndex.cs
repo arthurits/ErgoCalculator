@@ -143,7 +143,10 @@ namespace ErgoCalc
             _job.order = new int[_job.numberTasks];
             _job.JobTasks = new ModelTask[_job.numberTasks];
             _job.index = -1;
-            
+            _job.model = radRSI.Checked ? IndexType.RSI : (radCOSI.Checked ? IndexType.COSI : IndexType.CUSI);
+            //_job.model = (IndexType)Enum.Parse(typeof(IndexType), this.groupIndex.Handle.ToString());
+
+
             for (int i = 0; i < _job.numberTasks; i++)
             {
                 _job.order[i] = i;
@@ -362,6 +365,7 @@ namespace ErgoCalc
             // Load some data example
             DataExample2();
             DataToGrid();
+            tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
 
             return;
         }
