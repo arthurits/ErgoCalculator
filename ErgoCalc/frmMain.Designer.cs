@@ -185,6 +185,7 @@
             this.toolStripMain_Open.Size = new System.Drawing.Size(77, 67);
             this.toolStripMain_Open.Text = "Open model";
             this.toolStripMain_Open.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_Open.Click += new System.EventHandler(this.toolStripMain_Open_Click);
             // 
             // toolStripMain_Save
             // 

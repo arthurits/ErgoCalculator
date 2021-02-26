@@ -257,21 +257,27 @@ namespace ErgoCalc
                 plot.Ticks(fontSize: 18);
                 plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
 
-                var orgdata = Clipboard.GetDataObject();
-                using (var plotImage = plot.GetBitmap())
+                try
                 {
-                    Clipboard.SetImage(plotImage);
+                    var orgdata = Clipboard.GetDataObject();
+                    using (var plotImage = plot.GetBitmap())
+                    {
+                        Clipboard.SetImage(plotImage);
+                    }
+                    plot.Clear();
+                    rtbShowResult.AppendText(Environment.NewLine);
+                    var read = rtbShowResult.ReadOnly;
+                    rtbShowResult.ReadOnly = false;
+                    rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+                    rtbShowResult.Paste();
+                    Clipboard.SetDataObject(orgdata);
+                    rtbShowResult.ReadOnly = read;
+                    rtbShowResult.SelectionStart = 0;
                 }
-                plot.Clear();
-                rtbShowResult.AppendText(Environment.NewLine);
-                var read = rtbShowResult.ReadOnly;
-                rtbShowResult.ReadOnly = false;
-                rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
-                rtbShowResult.Paste();
-                Clipboard.SetDataObject(orgdata);
-                rtbShowResult.ReadOnly = read;
-                rtbShowResult.SelectionStart = 0;
-
+                catch (Exception exception) when (!(exception is System.Runtime.InteropServices.ExternalException))
+                {
+                    MessageBox.Show("Unexpected error while plotting results", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             /*
@@ -303,6 +309,7 @@ namespace ErgoCalc
             // https://docs.microsoft.com/es-es/dotnet/standard/serialization/write-custom-serializer-deserializer
             // https://docs.microsoft.com/es-es/dotnet/api/system.text.json.jsonelement?view=net-5.0
             // https://stackoverflow.com/questions/37665240/howto-serialize-a-nested-collection-using-jsonwriter-in-c-sharp
+            // https://gist.github.com/richlander/530947180fb95b4df3f1123170ba8701
             //var writerOptions = new JsonWriterOptions
             //{
             //    Indented = true
