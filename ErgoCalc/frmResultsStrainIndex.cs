@@ -22,9 +22,7 @@ namespace ErgoCalc
         //private ModelSubTask[] _subtasks;
         //private ModelTask[] _tasks;
         private ModelJob _job;
-        private IndexType _index;
         private cModelStrain _classDLL;
-        private ResultsOptions _options;
 
         public frmResultsStrainIndex()
         {
@@ -33,10 +31,9 @@ namespace ErgoCalc
             //rtbShowResult.Size = this.ClientSize;
             
             // Initialize private variables
-            // _classDLL = new cModelStrain();
-            _options = new ResultsOptions(rtbShowResult);
+            _classDLL = new cModelStrain();
 
-            propertyGrid1.SelectedObject = _options;
+            propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
             splitContainer1.Panel1Collapsed = false;
             splitContainer1.SplitterDistance = 0;
             splitContainer1.SplitterWidth = 1;
@@ -50,12 +47,12 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(IndexType index, ModelJob job)
+        public frmResultsStrainIndex(ModelJob job)
             :this()
         {
-            _index = index;
+            //_index = index;
             _job = job;
-            _classDLL = new cModelStrain(job, index);
+            _classDLL = new cModelStrain(job);
             //_subtasks = subtasks;
             //_tasks = tasks;
             //_classDLL.IndexType = index;
@@ -121,20 +118,10 @@ namespace ErgoCalc
 
         }
 
-        private void rtbShowResult_DoubleClick(object sender, EventArgs e)
-        {
-            frmResultsStrainIndex_Shown(null, EventArgs.Empty);
-        }
-
-        private void frmResultsStrainIndex_Resize(object sender, EventArgs e)
-        {
-            // Resize the control to fit the form's client area
-            //rtbShowResult.Size = this.ClientSize;
-        }
 
         #region Private routines
         /// <summary>
-        /// Shows the numerical results in the RTF control
+        /// Creates the plots and adds them to the end of the RichTextControl
         /// </summary>
         /// <param name="sData">Data and results array</param>
         private void CreatePlots()
@@ -145,121 +132,69 @@ namespace ErgoCalc
             double[] dataRSI;
             double[] dataCOSI;
             string[] labels;
-            string strTaskText = string.Empty;
-            string strPlotTitle = string.Empty;
+            string strTaskText;
+            string strPlotTitle;
 
-            for (int j = 0; j < _job.numberTasks; j++)
+            try
             {
-                dataX = new double[_job.JobTasks[j].numberSubTasks];
-                dataRSI = new double[_job.JobTasks[j].numberSubTasks];
-                dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
-                labels = new string[_job.JobTasks[j].numberSubTasks];
-
-                if (_job.JobTasks[j].index == -1)
-                {
-                    strTaskText = "Tasks";
-                    strPlotTitle = "RSI results";
-                }
-                else
-                {
-                    strTaskText = "SubTasks";
-                    strPlotTitle = string.Concat("RSI & COSI results for Task ", ((char)('A' + j)).ToString());
-                }
-
-                for (int i = 0; i < _job.JobTasks[j].numberSubTasks; i++)
-                {
-
-                    if(_job.JobTasks[j].index == -1)
-                        nOrder = _job.JobTasks[j].order[i];
-                    else
-                        nOrder = _job.JobTasks[j].order[_job.JobTasks[j].numberSubTasks - 1 - i];
-
-                    dataX[i] = i + 1;
-                    dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].index;
-                    if (i == 0)
-                        nCOSI = _job.JobTasks[j].SubTasks[nOrder].index;
-                    else
-                        nCOSI += _job.JobTasks[j].SubTasks[nOrder].index * (_job.JobTasks[j].SubTasks[nOrder].factors.EMa - _job.JobTasks[j].SubTasks[nOrder].factors.EMb) / _job.JobTasks[j].SubTasks[nOrder].factors.EM;
-                    dataCOSI[i] = nCOSI;
-                    //labels[i] = string.Concat(strTaskText, ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
-                    labels[i] = ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString();
-                }
-
-                //var plot = new ScottPlot.Plot(1200, 900);
-                var plot = new ScottPlot.Plot(600, 450);
-                //var formsplot2 = new ScottPlot.FormsPlot(plot);
-
-                plot.Title(strPlotTitle, fontSize: 22);
-                plot.YLabel("Index value", fontSize: 22);
-                plot.XLabel(strTaskText.TrimEnd(), fontSize: 22); ;
-
-                plot.PlotBar(dataX, dataRSI, label: "RSI");
-                if (_job.JobTasks[j].index != -1)
-                    plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
-                plot.AxisAuto();
-                plot.XTicks(dataX, labels);
-                plot.Ticks(fontSize: 18);
-                plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
-                //formsplot2.Render();
-                
-                //plot.CoordinateFromPixel();
-                
                 var orgdata = Clipboard.GetDataObject();
-                using (var plotImage = plot.GetBitmap())
-                {
-                    Clipboard.SetImage(plotImage);
-                }
-                plot.Clear();
-                rtbShowResult.AppendText(Environment.NewLine);
-                var read = rtbShowResult.ReadOnly;
-                rtbShowResult.ReadOnly = false;
-                rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
-                rtbShowResult.Paste();
-                Clipboard.SetDataObject(orgdata);
-                rtbShowResult.ReadOnly = read;
-                rtbShowResult.SelectionStart = 0;
-                string code = rtbShowResult.Rtf;
-            }
 
-            if (_job.index != -1)
-            {
-                dataX = new double[_job.numberTasks];
-                dataRSI = new double[_job.numberTasks];
-                dataCOSI = new double[_job.numberTasks];
-                labels = new string[_job.numberTasks];
-                strPlotTitle = string.Empty;
-
-                for (int i = 0; i < _job.numberTasks; i++)
+                for (int j = 0; j < _job.numberTasks; j++)
                 {
-                    nOrder = _job.order[_job.numberTasks - 1 - i];
-                    dataX[i] = i + 1;
-                    dataRSI[i] = _job.JobTasks[nOrder].index;
-                    if (i == 0)
-                        nCOSI = _job.JobTasks[nOrder].index;
+                    dataX = new double[_job.JobTasks[j].numberSubTasks];
+                    dataRSI = new double[_job.JobTasks[j].numberSubTasks];
+                    dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
+                    labels = new string[_job.JobTasks[j].numberSubTasks];
+
+                    if (_job.JobTasks[j].index == -1)
+                    {
+                        strTaskText = "Tasks";
+                        strPlotTitle = "RSI results";
+                    }
                     else
-                        nCOSI += _job.JobTasks[nOrder].index * (_job.JobTasks[nOrder].HMa - _job.JobTasks[nOrder].HMb) / _job.JobTasks[nOrder].HM;
-                    dataCOSI[i] = nCOSI;
-                    //labels[i] = string.Concat("Task ", ((char)('A' + nOrder)).ToString());
-                    labels[i] = ((char)('A' + nOrder)).ToString();
-                    strPlotTitle += string.Concat(((char)('A' + i)).ToString(), " & ");
-                }
-                strPlotTitle = strPlotTitle.Remove(strPlotTitle.Length - 3, 3);
+                    {
+                        strTaskText = "SubTasks";
+                        strPlotTitle = string.Concat("RSI & COSI results for Task ", ((char)('A' + j)).ToString());
+                    }
 
-                var plot = new ScottPlot.Plot(600, 450);
-                plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
-                plot.YLabel("Index value", fontSize: 22);
-                plot.XLabel("Tasks", fontSize: 22); ;
+                    for (int i = 0; i < _job.JobTasks[j].numberSubTasks; i++)
+                    {
 
-                plot.PlotBar(dataX, dataRSI, label: "COSI");
-                plot.PlotScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
-                plot.AxisAuto();
-                plot.XTicks(dataX, labels);
-                plot.Ticks(fontSize: 18);
-                plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+                        if (_job.JobTasks[j].index == -1)
+                            nOrder = _job.JobTasks[j].order[i];
+                        else
+                            nOrder = _job.JobTasks[j].order[_job.JobTasks[j].numberSubTasks - 1 - i];
 
-                try
-                {
-                    var orgdata = Clipboard.GetDataObject();
+                        dataX[i] = i + 1;
+                        dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].index;
+                        if (i == 0)
+                            nCOSI = _job.JobTasks[j].SubTasks[nOrder].index;
+                        else
+                            nCOSI += _job.JobTasks[j].SubTasks[nOrder].index * (_job.JobTasks[j].SubTasks[nOrder].factors.EMa - _job.JobTasks[j].SubTasks[nOrder].factors.EMb) / _job.JobTasks[j].SubTasks[nOrder].factors.EM;
+                        dataCOSI[i] = nCOSI;
+                        //labels[i] = string.Concat(strTaskText, ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
+                        labels[i] = ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString();
+                    }
+
+                    //var plot = new ScottPlot.Plot(1200, 900);
+                    var plot = new ScottPlot.Plot(600, 450);
+                    //var formsplot2 = new ScottPlot.FormsPlot(plot);
+
+                    plot.Title(strPlotTitle, fontSize: 22);
+                    plot.YLabel("Index value", fontSize: 22);
+                    plot.XLabel(strTaskText.TrimEnd(), fontSize: 22); ;
+
+                    plot.PlotBar(dataX, dataRSI, label: "RSI");
+                    if (_job.JobTasks[j].index != -1)
+                        plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                    plot.AxisAuto();
+                    plot.XTicks(dataX, labels);
+                    plot.Ticks(fontSize: 18);
+                    plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+                    //formsplot2.Render();
+
+                    //plot.CoordinateFromPixel();
+
                     using (var plotImage = plot.GetBitmap())
                     {
                         Clipboard.SetImage(plotImage);
@@ -273,11 +208,68 @@ namespace ErgoCalc
                     Clipboard.SetDataObject(orgdata);
                     rtbShowResult.ReadOnly = read;
                     rtbShowResult.SelectionStart = 0;
+                    string code = rtbShowResult.Rtf;
                 }
-                catch (Exception exception) when (!(exception is System.Runtime.InteropServices.ExternalException))
+
+                if (_job.index != -1)
                 {
-                    MessageBox.Show("Unexpected error while plotting results", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dataX = new double[_job.numberTasks];
+                    dataRSI = new double[_job.numberTasks];
+                    dataCOSI = new double[_job.numberTasks];
+                    labels = new string[_job.numberTasks];
+                    strPlotTitle = string.Empty;
+
+                    for (int i = 0; i < _job.numberTasks; i++)
+                    {
+                        nOrder = _job.order[_job.numberTasks - 1 - i];
+                        dataX[i] = i + 1;
+                        dataRSI[i] = _job.JobTasks[nOrder].index;
+                        if (i == 0)
+                            nCOSI = _job.JobTasks[nOrder].index;
+                        else
+                            nCOSI += _job.JobTasks[nOrder].index * (_job.JobTasks[nOrder].HMa - _job.JobTasks[nOrder].HMb) / _job.JobTasks[nOrder].HM;
+                        dataCOSI[i] = nCOSI;
+                        //labels[i] = string.Concat("Task ", ((char)('A' + nOrder)).ToString());
+                        labels[i] = ((char)('A' + nOrder)).ToString();
+                        strPlotTitle += string.Concat(((char)('A' + i)).ToString(), " & ");
+                    }
+                    strPlotTitle = strPlotTitle.Remove(strPlotTitle.Length - 3, 3);
+
+                    var plot = new ScottPlot.Plot(600, 450);
+                    plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
+                    plot.YLabel("Index value", fontSize: 22);
+                    plot.XLabel("Tasks", fontSize: 22); ;
+
+                    plot.PlotBar(dataX, dataRSI, label: "COSI");
+                    plot.PlotScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                    plot.AxisAuto();
+                    plot.XTicks(dataX, labels);
+                    plot.Ticks(fontSize: 18);
+                    plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+
+                    using (var plotImage = plot.GetBitmap())
+                    {
+                        Clipboard.SetImage(plotImage);
+                    }
+                    plot.Clear();
+                    rtbShowResult.AppendText(Environment.NewLine);
+                    var read = rtbShowResult.ReadOnly;
+                    rtbShowResult.ReadOnly = false;
+                    rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+                    rtbShowResult.Paste();
+                    Clipboard.SetDataObject(orgdata);
+                    rtbShowResult.ReadOnly = read;
+                    rtbShowResult.SelectionStart = 0;
+
                 }
+            }
+            catch (System.Runtime.InteropServices.ExternalException)
+            {
+
+            }
+            catch (Exception exception) when (!(exception is System.Runtime.InteropServices.ExternalException))
+            {
+                MessageBox.Show("Unexpected error while plotting results", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             /*
@@ -289,7 +281,7 @@ namespace ErgoCalc
             //if (positionW == -1) break;
             //var algo = rtbShowResult.Rtf.Substring(positionW + 8, 4);
             rtbShowResult.Rtf = rtbShowResult.Rtf.Replace(rtbShowResult.Rtf.Substring(positionW + 8, 4), @"9000");
-        
+
             positionH = rtbShowResult.Rtf.IndexOf("pichgoal", positionH);
             //if (positionH == -1) break;
             rtbShowResult.Rtf = rtbShowResult.Rtf.Replace(rtbShowResult.Rtf.Substring(positionH + 8, 4), @"6750");
@@ -390,6 +382,80 @@ namespace ErgoCalc
         #endregion Private routines
 
         #region IChildResults
+        public bool OpenFile(JsonDocument document)
+        {
+            bool result = true;
+            ModelJob job;
+            JsonElement root = document.RootElement;
+
+            try
+            {
+                job.index = root.GetProperty("CUSI index").GetDouble();
+                job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
+                job.model = (DLL.Strain.IndexType)root.GetProperty("Index type").GetInt32();
+
+                job.order = new int[job.numberTasks];
+                int i = 0;
+                foreach (JsonElement TaskOrder in root.GetProperty("Tasks order").EnumerateArray())
+                {
+                    job.order[i] = TaskOrder.GetInt32();
+                    i++;
+                }
+
+                job.JobTasks = new DLL.Strain.ModelTask[job.numberTasks];
+                i = 0;
+                JsonElement SubTasks;
+                JsonElement Order;
+                foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
+                {
+                    job.JobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
+                    job.JobTasks[i].SubTasks = new DLL.Strain.ModelSubTask[job.JobTasks[i].numberSubTasks];
+                    job.JobTasks[i].order = new int[job.JobTasks[i].numberSubTasks];
+
+                    SubTasks = Task.GetProperty("Sub-tasks");
+                    Order = Task.GetProperty("Sub-tasks order");
+                    for (int j = 0; j < job.JobTasks[i].numberSubTasks; j++)
+                    {
+                        job.JobTasks[i].SubTasks[j].data.i = SubTasks[j].GetProperty("Intensity").GetDouble();
+                        job.JobTasks[i].SubTasks[j].data.e = SubTasks[j].GetProperty("Efforts").GetDouble();
+                        job.JobTasks[i].SubTasks[j].data.ea = SubTasks[j].GetProperty("EffortsA").GetDouble();
+                        job.JobTasks[i].SubTasks[j].data.eb = SubTasks[j].GetProperty("EffortsB").GetDouble();
+                        job.JobTasks[i].SubTasks[j].data.d = SubTasks[j].GetProperty("Duration").GetDouble();
+                        job.JobTasks[i].SubTasks[j].data.p = SubTasks[j].GetProperty("Posture").GetDouble();
+                        job.JobTasks[i].SubTasks[j].data.h = SubTasks[j].GetProperty("Hours").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.IM = SubTasks[j].GetProperty("I multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.EM = SubTasks[j].GetProperty("E multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.EMa = SubTasks[j].GetProperty("Ea multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.EMb = SubTasks[j].GetProperty("Eb multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.PM = SubTasks[j].GetProperty("P multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
+                        job.JobTasks[i].SubTasks[j].index = SubTasks[j].GetProperty("RSI index").GetDouble();
+                        job.JobTasks[i].SubTasks[j].ItemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
+
+                        job.JobTasks[i].order[j] = Order[j].GetInt32();
+                    }
+
+                    job.JobTasks[i].index = Task.GetProperty("COSI index").GetDouble();
+                    job.JobTasks[i].h = Task.GetProperty("h factor").GetDouble();
+                    job.JobTasks[i].ha = Task.GetProperty("ha factor").GetDouble();
+                    job.JobTasks[i].hb = Task.GetProperty("hb factor").GetDouble();
+                    job.JobTasks[i].HM = Task.GetProperty("H multiplier").GetDouble();
+                    job.JobTasks[i].HMa = Task.GetProperty("Ha multiplier").GetDouble();
+                    job.JobTasks[i].HMb = Task.GetProperty("Hb multiplier").GetDouble();
+
+                    i++;
+                }
+                
+                _classDLL.Job = job;
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+            
+            return result;
+        }
         public void Save(string path)
         {
             // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
@@ -454,6 +520,20 @@ namespace ErgoCalc
 
         public void EditData()
         {
+            // Llamar al formulario para introducir los datos
+            frmDataStrainIndex frmDataStrain = new frmDataStrainIndex(_job);
+
+            if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
+            {
+                // Mostrar la ventana de resultados
+                _job = frmDataStrain.Job;
+                _classDLL = new cModelStrain(_job);
+                this.rtbShowResult.Clear();
+                frmResultsStrainIndex_Shown(null, EventArgs.Empty);
+            }
+            // Cerrar el formulario de entrada de datos
+            frmDataStrain.Dispose();
+
             return;
         }
 
@@ -462,7 +542,7 @@ namespace ErgoCalc
             string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
             // Mostrar la ventana de resultados
-            frmResultsStrainIndex frmResults = new frmResultsStrainIndex(_index,_job)
+            frmResultsStrainIndex frmResults = new frmResultsStrainIndex(_job)
             {
                 MdiParent = this.MdiParent
             };
@@ -472,7 +552,7 @@ namespace ErgoCalc
 
         public bool[] GetToolbarEnabledState()
         {
-            return new bool[] { true, true, true, false, true, true, false, false, true, false, false, true, true, true };
+            return new bool[] { true, true, true, false, true, true, false, true, true, false, false, true, true, true };
         }
 
         public ToolStrip ChildToolStrip

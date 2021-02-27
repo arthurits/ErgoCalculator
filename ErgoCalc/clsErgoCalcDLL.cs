@@ -618,9 +618,7 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct ModelTask
             {
-                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
                 public ModelSubTask[] SubTasks; // Set of subtasks in the task
-                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
                 public int[] order;             // Reordering of the subtasks from lower RSI to higher RSI
                 public double h;                // The total time (in hours) that the task is performed per day
                 public double ha;               // Duración de la tarea acumulada a
@@ -769,9 +767,7 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct ModelJob
             {
-                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_ARRAY)]
                 public ModelTask[] JobTasks;    // Set of tasks in the job
-                //[MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
                 public int[] order;             // Reordering of the subtasks from lower COSI to higher COSI
                 public double index;            // The CUSI index for this job
                 public int numberTasks;         // Number of tasks in the job
@@ -788,7 +784,7 @@ namespace ErgoCalc
 
                     
                     string strCUSI = string.Empty;
-                    if (index != -1)
+                    if (model == IndexType.CUSI)
                     {
                         string[] strLineD = new string[4];
                         string[] strLineF = new string[6];
@@ -861,10 +857,10 @@ namespace ErgoCalc
             public class cModelStrain
             {
                 private ModelJob _job;
-                private IndexType _index;
+                //private IndexType _index;
 
                 public ModelJob Job { get => _job; set => _job = value; }
-                public IndexType Index { get => _index; set => _index = value; }
+                //public IndexType Index { get => _index; set => _index = value; }
 
                 /* https://docs.microsoft.com/en-us/dotnet/framework/interop/marshaling-different-types-of-arrays
                 
@@ -881,6 +877,8 @@ namespace ErgoCalc
                 */
 
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndex")]
+                private static extern double StrainIndex(IntPtr Job);
+                [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexRSI")]
                 private static extern double RSI_index([In, Out] ModelSubTask[] subtasks, ref int nSize);
                 [DllImport("dlls/strain.dll", EntryPoint = "StrainIndexCOSI")]
                 private static extern double COSI_index(IntPtr Task, ref int nSubTasks);
@@ -888,16 +886,13 @@ namespace ErgoCalc
                 //private static extern double CUSI_index(ref ModelJob Job, ref int nTasks);
                 private static extern double CUSI_index(IntPtr Job, ref int nTasks);
 
-                [DllImport("dlls/strain.dll", EntryPoint = "DummyTest")]
-                private static extern double RSI_Dummy(IntPtr Task, ref int nTasks);
+                public cModelStrain()
+                {
+                }
 
-                [DllImport("dlls/strain.dll", EntryPoint = "DummySubTask")]
-                private static extern double RSI_DummySubTask(IntPtr SubTask);
-
-                public cModelStrain(ModelJob job, IndexType index)
+                public cModelStrain(ModelJob job)
                 {
                     _job = job;
-                    _index = index;
                 }
 
                 /// <summary>
@@ -906,24 +901,20 @@ namespace ErgoCalc
                 /// <returns></returns>
                 public double StrainIndex()
                 {
-                    switch (_index)
+                    switch (_job.model)
                     {
                         case Strain.IndexType.RSI:
                             RSI_index(_job.JobTasks[0].SubTasks, ref _job.JobTasks[0].numberSubTasks);
                             break;
                         case Strain.IndexType.COSI:
-                            int nSubTasks = 0;
+                            //int nSubTasks = 0;
                             for (int i = 0; i < _job.JobTasks.Length; i++)
                             {
-                                //IntPtr ptrSubTask = SubTaskToMarshal(_job.JobTasks[i].SubTasks[i]);
-                                //double resultadoST = RSI_DummySubTask(ptrSubTask);
-                                //ModelSubTask subTask = SubTaskFromMarshal(ptrSubTask);
                                 IntPtr task = TaskToMarshal(_job.JobTasks[i]);
-
                                 try
                                 {
-                                    nSubTasks = _job.JobTasks[i].SubTasks.Length;
-                                    _job.JobTasks[i].index = COSI_index(task, ref nSubTasks);
+                                    //nSubTasks = _job.JobTasks[i].SubTasks.Length;
+                                    _job.JobTasks[i].index = COSI_index(task, ref _job.JobTasks[i].numberSubTasks);
                                     _job.JobTasks[i] = TaskfromMarshal(task);
                                 }
                                 finally
@@ -937,7 +928,7 @@ namespace ErgoCalc
                             //double resultado = CUSI_index(job, ref _job.numberTasks);
                             try
                             {
-                                double resultado = CUSI_index(ptrJob, ref _job.numberTasks);
+                                _job.index = CUSI_index(ptrJob, ref _job.numberTasks);
                                 _job = JobFromMarshal(ptrJob);
                             }
                             finally
@@ -948,38 +939,20 @@ namespace ErgoCalc
                         default:
                             break;
                     }
-                    //return RSI(datos, ref nSize);
+                    
                     return 0.0;
                 }
 
                 public override string ToString()
                 {
-                    switch (_index)
-                    {
-                        case Strain.IndexType.RSI:
-                            return ToStringRSI();
-                        case Strain.IndexType.COSI:
-                            return ToStringCOSI();
-                        case Strain.IndexType.CUSI:
-                            return ToStringCUSI();
-                        default:
-                            return string.Empty;
-                    }
+                    return _job.ToString();
                 }
+
                 private string ToStringRSI()
                 {
                     return _job.JobTasks[0].ToString();
                 }   // ToString()
 
-                private string ToStringCOSI()
-                {
-                    return _job.ToString();
-                }
-
-                private string ToStringCUSI()
-                {
-                    return _job.ToString();
-                }
 
 
                 #region Marshalling private routines

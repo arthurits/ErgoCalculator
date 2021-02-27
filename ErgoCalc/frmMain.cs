@@ -278,7 +278,7 @@ namespace ErgoCalc
                     if (frmDataStrain.ShowDialog(this)==DialogResult.OK)
                     {
                         // Mostrar la ventana de resultados
-                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.Index, frmDataStrain.Job);
+                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.Job);
                         frmStrainIndex.MdiParent = this;
                         if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmStrainIndex.Show();
@@ -521,19 +521,20 @@ namespace ErgoCalc
                 var options = new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip };
 
                 using JsonDocument document = JsonDocument.Parse(jsonString, options);
-                var strType = document.RootElement.GetProperty("Document type").GetString();
+                var strType = document.RootElement.TryGetProperty("Document type", out JsonElement docuValue) ? docuValue.ToString() : "Error";
 
                 switch (strType)
                 {
                     case "Strain index":
-                        DLL.Strain.ModelJob job = new DLL.Strain.ModelJob();
-                        OpenFile(document, ref job);
-                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(job.model, job) { MdiParent = this };
-                        if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
-                        frmStrainIndex.Show();
+                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex() { MdiParent = this };
+                        if (frmStrainIndex.OpenFile(document))
+                        {
+                            if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
+                            frmStrainIndex.Show();
+                        }
                         break;
                     default:
-                        MessageBox.Show("The document cannot be opened by this application", "Open");
+                        MessageBox.Show("The document cannot be opened by this application", "Format mismatch",MessageBoxButtons.OK,MessageBoxIcon.Error);
                         break;
                 }
             }
@@ -594,70 +595,6 @@ namespace ErgoCalc
         }
 
         #endregion
-
-        private bool OpenFile(JsonDocument document, ref DLL.Strain.ModelJob job)
-        {
-            JsonElement root = document.RootElement;
-            
-            job.index = root.GetProperty("CUSI index").GetDouble();
-            job.numberTasks= root.GetProperty("Number of tasks").GetInt32();
-            job.model = (DLL.Strain.IndexType)root.GetProperty("Index type").GetInt32();
-
-            job.order = new int[job.numberTasks];
-            int i = 0;
-            foreach (JsonElement TaskOrder in root.GetProperty("Tasks order").EnumerateArray())
-            {
-                job.order[i] = TaskOrder.GetInt32();
-                i++;
-            }
-
-            job.JobTasks = new DLL.Strain.ModelTask[job.numberTasks];
-            i = 0;
-            JsonElement SubTasks;
-            JsonElement Order;
-            foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
-            {
-                job.JobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                job.JobTasks[i].SubTasks = new DLL.Strain.ModelSubTask[job.JobTasks[i].numberSubTasks];
-                job.JobTasks[i].order = new int[job.JobTasks[i].numberSubTasks];
-
-                SubTasks = Task.GetProperty("Sub-tasks");
-                Order = Task.GetProperty("Sub-tasks order");
-                for (int j = 0; j < job.JobTasks[i].numberSubTasks; j++)
-                {
-                    job.JobTasks[i].SubTasks[j].data.i = SubTasks[j].GetProperty("Intensity").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.e = SubTasks[j].GetProperty("Efforts").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.ea = SubTasks[j].GetProperty("EffortsA").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.eb = SubTasks[j].GetProperty("EffortsB").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.d = SubTasks[j].GetProperty("Duration").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.p = SubTasks[j].GetProperty("Posture").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.h = SubTasks[j].GetProperty("Hours").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.IM = SubTasks[j].GetProperty("I multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.EM = SubTasks[j].GetProperty("E multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.EMa = SubTasks[j].GetProperty("Ea multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.EMb = SubTasks[j].GetProperty("Eb multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.PM = SubTasks[j].GetProperty("P multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].index = SubTasks[j].GetProperty("RSI index").GetDouble();
-                    job.JobTasks[i].SubTasks[j].ItemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
-
-                    job.JobTasks[i].order[j] = Order[j].GetInt32();
-                }
-
-                job.JobTasks[i].index = Task.GetProperty("COSI index").GetDouble();
-                job.JobTasks[i].h = Task.GetProperty("h factor").GetDouble();
-                job.JobTasks[i].ha = Task.GetProperty("ha factor").GetDouble();
-                job.JobTasks[i].hb = Task.GetProperty("hb factor").GetDouble();
-                job.JobTasks[i].HM = Task.GetProperty("H multiplier").GetDouble();
-                job.JobTasks[i].HMa = Task.GetProperty("Ha multiplier").GetDouble();
-                job.JobTasks[i].HMb = Task.GetProperty("Hb multiplier").GetDouble();
-
-                i++;
-            }
-
-            return true;
-        }
         
     }
 

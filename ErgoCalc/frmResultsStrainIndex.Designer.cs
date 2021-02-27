@@ -91,7 +91,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmResultsStrainIndex_FormClosing);
             this.Load += new System.EventHandler(this.frmResultsStrainIndex_Load);
             this.Shown += new System.EventHandler(this.frmResultsStrainIndex_Shown);
-            this.Resize += new System.EventHandler(this.frmResultsStrainIndex_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

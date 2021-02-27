@@ -54,6 +54,7 @@ namespace ErgoCalc
         {
             _job = job;
             DataToGrid();
+            tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -329,6 +330,19 @@ namespace ErgoCalc
         /// </summary>
         private void DataToGrid()
         {
+            switch ((int)_job.model)
+            {
+                case 0:
+                    radRSI.Checked = true;
+                    break;
+                case 1:
+                    radCOSI.Checked = true;
+                    break;
+                case 2:
+                    radCUSI.Checked = true;
+                    break;
+            }
+
             updTasks.Value = _job.numberTasks;
             Int32 nCol = 0;
             for (var j = 0; j < _job.numberTasks; j++)
