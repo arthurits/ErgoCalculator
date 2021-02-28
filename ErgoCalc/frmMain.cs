@@ -15,7 +15,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 // Namespaces personales
-using ErgoCalc.DLL;
 using Utilidades;
 
 namespace ErgoCalc
@@ -209,7 +208,7 @@ namespace ErgoCalc
             frmNew frmNew = new frmNew();
             if (frmNew.ShowDialog() == DialogResult.Cancel) return;
 
-            switch (frmNew._nOption)
+            switch (frmNew.Model)
             {
                 case 1: // WR model
 
@@ -286,8 +285,11 @@ namespace ErgoCalc
                     // Cerrar el formulario de entrada de datos
                     frmDataStrain.Dispose();
                     break;
+                
+                case 5: // OCRA checklist
+                    break;
 
-                case 5: // Metabolic rate
+                case 6: // Metabolic rate
 
                     // Llamar al formulario para introducir los datos
                     frmMet frmMet = new frmMet();
@@ -525,6 +527,10 @@ namespace ErgoCalc
 
                 switch (strType)
                 {
+                    case "WR model":
+                        break;
+                    case "NIOSH equation":
+                        break;
                     case "Strain index":
                         frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex() { MdiParent = this };
                         if (frmStrainIndex.OpenFile(document))

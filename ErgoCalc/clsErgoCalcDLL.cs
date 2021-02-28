@@ -25,7 +25,7 @@ You now should be all set.
 namespace ErgoCalc
 {
 
-    namespace DLL
+    namespace Models
     {
         // Para acceder a todos los servicios Interop
         using System.Runtime.InteropServices;
@@ -942,18 +942,6 @@ namespace ErgoCalc
                     
                     return 0.0;
                 }
-
-                public override string ToString()
-                {
-                    return _job.ToString();
-                }
-
-                private string ToStringRSI()
-                {
-                    return _job.JobTasks[0].ToString();
-                }   // ToString()
-
-
 
                 #region Marshalling private routines
 

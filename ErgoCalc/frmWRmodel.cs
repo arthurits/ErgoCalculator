@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-using ErgoCalc.DLL.WRmodel;
+using ErgoCalc.Models.WRmodel;
 //using LiveCharts; //Core of the library
 //using LiveCharts.Wpf; //The WPF controls
 //using LiveCharts.WinForms; //the WinForm wrappers

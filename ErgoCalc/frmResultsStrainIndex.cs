@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 // Para llamar a la DLL
-using ErgoCalc.DLL.Strain;
+using ErgoCalc.Models.Strain;
 
 namespace ErgoCalc
 {
@@ -106,7 +106,7 @@ namespace ErgoCalc
             // Call the routine that shows the results
             if (error == false)
             {
-                rtbShowResult.Text = _classDLL.ToString();
+                rtbShowResult.Text = _job.ToString();
                 CreatePlots();
                 FormatText();
             }
@@ -392,7 +392,7 @@ namespace ErgoCalc
             {
                 job.index = root.GetProperty("CUSI index").GetDouble();
                 job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
-                job.model = (DLL.Strain.IndexType)root.GetProperty("Index type").GetInt32();
+                job.model = (Models.Strain.IndexType)root.GetProperty("Index type").GetInt32();
 
                 job.order = new int[job.numberTasks];
                 int i = 0;
@@ -402,14 +402,14 @@ namespace ErgoCalc
                     i++;
                 }
 
-                job.JobTasks = new DLL.Strain.ModelTask[job.numberTasks];
+                job.JobTasks = new Models.Strain.ModelTask[job.numberTasks];
                 i = 0;
                 JsonElement SubTasks;
                 JsonElement Order;
                 foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
                 {
                     job.JobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                    job.JobTasks[i].SubTasks = new DLL.Strain.ModelSubTask[job.JobTasks[i].numberSubTasks];
+                    job.JobTasks[i].SubTasks = new Models.Strain.ModelSubTask[job.JobTasks[i].numberSubTasks];
                     job.JobTasks[i].order = new int[job.JobTasks[i].numberSubTasks];
 
                     SubTasks = Task.GetProperty("Sub-tasks");

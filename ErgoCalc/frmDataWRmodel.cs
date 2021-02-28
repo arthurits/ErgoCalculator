@@ -14,7 +14,7 @@ namespace ErgoCalc
     public partial class frmDataWRmodel : Form
     {
         // Propiedades de la clase
-        public DLL.WRmodel.datosWR _datos;
+        public Models.WRmodel.datosWR _datos;
         private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDataWRmodel));
 
         public frmDataWRmodel()
@@ -29,7 +29,7 @@ namespace ErgoCalc
             txtPaso.Text = "0,01";
         }
 
-        public frmDataWRmodel (DLL.WRmodel.datosWR datos)
+        public frmDataWRmodel (Models.WRmodel.datosWR datos)
         {
             // Inicializar el control
             InitializeComponent();
@@ -63,7 +63,7 @@ namespace ErgoCalc
 
         }
 
-        public DLL.WRmodel.datosWR getData()
+        public Models.WRmodel.datosWR getData()
         {
             return _datos;
         }
@@ -130,7 +130,7 @@ namespace ErgoCalc
         /// <returns>"True" si no ha habido problemas y "False" si los ha habido</returns>
         private Boolean ValidarMVC()
         {
-            DLL.WRmodel.cWRmodel modelo = new DLL.WRmodel.cWRmodel();
+            Models.WRmodel.cWRmodel modelo = new Models.WRmodel.cWRmodel();
             try
             {
                 // Comprobar que se ha introducido texto en el campo

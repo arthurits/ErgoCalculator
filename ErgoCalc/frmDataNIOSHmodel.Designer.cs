@@ -36,13 +36,18 @@
             this.chkComposite = new System.Windows.Forms.CheckBox();
             this.lblConstanteLC = new System.Windows.Forms.Label();
             this.txtConstanteLC = new System.Windows.Forms.TextBox();
+            this.listViewTasks = new System.Windows.Forms.ListView();
+            this.tabDataNIOSH = new System.Windows.Forms.TablessTabControl();
+            this.tabSubtasks = new System.Windows.Forms.TabPage();
+            this.tabTasks = new System.Windows.Forms.TabPage();
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).BeginInit();
+            this.tabDataNIOSH.SuspendLayout();
             this.SuspendLayout();
             // 
             // updTasks
             // 
-            this.updTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.updTasks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.updTasks.Location = new System.Drawing.Point(152, 405);
             this.updTasks.Margin = new System.Windows.Forms.Padding(4);
@@ -84,11 +89,11 @@
             // lblTasks
             // 
             this.lblTasks.AutoSize = true;
-            this.lblTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTasks.Location = new System.Drawing.Point(16, 409);
             this.lblTasks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTasks.Name = "lblTasks";
-            this.lblTasks.Size = new System.Drawing.Size(105, 16);
+            this.lblTasks.Size = new System.Drawing.Size(104, 16);
             this.lblTasks.TabIndex = 2;
             this.lblTasks.Text = "Number of tasks";
             this.lblTasks.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -121,7 +126,7 @@
             // 
             this.chkComposite.AutoSize = true;
             this.chkComposite.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkComposite.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkComposite.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.chkComposite.Location = new System.Drawing.Point(16, 434);
             this.chkComposite.Margin = new System.Windows.Forms.Padding(4);
             this.chkComposite.Name = "chkComposite";
@@ -146,6 +151,49 @@
             this.txtConstanteLC.Size = new System.Drawing.Size(33, 23);
             this.txtConstanteLC.TabIndex = 3;
             // 
+            // listViewTasks
+            // 
+            this.listViewTasks.HideSelection = false;
+            this.listViewTasks.Location = new System.Drawing.Point(464, 335);
+            this.listViewTasks.Name = "listViewTasks";
+            this.listViewTasks.Size = new System.Drawing.Size(222, 120);
+            this.listViewTasks.TabIndex = 7;
+            this.listViewTasks.UseCompatibleStateImageBehavior = false;
+            this.listViewTasks.Visible = false;
+            // 
+            // tabDataNIOSH
+            // 
+            this.tabDataNIOSH.AllowArrowKeys = true;
+            this.tabDataNIOSH.AllowTabKey = true;
+            this.tabDataNIOSH.Controls.Add(this.tabSubtasks);
+            this.tabDataNIOSH.Controls.Add(this.tabTasks);
+            this.tabDataNIOSH.Location = new System.Drawing.Point(300, 288);
+            this.tabDataNIOSH.Name = "tabDataNIOSH";
+            this.tabDataNIOSH.SelectedIndex = 0;
+            this.tabDataNIOSH.Size = new System.Drawing.Size(158, 208);
+            this.tabDataNIOSH.TabIndex = 8;
+            this.tabDataNIOSH.Visible = false;
+            // 
+            // tabSubtasks
+            // 
+            this.tabSubtasks.BackColor = System.Drawing.SystemColors.Control;
+            this.tabSubtasks.Location = new System.Drawing.Point(4, 25);
+            this.tabSubtasks.Name = "tabSubtasks";
+            this.tabSubtasks.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSubtasks.Size = new System.Drawing.Size(150, 179);
+            this.tabSubtasks.TabIndex = 0;
+            this.tabSubtasks.Text = "Subtasks";
+            // 
+            // tabTasks
+            // 
+            this.tabTasks.BackColor = System.Drawing.SystemColors.Control;
+            this.tabTasks.Location = new System.Drawing.Point(4, 25);
+            this.tabTasks.Name = "tabTasks";
+            this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTasks.Size = new System.Drawing.Size(150, 179);
+            this.tabTasks.TabIndex = 1;
+            this.tabTasks.Text = "Tasks";
+            // 
             // frmDataNIOSHmodel
             // 
             this.AcceptButton = this.btnOK;
@@ -153,6 +201,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(774, 511);
+            this.Controls.Add(this.tabDataNIOSH);
+            this.Controls.Add(this.listViewTasks);
             this.Controls.Add(this.txtConstanteLC);
             this.Controls.Add(this.lblConstanteLC);
             this.Controls.Add(this.chkComposite);
@@ -161,7 +211,7 @@
             this.Controls.Add(this.lblTasks);
             this.Controls.Add(this.gridVariables);
             this.Controls.Add(this.updTasks);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
@@ -172,6 +222,7 @@
             this.Text = "NIOSH model data";
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).EndInit();
+            this.tabDataNIOSH.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,5 +238,9 @@
         private System.Windows.Forms.CheckBox chkComposite;
         private System.Windows.Forms.Label lblConstanteLC;
         private System.Windows.Forms.TextBox txtConstanteLC;
+        private System.Windows.Forms.ListView listViewTasks;
+        private System.Windows.Forms.TablessTabControl tabDataNIOSH;
+        private System.Windows.Forms.TabPage tabSubtasks;
+        private System.Windows.Forms.TabPage tabTasks;
     }
 }

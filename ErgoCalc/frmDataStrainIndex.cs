@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using ErgoCalc.DLL.Strain;
+using ErgoCalc.Models.Strain;
 //using ErgoCalc;
 
 namespace ErgoCalc

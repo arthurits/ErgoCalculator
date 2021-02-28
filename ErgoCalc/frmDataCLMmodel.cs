@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using ErgoCalc.DLL.CLMmodel;
+using ErgoCalc.Models.CLMmodel;
 
 namespace ErgoCalc
 {

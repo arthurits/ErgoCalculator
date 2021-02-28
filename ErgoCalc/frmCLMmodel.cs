@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 // Para llamar a la DLL
-using ErgoCalc.DLL.CLMmodel;
+using ErgoCalc.Models.CLMmodel;
 
 namespace ErgoCalc
 {

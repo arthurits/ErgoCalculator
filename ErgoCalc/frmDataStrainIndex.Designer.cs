@@ -43,7 +43,7 @@
             this.listViewTasks = new System.Windows.Forms.ListViewEx();
             this.lblTasks = new System.Windows.Forms.Label();
             this.updTasks = new System.Windows.Forms.NumericUpDown();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.tabDummy = new System.Windows.Forms.TabControl();
             this.tabDataStrain.SuspendLayout();
             this.tabSubtasks.SuspendLayout();
@@ -158,7 +158,7 @@
             // lblSubtasks
             // 
             this.lblSubtasks.AutoSize = true;
-            this.lblSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblSubtasks.Location = new System.Drawing.Point(3, 389);
             this.lblSubtasks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtasks.Name = "lblSubtasks";
@@ -168,7 +168,7 @@
             // 
             // updSubtasks
             // 
-            this.updSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.updSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.updSubtasks.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.updSubtasks.Location = new System.Drawing.Point(139, 389);
             this.updSubtasks.Margin = new System.Windows.Forms.Padding(4);
@@ -261,12 +261,13 @@
             // 
             // columnHeader1
             // 
+            this.columnHeader1.Name = "columnHeader1";
             this.columnHeader1.Text = "Task A";
             this.columnHeader1.Width = 189;
             // 
             // tabDummy
             // 
-            this.tabDummy.Location = new System.Drawing.Point(4, 13);
+            this.tabDummy.Location = new System.Drawing.Point(12, 422);
             this.tabDummy.Name = "tabDummy";
             this.tabDummy.SelectedIndex = 0;
             this.tabDummy.Size = new System.Drawing.Size(88, 77);
@@ -284,7 +285,7 @@
             this.Controls.Add(this.tabDummy);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;

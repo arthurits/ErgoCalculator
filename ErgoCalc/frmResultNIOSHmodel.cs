@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-using ErgoCalc.DLL.NIOSHModel;
+using ErgoCalc.Models.NIOSHModel;
 
 namespace ErgoCalc
 {

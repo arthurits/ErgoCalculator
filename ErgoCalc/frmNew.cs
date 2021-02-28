@@ -11,15 +11,17 @@ namespace ErgoCalc
 {
     public partial class frmNew : Form
     {
-        public Int32 _nOption;
-        private String[] _strArray = { "WR model", "CLM model", "NIOSH equation (LI, CLI, SLI, VLI)", "Revised strain index (RSI, COSI, CUSI)", "Metabolic rate" };
-        private RadioButton[] radioButtons = new RadioButton[5];
+        private Int32 _nOption;
+        public Int32 Model { get => _nOption; }
+
+        //private String[] _strArray = { "WR model", "CLM model", "NIOSH equation (LI, CLI, SLI, VLI)", "Revised strain index (RSI, COSI, CUSI)", "Metabolic rate" };
+        //private RadioButton[] radioButtons = new RadioButton[5];
         
         public frmNew()
         {
             InitializeComponent();
 
-                       
+            /*           
             for (Int32 i = 0; i < _strArray.Length; ++i)
             {
                 radioButtons[i] = new RadioButtonClick
@@ -33,11 +35,44 @@ namespace ErgoCalc
                 radioButtons[i].MouseDoubleClick += radioButtons_DoubleClick;
                 this.Controls.Add(radioButtons[i]);
             }
-
+            */
         }
+
+        
 
         private void btnAccept_Click(object sender, EventArgs e)
         {
+            foreach(RadioButtonClick rad in this.Controls)
+            {
+                if (rad.Checked)
+                {
+                    switch (rad.Text)
+                    {
+                        case "WR model":
+                            _nOption = 1;
+                            break;
+                        case "CLM model":
+                            _nOption = 2;
+                            break;
+                        case "NIOSH equation (LI, CLI, SLI, VLI)":
+                            _nOption = 3;
+                            break;
+                        case "Revised strain index (RSI, COSI, CUSI)":
+                            _nOption = 4;
+                            break;
+                        case "OCRA checklist":
+                            _nOption = 5;
+                            break;
+                        case "Metabolic rate":
+                            _nOption = 6;
+                            break;
+                    }
+                    //_nOption = (int)rad.Tag;
+                    break;
+                }
+            }
+
+            /*
             for (Int32 i = 0; i < _strArray.Length; i++)
             {
                 if (radioButtons[i].Checked == true)
@@ -46,9 +81,11 @@ namespace ErgoCalc
                     break;
                 }
             }
+            */
             return;
         }
-        private void radioButtons_DoubleClick(object sender, EventArgs e)
+
+        private void radioButtons_DoubleClick(object sender, MouseEventArgs e)
         {
             this.btnAccept_Click(btnAccept, EventArgs.Empty);
             this.DialogResult = DialogResult.OK;
