@@ -21,6 +21,7 @@ namespace ErgoCalc
         // Variable definition
         //private ModelSubTask[] _subtasks;
         //private ModelTask[] _tasks;
+        private string _strPath;
         private ModelJob _job;
         private cModelStrain _classDLL;
 
@@ -29,7 +30,10 @@ namespace ErgoCalc
             InitializeComponent();
 
             //rtbShowResult.Size = this.ClientSize;
-            
+
+            _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
+
             // Initialize private variables
             _classDLL = new cModelStrain();
 
@@ -382,6 +386,7 @@ namespace ErgoCalc
         #endregion Private routines
 
         #region IChildResults
+        
         public bool OpenFile(JsonDocument document)
         {
             bool result = true;
@@ -456,6 +461,7 @@ namespace ErgoCalc
             
             return result;
         }
+        
         public void Save(string path)
         {
             // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
@@ -539,14 +545,11 @@ namespace ErgoCalc
 
         public void Duplicate()
         {
-            string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
             // Mostrar la ventana de resultados
-            frmResultsStrainIndex frmResults = new frmResultsStrainIndex(_job)
-            {
-                MdiParent = this.MdiParent
-            };
-            if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResultsStrainIndex frmResults = new frmResultsStrainIndex(_job) { MdiParent = this.MdiParent };
+            //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
             frmResults.Show();
         }
 
@@ -617,7 +620,8 @@ namespace ErgoCalc
             rtbShowResult.SelectionStart = 0;
             rtbShowResult.SelectionLength = 0;
         }
-        #endregion
+        
+        #endregion IChildResults
 
         private void frmResultsStrainIndex_Load(object sender, EventArgs e)
         {

@@ -394,7 +394,14 @@ namespace ErgoCalc
         /// </summary>
         /// <param name="path">Path where the data should be saved</param>
         void Save(string path);
-        
+
+        /// <summary>
+        /// Opens a document
+        /// </summary>
+        /// <param name="document">Document</param>
+        /// <returns></returns>
+        bool OpenFile(System.Text.Json.JsonDocument document);
+
         /// <summary>
         /// Defines the enabled state for each control in frmMain's ToolBar
         /// </summary>
@@ -431,6 +438,14 @@ namespace ErgoCalc
         /// Duplicates the current child window
         /// </summary>
         void Duplicate();
+    }
+
+    /// <summary>
+    /// Public interface for data windows
+    /// </summary>
+    public interface IChildData
+    {
+        object GetData();
     }
 
 }

@@ -56,12 +56,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="controls\CustomControl1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="controls\CustomControl1.Designer.cs">
-      <DependentUpon>CustomControl1.cs</DependentUpon>
-    </Compile>
     <Compile Update="controls\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -73,12 +67,6 @@
     </Compile>
     <Compile Update="controls\TablessTabControl.Designer.cs">
       <DependentUpon>TablessTabControl.cs</DependentUpon>
-    </Compile>
-    <Compile Update="controls\UserControl1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="controls\UserControl1.Designer.cs">
-      <DependentUpon>UserControl1.cs</DependentUpon>
     </Compile>
     <Compile Update="frmResultsStrainIndex.cs">
       <SubType>Form</SubType>

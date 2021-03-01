@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.WRmodel;
+using System.Text.Json;
 //using LiveCharts; //Core of the library
 //using LiveCharts.Wpf; //The WPF controls
 //using LiveCharts.WinForms; //the WinForm wrappers
@@ -223,6 +224,13 @@ namespace ErgoCalc
             }
 
             return;
+        }
+
+        public bool OpenFile(JsonDocument document)
+        {
+            bool result = true;
+            MessageBox.Show("Json Open not yet implemented");
+            return result;
         }
 
         public void EditData()

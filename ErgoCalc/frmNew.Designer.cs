@@ -138,7 +138,6 @@
             // radioButtonClick5
             // 
             this.radioButtonClick5.AutoSize = true;
-            this.radioButtonClick5.Enabled = false;
             this.radioButtonClick5.Location = new System.Drawing.Point(63, 290);
             this.radioButtonClick5.Name = "radioButtonClick5";
             this.radioButtonClick5.Size = new System.Drawing.Size(123, 21);

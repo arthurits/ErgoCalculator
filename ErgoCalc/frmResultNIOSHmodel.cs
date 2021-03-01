@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.NIOSHModel;
+using System.Text.Json;
 
 namespace ErgoCalc
 {
@@ -352,6 +353,13 @@ namespace ErgoCalc
             }
 
             return;
+        }
+
+        public bool OpenFile(JsonDocument document)
+        {
+            bool result = true;
+            MessageBox.Show("Json Open not yet implemented");
+            return result;
         }
 
         public void EditData()

@@ -206,6 +206,8 @@ namespace ErgoCalc
         private void mnuMainFrm_File_New_Click(object sender, EventArgs e)
         {
             frmNew frmNew = new frmNew();
+            Form frmData = new Form();
+            Form frmResults = new Form();
             if (frmNew.ShowDialog() == DialogResult.Cancel) return;
 
             switch (frmNew.Model)
@@ -279,7 +281,7 @@ namespace ErgoCalc
                         // Mostrar la ventana de resultados
                         frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.Job);
                         frmStrainIndex.MdiParent = this;
-                        if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
+                        //if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmStrainIndex.Show();
                     }
                     // Cerrar el formulario de entrada de datos
@@ -287,6 +289,8 @@ namespace ErgoCalc
                     break;
                 
                 case 5: // OCRA checklist
+                    frmData = new frmDataOCRAcheck();
+                    frmResults = new frmResultsOCRAcheck(((IChildData)frmData).GetData());
                     break;
 
                 case 6: // Metabolic rate
@@ -308,11 +312,20 @@ namespace ErgoCalc
                     }
                     break;
             }
+
+            
+            if (frmData.ShowDialog(this) == DialogResult.OK)
+            {
+                frmResults.MdiParent = this;
+                frmResults.Show();
+            }
+            frmData.Dispose();
+            
         }
 
         private void mnuMainFrm_File_Exit_Click(object sender, EventArgs e)
         {
-            // Cerrar llamando al evento frmMain_FormClosing
+            // Exit the application by calling the frmMain_FormClosing event
             this.Close();
         }
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Forms;
 
 // Para llamar a la DLL
@@ -209,6 +210,13 @@ namespace ErgoCalc
         public void Save(string path)
         {
             throw new NotImplementedException();
+        }
+
+        public bool OpenFile(JsonDocument document)
+        {
+            bool result = true;
+            MessageBox.Show("Json Open not yet implemented");
+            return result;
         }
 
         public void EditData()
