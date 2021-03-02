@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-Strain", "Dll-Strain\Dl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EjemploTool", "EjemploTool\EjemploTool.csproj", "{82121D04-64FB-405A-9EE3-405260BA8882}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-Ocra", "Dll-Ocra\Dll-Ocra.vcxproj", "{400F6A16-583A-450C-910A-5A11FED4720C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +41,8 @@ Global
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Debug|x86.Build.0 = Debug|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|x64.ActiveCfg = Release|x64
-		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|x64.Build.0 = Release|x64
+		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|x64.ActiveCfg = Release|Any CPU
+		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|x64.Build.0 = Release|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|x86.ActiveCfg = Release|Any CPU
 		{C5B4639E-3CAD-477A-8EC1-E182930CE89A}.Release|x86.Build.0 = Release|Any CPU
 		{2E9762A4-39A6-4328-9A41-B14D678EC36F}.Debug|Any CPU.ActiveCfg = Release|Win32
@@ -94,6 +96,15 @@ Global
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Release|x64.Build.0 = Release|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Release|x86.ActiveCfg = Release|Any CPU
 		{82121D04-64FB-405A-9EE3-405260BA8882}.Release|x86.Build.0 = Release|Any CPU
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Debug|x64.ActiveCfg = Release|x64
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Debug|x86.ActiveCfg = Debug|Win32
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Debug|x86.Build.0 = Debug|Win32
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|Any CPU.ActiveCfg = Release|Win32
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x64.ActiveCfg = Release|x64
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x64.Build.0 = Release|x64
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x86.ActiveCfg = Release|Win32
+		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,5 @@
+LIBRARY	"OCRA indes"
+DESCRIPTION "Functions needed to calculate the OCRA checklist index"
+VERSION 1.0
+EXPORTS
+   OCRAchecklist @1

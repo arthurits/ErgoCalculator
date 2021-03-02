@@ -54,6 +54,9 @@
     <Optimize>false</Optimize>
     <WarningsAsErrors>NU1605</WarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
 
   <ItemGroup>
     <Compile Update="controls\ListViewEx.cs">
@@ -330,5 +333,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="examples\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Dll-Ocra\x64\Release\ocra.dll" Link="dlls\ocra.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
