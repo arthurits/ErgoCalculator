@@ -104,14 +104,18 @@ namespace ErgoCalc
             // Modify the chkComposite state
             if (col > 1)
             {
-                this.groupIndex.Enabled = true;
-                //chkComposite.Enabled = true;
+                radCOSI.Enabled = true;
+                radCUSI.Enabled = true;
+            }
+            else if (col==1)
+            {
+                radRSI.Checked = true;
+                radCOSI.Enabled = false;
+                radCUSI.Enabled = false;
             }
             else
             {
-                this.groupIndex.Enabled = false;
-                //chkComposite.Checked = false;
-                //chkComposite.Enabled = false;
+                groupIndex.Enabled = false;
             }
 
             // Set the maximum tasks
@@ -350,8 +354,8 @@ namespace ErgoCalc
                 //nCol++;
                 for (var i = 0; i < _job.JobTasks[j].SubTasks.Length; i++)
                 {
-                    //AddColumn(nCol);
-                    AddColumn();
+                    //Column 0 is already created in the constructor;
+                    if (i > 0) AddColumn();
 
                     // Populate the DataGridView with data
                     gridVariables[nCol, 0].Value = _job.JobTasks[j].SubTasks[i].data.i.ToString();

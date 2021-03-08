@@ -467,7 +467,7 @@ namespace ErgoCalc
             // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
             // Displays a SaveFileDialog so the user can save the Image  
             // assigned to Button2.  
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            SaveFileDialog SaveDlg = new SaveFileDialog
             {
                 DefaultExt = "*.rtf",
                 Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
@@ -478,22 +478,22 @@ namespace ErgoCalc
             };
 
             DialogResult result;
-            using (new CenterWinDialog(this))
+            using (new CenterWinDialog((Form)this.Parent))
             { 
-                result = saveFileDialog1.ShowDialog();
+                result = SaveDlg.ShowDialog((Form)this.Parent);
             }
 
             // If the file name is not an empty string open it for saving.  
-            if (result==DialogResult.OK && saveFileDialog1.FileName != "")
+            if (result==DialogResult.OK && SaveDlg.FileName != "")
             {
-                System.IO.FileStream fs;
+                var fs = SaveDlg.OpenFile();
 
                 // Saves the text via a FileStream created by the OpenFile method.  
-                if ( (fs = (System.IO.FileStream)saveFileDialog1.OpenFile()) != null)
+                if ( fs != null)
                 {
                     // Saves the text in the appropriate TextFormat based upon the File type selected in the dialog box.  
                     // NOTE that the FilterIndex property is one-based. 
-                    switch (saveFileDialog1.FilterIndex)
+                    switch (SaveDlg.FilterIndex)
                     {
                         case 1:
                             using (var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true }))

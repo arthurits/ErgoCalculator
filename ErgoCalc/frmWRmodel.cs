@@ -20,13 +20,15 @@ namespace ErgoCalc
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public partial class frmWRmodel : Form, IChildResults
     {
-        private datosWR _datos;
+        private List<datosWR> _datos;
         private ChartOptions _chartOptions;
 
         public frmWRmodel()
         {
             InitializeComponent();
             InitializeChart();
+
+            _datos = new List<datosWR>();
 
             this.mnuSub.Visible = false;
             _chartOptions = new ChartOptions(chart, 1)
@@ -58,7 +60,7 @@ namespace ErgoCalc
         public frmWRmodel(datosWR datos)
             :this()
         {
-            _datos = datos;
+            _datos.Add(datos);
             CalcularCurva();
             _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
         }
@@ -85,7 +87,7 @@ namespace ErgoCalc
 
             // Calcular los puntos de la curva. Si se devuelve una matriz vacía quiere decir
             //  que no se ha podido calcular la curva. Entonces hay que salir de la rutina
-            valores = model.Curva(_datos);
+            valores = model.Curva(_datos.Last());
             if (valores.Length == 0)
                 return;
 
@@ -176,7 +178,7 @@ namespace ErgoCalc
             frmDataWRmodel frmDatosWR = new frmDataWRmodel();
             if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
             {
-                _datos = frmDatosWR.getData();
+                _datos.Add(frmDatosWR.getData());
                 CalcularCurva();
                 _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
                 propertyGrid1.Refresh();
@@ -197,29 +199,98 @@ namespace ErgoCalc
             }
         }
 
+        private void SerializeToJSON(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteString("Document type", "Work-Rest model");
+            
+            writer.WritePropertyName("WR curves");
+            writer.WriteStartArray();
+
+            foreach ( var data in _datos)
+            {
+                writer.WriteStartObject();
+                
+                writer.WriteNumber("MHT", data._dMHT);
+                writer.WriteNumber("MVC", data._dMVC);
+                writer.WriteNumber("Step", data._dPaso);
+                writer.WriteNumber("Curve #", data._nCurva);
+                writer.WriteNumber("Points", data._nPuntos);
+                writer.WriteNumber("Cycles", data._bCiclos);
+                writer.WriteStartArray("Trabajo-Descanso");
+                for (int i = 0; i < data._dTrabajoDescanso[0].Length; i++)
+                {
+                    writer.WriteStartArray();
+                    writer.WriteNumberValue(data._dTrabajoDescanso[0][i]);
+                    writer.WriteNumberValue(data._dTrabajoDescanso[1][0]);
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndArray();
+                writer.WriteStartArray("Trabajo-Descanso p");
+                for (int i = 0; i < data._dTrabajoDescansop[0].Length; i++)
+                {
+                    writer.WriteStartArray();
+                    writer.WriteNumberValue(data._dTrabajoDescansop[0][i]);
+                    writer.WriteNumberValue(data._dTrabajoDescansop[1][0]);
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndArray();
+
+                writer.WriteEndObject();
+
+            }
+
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+
+            writer.Flush();
+        }
+
         #region IChildResults interface
 
         public void Save(string path)
         {   
             // Displays a SaveFileDialog so the user can save the Image  
-            SaveFileDialog saveFileDlg = new SaveFileDialog
+            SaveFileDialog SaveDlg = new SaveFileDialog
             {
                 DefaultExt = "*.csv",
-                Filter = "CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                Filter = "ERGO file (*.ergo)|*.ergo|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
                 FilterIndex = 1,
                 Title = "Save scatter-plot data",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };
-            DialogResult result = saveFileDlg.ShowDialog();
+            
+            DialogResult result;
+            using (new CenterWinDialog((Form)this.Parent))
+            {
+                result = SaveDlg.ShowDialog((Form)this.Parent);
+            }
 
             // If the file name is not an empty string open it for saving.  
-            if (result == DialogResult.OK && saveFileDlg.FileName != "")
-            {   
-                foreach (var plot in chart.plt.GetPlottables())
+            if (result == DialogResult.OK && SaveDlg.FileName != "")
+            {
+                switch (SaveDlg.FilterIndex)
                 {
-                    if (plot.GetType() == typeof(ScottPlot.PlottableScatter))
-                        ((ScottPlot.PlottableScatter)plot).SaveCSV(saveFileDlg.FileName);
+                    case 1:
+                        var fs = SaveDlg.OpenFile();
+                        if (fs != null)
+                        {
+                            using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
+                            SerializeToJSON(writer);
+                        }
+                        break;
+                    case 2:
+                        foreach (var plot in chart.plt.GetPlottables())
+                        {
+                            if (plot.GetType() == typeof(ScottPlot.PlottableScatter))
+                                ((ScottPlot.PlottableScatter)plot).SaveCSV(SaveDlg.FileName);
+                        }
+                        break;
+                }
+                using (new CenterWinDialog(this.MdiParent))
+                {
+                    MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
@@ -229,6 +300,50 @@ namespace ErgoCalc
         public bool OpenFile(JsonDocument document)
         {
             bool result = true;
+            int Length;
+            datosWR data = new datosWR();
+            _datos = new List<datosWR>();
+            JsonElement root = document.RootElement;
+
+            try
+            {
+                foreach (JsonElement curve in root.GetProperty("WR curves").EnumerateArray())
+                {
+                    data._dMHT = curve.GetProperty("MHT").GetDouble();
+                    data._dMVC = curve.GetProperty("MVC").GetDouble();
+                    data._dPaso = curve.GetProperty("Step").GetDouble();
+                    data._nCurva = curve.GetProperty("Curve #").GetInt32();
+                    data._nPuntos = curve.GetProperty("Points").GetInt32();
+                    data._bCiclos = curve.GetProperty("Cycles").GetByte();
+                    
+                    Length = curve.GetProperty("Trabajo-Descanso").GetArrayLength();
+                    data._dTrabajoDescanso = new double[2][];
+                    data._dTrabajoDescanso[0] = new double[Length];
+                    data._dTrabajoDescanso[1] = new double[Length];
+                    for (int i = 0; i < Length; i++)
+                    {
+                        data._dTrabajoDescanso[0][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
+                        data._dTrabajoDescanso[1][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
+                    }
+
+                    Length = curve.GetProperty("Trabajo-Descanso p").GetArrayLength();
+                    data._dTrabajoDescansop = new double[2][];
+                    data._dTrabajoDescansop[0] = new double[Length];
+                    data._dTrabajoDescansop[1] = new double[Length];
+                    for (int i = 0; i < Length; i++)
+                    {
+                        data._dTrabajoDescanso[0][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
+                        data._dTrabajoDescanso[1][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
+                    }
+
+                    _datos.Add(data);
+                }
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
             MessageBox.Show("Json Open not yet implemented");
             return result;
         }
@@ -236,11 +351,11 @@ namespace ErgoCalc
         public void EditData()
         {
             // Show the form with the data in order to edit it
-            frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos);
+            frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos.Last());
             if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
             {
                 // Get the edited input data
-                _datos = (frmDatosWR.getData());
+                _datos.Add(frmDatosWR.getData());
                 chart.plt.Clear();
                 CalcularCurva();
                 _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
@@ -253,7 +368,7 @@ namespace ErgoCalc
             string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
             // Mostrar la ventana de resultados
-            frmWRmodel frmResults = new frmWRmodel(_datos)
+            frmWRmodel frmResults = new frmWRmodel(_datos.Last())
             {
                 MdiParent = this.MdiParent
             };

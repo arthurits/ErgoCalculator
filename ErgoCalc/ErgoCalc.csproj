@@ -210,6 +210,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Update="examples\NTP 1125.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="examples\NTP RSI.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

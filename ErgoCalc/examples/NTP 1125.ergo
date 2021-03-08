@@ -1,0 +1,44 @@
+{
+  "Document type": "Strain index",
+  "Tasks": [
+    {
+      "Sub-tasks": [
+        {
+          "Intensity": 0.2,
+          "Efforts": 5,
+          "EffortsA": 0,
+          "EffortsB": 0,
+          "Duration": 3,
+          "Posture": -5,
+          "Hours": 4,
+          "I multiplier": 2.616,
+          "E multiplier": 1.35,
+          "Ea multiplier": 0,
+          "Eb multiplier": 0,
+          "D multiplier": 1.38,
+          "P multiplier": 1.0552334318904604,
+          "H multiplier": 0.7697664925007901,
+          "RSI index": 3.95875057256898,
+          "Item index": 0
+        }
+      ],
+      "Sub-tasks order": [
+        0
+      ],
+      "h factor": 4,
+      "ha factor": 0,
+      "hb factor": 0,
+      "H multiplier": 0,
+      "Ha multiplier": 0,
+      "Hb multiplier": 0,
+      "COSI index": -1,
+      "Number of sub-tasks": 1
+    }
+  ],
+  "Tasks order": [
+    0
+  ],
+  "CUSI index": -1,
+  "Number of tasks": 1,
+  "Index type": 0
+}
