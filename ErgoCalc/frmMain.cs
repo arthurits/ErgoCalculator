@@ -314,11 +314,12 @@ namespace ErgoCalc
             }
 
             
-            if (frmData.ShowDialog(this) == DialogResult.OK)
-            {
-                frmResults.MdiParent = this;
-                frmResults.Show();
-            }
+            //if (frmData.ShowDialog(this) == DialogResult.OK)
+            //{
+            //    frmResults.MdiParent = this;
+            //    frmResults.Show();
+            //}
+
             frmData.Dispose();
             
         }
@@ -540,7 +541,13 @@ namespace ErgoCalc
 
                 switch (strType)
                 {
-                    case "WR model":
+                    case "Work-Rest model":
+                        frmWRmodel frmWR = new frmWRmodel() { MdiParent = this };
+                        if (frmWR.OpenFile(document))
+                        {
+                            if (File.Exists(_strPath + @"\images\logo.ico")) frmWR.Icon = new Icon(_strPath + @"\images\logo.ico");
+                            frmWR.Show();
+                        }
                         break;
                     case "NIOSH equation":
                         break;

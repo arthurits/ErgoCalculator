@@ -355,7 +355,7 @@ namespace ErgoCalc
                 for (var i = 0; i < _job.JobTasks[j].SubTasks.Length; i++)
                 {
                     //Column 0 is already created in the constructor;
-                    if (i > 0) AddColumn();
+                    if ((i + j) > 0) AddColumn();
 
                     // Populate the DataGridView with data
                     gridVariables[nCol, 0].Value = _job.JobTasks[j].SubTasks[i].data.i.ToString();

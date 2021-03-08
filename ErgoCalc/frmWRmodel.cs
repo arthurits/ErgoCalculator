@@ -321,9 +321,9 @@ namespace ErgoCalc
                     data._dTrabajoDescanso[0] = new double[Length];
                     data._dTrabajoDescanso[1] = new double[Length];
                     for (int i = 0; i < Length; i++)
-                    {
-                        data._dTrabajoDescanso[0][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
-                        data._dTrabajoDescanso[1][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
+                    {                       
+                        data._dTrabajoDescanso[0][i] = curve.GetProperty("Trabajo-Descanso")[i][0].GetDouble();
+                        data._dTrabajoDescanso[1][i] = curve.GetProperty("Trabajo-Descanso")[i][1].GetDouble();
                     }
 
                     Length = curve.GetProperty("Trabajo-Descanso p").GetArrayLength();
@@ -332,8 +332,8 @@ namespace ErgoCalc
                     data._dTrabajoDescansop[1] = new double[Length];
                     for (int i = 0; i < Length; i++)
                     {
-                        data._dTrabajoDescanso[0][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
-                        data._dTrabajoDescanso[1][i] = curve.GetProperty("Trabajo-Descanso")[i].GetArrayLength();
+                        data._dTrabajoDescansop[0][i] = curve.GetProperty("Trabajo-Descanso p")[i][0].GetDouble();
+                        data._dTrabajoDescansop[1][i] = curve.GetProperty("Trabajo-Descanso p")[i][1].GetDouble();
                     }
 
                     _datos.Add(data);
@@ -344,7 +344,12 @@ namespace ErgoCalc
                 result = false;
             }
 
-            MessageBox.Show("Json Open not yet implemented");
+            if (result)
+            {
+                CalcularCurva();
+                _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+            }
+
             return result;
         }
 
