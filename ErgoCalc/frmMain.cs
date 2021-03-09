@@ -184,16 +184,6 @@ namespace ErgoCalc
                     Win32.Win32API.AnimateWindow(this.Handle, 200, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_HIDE);
             }
 
-            // https://devblogs.microsoft.com/dotnet/try-the-new-system-text-json-apis/
-            // https://docs.microsoft.com/es-es/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
-            /*var options = new JsonSerializerOptions
-            {
-                WriteIndented = true
-            };
-            using FileStream createStream = File.Create(_programSettingsFileName);
-            System.Diagnostics.Debug.Print(JsonSerializer.Serialize<clsApplicationSettings>(_programSettings, options));
-            */
-
             // Guardar los datos de configuración
             //SaveProgramSettingsXML();
             SaveProgramSettingsJSON();
@@ -536,33 +526,38 @@ namespace ErgoCalc
                 string jsonString = File.ReadAllText(openDlg.FileName);
                 var options = new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip };
 
+                // Dilemma: should be wrapped in a try-catch, but variables will be out of scope and syntax would be cumbersome
                 using JsonDocument document = JsonDocument.Parse(jsonString, options);
                 var strType = document.RootElement.TryGetProperty("Document type", out JsonElement docuValue) ? docuValue.ToString() : "Error";
+
+                Form frm = default;
 
                 switch (strType)
                 {
                     case "Work-Rest model":
-                        frmWRmodel frmWR = new frmWRmodel() { MdiParent = this };
-                        if (frmWR.OpenFile(document))
-                        {
-                            if (File.Exists(_strPath + @"\images\logo.ico")) frmWR.Icon = new Icon(_strPath + @"\images\logo.ico");
-                            frmWR.Show();
-                        }
+                        frm = new frmWRmodel() { MdiParent = this };
                         break;
-                    case "NIOSH equation":
+                    case "NIOSH lifting equation":
+                        //frm = new frmResultNIOSHmodel() { MdiParent = this };
                         break;
                     case "Strain index":
-                        frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex() { MdiParent = this };
-                        if (frmStrainIndex.OpenFile(document))
-                        {
-                            if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
-                            frmStrainIndex.Show();
-                        }
-                        break;
-                    default:
-                        MessageBox.Show("The document cannot be opened by this application", "Format mismatch",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                        frm = new frmResultsStrainIndex() { MdiParent = this };
                         break;
                 }
+
+                if(frm != default)
+                {
+                    if (((IChildResults)frm).OpenFile(document))
+                    {
+                        if (File.Exists(_strPath + @"\images\logo.ico")) frm.Icon = new Icon(_strPath + @"\images\logo.ico");
+                        frm.Show();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
         }
 

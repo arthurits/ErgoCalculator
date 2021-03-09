@@ -70,6 +70,10 @@ namespace ErgoCalc
         /// </summary>
         private void InitializeChart()
         {
+            chart.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
+            chart.MouseClicked += new System.Windows.Forms.MouseEventHandler(chart_MouseClicked);
+            //chart.MouseMoved += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
+            //chart.MouseMove += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
             chart.plt.Title("WR model", fontSize: 16);
             chart.plt.YLabel("% Maximum holding time", fontSize: 14);
             chart.plt.XLabel("Time / s", fontSize: 14);
@@ -118,19 +122,35 @@ namespace ErgoCalc
             */
         }
 
-        private void chart_MouseClick(object sender, MouseEventArgs e)
+        private void chart_MouseClicked(object sender, MouseEventArgs e)
         {
             // https://github.com/ScottPlot/ScottPlot/discussions/645
             double x = chart.plt.CoordinateFromPixelX(e.X);
             double y = chart.plt.CoordinateFromPixelY(e.Y);
-            using (var bmp = chart.plt.GetBitmap(false))
-            {
-                var algo = bmp.GetPixel(e.X, e.Y);
-            }
+
+            using var bmp = chart.plt.GetBitmap(false);
+            var algo = bmp.GetPixel(e.X, e.Y);
+            
             //Text = $"Clicked X={x} Y={y}";
+            foreach (var plot in chart.plt.GetPlottables())
+            {
+                if ( algo.Name == ((ScottPlot.PlottableScatter)plot).color.Name)
+                {
+                    ((ScottPlot.PlottableScatter)plot).lineWidth = 1 + 2 * ((ScottPlot.PlottableScatter)plot).lineWidth;
+                    chart.Render();
+                }
+            }
+            var colores = chart.plt.Colorset();
+
+            
         }
 
         private void chart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chart_DoubleClick(object sender, EventArgs e)
         {
 
         }
@@ -222,7 +242,7 @@ namespace ErgoCalc
                 {
                     writer.WriteStartArray();
                     writer.WriteNumberValue(data._dTrabajoDescanso[0][i]);
-                    writer.WriteNumberValue(data._dTrabajoDescanso[1][0]);
+                    writer.WriteNumberValue(data._dTrabajoDescanso[1][i]);
                     writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
@@ -231,7 +251,7 @@ namespace ErgoCalc
                 {
                     writer.WriteStartArray();
                     writer.WriteNumberValue(data._dTrabajoDescansop[0][i]);
-                    writer.WriteNumberValue(data._dTrabajoDescansop[1][0]);
+                    writer.WriteNumberValue(data._dTrabajoDescansop[1][i]);
                     writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
@@ -262,9 +282,9 @@ namespace ErgoCalc
             };
             
             DialogResult result;
-            using (new CenterWinDialog((Form)this.Parent))
+            using (new CenterWinDialog(this))
             {
-                result = SaveDlg.ShowDialog((Form)this.Parent);
+                result = SaveDlg.ShowDialog(this.Parent);
             }
 
             // If the file name is not an empty string open it for saving.  

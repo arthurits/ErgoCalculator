@@ -145,8 +145,6 @@
             this.chart.Name = "chart";
             this.chart.Size = new System.Drawing.Size(470, 450);
             this.chart.TabIndex = 2;
-            this.chart.Click += new System.EventHandler(this.chart_Click);
-            this.chart.MouseClick += new System.Windows.Forms.MouseEventHandler(this.chart_MouseClick);
             // 
             // toolStripWR
             // 
