@@ -187,6 +187,7 @@ namespace ErgoCalc
                 public byte _bCiclos;
                 public int _nCurva;
                 public int _nPuntos;
+                public double[][] _points;
 
                 public override string ToString()
                 {
@@ -239,6 +240,9 @@ namespace ErgoCalc
                 [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva")]
                 private static extern System.IntPtr Curva_DLL(System.IntPtr array, int tamaño, ref datosDLL datos);
 
+                [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva2")]
+                private static extern void Curva2_DLL(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, ref datosDLL datos);
+
                 /// <summary>
                 /// Libera la memoria reservada por la DLL
                 /// </summary>
@@ -276,6 +280,14 @@ namespace ErgoCalc
                     structDatos.dPaso = datos._dPaso;
                     structDatos.nCiclos = Convert.ToInt32(datos._bCiclos);
                     structDatos.nPuntos = datos._nPuntos;
+
+                    Curva2_DLL(datos._dTrabajoDescanso[0],
+                        datos._dTrabajoDescanso[1],
+                        longitud,
+                        datos._points[0],
+                        datos._points[1],
+                        datos._nPuntos,
+                        ref structDatos);
 
                     try
                     {

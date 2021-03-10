@@ -88,7 +88,7 @@ namespace ErgoCalc
         {
             cWRmodel model = new cWRmodel();
             double[][] valores;
-
+                        
             // Calcular los puntos de la curva. Si se devuelve una matriz vacía quiere decir
             //  que no se ha podido calcular la curva. Entonces hay que salir de la rutina
             valores = model.Curva(_datos.Last());

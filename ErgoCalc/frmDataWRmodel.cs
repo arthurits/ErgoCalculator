@@ -68,6 +68,21 @@ namespace ErgoCalc
             return _datos;
         }
 
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+
+            if (ValidarMVC() != true) { txtMVC.Focus(); return; }
+            if (ValidarTT() != true) { return; }
+            if (ValidarC() != true) { txtCiclos.Focus(); return; }
+            if (ValidarPaso() != true) { txtPaso.Focus(); return; }
+
+            // Calcular
+
+            // Salir y cerrar el formulario
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
         #region Eventos de los TextBox
 
         private void txtMVC_Validating(object sender, CancelEventArgs e)
@@ -106,20 +121,6 @@ namespace ErgoCalc
             txtPaso.SelectAll();
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
-        {
-            
-            if (ValidarMVC() != true) { txtMVC.Focus(); return; }
-            if (ValidarTT() != true) { return; }
-            if (ValidarC() != true) { txtCiclos.Focus(); return; }
-            if (ValidarPaso() != true) { txtPaso.Focus(); return; }
-            
-            // Calcular
-
-            // Salir y cerrar el formulario
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
         #endregion
 
         #region Rutinas de validación
@@ -324,6 +325,7 @@ namespace ErgoCalc
         /// <returns>"True" si no ha habido problemas y "False" si los ha habido</returns>
         private Boolean ValidarPaso()
         {
+            Boolean result = true;
             Double nSize = 0;
 
             try
@@ -357,8 +359,6 @@ namespace ErgoCalc
 
                 _datos._nPuntos = Convert.ToInt32(nSize);
 
-                // Finalizar
-                return true;
             }
             catch (Exception e)
             {
@@ -367,8 +367,10 @@ namespace ErgoCalc
                 MessageBox.Show(e.Message, _resources.GetString("errorValidarPasoTítulo"), MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 // Finalizar
-                return false;
+                result = false;
             }
+            
+            return result;
         }
 
         #endregion
