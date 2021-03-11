@@ -87,20 +87,19 @@ namespace ErgoCalc
         private void CalcularCurva()
         {
             cWRmodel model = new cWRmodel();
-            double[][] valores;
-                        
-            // Calcular los puntos de la curva. Si se devuelve una matriz vacía quiere decir
-            //  que no se ha podido calcular la curva. Entonces hay que salir de la rutina
-            valores = model.Curva(_datos.Last());
-            if (valores.Length == 0)
-                return;
 
-            //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-            chart.plt.PlotScatter(valores[0], valores[1], label: "4 3 2", lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
-            chart.plt.Axis(0, null, 0, 100);
-            chart.plt.AxisAutoX();
-            chart.Render();
-
+            foreach (var datos in _datos)
+            {
+                // Calcular los puntos de la curva.
+                if (model.Curva(datos))
+                {
+                    //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
+                    chart.plt.PlotScatter(datos._points[0], datos._points[1], label: "4 3 2", lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+                    chart.plt.AxisAutoX();
+                    chart.plt.Axis(0, null, 0, 100);
+                    chart.Render();
+                }
+            }
             /*
            ChartValues<System.Windows.Point> puntos = new ChartValues<System.Windows.Point>();
            for (int i=0; i<valores[0].Length; i++)

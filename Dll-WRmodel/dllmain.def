@@ -4,5 +4,5 @@ VERSION 1.0
 EXPORTS
    Sjogaard @1
    Curva @2
-   FreeMemory @3
-   Curva2 @4
+   CurvaNew @3
+   FreeMemory @4

@@ -240,8 +240,8 @@ namespace ErgoCalc
                 [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva")]
                 private static extern System.IntPtr Curva_DLL(System.IntPtr array, int tamaño, ref datosDLL datos);
 
-                [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva2")]
-                private static extern void Curva2_DLL(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, ref datosDLL datos);
+                [DllImport("dlls/wrmodel.dll", EntryPoint = "CurvaNew")]
+                private static extern void CurvaNew_DLL(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, ref datosDLL datos);
 
                 /// <summary>
                 /// Libera la memoria reservada por la DLL
@@ -263,15 +263,16 @@ namespace ErgoCalc
 
                 #region Class functions
 
-                public double[][] Curva(datosWR datos)
+                public bool Curva(datosWR datos)
                 {
                     // Definición de variables
                     // La matriz arrayCurva se inicializa a "empty" porque la función puede devolver
                     //   una matriz "empty" si no ha podido realizar el cálculo.
                     Double[][] arrayCurva = Array.Empty<double[]>();
-                    //Double[][] arrayIntermedia = new Double[2][];
                     IntPtr ptrTiempos = IntPtr.Zero;
                     IntPtr ptrResultado = IntPtr.Zero;
+
+                    bool result = true;
 
                     // Definición de las variables que se pasan a la función
                     int longitud = datos._dTrabajoDescanso[0].Length;
@@ -281,14 +282,21 @@ namespace ErgoCalc
                     structDatos.nCiclos = Convert.ToInt32(datos._bCiclos);
                     structDatos.nPuntos = datos._nPuntos;
 
-                    Curva2_DLL(datos._dTrabajoDescanso[0],
-                        datos._dTrabajoDescanso[1],
-                        longitud,
-                        datos._points[0],
-                        datos._points[1],
-                        datos._nPuntos,
-                        ref structDatos);
-
+                    try
+                    {
+                        CurvaNew_DLL(datos._dTrabajoDescanso[0],
+                            datos._dTrabajoDescanso[1],
+                            longitud,
+                            datos._points[0],
+                            datos._points[1],
+                            datos._nPuntos,
+                            ref structDatos);
+                    }
+                    catch(Exception)
+                    {
+                        result = false;
+                    }
+                    /*
                     try
                     {
                         // Pasar la matriz a la memoria no gestionada
@@ -326,9 +334,10 @@ namespace ErgoCalc
                             FreeMemory_DLL(ptrResultado);
                         }
                     }
+                    */
 
                     // Finalizar
-                    return arrayCurva;
+                    return result;
                 }
 
 

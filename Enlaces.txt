@@ -8,3 +8,14 @@ https://docs.microsoft.com/es-es/dotnet/framework/winforms/controls/walkthrough-
 https://docs.microsoft.com/es-es/dotnet/framework/winforms/controls/how-to-create-an-mdi-form-with-menu-merging-and-toolstrip-controls
 
 https://www.codeproject.com/Questions/183070/Mdi-Application-Toolstrip-Merging
+
+
+Linked lists in C#
+
+https://www.c-sharpcorner.com/article/linked-list-implementation-in-c-sharp/
+https://stackoverflow.com/questions/3823848/creating-a-very-simple-linked-list
+https://blog.simontimms.com/2018/12/10/2018-12-11_linked_lists_in_csharp/
+
+https://www.geeksforgeeks.org/linked-list-implementation-in-c-sharp/
+
+https://www.google.es/search?q=C%23+linked+lists&ie=UTF-8&oe=

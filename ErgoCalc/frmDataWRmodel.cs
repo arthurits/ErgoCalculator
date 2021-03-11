@@ -250,7 +250,7 @@ namespace ErgoCalc
                 }
                 _datos._dTrabajoDescanso[0][bEspacio] = Convert.ToDouble(subcadena);
                 _datos._dTrabajoDescansop[0][bEspacio] = 100 * _datos._dTrabajoDescanso[0][bEspacio] / _datos._dMHT;
-
+                
                 bEspacio = 0;
                 bPosición = 0;
                 bPosiciónAnt = 0;
@@ -358,6 +358,9 @@ namespace ErgoCalc
                 }
 
                 _datos._nPuntos = Convert.ToInt32(nSize);
+                _datos._points = new double[2][];
+                _datos._points[0] = new double[_datos._nPuntos];
+                _datos._points[1] = new double[_datos._nPuntos];
 
             }
             catch (Exception e)
