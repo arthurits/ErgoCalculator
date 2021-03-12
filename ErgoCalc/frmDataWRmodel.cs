@@ -131,7 +131,7 @@ namespace ErgoCalc
         /// <returns>"True" si no ha habido problemas y "False" si los ha habido</returns>
         private Boolean ValidarMVC()
         {
-            Models.WRmodel.cWRmodel modelo = new Models.WRmodel.cWRmodel();
+            //Models.WRmodel.cWRmodel modelo = new Models.WRmodel.cWRmodel();
             try
             {
                 // Comprobar que se ha introducido texto en el campo
@@ -149,7 +149,8 @@ namespace ErgoCalc
                 }
 
                 // Una vez comprobado que el dato es correcto, se calcula el MHT
-                _datos._dMHT = modelo.Sjogaard(_datos._dMVC);
+                //_datos._dMHT = modelo.Sjogaard(_datos._dMVC);
+                _datos._dMHT = 5710.0 / Math.Pow(_datos._dMVC, 2.14);
 
                 // Finalizar
                 return true;
