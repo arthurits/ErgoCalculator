@@ -240,8 +240,8 @@ namespace ErgoCalc
                 [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva")]
                 private static extern System.IntPtr Curva_DLL(System.IntPtr array, int tamaño, ref datosDLL datos);
 
-                [DllImport("dlls/wrmodel.dll", EntryPoint = "CurvaNew")]
-                private static extern void CurvaNew_DLL(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, ref datosDLL datos);
+                [DllImport("dlls/wrmodel.dll", EntryPoint = "WRCurve")]
+                private static extern void WRCurve(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, int nCycles, double dMHT, double dStep);
 
                 /// <summary>
                 /// Libera la memoria reservada por la DLL
@@ -266,39 +266,43 @@ namespace ErgoCalc
                 public bool Curva(datosWR datos)
                 {
                     // Definición de variables
-                    // La matriz arrayCurva se inicializa a "empty" porque la función puede devolver
-                    //   una matriz "empty" si no ha podido realizar el cálculo.
-                    Double[][] arrayCurva = Array.Empty<double[]>();
-                    IntPtr ptrTiempos = IntPtr.Zero;
-                    IntPtr ptrResultado = IntPtr.Zero;
-
                     bool result = true;
-
-                    // Definición de las variables que se pasan a la función
-                    int longitud = datos._dTrabajoDescanso[0].Length;
-                    datosDLL structDatos;
-                    structDatos.dMHT = datos._dMHT;
-                    structDatos.dPaso = datos._dPaso;
-                    structDatos.nCiclos = Convert.ToInt32(datos._bCiclos);
-                    structDatos.nPuntos = datos._nPuntos;
-
+                    
+                    datos._dMHT = Sjogaard(datos._dMVC);
+                    
                     try
-                    {
-                        datos._dMHT = Sjogaard_DLL(datos._dMVC);
-                        CurvaNew_DLL(datos._dTrabajoDescanso[0],
+                    {    
+                        WRCurve(datos._dTrabajoDescanso[0],
                             datos._dTrabajoDescanso[1],
-                            longitud,
+                            datos._dTrabajoDescanso[0].Length,
                             datos._points[0],
                             datos._points[1],
                             datos._nPuntos,
-                            ref structDatos);
+                            datos._bCiclos,
+                            datos._dMHT,
+                            datos._dPaso);
                     }
                     catch(Exception)
                     {
+                        System.Windows.Forms.MessageBox.Show("Error calling WRCurve function", "Error");
                         result = false;
                     }
  
                     // Finalizar
+                    return result;
+                }
+                
+                public double Sjogaard(double dMVC)
+                {
+                    double result = -1.0;
+                    try
+                    {
+                        result = Sjogaard_DLL(dMVC);
+                    }
+                    catch(Exception)
+                    {
+                        System.Windows.Forms.MessageBox.Show("Error calling Sjogaard function", "Error");
+                    }
                     return result;
                 }
 
@@ -366,29 +370,7 @@ namespace ErgoCalc
                     return arrayCurva;
                 }
 
-                public double Sjogaard(double dMVC)
-                {
-                    double result = -1.0;
-                    try
-                    {
-                        result = Sjogaard_DLL(dMVC);
-                    }
-                    catch(Exception)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Error calling Sjogaard function", "Error");
-                    }
-                    return result;
-                }
-
-                public System.IntPtr Curva (System.IntPtr array, int tamaño, ref datosDLL datos)
-                {
-                    return Curva_DLL(array, tamaño, ref datos);
-                }
-
-                public System.IntPtr FreeMemory (System.IntPtr ptr)
-                {
-                    return FreeMemory_DLL(ptr);
-                }
+                
 
                 #endregion
 

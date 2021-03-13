@@ -38,6 +38,7 @@
             this.radioButtonClick4 = new System.Windows.Forms.RadioButtonClick();
             this.radioButtonClick5 = new System.Windows.Forms.RadioButtonClick();
             this.radioButtonClick6 = new System.Windows.Forms.RadioButtonClick();
+            this.radioButtonClick7 = new System.Windows.Forms.RadioButtonClick();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(16, 127);
+            this.label1.Location = new System.Drawing.Point(21, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(282, 17);
             this.label1.TabIndex = 3;
@@ -56,7 +57,7 @@
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.Location = new System.Drawing.Point(0, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(382, 101);
+            this.pictureBox1.Size = new System.Drawing.Size(382, 86);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
@@ -86,7 +87,7 @@
             // radioButtonClick1
             // 
             this.radioButtonClick1.AutoSize = true;
-            this.radioButtonClick1.Location = new System.Drawing.Point(63, 158);
+            this.radioButtonClick1.Location = new System.Drawing.Point(63, 134);
             this.radioButtonClick1.Name = "radioButtonClick1";
             this.radioButtonClick1.Size = new System.Drawing.Size(91, 21);
             this.radioButtonClick1.TabIndex = 7;
@@ -99,7 +100,7 @@
             // radioButtonClick2
             // 
             this.radioButtonClick2.AutoSize = true;
-            this.radioButtonClick2.Location = new System.Drawing.Point(63, 191);
+            this.radioButtonClick2.Location = new System.Drawing.Point(63, 167);
             this.radioButtonClick2.Name = "radioButtonClick2";
             this.radioButtonClick2.Size = new System.Drawing.Size(96, 21);
             this.radioButtonClick2.TabIndex = 8;
@@ -112,7 +113,7 @@
             // radioButtonClick3
             // 
             this.radioButtonClick3.AutoSize = true;
-            this.radioButtonClick3.Location = new System.Drawing.Point(63, 224);
+            this.radioButtonClick3.Location = new System.Drawing.Point(63, 200);
             this.radioButtonClick3.Name = "radioButtonClick3";
             this.radioButtonClick3.Size = new System.Drawing.Size(237, 21);
             this.radioButtonClick3.TabIndex = 9;
@@ -125,7 +126,7 @@
             // radioButtonClick4
             // 
             this.radioButtonClick4.AutoSize = true;
-            this.radioButtonClick4.Location = new System.Drawing.Point(63, 257);
+            this.radioButtonClick4.Location = new System.Drawing.Point(63, 233);
             this.radioButtonClick4.Name = "radioButtonClick4";
             this.radioButtonClick4.Size = new System.Drawing.Size(268, 21);
             this.radioButtonClick4.TabIndex = 10;
@@ -138,7 +139,7 @@
             // radioButtonClick5
             // 
             this.radioButtonClick5.AutoSize = true;
-            this.radioButtonClick5.Location = new System.Drawing.Point(63, 290);
+            this.radioButtonClick5.Location = new System.Drawing.Point(63, 266);
             this.radioButtonClick5.Name = "radioButtonClick5";
             this.radioButtonClick5.Size = new System.Drawing.Size(123, 21);
             this.radioButtonClick5.TabIndex = 11;
@@ -151,7 +152,7 @@
             // radioButtonClick6
             // 
             this.radioButtonClick6.AutoSize = true;
-            this.radioButtonClick6.Location = new System.Drawing.Point(63, 323);
+            this.radioButtonClick6.Location = new System.Drawing.Point(63, 299);
             this.radioButtonClick6.Name = "radioButtonClick6";
             this.radioButtonClick6.Size = new System.Drawing.Size(115, 21);
             this.radioButtonClick6.TabIndex = 12;
@@ -161,6 +162,17 @@
             this.radioButtonClick6.UseVisualStyleBackColor = true;
             this.radioButtonClick6.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
             // 
+            // radioButtonClick7
+            // 
+            this.radioButtonClick7.AutoSize = true;
+            this.radioButtonClick7.Location = new System.Drawing.Point(63, 332);
+            this.radioButtonClick7.Name = "radioButtonClick7";
+            this.radioButtonClick7.Size = new System.Drawing.Size(208, 21);
+            this.radioButtonClick7.TabIndex = 13;
+            this.radioButtonClick7.TabStop = true;
+            this.radioButtonClick7.Text = "Thermal comfort (PMV, PPD)";
+            this.radioButtonClick7.UseVisualStyleBackColor = true;
+            // 
             // frmNew
             // 
             this.AcceptButton = this.btnAccept;
@@ -168,6 +180,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(382, 418);
+            this.Controls.Add(this.radioButtonClick7);
             this.Controls.Add(this.radioButtonClick6);
             this.Controls.Add(this.radioButtonClick5);
             this.Controls.Add(this.radioButtonClick4);
@@ -201,5 +214,6 @@
         private System.Windows.Forms.RadioButtonClick radioButtonClick4;
         private System.Windows.Forms.RadioButtonClick radioButtonClick5;
         private System.Windows.Forms.RadioButtonClick radioButtonClick6;
+        private System.Windows.Forms.RadioButtonClick radioButtonClick7;
     }
 }

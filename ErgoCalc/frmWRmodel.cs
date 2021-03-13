@@ -236,24 +236,21 @@ namespace ErgoCalc
                 writer.WriteNumber("Curve #", data._nCurva);
                 writer.WriteNumber("Points", data._nPuntos);
                 writer.WriteNumber("Cycles", data._bCiclos);
-                writer.WriteStartArray("Trabajo-Descanso");
-                for (int i = 0; i < data._dTrabajoDescanso[0].Length; i++)
-                {
-                    writer.WriteStartArray();
-                    writer.WriteNumberValue(data._dTrabajoDescanso[0][i]);
-                    writer.WriteNumberValue(data._dTrabajoDescanso[1][i]);
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
-                writer.WriteStartArray("Trabajo-Descanso p");
-                for (int i = 0; i < data._dTrabajoDescansop[0].Length; i++)
-                {
-                    writer.WriteStartArray();
-                    writer.WriteNumberValue(data._dTrabajoDescansop[0][i]);
-                    writer.WriteNumberValue(data._dTrabajoDescansop[1][i]);
-                    writer.WriteEndArray();
-                }
-                writer.WriteEndArray();
+                
+                writer.WritePropertyName("Work times");
+                JsonSerializer.Serialize(writer, data._dTrabajoDescanso[0], new JsonSerializerOptions { WriteIndented = true });
+
+                writer.WritePropertyName("Rest times");
+                JsonSerializer.Serialize(writer, data._dTrabajoDescanso[1], new JsonSerializerOptions { WriteIndented = true });
+
+                writer.WritePropertyName("Trabajo-Descanso p");
+                JsonSerializer.Serialize(writer, data._dTrabajoDescansop, new JsonSerializerOptions { WriteIndented = true });
+
+                writer.WritePropertyName("Points X");
+                JsonSerializer.Serialize(writer, data._points[0], new JsonSerializerOptions { WriteIndented = true });
+
+                writer.WritePropertyName("Points Y");
+                JsonSerializer.Serialize(writer, data._points[1], new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WriteEndObject();
 
@@ -297,6 +294,7 @@ namespace ErgoCalc
                         {
                             using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
                             SerializeToJSON(writer);
+                            //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
                         }
                         break;
                     case 2:
