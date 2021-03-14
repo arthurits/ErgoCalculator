@@ -445,7 +445,9 @@ namespace ErgoCalc
     /// </summary>
     public interface IChildData
     {
-        object GetData();
+        object GetData { get; }
+
+        //object GetData();
     }
 
 }

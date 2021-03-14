@@ -65,6 +65,7 @@ namespace ErgoCalc
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "&Accept";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnCancel
             // 
@@ -185,6 +186,7 @@ namespace ErgoCalc
             0,
             0,
             0});
+            this.updSubtasks.ValueChanged += new System.EventHandler(this.updSubtasks_ValueChanged);
             // 
             // gridVariables
             // 
@@ -211,7 +213,7 @@ namespace ErgoCalc
             this.tabTasks.Location = new System.Drawing.Point(4, 25);
             this.tabTasks.Name = "tabTasks";
             this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTasks.Size = new System.Drawing.Size(737, 425);
+            this.tabTasks.Size = new System.Drawing.Size(737, 416);
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 

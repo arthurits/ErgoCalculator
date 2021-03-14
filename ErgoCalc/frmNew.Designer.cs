@@ -172,6 +172,7 @@
             this.radioButtonClick7.TabStop = true;
             this.radioButtonClick7.Text = "Thermal comfort (PMV, PPD)";
             this.radioButtonClick7.UseVisualStyleBackColor = true;
+            this.radioButtonClick7.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
             // 
             // frmNew
             // 

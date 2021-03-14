@@ -66,6 +66,9 @@ namespace ErgoCalc
                         case "Metabolic rate":
                             _nOption = 6;
                             break;
+                        case "Thermal comfort (PMV, PPD)":
+                            _nOption = 7;
+                            break;
                     }
                     //_nOption = (int)rad.Tag;
                     break;

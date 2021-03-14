@@ -46,12 +46,12 @@ namespace ErgoCalc
             txtCiclos.Text = datos._bCiclos.ToString();
             txtPaso.Text = datos._dPaso.ToString();
 
-            foreach (double d in datos._dTrabajoDescanso[0])
+            foreach (double d in datos._dWorkRest[0])
                 strTexto += d.ToString() + strEspacio;
             txtTT.Text = strTexto.TrimEnd(strEspacio.ToCharArray());
 
             strTexto = "";
-            foreach (double d in datos._dTrabajoDescanso[1])
+            foreach (double d in datos._dWorkRest[1])
                 strTexto += d.ToString() + strEspacio;
             txtTD.Text = strTexto.TrimEnd(strEspacio.ToCharArray());
 
@@ -209,12 +209,13 @@ namespace ErgoCalc
                 }
 
                 // Dimensionar las matrices (elementos: espacios_blanco + 1)
-                _datos._dTrabajoDescanso = new double[2][];
-                _datos._dTrabajoDescanso[0] = new double[++bPosición];
-                _datos._dTrabajoDescanso[1] = new double[bPosición];
-                _datos._dTrabajoDescansop = new double[2][];
-                _datos._dTrabajoDescansop[0] = new double[bPosición];
-                _datos._dTrabajoDescansop[1] = new double[bPosición];
+                _datos._dWorkRest = new double[2][];
+                _datos._dWorkRest[0] = new double[++bPosición];
+                _datos._dWorkRest[1] = new double[bPosición];
+                _datos._dWorkRestDrop = new double[bPosición];
+                //_datos._dWorkRestY = new double[2][];
+                //_datos._dWorkRestY[0] = new double[bPosición];
+                //_datos._dWorkRestY[1] = new double[bPosición];
 
                 // Extraer los caracteres entre los espacios en blanco y pasarlos a los datos
                 bPosición = 0;
@@ -232,8 +233,8 @@ namespace ErgoCalc
                             throw new InvalidRange(strError);
                         }
 
-                        _datos._dTrabajoDescanso[0][bEspacio] = número;
-                        _datos._dTrabajoDescansop[0][bEspacio] = 100 * número / _datos._dMHT;
+                        _datos._dWorkRest[0][bEspacio] = número;
+                        _datos._dWorkRestDrop[bEspacio] = 100 * número / _datos._dMHT;
 
                         bPosiciónAnt = bPosición;
                         ++bPosiciónAnt;
@@ -249,8 +250,8 @@ namespace ErgoCalc
                     strError = String.Format(_resources.GetString("errorValidarTTInvalidRange"), _datos._dMHT);
                     throw new InvalidRange(strError);
                 }
-                _datos._dTrabajoDescanso[0][bEspacio] = Convert.ToDouble(subcadena);
-                _datos._dTrabajoDescansop[0][bEspacio] = 100 * _datos._dTrabajoDescanso[0][bEspacio] / _datos._dMHT;
+                _datos._dWorkRest[0][bEspacio] = Convert.ToDouble(subcadena);
+                _datos._dWorkRestDrop[bEspacio] = 100 * _datos._dWorkRest[0][bEspacio] / _datos._dMHT;
                 
                 bEspacio = 0;
                 bPosición = 0;
@@ -261,8 +262,8 @@ namespace ErgoCalc
                     {
                         subcadena = cadenaD.Substring(bPosiciónAnt, bPosición - bPosiciónAnt);
                         número = Convert.ToDouble(subcadena);
-                        _datos._dTrabajoDescanso[1][bEspacio] = número;
-                        _datos._dTrabajoDescansop[1][bEspacio] = 100 * número / _datos._dMHT;
+                        _datos._dWorkRest[1][bEspacio] = número;
+                        //_datos._dWorkRestY[1][bEspacio] = 100 * número / _datos._dMHT;
                         bPosiciónAnt = bPosición;
                         ++bPosiciónAnt;
                         ++bEspacio;
@@ -270,8 +271,8 @@ namespace ErgoCalc
                     ++bPosición;
                 }
                 subcadena = cadenaD.Substring(bPosiciónAnt, bPosición - bPosiciónAnt);
-                _datos._dTrabajoDescanso[1][bEspacio] = Convert.ToDouble(subcadena);
-                _datos._dTrabajoDescansop[1][bEspacio] = 100 * _datos._dTrabajoDescanso[1][bEspacio] / _datos._dMHT;
+                _datos._dWorkRest[1][bEspacio] = Convert.ToDouble(subcadena);
+                //_datos._dWorkRestY[1][bEspacio] = 100 * _datos._dWorkRest[1][bEspacio] / _datos._dMHT;
 
                 // Finalizar
                 return true;
@@ -348,8 +349,8 @@ namespace ErgoCalc
 
                 // Cálculo del número de puntos de la curva y comprobar que cada tiempo de descanso
                 //  entre el paso es un entero
-                nSize = _datos._bCiclos * _datos._dTrabajoDescanso[0].Length + 1;
-                foreach (double d in _datos._dTrabajoDescanso[1])
+                nSize = _datos._bCiclos * _datos._dWorkRest[0].Length + 1;
+                foreach (double d in _datos._dWorkRest[1])
                 {
                     // La opción más corta sería utilizar el operador %, pero no funciona del todo bien
                     if (Math.Abs(d / _datos._dPaso - Math.Floor(d / _datos._dPaso)) >= 0.001)
@@ -359,9 +360,9 @@ namespace ErgoCalc
                 }
 
                 _datos._nPuntos = Convert.ToInt32(nSize);
-                _datos._points = new double[2][];
-                _datos._points[0] = new double[_datos._nPuntos];
-                _datos._points[1] = new double[_datos._nPuntos];
+                _datos._dPoints = new double[2][];
+                _datos._dPoints[0] = new double[_datos._nPuntos];
+                _datos._dPoints[1] = new double[_datos._nPuntos];
 
             }
             catch (Exception e)

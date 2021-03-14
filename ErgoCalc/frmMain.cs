@@ -280,7 +280,7 @@ namespace ErgoCalc
                 
                 case 5: // OCRA checklist
                     frmData = new frmDataOCRAcheck();
-                    frmResults = new frmResultsOCRAcheck(((IChildData)frmData).GetData());
+                    frmResults = new frmResultsOCRAcheck(((IChildData)frmData).GetData);
                     break;
 
                 case 6: // Metabolic rate
@@ -299,6 +299,13 @@ namespace ErgoCalc
                         frmResult.MdiParent = this;
                         if (File.Exists(_strPath + @"\images\logo.ico")) frmResult.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmResult.Show();
+                    }
+                    break;
+
+                case 7:
+                    frmDataTC frmDataThermal = new frmDataTC();
+                    if (frmDataThermal.ShowDialog(this) == DialogResult.OK)
+                    {
                     }
                     break;
             }
@@ -523,7 +530,13 @@ namespace ErgoCalc
             // If the file name is not an empty string open it for saving.  
             if (result == DialogResult.OK && openDlg.FileName != "")
             {
-                string jsonString = File.ReadAllText(openDlg.FileName);
+                // https://stackoverflow.com/questions/897796/how-do-i-open-an-already-opened-file-with-a-net-streamreader
+                using var fs = File.Open(openDlg.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using var sr = new StreamReader(fs, Encoding.UTF8);
+
+                string jsonString = sr.ReadToEnd();
+
+                //string jsonString = File.ReadAllText(openDlg.FileName);
                 var options = new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip };
 
                 // Dilemma: should be wrapped in a try-catch, but variables will be out of scope and syntax would be cumbersome
@@ -552,13 +565,15 @@ namespace ErgoCalc
                         if (File.Exists(_strPath + @"\images\logo.ico")) frm.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frm.Show();
                     }
-                }
-                else
-                {
-                    MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    else
+                    {
+                        MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
             }
+
+            return;
         }
 
         private void toolStripMain_Save_Click(object sender, EventArgs e)

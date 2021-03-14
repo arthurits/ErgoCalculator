@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EjemploTool", "EjemploTool\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-Ocra", "Dll-Ocra\Dll-Ocra.vcxproj", "{400F6A16-583A-450C-910A-5A11FED4720C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-ThermalC", "Dll-ThermalC\Dll-ThermalC.vcxproj", "{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,15 @@ Global
 		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x64.Build.0 = Release|x64
 		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x86.ActiveCfg = Release|Win32
 		{400F6A16-583A-450C-910A-5A11FED4720C}.Release|x86.Build.0 = Release|Win32
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Debug|x64.ActiveCfg = Release|x64
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Debug|x86.ActiveCfg = Debug|Win32
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Debug|x86.Build.0 = Debug|Win32
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Release|x64.ActiveCfg = Release|x64
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Release|x64.Build.0 = Release|x64
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Release|x86.ActiveCfg = Release|Win32
+		{8753AE52-8A7E-4C6B-AF68-75F342DAD31E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

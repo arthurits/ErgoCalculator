@@ -12,15 +12,12 @@ namespace ErgoCalc
 {
     public partial class frmDataOCRAcheck : Form, IChildData
     {
+        private double _data;
+        object IChildData.GetData => _data;
 
         public frmDataOCRAcheck()
         {
             InitializeComponent();
-        }
-
-        public object GetData()
-        {
-            return "";
         }
 
         private void btnOK_Click(object sender, EventArgs e)

@@ -181,13 +181,14 @@ namespace ErgoCalc
             {
                 public double _dMVC;
                 public double _dMHT;
-                public double[][] _dTrabajoDescanso;
-                public double[][] _dTrabajoDescansop;
+                public double[][] _dPoints;
+                public double[][] _dWorkRest;
+                public double[] _dWorkRestDrop;
                 public double _dPaso;
-                public byte _bCiclos;
                 public int _nCurva;
                 public int _nPuntos;
-                public double[][] _points;
+                public byte _bCiclos;
+                public string _strLegend;
 
                 public override string ToString()
                 {
@@ -196,11 +197,11 @@ namespace ErgoCalc
                     System.String strTiempoD = "";
                     char[] charEspacio = { ' ' };
 
-                    foreach (double d in _dTrabajoDescanso[0])
+                    foreach (double d in _dWorkRest[0])
                         strTiempoT += d.ToString() + " ";
                     strTiempoT = strTiempoT.TrimEnd(charEspacio);
 
-                    foreach (double d in _dTrabajoDescanso[1])
+                    foreach (double d in _dWorkRest[1])
                         strTiempoD += d.ToString() + " ";
                     strTiempoD = strTiempoD.TrimEnd(charEspacio);
 
@@ -272,11 +273,11 @@ namespace ErgoCalc
                     
                     try
                     {    
-                        WRCurve(datos._dTrabajoDescanso[0],
-                            datos._dTrabajoDescanso[1],
-                            datos._dTrabajoDescanso[0].Length,
-                            datos._points[0],
-                            datos._points[1],
+                        WRCurve(datos._dWorkRest[0],
+                            datos._dWorkRest[1],
+                            datos._dWorkRest[0].Length,
+                            datos._dPoints[0],
+                            datos._dPoints[1],
                             datos._nPuntos,
                             datos._bCiclos,
                             datos._dMHT,
@@ -321,7 +322,7 @@ namespace ErgoCalc
                     IntPtr ptrResultado = IntPtr.Zero;
 
                     // Definición de las variables que se pasan a la función
-                    int longitud = datos._dTrabajoDescanso[0].Length;
+                    int longitud = datos._dWorkRest[0].Length;
                     datosDLL structDatos;
                     structDatos.dMHT = datos._dMHT;
                     structDatos.dPaso = datos._dPaso;
@@ -331,7 +332,7 @@ namespace ErgoCalc
                     try
                     {
                         // Pasar la matriz a la memoria no gestionada
-                        ptrTiempos = marshalJuggedToC(datos._dTrabajoDescanso);
+                        ptrTiempos = marshalJuggedToC(datos._dWorkRest);
 
                         // Llamar a la función de la DLL que devuelve la curva calculada
                         ptrResultado = Curva_DLL(ptrTiempos, longitud, ref structDatos);
@@ -356,7 +357,7 @@ namespace ErgoCalc
                     finally
                     {
                         // Liberar la memoria reservada por la rutina marshalJuggedToC
-                        marshalFreeMemory(ptrTiempos, datos._dTrabajoDescanso.Length);
+                        marshalFreeMemory(ptrTiempos, datos._dWorkRest.Length);
 
                         // Liberar la memoria reservada por la DLL (en caso de que la haya podido reservar)
                         if (ptrResultado != IntPtr.Zero)
@@ -1301,5 +1302,76 @@ namespace ErgoCalc
             
             }   // class cModelStrain
         }   // namespace Strain
+
+        namespace ThermalComfort
+        {   // https://github.com/CenterForTheBuiltEnvironment/comfort_tool/blob/master/static/js/comfortmodels.js
+            using System;
+            using System.Collections.Generic;
+
+            // Definición de tipos
+            [StructLayout(LayoutKind.Sequential)]
+            public struct DataTC
+            {
+                public double TempAir;      // Air temperature (C)
+                public double TempRad;      // Radiant temperature (C)
+                public double Velocity;     // Air velocity (m/s)
+                public double RelHumidity;  // Relative humidity (%)
+                public double Clothing;     // Clothing (clo)
+                public double MetRate;      // Metabolic rate (met)
+            };
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct VarsTC
+            {
+                public double PMV;          // Factor de intensidad del esfuerzo [0, 1]
+                public double PPD;          // Factor de esfuerzos por minuto
+                public double HL_Skin;      // HL1 heat loss diff. through skin
+                public double HL_Sweating;  // HL2 heat loss by sweating
+                public double HL_Latent;    // HL3 latent respiration heat loss
+                public double HL_Dry;       // HL4 dry respiration heat loss
+                public double HL_Radiation; // HL5 heat loss by radiation
+                public double HL_Convection;// HL6 heat loss by convection
+            };
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct ModelTC
+            {
+                [MarshalAs(UnmanagedType.Struct)]
+                public DataTC data;         // Model data
+                [MarshalAs(UnmanagedType.Struct)]
+                public VarsTC factors;      // Model variables
+                public double indexPMV;     // PMV index
+                public double indexPPD;     // PPD index
+            };
+
+            public class CThermalModels
+            {
+                private List<ModelTC> _DataList;
+                //private IndexType _index;
+
+                public List<ModelTC> Data { get => _DataList; set => _DataList = value; }
+
+
+                [DllImport("dlls/comfort.dll", EntryPoint = "ComfortPMV")]
+                private static extern void ComfortPMV([In, Out] ModelTC[] data);
+
+                public CThermalModels()
+                {
+
+                }
+
+                public CThermalModels(List<ModelTC> data)
+                {
+                    _DataList = data;
+                }
+
+                public void ThermalComfort()
+                {
+                    ComfortPMV(_DataList.ToArray());
+                }
+            }
+        }
+
     }   // namespace DLL
+
 }   // namespace ErgoCalc

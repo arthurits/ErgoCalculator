@@ -83,6 +83,18 @@ namespace ErgoCalc
             chart.plt.Legend(location: ScottPlot.legendLocation.upperCenter);
         }
 
+        private void PlotCurves()
+        {
+            foreach (var datos in _datos)
+            {
+                //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
+                chart.plt.PlotScatter(datos._dPoints[0], datos._dPoints[1], label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+            }
+
+            chart.plt.AxisAutoX();
+            chart.plt.Axis(0, null, 0, 100);
+            chart.Render();
+        }
 
         private void CalcularCurva()
         {
@@ -94,12 +106,14 @@ namespace ErgoCalc
                 if (model.Curva(datos))
                 {
                     //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-                    chart.plt.PlotScatter(datos._points[0], datos._points[1], label: "4 3 2", lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
-                    chart.plt.AxisAutoX();
-                    chart.plt.Axis(0, null, 0, 100);
-                    chart.Render();
+                    chart.plt.PlotScatter(datos._dPoints[0], datos._dPoints[1], label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
                 }
             }
+            
+            chart.plt.AxisAutoX();
+            chart.plt.Axis(0, null, 0, 100);
+            chart.Render();
+
             /*
            ChartValues<System.Windows.Point> puntos = new ChartValues<System.Windows.Point>();
            for (int i=0; i<valores[0].Length; i++)
@@ -229,28 +243,29 @@ namespace ErgoCalc
             foreach ( var data in _datos)
             {
                 writer.WriteStartObject();
-                
+
+                writer.WriteNumber("Curve #", data._nCurva);
+                writer.WriteString("Curve legend", data._strLegend);
                 writer.WriteNumber("MHT", data._dMHT);
                 writer.WriteNumber("MVC", data._dMVC);
                 writer.WriteNumber("Step", data._dPaso);
-                writer.WriteNumber("Curve #", data._nCurva);
                 writer.WriteNumber("Points", data._nPuntos);
                 writer.WriteNumber("Cycles", data._bCiclos);
                 
-                writer.WritePropertyName("Work times");
-                JsonSerializer.Serialize(writer, data._dTrabajoDescanso[0], new JsonSerializerOptions { WriteIndented = true });
+                writer.WritePropertyName("Work times (minutes)");
+                JsonSerializer.Serialize(writer, data._dWorkRest[0], new JsonSerializerOptions { WriteIndented = true });
 
-                writer.WritePropertyName("Rest times");
-                JsonSerializer.Serialize(writer, data._dTrabajoDescanso[1], new JsonSerializerOptions { WriteIndented = true });
+                writer.WritePropertyName("Rest times (minutes)");
+                JsonSerializer.Serialize(writer, data._dWorkRest[1], new JsonSerializerOptions { WriteIndented = true });
 
-                writer.WritePropertyName("Trabajo-Descanso p");
-                JsonSerializer.Serialize(writer, data._dTrabajoDescansop, new JsonSerializerOptions { WriteIndented = true });
+                writer.WritePropertyName("Work-Rest drop (REC)");
+                JsonSerializer.Serialize(writer, data._dWorkRestDrop, new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WritePropertyName("Points X");
-                JsonSerializer.Serialize(writer, data._points[0], new JsonSerializerOptions { WriteIndented = true });
+                JsonSerializer.Serialize(writer, data._dPoints[0], new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WritePropertyName("Points Y");
-                JsonSerializer.Serialize(writer, data._points[1], new JsonSerializerOptions { WriteIndented = true });
+                JsonSerializer.Serialize(writer, data._dPoints[1], new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WriteEndObject();
 
@@ -316,6 +331,7 @@ namespace ErgoCalc
 
         public bool OpenFile(JsonDocument document)
         {
+
             bool result = true;
             int Length;
             datosWR data = new datosWR();
@@ -326,32 +342,35 @@ namespace ErgoCalc
             {
                 foreach (JsonElement curve in root.GetProperty("WR curves").EnumerateArray())
                 {
+                    data._nCurva = curve.GetProperty("Curve #").GetInt32();
+                    data._strLegend = curve.GetProperty("Curve legend").GetString();
                     data._dMHT = curve.GetProperty("MHT").GetDouble();
                     data._dMVC = curve.GetProperty("MVC").GetDouble();
                     data._dPaso = curve.GetProperty("Step").GetDouble();
-                    data._nCurva = curve.GetProperty("Curve #").GetInt32();
                     data._nPuntos = curve.GetProperty("Points").GetInt32();
                     data._bCiclos = curve.GetProperty("Cycles").GetByte();
-                    
-                    Length = curve.GetProperty("Trabajo-Descanso").GetArrayLength();
-                    data._dTrabajoDescanso = new double[2][];
-                    data._dTrabajoDescanso[0] = new double[Length];
-                    data._dTrabajoDescanso[1] = new double[Length];
-                    for (int i = 0; i < Length; i++)
-                    {                       
-                        data._dTrabajoDescanso[0][i] = curve.GetProperty("Trabajo-Descanso")[i][0].GetDouble();
-                        data._dTrabajoDescanso[1][i] = curve.GetProperty("Trabajo-Descanso")[i][1].GetDouble();
-                    }
 
-                    Length = curve.GetProperty("Trabajo-Descanso p").GetArrayLength();
-                    data._dTrabajoDescansop = new double[2][];
-                    data._dTrabajoDescansop[0] = new double[Length];
-                    data._dTrabajoDescansop[1] = new double[Length];
-                    for (int i = 0; i < Length; i++)
-                    {
-                        data._dTrabajoDescansop[0][i] = curve.GetProperty("Trabajo-Descanso p")[i][0].GetDouble();
-                        data._dTrabajoDescansop[1][i] = curve.GetProperty("Trabajo-Descanso p")[i][1].GetDouble();
-                    }
+                    data._dPoints = new double[2][];
+                    Length = curve.GetProperty("Points X").GetArrayLength();
+                    data._dPoints[0] = new double[Length];
+                    data._dPoints[0] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points X").ToString());
+
+                    //Length = curve.GetProperty("Points Y").GetArrayLength();
+                    data._dPoints[1] = new double[Length];
+                    data._dPoints[1] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points Y").ToString());
+
+                    data._dWorkRest = new double[2][];
+                    Length = curve.GetProperty("Work times (minutes)").GetArrayLength();
+                    data._dWorkRest[0] = new double[Length];
+                    data._dWorkRest[0] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work times (minutes)").ToString());
+
+                    //Length = curve.GetProperty("Rest times (minutes)").GetArrayLength();
+                    data._dWorkRest[1] = new double[Length];
+                    data._dWorkRest[1] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Rest times (minutes)").ToString());
+
+                    //Length = curve.GetProperty("Work-Rest drop (REC)").GetArrayLength();
+                    data._dWorkRestDrop = new double[Length];
+                    data._dWorkRestDrop = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work-Rest drop (REC)").ToString());
 
                     _datos.Add(data);
                 }
@@ -363,7 +382,8 @@ namespace ErgoCalc
 
             if (result)
             {
-                CalcularCurva();
+                //CalcularCurva();
+                PlotCurves();
                 _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
             }
 

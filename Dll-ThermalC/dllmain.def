@@ -1,0 +1,5 @@
+LIBRARY	"ThermalControl models"
+DESCRIPTION "Functions needed to calculate the thermal PMV and PPD indexes"
+VERSION 1.0
+EXPORTS
+   ComfortPMV @1
