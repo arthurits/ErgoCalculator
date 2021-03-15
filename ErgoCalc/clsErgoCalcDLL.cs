@@ -1350,7 +1350,7 @@ namespace ErgoCalc
                 private List<ModelTC> _DataList;
                 //private IndexType _index;
 
-                public List<ModelTC> Data { get => _DataList; set => _DataList = value; }
+                public List<ModelTC> GetData { get => _DataList; set => _DataList = value; }
 
 
                 [DllImport("dlls/comfort.dll", EntryPoint = "ComfortPMV")]
@@ -1369,6 +1369,17 @@ namespace ErgoCalc
                 public void ThermalComfort()
                 {
                     ComfortPMV(_DataList.ToArray());
+                }
+
+                public override string ToString()
+                {
+                    string strResult;
+                    foreach (var data in _DataList)
+                    {
+                        strResult = "The PMV index is :" + data.factors.PMV + " and the PPD index is: " + data.factors.PPD;
+                        strResult += System.Environment.NewLine;
+                    }
+                    return base.ToString();
                 }
             }
         }

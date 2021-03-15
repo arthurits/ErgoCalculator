@@ -34,7 +34,10 @@ namespace ErgoCalc
             gridVariables.Rows[4].HeaderCell.Value = "Clothing insulation (clo)";
             gridVariables.Rows[5].HeaderCell.Value = "Metabolic rate (mets)";
             gridVariables.Rows[6].HeaderCell.Value = "External work (mets)";
-            //gridVariables[6, 0].Value = 0;
+            gridVariables[0, 6].Value = 0;
+
+            // Initialize private variable
+            _data = new List<ModelTC>();
         }
 
         #region IChildData interface
@@ -63,7 +66,7 @@ namespace ErgoCalc
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 70;
 
-            if (col > 0) gridVariables[6, col].Value = 0;
+            if (col > 0) gridVariables[col, 6].Value = 0;
 
             // Give format to the cells
             // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
@@ -93,6 +96,7 @@ namespace ErgoCalc
                 item.data.RelHumidity = Convert.ToDouble(gridVariables[i, 3].Value);
                 item.data.Clothing = Convert.ToDouble(gridVariables[i, 4].Value);
                 item.data.MetRate = Convert.ToDouble(gridVariables[i, 5].Value);
+                item.data.ExternalWork = Convert.ToDouble(gridVariables[i, 6].Value);
                 _data.Add(item);
             }
         }

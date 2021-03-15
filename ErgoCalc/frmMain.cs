@@ -306,6 +306,11 @@ namespace ErgoCalc
                     frmDataTC frmDataThermal = new frmDataTC();
                     if (frmDataThermal.ShowDialog(this) == DialogResult.OK)
                     {
+                        // Mostrar la ventana de resultados
+                        frmResultsTC frmTC = new frmResultsTC(frmDataThermal.GetData);
+                        frmTC.MdiParent = this;
+                        //if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
+                        frmTC.Show();
                     }
                     break;
             }
