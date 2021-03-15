@@ -1,6 +1,8 @@
 #include "pch.h"
 #include <math.h>
 #include <stdlib.h>
+#include <cstdlib>
+//#include <cmath>
 
 #pragma once
 #ifdef THERMALC_EXPORTS
@@ -49,7 +51,7 @@ extern "C" ThermalComfort_API double __stdcall ComfortPMV(ModelTC*);
 
 
 /// <summary>
-/// 
+/// https://github.com/CenterForTheBuiltEnvironment/comfort_tool/blob/master/static/js/comfortmodels.js
 /// </summary>
 /// <param name="data"></param>
 /// <returns></returns>
@@ -69,6 +71,43 @@ double __stdcall ComfortPMV(ModelTC* data)
         fcl = 1.05 + 0.645 * dInsulation;
 
 
+    // Heat transf. coeff. by forced convection
+    double hcf = 12.1 * sqrt(data->data.Velocity);
+    double taa = data->data.TempAir + 273;
+    double tra = data->data.TempRad + 273;
+    // we have verified that using the equation below or this tcla = taa + (35.5 - ta) / (3.5 * (6.45 * icl + .1)) does not affect the PMV value
+    double tcla = taa + (35.5 - data->data.TempAir) / (3.5 * dInsulation + 0.1);
+
+    // Intermediate variables
+    double p1 = dInsulation * fcl;
+    double p2 = p1 * 3.96;
+    double p3 = p1 * 100;
+    double p4 = p1 * taa;
+    double p5 = 308.7 - 0.028 * dNeatHeat + p2 * pow(tra / 100, 4);
+    double xn = tcla / 100;
+    double xf = tcla / 50;
+    double eps = 0.00015;
+    
+    // Iteration
+    double hcn = 0;
+    double hc = 0;
+    int n = 0;
+    while (abs(xn - xf) > eps) {
+        xf = (xf + xn) / 2;
+        hcn = 2.38 * pow(abs(100.0 * xf - taa), 0.25);
+        if (hcf > hcn) hc = hcf;
+        else hc = hcn;
+        xn = (p5 + p4 * hc - p2 * pow(xf, 4)) / (100 + p3 * hc);
+        ++n;
+        if (n > 150) {
+            //alert("Max iterations exceeded");
+            return -1.0;
+        }
+    }
+
+    double tcl = 100 * xn - 273;
+
+
     // heat loss diff. through skin
     data->factors.HL_Skin = 3.05 * 0.001 * (5733 - 6.99 * dNeatHeat - pa);
     
@@ -82,13 +121,13 @@ double __stdcall ComfortPMV(ModelTC* data)
     data->factors.HL_Latent = 1.7 * 0.00001 * dMetRate * (5867 - pa);
     
     // dry respiration heat loss
-    data->factors.HL_Dry = 0.0014 * dMetRate * (34 - ta);
+    data->factors.HL_Dry = 0.0014 * dMetRate * (34 - data->data.TempAir);
     
     // heat loss by radiation
     data->factors.HL_Radiation = 3.96 * fcl * (pow(xn, 4) - pow(tra / 100, 4));
     
     // heat loss by convection
-    data->factors.HL_Convection = fcl * hc * (tcl - ta);
+    data->factors.HL_Convection = fcl * hc * (tcl - data->data.TempAir);
 
-	return 0.0;
+	return 1.0;
 }

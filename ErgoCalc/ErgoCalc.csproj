@@ -216,6 +216,9 @@
     <None Update="examples\NTP 477.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="examples\NTP 874 bis.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="examples\NTP 874.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

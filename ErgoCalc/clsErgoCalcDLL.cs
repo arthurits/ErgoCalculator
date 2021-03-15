@@ -1318,6 +1318,7 @@ namespace ErgoCalc
                 public double RelHumidity;  // Relative humidity (%)
                 public double Clothing;     // Clothing (clo)
                 public double MetRate;      // Metabolic rate (met)
+                public double ExternalWork; // External work (met), generally around 0
             };
 
             [StructLayout(LayoutKind.Sequential)]

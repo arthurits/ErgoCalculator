@@ -158,9 +158,9 @@ namespace ErgoCalc
             this.lblSubtasks.Location = new System.Drawing.Point(3, 389);
             this.lblSubtasks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSubtasks.Name = "lblSubtasks";
-            this.lblSubtasks.Size = new System.Drawing.Size(111, 17);
+            this.lblSubtasks.Size = new System.Drawing.Size(115, 17);
             this.lblSubtasks.TabIndex = 8;
-            this.lblSubtasks.Text = "Number of tasks";
+            this.lblSubtasks.Text = "Number of cases";
             // 
             // updSubtasks
             // 

@@ -26,7 +26,7 @@ namespace ErgoCalc
             AddColumn();
 
             // Create the header rows
-            gridVariables.RowCount = 5;
+            gridVariables.RowCount = 7;
             gridVariables.Rows[0].HeaderCell.Value = "Air temperature (C)";
             gridVariables.Rows[1].HeaderCell.Value = "Radiant temperature (C)";
             gridVariables.Rows[2].HeaderCell.Value = "Air velocity (m/s)";
@@ -34,7 +34,7 @@ namespace ErgoCalc
             gridVariables.Rows[4].HeaderCell.Value = "Clothing insulation (clo)";
             gridVariables.Rows[5].HeaderCell.Value = "Metabolic rate (mets)";
             gridVariables.Rows[6].HeaderCell.Value = "External work (mets)";
-            gridVariables[5, 0].Value = 0;
+            //gridVariables[6, 0].Value = 0;
         }
 
         #region IChildData interface
@@ -63,7 +63,7 @@ namespace ErgoCalc
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 70;
 
-            gridVariables[5, col].Value = 0;
+            if (col > 0) gridVariables[6, col].Value = 0;
 
             // Give format to the cells
             // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
