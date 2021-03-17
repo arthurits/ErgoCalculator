@@ -54,8 +54,8 @@ namespace ErgoCalc
             {
                 error = true;
                 MessageBox.Show(
-                    "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
-                    "RSI index error",
+                    "The program calculation kernel's been tampered with.\nThermal Comfort could not be computed.",
+                    "Thermal Comfort error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -64,7 +64,7 @@ namespace ErgoCalc
                 error = true;
                 MessageBox.Show(
                     "DLL files are missing. Please\nreinstall the application.",
-                    "RSI index error",
+                    "Thermal Comfort error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -72,7 +72,7 @@ namespace ErgoCalc
             {
                 error = true;
                 MessageBox.Show(
-                    "Error in the calculation kernel:\n" + ex.ToString(),
+                    "Error in the Thermal Comfort calculation kernel:\n" + ex.ToString(),
                     "Unexpected error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -132,7 +132,11 @@ namespace ErgoCalc
         }
 
         #region IChildResults interface
-        public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ToolStrip ChildToolStrip
+        {
+            get => null;
+            set { }
+        }
 
         public void Duplicate()
         {
@@ -151,13 +155,12 @@ namespace ErgoCalc
 
         public bool[] GetToolbarEnabledState()
         {
-            throw new NotImplementedException();
+            return new bool[] { true, true, true, false, true, true, false, true, true, false, false, true, true, true };
         }
 
         public bool OpenFile(JsonDocument document)
         {
             bool result = true;
-            int Length;
             ModelTC data = new ModelTC();
             _data = new List<ModelTC>();
             JsonElement root = document.RootElement;
@@ -203,7 +206,7 @@ namespace ErgoCalc
 
         public bool PanelCollapsed()
         {
-            throw new NotImplementedException();
+            return splitContainer1.SplitterDistance == 0 ? true : false;
         }
 
         public void Save(string path)
@@ -254,7 +257,23 @@ namespace ErgoCalc
 
         public void ShowHideSettings()
         {
-            throw new NotImplementedException();
+            //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+
+            this.SuspendLayout();
+            if (splitContainer1.SplitterDistance > 0)
+            {
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
+                splitContainer1.SplitterWidth = 1;
+                splitContainer1.IsSplitterFixed = true;
+            }
+            else
+            {
+                Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
+                splitContainer1.SplitterWidth = 4;
+                splitContainer1.IsSplitterFixed = false;
+            }
+            this.ResumeLayout();
+            return;
         }
 
         #endregion IChildResults interface

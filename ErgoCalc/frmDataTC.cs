@@ -43,7 +43,7 @@ namespace ErgoCalc
         #region IChildData interface
         public object GetData()
         {
-            throw new NotImplementedException();
+            return _data;
         }
         #endregion IChildData interface
 
