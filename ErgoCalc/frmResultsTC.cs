@@ -29,6 +29,12 @@ namespace ErgoCalc
 
             // Initialize private variables
             _modelTC = new CThermalModels();
+
+            propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
+            splitContainer1.Panel1Collapsed = false;
+            splitContainer1.SplitterDistance = 0;
+            splitContainer1.SplitterWidth = 1;
+            splitContainer1.IsSplitterFixed = true;
         }
 
         public frmResultsTC(object data)
@@ -150,7 +156,7 @@ namespace ErgoCalc
 
         public void FormatText()
         {
-            throw new NotImplementedException();
+            
         }
 
         public bool[] GetToolbarEnabledState()

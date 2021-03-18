@@ -129,5 +129,10 @@ double __stdcall ComfortPMV(ModelTC* data)
     // heat loss by convection
     data->factors.HL_Convection = fcl * hc * (tcl - data->data.TempAir);
 
+    // PMV and PPD indexes
+    data->factors.PMV = 0.303 * exp(-0.036 * dMetRate) + 0.028;
+    data->factors.PMV *= (dNeatHeat - data->factors.HL_Skin - data->factors.HL_Sweating - data->factors.HL_Latent - data->factors.HL_Dry - data->factors.HL_Radiation - data->factors.HL_Convection);
+    data->factors.PPD = 100.0 - 95.0 * exp(-0.03353 * pow(data->factors.PMV, 4.0) - 0.2179 * pow(data->factors.PMV, 2.0));
+
 	return 1.0;
 }

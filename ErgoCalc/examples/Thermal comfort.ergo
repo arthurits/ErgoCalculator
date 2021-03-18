@@ -1,0 +1,26 @@
+{
+  "Document type": "Thermal comfort model",
+  "Cases": [
+    {
+      "Data": {
+        "Air temperature": 25,
+        "Radiant temperature": 25,
+        "Air velocity": 0.1,
+        "Relative humidity": 50,
+        "Clothing": 0.61,
+        "Metabolic rate": 1,
+        "External work": 0
+      },
+      "Results": {
+        "PMV": -0.15619094650249288,
+        "PPD": 5.5055471709707575,
+        "Heat loss - Skin": 11.415708085459748,
+        "Heat loss - Sweating": 0,
+        "Heat loss - Latent": 4.234279554652454,
+        "Heat loss - Dry": 0.73269,
+        "Heat loss - Radiation": 23.355863276303538,
+        "Heat loss - Convection": 20.801527269830807
+      }
+    }
+  ]
+}

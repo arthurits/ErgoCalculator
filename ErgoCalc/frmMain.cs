@@ -544,7 +544,7 @@ namespace ErgoCalc
                 //string jsonString = File.ReadAllText(openDlg.FileName);
                 var options = new JsonDocumentOptions { AllowTrailingCommas = true, CommentHandling = JsonCommentHandling.Skip };
 
-                // Dilemma: should be wrapped in a try-catch, but variables will be out of scope and syntax would be cumbersome
+                // Dilemma: this should be wrapped in a try-catch, but variables will be out of scope and syntax would be cumbersome
                 using JsonDocument document = JsonDocument.Parse(jsonString, options);
                 var strType = document.RootElement.TryGetProperty("Document type", out JsonElement docuValue) ? docuValue.ToString() : "Error";
 
@@ -560,6 +560,9 @@ namespace ErgoCalc
                         break;
                     case "Strain index":
                         frm = new frmResultsStrainIndex() { MdiParent = this };
+                        break;
+                    case "Thermal comfort model":
+                        frm = new frmResultsTC() { MdiParent = this };
                         break;
                 }
 

@@ -1347,10 +1347,10 @@ namespace ErgoCalc
 
             public class CThermalModels
             {
-                private List<ModelTC> _DataList;
+                private List<ModelTC> _data;
                 //private IndexType _index;
 
-                public List<ModelTC> GetData { get => _DataList; set => _DataList = value; }
+                public List<ModelTC> GetData { get => new(_data); set => _data = value; }
 
 
                 [DllImport("dlls/comfort.dll", EntryPoint = "ComfortPMV")]
@@ -1363,23 +1363,30 @@ namespace ErgoCalc
 
                 public CThermalModels(List<ModelTC> data)
                 {
-                    _DataList = data;
+                    _data = data;
+                }
+
+                public CThermalModels(ModelTC[] data)
+                {
+                    _data = new(data);
                 }
 
                 public void ThermalComfort()
                 {
-                    ComfortPMV(_DataList.ToArray());
+                    var tempArray = _data.ToArray();
+                    ComfortPMV(tempArray);
+                    _data = new(tempArray);
                 }
 
                 public override string ToString()
                 {
-                    string strResult;
-                    foreach (var data in _DataList)
+                    string strResult = string.Empty;
+                    foreach (var data in _data)
                     {
-                        strResult = "The PMV index is :" + data.factors.PMV + " and the PPD index is: " + data.factors.PPD;
+                        strResult = String.Format("The PMV index is: {0:#.##}  and the PPD index is: {1:#.##}", data.factors.PMV, data.factors.PPD);
                         strResult += System.Environment.NewLine;
                     }
-                    return base.ToString();
+                    return strResult;
                 }
             }
         }
