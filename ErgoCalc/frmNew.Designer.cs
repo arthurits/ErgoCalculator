@@ -181,6 +181,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(382, 418);
+            this.ControlBox = false;
             this.Controls.Add(this.radioButtonClick7);
             this.Controls.Add(this.radioButtonClick6);
             this.Controls.Add(this.radioButtonClick5);
@@ -195,6 +196,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "frmNew";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New model";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

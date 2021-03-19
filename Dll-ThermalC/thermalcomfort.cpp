@@ -45,9 +45,10 @@ struct ModelTC
 
 
 /* Prototipos de función a exportar*/
-extern "C" ThermalComfort_API double __stdcall ComfortPMV(ModelTC*);
+extern "C" ThermalComfort_API double __stdcall ComfortPMV(ModelTC*, int);
 
 /* Prototipos de funciones internas*/
+double SingleComfortPMV(ModelTC* data);
 
 
 /// <summary>
@@ -55,7 +56,16 @@ extern "C" ThermalComfort_API double __stdcall ComfortPMV(ModelTC*);
 /// </summary>
 /// <param name="data"></param>
 /// <returns></returns>
-double __stdcall ComfortPMV(ModelTC* data)
+double __stdcall ComfortPMV(ModelTC* data, int nSize)
+{
+    for (int i = 0; i < nSize; i++)
+    {
+        SingleComfortPMV(&data[i]);
+    }
+    return 1.0;
+}
+
+double SingleComfortPMV(ModelTC* data)
 {
     // Variable definition
     double pa = data->data.RelHumidity * 10 * exp(16.6536 - 4030.183 / (data->data.TempAir + 235));
@@ -87,7 +97,7 @@ double __stdcall ComfortPMV(ModelTC* data)
     double xn = tcla / 100;
     double xf = tcla / 50;
     double eps = 0.00015;
-    
+
     // Iteration
     double hcn = 0;
     double hc = 0;
@@ -110,22 +120,22 @@ double __stdcall ComfortPMV(ModelTC* data)
 
     // heat loss diff. through skin
     data->factors.HL_Skin = 3.05 * 0.001 * (5733 - 6.99 * dNeatHeat - pa);
-    
+
     // heat loss by sweating
     if (dNeatHeat > 58.15)
         data->factors.HL_Sweating = 0.42 * (dNeatHeat - 58.15);
     else
         data->factors.HL_Sweating = 0;
-    
+
     // latent respiration heat loss
     data->factors.HL_Latent = 1.7 * 0.00001 * dMetRate * (5867 - pa);
-    
+
     // dry respiration heat loss
     data->factors.HL_Dry = 0.0014 * dMetRate * (34 - data->data.TempAir);
-    
+
     // heat loss by radiation
     data->factors.HL_Radiation = 3.96 * fcl * (pow(xn, 4) - pow(tra / 100, 4));
-    
+
     // heat loss by convection
     data->factors.HL_Convection = fcl * hc * (tcl - data->data.TempAir);
 
@@ -134,5 +144,5 @@ double __stdcall ComfortPMV(ModelTC* data)
     data->factors.PMV *= (dNeatHeat - data->factors.HL_Skin - data->factors.HL_Sweating - data->factors.HL_Latent - data->factors.HL_Dry - data->factors.HL_Radiation - data->factors.HL_Convection);
     data->factors.PPD = 100.0 - 95.0 * exp(-0.03353 * pow(data->factors.PMV, 4.0) - 0.2179 * pow(data->factors.PMV, 2.0));
 
-	return 1.0;
+    return 1.0;
 }

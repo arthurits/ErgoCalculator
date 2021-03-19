@@ -156,7 +156,33 @@ namespace ErgoCalc
 
         public void FormatText()
         {
-            
+            int nStart = 0, nEnd = 0;
+
+            while (true)
+            {
+                // Underline
+                nStart = rtbShowResult.Find("Description", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            }
+
+            // Bold results
+            nStart = 0;
+            while (true)
+            {
+                nStart = rtbShowResult.Find("The ", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                //nEnd = rtbShowResult.Text.Length;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+            }
+
+            // Set the cursor at the beginning of the text
+            rtbShowResult.SelectionStart = 0;
+            rtbShowResult.SelectionLength = 0;
         }
 
         public bool[] GetToolbarEnabledState()
@@ -221,7 +247,7 @@ namespace ErgoCalc
             SaveFileDialog SaveDlg = new SaveFileDialog
             {
                 DefaultExt = "*.csv",
-                Filter = "ERGO file (*.ergo)|*.ergo|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
                 FilterIndex = 1,
                 Title = "Save scatter-plot data",
                 OverwritePrompt = true,
@@ -237,10 +263,11 @@ namespace ErgoCalc
             // If the file name is not an empty string open it for saving.  
             if (result == DialogResult.OK && SaveDlg.FileName != "")
             {
+                using var fs = SaveDlg.OpenFile();
+
                 switch (SaveDlg.FilterIndex)
                 {
                     case 1:
-                        var fs = SaveDlg.OpenFile();
                         if (fs != null)
                         {
                             using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
@@ -249,9 +276,16 @@ namespace ErgoCalc
                         }
                         break;
                     case 2:
-                        
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
+                        break;
+                    case 3:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                        break;
+                    case 4:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
                         break;
                 }
+
                 using (new CenterWinDialog(this.MdiParent))
                 {
                     MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -486,7 +486,7 @@ namespace ErgoCalc
             // If the file name is not an empty string open it for saving.  
             if (result==DialogResult.OK && SaveDlg.FileName != "")
             {
-                var fs = SaveDlg.OpenFile();
+                using var fs = SaveDlg.OpenFile();
 
                 // Saves the text via a FileStream created by the OpenFile method.  
                 if ( fs != null)
@@ -511,8 +511,6 @@ namespace ErgoCalc
                             rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
                             break;
                     }
-
-                    fs.Close();
 
                     using (new CenterWinDialog(this.MdiParent))
                     {

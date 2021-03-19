@@ -1354,7 +1354,7 @@ namespace ErgoCalc
 
 
                 [DllImport("dlls/comfort.dll", EntryPoint = "ComfortPMV")]
-                private static extern void ComfortPMV([In, Out] ModelTC[] data);
+                private static extern void ComfortPMV([In, Out] ModelTC[] data, int Size);
 
                 public CThermalModels()
                 {
@@ -1374,18 +1374,76 @@ namespace ErgoCalc
                 public void ThermalComfort()
                 {
                     var tempArray = _data.ToArray();
-                    ComfortPMV(tempArray);
+                    ComfortPMV(tempArray, tempArray.Length);
                     _data = new(tempArray);
                 }
 
                 public override string ToString()
                 {
                     string strResult = string.Empty;
-                    foreach (var data in _data)
+                    /*foreach (var data in _data)
                     {
-                        strResult = String.Format("The PMV index is: {0:#.##}  and the PPD index is: {1:#.##}", data.factors.PMV, data.factors.PPD);
+                        strResult = String.Format("The PMV index is: {0:#.##} and the PPD index is: {1:#.##}", data.factors.PMV, data.factors.PPD);
                         strResult += System.Environment.NewLine;
                     }
+                    */
+
+                    string[] strLineD = new string[8];
+                    string[] strLineF = new string[9];
+
+                    strLineD[0] = string.Concat("Description", "\t");
+                    strLineD[1] = string.Concat(System.Environment.NewLine, "Air temperature (C)");
+                    strLineD[2] = string.Concat(System.Environment.NewLine, "Radiant temperature (C)");
+                    strLineD[3] = string.Concat(System.Environment.NewLine, "Air velocity (m/s)");
+                    strLineD[4] = string.Concat(System.Environment.NewLine, "Relative humidity (%)");
+                    strLineD[5] = string.Concat(System.Environment.NewLine, "Clothing (clo)", "\t");
+                    strLineD[6] = string.Concat(System.Environment.NewLine, "Metabolic rate (met)");
+                    strLineD[7] = string.Concat(System.Environment.NewLine, "External work (met)");
+
+                    strLineF[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
+                    strLineF[1] = string.Concat(System.Environment.NewLine, "Heat loss diff. through skin");
+                    strLineF[2] = string.Concat(System.Environment.NewLine, "Heat loss by sweating", "\t");
+                    strLineF[3] = string.Concat(System.Environment.NewLine, "Latent respiration heat loss");
+                    strLineF[4] = string.Concat(System.Environment.NewLine, "Dry respiration heat loss", "\t");
+                    strLineF[5] = string.Concat(System.Environment.NewLine, "Heat loss by radiation", "\t");
+                    strLineF[6] = string.Concat(System.Environment.NewLine, "Heat loss by convection");
+                    
+                    strLineF[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The PMV index");
+                    strLineF[8] = string.Concat(System.Environment.NewLine, "The PPD index", "\t");
+
+                    int i = 0;
+                    foreach (var data in _data)
+                    {
+                        strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
+                        strLineD[1] += string.Concat("\t\t", data.data.TempAir.ToString("0.####"));
+                        strLineD[2] += string.Concat("\t\t", data.data.TempRad.ToString("0.####"));
+                        strLineD[3] += string.Concat("\t\t", data.data.Velocity.ToString("0.####"));
+                        strLineD[4] += string.Concat("\t\t", data.data.RelHumidity.ToString("0.####"));
+                        strLineD[5] += string.Concat("\t\t", data.data.Clothing.ToString("0.####"));
+                        strLineD[6] += string.Concat("\t\t", data.data.MetRate.ToString("0.####"));
+                        strLineD[7] += string.Concat("\t\t", data.data.ExternalWork.ToString("0.####"));
+
+                        strLineF[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
+                        strLineF[1] += string.Concat("\t", data.factors.HL_Skin.ToString("0.####"));
+                        strLineF[2] += string.Concat("\t", data.factors.HL_Sweating.ToString("0.####"));
+                        strLineF[3] += string.Concat("\t", data.factors.HL_Latent.ToString("0.####"));
+                        strLineF[4] += string.Concat("\t", data.factors.HL_Dry.ToString("0.####"));
+                        strLineF[5] += string.Concat("\t", data.factors.HL_Radiation.ToString("0.####"));
+                        strLineF[6] += string.Concat("\t", data.factors.HL_Convection.ToString("0.####"));
+
+                        strLineF[7] += string.Concat("\t\t", data.factors.PMV.ToString("0.####"));
+                        strLineF[8] += string.Concat("\t\t", data.factors.PPD.ToString("0.####"));
+
+                        i++;
+                    }
+
+                    strResult = string.Concat(
+                            string.Concat(strLineD),
+                            System.Environment.NewLine,
+                            string.Concat(strLineF),
+                            System.Environment.NewLine);
+
+
                     return strResult;
                 }
             }
