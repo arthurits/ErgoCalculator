@@ -1,0 +1,5 @@
+LIBRARY	"Liberty Mutual manual materials handling equations"
+DESCRIPTION "Liberty Mutual manual materials handling equations"
+VERSION 1.0
+EXPORTS
+   LibertyMutualMMH @1

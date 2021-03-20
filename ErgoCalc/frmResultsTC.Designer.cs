@@ -29,13 +29,20 @@ namespace ErgoCalc
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.rtbShowResult = new System.Windows.Forms.RichTextBox();
+            this.formsPlot1 = new ScottPlot.FormsPlot();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -51,7 +58,7 @@ namespace ErgoCalc
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.rtbShowResult);
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(892, 440);
             this.splitContainer1.SplitterDistance = 200;
             this.splitContainer1.SplitterWidth = 5;
@@ -65,6 +72,24 @@ namespace ErgoCalc
             this.propertyGrid1.Size = new System.Drawing.Size(200, 440);
             this.propertyGrid1.TabIndex = 0;
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.formsPlot1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.rtbShowResult);
+            this.splitContainer2.Size = new System.Drawing.Size(687, 440);
+            this.splitContainer2.SplitterDistance = 200;
+            this.splitContainer2.TabIndex = 2;
+            // 
             // rtbShowResult
             // 
             this.rtbShowResult.AcceptsTab = true;
@@ -75,10 +100,19 @@ namespace ErgoCalc
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.ReadOnly = true;
             this.rtbShowResult.ShowSelectionMargin = true;
-            this.rtbShowResult.Size = new System.Drawing.Size(687, 440);
-            this.rtbShowResult.TabIndex = 1;
+            this.rtbShowResult.Size = new System.Drawing.Size(687, 236);
+            this.rtbShowResult.TabIndex = 2;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
+            // 
+            // formsPlot1
+            // 
+            this.formsPlot1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formsPlot1.Location = new System.Drawing.Point(0, 0);
+            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot1.Name = "formsPlot1";
+            this.formsPlot1.Size = new System.Drawing.Size(687, 200);
+            this.formsPlot1.TabIndex = 0;
             // 
             // frmResultsTC
             // 
@@ -94,6 +128,10 @@ namespace ErgoCalc
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -102,6 +140,8 @@ namespace ErgoCalc
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private ScottPlot.FormsPlot formsPlot1;
         private System.Windows.Forms.RichTextBox rtbShowResult;
     }
 }

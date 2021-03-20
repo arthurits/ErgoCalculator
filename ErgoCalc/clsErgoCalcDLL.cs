@@ -1437,7 +1437,8 @@ namespace ErgoCalc
                         i++;
                     }
 
-                    strResult = string.Concat(
+                    strResult = string.Concat("These are the results for the PMV and the PPD indexes according to ISO 7730:",
+                            System.Environment.NewLine,
                             string.Concat(strLineD),
                             System.Environment.NewLine,
                             string.Concat(strLineF),
