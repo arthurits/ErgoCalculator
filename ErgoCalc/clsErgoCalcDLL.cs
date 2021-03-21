@@ -1391,7 +1391,7 @@ namespace ErgoCalc
                     string[] strLineD = new string[8];
                     string[] strLineF = new string[9];
 
-                    strLineD[0] = string.Concat("Description", "\t");
+                    strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
                     strLineD[1] = string.Concat(System.Environment.NewLine, "Air temperature (C)");
                     strLineD[2] = string.Concat(System.Environment.NewLine, "Radiant temperature (C)");
                     strLineD[3] = string.Concat(System.Environment.NewLine, "Air velocity (m/s)");

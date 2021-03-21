@@ -33,8 +33,9 @@ namespace ErgoCalc
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
             this.formsPlot1 = new ScottPlot.FormsPlot();
+            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
+            this.formsPlot2 = new ScottPlot.FormsPlot();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -81,14 +82,23 @@ namespace ErgoCalc
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.formsPlot2);
             this.splitContainer2.Panel1.Controls.Add(this.formsPlot1);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.rtbShowResult);
             this.splitContainer2.Size = new System.Drawing.Size(687, 440);
-            this.splitContainer2.SplitterDistance = 200;
+            this.splitContainer2.SplitterDistance = 199;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // formsPlot1
+            // 
+            this.formsPlot1.Location = new System.Drawing.Point(0, 0);
+            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot1.Name = "formsPlot1";
+            this.formsPlot1.Size = new System.Drawing.Size(344, 200);
+            this.formsPlot1.TabIndex = 0;
             // 
             // rtbShowResult
             // 
@@ -100,19 +110,18 @@ namespace ErgoCalc
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.ReadOnly = true;
             this.rtbShowResult.ShowSelectionMargin = true;
-            this.rtbShowResult.Size = new System.Drawing.Size(687, 236);
+            this.rtbShowResult.Size = new System.Drawing.Size(687, 237);
             this.rtbShowResult.TabIndex = 2;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
             // 
-            // formsPlot1
+            // formsPlot2
             // 
-            this.formsPlot1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formsPlot1.Location = new System.Drawing.Point(0, 0);
-            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(687, 200);
-            this.formsPlot1.TabIndex = 0;
+            this.formsPlot2.Location = new System.Drawing.Point(343, 0);
+            this.formsPlot2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot2.Name = "formsPlot2";
+            this.formsPlot2.Size = new System.Drawing.Size(344, 200);
+            this.formsPlot2.TabIndex = 1;
             // 
             // frmResultsTC
             // 
@@ -143,5 +152,6 @@ namespace ErgoCalc
         private System.Windows.Forms.SplitContainer splitContainer2;
         private ScottPlot.FormsPlot formsPlot1;
         private System.Windows.Forms.RichTextBox rtbShowResult;
+        private ScottPlot.FormsPlot formsPlot2;
     }
 }

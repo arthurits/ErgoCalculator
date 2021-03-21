@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.ThermalComfort;
+using PsychroLib;
+using ScottPlot;
 
 namespace ErgoCalc
 {
@@ -22,11 +24,12 @@ namespace ErgoCalc
 
         public frmResultsTC()
         {
-            InitializeComponent();
-
             _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
 
+            InitializeComponent();
+            InitializePlot();
+            
             // Initialize private variables
             _modelTC = new CThermalModels();
 
@@ -42,6 +45,35 @@ namespace ErgoCalc
         {
             _data = (List<ModelTC>)data;
             _modelTC = new CThermalModels(_data);
+        }
+
+        private void InitializePlot()
+        {
+            // Delete any poits if any
+            formsPlot1.plt.GetPlottables().RemoveAll(x => x is ScottPlot.PlottableScatter || ((ScottPlot.PlottableScatter)x).ys.Length == 1);
+
+            // Draw the basic lines
+            var CPsy = new Psychrometrics(UnitSystem.SI);
+            var abscissa = new double[360 - 100];
+            for (int i = 100; i < 360; i++)
+            {
+                abscissa[i - 100] = i / 10.0;
+            }
+
+            List<double[]> OrdinateVal = new List<double[]>();
+            for (int j = 10; j <= 100; j += 10)
+            {
+                var line = new double[360 - 100];
+                for (int i = 100; i < 360; i++)
+                {
+                    line[i - 100] = 1000 * CPsy.GetHumRatioFromRelHum(i / 10.0, j / 100.0, 101325);
+                }
+                OrdinateVal.Add(line);
+                formsPlot1.plt.PlotScatter(abscissa, line, markerShape: ScottPlot.MarkerShape.none, color: Color.LightGray);
+            }
+
+            formsPlot1.plt.XLabel("Air temperature (°C)");
+            formsPlot1.plt.YLabel("g water / kg dry air");
         }
 
         private void frmResultsTC_Shown(object sender, EventArgs e)
@@ -88,9 +120,60 @@ namespace ErgoCalc
             if (error == false)
             {
                 rtbShowResult.Text = _modelTC.ToString();
-                //CreatePlots();
+                CreatePlots();
                 FormatText();
             }
+        }
+
+        private void CreatePlots()
+        {
+
+            var CPsy = new Psychrometrics(UnitSystem.SI);
+            int i = 0;
+            foreach (var data in _data)
+            {
+                var result = 1000 * CPsy.GetHumRatioFromRelHum(data.data.TempAir, data.data.RelHumidity / 100, 101325);
+                formsPlot1.plt.PlotPoint(data.data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), markerSize: 7);
+                i++;
+            }
+            formsPlot1.Render();
+
+            string[] xsLabels = new string[_data.Count()];
+            double[] xsStacked = new double[_data.Count()];
+            double[] HL_1 = new double[_data.Count()];
+            double[] HL_2 = new double[_data.Count()];
+            double[] HL_3 = new double[_data.Count()];
+            double[] HL_4 = new double[_data.Count()];
+            double[] HL_5 = new double[_data.Count()];
+            double[] HL_6 = new double[_data.Count()];
+            i = 0;
+            foreach(var data in _data)
+            {
+                xsLabels[i] = "Case " + ((char)('A' + i)).ToString();
+                xsStacked[i] = i;
+                HL_1[i] = data.factors.HL_Skin;
+                HL_2[i] = HL_1[i] + data.factors.HL_Sweating;
+                HL_3[i] = HL_2[i] + data.factors.HL_Latent;
+                HL_4[i] = HL_3[i] + data.factors.HL_Dry;
+                HL_5[i] = HL_4[i] + data.factors.HL_Radiation;
+                HL_6[i] = HL_5[i] + data.factors.HL_Convection;
+                i++;
+            }
+
+            // Plot the bar charts in reverse order (highest first)
+            formsPlot2.plt.Legend(backColor: Color.Transparent);
+            formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+
+            formsPlot2.plt.PlotBar(xsStacked, HL_6, label: "Convection");
+            formsPlot2.plt.PlotBar(xsStacked, HL_5, label: "Radiation");
+            formsPlot2.plt.PlotBar(xsStacked, HL_4, label: "Dry");
+            formsPlot2.plt.PlotBar(xsStacked, HL_3, label: "Latent");
+            formsPlot2.plt.PlotBar(xsStacked, HL_2, label: "Sweating");
+            formsPlot2.plt.PlotBar(xsStacked, HL_1, label: "Skin");
+            formsPlot2.plt.XTicks(xsStacked, xsLabels);
+            
+            formsPlot2.Render();
+
         }
 
         private void SerializeToJSON(Utf8JsonWriter writer)
@@ -151,7 +234,12 @@ namespace ErgoCalc
 
         public void EditData()
         {
-            throw new NotImplementedException();
+            var frm = new frmDataTC();
+
+            if (frm.ShowDialog(this)== DialogResult.OK)
+            {
+
+            }
         }
 
         public void FormatText()
