@@ -16,7 +16,11 @@ namespace ErgoCalc
     {
         private List<ModelTC> _data;
 
-        object IChildData.GetData => _data;
+        #region IChildData interface
+        public object GetData => _data;
+
+        #endregion IChildData interface
+
 
         public frmDataTC()
         {
@@ -40,12 +44,33 @@ namespace ErgoCalc
             _data = new List<ModelTC>();
         }
 
-        #region IChildData interface
-        public object GetData()
+        public frmDataTC(List<ModelTC> data)
+            :this()
         {
-            return _data;
+            //DataToGrid(data);
+
+            int nDataNumber = data.Count;
+            
+            // Update the control which in turn updates the grid's column number
+            updTasks.Value = nDataNumber;
+            
+            // Shows the data into the grid control
+            for (var j = 0; j < nDataNumber; j++)
+            {
+                //Column 0 is already created in the constructor;
+                if (j > 0) AddColumn();
+
+                // Populate the DataGridView with data
+                gridVariables[j, 0].Value = data[j].data.TempAir.ToString();
+                gridVariables[j, 1].Value = data[j].data.TempRad.ToString();
+                gridVariables[j, 2].Value = data[j].data.Velocity.ToString();
+                gridVariables[j, 3].Value = data[j].data.RelHumidity.ToString();
+                gridVariables[j, 4].Value = data[j].data.Clothing.ToString();
+                gridVariables[j, 5].Value = data[j].data.MetRate.ToString();
+                gridVariables[j, 6].Value = data[j].data.ExternalWork.ToString();
+            }
         }
-        #endregion IChildData interface
+
 
         #region Private routines
         /// <summary>
@@ -80,6 +105,31 @@ namespace ErgoCalc
         private void AddColumn()
         {
             AddColumn(gridVariables.Columns.Count);
+        }
+
+        /// <summary>
+        /// Shows the data into the grid control
+        /// </summary>
+        private void DataToGrid(List<ModelTC> data)
+        {
+            int nDataNumber = data.Count;
+            
+            updTasks.Value = nDataNumber;
+
+            for (var j = 0; j < nDataNumber; j++)
+            {
+                //Column 0 is already created in the constructor;
+                if (j > 0) AddColumn();
+
+                // Populate the DataGridView with data
+                gridVariables[j, 0].Value = data[j].data.TempAir.ToString();
+                gridVariables[j, 1].Value = data[j].data.TempRad.ToString();
+                gridVariables[j, 2].Value = data[j].data.Velocity.ToString();
+                gridVariables[j, 3].Value = data[j].data.RelHumidity.ToString();
+                gridVariables[j, 4].Value = data[j].data.Clothing.ToString();
+                gridVariables[j, 5].Value = data[j].data.MetRate.ToString();
+                gridVariables[j, 6].Value = data[j].data.ExternalWork.ToString();
+            }
         }
 
         #endregion Private routines

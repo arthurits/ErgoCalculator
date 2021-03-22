@@ -44,42 +44,13 @@ namespace ErgoCalc
             :this()
         {
             _data = (List<ModelTC>)data;
-            _modelTC = new CThermalModels(_data);
         }
 
-        private void InitializePlot()
-        {
-            // Delete any poits if any
-            formsPlot1.plt.GetPlottables().RemoveAll(x => x is ScottPlot.PlottableScatter || ((ScottPlot.PlottableScatter)x).ys.Length == 1);
-
-            // Draw the basic lines
-            var CPsy = new Psychrometrics(UnitSystem.SI);
-            var abscissa = new double[360 - 100];
-            for (int i = 100; i < 360; i++)
-            {
-                abscissa[i - 100] = i / 10.0;
-            }
-
-            List<double[]> OrdinateVal = new List<double[]>();
-            for (int j = 10; j <= 100; j += 10)
-            {
-                var line = new double[360 - 100];
-                for (int i = 100; i < 360; i++)
-                {
-                    line[i - 100] = 1000 * CPsy.GetHumRatioFromRelHum(i / 10.0, j / 100.0, 101325);
-                }
-                OrdinateVal.Add(line);
-                formsPlot1.plt.PlotScatter(abscissa, line, markerShape: ScottPlot.MarkerShape.none, color: Color.LightGray);
-            }
-
-            formsPlot1.plt.XLabel("Air temperature (°C)");
-            formsPlot1.plt.YLabel("g water / kg dry air");
-        }
-
-        private void frmResultsTC_Shown(object sender, EventArgs e)
+        private void ShowResults()
         {
             Boolean error = false;
 
+            _modelTC = new CThermalModels(_data);
             // Call the DLL function
             try
             {
@@ -125,9 +96,45 @@ namespace ErgoCalc
             }
         }
 
+        private void InitializePlot()
+        {
+            // Draw the basic lines
+            var CPsy = new Psychrometrics(UnitSystem.SI);
+            var abscissa = new double[360 - 100];
+            for (int i = 100; i < 360; i++)
+            {
+                abscissa[i - 100] = i / 10.0;
+            }
+
+            List<double[]> OrdinateVal = new List<double[]>();
+            for (int j = 10; j <= 100; j += 10)
+            {
+                var line = new double[360 - 100];
+                for (int i = 100; i < 360; i++)
+                {
+                    line[i - 100] = 1000 * CPsy.GetHumRatioFromRelHum(i / 10.0, j / 100.0, 101325);
+                }
+                OrdinateVal.Add(line);
+                formsPlot1.plt.PlotScatter(abscissa, line, markerShape: ScottPlot.MarkerShape.none, color: Color.LightGray);
+            }
+
+            formsPlot1.plt.XLabel("Air temperature (°C)");
+            formsPlot1.plt.YLabel("g water / kg dry air");
+        }
+
+        private void frmResultsTC_Shown(object sender, EventArgs e)
+        {
+            ShowResults();
+        }
+
         private void CreatePlots()
         {
+            // Delete any poits if any
+            // https://github.com/ScottPlot/ScottPlot/discussions/673
+            formsPlot1.plt.GetPlottables().RemoveAll(x => x is ScottPlot.PlottableScatter && ((ScottPlot.PlottableScatter)x).ys.Length == 1);
+            formsPlot2.plt.GetPlottables().Clear();
 
+            // Psychrometric plot
             var CPsy = new Psychrometrics(UnitSystem.SI);
             int i = 0;
             foreach (var data in _data)
@@ -138,14 +145,16 @@ namespace ErgoCalc
             }
             formsPlot1.Render();
 
-            string[] xsLabels = new string[_data.Count()];
-            double[] xsStacked = new double[_data.Count()];
-            double[] HL_1 = new double[_data.Count()];
-            double[] HL_2 = new double[_data.Count()];
-            double[] HL_3 = new double[_data.Count()];
-            double[] HL_4 = new double[_data.Count()];
-            double[] HL_5 = new double[_data.Count()];
-            double[] HL_6 = new double[_data.Count()];
+            // Heat-loss plot
+            int nSeries = _data.Count;
+            string[] xsLabels = new string[nSeries];
+            double[] xsStacked = new double[nSeries];
+            double[] HL_1 = new double[nSeries];
+            double[] HL_2 = new double[nSeries];
+            double[] HL_3 = new double[nSeries];
+            double[] HL_4 = new double[nSeries];
+            double[] HL_5 = new double[nSeries];
+            double[] HL_6 = new double[nSeries];
             i = 0;
             foreach(var data in _data)
             {
@@ -161,7 +170,7 @@ namespace ErgoCalc
             }
 
             // Plot the bar charts in reverse order (highest first)
-            formsPlot2.plt.Legend(backColor: Color.Transparent);
+            formsPlot2.plt.Legend(backColor: Color.Transparent, shadowDirection: shadowDirection.none, location: legendLocation.upperRight, fixedLineWidth: true);
             formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
 
             formsPlot2.plt.PlotBar(xsStacked, HL_6, label: "Convection");
@@ -234,11 +243,12 @@ namespace ErgoCalc
 
         public void EditData()
         {
-            var frm = new frmDataTC();
+            using var frm = new frmDataTC(_data);
 
-            if (frm.ShowDialog(this)== DialogResult.OK)
+            if (frm.ShowDialog(this) == DialogResult.OK)
             {
-
+                _data = (List<ModelTC>)frm.GetData;
+                ShowResults();
             }
         }
 

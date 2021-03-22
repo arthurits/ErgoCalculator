@@ -21,6 +21,27 @@
         "Heat loss - Radiation": 23.355863276303538,
         "Heat loss - Convection": 20.801527269830807
       }
+    },
+    {
+      "Data": {
+        "Air temperature": 26,
+        "Radiant temperature": 26,
+        "Air velocity": 0.1,
+        "Relative humidity": 50,
+        "Clothing": 0.8,
+        "Metabolic rate": 1,
+        "External work": 0
+      },
+      "Results": {
+        "PMV": 0.49515921480881825,
+        "PPD": 10.123549734979676,
+        "Heat loss - Skin": 11.120153760017356,
+        "Heat loss - Sweating": 0,
+        "Heat loss - Latent": 4.1384860371389856,
+        "Heat loss - Dry": 0.65128,
+        "Heat loss - Radiation": 18.371533151526233,
+        "Heat loss - Convection": 16.291511935376906
+      }
     }
   ]
 }
