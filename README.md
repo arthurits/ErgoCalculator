@@ -11,5 +11,7 @@ Sponsor this project!
 
 
 ## External dependencies
-This project uses the ScottPlot control, from the following Git:
-[ScottPlot](https://github.com/ScottPlot/ScottPlot)
+This project uses controls and routines from the following Gits:
+* [ScottPlot](https://github.com/ScottPlot/ScottPlot)
+* [CBE Thermal Comfort Tool](https://github.com/CenterForTheBuiltEnvironment/comfort_tool), routines ported from [comfortmodels.js](https://github.com/CenterForTheBuiltEnvironment/comfort_tool/blob/master/static/js/comfortmodels.js)
+* [PsychroLib (version 2.5.0)](https://github.com/psychrometrics/psychrolib), [C# port](https://github.com/psychrometrics/psychrolib/blob/master/src/c_sharp/PsychroLib/psychrolib.cs)
