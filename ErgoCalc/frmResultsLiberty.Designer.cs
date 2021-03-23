@@ -1,7 +1,7 @@
 ﻿
 namespace ErgoCalc
 {
-    partial class frmResultsTC
+    partial class frmResultsLiberty
     {
         /// <summary>
         /// Required designer variable.
@@ -127,16 +127,16 @@ namespace ErgoCalc
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
             // 
-            // frmResultsTC
+            // frmResultsLiberty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(892, 440);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Name = "frmResultsTC";
-            this.Text = "Thermal comfort results";
-            this.Shown += new System.EventHandler(this.frmResultsTC_Shown);
+            this.Name = "frmResultsLiberty";
+            this.Text = "LM-MMH results";
+            this.Shown += new System.EventHandler(this.frmResultsLiberty_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

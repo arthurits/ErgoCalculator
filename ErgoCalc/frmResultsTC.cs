@@ -46,6 +46,13 @@ namespace ErgoCalc
             _data = (List<ModelTC>)data;
         }
 
+        private void frmResultsTC_Shown(object sender, EventArgs e)
+        {
+            ShowResults();
+        }
+
+        #region Private routines
+
         private void ShowResults()
         {
             Boolean error = false;
@@ -120,11 +127,6 @@ namespace ErgoCalc
 
             formsPlot1.plt.XLabel("Air temperature (°C)");
             formsPlot1.plt.YLabel("g water / kg dry air");
-        }
-
-        private void frmResultsTC_Shown(object sender, EventArgs e)
-        {
-            ShowResults();
         }
 
         private void CreatePlots()
@@ -228,6 +230,8 @@ namespace ErgoCalc
 
             writer.Flush();
         }
+
+        #endregion Private routines
 
         #region IChildResults interface
         public ToolStrip ChildToolStrip
