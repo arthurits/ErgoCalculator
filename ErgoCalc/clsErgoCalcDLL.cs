@@ -1450,6 +1450,97 @@ namespace ErgoCalc
             }
         }
 
+        namespace LibertyMutual
+        {
+            using System;
+            using System.Collections.Generic;
+
+            public enum MNType : byte
+            {
+                Lifting = 0,
+                Lowering = 1,
+                Pushing = 2,
+                Pulling = 3,
+                Carrying = 4
+            }
+
+            public enum MNGender : byte
+            {
+                Male = 0,
+                Female = 1
+            }
+
+            // Definición de tipos
+            [StructLayout(LayoutKind.Sequential)]
+            public struct DataLiberty
+            {
+                double HorzReach;   // Horizontal reach distance (H) must range from 0.20 to 0.68 m for females and 0.25 to 0.73 m for males. If H changes during a lift or lower, the mean H or maximum H can be used
+                double VRM;         // Radiant temperature (C)
+                double VertHeight;  // The vertical height of the hands (m)
+                double DistVert;    // Distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
+                double DistHorz;    // The distance travelled horizontally per push or pull (m)
+                double Freq;        // The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
+            };
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct ResultsLiberty
+            {
+                double CVInitial;   // Coefficient of variation
+                double CVSustained; // Coefficient of variation
+                double InitialF;    // Maximum initial force in kgf
+                double SustainedF;  // Maximum sustained force in kgf
+                double Weight;      // Maximum weight in kg
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct ModelLiberty
+            {
+                [MarshalAs(UnmanagedType.Struct)]
+                public DataLiberty data;         // Model data
+                [MarshalAs(UnmanagedType.Struct)]
+                public ResultsLiberty results;      // Model variables
+                public MNType type;
+                public MNGender gender;
+            }
+
+            public class CLibertyMutal
+            {
+                private List<ModelLiberty> _data;
+                //private IndexType _index;
+
+                public List<ModelLiberty> GetData { get => new(_data); set => _data = value; }
+
+                [DllImport("dlls/liberty.dll", EntryPoint = "LibertyMutualMMH")]
+                private static extern void LibertyMutualMMH([In, Out] ModelLiberty[] data, int Size);
+                
+                
+                public CLibertyMutal()
+                {
+
+                }
+
+                public CLibertyMutal(List<ModelLiberty> data)
+                {
+                    _data = data;
+                }
+
+                public void ComputeMMH()
+                {
+                    var tempArray = _data.ToArray();
+                    LibertyMutualMMH(tempArray, tempArray.Length);
+                    _data = new(tempArray);
+                }
+                
+                
+                public override string ToString()
+                {
+                    return "";
+                }
+
+            }
+            
+        }
+
     }   // namespace DLL
 
 }   // namespace ErgoCalc

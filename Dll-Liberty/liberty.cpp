@@ -16,7 +16,22 @@
 #define M_2_SQRTPI 1.12837916709551257390   // 2/sqrt(pi)
 
 // Type definitions
-struct DataTC
+enum MNType
+{
+	Lifting = 0,
+	Lowering = 1,
+	Pushing = 2,
+	Pulling = 3,
+	Carrying = 4
+};
+
+enum MNGender
+{
+	Male = 0,
+	Female = 1
+};
+
+struct DataLiberty
 {
 	double HorzReach;	// Horizontal reach distance (H) must range from 0.20 to 0.68 m for females and 0.25 to 0.73 m for males. If H changes during a lift or lower, the mean H or maximum H can be used
 	double VRM;      // Radiant temperature (C)
@@ -26,83 +41,274 @@ struct DataTC
 	double Freq;		// The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
 };
 
+struct ResultsLiberty
+{
+	double CVInitial;
+	double CVSustained;
+	double InitialF;    // Maximum initial force in kgf
+	double SustainedF;  // Maximum sustained force in kgf
+	double Weight;      // Maximum weight in kg
+};
+
+struct ModelLiberty
+{
+	DataLiberty data;         // Model data
+	ResultsLiberty results;      // Model variables
+	MNType type;
+	MNGender gender;
+};
+
 /* Prototipos de función a exportar*/
-extern "C" LibertyMutual_API double __stdcall LibertyMutualMMH(double, int);
+extern "C" LibertyMutual_API double __stdcall LibertyMutualMMH(ModelLiberty*, int);
 
 /* Prototipos de funciones internas*/
+void Lifting(ModelLiberty*);
+void Lowering(ModelLiberty*);
+void Pushing(ModelLiberty*);
+void Pulling(ModelLiberty*);
+void Carrying(ModelLiberty*);
 double Gaussian_Distribution(double);
 double Gaussian_Density(double);
 
 
-double __stdcall LibertyMutualMMH(double x, int i)
+double __stdcall LibertyMutualMMH(ModelLiberty* data, int nSize)
+{
+
+	for (int i = 0; i < nSize; i++)
+	{
+		switch (data[i].type)
+		{
+		case 0:
+			Lifting(data + i);
+			break;
+		case 1:
+			Lowering(data + i);
+			break;
+		case 2:
+			Pushing(data + i);
+			break;
+		case 3:
+			Pulling(data + i);
+			break;
+		case 4:
+			Carrying(data + i);
+			break;
+
+		}
+		//SingleComfortPMV(&data[i]);
+	}
+	
+	return 0.0;
+}
+
+
+void Lifting(ModelLiberty* data)
 {
 	double result;
 	double CoeffVar;
 
-	double H = 0.0;
-	double VRM = 0.0;
-	double V = 0.0;
-	double DV = 0.0;
-	double DH = 0.0;
-	double F = 0.0;
-	
-	// Lift – Male
-	result = 82.6 * (1.3532 - H / 0.7079) * (0.7746 + VRM / 1.912 - pow(VRM, 2) / 3.296) * (0.8695 - log(DV) / 10.62) * (0.6259 - log(F) / 9.092 - pow(log(F), 2) / 125.0);
-	CoeffVar = 0.276;
-	
-	// Lower – Male (note: only the RL, FSF, and CV values are different from the Lift – Male equation)
-	result = 95.9 * (1.3532 - H / 0.7079) * (0.7746 + VRM / 1.912 - pow(VRM, 2) / 3.296) * (0.8695 - log(DV) / 10.62) * (0.5773 - log(F) / 10.80 - pow(log(F), 2) / 255.9);
-	CoeffVar = 0.304;
-	
-	// Lift – Female
-	result = 34.9 * (1.2602 - H / 0.7686) * (0.9877 + VRM / 13.69 - pow(VRM, 2) / 9.221) * (0.8199 - log(DV) / 7.696) * (0.6767 - log(F) / 12.59 - pow(log(F), 2) / 228.2);
-	CoeffVar = 0.260;
+	double H = data->data.HorzReach;
+	double VRM = data->data.VRM;
+	double V = data->data.VertHeight;
+	double DV = data->data.DistVert;
+	double DH = data->data.DistHorz;
+	double F = data->data.Freq;
 
-	// Lower – Female (note: only the RL and CV values are different from the Lift – Female equation)
-	result = 37.0 * (1.2602 - H / 0.7686) * (0.9877 + VRM / 13.69 - pow(VRM, 2) / 9.221) * (0.8199 - log(DV) / 7.696) * (0.6767 - log(F) / 12.59 - pow(log(F), 2) / 228.2);
-	CoeffVar = 0.307;
+	if (data->gender == Male)
+	{
+		// Lift – Male
+		//result = 82.6 * (1.3532 - H / 0.7079) * (0.7746 + VRM / 1.912 - pow(VRM, 2) / 3.296) * (0.8695 - log(DV) / 10.62) * (0.6259 - log(F) / 9.092 - pow(log(F), 2) / 125.0);
+		result = 82.6;
+		result *= 1.3532 - H / 0.7079;
+		result *= 0.7746 + VRM / 1.912 - pow(VRM, 2) / 3.296;
+		result *= 0.8695 - log(DV) / 10.62;
+		result *= 0.6259 - log(F) / 9.092 - pow(log(F), 2) / 125.0;
+		CoeffVar = 0.276;
+	}
+	else if (data->gender == Female)
+	{
+		// Lift – Female
+		//result = 34.9 * (1.2602 - H / 0.7686) * (0.9877 + VRM / 13.69 - pow(VRM, 2) / 9.221) * (0.8199 - log(DV) / 7.696) * (0.6767 - log(F) / 12.59 - pow(log(F), 2) / 228.2);
+		result = 34.9;
+		result *= 1.2602 - H / 0.7686;
+		result *= 0.9877 + VRM / 13.69 - pow(VRM, 2) / 9.221;
+		result *= 0.8199 - log(DV) / 7.696;
+		result *= 0.6767 - log(F) / 12.59 - pow(log(F), 2) / 228.2;
+		CoeffVar = 0.260;
+	}
 
-	
-	// Push or Pull – Initial – Female
-	result = 36.9 * (-0.5304 + V / 0.3361 - pow(V, 2) / 0.6915) * (1.0286 - DH / 72.22 + pow(DH, 2) / 9782) * (0.7251 - log(F) / 13.19 - pow(log(F), 2) / 197.3);
+	data->results.Weight = result;
+	data->results.CVInitial = CoeffVar;
 
-	CoeffVar = 0.214;	// for Push – Initial – Female
-	CoeffVar = 0.234;	// for Pull – Initial – Female
-
-	// Push or Pull – Sustained – Female
-	result = 25.5 * (-0.6539 + V / 0.2941 - pow(V, 2) / 0.5722) * (1.0391 - DH / 52.91 + pow(DH, 2) / 7975) * (0.6086 - log(F) / 11.95 - pow(log(F), 2) / 304.4);
-
-	CoeffVar = 0.286;	// for Push – Sustained – Female;
-	CoeffVar = 0.298;	// for Pull – Sustained – Female;
-
-	// Push – Initial – Male
-	result = 70.3 * (1.2737 - V / 1.335 + pow(V, 2) / 2.576) * (1.0790 - log(DH) / 9.392) * (0.6281 - log(F) / 13.07 - pow(log(F), 2) / 379.5);
-	CoeffVar = 0.231;
-
-	// Push – Sustained – Male
-	result = 65.3 * (2.2940 - V / 0.3345 + pow(V, 2) / 0.6687) * (1.1035 - log(DH) / 7.170) * (0.4896 - log(F) / 10.20 - pow(log(F), 2) / 403.9);
-	CoeffVar = 0.267;
-
-	// Pull – Initial – Male(note: only the RL, VSF, &CoeffVar values are different from the Push – Initiate – Male equation)
-	result = 69.8 * (1.7186 - V / 0.6888 + pow(V, 2) / 2.025) * (1.0790 - log(DH) / 9.392) * (0.6281 - log(F) / 13.07 - pow(log(F), 2) / 379.5);
-	CoeffVar = 0.238;
-
-	// Pull – Sustained – Male(note: only the RL, VSF, &CoeffVar values are different from the Push – Sustain – Male equation)
-	result = 61.0 * (2.1977 - V / 0.3850 + pow(V, 2) / 0.9047) * (1.1035 - log(DH) / 7.170) * (0.4896 - log(F) / 10.20 - pow(log(F), 2) / 403.9);
-	CoeffVar = 0.257;
-
-
-	//Carry – Female
-	result = 28.6 * (1.1645 - V/4.437) * (1.0101 - DH / 207.8) * (0.6224 - log(F) / 16.33);
-	CoeffVar = 0.231;
-
-	//Carry – Male
-	result = 74.9 * (1.5505 - V / 1.417) * (1.1172 - log(DH) / 6.332) * (0.5149 - log(F) / 7.958 - pow(log(F), 2) / 131.1);
-	CoeffVar = 0.278;
-
-	return 0.0;
+	return;
 }
 
+void Lowering(ModelLiberty* data)
+{
+	double result = -1.0;
+	double CoeffVar;
+
+	double H = data->data.HorzReach;
+	double VRM = data->data.VRM;
+	double V = data->data.VertHeight;
+	double DV = data->data.DistVert;
+	double DH = data->data.DistHorz;
+	double F = data->data.Freq;
+
+	if (data->gender == Male)
+	{
+		// Lower – Male (note: only the RL, FSF, and CV values are different from the Lift – Male equation)
+		//result = 95.9 * (1.3532 - H / 0.7079) * (0.7746 + VRM / 1.912 - pow(VRM, 2) / 3.296) * (0.8695 - log(DV) / 10.62) * (0.5773 - log(F) / 10.80 - pow(log(F), 2) / 255.9);
+		result = 95.9;
+		result *= 1.3532 - H / 0.7079;
+		result *= 0.7746 + VRM / 1.912 - pow(VRM, 2) / 3.296;
+		result *= 0.5773 - log(F) / 10.80 - pow(log(F), 2) / 255.9;
+
+		CoeffVar = 0.304;
+	}
+	else if (data->gender == Female)
+	{
+		// Lower – Female (note: only the RL and CV values are different from the Lift – Female equation)
+		//result = 37.0 * (1.2602 - H / 0.7686) * (0.9877 + VRM / 13.69 - pow(VRM, 2) / 9.221) * (0.8199 - log(DV) / 7.696) * (0.6767 - log(F) / 12.59 - pow(log(F), 2) / 228.2);
+		result = 37.0;
+		result *= 1.2602 - H / 0.7686;
+		result *= 0.9877 + VRM / 13.69 - pow(VRM, 2) / 9.221;
+		result *= 0.6767 - log(F) / 12.59 - pow(log(F), 2) / 228.2;
+
+		CoeffVar = 0.307;
+	}
+
+	data->results.Weight = result;
+	data->results.CVInitial = CoeffVar;
+
+	return;
+}
+
+void Pushing(ModelLiberty* data)
+{
+	double resultI;
+	double resultS;
+	double cvI;
+	double cvS;
+
+	double V = data->data.VertHeight;
+	double DH = data->data.DistHorz;
+	double F = data->data.Freq;
+
+	if (data->gender == Male)
+	{
+		// Push – Initial – Male
+		resultI = 70.3 * (1.2737 - V / 1.335 + pow(V, 2) / 2.576) * (1.0790 - log(DH) / 9.392) * (0.6281 - log(F) / 13.07 - pow(log(F), 2) / 379.5);
+		cvI = 0.231;
+
+		// Push – Sustained – Male
+		resultS = 65.3 * (2.2940 - V / 0.3345 + pow(V, 2) / 0.6687) * (1.1035 - log(DH) / 7.170) * (0.4896 - log(F) / 10.20 - pow(log(F), 2) / 403.9);
+		cvS = 0.267;
+	}
+	else if (data->gender == Female)
+	{
+		// Push or Pull – Initial – Female
+		resultI = 36.9 * (-0.5304 + V / 0.3361 - pow(V, 2) / 0.6915) * (1.0286 - DH / 72.22 + pow(DH, 2) / 9782) * (0.7251 - log(F) / 13.19 - pow(log(F), 2) / 197.3);
+
+		cvI = 0.214;	// for Push – Initial – Female
+		//CoeffVar = 0.234;	// for Pull – Initial – Female
+
+		// Push or Pull – Sustained – Female
+		resultS = 25.5 * (-0.6539 + V / 0.2941 - pow(V, 2) / 0.5722) * (1.0391 - DH / 52.91 + pow(DH, 2) / 7975) * (0.6086 - log(F) / 11.95 - pow(log(F), 2) / 304.4);
+
+		cvS = 0.286;	// for Push – Sustained – Female;
+		//CoeffVar = 0.298;	// for Pull – Sustained – Female;
+	}
+
+	data->results.InitialF = resultI;
+	data->results.SustainedF = resultS;
+
+	data->results.CVInitial = cvI;
+	data->results.CVSustained = cvS;
+
+	return;
+}
+
+void Pulling(ModelLiberty* data)
+{
+	double resultI;
+	double resultS;
+	double cvI;
+	double cvS;
+
+	double V = data->data.VertHeight;
+	double DH = data->data.DistHorz;
+	double F = data->data.Freq;
+
+	if (data->gender == Male)
+	{
+		// Pull – Initial – Male(note: only the RL, VSF, &CoeffVar values are different from the Push – Initiate – Male equation)
+		resultI = 69.8 * (1.7186 - V / 0.6888 + pow(V, 2) / 2.025) * (1.0790 - log(DH) / 9.392) * (0.6281 - log(F) / 13.07 - pow(log(F), 2) / 379.5);
+		cvI = 0.238;
+
+		// Pull – Sustained – Male(note: only the RL, VSF, &CoeffVar values are different from the Push – Sustain – Male equation)
+		resultS = 61.0 * (2.1977 - V / 0.3850 + pow(V, 2) / 0.9047) * (1.1035 - log(DH) / 7.170) * (0.4896 - log(F) / 10.20 - pow(log(F), 2) / 403.9);
+		cvS = 0.257;
+	}
+	else if (data->gender == Female)
+	{
+		// Push or Pull – Initial – Female
+		resultI = 36.9 * (-0.5304 + V / 0.3361 - pow(V, 2) / 0.6915) * (1.0286 - DH / 72.22 + pow(DH, 2) / 9782) * (0.7251 - log(F) / 13.19 - pow(log(F), 2) / 197.3);
+
+		//CoeffVar = 0.214;	// for Push – Initial – Female
+		cvI = 0.234;	// for Pull – Initial – Female
+
+		// Push or Pull – Sustained – Female
+		resultS = 25.5 * (-0.6539 + V / 0.2941 - pow(V, 2) / 0.5722) * (1.0391 - DH / 52.91 + pow(DH, 2) / 7975) * (0.6086 - log(F) / 11.95 - pow(log(F), 2) / 304.4);
+
+		//CoeffVar = 0.286;	// for Push – Sustained – Female;
+		cvS = 0.298;	// for Pull – Sustained – Female;
+	}
+
+	data->results.InitialF = resultI;
+	data->results.SustainedF = resultS;
+
+	data->results.CVInitial = cvI;
+	data->results.CVSustained = cvS;
+
+	return;
+}
+
+void Carrying(ModelLiberty* data)
+{
+	double result;
+	double CoeffVar;
+
+	double V = data->data.VertHeight;
+	double DH = data->data.DistHorz;
+	double F = data->data.Freq;
+
+	if (data->gender == Male)
+	{
+		//Carry – Male
+		//result = 74.9 * (1.5505 - V / 1.417) * (1.1172 - log(DH) / 6.332) * (0.5149 - log(F) / 7.958 - pow(log(F), 2) / 131.1);
+		result = 74.9;
+		result *= 1.5505 - V / 1.417;
+		result *= 1.1172 - log(DH) / 6.332;
+		result *= 0.5149 - log(F) / 7.958 - pow(log(F), 2) / 131.1;
+		CoeffVar = 0.278;
+	}
+	else if (data->gender == Female)
+	{
+		//Carry – Female
+		//result = 28.6 * (1.1645 - V / 4.437) * (1.0101 - DH / 207.8) * (0.6224 - log(F) / 16.33);
+		result = 28.6;
+		result *= 1.1645 - V / 4.437;
+		result *= 1.0101 - DH / 207.8;
+		result *= 0.6224 - log(F) / 16.33;
+		CoeffVar = 0.231;
+	}
+
+	data->results.Weight = result;
+	data->results.CoeffVar = CoeffVar;
+
+	return;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // double Gaussian_Distribution( double x )                                   //
