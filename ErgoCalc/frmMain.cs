@@ -302,12 +302,22 @@ namespace ErgoCalc
                     }
                     break;
 
-                case 7:
+                case 7: // Thermal comfort
                     frmData = new frmDataTC();
                     if (frmData.ShowDialog(this) == DialogResult.OK)
                     {
                         // Mostrar la ventana de resultados
                         frmResults = new frmResultsTC(((IChildData)frmData).GetData);
+                        frmResults.MdiParent = this;
+                        frmResults.Show();
+                    }
+                    break;
+                case 8: // Liberty mutual 
+                    frmData = new frmDataLiberty();
+                    if (frmData.ShowDialog(this) == DialogResult.OK)
+                    {
+                        // Mostrar la ventana de resultados
+                        frmResults = new frmResultsLiberty(((IChildData)frmData).GetData);
                         frmResults.MdiParent = this;
                         frmResults.Show();
                     }

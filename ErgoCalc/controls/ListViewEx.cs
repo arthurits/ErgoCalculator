@@ -19,7 +19,7 @@ namespace System.Windows.Forms
     public partial class ListViewEx : System.Windows.Forms.ListView
     {
         private System.Windows.Forms.ListViewItem heldDownItem;
-        private System.Windows.Forms.ListViewGroup heldDownGroup;
+        //private System.Windows.Forms.ListViewGroup heldDownGroup;
         private System.Drawing.Point heldDownPoint;
 
         public ListViewEx()

@@ -1474,22 +1474,22 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct DataLiberty
             {
-                double HorzReach;   // Horizontal reach distance (H) must range from 0.20 to 0.68 m for females and 0.25 to 0.73 m for males. If H changes during a lift or lower, the mean H or maximum H can be used
-                double VRM;         // Radiant temperature (C)
-                double VertHeight;  // The vertical height of the hands (m)
-                double DistVert;    // Distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
-                double DistHorz;    // The distance travelled horizontally per push or pull (m)
-                double Freq;        // The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
+                public double HorzReach;   // Horizontal reach distance (H) must range from 0.20 to 0.68 m for females and 0.25 to 0.73 m for males. If H changes during a lift or lower, the mean H or maximum H can be used
+                public double VRM;         // Radiant temperature (C)
+                public double VertHeight;  // The vertical height of the hands (m)
+                public double DistVert;    // Distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
+                public double DistHorz;    // The distance travelled horizontally per push or pull (m)
+                public double Freq;        // The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
             };
 
             [StructLayout(LayoutKind.Sequential)]
             public struct ResultsLiberty
             {
-                double CVInitial;   // Coefficient of variation
-                double CVSustained; // Coefficient of variation
-                double InitialF;    // Maximum initial force in kgf
-                double SustainedF;  // Maximum sustained force in kgf
-                double Weight;      // Maximum weight in kg
+                public double CVInitial;   // Coefficient of variation
+                public double CVSustained; // Coefficient of variation
+                public double InitialF;    // Maximum initial force in kgf
+                public double SustainedF;  // Maximum sustained force in kgf
+                public double Weight;      // Maximum weight in kg
             }
 
             [StructLayout(LayoutKind.Sequential)]

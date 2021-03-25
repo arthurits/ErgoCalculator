@@ -69,6 +69,9 @@ namespace ErgoCalc
                         case "Thermal comfort (PMV, PPD)":
                             _nOption = 7;
                             break;
+                        case "LM manual handling":
+                            _nOption = 8;
+                            break;
                     }
                     //_nOption = (int)rad.Tag;
                     break;

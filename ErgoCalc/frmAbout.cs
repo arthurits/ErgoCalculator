@@ -27,7 +27,7 @@ namespace ErgoCalc
                         return titleAttribute.Title;
                     }
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
             }
         }
 
@@ -118,13 +118,13 @@ namespace ErgoCalc
             if (System.IO.File.Exists(path + @"\images\logo@256.png")) this.logoPictureBox.Image = new Bitmap(path + @"\images\logo@256.png");
         }
 
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+        //[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
         protected override void WndProc(ref Message m)
         {
             const int WM_PARENTNOTIFY = 0x210;
             const int WM_LBUTTONDOWN = 0x201;
-            const int WM_LBUTTONUP = 0x202;
-            const int WM_KEYDOWN = 0x100;
+            //const int WM_LBUTTONUP = 0x202;
+            //const int WM_KEYDOWN = 0x100;
             const int WM_KEYUP = 0x101;
             const int VK_ESCAPE = 0x1B;
             const int VK_RETURN = 0x0D;
