@@ -34,6 +34,8 @@ namespace ErgoCalc
             this.tabDataStrain = new System.Windows.Forms.TabControl();
             this.tabSubtasks = new System.Windows.Forms.TabPage();
             this.groupIndex = new System.Windows.Forms.GroupBox();
+            this.radCarr = new System.Windows.Forms.RadioButton();
+            this.radPush = new System.Windows.Forms.RadioButton();
             this.radPull = new System.Windows.Forms.RadioButton();
             this.radLow = new System.Windows.Forms.RadioButton();
             this.radLift = new System.Windows.Forms.RadioButton();
@@ -46,8 +48,6 @@ namespace ErgoCalc
             this.updTasks = new System.Windows.Forms.NumericUpDown();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.tabDummy = new System.Windows.Forms.TabControl();
-            this.radPush = new System.Windows.Forms.RadioButton();
-            this.radCarr = new System.Windows.Forms.RadioButton();
             this.tabDataStrain.SuspendLayout();
             this.tabSubtasks.SuspendLayout();
             this.groupIndex.SuspendLayout();
@@ -117,6 +117,32 @@ namespace ErgoCalc
             this.groupIndex.TabIndex = 9;
             this.groupIndex.TabStop = false;
             this.groupIndex.Text = "Index type";
+            // 
+            // radCarr
+            // 
+            this.radCarr.AutoSize = true;
+            this.radCarr.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radCarr.Checked = true;
+            this.radCarr.Location = new System.Drawing.Point(10, 28);
+            this.radCarr.Name = "radCarr";
+            this.radCarr.Size = new System.Drawing.Size(79, 21);
+            this.radCarr.TabIndex = 4;
+            this.radCarr.TabStop = true;
+            this.radCarr.Text = "Carrying";
+            this.radCarr.UseVisualStyleBackColor = true;
+            this.radCarr.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radPush
+            // 
+            this.radPush.AutoSize = true;
+            this.radPush.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radPush.Location = new System.Drawing.Point(376, 29);
+            this.radPush.Name = "radPush";
+            this.radPush.Size = new System.Drawing.Size(77, 21);
+            this.radPush.TabIndex = 3;
+            this.radPush.Text = "Pushing";
+            this.radPush.UseVisualStyleBackColor = true;
+            this.radPush.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // radPull
             // 
@@ -204,7 +230,7 @@ namespace ErgoCalc
             this.gridVariables.RowHeadersWidth = 220;
             this.gridVariables.RowTemplate.Height = 25;
             this.gridVariables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridVariables.Size = new System.Drawing.Size(729, 207);
+            this.gridVariables.Size = new System.Drawing.Size(729, 233);
             this.gridVariables.TabIndex = 1;
             // 
             // tabTasks
@@ -271,32 +297,6 @@ namespace ErgoCalc
             this.tabDummy.Size = new System.Drawing.Size(88, 77);
             this.tabDummy.TabIndex = 8;
             this.tabDummy.Visible = false;
-            // 
-            // radPush
-            // 
-            this.radPush.AutoSize = true;
-            this.radPush.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radPush.Location = new System.Drawing.Point(376, 29);
-            this.radPush.Name = "radPush";
-            this.radPush.Size = new System.Drawing.Size(77, 21);
-            this.radPush.TabIndex = 3;
-            this.radPush.Text = "Pushing";
-            this.radPush.UseVisualStyleBackColor = true;
-            this.radPush.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
-            // 
-            // radCarr
-            // 
-            this.radCarr.AutoSize = true;
-            this.radCarr.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.radCarr.Checked = true;
-            this.radCarr.Location = new System.Drawing.Point(10, 28);
-            this.radCarr.Name = "radCarr";
-            this.radCarr.Size = new System.Drawing.Size(79, 21);
-            this.radCarr.TabIndex = 4;
-            this.radCarr.TabStop = true;
-            this.radCarr.Text = "Carrying";
-            this.radCarr.UseVisualStyleBackColor = true;
-            this.radCarr.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
             // frmDataLiberty
             // 

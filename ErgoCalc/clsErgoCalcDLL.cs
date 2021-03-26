@@ -1457,11 +1457,11 @@ namespace ErgoCalc
 
             public enum MNType : byte
             {
-                Lifting = 0,
-                Lowering = 1,
-                Pushing = 2,
+                Carrying = 0,
+                Lifting = 1,
+                Lowering = 2,
                 Pulling = 3,
-                Carrying = 4
+                Pushing = 4
             }
 
             public enum MNGender : byte
@@ -1503,7 +1503,7 @@ namespace ErgoCalc
                 public MNGender gender;
             }
 
-            public class CLibertyMutal
+            public class CLibertyMutual
             {
                 private List<ModelLiberty> _data;
                 //private IndexType _index;
@@ -1514,12 +1514,12 @@ namespace ErgoCalc
                 private static extern void LibertyMutualMMH([In, Out] ModelLiberty[] data, int Size);
                 
                 
-                public CLibertyMutal()
+                public CLibertyMutual()
                 {
 
                 }
 
-                public CLibertyMutal(List<ModelLiberty> data)
+                public CLibertyMutual(List<ModelLiberty> data)
                 {
                     _data = data;
                 }

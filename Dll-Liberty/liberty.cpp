@@ -16,14 +16,16 @@
 #define M_2_SQRTPI 1.12837916709551257390   // 2/sqrt(pi)
 
 // Type definitions
+
 enum MNType
 {
-	Lifting = 0,
-	Lowering = 1,
-	Pushing = 2,
-	Pulling = 3,
-	Carrying = 4
+	TypeCarrying = 0,
+	TypeLifting = 1,
+	TypeLowering = 2,
+	TypePulling = 3,
+	TypePushing = 4
 };
+
 
 enum MNGender
 {
@@ -305,7 +307,7 @@ void Carrying(ModelLiberty* data)
 	}
 
 	data->results.Weight = result;
-	data->results.CoeffVar = CoeffVar;
+	data->results.CVInitial = CoeffVar;
 
 	return;
 }

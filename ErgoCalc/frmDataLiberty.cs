@@ -28,22 +28,55 @@ namespace ErgoCalc
             AddColumn();
 
             // Create the header rows
-            gridVariables.RowCount = 6;
+            gridVariables.RowCount = 8;
             gridVariables.Rows[0].HeaderCell.Value = "Horizontal reach (m)";
             gridVariables.Rows[1].HeaderCell.Value = "Vertical reach mean (m)";
             gridVariables.Rows[2].HeaderCell.Value = "Vertical height (m)";
             gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (m)";
             gridVariables.Rows[4].HeaderCell.Value = "Horizontal distance (m)";
             gridVariables.Rows[5].HeaderCell.Value = "Frequency (/m)";
+            gridVariables.Rows[6].HeaderCell.Value = "Type";
+            gridVariables.Rows[7].HeaderCell.Value = "Gender";
             //gridVariables.Rows[1].Visible = false;
+
+            // Create custom cells with combobox display
+            DataGridViewComboBoxCell cellType = new DataGridViewComboBoxCell();
+            DataTable tabType = new DataTable();
+
+            tabType.Columns.Add("Type", typeof(String));
+            tabType.Columns.Add("TypeValue", typeof(Int32));
+            tabType.Rows.Add("Carrying", 0);
+            tabType.Rows.Add("Lifting", 1);
+            tabType.Rows.Add("Lowering", 2);
+            tabType.Rows.Add("Pulling", 3);
+            tabType.Rows.Add("Pushing", 4);
+            cellType.DataSource = tabType;
+            cellType.DisplayMember = "Type";
+            cellType.ValueMember = "TypeValue";
+
+            gridVariables.Rows[6].Cells[0] = cellType;
+
+            DataGridViewComboBoxCell cellGender = new DataGridViewComboBoxCell();
+            DataTable tabGender = new DataTable();
+
+            tabGender.Columns.Add("Gender", typeof(String));
+            tabGender.Columns.Add("GenderValue", typeof(Int32));
+            tabGender.Rows.Add("Male", 0);
+            tabGender.Rows.Add("Female", 1);
+            cellGender.DataSource = tabGender;
+            cellGender.DisplayMember = "Gender";
+            cellGender.ValueMember = "GenderValue";
+
+            gridVariables.Rows[7].Cells[0] = cellGender;
+
             // Initialize private variable
             _data = new List<ModelLiberty>();
         }
 
-        public frmDataLiberty(int data)
+        public frmDataLiberty(List<ModelLiberty> data)
             :this()
         {
-
+            DataToGrid(data);
         }
 
         #region Form events
@@ -59,6 +92,8 @@ namespace ErgoCalc
                 item.data.DistVert = Convert.ToDouble(gridVariables[i, 3].Value);
                 item.data.DistHorz = Convert.ToDouble(gridVariables[i, 4].Value);
                 item.data.Freq = Convert.ToDouble(gridVariables[i, 5].Value);
+                item.type = (MNType)Convert.ToByte(gridVariables[i, 6].Value);
+                item.gender = (MNGender)Convert.ToByte(gridVariables[i, 6].Value);
                 _data.Add(item);
             }
         }
@@ -98,12 +133,16 @@ namespace ErgoCalc
             // Create the new column
             gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-            gridVariables.Columns[col].Width = 70;
+            gridVariables.Columns[col].Width = 90;
 
-            if (col > 0) gridVariables[col, 6].Value = 0;
+            //if (col > 0) gridVariables[col, 6].Value = 0;
 
-            // Give format to the cells
-            // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+            // Give format (ComboBox) to the added column cells
+            if (col > 0)
+            {
+                gridVariables.Rows[6].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[6].Cells[col - 1].Clone();
+                gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+            }
 
             return;
         }
@@ -137,6 +176,8 @@ namespace ErgoCalc
                 gridVariables[j, 3].Value = data[j].data.DistVert.ToString();
                 gridVariables[j, 4].Value = data[j].data.DistHorz.ToString();
                 gridVariables[j, 5].Value = data[j].data.Freq.ToString();
+                gridVariables[j, 6].Value = data[j].type;
+                gridVariables[j, 7].Value = data[j].gender;
             }
         }
 

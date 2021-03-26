@@ -351,7 +351,7 @@ namespace ErgoCalc
                 DefaultExt = "*.csv",
                 Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
                 FilterIndex = 1,
-                Title = "Save scatter-plot data",
+                Title = "Save thermal comfort data",
                 OverwritePrompt = true,
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
             };

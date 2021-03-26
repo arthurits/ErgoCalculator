@@ -10,11 +10,14 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ErgoCalc.Models.LibertyMutual;
+
 namespace ErgoCalc
 {
     public partial class frmResultsLiberty : Form, IChildResults
     {
-        private object _data;
+        private List<ModelLiberty> _data;
+        private CLibertyMutual _modelLM;
         private readonly string _strPath;
 
         public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -37,7 +40,7 @@ namespace ErgoCalc
         }
 
 
-        public frmResultsLiberty(object data)
+        public frmResultsLiberty(List<ModelLiberty> data)
             : this()
         {
             _data = data;
@@ -58,12 +61,12 @@ namespace ErgoCalc
         {
             Boolean error = false;
 
-            //_modelTC = new CThermalModels(_data);
+            _modelLM = new CLibertyMutual(_data);
             // Call the DLL function
             try
             {
-                //_modelTC.ThermalComfort();
-                //_data = _modelTC.GetData;
+                _modelLM.ComputeMMH();
+                _data = _modelLM.GetData;
             }
             catch (EntryPointNotFoundException)
             {
@@ -96,21 +99,55 @@ namespace ErgoCalc
             // Call the routine that shows the results
             if (error == false)
             {
-                //rtbShowResult.Text = _modelTC.ToString();
-                CreatePlots();
+                rtbShowResult.Text = _modelLM.ToString();
                 FormatText();
+                CreatePlots();
             }
         }
 
         private void CreatePlots()
         {
-            throw new NotImplementedException();
+            return;
         }
 
         private void SerializeToJSON(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WriteString("Document type", "LM-MMH model");
+
+            writer.WritePropertyName("Cases");
+            writer.WriteStartArray();
+
+            foreach (var data in _data)
+            {
+                writer.WriteStartObject();
+
+                writer.WritePropertyName("Data");
+                writer.WriteStartObject();
+                writer.WriteNumber("Horizontal reach (m)", data.data.HorzReach);
+                writer.WriteNumber("Vertical reach mean (m)", data.data.VRM);
+                writer.WriteNumber("Vertical height (m)", data.data.VertHeight);
+                writer.WriteNumber("Vertical distance (m)", data.data.DistVert);
+                writer.WriteNumber("Horizontal distance (m)", data.data.DistHorz);
+                writer.WriteNumber("Frequency (/m)", data.data.Freq);
+                writer.WriteNumber("Type", (int)data.type);
+                writer.WriteNumber("Gender", (int)data.gender);
+                writer.WriteEndObject();
+
+                writer.WritePropertyName("Results");
+                writer.WriteStartObject();
+                writer.WriteNumber("Coefficient of variation initial", data.results.CVInitial);
+                writer.WriteNumber("Coefficient of variation sustained", data.results.CVSustained);
+                writer.WriteNumber("Initial force (kg)", data.results.InitialF);
+                writer.WriteNumber("Sustained force (kg)", data.results.SustainedF);
+                writer.WriteNumber("Weight (kg)", data.results.Weight);
+                writer.WriteEndObject();
+
+                writer.WriteEndObject();
+            }
+
+            writer.WriteEndArray();
+            writer.WriteEndObject();
 
             writer.Flush();
         }
@@ -120,12 +157,98 @@ namespace ErgoCalc
         #region IChildResults inferface
         public void Save(string path)
         {
-            throw new NotImplementedException();
+            // Displays a SaveFileDialog so the user can save the Image  
+            SaveFileDialog SaveDlg = new SaveFileDialog
+            {
+                DefaultExt = "*.csv",
+                Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                FilterIndex = 1,
+                Title = "Save LM-MMH data",
+                OverwritePrompt = true,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+
+            DialogResult result;
+            using (new CenterWinDialog(this))
+            {
+                result = SaveDlg.ShowDialog(this.Parent);
+            }
+
+            // If the file name is not an empty string open it for saving.  
+            if (result == DialogResult.OK && SaveDlg.FileName != "")
+            {
+                using var fs = SaveDlg.OpenFile();
+
+                switch (SaveDlg.FilterIndex)
+                {
+                    case 1:
+                        if (fs != null)
+                        {
+                            using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
+                            SerializeToJSON(writer);
+                            //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
+                        }
+                        break;
+                    case 2:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
+                        break;
+                    case 3:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                        break;
+                    case 4:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
+                        break;
+                }
+
+                using (new CenterWinDialog(this.MdiParent))
+                {
+                    MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
         }
 
         public bool OpenFile(JsonDocument document)
         {
-            throw new NotImplementedException();
+            bool result = true;
+            ModelLiberty data = new ModelLiberty();
+            _data = new List<ModelLiberty>();
+            JsonElement root = document.RootElement;
+
+            try
+            {
+                foreach (JsonElement curve in root.GetProperty("Cases").EnumerateArray())
+                {
+                    data.data.HorzReach = curve.GetProperty("Data").GetProperty("Horizontal reach (m)").GetDouble();
+                    data.data.VRM = curve.GetProperty("Data").GetProperty("Vertical reach mean (m)").GetDouble();
+                    data.data.VertHeight = curve.GetProperty("Data").GetProperty("Vertical height (m)").GetDouble();
+                    data.data.DistVert = curve.GetProperty("Data").GetProperty("Vertical distance (m)").GetDouble();
+                    data.data.DistHorz = curve.GetProperty("Data").GetProperty("Horizontal distance (m)").GetDouble();
+                    data.data.Freq = curve.GetProperty("Data").GetProperty("Frequency (/m)").GetDouble();
+                    data.type = (MNType)curve.GetProperty("Data").GetProperty("Type").GetByte();
+                    data.gender = (MNGender)curve.GetProperty("Data").GetProperty("Gender").GetByte();
+
+                    data.results.CVInitial = curve.GetProperty("Results").GetProperty("Coefficient of variation initial").GetDouble();
+                    data.results.CVSustained = curve.GetProperty("Results").GetProperty("Coefficient of variation sustained").GetDouble();
+                    data.results.InitialF = curve.GetProperty("Results").GetProperty("Initial force (kg)").GetDouble();
+                    data.results.SustainedF = curve.GetProperty("Results").GetProperty("Sustained force (kg)").GetDouble();
+                    data.results.Weight = curve.GetProperty("Results").GetProperty("Weight (kg)").GetDouble();
+
+                    _data.Add(data);
+                }
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
+            if (result)
+            {
+                //CalcularCurva();
+                //PlotCurves();
+                //_chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+            }
+
+            return result;
         }
 
         public bool[] GetToolbarEnabledState()
@@ -159,12 +282,18 @@ namespace ErgoCalc
 
         public void FormatText()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void EditData()
         {
-            throw new NotImplementedException();
+            using var frm = new frmDataLiberty(_data);
+
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                _data = (List<ModelLiberty>)frm.GetData;
+                ShowResults();
+            }
         }
 
         public void Duplicate()
