@@ -573,6 +573,9 @@ namespace ErgoCalc
                     case "Thermal comfort model":
                         frm = new frmResultsTC() { MdiParent = this };
                         break;
+                    case "LM-MMH model":
+                        frm = new frmResultsLiberty() { MdiParent = this };
+                        break;
                 }
 
                 if(frm != default)

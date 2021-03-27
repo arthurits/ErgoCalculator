@@ -36,19 +36,19 @@ enum MNGender
 struct DataLiberty
 {
 	double HorzReach;	// Horizontal reach distance (H) must range from 0.20 to 0.68 m for females and 0.25 to 0.73 m for males. If H changes during a lift or lower, the mean H or maximum H can be used
-	double VRM;      // Radiant temperature (C)
-	double VertHeight;	// The vertical height of the hands (m)
-	double DistVert;	// Distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
+	double VertRangeM;	// Vertical range middle (m)
 	double DistHorz;	// The distance travelled horizontally per push or pull (m)
+	double DistVert;	// Distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
+	double VertHeight;	// The vertical height of the hands (m)
 	double Freq;		// The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
 };
 
 struct ResultsLiberty
 {
-	double CVInitial;
-	double CVSustained;
-	double InitialF;    // Maximum initial force in kgf
-	double SustainedF;  // Maximum sustained force in kgf
+	double IniCoeffV;
+	double SusCoeffV;
+	double IniForce;    // Maximum initial force in kgf
+	double SusForce;	// Maximum sustained force in kgf
 	double Weight;      // Maximum weight in kg
 };
 
@@ -80,22 +80,21 @@ double __stdcall LibertyMutualMMH(ModelLiberty* data, int nSize)
 	{
 		switch (data[i].type)
 		{
-		case 0:
-			Lifting(data + i);
-			break;
-		case 1:
-			Lowering(data + i);
-			break;
-		case 2:
-			Pushing(data + i);
-			break;
-		case 3:
-			Pulling(data + i);
-			break;
-		case 4:
+		case TypeCarrying:
 			Carrying(data + i);
 			break;
-
+		case TypeLifting:
+			Lifting(data + i);
+			break;
+		case TypeLowering:
+			Lowering(data + i);
+			break;
+		case TypePulling:
+			Pulling(data + i);
+			break;
+		case TypePushing:
+			Pushing(data + i);
+			break;
 		}
 		//SingleComfortPMV(&data[i]);
 	}
@@ -106,14 +105,14 @@ double __stdcall LibertyMutualMMH(ModelLiberty* data, int nSize)
 
 void Lifting(ModelLiberty* data)
 {
-	double result;
-	double CoeffVar;
+	double result = -1.0;
+	double CoeffVar = -1.0;
 
 	double H = data->data.HorzReach;
-	double VRM = data->data.VRM;
-	double V = data->data.VertHeight;
-	double DV = data->data.DistVert;
+	double VRM = data->data.VertRangeM;
 	double DH = data->data.DistHorz;
+	double DV = data->data.DistVert;
+	double V = data->data.VertHeight;
 	double F = data->data.Freq;
 
 	if (data->gender == Male)
@@ -140,7 +139,7 @@ void Lifting(ModelLiberty* data)
 	}
 
 	data->results.Weight = result;
-	data->results.CVInitial = CoeffVar;
+	data->results.IniCoeffV = CoeffVar;
 
 	return;
 }
@@ -148,13 +147,13 @@ void Lifting(ModelLiberty* data)
 void Lowering(ModelLiberty* data)
 {
 	double result = -1.0;
-	double CoeffVar;
+	double CoeffVar = -1.0;
 
 	double H = data->data.HorzReach;
-	double VRM = data->data.VRM;
-	double V = data->data.VertHeight;
-	double DV = data->data.DistVert;
+	double VRM = data->data.VertRangeM;
 	double DH = data->data.DistHorz;
+	double DV = data->data.DistVert;
+	double V = data->data.VertHeight;
 	double F = data->data.Freq;
 
 	if (data->gender == Male)
@@ -181,17 +180,17 @@ void Lowering(ModelLiberty* data)
 	}
 
 	data->results.Weight = result;
-	data->results.CVInitial = CoeffVar;
+	data->results.IniCoeffV = CoeffVar;
 
 	return;
 }
 
 void Pushing(ModelLiberty* data)
 {
-	double resultI;
-	double resultS;
-	double cvI;
-	double cvS;
+	double resultI = -1.0;
+	double resultS = -1.0;
+	double cvI = -1.0;
+	double cvS = -1.0;
 
 	double V = data->data.VertHeight;
 	double DH = data->data.DistHorz;
@@ -222,21 +221,21 @@ void Pushing(ModelLiberty* data)
 		//CoeffVar = 0.298;	// for Pull – Sustained – Female;
 	}
 
-	data->results.InitialF = resultI;
-	data->results.SustainedF = resultS;
+	data->results.IniForce = resultI;
+	data->results.SusForce = resultS;
 
-	data->results.CVInitial = cvI;
-	data->results.CVSustained = cvS;
+	data->results.IniCoeffV = cvI;
+	data->results.SusCoeffV = cvS;
 
 	return;
 }
 
 void Pulling(ModelLiberty* data)
 {
-	double resultI;
-	double resultS;
-	double cvI;
-	double cvS;
+	double resultI = -1.0;
+	double resultS = -1.0;
+	double cvI = -1.0;
+	double cvS = -1.0;
 
 	double V = data->data.VertHeight;
 	double DH = data->data.DistHorz;
@@ -267,19 +266,19 @@ void Pulling(ModelLiberty* data)
 		cvS = 0.298;	// for Pull – Sustained – Female;
 	}
 
-	data->results.InitialF = resultI;
-	data->results.SustainedF = resultS;
+	data->results.IniForce = resultI;
+	data->results.SusForce = resultS;
 
-	data->results.CVInitial = cvI;
-	data->results.CVSustained = cvS;
+	data->results.IniCoeffV = cvI;
+	data->results.SusCoeffV = cvS;
 
 	return;
 }
 
 void Carrying(ModelLiberty* data)
 {
-	double result;
-	double CoeffVar;
+	double result = -1.0;
+	double CoeffVar = -1.0;
 
 	double V = data->data.VertHeight;
 	double DH = data->data.DistHorz;
@@ -307,7 +306,7 @@ void Carrying(ModelLiberty* data)
 	}
 
 	data->results.Weight = result;
-	data->results.CVInitial = CoeffVar;
+	data->results.IniCoeffV = CoeffVar;
 
 	return;
 }
@@ -359,3 +358,6 @@ double Gaussian_Density(double x)
 {
 	return  0.5 * M_SQRT1_2 * M_2_SQRTPI * exp(-0.5 * x * x);
 }
+
+// https://github.com/antelopeusersgroup/antelope_contrib/blob/master/lib/location/libgenloc/erfinv.c
+// https://github.com/lakshayg/erfinv/blob/master/erfinv.c

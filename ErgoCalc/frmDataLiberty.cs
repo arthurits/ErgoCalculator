@@ -29,13 +29,13 @@ namespace ErgoCalc
 
             // Create the header rows
             gridVariables.RowCount = 8;
-            gridVariables.Rows[0].HeaderCell.Value = "Horizontal reach (m)";
-            gridVariables.Rows[1].HeaderCell.Value = "Vertical reach mean (m)";
-            gridVariables.Rows[2].HeaderCell.Value = "Vertical height (m)";
-            gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (m)";
-            gridVariables.Rows[4].HeaderCell.Value = "Horizontal distance (m)";
-            gridVariables.Rows[5].HeaderCell.Value = "Frequency (/m)";
-            gridVariables.Rows[6].HeaderCell.Value = "Type";
+            gridVariables.Rows[0].HeaderCell.Value = "Type";
+            gridVariables.Rows[1].HeaderCell.Value = "Horizontal reach H (m)";
+            gridVariables.Rows[2].HeaderCell.Value = "Vertical range middle VRM (m)";
+            gridVariables.Rows[3].HeaderCell.Value = "Horizontal distance DH (m)";
+            gridVariables.Rows[4].HeaderCell.Value = "Vertical distance DV (m)";
+            gridVariables.Rows[5].HeaderCell.Value = "Vertical height V (m)";
+            gridVariables.Rows[6].HeaderCell.Value = "Frequency F (actions/min)";
             gridVariables.Rows[7].HeaderCell.Value = "Gender";
             //gridVariables.Rows[1].Visible = false;
 
@@ -54,7 +54,7 @@ namespace ErgoCalc
             cellType.DisplayMember = "Type";
             cellType.ValueMember = "TypeValue";
 
-            gridVariables.Rows[6].Cells[0] = cellType;
+            gridVariables.Rows[0].Cells[0] = cellType;
 
             DataGridViewComboBoxCell cellGender = new DataGridViewComboBoxCell();
             DataTable tabGender = new DataTable();
@@ -86,14 +86,14 @@ namespace ErgoCalc
 
             for (int i = 0; i < gridVariables.ColumnCount; i++)
             {
-                item.data.HorzReach = Convert.ToDouble(gridVariables[i, 0].Value);
-                item.data.VRM = Convert.ToDouble(gridVariables[i, 1].Value);
-                item.data.VertHeight = Convert.ToDouble(gridVariables[i, 2].Value);
-                item.data.DistVert = Convert.ToDouble(gridVariables[i, 3].Value);
-                item.data.DistHorz = Convert.ToDouble(gridVariables[i, 4].Value);
-                item.data.Freq = Convert.ToDouble(gridVariables[i, 5].Value);
-                item.type = (MNType)Convert.ToByte(gridVariables[i, 6].Value);
-                item.gender = (MNGender)Convert.ToByte(gridVariables[i, 6].Value);
+                item.type = (MNType)Convert.ToInt32(gridVariables[i, 0].Value);
+                item.data.HorzReach = Convert.ToDouble(gridVariables[i, 1].Value);
+                item.data.VertRangeM = Convert.ToDouble(gridVariables[i, 2].Value);
+                item.data.DistHorz = Convert.ToDouble(gridVariables[i, 3].Value);
+                item.data.DistVert = Convert.ToDouble(gridVariables[i, 4].Value);
+                item.data.VertHeight = Convert.ToDouble(gridVariables[i, 5].Value);
+                item.data.Freq = Convert.ToDouble(gridVariables[i, 6].Value);
+                item.gender = (MNGender)Convert.ToInt32(gridVariables[i, 7].Value);
                 _data.Add(item);
             }
         }
@@ -140,7 +140,7 @@ namespace ErgoCalc
             // Give format (ComboBox) to the added column cells
             if (col > 0)
             {
-                gridVariables.Rows[6].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[6].Cells[col - 1].Clone();
+                gridVariables.Rows[0].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[0].Cells[col - 1].Clone();
                 gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
             }
 
@@ -170,13 +170,13 @@ namespace ErgoCalc
                 if (j > 0) AddColumn();
 
                 // Populate the DataGridView with data
-                gridVariables[j, 0].Value = data[j].data.HorzReach.ToString();
-                gridVariables[j, 1].Value = data[j].data.VRM.ToString();
-                gridVariables[j, 2].Value = data[j].data.VertHeight.ToString();
-                gridVariables[j, 3].Value = data[j].data.DistVert.ToString();
-                gridVariables[j, 4].Value = data[j].data.DistHorz.ToString();
-                gridVariables[j, 5].Value = data[j].data.Freq.ToString();
-                gridVariables[j, 6].Value = data[j].type;
+                gridVariables[j, 0].Value = data[j].type;
+                gridVariables[j, 1].Value = data[j].data.HorzReach.ToString();
+                gridVariables[j, 2].Value = data[j].data.VertRangeM.ToString();
+                gridVariables[j, 3].Value = data[j].data.DistHorz.ToString();
+                gridVariables[j, 4].Value = data[j].data.DistVert.ToString();
+                gridVariables[j, 5].Value = data[j].data.VertHeight.ToString();
+                gridVariables[j, 6].Value = data[j].data.Freq.ToString();
                 gridVariables[j, 7].Value = data[j].gender;
             }
         }

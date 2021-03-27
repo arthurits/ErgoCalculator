@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ScottPlot;
 using ErgoCalc.Models.LibertyMutual;
 
 namespace ErgoCalc
@@ -40,10 +41,10 @@ namespace ErgoCalc
         }
 
 
-        public frmResultsLiberty(List<ModelLiberty> data)
+        public frmResultsLiberty(object data)
             : this()
         {
-            _data = data;
+            _data = (List<ModelLiberty>)data;
         }
 
         private void frmResultsLiberty_Shown(object sender, EventArgs e)
@@ -54,7 +55,8 @@ namespace ErgoCalc
         #region Private routines
         private void InitializePlot()
         {
-            throw new NotImplementedException();
+            formsPlot1.plt.XLabel("Maximum limit (kg)");
+            formsPlot1.plt.YLabel("Frequency?");
         }
 
         private void ShowResults()
@@ -107,6 +109,34 @@ namespace ErgoCalc
 
         private void CreatePlots()
         {
+            var mean = _data[0].results.Weight;
+            var std = mean * _data[0].results.IniCoeffV;
+
+            Random rand = new Random(0);
+            double[] values = DataGen.RandomNormal(rand, pointCount: 1000, mean: mean, stdDev: std);
+
+            // create a Population object from the data
+            var pop = new ScottPlot.Statistics.Population(values);
+
+            var hist = new ScottPlot.Statistics.Histogram(values, min: mean - 3 * std, max: mean + 3 * std);
+            double[] curveXs = DataGen.Range(pop.minus3stDev, pop.plus3stDev, .1);
+            double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
+
+
+
+            formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot1.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: "Population");
+            //formsPlot1.plt.PlotScatter(hist.bins, hist.countsFracCurve, markerSize: 0, lineWidth: 2, label: "Histogram");
+            
+            var limit75 = mean - std * 0.674489750196082;
+            var limit90 = mean - std * 1.281551565544601;
+
+            formsPlot1.plt.PlotVLine(x: limit75, label: "75%", color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
+            formsPlot1.plt.PlotVLine(x: limit90, label: "90%", color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
+
+            formsPlot1.Render();
+
             return;
         }
 
@@ -125,21 +155,21 @@ namespace ErgoCalc
                 writer.WritePropertyName("Data");
                 writer.WriteStartObject();
                 writer.WriteNumber("Horizontal reach (m)", data.data.HorzReach);
-                writer.WriteNumber("Vertical reach mean (m)", data.data.VRM);
+                writer.WriteNumber("Vertical range middle (m)", data.data.VertRangeM);
                 writer.WriteNumber("Vertical height (m)", data.data.VertHeight);
                 writer.WriteNumber("Vertical distance (m)", data.data.DistVert);
                 writer.WriteNumber("Horizontal distance (m)", data.data.DistHorz);
-                writer.WriteNumber("Frequency (/m)", data.data.Freq);
+                writer.WriteNumber("Frequency (actions/min)", data.data.Freq);
                 writer.WriteNumber("Type", (int)data.type);
                 writer.WriteNumber("Gender", (int)data.gender);
                 writer.WriteEndObject();
 
                 writer.WritePropertyName("Results");
                 writer.WriteStartObject();
-                writer.WriteNumber("Coefficient of variation initial", data.results.CVInitial);
-                writer.WriteNumber("Coefficient of variation sustained", data.results.CVSustained);
-                writer.WriteNumber("Initial force (kg)", data.results.InitialF);
-                writer.WriteNumber("Sustained force (kg)", data.results.SustainedF);
+                writer.WriteNumber("Coefficient of variation initial", data.results.IniCoeffV);
+                writer.WriteNumber("Coefficient of variation sustained", data.results.SusCoeffV);
+                writer.WriteNumber("Initial force (kg)", data.results.IniForce);
+                writer.WriteNumber("Sustained force (kg)", data.results.SusForce);
                 writer.WriteNumber("Weight (kg)", data.results.Weight);
                 writer.WriteEndObject();
 
@@ -219,18 +249,18 @@ namespace ErgoCalc
                 foreach (JsonElement curve in root.GetProperty("Cases").EnumerateArray())
                 {
                     data.data.HorzReach = curve.GetProperty("Data").GetProperty("Horizontal reach (m)").GetDouble();
-                    data.data.VRM = curve.GetProperty("Data").GetProperty("Vertical reach mean (m)").GetDouble();
+                    data.data.VertRangeM = curve.GetProperty("Data").GetProperty("Vertical range middle (m)").GetDouble();
                     data.data.VertHeight = curve.GetProperty("Data").GetProperty("Vertical height (m)").GetDouble();
                     data.data.DistVert = curve.GetProperty("Data").GetProperty("Vertical distance (m)").GetDouble();
                     data.data.DistHorz = curve.GetProperty("Data").GetProperty("Horizontal distance (m)").GetDouble();
-                    data.data.Freq = curve.GetProperty("Data").GetProperty("Frequency (/m)").GetDouble();
+                    data.data.Freq = curve.GetProperty("Data").GetProperty("Frequency (actions/min)").GetDouble();
                     data.type = (MNType)curve.GetProperty("Data").GetProperty("Type").GetByte();
                     data.gender = (MNGender)curve.GetProperty("Data").GetProperty("Gender").GetByte();
 
-                    data.results.CVInitial = curve.GetProperty("Results").GetProperty("Coefficient of variation initial").GetDouble();
-                    data.results.CVSustained = curve.GetProperty("Results").GetProperty("Coefficient of variation sustained").GetDouble();
-                    data.results.InitialF = curve.GetProperty("Results").GetProperty("Initial force (kg)").GetDouble();
-                    data.results.SustainedF = curve.GetProperty("Results").GetProperty("Sustained force (kg)").GetDouble();
+                    data.results.IniCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation initial").GetDouble();
+                    data.results.SusCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation sustained").GetDouble();
+                    data.results.IniForce = curve.GetProperty("Results").GetProperty("Initial force (kg)").GetDouble();
+                    data.results.SusForce = curve.GetProperty("Results").GetProperty("Sustained force (kg)").GetDouble();
                     data.results.Weight = curve.GetProperty("Results").GetProperty("Weight (kg)").GetDouble();
 
                     _data.Add(data);
@@ -277,7 +307,7 @@ namespace ErgoCalc
 
         public bool PanelCollapsed()
         {
-            return splitContainer1.SplitterDistance == 0 ? true : false; ;
+            return splitContainer1.SplitterDistance == 0 ? true : false;
         }
 
         public void FormatText()

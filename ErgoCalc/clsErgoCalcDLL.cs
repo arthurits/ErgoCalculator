@@ -1455,7 +1455,7 @@ namespace ErgoCalc
             using System;
             using System.Collections.Generic;
 
-            public enum MNType : byte
+            public enum MNType : int
             {
                 Carrying = 0,
                 Lifting = 1,
@@ -1464,7 +1464,7 @@ namespace ErgoCalc
                 Pushing = 4
             }
 
-            public enum MNGender : byte
+            public enum MNGender : int
             {
                 Male = 0,
                 Female = 1
@@ -1475,20 +1475,20 @@ namespace ErgoCalc
             public struct DataLiberty
             {
                 public double HorzReach;   // Horizontal reach distance (H) must range from 0.20 to 0.68 m for females and 0.25 to 0.73 m for males. If H changes during a lift or lower, the mean H or maximum H can be used
-                public double VRM;         // Radiant temperature (C)
-                public double VertHeight;  // The vertical height of the hands (m)
-                public double DistVert;    // Distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
+                public double VertRangeM;  // Vertical range middle (m)
                 public double DistHorz;    // The distance travelled horizontally per push or pull (m)
+                public double DistVert;    // The distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
+                public double VertHeight;  // The vertical height of the hands (m)
                 public double Freq;        // The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
             };
 
             [StructLayout(LayoutKind.Sequential)]
             public struct ResultsLiberty
             {
-                public double CVInitial;   // Coefficient of variation
-                public double CVSustained; // Coefficient of variation
-                public double InitialF;    // Maximum initial force in kgf
-                public double SustainedF;  // Maximum sustained force in kgf
+                public double IniCoeffV;   // Coefficient of variation
+                public double SusCoeffV; // Coefficient of variation
+                public double IniForce;    // Maximum initial force in kgf
+                public double SusForce;  // Maximum sustained force in kgf
                 public double Weight;      // Maximum weight in kg
             }
 
@@ -1511,7 +1511,7 @@ namespace ErgoCalc
                 public List<ModelLiberty> GetData { get => new(_data); set => _data = value; }
 
                 [DllImport("dlls/liberty.dll", EntryPoint = "LibertyMutualMMH")]
-                private static extern void LibertyMutualMMH([In, Out] ModelLiberty[] data, int Size);
+                private static extern double LibertyMutualMMH([In, Out] ModelLiberty[] data, int Size);
                 
                 
                 public CLibertyMutual()
@@ -1527,7 +1527,7 @@ namespace ErgoCalc
                 public void ComputeMMH()
                 {
                     var tempArray = _data.ToArray();
-                    LibertyMutualMMH(tempArray, tempArray.Length);
+                    var result = LibertyMutualMMH(tempArray, tempArray.Length);
                     _data = new(tempArray);
                 }
                 
