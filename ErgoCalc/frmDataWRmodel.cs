@@ -212,7 +212,7 @@ namespace ErgoCalc
                 _datos._dWorkRest = new double[2][];
                 _datos._dWorkRest[0] = new double[++bPosición];
                 _datos._dWorkRest[1] = new double[bPosición];
-                _datos._dWorkRestDrop = new double[bPosición];
+                //_datos._dWorkRestDrop = new double[bPosición];
                 //_datos._dWorkRestY = new double[2][];
                 //_datos._dWorkRestY[0] = new double[bPosición];
                 //_datos._dWorkRestY[1] = new double[bPosición];
@@ -234,7 +234,7 @@ namespace ErgoCalc
                         }
 
                         _datos._dWorkRest[0][bEspacio] = número;
-                        _datos._dWorkRestDrop[bEspacio] = 100 * número / _datos._dMHT;
+                        //_datos._dWorkRestDrop[bEspacio] = 100 * número / _datos._dMHT;
 
                         bPosiciónAnt = bPosición;
                         ++bPosiciónAnt;
@@ -251,7 +251,7 @@ namespace ErgoCalc
                     throw new InvalidRange(strError);
                 }
                 _datos._dWorkRest[0][bEspacio] = Convert.ToDouble(subcadena);
-                _datos._dWorkRestDrop[bEspacio] = 100 * _datos._dWorkRest[0][bEspacio] / _datos._dMHT;
+                //_datos._dWorkRestDrop[bEspacio] = 100 * _datos._dWorkRest[0][bEspacio] / _datos._dMHT;
                 
                 bEspacio = 0;
                 bPosición = 0;

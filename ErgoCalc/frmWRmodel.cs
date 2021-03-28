@@ -258,8 +258,8 @@ namespace ErgoCalc
                 writer.WritePropertyName("Rest times (minutes)");
                 JsonSerializer.Serialize(writer, data._dWorkRest[1], new JsonSerializerOptions { WriteIndented = true });
 
-                writer.WritePropertyName("Work-Rest drop (REC)");
-                JsonSerializer.Serialize(writer, data._dWorkRestDrop, new JsonSerializerOptions { WriteIndented = true });
+                //writer.WritePropertyName("Work-Rest drop (REC)");
+                //JsonSerializer.Serialize(writer, data._dWorkRestDrop, new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WritePropertyName("Points X");
                 JsonSerializer.Serialize(writer, data._dPoints[0], new JsonSerializerOptions { WriteIndented = true });
@@ -369,8 +369,8 @@ namespace ErgoCalc
                     data._dWorkRest[1] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Rest times (minutes)").ToString());
 
                     //Length = curve.GetProperty("Work-Rest drop (REC)").GetArrayLength();
-                    data._dWorkRestDrop = new double[Length];
-                    data._dWorkRestDrop = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work-Rest drop (REC)").ToString());
+                    //data._dWorkRestDrop = new double[Length];
+                    //data._dWorkRestDrop = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work-Rest drop (REC)").ToString());
 
                     _datos.Add(data);
                 }

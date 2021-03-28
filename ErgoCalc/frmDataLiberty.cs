@@ -170,14 +170,14 @@ namespace ErgoCalc
                 if (j > 0) AddColumn();
 
                 // Populate the DataGridView with data
-                gridVariables[j, 0].Value = data[j].type;
+                gridVariables[j, 0].Value = (int)data[j].type;
                 gridVariables[j, 1].Value = data[j].data.HorzReach.ToString();
                 gridVariables[j, 2].Value = data[j].data.VertRangeM.ToString();
                 gridVariables[j, 3].Value = data[j].data.DistHorz.ToString();
                 gridVariables[j, 4].Value = data[j].data.DistVert.ToString();
                 gridVariables[j, 5].Value = data[j].data.VertHeight.ToString();
                 gridVariables[j, 6].Value = data[j].data.Freq.ToString();
-                gridVariables[j, 7].Value = data[j].gender;
+                gridVariables[j, 7].Value = (int)data[j].gender;
             }
         }
 

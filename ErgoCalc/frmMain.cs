@@ -565,7 +565,7 @@ namespace ErgoCalc
                         frm = new frmWRmodel() { MdiParent = this };
                         break;
                     case "NIOSH lifting equation":
-                        //frm = new frmResultNIOSHmodel() { MdiParent = this };
+                        frm = new frmResultNIOSHmodel() { MdiParent = this };
                         break;
                     case "Strain index":
                         frm = new frmResultsStrainIndex() { MdiParent = this };

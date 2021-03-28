@@ -154,13 +154,13 @@ namespace ErgoCalc
 
                 writer.WritePropertyName("Data");
                 writer.WriteStartObject();
+                writer.WriteNumber("Type", (int)data.type);
                 writer.WriteNumber("Horizontal reach (m)", data.data.HorzReach);
                 writer.WriteNumber("Vertical range middle (m)", data.data.VertRangeM);
-                writer.WriteNumber("Vertical height (m)", data.data.VertHeight);
-                writer.WriteNumber("Vertical distance (m)", data.data.DistVert);
                 writer.WriteNumber("Horizontal distance (m)", data.data.DistHorz);
+                writer.WriteNumber("Vertical distance (m)", data.data.DistVert);
+                writer.WriteNumber("Vertical height (m)", data.data.VertHeight);
                 writer.WriteNumber("Frequency (actions/min)", data.data.Freq);
-                writer.WriteNumber("Type", (int)data.type);
                 writer.WriteNumber("Gender", (int)data.gender);
                 writer.WriteEndObject();
 
@@ -248,14 +248,27 @@ namespace ErgoCalc
             {
                 foreach (JsonElement curve in root.GetProperty("Cases").EnumerateArray())
                 {
+                    // https://stackoverflow.com/questions/29482/how-can-i-cast-int-to-enum
+                    // safe, as it explicitly specifies supported values
+                    // unsafe: Enum.IsDefined(typeof(MyEnum), value)
+                    var value = curve.GetProperty("Data").GetProperty("Type").GetInt32();
+                    if ((new[] { MNType.Carrying, MNType.Lifting, MNType.Lowering, MNType.Pulling, MNType.Pushing }).Contains((MNType)value))
+                        data.type = (MNType)value;
+                    else
+                        data.type = MNType.Carrying;
+
                     data.data.HorzReach = curve.GetProperty("Data").GetProperty("Horizontal reach (m)").GetDouble();
                     data.data.VertRangeM = curve.GetProperty("Data").GetProperty("Vertical range middle (m)").GetDouble();
-                    data.data.VertHeight = curve.GetProperty("Data").GetProperty("Vertical height (m)").GetDouble();
-                    data.data.DistVert = curve.GetProperty("Data").GetProperty("Vertical distance (m)").GetDouble();
                     data.data.DistHorz = curve.GetProperty("Data").GetProperty("Horizontal distance (m)").GetDouble();
+                    data.data.DistVert = curve.GetProperty("Data").GetProperty("Vertical distance (m)").GetDouble();
+                    data.data.VertHeight = curve.GetProperty("Data").GetProperty("Vertical height (m)").GetDouble();
                     data.data.Freq = curve.GetProperty("Data").GetProperty("Frequency (actions/min)").GetDouble();
-                    data.type = (MNType)curve.GetProperty("Data").GetProperty("Type").GetByte();
-                    data.gender = (MNGender)curve.GetProperty("Data").GetProperty("Gender").GetByte();
+                    
+                    value = curve.GetProperty("Data").GetProperty("Gender").GetInt32();
+                    if ((new[] { MNGender.Male, MNGender.Female }).Contains((MNGender)value))
+                        data.gender = (MNGender)value;
+                    else
+                        data.gender = MNGender.Male;
 
                     data.results.IniCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation initial").GetDouble();
                     data.results.SusCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation sustained").GetDouble();
@@ -312,7 +325,40 @@ namespace ErgoCalc
 
         public void FormatText()
         {
-            
+            int nStart = 0, nEnd = 0;
+
+            while (true)
+            {
+                // Underline
+                nStart = rtbShowResult.Find("Initial data", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+
+                // Underline
+                nStart = rtbShowResult.Find("Intermediate results", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            }
+
+            // Bold results
+            nStart = 0;
+            while (true)
+            {
+                nStart = rtbShowResult.Find("Maximum acceptable load", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                //nEnd = rtbShowResult.Text.Length;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+            }
+
+            // Set the cursor at the beginning of the text
+            rtbShowResult.SelectionStart = 0;
+            rtbShowResult.SelectionLength = 0;
         }
 
         public void EditData()

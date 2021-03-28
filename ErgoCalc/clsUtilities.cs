@@ -299,7 +299,8 @@ namespace ErgoCalc
             set
             {
                 _rtbText.Font = value;
-                ((IChildResults)_rtbText.Parent.Parent.Parent).FormatText();
+                //((IChildResults)_rtbText.Parent.Parent.Parent).FormatText();
+                ((IChildResults)_rtbText.FindForm()).FormatText();
             }
         }
 
