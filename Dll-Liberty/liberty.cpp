@@ -43,6 +43,21 @@ struct DataLiberty
 	double Freq;		// The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
 };
 
+struct ScaleFactors
+{
+	double RL;		// Reference load (in kg or kgf)
+	double H;		// Horizontal reach factor
+	double VRM;
+	double DH;
+	double DV;
+	double V;
+	double F;
+	double CV;
+	double MAL;      // Maximum acceptable load — Mean (in kg or kgf)
+	double MAL75;    // Maximum acceptable load for 75% (in kg or kgf)
+	double MAL90;    // Maximum acceptable load for 90% (in kg or kgf)
+};
+
 struct ResultsLiberty
 {
 	double IniCoeffV;
@@ -54,8 +69,10 @@ struct ResultsLiberty
 
 struct ModelLiberty
 {
-	DataLiberty data;         // Model data
-	ResultsLiberty results;      // Model variables
+	DataLiberty data;			// Model data
+	ResultsLiberty results;		// Model variables
+	ScaleFactors Initial;
+	ScaleFactors Sustained;
 	MNType type;
 	MNGender gender;
 };

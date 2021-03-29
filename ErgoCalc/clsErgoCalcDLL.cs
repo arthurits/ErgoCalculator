@@ -1483,6 +1483,22 @@ namespace ErgoCalc
             };
 
             [StructLayout(LayoutKind.Sequential)]
+            public struct ScaleFactors
+            {
+                public double RF;       // Reference load (in kg or kgf)
+                public double H;        // Horizontal reach factor
+                public double VRM;      // Vertical range middle factor
+                public double DH;       // Horizontal travel distance factor
+                public double DV;       // Vertical travel distance factor
+                public double V;        // Vertical height factor
+                public double F;        // Frequency factor
+                public double CV;       // Coefficient of variation
+                public double MAL;      // Maximum acceptable load — Mean (in kg or kgf)
+                public double MAL75;    // Maximum acceptable load for 75% (in kg or kgf)
+                public double MAL90;    // Maximum acceptable load for 90% (in kg or kgf)
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
             public struct ResultsLiberty
             {
                 public double IniCoeffV;   // Coefficient of variation
@@ -1499,6 +1515,8 @@ namespace ErgoCalc
                 public DataLiberty data;         // Model data
                 [MarshalAs(UnmanagedType.Struct)]
                 public ResultsLiberty results;      // Model variables
+                public ScaleFactors Initial;
+                public ScaleFactors Sustained;
                 public MNType type;
                 public MNGender gender;
             }
