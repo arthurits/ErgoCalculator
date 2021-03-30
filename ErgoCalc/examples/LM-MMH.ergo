@@ -3,21 +3,40 @@
   "Cases": [
     {
       "Data": {
+        "Type": 1,
         "Horizontal reach (m)": 0.38,
         "Vertical range middle (m)": 1.03,
-        "Vertical height (m)": 0,
-        "Vertical distance (m)": 0.51,
         "Horizontal distance (m)": 0,
+        "Vertical distance (m)": 0.51,
+        "Vertical height (m)": 0,
         "Frequency (actions/min)": 1,
-        "Type": 1,
         "Gender": 1
       },
-      "Results": {
-        "Coefficient of variation initial": 0,
-        "Coefficient of variation sustained": 0,
-        "Initial force (kg)": 0,
-        "Sustained force (kg)": 0,
-        "Weight (kg)": 0
+      "Scale factors initial": {
+        "Reference load (RF)": 34.9,
+        "Horizontal reach factor (H)": 0.7657945875618006,
+        "Vertical range middle factor (VRM)": 0.9478848022295474,
+        "Horizontal travel distance factor (DH)": 0,
+        "Vertical travel distance factor (DV)": 0.9073927953825058,
+        "Vertical height factor (V)": 0,
+        "Frequency factor (F)": 0.6767,
+        "Coefficient of variation (CV)": 0.26,
+        "MAL \u2014 Maximum acceptable load \u2014 Mean (kg or kg-f)": 15.55552892693037,
+        "MAL \u2014 Maximum acceptable load \u2014 75% (kg or kg-f)": 12.827597273706141,
+        "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 10.372373690143064
+      },
+      "Scale factors sustained": {
+        "Reference load (RF)": 0,
+        "Horizontal reach factor (H)": 0,
+        "Vertical range middle factor (VRM)": 0,
+        "Horizontal travel distance factor (DH)": 0,
+        "Vertical travel distance factor (DV)": 0,
+        "Vertical height factor (V)": 0,
+        "Frequency factor (F)": 0,
+        "Coefficient of variation (CV)": 0,
+        "MAL \u2014 Maximum acceptable load \u2014 Mean (kg or kg-f)": 0,
+        "MAL \u2014 Maximum acceptable load \u2014 75% (kg or kg-f)": 0,
+        "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 0
       }
     }
   ]

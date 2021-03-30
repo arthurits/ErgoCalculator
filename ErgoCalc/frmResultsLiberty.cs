@@ -55,8 +55,22 @@ namespace ErgoCalc
         #region Private routines
         private void InitializePlot()
         {
-            formsPlot1.plt.XLabel("Maximum limit (kg)");
+            formsPlot1.plt.XLabel("Initial force / kg-f");
             formsPlot1.plt.YLabel("Frequency?");
+            formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+
+            formsPlot2.plt.XLabel("Sustained force / kg-f)");
+            formsPlot2.plt.YLabel("Frequency?");
+            formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+
+            formsPlot3.plt.XLabel("Weight / kg");
+            formsPlot3.plt.YLabel("Frequency?");
+            formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            formsPlot3.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            //formsPlot3.plt.AxisAutoY();
+            //formsPlot3.plt.Axis(y1: 0, y2: 1);
         }
 
         private void ShowResults()
@@ -109,9 +123,27 @@ namespace ErgoCalc
 
         private void CreatePlots()
         {
-            var mean = _data[0].results.Weight;
-            var std = mean * _data[0].results.IniCoeffV;
+            foreach (var data in _data)
+            {
+                switch(data.type)
+                {
+                    case MNType.Pulling:
+                    case MNType.Pushing:
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, MNType.Pulling);
+                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, MNType.Pushing);
+                        break;
+                    case MNType.Carrying:
+                    case MNType.Lifting:
+                    case MNType.Lowering:
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, data.type);
+                        break;
+                }
+            }
+            return;
+        }
 
+        private void CreatePlot(double mean, double std,MNType type)
+        {
             Random rand = new Random(0);
             double[] values = DataGen.RandomNormal(rand, pointCount: 1000, mean: mean, stdDev: std);
 
@@ -122,22 +154,34 @@ namespace ErgoCalc
             double[] curveXs = DataGen.Range(pop.minus3stDev, pop.plus3stDev, .1);
             double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 
+            ScottPlot.FormsPlot plot = null;
+            switch (type)
+            {
+                case MNType.Pulling:
+                    plot = formsPlot1;  // Initial force plot
+                    break;
+                case MNType.Pushing:
+                    plot = formsPlot2;  // Sustained formce plot
+                    break;
+                case MNType.Carrying:
+                case MNType.Lifting:
+                case MNType.Lowering:
+                    plot = formsPlot3;  // Weight plot
+                    break;
+            }
 
-
-            formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            formsPlot1.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: "Population");
+            plot.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            plot.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            plot.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: "Population");
             //formsPlot1.plt.PlotScatter(hist.bins, hist.countsFracCurve, markerSize: 0, lineWidth: 2, label: "Histogram");
-            
+
             var limit75 = mean - std * 0.674489750196082;
             var limit90 = mean - std * 1.281551565544601;
 
-            formsPlot1.plt.PlotVLine(x: limit75, label: "75%", color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
-            formsPlot1.plt.PlotVLine(x: limit90, label: "90%", color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
-
-            formsPlot1.Render();
-
-            return;
+            plot.plt.PlotVLine(x: limit75, label: "75%", color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
+            plot.plt.PlotVLine(x: limit90, label: "90%", color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
+            plot.plt.Axis(y1: 0, y2: null);
+            plot.Render();
         }
 
         private void SerializeToJSON(Utf8JsonWriter writer)
@@ -163,15 +207,45 @@ namespace ErgoCalc
                 writer.WriteNumber("Frequency (actions/min)", data.data.Freq);
                 writer.WriteNumber("Gender", (int)data.gender);
                 writer.WriteEndObject();
-
-                writer.WritePropertyName("Results");
+                
+                writer.WritePropertyName("Scale factors initial");
                 writer.WriteStartObject();
-                writer.WriteNumber("Coefficient of variation initial", data.results.IniCoeffV);
-                writer.WriteNumber("Coefficient of variation sustained", data.results.SusCoeffV);
-                writer.WriteNumber("Initial force (kg)", data.results.IniForce);
-                writer.WriteNumber("Sustained force (kg)", data.results.SusForce);
-                writer.WriteNumber("Weight (kg)", data.results.Weight);
+                writer.WriteNumber("Reference load (RF)", data.Initial.RF);
+                writer.WriteNumber("Horizontal reach factor (H)", data.Initial.H);
+                writer.WriteNumber("Vertical range middle factor (VRM)", data.Initial.VRM);
+                writer.WriteNumber("Horizontal travel distance factor (DH)", data.Initial.DH);
+                writer.WriteNumber("Vertical travel distance factor (DV)", data.Initial.DV);
+                writer.WriteNumber("Vertical height factor (V)", data.Initial.V);
+                writer.WriteNumber("Frequency factor (F)", data.Initial.F);
+                writer.WriteNumber("Coefficient of variation (CV)", data.Initial.CV);
+                writer.WriteNumber("MAL — Maximum acceptable load — Mean (kg or kg-f)", data.Initial.MAL);
+                writer.WriteNumber("MAL — Maximum acceptable load — 75% (kg or kg-f)", data.Initial.MAL75);
+                writer.WriteNumber("MAL — Maximum acceptable load — 90% (kg or kg-f)", data.Initial.MAL90);
                 writer.WriteEndObject();
+
+                writer.WritePropertyName("Scale factors sustained");
+                writer.WriteStartObject();
+                writer.WriteNumber("Reference load (RF)", data.Sustained.RF);
+                writer.WriteNumber("Horizontal reach factor (H)", data.Sustained.H);
+                writer.WriteNumber("Vertical range middle factor (VRM)", data.Sustained.VRM);
+                writer.WriteNumber("Horizontal travel distance factor (DH)", data.Sustained.DH);
+                writer.WriteNumber("Vertical travel distance factor (DV)", data.Sustained.DV);
+                writer.WriteNumber("Vertical height factor (V)", data.Sustained.V);
+                writer.WriteNumber("Frequency factor (F)", data.Sustained.F);
+                writer.WriteNumber("Coefficient of variation (CV)", data.Sustained.CV);
+                writer.WriteNumber("MAL — Maximum acceptable load — Mean (kg or kg-f)", data.Sustained.MAL);
+                writer.WriteNumber("MAL — Maximum acceptable load — 75% (kg or kg-f)", data.Sustained.MAL75);
+                writer.WriteNumber("MAL — Maximum acceptable load — 90% (kg or kg-f)", data.Sustained.MAL90);
+                writer.WriteEndObject();
+
+                //writer.WritePropertyName("Results");
+                //writer.WriteStartObject();
+                //writer.WriteNumber("Coefficient of variation initial", data.results.IniCoeffV);
+                //writer.WriteNumber("Coefficient of variation sustained", data.results.SusCoeffV);
+                //writer.WriteNumber("Initial force (kg)", data.results.IniForce);
+                //writer.WriteNumber("Sustained force (kg)", data.results.SusForce);
+                //writer.WriteNumber("Weight (kg)", data.results.Weight);
+                //writer.WriteEndObject();
 
                 writer.WriteEndObject();
             }
@@ -270,11 +344,35 @@ namespace ErgoCalc
                     else
                         data.gender = MNGender.Male;
 
-                    data.results.IniCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation initial").GetDouble();
-                    data.results.SusCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation sustained").GetDouble();
-                    data.results.IniForce = curve.GetProperty("Results").GetProperty("Initial force (kg)").GetDouble();
-                    data.results.SusForce = curve.GetProperty("Results").GetProperty("Sustained force (kg)").GetDouble();
-                    data.results.Weight = curve.GetProperty("Results").GetProperty("Weight (kg)").GetDouble();
+                    data.Initial.RF = curve.GetProperty("Scale factors initial").GetProperty("Reference load (RF)").GetDouble();
+                    data.Initial.H = curve.GetProperty("Scale factors initial").GetProperty("Horizontal reach factor (H)").GetDouble();
+                    data.Initial.VRM = curve.GetProperty("Scale factors initial").GetProperty("Vertical range middle factor (VRM)").GetDouble();
+                    data.Initial.DH = curve.GetProperty("Scale factors initial").GetProperty("Horizontal travel distance factor (DH)").GetDouble();
+                    data.Initial.DV = curve.GetProperty("Scale factors initial").GetProperty("Vertical travel distance factor (DV)").GetDouble();
+                    data.Initial.V = curve.GetProperty("Scale factors initial").GetProperty("Vertical height factor (V)").GetDouble();
+                    data.Initial.F = curve.GetProperty("Scale factors initial").GetProperty("Frequency factor (F)").GetDouble();
+                    data.Initial.CV = curve.GetProperty("Scale factors initial").GetProperty("Coefficient of variation (CV)").GetDouble();
+                    data.Initial.MAL = curve.GetProperty("Scale factors initial").GetProperty("MAL — Maximum acceptable load — Mean (kg or kg-f)").GetDouble();
+                    data.Initial.MAL75 = curve.GetProperty("Scale factors initial").GetProperty("MAL — Maximum acceptable load — 75% (kg or kg-f)").GetDouble();
+                    data.Initial.MAL90 = curve.GetProperty("Scale factors initial").GetProperty("MAL — Maximum acceptable load — 90% (kg or kg-f)").GetDouble();
+
+                    data.Sustained.RF = curve.GetProperty("Scale factors sustained").GetProperty("Reference load (RF)").GetDouble();
+                    data.Sustained.H = curve.GetProperty("Scale factors sustained").GetProperty("Horizontal reach factor (H)").GetDouble();
+                    data.Sustained.VRM = curve.GetProperty("Scale factors sustained").GetProperty("Vertical range middle factor (VRM)").GetDouble();
+                    data.Sustained.DH = curve.GetProperty("Scale factors sustained").GetProperty("Horizontal travel distance factor (DH)").GetDouble();
+                    data.Sustained.DV = curve.GetProperty("Scale factors sustained").GetProperty("Vertical travel distance factor (DV)").GetDouble();
+                    data.Sustained.V = curve.GetProperty("Scale factors sustained").GetProperty("Vertical height factor (V)").GetDouble();
+                    data.Sustained.F = curve.GetProperty("Scale factors sustained").GetProperty("Frequency factor (F)").GetDouble();
+                    data.Sustained.CV = curve.GetProperty("Scale factors sustained").GetProperty("Coefficient of variation (CV)").GetDouble();
+                    data.Sustained.MAL = curve.GetProperty("Scale factors sustained").GetProperty("MAL — Maximum acceptable load — Mean (kg or kg-f)").GetDouble();
+                    data.Sustained.MAL75 = curve.GetProperty("Scale factors sustained").GetProperty("MAL — Maximum acceptable load — 75% (kg or kg-f)").GetDouble();
+                    data.Sustained.MAL90 = curve.GetProperty("Scale factors sustained").GetProperty("MAL — Maximum acceptable load — 90% (kg or kg-f)").GetDouble();
+
+                    //data.results.IniCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation initial").GetDouble();
+                    //data.results.SusCoeffV = curve.GetProperty("Results").GetProperty("Coefficient of variation sustained").GetDouble();
+                    //data.results.IniForce = curve.GetProperty("Results").GetProperty("Initial force (kg)").GetDouble();
+                    //data.results.SusForce = curve.GetProperty("Results").GetProperty("Sustained force (kg)").GetDouble();
+                    //data.results.Weight = curve.GetProperty("Results").GetProperty("Weight (kg)").GetDouble();
 
                     _data.Add(data);
                 }
@@ -368,6 +466,9 @@ namespace ErgoCalc
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 _data = (List<ModelLiberty>)frm.GetData;
+                formsPlot1.plt.GetPlottables().Clear();
+                formsPlot2.plt.GetPlottables().Clear();
+                formsPlot3.plt.GetPlottables().Clear();
                 ShowResults();
             }
         }

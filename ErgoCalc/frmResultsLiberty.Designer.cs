@@ -33,10 +33,11 @@ namespace ErgoCalc
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.formsPlot2 = new ScottPlot.FormsPlot();
             this.formsPlot1 = new ScottPlot.FormsPlot();
+            this.formsPlot2 = new ScottPlot.FormsPlot();
+            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
+            this.formsPlot3 = new ScottPlot.FormsPlot();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -93,6 +94,41 @@ namespace ErgoCalc
             this.splitContainer2.SplitterDistance = 199;
             this.splitContainer2.TabIndex = 2;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 3;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.Controls.Add(this.formsPlot1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.formsPlot2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.formsPlot3, 2, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(687, 199);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // formsPlot1
+            // 
+            this.formsPlot1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formsPlot1.Location = new System.Drawing.Point(4, 3);
+            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot1.Name = "formsPlot1";
+            this.formsPlot1.Size = new System.Drawing.Size(221, 193);
+            this.formsPlot1.TabIndex = 3;
+            // 
+            // formsPlot2
+            // 
+            this.formsPlot2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formsPlot2.Location = new System.Drawing.Point(233, 3);
+            this.formsPlot2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot2.Name = "formsPlot2";
+            this.formsPlot2.Size = new System.Drawing.Size(221, 193);
+            this.formsPlot2.TabIndex = 2;
+            // 
             // rtbShowResult
             // 
             this.rtbShowResult.AcceptsTab = true;
@@ -108,39 +144,14 @@ namespace ErgoCalc
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
             // 
-            // tableLayoutPanel1
+            // formsPlot3
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.formsPlot1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.formsPlot2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(687, 199);
-            this.tableLayoutPanel1.TabIndex = 2;
-            // 
-            // formsPlot2
-            // 
-            this.formsPlot2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formsPlot2.Location = new System.Drawing.Point(347, 3);
-            this.formsPlot2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.formsPlot2.Name = "formsPlot2";
-            this.formsPlot2.Size = new System.Drawing.Size(336, 193);
-            this.formsPlot2.TabIndex = 2;
-            // 
-            // formsPlot1
-            // 
-            this.formsPlot1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formsPlot1.Location = new System.Drawing.Point(4, 3);
-            this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(335, 193);
-            this.formsPlot1.TabIndex = 3;
+            this.formsPlot3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formsPlot3.Location = new System.Drawing.Point(462, 3);
+            this.formsPlot3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot3.Name = "formsPlot3";
+            this.formsPlot3.Size = new System.Drawing.Size(221, 193);
+            this.formsPlot3.TabIndex = 4;
             // 
             // frmResultsLiberty
             // 
@@ -174,5 +185,6 @@ namespace ErgoCalc
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private ScottPlot.FormsPlot formsPlot1;
         private ScottPlot.FormsPlot formsPlot2;
+        private ScottPlot.FormsPlot formsPlot3;
     }
 }
