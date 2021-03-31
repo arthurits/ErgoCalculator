@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -69,6 +70,8 @@ namespace ErgoCalc
 
             gridVariables.Rows[7].Cells[0] = cellGender;
 
+            gridVariables.CurrentCellDirtyStateChanged += gridVariables_CurrentCellDirtyStateChanged;
+
             // Initialize private variable
             _data = new List<ModelLiberty>();
         }
@@ -86,14 +89,14 @@ namespace ErgoCalc
 
             for (int i = 0; i < gridVariables.ColumnCount; i++)
             {
-                item.type = (MNType)Convert.ToInt32(gridVariables[i, 0].Value);
-                item.data.HorzReach = Convert.ToDouble(gridVariables[i, 1].Value);
-                item.data.VertRangeM = Convert.ToDouble(gridVariables[i, 2].Value);
-                item.data.DistHorz = Convert.ToDouble(gridVariables[i, 3].Value);
-                item.data.DistVert = Convert.ToDouble(gridVariables[i, 4].Value);
-                item.data.VertHeight = Convert.ToDouble(gridVariables[i, 5].Value);
-                item.data.Freq = Convert.ToDouble(gridVariables[i, 6].Value);
-                item.gender = (MNGender)Convert.ToInt32(gridVariables[i, 7].Value);
+                item.data.type = (MNType)Convert.ToInt32(gridVariables[i, 0].Value);
+                item.data.HorzReach = IsValidNumber(gridVariables[i, 1].Value) ? Convert.ToDouble(gridVariables[i, 1].Value) : 0;
+                item.data.VertRangeM = IsValidNumber(gridVariables[i, 2].Value) ? Convert.ToDouble(gridVariables[i, 2].Value) : 0;
+                item.data.DistHorz = IsValidNumber(gridVariables[i, 3].Value) ? Convert.ToDouble(gridVariables[i, 3].Value) : 0;
+                item.data.DistVert = IsValidNumber(gridVariables[i, 4].Value) ? Convert.ToDouble(gridVariables[i, 4].Value) : 0;
+                item.data.VertHeight = IsValidNumber(gridVariables[i, 5].Value) ? Convert.ToDouble(gridVariables[i, 5].Value) : 0;
+                item.data.Freq = IsValidNumber(gridVariables[i, 6].Value) ? Convert.ToDouble(gridVariables[i, 6].Value) : 0;
+                item.data.gender = (MNGender)Convert.ToInt32(gridVariables[i, 7].Value);
                 _data.Add(item);
             }
         }
@@ -107,6 +110,46 @@ namespace ErgoCalc
                 for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
             else if (col < gridVariables.ColumnCount)
                 for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        }
+
+        void gridVariables_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            // Important to avoid running a 2nd time
+            // https://stackoverflow.com/questions/5652957/what-event-catches-a-change-of-value-in-a-combobox-in-a-datagridviewcell
+            if (!gridVariables.IsCurrentCellDirty) return;
+
+            var CurrentCell = gridVariables.CurrentCell;
+            if (CurrentCell is DataGridViewComboBoxCell)
+            {
+                // This fires the cell value changed (CellValueChanged) handler below
+                // By committing the current cell edition, this function will change
+                // the current cell dirty state (ie IsCurrentCellDirty),
+                // so it will indeed trigger again this event. Hence the first IF of the routine
+                // https://stackoverflow.com/questions/9608343/datagridview-combobox-column-change-cell-value-after-selection-from-dropdown-is/22327701
+                gridVariables.CommitEdit(DataGridViewDataErrorContexts.Commit); // this mofi
+
+                gridVariables.EndEdit();
+
+                DataGridViewColumn col = gridVariables.Columns[gridVariables.CurrentCell.ColumnIndex];
+
+                switch (CurrentCell.Value)
+                {
+                    case 0:     // Carrying
+                    case 3:     // Pulling
+                    case 4:     // Pushing
+                        gridVariables.Rows[1].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
+                        gridVariables.Rows[2].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
+                        gridVariables.Rows[4].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
+                        break;
+                    case 1:
+                    case 2:
+                        gridVariables.Rows[3].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
+                        gridVariables.Rows[5].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -170,18 +213,30 @@ namespace ErgoCalc
                 if (j > 0) AddColumn();
 
                 // Populate the DataGridView with data
-                gridVariables[j, 0].Value = (int)data[j].type;
+                gridVariables[j, 0].Value = (int)data[j].data.type;
                 gridVariables[j, 1].Value = data[j].data.HorzReach.ToString();
                 gridVariables[j, 2].Value = data[j].data.VertRangeM.ToString();
                 gridVariables[j, 3].Value = data[j].data.DistHorz.ToString();
                 gridVariables[j, 4].Value = data[j].data.DistVert.ToString();
                 gridVariables[j, 5].Value = data[j].data.VertHeight.ToString();
                 gridVariables[j, 6].Value = data[j].data.Freq.ToString();
-                gridVariables[j, 7].Value = (int)data[j].gender;
+                gridVariables[j, 7].Value = (int)data[j].data.gender;
             }
         }
 
         #endregion Private routines
+
+        private bool IsValidNumber(object str)
+        {
+            // https://stackoverflow.com/questions/894263/identify-if-a-string-is-a-number
+            // https://stackoverflow.com/questions/33939770/regex-for-decimal-number-validation-in-c-sharp
+            //string input = "132456789";
+            
+            if (str == null) return false;
+
+            Match m = Regex.Match(str.ToString(), @"^-?\+?[0-9]*\.?\,?[0-9]+$");
+            return m.Success && m.Value != "";
+        }
 
     }
 }

@@ -121,28 +121,41 @@ namespace ErgoCalc
             }
         }
 
+        private void ClearPlots()
+        {
+            formsPlot1.plt.GetPlottables().Clear();
+            formsPlot2.plt.GetPlottables().Clear();
+            formsPlot3.plt.GetPlottables().Clear();
+        }
+
         private void CreatePlots()
         {
             foreach (var data in _data)
             {
-                switch(data.type)
+                switch(data.data.type)
                 {
                     case MNType.Pulling:
                     case MNType.Pushing:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, MNType.Pulling);
-                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, MNType.Pushing);
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1);
+                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2);
                         break;
                     case MNType.Carrying:
                     case MNType.Lifting:
                     case MNType.Lowering:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, data.type);
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3);
                         break;
                 }
             }
             return;
         }
 
-        private void CreatePlot(double mean, double std,MNType type)
+        /// <summary>
+        /// Draws a gaussian distribution curve as well as the lower 90 percentile and the lower 75 percentile
+        /// </summary>
+        /// <param name="mean">Mean</param>
+        /// <param name="std">Standard deviation</param>
+        /// <param name="nPlot">Number of plot control: 1 for Initial force, 2 for sustained force, and 3 for weight</param>
+        private void CreatePlot(double mean, double std, int nPlot)
         {
             Random rand = new Random(0);
             double[] values = DataGen.RandomNormal(rand, pointCount: 1000, mean: mean, stdDev: std);
@@ -155,17 +168,15 @@ namespace ErgoCalc
             double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 
             ScottPlot.FormsPlot plot = null;
-            switch (type)
+            switch (nPlot)
             {
-                case MNType.Pulling:
+                case 1:
                     plot = formsPlot1;  // Initial force plot
                     break;
-                case MNType.Pushing:
-                    plot = formsPlot2;  // Sustained formce plot
+                case 2:
+                    plot = formsPlot2;  // Sustained force plot
                     break;
-                case MNType.Carrying:
-                case MNType.Lifting:
-                case MNType.Lowering:
+                case 3:
                     plot = formsPlot3;  // Weight plot
                     break;
             }
@@ -198,14 +209,14 @@ namespace ErgoCalc
 
                 writer.WritePropertyName("Data");
                 writer.WriteStartObject();
-                writer.WriteNumber("Type", (int)data.type);
+                writer.WriteNumber("Type", (int)data.data.type);
                 writer.WriteNumber("Horizontal reach (m)", data.data.HorzReach);
                 writer.WriteNumber("Vertical range middle (m)", data.data.VertRangeM);
                 writer.WriteNumber("Horizontal distance (m)", data.data.DistHorz);
                 writer.WriteNumber("Vertical distance (m)", data.data.DistVert);
                 writer.WriteNumber("Vertical height (m)", data.data.VertHeight);
                 writer.WriteNumber("Frequency (actions/min)", data.data.Freq);
-                writer.WriteNumber("Gender", (int)data.gender);
+                writer.WriteNumber("Gender", (int)data.data.gender);
                 writer.WriteEndObject();
                 
                 writer.WritePropertyName("Scale factors initial");
@@ -327,9 +338,9 @@ namespace ErgoCalc
                     // unsafe: Enum.IsDefined(typeof(MyEnum), value)
                     var value = curve.GetProperty("Data").GetProperty("Type").GetInt32();
                     if ((new[] { MNType.Carrying, MNType.Lifting, MNType.Lowering, MNType.Pulling, MNType.Pushing }).Contains((MNType)value))
-                        data.type = (MNType)value;
+                        data.data.type = (MNType)value;
                     else
-                        data.type = MNType.Carrying;
+                        data.data.type = MNType.Carrying;
 
                     data.data.HorzReach = curve.GetProperty("Data").GetProperty("Horizontal reach (m)").GetDouble();
                     data.data.VertRangeM = curve.GetProperty("Data").GetProperty("Vertical range middle (m)").GetDouble();
@@ -340,9 +351,9 @@ namespace ErgoCalc
                     
                     value = curve.GetProperty("Data").GetProperty("Gender").GetInt32();
                     if ((new[] { MNGender.Male, MNGender.Female }).Contains((MNGender)value))
-                        data.gender = (MNGender)value;
+                        data.data.gender = (MNGender)value;
                     else
-                        data.gender = MNGender.Male;
+                        data.data.gender = MNGender.Male;
 
                     data.Initial.RF = curve.GetProperty("Scale factors initial").GetProperty("Reference load (RF)").GetDouble();
                     data.Initial.H = curve.GetProperty("Scale factors initial").GetProperty("Horizontal reach factor (H)").GetDouble();
@@ -435,7 +446,7 @@ namespace ErgoCalc
                 rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
 
                 // Underline
-                nStart = rtbShowResult.Find("Intermediate results", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                nStart = rtbShowResult.Find("Scale factors", nStart + 1, -1, RichTextBoxFinds.MatchCase);
                 if (nStart == -1) break;
                 nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
                 rtbShowResult.Select(nStart, nEnd - nStart);
@@ -446,7 +457,7 @@ namespace ErgoCalc
             nStart = 0;
             while (true)
             {
-                nStart = rtbShowResult.Find("Maximum acceptable load", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                nStart = rtbShowResult.Find("Maximum acceptable limit", nStart + 1, -1, RichTextBoxFinds.MatchCase);
                 if (nStart == -1) break;
                 //nEnd = rtbShowResult.Text.Length;
                 nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
@@ -466,9 +477,7 @@ namespace ErgoCalc
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
                 _data = (List<ModelLiberty>)frm.GetData;
-                formsPlot1.plt.GetPlottables().Clear();
-                formsPlot2.plt.GetPlottables().Clear();
-                formsPlot3.plt.GetPlottables().Clear();
+                ClearPlots();
                 ShowResults();
             }
         }

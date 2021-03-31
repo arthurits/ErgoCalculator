@@ -1480,6 +1480,8 @@ namespace ErgoCalc
                 public double DistVert;    // The distance travelled vertically (DV) per lift or lower must not be lower than 0.25 m or exceed arm reach for the anthropometry being used
                 public double VertHeight;  // The vertical height of the hands (m)
                 public double Freq;        // The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
+                public MNType type;
+                public MNGender gender;
             };
 
             [StructLayout(LayoutKind.Sequential)]
@@ -1514,11 +1516,9 @@ namespace ErgoCalc
                 [MarshalAs(UnmanagedType.Struct)]
                 public DataLiberty data;         // Model data
                 [MarshalAs(UnmanagedType.Struct)]
-                public ResultsLiberty results;      // Model variables
+                //public ResultsLiberty results;      // Model variables
                 public ScaleFactors Initial;
                 public ScaleFactors Sustained;
-                public MNType type;
-                public MNGender gender;
             }
 
             public class CLibertyMutual
@@ -1552,13 +1552,12 @@ namespace ErgoCalc
                 
                 public override string ToString()
                 {
+                    // https://stackoverflow.com/questions/26235759/how-to-format-a-double-with-fixed-number-of-significant-digits-regardless-of-th
                     string strResult;
 
                     string[] strLineD = new string[9];
-                    string[] strLineF = new string[7];
-                    string[] strThresholds = new string[7];
-
-                    
+                    string[] strLineF = new string[12];
+                    string[] strThresholds = new string[13];
 
                     strLineD[0] = string.Concat(System.Environment.NewLine, "Initial data", "\t\t");
                     strLineD[1] = string.Concat(System.Environment.NewLine, "Manual handling type", "\t");
@@ -1570,89 +1569,138 @@ namespace ErgoCalc
                     strLineD[7] = string.Concat(System.Environment.NewLine, "Frequency F (actions/min)");
                     strLineD[8] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t");
 
-                    strLineF[0] = string.Concat(System.Environment.NewLine, "Intermediate results", "\t");
-                    strLineF[1] = string.Concat(System.Environment.NewLine, "Initial force (kgf)", "\t");
-                    strLineF[2] = string.Concat(System.Environment.NewLine, "Initial force CV", "\t");
-                    strLineF[3] = string.Concat(System.Environment.NewLine, "Sustained force (kgf)");
-                    strLineF[4] = string.Concat(System.Environment.NewLine, "Sustained force CV", "\t");
-                    strLineF[5] = string.Concat(System.Environment.NewLine, "Weight (kgf)", "\t\t");
-                    strLineF[6] = string.Concat(System.Environment.NewLine, "Weight CV", "\t\t");
-                    
-                    strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable load");
-                    strThresholds[1] = string.Concat(System.Environment.NewLine, "Initial force (kgf) for 75%");
-                    strThresholds[2] = string.Concat(System.Environment.NewLine, "Initial force (kgf) for 90%");
-                    strThresholds[3] = string.Concat(System.Environment.NewLine, "Sustained force (kgf) for 75%");
-                    strThresholds[4] = string.Concat(System.Environment.NewLine, "Sustained force (kgf) for 90%");
-                    strThresholds[5] = string.Concat(System.Environment.NewLine, "Maximum weight (kg) for 75%");
-                    strThresholds[6] = string.Concat(System.Environment.NewLine, "Maximum weight (kg) for 90%");
+                    strLineF[0] = string.Concat(System.Environment.NewLine, "Scale factors", "\t\t");
+                    strLineF[1] = string.Concat(System.Environment.NewLine, "Reference load", "\t");
+                    strLineF[2] = string.Concat(System.Environment.NewLine, "H factor", "\t\t");
+                    strLineF[3] = string.Concat(System.Environment.NewLine, "VRM factor", "\t\t");
+                    strLineF[4] = string.Concat(System.Environment.NewLine, "DH factor", "\t\t");
+                    strLineF[5] = string.Concat(System.Environment.NewLine, "DV factor", "\t\t");
+                    strLineF[6] = string.Concat(System.Environment.NewLine, "V factor", "\t\t");
+                    strLineF[7] = string.Concat(System.Environment.NewLine, "F factor", "\t\t");
+
+                    strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Reference load", "\t");
+                    strLineF[9] = string.Concat(System.Environment.NewLine, "Sustained DH factor", "\t");
+                    strLineF[10] = string.Concat(System.Environment.NewLine, "Sustained V factor", "\t");
+                    strLineF[11] = string.Concat(System.Environment.NewLine, "Sustained F factor", "\t");
+
+
+                    strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable limit");
+                    strThresholds[1] = string.Concat(System.Environment.NewLine, "CV initial force", "\t");
+                    strThresholds[2] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 50%");
+                    strThresholds[3] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 75%");
+                    strThresholds[4] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 90%");
+                    strThresholds[5] = string.Concat(System.Environment.NewLine, "CV sustained force", "\t");
+                    strThresholds[6] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 50%");
+                    strThresholds[7] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 75%");
+                    strThresholds[8] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 90%");
+                    strThresholds[9] = string.Concat(System.Environment.NewLine, "CV weight", "\t\t");
+                    strThresholds[10] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 50%");
+                    strThresholds[11] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 75%");
+                    strThresholds[12] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 90%");
 
                     int i = 0;
                     foreach (var data in _data)
                     {
                         strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-                        strLineD[1] += string.Concat("\t\t", data.type.ToString());
-                        strLineD[8] += string.Concat("\t\t", data.gender.ToString());
+                        strLineD[1] += string.Concat("\t\t", data.data.type.ToString());
+                        strLineD[8] += string.Concat("\t\t", data.data.gender.ToString());
                         
                         strLineF[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
                         
-                        strThresholds[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-                        if(data.type==MNType.Pulling || data.type == MNType.Pushing)
+                        strThresholds[0] += string.Concat(i == 0 ? "\t" : "\t\t", "Case ", ((char)('A' + i)).ToString());
+                        if (data.data.type == MNType.Pulling || data.data.type == MNType.Pushing)
                         {
                             strLineD[2] += string.Concat("\t\t", "------");
                             strLineD[3] += string.Concat("\t\t", "------");
-                            strLineD[4] += string.Concat("\t\t", "------");
-                            strLineD[5] += string.Concat("\t\t", data.data.DistVert.ToString("0.####"));
+                            // Convert.ToDouble(String.Format("{0:G3}", number)).ToString()
+                            //strLineD[4] += string.Concat("\t\t", data.data.DistHorz.ToString("0.####"));
+                            strLineD[4] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.data.DistHorz)).ToString());
+                            strLineD[5] += string.Concat("\t\t", "------");
                             strLineD[6] += string.Concat("\t\t", data.data.VertHeight.ToString("0.####"));
                             strLineD[7] += string.Concat("\t\t", data.data.Freq.ToString("0.####"));
 
-                            strLineF[1] += string.Concat("\t\t", data.results.IniForce.ToString("0.####"));
-                            strLineF[2] += string.Concat("\t\t", data.results.IniCoeffV.ToString("0.####"));
-                            strLineF[3] += string.Concat("\t\t", data.results.SusForce.ToString("0.####"));
-                            strLineF[4] += string.Concat("\t\t", data.results.SusCoeffV.ToString("0.####"));
+                            strLineF[1] += string.Concat("\t\t", data.Initial.RF.ToString("0.####"));
+                            strLineF[2] += string.Concat("\t\t", "------");
+                            strLineF[3] += string.Concat("\t\t", "------");
+                            strLineF[4] += string.Concat("\t\t", data.Initial.DH.ToString("0.####"));
                             strLineF[5] += string.Concat("\t\t", "------");
-                            strLineF[6] += string.Concat("\t\t", "------");
+                            strLineF[6] += string.Concat("\t\t", data.Initial.V.ToString("0.####"));
+                            strLineF[7] += string.Concat("\t\t", data.Initial.F.ToString("0.####"));
 
-                            strThresholds[1] += string.Concat("\t\t", data.results.IniForce.ToString("0.####"));
-                            strThresholds[2] += string.Concat("\t\t", data.results.IniForce.ToString("0.####"));
-                            strThresholds[3] += string.Concat(i == 0 ? "\t" : "\t\t", data.results.SusForce.ToString("0.####"));
-                            strThresholds[4] += string.Concat(i == 0 ? "\t" : "\t\t", data.results.SusForce.ToString("0.####"));
-                            strThresholds[5] += string.Concat("\t\t", "------");
-                            strThresholds[6] += string.Concat("\t\t", "------");
+                            strLineF[8] += string.Concat("\t\t", data.Sustained.RF.ToString("0.####"));
+                            strLineF[9] += string.Concat("\t\t", data.Sustained.DH.ToString("0.####"));
+                            strLineF[10] += string.Concat("\t\t", data.Sustained.V.ToString("0.####"));
+                            strLineF[11] += string.Concat("\t\t", data.Sustained.F.ToString("0.####"));
+
+                            strThresholds[1] += string.Concat("\t\t", data.Initial.CV.ToString("0.####"));
+                            strThresholds[2] += string.Concat("\t\t", data.Initial.MAL.ToString("0.####"));
+                            strThresholds[3] += string.Concat("\t\t", data.Initial.MAL75.ToString("0.####"));
+                            strThresholds[4] += string.Concat("\t\t", data.Initial.MAL90.ToString("0.####"));
+                            strThresholds[5] += string.Concat("\t\t", data.Sustained.CV.ToString("0.####"));
+                            strThresholds[6] += string.Concat("\t\t", data.Sustained.MAL.ToString("0.####"));
+                            strThresholds[7] += string.Concat("\t\t", data.Sustained.MAL75.ToString("0.####"));
+                            strThresholds[8] += string.Concat("\t\t", data.Sustained.MAL90.ToString("0.####"));
+                            strThresholds[9] += string.Concat("\t\t", "------");
+                            strThresholds[10] += string.Concat("\t\t", "------");
+                            strThresholds[11] += string.Concat("\t\t", "------");
+                            strThresholds[12] += string.Concat("\t\t", "------");
                         }
                         else // Lift, lower, and carry
                         {
-                            if (data.type == MNType.Carrying)
+                            if (data.data.type == MNType.Carrying)
                             {
                                 strLineD[2] += string.Concat("\t\t", "------");
                                 strLineD[3] += string.Concat("\t\t", "------");
-                                strLineD[4] += string.Concat("\t\t", "------");
-                                strLineD[5] += string.Concat("\t\t", data.data.DistVert.ToString("0.####"));
+                                strLineD[4] += string.Concat("\t\t", data.data.DistHorz.ToString("0.####"));
+                                strLineD[5] += string.Concat("\t\t", "------");
                                 strLineD[6] += string.Concat("\t\t", data.data.VertHeight.ToString("0.####"));
                                 strLineD[7] += string.Concat("\t\t", data.data.Freq.ToString("0.####"));
+
+                                strLineF[1] += string.Concat("\t\t", data.Initial.RF.ToString("0.####"));
+                                strLineF[2] += string.Concat("\t\t", "------");
+                                strLineF[3] += string.Concat("\t\t", "------");
+                                strLineF[4] += string.Concat("\t\t", data.Initial.DV.ToString("0.####"));
+                                strLineF[5] += string.Concat("\t\t", "------");
+                                strLineF[6] += string.Concat("\t\t", data.Initial.V.ToString("0.####"));
+                                strLineF[7] += string.Concat("\t\t", data.Initial.F.ToString("0.####"));
                             }
                             else //lift and lower
                             {
-                                strLineD[2] += string.Concat("\t\t", data.data.HorzReach.ToString("0.####"));
+                                //strLineD[2] += string.Concat("\t\t", data.data.HorzReach.ToString("0.####"));
+                                strLineD[2] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.data.HorzReach)).ToString());
                                 strLineD[3] += string.Concat("\t\t", data.data.VertRangeM.ToString("0.####"));
                                 strLineD[4] += string.Concat("\t\t", "------");
                                 strLineD[5] += string.Concat("\t\t", data.data.DistVert.ToString("0.####"));
                                 strLineD[6] += string.Concat("\t\t", "------");
                                 strLineD[7] += string.Concat("\t\t", data.data.Freq.ToString("0.####"));
+
+                                strLineF[1] += string.Concat("\t\t", data.Initial.RF.ToString("0.####"));
+                                strLineF[2] += string.Concat("\t\t", data.Initial.H.ToString("0.####"));
+                                strLineF[3] += string.Concat("\t\t", data.Initial.VRM.ToString("0.####"));
+                                strLineF[4] += string.Concat("\t\t", "------");
+                                strLineF[5] += string.Concat("\t\t", data.Initial.DV.ToString("0.####"));
+                                strLineF[6] += string.Concat("\t\t", "------");
+                                strLineF[7] += string.Concat("\t\t", data.Initial.F.ToString("0.####"));
                             }
 
-                            strLineF[1] += string.Concat("\t\t", "------");
-                            strLineF[2] += string.Concat("\t\t", "------");
-                            strLineF[3] += string.Concat("\t\t", "------");
-                            strLineF[4] += string.Concat("\t\t", "------");
-                            strLineF[5] += string.Concat("\t\t", data.results.Weight.ToString("0.####"));
-                            strLineF[6] += string.Concat("\t\t", data.results.IniCoeffV.ToString("0.####"));
+                            strLineF[8] += string.Concat("\t\t", "------");
+                            strLineF[9] += string.Concat("\t\t", "------");
+                            strLineF[10] += string.Concat("\t\t", "------");
+                            strLineF[11] += string.Concat("\t\t", "------");
 
                             strThresholds[1] += string.Concat("\t\t", "------");
                             strThresholds[2] += string.Concat("\t\t", "------");
-                            strThresholds[3] += string.Concat(i == 0 ? "\t" : "\t\t", "------");
-                            strThresholds[4] += string.Concat(i == 0 ? "\t" : "\t\t", "------");
-                            strThresholds[5] += string.Concat("\t\t", data.results.Weight.ToString("0.####"));
-                            strThresholds[6] += string.Concat("\t\t", data.results.Weight.ToString("0.####"));
+                            strThresholds[3] += string.Concat("\t\t", "------");
+                            strThresholds[4] += string.Concat("\t\t", "------");
+                            strThresholds[5] += string.Concat("\t\t", "------");
+                            strThresholds[6] += string.Concat("\t\t", "------");
+                            strThresholds[7] += string.Concat("\t\t", "------");
+                            strThresholds[8] += string.Concat("\t\t", "------");
+                            strThresholds[9] += string.Concat("\t\t", data.Initial.CV.ToString("0.####"));
+                            //strThresholds[10] += string.Concat("\t\t", data.Initial.MAL.ToString("0.####"));
+                            strThresholds[10] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString());
+                            strThresholds[11] += string.Concat("\t\t", data.Initial.MAL75.ToString("0.####"));
+                            strThresholds[12] += string.Concat("\t\t", data.Initial.MAL90.ToString("0.####"));
                         }
 
                         i++;
