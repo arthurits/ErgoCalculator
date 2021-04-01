@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,6 +24,7 @@ namespace ErgoCalc
         public frmDataLiberty()
         {
             InitializeComponent();
+            
             // Create the first column (zero index base)
             AddColumn();
 
@@ -85,20 +85,72 @@ namespace ErgoCalc
         #region Form events
         private void btnOK_Click(object sender, EventArgs e)
         {
-            ModelLiberty item = new ModelLiberty();
+            // The form does not return unless all fields are validated. This avoids closing the dialog
+            this.DialogResult = DialogResult.None;
 
+            // Validate each data starting from column 0
+            ModelLiberty item = new ModelLiberty();
             for (int i = 0; i < gridVariables.ColumnCount; i++)
             {
                 item.data.type = (MNType)Convert.ToInt32(gridVariables[i, 0].Value);
-                item.data.HorzReach = IsValidNumber(gridVariables[i, 1].Value) ? Convert.ToDouble(gridVariables[i, 1].Value) : 0;
-                item.data.VertRangeM = IsValidNumber(gridVariables[i, 2].Value) ? Convert.ToDouble(gridVariables[i, 2].Value) : 0;
-                item.data.DistHorz = IsValidNumber(gridVariables[i, 3].Value) ? Convert.ToDouble(gridVariables[i, 3].Value) : 0;
-                item.data.DistVert = IsValidNumber(gridVariables[i, 4].Value) ? Convert.ToDouble(gridVariables[i, 4].Value) : 0;
-                item.data.VertHeight = IsValidNumber(gridVariables[i, 5].Value) ? Convert.ToDouble(gridVariables[i, 5].Value) : 0;
-                item.data.Freq = IsValidNumber(gridVariables[i, 6].Value) ? Convert.ToDouble(gridVariables[i, 6].Value) : 0;
                 item.data.gender = (MNGender)Convert.ToInt32(gridVariables[i, 7].Value);
-                _data.Add(item);
+
+                if (item.data.type == MNType.Lifting || item.data.type == MNType.Lowering)
+                {
+                    if (item.data.gender == MNGender.Male)
+                    {
+                        if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.25, 0.73, true)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 2.14, true)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 2.14, true)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                    }
+                    else
+                    {
+                        if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.20, 0.68, true)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 1.96, true)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 1.96, true)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                    }
+                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 20.0, true)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                }
+                else if (item.data.type == MNType.Pulling || item.data.type == MNType.Pushing)
+                {
+                    if (item.data.gender == MNGender.Male)
+                    {
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.63, 1.44, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    }
+                    else
+                    {
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.58, 1.33, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    }
+                    if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 61.0, true)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                }
+                else if (item.data.type == MNType.Carrying)
+                {
+                    if (item.data.gender == MNGender.Male)
+                    {
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.78, 1.10, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    }
+                    else
+                    {
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.71, 1.03, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    }
+                    if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 10.0, true)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                }
+
+                item.data.HorzReach = Validation.ValidateNumber(gridVariables[i, 1].Value);
+                item.data.VertRangeM = Validation.ValidateNumber(gridVariables[i, 2].Value);
+                item.data.DistHorz = Validation.ValidateNumber(gridVariables[i, 3].Value);
+                item.data.DistVert = Validation.ValidateNumber(gridVariables[i, 4].Value);
+                item.data.VertHeight = Validation.ValidateNumber(gridVariables[i, 5].Value);
+                item.data.Freq = Validation.ValidateNumber(gridVariables[i, 6].Value);
+
+                // Save the column data once it's been approved
+                _data.Add(item);    
             }
+
+            // Return OK thus closing the dialog
+            this.DialogResult = DialogResult.OK;
         }
 
         private void updSubtasks_ValueChanged(object sender, EventArgs e)
@@ -114,42 +166,44 @@ namespace ErgoCalc
 
         void gridVariables_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
+            var CurrentCell = gridVariables.CurrentCell;
+            if (!(CurrentCell is DataGridViewComboBoxCell)) return;
+            if (((DataGridViewComboBoxCell)CurrentCell).DisplayMember != "Type") return;
+
             // Important to avoid running a 2nd time
             // https://stackoverflow.com/questions/5652957/what-event-catches-a-change-of-value-in-a-combobox-in-a-datagridviewcell
             if (!gridVariables.IsCurrentCellDirty) return;
 
-            var CurrentCell = gridVariables.CurrentCell;
-            if (CurrentCell is DataGridViewComboBoxCell)
+
+            // This fires the cell value changed (CellValueChanged) handler below
+            // By committing the current cell edition, this function will change
+            // the current cell dirty state (ie IsCurrentCellDirty),
+            // so it will indeed trigger again this event. Hence the 3rd IF of this routine
+            // https://stackoverflow.com/questions/9608343/datagridview-combobox-column-change-cell-value-after-selection-from-dropdown-is/22327701
+            gridVariables.CommitEdit(DataGridViewDataErrorContexts.Commit);
+
+            gridVariables.EndEdit();
+
+            DataGridViewColumn col = gridVariables.Columns[gridVariables.CurrentCell.ColumnIndex];
+
+            switch (CurrentCell.Value)
             {
-                // This fires the cell value changed (CellValueChanged) handler below
-                // By committing the current cell edition, this function will change
-                // the current cell dirty state (ie IsCurrentCellDirty),
-                // so it will indeed trigger again this event. Hence the first IF of the routine
-                // https://stackoverflow.com/questions/9608343/datagridview-combobox-column-change-cell-value-after-selection-from-dropdown-is/22327701
-                gridVariables.CommitEdit(DataGridViewDataErrorContexts.Commit); // this mofi
-
-                gridVariables.EndEdit();
-
-                DataGridViewColumn col = gridVariables.Columns[gridVariables.CurrentCell.ColumnIndex];
-
-                switch (CurrentCell.Value)
-                {
-                    case 0:     // Carrying
-                    case 3:     // Pulling
-                    case 4:     // Pushing
-                        gridVariables.Rows[1].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
-                        gridVariables.Rows[2].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
-                        gridVariables.Rows[4].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
-                        break;
-                    case 1:
-                    case 2:
-                        gridVariables.Rows[3].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
-                        gridVariables.Rows[5].Cells[gridVariables.CurrentCell.ColumnIndex].Value = "——";
-                        break;
-                    default:
-                        break;
-                }
+                case 0:     // Carrying
+                case 3:     // Pulling
+                case 4:     // Pushing
+                    gridVariables.Rows[1].Cells[CurrentCell.ColumnIndex].Value = "——";
+                    gridVariables.Rows[2].Cells[CurrentCell.ColumnIndex].Value = "——";
+                    gridVariables.Rows[4].Cells[CurrentCell.ColumnIndex].Value = "——";
+                    break;
+                case 1:
+                case 2:
+                    gridVariables.Rows[3].Cells[CurrentCell.ColumnIndex].Value = "——";
+                    gridVariables.Rows[5].Cells[CurrentCell.ColumnIndex].Value = "——";
+                    break;
+                default:
+                    break;
             }
+
         }
 
         private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -221,22 +275,23 @@ namespace ErgoCalc
                 gridVariables[j, 5].Value = data[j].data.VertHeight.ToString();
                 gridVariables[j, 6].Value = data[j].data.Freq.ToString();
                 gridVariables[j, 7].Value = (int)data[j].data.gender;
+
+                if ((data[j].data.type == MNType.Pulling) || (data[j].data.type == MNType.Pushing))
+                {
+                    gridVariables[j, 1].Value = "——";
+                    gridVariables[j, 2].Value = "——";
+                    gridVariables[j, 4].Value = "——";
+                }
+                else
+                {
+                    gridVariables[j, 3].Value = "——";
+                    gridVariables[j, 5].Value = "——";
+                }
+
             }
         }
 
         #endregion Private routines
-
-        private bool IsValidNumber(object str)
-        {
-            // https://stackoverflow.com/questions/894263/identify-if-a-string-is-a-number
-            // https://stackoverflow.com/questions/33939770/regex-for-decimal-number-validation-in-c-sharp
-            //string input = "132456789";
-            
-            if (str == null) return false;
-
-            Match m = Regex.Match(str.ToString(), @"^-?\+?[0-9]*\.?\,?[0-9]+$");
-            return m.Success && m.Value != "";
-        }
 
     }
 }

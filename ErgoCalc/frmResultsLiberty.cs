@@ -192,6 +192,7 @@ namespace ErgoCalc
             plot.plt.PlotVLine(x: limit75, label: "75%", color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
             plot.plt.PlotVLine(x: limit90, label: "90%", color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
             plot.plt.Axis(y1: 0, y2: null);
+            plot.plt.AxisAutoX();
             plot.Render();
         }
 

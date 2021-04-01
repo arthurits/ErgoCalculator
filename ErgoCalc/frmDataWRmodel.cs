@@ -11,15 +11,29 @@ using System.Windows.Forms;
 
 namespace ErgoCalc
 {
-    public partial class frmDataWRmodel : Form
+    public partial class frmDataWRmodel : Form, IChildData
     {
         // Propiedades de la clase
-        public Models.WRmodel.datosWR _datos;
+        public Models.WRmodel.datosWR _data;
         private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDataWRmodel));
+
+        public object GetData => _data;
 
         public frmDataWRmodel()
         {
             InitializeComponent();
+
+            AddColumn();
+
+            // Create the header rows
+            gridVariables.RowCount = 5;
+            gridVariables.Rows[0].HeaderCell.Value = "Maximum voluntary contraction (MVC)";
+            gridVariables.Rows[1].HeaderCell.Value = "Working times (min)";
+            gridVariables.Rows[2].HeaderCell.Value = "Rest times (min)";
+            gridVariables.Rows[3].HeaderCell.Value = "Number of cycles";
+            gridVariables.Rows[4].HeaderCell.Value = "Numeric step";
+
+            gridVariables[0, 4].Value = 0.1;
 
             // Rellenar el valor por defecto de los cuadros de texto
             txtMVC.Text = "15";
@@ -55,7 +69,7 @@ namespace ErgoCalc
                 strTexto += d.ToString() + strEspacio;
             txtTD.Text = strTexto.TrimEnd(strEspacio.ToCharArray());
 
-            _datos._dPaso = datos._dPaso;
+            _data._dPaso = datos._dPaso;
 
             // Funciona pero requiere C# 3
             /*long[] numbers = new long[] { 1, 2, 3};
@@ -65,23 +79,96 @@ namespace ErgoCalc
 
         public Models.WRmodel.datosWR getData()
         {
-            return _datos;
+            return _data;
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            // The form does not return unless all fields are validated
+            this.DialogResult = DialogResult.None;
 
+            // Validation routines
             if (ValidarMVC() != true) { txtMVC.Focus(); return; }
             if (ValidarTT() != true) { return; }
             if (ValidarC() != true) { txtCiclos.Focus(); return; }
             if (ValidarPaso() != true) { txtPaso.Focus(); return; }
 
-            // Calcular
-
-            // Salir y cerrar el formulario
+            // Return OK and close the dialog
             this.DialogResult = DialogResult.OK;
-            this.Close();
         }
+
+        #region Private routines
+        /// <summary>
+        /// Adds a column to the DataGrid View and formates it
+        /// </summary>
+        /// <param name="col">Column number (zero based)</param>
+        private void AddColumn(Int32 col)
+        {
+            // By default, the DataGrid always contains a single column
+            //if (col == 0) return;
+            if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+
+            string strName = "Case ";
+            //if (_index != IndexType.RSI) strName = "SubTask ";
+
+            // Create the new column
+            gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
+            gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
+            gridVariables.Columns[col].Width = 70;
+
+            if (col > 0) gridVariables[col, 4].Value = 0.1;
+
+            return;
+        }
+
+        /// <summary>
+        /// Adds a column to the DataGrid View and formates it
+        /// </summary>
+        private void AddColumn()
+        {
+            AddColumn(gridVariables.Columns.Count);
+        }
+
+        /// <summary>
+        /// Shows the data into the grid control
+        /// </summary>
+        //private void DataToGrid(List<ModelLiberty> data)
+        //{
+        //    int nDataNumber = data.Count;
+
+        //    updTasks.Value = nDataNumber;
+
+        //    for (var j = 0; j < nDataNumber; j++)
+        //    {
+        //        //Column 0 is already created in the constructor;
+        //        if (j > 0) AddColumn();
+
+        //        // Populate the DataGridView with data
+        //        gridVariables[j, 0].Value = (int)data[j].data.type;
+        //        gridVariables[j, 1].Value = data[j].data.HorzReach.ToString();
+        //        gridVariables[j, 2].Value = data[j].data.VertRangeM.ToString();
+        //        gridVariables[j, 3].Value = data[j].data.DistHorz.ToString();
+        //        gridVariables[j, 4].Value = data[j].data.DistVert.ToString();
+        //        gridVariables[j, 5].Value = data[j].data.VertHeight.ToString();
+        //        gridVariables[j, 6].Value = data[j].data.Freq.ToString();
+        //        gridVariables[j, 7].Value = (int)data[j].data.gender;
+
+        //        if ((data[j].data.type == MNType.Pulling) || (data[j].data.type == MNType.Pushing))
+        //        {
+        //            gridVariables[j, 1].Value = "——";
+        //            gridVariables[j, 2].Value = "——";
+        //            gridVariables[j, 4].Value = "——";
+        //        }
+        //        else
+        //        {
+        //            gridVariables[j, 3].Value = "——";
+        //            gridVariables[j, 5].Value = "——";
+        //        }
+
+        //    }
+        //}
+
+        #endregion Private routines
 
         #region Eventos de los TextBox
 
@@ -92,7 +179,7 @@ namespace ErgoCalc
                 /*if (ValidarMVC() == false)
                     this.txtMVC.Focus();
                 else*/
-                    this.lblTDmax.Text = _datos._dMHT.ToString("##.00", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"));
+                    this.lblTDmax.Text = _data._dMHT.ToString("##.00", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"));
             }
         }
 
@@ -139,10 +226,10 @@ namespace ErgoCalc
                     throw new FieldLength(_resources.GetString("errorValidarMVCFieldLength"));
 
                 // Pasar el dato a doble
-                _datos._dMVC = Convert.ToDouble(txtMVC.Text);
+                _data._dMVC = Convert.ToDouble(txtMVC.Text);
 
                 // Comprobar que el valor está comprendido entre 0 y 100
-                if (_datos._dMVC <= 0 | _datos._dMVC >= 100)
+                if (_data._dMVC <= 0 | _data._dMVC >= 100)
                 {
                     //throw new InvalidRange("El valor de MVC debe estar\n comprendido entre 0 y 100");
                     throw new InvalidRange(_resources.GetString("errorValidarMVCInvalidRange"));
@@ -150,7 +237,7 @@ namespace ErgoCalc
 
                 // Una vez comprobado que el dato es correcto, se calcula el MHT
                 //_datos._dMHT = modelo.Sjogaard(_datos._dMVC);
-                _datos._dMHT = 5710.0 / Math.Pow(_datos._dMVC, 2.14);
+                _data._dMHT = 5710.0 / Math.Pow(_data._dMVC, 2.14);
 
                 // Finalizar
                 return true;
@@ -209,9 +296,9 @@ namespace ErgoCalc
                 }
 
                 // Dimensionar las matrices (elementos: espacios_blanco + 1)
-                _datos._dWorkRest = new double[2][];
-                _datos._dWorkRest[0] = new double[++bPosición];
-                _datos._dWorkRest[1] = new double[bPosición];
+                _data._dWorkRest = new double[2][];
+                _data._dWorkRest[0] = new double[++bPosición];
+                _data._dWorkRest[1] = new double[bPosición];
                 //_datos._dWorkRestDrop = new double[bPosición];
                 //_datos._dWorkRestY = new double[2][];
                 //_datos._dWorkRestY[0] = new double[bPosición];
@@ -226,14 +313,14 @@ namespace ErgoCalc
                     {
                         subcadena = cadenaT.Substring(bPosiciónAnt, bPosición - bPosiciónAnt);
                         número = Convert.ToDouble(subcadena);
-                        if (número > _datos._dMHT)
+                        if (número > _data._dMHT)
                         {
                             //strError = String.Format("Los tiempos de trabajo deben ser\ninferiores a {0:0.00} min", datos._dMHT);
-                            strError = String.Format(_resources.GetString("errorValidarTTInvalidRange"), _datos._dMHT);
+                            strError = String.Format(_resources.GetString("errorValidarTTInvalidRange"), _data._dMHT);
                             throw new InvalidRange(strError);
                         }
 
-                        _datos._dWorkRest[0][bEspacio] = número;
+                        _data._dWorkRest[0][bEspacio] = número;
                         //_datos._dWorkRestDrop[bEspacio] = 100 * número / _datos._dMHT;
 
                         bPosiciónAnt = bPosición;
@@ -244,13 +331,13 @@ namespace ErgoCalc
                 }
                 subcadena = cadenaT.Substring(bPosiciónAnt, bPosición - bPosiciónAnt);
                 número = Convert.ToDouble(subcadena);
-                if (número > _datos._dMHT)
+                if (número > _data._dMHT)
                 {
                     //strError = String.Format("Los tiempos de trabajo deben ser\ninferiores a {0:0.00} min", datos._dMHT);
-                    strError = String.Format(_resources.GetString("errorValidarTTInvalidRange"), _datos._dMHT);
+                    strError = String.Format(_resources.GetString("errorValidarTTInvalidRange"), _data._dMHT);
                     throw new InvalidRange(strError);
                 }
-                _datos._dWorkRest[0][bEspacio] = Convert.ToDouble(subcadena);
+                _data._dWorkRest[0][bEspacio] = Convert.ToDouble(subcadena);
                 //_datos._dWorkRestDrop[bEspacio] = 100 * _datos._dWorkRest[0][bEspacio] / _datos._dMHT;
                 
                 bEspacio = 0;
@@ -262,7 +349,7 @@ namespace ErgoCalc
                     {
                         subcadena = cadenaD.Substring(bPosiciónAnt, bPosición - bPosiciónAnt);
                         número = Convert.ToDouble(subcadena);
-                        _datos._dWorkRest[1][bEspacio] = número;
+                        _data._dWorkRest[1][bEspacio] = número;
                         //_datos._dWorkRestY[1][bEspacio] = 100 * número / _datos._dMHT;
                         bPosiciónAnt = bPosición;
                         ++bPosiciónAnt;
@@ -271,7 +358,7 @@ namespace ErgoCalc
                     ++bPosición;
                 }
                 subcadena = cadenaD.Substring(bPosiciónAnt, bPosición - bPosiciónAnt);
-                _datos._dWorkRest[1][bEspacio] = Convert.ToDouble(subcadena);
+                _data._dWorkRest[1][bEspacio] = Convert.ToDouble(subcadena);
                 //_datos._dWorkRestY[1][bEspacio] = 100 * _datos._dWorkRest[1][bEspacio] / _datos._dMHT;
 
                 // Finalizar
@@ -298,7 +385,7 @@ namespace ErgoCalc
             {
                 // Pasar el dato a byte
                 if (txtCiclos.Text.Length > 0)
-                    _datos._bCiclos = Convert.ToByte(txtCiclos.Text);
+                    _data._bCiclos = Convert.ToByte(txtCiclos.Text);
                 else
                 {
                     txtCiclos.Text = "1";
@@ -341,28 +428,28 @@ namespace ErgoCalc
                 }
 
                 // Pasar el dato a doble
-                _datos._dPaso = Convert.ToDouble(txtPaso.Text);
+                _data._dPaso = Convert.ToDouble(txtPaso.Text);
 
                 // Comprobar que es un dato positivo
-                if (_datos._dPaso <= 0)
+                if (_data._dPaso <= 0)
                     throw new InvalidRange(_resources.GetString("errorValidarPasoInvalidRange"));
 
                 // Cálculo del número de puntos de la curva y comprobar que cada tiempo de descanso
                 //  entre el paso es un entero
-                nSize = _datos._bCiclos * _datos._dWorkRest[0].Length + 1;
-                foreach (double d in _datos._dWorkRest[1])
+                nSize = _data._bCiclos * _data._dWorkRest[0].Length + 1;
+                foreach (double d in _data._dWorkRest[1])
                 {
                     // La opción más corta sería utilizar el operador %, pero no funciona del todo bien
-                    if (Math.Abs(d / _datos._dPaso - Math.Floor(d / _datos._dPaso)) >= 0.001)
+                    if (Math.Abs(d / _data._dPaso - Math.Floor(d / _data._dPaso)) >= 0.001)
                         throw new NotAnInteger(_resources.GetString("errorValidarPasoNotAnInteger"));
 
-                    nSize += ((d / _datos._dPaso)) * _datos._bCiclos;
+                    nSize += ((d / _data._dPaso)) * _data._bCiclos;
                 }
 
-                _datos._nPuntos = Convert.ToInt32(nSize);
-                _datos._dPoints = new double[2][];
-                _datos._dPoints[0] = new double[_datos._nPuntos];
-                _datos._dPoints[1] = new double[_datos._nPuntos];
+                _data._nPuntos = Convert.ToInt32(nSize);
+                _data._dPoints = new double[2][];
+                _data._dPoints[0] = new double[_data._nPuntos];
+                _data._dPoints[1] = new double[_data._nPuntos];
 
             }
             catch (Exception e)
@@ -379,5 +466,16 @@ namespace ErgoCalc
         }
 
         #endregion
+
+        private void updTasks_ValueChanged(object sender, EventArgs e)
+        {
+            Int32 col = Convert.ToInt32(updTasks.Value);
+
+            // Add or remove columns
+            if (col > gridVariables.ColumnCount)
+                for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
+            else if (col < gridVariables.ColumnCount)
+                for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        }
     }
 }
