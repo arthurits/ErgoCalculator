@@ -90,5 +90,17 @@ namespace ErgoCalc
             return m.Success && m.Value != "";
         }
 
+        public static bool IsValidInteger(object str)
+        {
+            // https://stackoverflow.com/questions/894263/identify-if-a-string-is-a-number
+            // https://stackoverflow.com/questions/33939770/regex-for-decimal-number-validation-in-c-sharp
+            //string input = "132456789";
+
+            if (str == null) return false;
+
+            var m = System.Text.RegularExpressions.Regex.Match(str.ToString(), @"^-?\+?[0-9]+$");
+            return m.Success && m.Value != "";
+        }
+
     }
 }

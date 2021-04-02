@@ -57,10 +57,10 @@ namespace ErgoCalc
             
         }
 
-        public frmWRmodel(datosWR datos)
+        public frmWRmodel(object datos)
             :this()
         {
-            _datos.Add(datos);
+            _datos = (List<datosWR>)datos;
             CalcularCurva();
             _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
         }
@@ -208,10 +208,11 @@ namespace ErgoCalc
         private void toolStripWR_AddLine_Click(object sender, EventArgs e)
         {
             // Llamar al formulario para introducir los datos
-            frmDataWRmodel frmDatosWR = new frmDataWRmodel();
+            frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos);
             if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
             {
-                _datos.Add(frmDatosWR.getData());
+                _datos = (List<datosWR>)frmDatosWR.GetData;
+                //_datos.Add(frmDatosWR.getData());
                 CalcularCurva();
                 _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
                 propertyGrid1.Refresh();
@@ -393,11 +394,12 @@ namespace ErgoCalc
         public void EditData()
         {
             // Show the form with the data in order to edit it
-            frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos.Last());
+            frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos);
             if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
             {
                 // Get the edited input data
-                _datos.Add(frmDatosWR.getData());
+                _datos = (List<datosWR>)frmDatosWR.GetData;
+                //_datos.Add(frmDatosWR.getData());
                 chart.plt.Clear();
                 CalcularCurva();
                 _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
@@ -410,7 +412,7 @@ namespace ErgoCalc
             string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
             // Mostrar la ventana de resultados
-            frmWRmodel frmResults = new frmWRmodel(_datos.Last())
+            frmWRmodel frmResults = new frmWRmodel(_datos)
             {
                 MdiParent = this.MdiParent
             };

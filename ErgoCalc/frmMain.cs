@@ -209,7 +209,7 @@ namespace ErgoCalc
                     if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
                     {
                         // Mostrar la ventana de resultados
-                        frmWRmodel frmWR = new frmWRmodel(frmDatosWR.getData());
+                        frmWRmodel frmWR = new frmWRmodel(frmDatosWR.GetData);
                         frmWR.MdiParent = this;
                         if (File.Exists(_strPath + @"\images\logo.ico")) frmWR.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmWR.Show();
