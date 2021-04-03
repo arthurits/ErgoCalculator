@@ -181,8 +181,12 @@ namespace ErgoCalc
             {
                 public double _dMVC;
                 public double _dMHT;
-                public double[][] _dPoints;
-                public double[][] _dWorkRest;
+                //public double[][] _dPoints;
+                public double[] _dPointsX;
+                public double[] _dPointsY;
+                //public double[][] _dWorkRest;
+                public double[] _dWork;
+                public double[] _dRest;
                 //public double[] _dWorkRestDrop;
                 public double _dPaso;
                 public int _nCurva;
@@ -197,21 +201,21 @@ namespace ErgoCalc
                     System.String strTiempoD = "";
                     char[] charEspacio = { ' ' };
 
-                    foreach (double d in _dWorkRest[0])
+                    foreach (double d in _dWork)
                         strTiempoT += d.ToString() + " ";
                     strTiempoT = strTiempoT.TrimEnd(charEspacio);
 
-                    foreach (double d in _dWorkRest[1])
+                    foreach (double d in _dRest)
                         strTiempoD += d.ToString() + " ";
                     strTiempoD = strTiempoD.TrimEnd(charEspacio);
 
                     strCadena = "[Maximum voluntary contraction]: " + _dMVC.ToString() + "\r\n";
                     strCadena += "[Maximum holding time (min)]: " + _dMHT.ToString() + "\r\n";
-                    strCadena += "[Ciclos de trabajo (min)]: " + strTiempoT + "\r\n";
-                    strCadena += "[Ciclos de descanso (min)]: " + strTiempoD + "\r\n";
-                    strCadena += "[Número de ciclos]: " + _bCiclos.ToString() + "\r\n";
-                    strCadena += "[Paso]: " + _dPaso.ToString() + "\r\n";
-                    strCadena += "[Número de curva]: " + _nCurva.ToString();
+                    strCadena += "[Work times (min)]: " + strTiempoT + "\r\n";
+                    strCadena += "[Rest times (min)]: " + strTiempoD + "\r\n";
+                    strCadena += "[Number of cycles]: " + _bCiclos.ToString() + "\r\n";
+                    strCadena += "[Step]: " + _dPaso.ToString() + "\r\n";
+                    strCadena += "[Curve number]: " + _nCurva.ToString();
                     return strCadena;
                 }
 
@@ -273,11 +277,11 @@ namespace ErgoCalc
                     
                     try
                     {    
-                        WRCurve(datos._dWorkRest[0],
-                            datos._dWorkRest[1],
-                            datos._dWorkRest[0].Length,
-                            datos._dPoints[0],
-                            datos._dPoints[1],
+                        WRCurve(datos._dWork,
+                            datos._dRest,
+                            datos._dWork.Length,
+                            datos._dPointsX,
+                            datos._dPointsY,
                             datos._nPuntos,
                             datos._bCiclos,
                             datos._dMHT,
@@ -322,7 +326,7 @@ namespace ErgoCalc
                     IntPtr ptrResultado = IntPtr.Zero;
 
                     // Definición de las variables que se pasan a la función
-                    int longitud = datos._dWorkRest[0].Length;
+                    int longitud = datos._dWork.Length;
                     datosDLL structDatos;
                     structDatos.dMHT = datos._dMHT;
                     structDatos.dPaso = datos._dPaso;
@@ -332,7 +336,7 @@ namespace ErgoCalc
                     try
                     {
                         // Pasar la matriz a la memoria no gestionada
-                        ptrTiempos = marshalJuggedToC(datos._dWorkRest);
+                        ptrTiempos = marshalJuggedToC(new double[][] { datos._dWork, datos._dRest });
 
                         // Llamar a la función de la DLL que devuelve la curva calculada
                         ptrResultado = Curva_DLL(ptrTiempos, longitud, ref structDatos);
@@ -357,7 +361,8 @@ namespace ErgoCalc
                     finally
                     {
                         // Liberar la memoria reservada por la rutina marshalJuggedToC
-                        marshalFreeMemory(ptrTiempos, datos._dWorkRest.Length);
+                        //marshalFreeMemory(ptrTiempos, datos._dWorkRest.Length);
+                        marshalFreeMemory(ptrTiempos, 2);
 
                         // Liberar la memoria reservada por la DLL (en caso de que la haya podido reservar)
                         if (ptrResultado != IntPtr.Zero)

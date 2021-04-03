@@ -80,7 +80,7 @@ namespace ErgoCalc
             chart.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
             chart.plt.Axis(0, null, 0, 100);
             chart.plt.Grid(lineWidth: 1, color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
-            chart.plt.Legend(location: ScottPlot.legendLocation.upperCenter);
+            chart.plt.Legend(location: ScottPlot.legendLocation.lowerRight);
         }
 
         private void PlotCurves()
@@ -88,7 +88,7 @@ namespace ErgoCalc
             foreach (var datos in _datos)
             {
                 //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-                chart.plt.PlotScatter(datos._dPoints[0], datos._dPoints[1], label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+                chart.plt.PlotScatter(datos._dPointsX, datos._dPointsY, label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
             }
 
             chart.plt.AxisAutoX();
@@ -106,7 +106,7 @@ namespace ErgoCalc
                 if (model.Curva(datos))
                 {
                     //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-                    chart.plt.PlotScatter(datos._dPoints[0], datos._dPoints[1], label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+                    chart.plt.PlotScatter(datos._dPointsX, datos._dPointsY, label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
                 }
             }
             
@@ -138,22 +138,22 @@ namespace ErgoCalc
         private void chart_MouseClicked(object sender, MouseEventArgs e)
         {
             // https://github.com/ScottPlot/ScottPlot/discussions/645
-            double x = chart.plt.CoordinateFromPixelX(e.X);
-            double y = chart.plt.CoordinateFromPixelY(e.Y);
+            //double x = chart.plt.CoordinateFromPixelX(e.X);
+            //double y = chart.plt.CoordinateFromPixelY(e.Y);
 
-            using var bmp = chart.plt.GetBitmap(false);
-            var algo = bmp.GetPixel(e.X, e.Y);
+            //using var bmp = chart.plt.GetBitmap(false);
+            //var algo = bmp.GetPixel(e.X, e.Y);
             
-            //Text = $"Clicked X={x} Y={y}";
-            foreach (var plot in chart.plt.GetPlottables())
-            {
-                if ( algo.Name == ((ScottPlot.PlottableScatter)plot).color.Name)
-                {
-                    ((ScottPlot.PlottableScatter)plot).lineWidth = 1 + 2 * ((ScottPlot.PlottableScatter)plot).lineWidth;
-                    chart.Render();
-                }
-            }
-            var colores = chart.plt.Colorset();
+            ////Text = $"Clicked X={x} Y={y}";
+            //foreach (var plot in chart.plt.GetPlottables())
+            //{
+            //    if ( algo.Name == ((ScottPlot.PlottableScatter)plot).color.Name)
+            //    {
+            //        ((ScottPlot.PlottableScatter)plot).lineWidth = 1 + 2 * ((ScottPlot.PlottableScatter)plot).lineWidth;
+            //        chart.Render();
+            //    }
+            //}
+            //var colores = chart.plt.Colorset();
 
             
         }
@@ -254,19 +254,19 @@ namespace ErgoCalc
                 writer.WriteNumber("Cycles", data._bCiclos);
                 
                 writer.WritePropertyName("Work times (minutes)");
-                JsonSerializer.Serialize(writer, data._dWorkRest[0], new JsonSerializerOptions { WriteIndented = true });
+                JsonSerializer.Serialize(writer, data._dWork, new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WritePropertyName("Rest times (minutes)");
-                JsonSerializer.Serialize(writer, data._dWorkRest[1], new JsonSerializerOptions { WriteIndented = true });
+                JsonSerializer.Serialize(writer, data._dRest, new JsonSerializerOptions { WriteIndented = true });
 
                 //writer.WritePropertyName("Work-Rest drop (REC)");
                 //JsonSerializer.Serialize(writer, data._dWorkRestDrop, new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WritePropertyName("Points X");
-                JsonSerializer.Serialize(writer, data._dPoints[0], new JsonSerializerOptions { WriteIndented = true });
+                JsonSerializer.Serialize(writer, data._dPointsX, new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WritePropertyName("Points Y");
-                JsonSerializer.Serialize(writer, data._dPoints[1], new JsonSerializerOptions { WriteIndented = true });
+                JsonSerializer.Serialize(writer, data._dPointsY, new JsonSerializerOptions { WriteIndented = true });
 
                 writer.WriteEndObject();
 
@@ -351,23 +351,23 @@ namespace ErgoCalc
                     data._nPuntos = curve.GetProperty("Points").GetInt32();
                     data._bCiclos = curve.GetProperty("Cycles").GetByte();
 
-                    data._dPoints = new double[2][];
+                    //data._dPoints = new double[2][];
                     Length = curve.GetProperty("Points X").GetArrayLength();
-                    data._dPoints[0] = new double[Length];
-                    data._dPoints[0] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points X").ToString());
+                    data._dPointsX = new double[Length];
+                    data._dPointsX = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points X").ToString());
 
                     //Length = curve.GetProperty("Points Y").GetArrayLength();
-                    data._dPoints[1] = new double[Length];
-                    data._dPoints[1] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points Y").ToString());
+                    data._dPointsY = new double[Length];
+                    data._dPointsY = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points Y").ToString());
 
-                    data._dWorkRest = new double[2][];
+                    //data._dWorkRest = new double[2][];
                     Length = curve.GetProperty("Work times (minutes)").GetArrayLength();
-                    data._dWorkRest[0] = new double[Length];
-                    data._dWorkRest[0] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work times (minutes)").ToString());
+                    data._dWork = new double[Length];
+                    data._dWork = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work times (minutes)").ToString());
 
                     //Length = curve.GetProperty("Rest times (minutes)").GetArrayLength();
-                    data._dWorkRest[1] = new double[Length];
-                    data._dWorkRest[1] = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Rest times (minutes)").ToString());
+                    data._dRest = new double[Length];
+                    data._dRest = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Rest times (minutes)").ToString());
 
                     //Length = curve.GetProperty("Work-Rest drop (REC)").GetArrayLength();
                     //data._dWorkRestDrop = new double[Length];
@@ -400,7 +400,7 @@ namespace ErgoCalc
                 // Get the edited input data
                 _datos = (List<datosWR>)frmDatosWR.GetData;
                 //_datos.Add(frmDatosWR.getData());
-                chart.plt.Clear();
+                chart.plt.GetPlottables().Clear();
                 CalcularCurva();
                 _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
             }
@@ -423,7 +423,7 @@ namespace ErgoCalc
 
         public bool[] GetToolbarEnabledState()
         {
-            bool[] toolbar = new bool[] { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
+            bool[] toolbar = new bool[] { true, true, true, true, true, true, true, true, true, false, false, true, true, true };
             return toolbar;
         }
 

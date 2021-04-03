@@ -38,6 +38,44 @@
         "MAL \u2014 Maximum acceptable load \u2014 75% (kg or kg-f)": 0,
         "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 0
       }
+    },
+    {
+      "Data": {
+        "Type": 3,
+        "Horizontal reach (m)": 0,
+        "Vertical range middle (m)": 0,
+        "Horizontal distance (m)": 20,
+        "Vertical distance (m)": 0,
+        "Vertical height (m)": 1.2,
+        "Frequency (actions/min)": 1,
+        "Gender": 0
+      },
+      "Scale factors initial": {
+        "Reference load (RF)": 69.8,
+        "Horizontal reach factor (H)": 0,
+        "Vertical range middle factor (VRM)": 0,
+        "Horizontal travel distance factor (DH)": 0.7600336165296006,
+        "Vertical travel distance factor (DV)": 0,
+        "Vertical height factor (V)": 0.6875508323654663,
+        "Frequency factor (F)": 0.6281,
+        "Coefficient of variation (CV)": 0.238,
+        "MAL \u2014 Maximum acceptable load \u2014 Mean (kg or kg-f)": 22.909828065410867,
+        "MAL \u2014 Maximum acceptable load \u2014 75% (kg or kg-f)": 19.232146343698815,
+        "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 15.922118071797655
+      },
+      "Scale factors sustained": {
+        "Reference load (RF)": 61,
+        "Horizontal reach factor (H)": 0,
+        "Vertical range middle factor (VRM)": 0,
+        "Horizontal travel distance factor (DH)": 0.6856851780259426,
+        "Vertical travel distance factor (DV)": 0,
+        "Vertical height factor (V)": 0.6725047354436218,
+        "Frequency factor (F)": 0.4896,
+        "Coefficient of variation (CV)": 0.257,
+        "MAL \u2014 Maximum acceptable load \u2014 Mean (kg or kg-f)": 13.771820471847821,
+        "MAL \u2014 Maximum acceptable load \u2014 75% (kg or kg-f)": 11.384559872148726,
+        "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 9.235950863721213
+      }
     }
   ]
 }

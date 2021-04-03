@@ -56,19 +56,22 @@ namespace ErgoCalc
         private void InitializePlot()
         {
             formsPlot1.plt.XLabel("Initial force / kg-f");
-            formsPlot1.plt.YLabel("Frequency?");
+            //formsPlot1.plt.YLabel("Frequency?");
             formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot1.plt.TightenLayout(padding: 0);
 
             formsPlot2.plt.XLabel("Sustained force / kg-f)");
-            formsPlot2.plt.YLabel("Frequency?");
+            //formsPlot2.plt.YLabel("Frequency?");
             formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot2.plt.TightenLayout(padding: 0);
 
             formsPlot3.plt.XLabel("Weight / kg");
-            formsPlot3.plt.YLabel("Frequency?");
+            //formsPlot3.plt.YLabel("Frequency?");
             formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot3.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot3.plt.TightenLayout(padding: 0);
             //formsPlot3.plt.AxisAutoY();
             //formsPlot3.plt.Axis(y1: 0, y2: 1);
         }
