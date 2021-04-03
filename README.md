@@ -11,18 +11,17 @@ Sponsor this project!
 
 ## Functionalities
 * Work-rest model developed by J. Dul, M. Douwes, M., and P Smitt in 1991 and suggested in [ISO 11226:2000 — Evaluation of static working postures](https://www.iso.org/standard/25573.html)
-![WR model](/Media/WR model.png?raw=true "WR model")
+![WR model](/Media/WRmodel.png?raw=true "WR model")
 * Comprehensive lifting model [CLM](https://doi.org/10.1080/001401397187748) by Jorge Hidalgo, Ashraf Genaidy, Waldemar Karwowski, Doran Christensen, Ronald Huston, and Jefferey Stambough
 * NIOSH lifting equation, inluding LI, CLI, SLI (not yet implemented), and VLI (not yet implemented) indices
 * Revised strain index, including [RSI](https://doi.org/10.1080/00140139.2016.1237678), [COSI](https://doi.org/10.1080/00140139.2016.1246675), and [CUSI](https://doi.org/10.1080/00140139.2016.1246675) indices
-![RSI model](/Media/Revised strain index.png?raw=true "RSI model")
+![RSI model](/Media/RevisedStrainIndex.png?raw=true "RSI model")
 * - Red. OCRA checklist (not yet implemented)
 * Metabolic rate (levels I and II) (ISO 8996:2004 Ergonomics of the thermal environment — Determination of metabolic rate)[https://www.iso.org/standard/34251.html]
 * Thermal comfort, including PMV and PPD according to [ISO 7730:2005 — Ergonomics of the thermal environment](https://www.iso.org/standard/39155.html)
-![Thermal comfort](/Media/Thermal comfort.png?raw=true "Thermal comfort")
+![Thermal comfort](/Media/ThermalComfort.png?raw=true "Thermal comfort")
 * Liberty Mutual manual materials handling equations [LM-MMH](https://doi.org/10.1080/00140139.2021.1891297) developed by Jim R. Potvin, Vincent M. Ciriello, Stover H. Snook, Wayne S. Maynard, and George E. Brogmus
-![Liberty mutual](/Media/Liberty.png?raw=true "Thermal comfort")
-
+![Liberty mutual](/Media/Liberty.png?raw=true "Liberty mutual")
 
 ## External dependencies
 This project uses controls and routines from the following Gits:
