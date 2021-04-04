@@ -1,7 +1,6 @@
 # ErgoCalc
-Software implementing ergonomics algorithms (strain index, lifting index, metabolic rate, etc.)
-
-Written in .NET C# WinForms
+Software implementing ergonomics algorithms (strain index, lifting index, metabolic rate, etc.). Written in .NET 5 (C# WinForms).
+![Software logo](/Media/Splash.png?raw=true "Software logo")
 
 Copyright © 2021 by Arthurits Ltd. No coommercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
 
@@ -13,11 +12,12 @@ Sponsor this project!
 * Work-rest model developed by J. Dul, M. Douwes, M., and P Smitt in 1991 and suggested in [ISO 11226:2000 — Evaluation of static working postures](https://www.iso.org/standard/25573.html)
 ![WR model](/Media/WRmodel.png?raw=true "WR model")
 * Comprehensive lifting model [CLM](https://doi.org/10.1080/001401397187748) by Jorge Hidalgo, Ashraf Genaidy, Waldemar Karwowski, Doran Christensen, Ronald Huston, and Jefferey Stambough
-* NIOSH lifting equation, inluding LI, CLI, SLI (not yet implemented), and VLI (not yet implemented) indices
+* NIOSH lifting equation, inluding LI, CLI, SLI (not yet implemented), and VLI (not yet implemented) indices as suggested in ISO [ISO 11228-1:2003 Ergonomics — Manual handling — Part 1: Lifting and carrying](https://www.iso.org/standard/26520.html)
+![NIOSH model](/Media/Niosh.png?raw=true "RSI model")
 * Revised strain index, including [RSI](https://doi.org/10.1080/00140139.2016.1237678), [COSI](https://doi.org/10.1080/00140139.2016.1246675), and [CUSI](https://doi.org/10.1080/00140139.2016.1246675) indices
 ![RSI model](/Media/RevisedStrainIndex.png?raw=true "RSI model")
-* - Red. OCRA checklist (not yet implemented)
-* Metabolic rate (levels I and II) (ISO 8996:2004 Ergonomics of the thermal environment — Determination of metabolic rate)[https://www.iso.org/standard/34251.html]
+* OCRA checklist (not yet implemented)
+* Metabolic rate (levels I and II) [ISO 8996:2004 Ergonomics of the thermal environment — Determination of metabolic rate](https://www.iso.org/standard/34251.html)
 * Thermal comfort, including PMV and PPD according to [ISO 7730:2005 — Ergonomics of the thermal environment](https://www.iso.org/standard/39155.html)
 ![Thermal comfort](/Media/ThermalComfort.png?raw=true "Thermal comfort")
 * Liberty Mutual manual materials handling equations [LM-MMH](https://doi.org/10.1080/00140139.2021.1891297) developed by Jim R. Potvin, Vincent M. Ciriello, Stover H. Snook, Wayne S. Maynard, and George E. Brogmus

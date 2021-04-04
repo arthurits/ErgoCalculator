@@ -36,8 +36,8 @@ namespace ErgoCalc
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.formsPlot1 = new ScottPlot.FormsPlot();
             this.formsPlot2 = new ScottPlot.FormsPlot();
-            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
             this.formsPlot3 = new ScottPlot.FormsPlot();
+            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -129,6 +129,15 @@ namespace ErgoCalc
             this.formsPlot2.Size = new System.Drawing.Size(221, 193);
             this.formsPlot2.TabIndex = 2;
             // 
+            // formsPlot3
+            // 
+            this.formsPlot3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formsPlot3.Location = new System.Drawing.Point(462, 3);
+            this.formsPlot3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.formsPlot3.Name = "formsPlot3";
+            this.formsPlot3.Size = new System.Drawing.Size(221, 193);
+            this.formsPlot3.TabIndex = 4;
+            // 
             // rtbShowResult
             // 
             this.rtbShowResult.AcceptsTab = true;
@@ -143,15 +152,6 @@ namespace ErgoCalc
             this.rtbShowResult.TabIndex = 2;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
-            // 
-            // formsPlot3
-            // 
-            this.formsPlot3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formsPlot3.Location = new System.Drawing.Point(462, 3);
-            this.formsPlot3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.formsPlot3.Name = "formsPlot3";
-            this.formsPlot3.Size = new System.Drawing.Size(221, 193);
-            this.formsPlot3.TabIndex = 4;
             // 
             // frmResultsLiberty
             // 

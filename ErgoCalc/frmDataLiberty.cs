@@ -15,6 +15,7 @@ namespace ErgoCalc
     public partial class frmDataLiberty : Form, IChildData
     {
         private List<ModelLiberty> _data;
+        private string strGridHeader = "Task ";
 
         #region IChildData interface
         public object GetData => _data;
@@ -99,43 +100,43 @@ namespace ErgoCalc
                 {
                     if (item.data.gender == MNGender.Male)
                     {
-                        if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.25, 0.73, true)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
-                        if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 2.14, true)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
-                        if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 2.14, true)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.25, 0.73, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 2.14, true, this)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 2.14, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
                     }
                     else
                     {
-                        if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.20, 0.68, true)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
-                        if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 1.96, true)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
-                        if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 1.96, true)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.20, 0.68, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 1.96, true, this)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 1.96, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
                     }
-                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 20.0, true)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 20.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
                 else if (item.data.type == MNType.Pulling || item.data.type == MNType.Pushing)
                 {
                     if (item.data.gender == MNGender.Male)
                     {
-                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.63, 1.44, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.63, 1.44, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                     }
                     else
                     {
-                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.58, 1.33, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.58, 1.33, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                     }
-                    if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 61.0, true)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
-                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 61.0, true, this)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
                 else if (item.data.type == MNType.Carrying)
                 {
                     if (item.data.gender == MNGender.Male)
                     {
-                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.78, 1.10, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.78, 1.10, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                     }
                     else
                     {
-                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.71, 1.03, true)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                        if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.71, 1.03, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                     }
-                    if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 10.0, true)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
-                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 10.0, true, this)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
 
                 item.data.HorzReach = Validation.ValidateNumber(gridVariables[i, 1].Value);
@@ -224,11 +225,11 @@ namespace ErgoCalc
             //if (col == 0) return;
             if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
-            string strName = "Case ";
+            //string strName = "Case ";
             //if (_index != IndexType.RSI) strName = "SubTask ";
 
             // Create the new column
-            gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
+            gridVariables.Columns.Add("Column" + (col).ToString(), strGridHeader + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 90;
 

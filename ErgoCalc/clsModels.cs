@@ -1529,9 +1529,11 @@ namespace ErgoCalc
             public class CLibertyMutual
             {
                 private List<ModelLiberty> _data;
+                private string strGridHeader = "Task ";
                 //private IndexType _index;
 
                 public List<ModelLiberty> GetData { get => new(_data); set => _data = value; }
+                public string TaskName { get => strGridHeader; set => strGridHeader = value; }
 
                 [DllImport("dlls/liberty.dll", EntryPoint = "LibertyMutualMMH")]
                 private static extern double LibertyMutualMMH([In, Out] ModelLiberty[] data, int Size);
@@ -1558,6 +1560,7 @@ namespace ErgoCalc
                 public override string ToString()
                 {
                     // https://stackoverflow.com/questions/26235759/how-to-format-a-double-with-fixed-number-of-significant-digits-regardless-of-th
+                    // https://stackoverflow.com/questions/33401356/formatting-text-with-padding-does-not-line-up-in-c-sharp
                     string strResult;
 
                     string[] strLineD = new string[9];
@@ -1565,7 +1568,7 @@ namespace ErgoCalc
                     string[] strThresholds = new string[13];
 
                     strLineD[0] = string.Concat(System.Environment.NewLine, "Initial data", "\t\t");
-                    strLineD[1] = string.Concat(System.Environment.NewLine, "Manual handling type", "\t");
+                    strLineD[1] = string.Concat(System.Environment.NewLine, "Manual handling type", "\t\t");
                     strLineD[2] = string.Concat(System.Environment.NewLine, "Horizontal reach H (m)");
                     strLineD[3] = string.Concat(System.Environment.NewLine, "Vertical range VRM (m)");
                     strLineD[4] = string.Concat(System.Environment.NewLine, "Horizontal distance DH (m)");
@@ -1589,7 +1592,7 @@ namespace ErgoCalc
                     strLineF[11] = string.Concat(System.Environment.NewLine, "Sustained F factor", "\t");
 
 
-                    strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable limit");
+                    strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable limit", "\t");
                     strThresholds[1] = string.Concat(System.Environment.NewLine, "CV initial force", "\t");
                     strThresholds[2] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 50%");
                     strThresholds[3] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 75%");
@@ -1606,13 +1609,13 @@ namespace ErgoCalc
                     int i = 0;
                     foreach (var data in _data)
                     {
-                        strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-                        strLineD[1] += string.Concat("\t\t", data.data.type.ToString());
+                        strLineD[0] += string.Concat("\t\t", strGridHeader, ((char)('A' + i)).ToString());
+                        strLineD[1] += string.Concat("\t", data.data.type.ToString());
                         strLineD[8] += string.Concat("\t\t", data.data.gender.ToString());
                         
-                        strLineF[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
+                        strLineF[0] += string.Concat("\t\t", strGridHeader, ((char)('A' + i)).ToString());
                         
-                        strThresholds[0] += string.Concat(i == 0 ? "\t" : "\t\t", "Case ", ((char)('A' + i)).ToString());
+                        strThresholds[0] += string.Concat(i == 0 ? "\t" : "\t\t", strGridHeader, ((char)('A' + i)).ToString());
                         if (data.data.type == MNType.Pulling || data.data.type == MNType.Pushing)
                         {
                             strLineD[2] += string.Concat("\t\t", "------");
@@ -1638,13 +1641,13 @@ namespace ErgoCalc
                             strLineF[11] += string.Concat("\t\t", data.Sustained.F.ToString("0.####"));
 
                             strThresholds[1] += string.Concat("\t\t", data.Initial.CV.ToString("0.####"));
-                            strThresholds[2] += string.Concat("\t\t", data.Initial.MAL.ToString("0.####"));
-                            strThresholds[3] += string.Concat("\t\t", data.Initial.MAL75.ToString("0.####"));
-                            strThresholds[4] += string.Concat("\t\t", data.Initial.MAL90.ToString("0.####"));
+                            strThresholds[2] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString("0.####"));
+                            strThresholds[3] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"));
+                            strThresholds[4] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"));
                             strThresholds[5] += string.Concat("\t\t", data.Sustained.CV.ToString("0.####"));
-                            strThresholds[6] += string.Concat("\t\t", data.Sustained.MAL.ToString("0.####"));
-                            strThresholds[7] += string.Concat("\t\t", data.Sustained.MAL75.ToString("0.####"));
-                            strThresholds[8] += string.Concat("\t\t", data.Sustained.MAL90.ToString("0.####"));
+                            strThresholds[6] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL)).ToString("0.####"));
+                            strThresholds[7] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL75)).ToString("0.####"));
+                            strThresholds[8] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL90)).ToString("0.####"));
                             strThresholds[9] += string.Concat("\t\t", "------");
                             strThresholds[10] += string.Concat("\t\t", "------");
                             strThresholds[11] += string.Concat("\t\t", "------");
@@ -1704,8 +1707,8 @@ namespace ErgoCalc
                             strThresholds[9] += string.Concat("\t\t", data.Initial.CV.ToString("0.####"));
                             //strThresholds[10] += string.Concat("\t\t", data.Initial.MAL.ToString("0.####"));
                             strThresholds[10] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString());
-                            strThresholds[11] += string.Concat("\t\t", data.Initial.MAL75.ToString("0.####"));
-                            strThresholds[12] += string.Concat("\t\t", data.Initial.MAL90.ToString("0.####"));
+                            strThresholds[11] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"));
+                            strThresholds[12] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"));
                         }
 
                         i++;

@@ -11,10 +11,17 @@ using ErgoCalc.Models.NIOSHModel;
 
 namespace ErgoCalc
 {
-    public partial class frmDataNIOSHmodel : Form
+    public partial class frmDataNIOSHmodel : Form, IChildData
     {
         private modelNIOSH[] _data;
         private bool _composite;
+        private string strGridHeader = "Task ";
+
+        #region IChildData interface
+        public object GetData => _data;
+        #endregion IChildData interface
+
+        public bool GetComposite => _composite;
 
         // Default constructor
         public frmDataNIOSHmodel()
@@ -24,33 +31,33 @@ namespace ErgoCalc
             txtConstanteLC.Text = "25";
 
             // Create the first column (zero index base)
-                AddColumn(0);
+            AddColumn();
 
             // Create the header rows
-                gridVariables.RowCount = 8;
-                gridVariables.Rows[0].HeaderCell.Value = "Weight lifted (kg)";
-                gridVariables.Rows[1].HeaderCell.Value = "Horizontal distance (cm)";
-                gridVariables.Rows[2].HeaderCell.Value = "Vertical distance (cm)";
-                gridVariables.Rows[3].HeaderCell.Value = "Vertical travel distance (cm)";
-                gridVariables.Rows[4].HeaderCell.Value = "Lifting frequency (times/min)";
-                gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
-                gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (º)";
-                gridVariables.Rows[7].HeaderCell.Value = "Coupling";
+            gridVariables.RowCount = 8;
+            gridVariables.Rows[0].HeaderCell.Value = "Weight lifted (kg)";
+            gridVariables.Rows[1].HeaderCell.Value = "Horizontal distance (cm)";
+            gridVariables.Rows[2].HeaderCell.Value = "Vertical distance (cm)";
+            gridVariables.Rows[3].HeaderCell.Value = "Vertical travel distance (cm)";
+            gridVariables.Rows[4].HeaderCell.Value = "Lifting frequency (times/min)";
+            gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
+            gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (º)";
+            gridVariables.Rows[7].HeaderCell.Value = "Coupling";
 
             // Create custom cells with combobox display
-                DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-                DataTable tableC = new DataTable();
+            DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
+            DataTable tableC = new DataTable();
 
-                tableC.Columns.Add("Display", typeof(String));
-                tableC.Columns.Add("Value", typeof(Int32));
-                tableC.Rows.Add("Good", 1);
-                tableC.Rows.Add("Poor", 2);
-                tableC.Rows.Add("No handle", 3);
-                celdaC.DataSource = tableC;
-                celdaC.DisplayMember = "Display";
-                celdaC.ValueMember = "Value";
+            tableC.Columns.Add("Display", typeof(String));
+            tableC.Columns.Add("Value", typeof(Int32));
+            tableC.Rows.Add("Good", 1);
+            tableC.Rows.Add("Poor", 2);
+            tableC.Rows.Add("No handle", 3);
+            celdaC.DataSource = tableC;
+            celdaC.DisplayMember = "Display";
+            celdaC.ValueMember = "Value";
 
-                gridVariables.Rows[7].Cells[0] = celdaC;
+            gridVariables.Rows[7].Cells[0] = celdaC;
 
         }
 
@@ -123,10 +130,10 @@ namespace ErgoCalc
         /// <param name="col">Column number (zero based)</param>
         private void AddColumn(Int32 col)
         {
-            String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+            if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
             // Create the new column
-            gridVariables.Columns.Add("Column" + (col+1).ToString() , "Task " + strTasks[col]);
+            gridVariables.Columns.Add("Column" + (col).ToString() , strGridHeader + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
             gridVariables.Columns[col].Width = 70;
 
@@ -135,6 +142,14 @@ namespace ErgoCalc
                 gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
 
             return;
+        }
+
+        /// <summary>
+        /// Adds a column to the DataGrid View and formates it
+        /// </summary>
+        private void AddColumn()
+        {
+            AddColumn(gridVariables.Columns.Count);
         }
 
         /// <summary>
@@ -282,7 +297,7 @@ namespace ErgoCalc
             for (Int32 i = 0; i < _data.Length; i++)
             {
                 // Add one column whenever necessary
-                if (i > 0) AddColumn(i);
+                if (i > 0) AddColumn();
 
                 // Populate the DataGridView with data
                 gridVariables[i, 0].Value = _data[i].data.weight.ToString();
@@ -309,24 +324,6 @@ namespace ErgoCalc
             // Load some data example
             DataExample();
             DataToGrid();
-        }
-
-        /// <summary>
-        /// Returns the data introduced by the user. Data is updated after user has clicked OK button
-        /// </summary>
-        /// <returns>Array of Model NIOSH data</returns>
-        public modelNIOSH[] getData()
-        {
-            return _data;
-        }
-
-        /// <summary>
-        /// Returns whether the user has selected the composite index or not
-        /// </summary>
-        /// <returns>True if the composite index has been selected</returns>
-        public bool getComposite()
-        {
-            return _composite;
         }
     }
 }

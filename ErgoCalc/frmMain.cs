@@ -249,7 +249,7 @@ namespace ErgoCalc
                     if (frmDatosNIOSH.ShowDialog(this)==DialogResult.OK)
                     {
                         // Mostrar la ventana de resultados
-                        frmResultNIOSHmodel frmNIOSH = new frmResultNIOSHmodel(frmDatosNIOSH.getData(), frmDatosNIOSH.getComposite());
+                        frmResultNIOSHmodel frmNIOSH = new frmResultNIOSHmodel(frmDatosNIOSH.GetData, frmDatosNIOSH.GetComposite);
                         frmNIOSH.MdiParent = this;
                         if (File.Exists(_strPath + @"\images\logo.ico")) frmNIOSH.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmNIOSH.Show();

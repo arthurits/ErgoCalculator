@@ -43,76 +43,17 @@ namespace ErgoCalc
             splitContainer1.IsSplitterFixed = true;
         }
 
-        public frmResultNIOSHmodel(modelNIOSH[] datos, bool composite)
+        public frmResultNIOSHmodel(object datos, bool composite)
             :this()
         {
-            _sDatosNIOSH = datos;
+            _sDatosNIOSH = (modelNIOSH[])datos;
             _composite = composite;
 
         }
 
         private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
         {
-            // Variable definition
-            Int32[] orden;
-            Int32 nSize;
-            Boolean error = false;
-            Double resultado = 0.0;
-            //Boolean composite;         
-            //frmDataNIOSHmodel frm = new frmDataNIOSHmodel(_sDatosNIOSH);
-
-            //if (frm.ShowDialog() == DialogResult.OK)
-            //{
-                // Retrieve data from the dialog
-                //_sDatosNIOSH = frm.getData();
-                //composite = frm._composite;
-
-                nSize = _sDatosNIOSH.Length;
-                orden = new Int32[nSize];
-                for (Int32 i = 0; i < nSize; i++) orden[i] = i;
-
-                // Call the DLL function
-                try
-                {
-                    resultado = _classNIOSH.CalculateNIOSH(_sDatosNIOSH, orden, ref nSize);
-                }
-                catch (EntryPointNotFoundException)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "The program calculation kernel's been tampered with.\nThe NIOSH index could not be computed.",
-                        "NIOSH index error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    this.Close();
-                }
-                catch (DllNotFoundException)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "Some files are missing. Please\nreinstall the application.",
-                        "NIOSH index error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "Error in the calculation kernel:\n" + ex.ToString(),
-                        "Unexpected error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    this.Close();
-                }
-
-                // Call the routine that shows the results
-                if (error == false) ShowResults(_sDatosNIOSH, orden, resultado, _composite);
-            //}
-            //else
-                // When this method is called artificially from code, don't do anything
-                //if (sender != null) this.Close();
+            ShowResults();
         }
 
         private void rtbShowResult_DoubleClick(object sender, EventArgs e)
@@ -128,7 +69,7 @@ namespace ErgoCalc
         /// <param name="indexTable">Array containing the tasks order</param>
         /// <param name="resultado">NIOSH compound index</param>
         /// <param name="composite">Boolean value which shows if the composite index has been calculated</param>
-        private void ShowResults(modelNIOSH[] sModel, Int32[] indexTable, Double resultado, Boolean composite)
+        private void ResultsToRichText(modelNIOSH[] sModel, Int32[] indexTable, Double resultado, Boolean composite)
         {
             Int32 i, length = sModel.Length;
             Int32[] ordenacion = new Int32[length];
@@ -295,7 +236,76 @@ namespace ErgoCalc
             }
 
         }
-        #endregion
+        
+        /// <summary>
+        /// Computes the numerical results and shows them in the RichTextBox
+        /// </summary>
+        private void ShowResults()
+        {
+            // Variable definition
+            Int32[] orden;
+            Int32 nSize;
+            Boolean error = false;
+            Double resultado = 0.0;
+            //Boolean composite;         
+            //frmDataNIOSHmodel frm = new frmDataNIOSHmodel(_sDatosNIOSH);
+
+            //if (frm.ShowDialog() == DialogResult.OK)
+            //{
+            // Retrieve data from the dialog
+            //_sDatosNIOSH = frm.getData();
+            //composite = frm._composite;
+
+            nSize = _sDatosNIOSH.Length;
+            if (nSize == 0) return;
+            orden = new Int32[nSize];
+            for (Int32 i = 0; i < nSize; i++) orden[i] = i;
+
+            // Call the DLL function
+            try
+            {
+                resultado = _classNIOSH.CalculateNIOSH(_sDatosNIOSH, orden, ref nSize);
+            }
+            catch (EntryPointNotFoundException)
+            {
+                error = true;
+                MessageBox.Show(
+                    "The program calculation kernel's been tampered with.\nThe NIOSH index could not be computed.",
+                    "NIOSH index error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                this.Close();
+            }
+            catch (DllNotFoundException)
+            {
+                error = true;
+                MessageBox.Show(
+                    "Some files are missing. Please\nreinstall the application.",
+                    "NIOSH index error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                error = true;
+                MessageBox.Show(
+                    "Error in the calculation kernel:\n" + ex.ToString(),
+                    "Unexpected error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                this.Close();
+            }
+
+            // Call the routine that shows the results
+            if (error == false) ResultsToRichText(_sDatosNIOSH, orden, resultado, _composite);
+            //}
+            //else
+            // When this method is called artificially from code, don't do anything
+            //if (sender != null) this.Close();
+        }
+
+        #endregion Private routines
 
         #region IChild interface
 
@@ -357,13 +367,22 @@ namespace ErgoCalc
 
         public bool OpenFile(JsonDocument document)
         {
+            _sDatosNIOSH = Array.Empty<modelNIOSH>();
             bool result = true;
-            MessageBox.Show("Json Open not yet implemented");
+            MessageBox.Show("Document opening not yet implemented");
             return result;
         }
 
         public void EditData()
         {
+            using var frm = new frmDataNIOSHmodel(_sDatosNIOSH);
+
+            if (frm.ShowDialog(this) == DialogResult.OK)
+            {
+                _sDatosNIOSH = (modelNIOSH[])frm.GetData;
+                //ClearPlots();
+                ShowResults();
+            }
             return;
         }
 

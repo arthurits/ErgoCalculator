@@ -37,6 +37,7 @@ namespace ErgoCalc
 
             InitializePlot();
 
+            //this.rtbShowResult.Font = new Font(FontFamily.GenericMonospace, rtbShowResult.Font.Size);
             // Initialize private variables
         }
 
@@ -139,13 +140,13 @@ namespace ErgoCalc
                 {
                     case MNType.Pulling:
                     case MNType.Pushing:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1);
-                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2);
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1);        // Initial force plot
+                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2);    // Sustained force plot
                         break;
                     case MNType.Carrying:
                     case MNType.Lifting:
                     case MNType.Lowering:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3);
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3);        // Weigth plot
                         break;
                 }
             }
@@ -466,7 +467,7 @@ namespace ErgoCalc
                 //nEnd = rtbShowResult.Text.Length;
                 nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
                 rtbShowResult.Select(nStart, nEnd - nStart);
-                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size, FontStyle.Underline | FontStyle.Bold);
             }
 
             // Set the cursor at the beginning of the text
