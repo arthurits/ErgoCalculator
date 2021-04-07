@@ -145,6 +145,7 @@ namespace ErgoCalc
                 formsPlot1.plt.PlotPoint(data.data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), markerSize: 7);
                 i++;
             }
+            pictureBox1.Image = formsPlot1.plt.GetLegendBitmap();
             formsPlot1.Render();
 
             // Heat-loss plot
@@ -172,9 +173,9 @@ namespace ErgoCalc
             }
 
             // Plot the bar charts in reverse order (highest first)
-            formsPlot2.plt.Legend(backColor: Color.Transparent, shadowDirection: shadowDirection.none, location: legendLocation.upperRight, fixedLineWidth: true);
+            //formsPlot2.plt.Legend(backColor: Color.White, shadowDirection: shadowDirection.none, location: legendLocation.lowerRight, fixedLineWidth: true);
             formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-
+            
             formsPlot2.plt.PlotBar(xsStacked, HL_6, label: "Convection");
             formsPlot2.plt.PlotBar(xsStacked, HL_5, label: "Radiation");
             formsPlot2.plt.PlotBar(xsStacked, HL_4, label: "Dry");
@@ -182,7 +183,8 @@ namespace ErgoCalc
             formsPlot2.plt.PlotBar(xsStacked, HL_2, label: "Sweating");
             formsPlot2.plt.PlotBar(xsStacked, HL_1, label: "Skin");
             formsPlot2.plt.XTicks(xsStacked, xsLabels);
-            
+            pictureBox2.Image = formsPlot2.plt.GetLegendBitmap();
+
             formsPlot2.Render();
 
         }

@@ -164,6 +164,13 @@ namespace ErgoCalc
                 {
                     ItemIndex = _index == IndexType.RSI ? j : listViewTasks.Groups[i].Items[j].Index;
                     _job.JobTasks[i].SubTasks[j].ItemIndex = ItemIndex;
+                    
+                    if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[ItemIndex, 2].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 2]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, -180, -180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 8, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
+
                     _job.JobTasks[i].SubTasks[j].data.i = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
                     _job.JobTasks[i].SubTasks[j].data.e = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
                     _job.JobTasks[i].SubTasks[j].data.d = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
@@ -181,13 +188,6 @@ namespace ErgoCalc
             //_index = chkComposite.Checked;
             return;
         }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            // Return empty array
-            //_subtasks = new ModelSubTask[0];
-        }
-
 
 
         #region Private routines

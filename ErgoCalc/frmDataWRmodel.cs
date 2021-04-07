@@ -30,7 +30,7 @@ namespace ErgoCalc
             // Create the header rows
             gridVariables.RowCount = 7;
             gridVariables.Rows[0].HeaderCell.Value = "Name";
-            gridVariables.Rows[1].HeaderCell.Value = "Maximum voluntary contraction (%)";
+            gridVariables.Rows[1].HeaderCell.Value = "Max. voluntary contraction (%)";
             gridVariables.Rows[2].HeaderCell.Value = "Maximum holding time (min)";
             gridVariables.Rows[3].HeaderCell.Value = "Working times (min)";
             gridVariables.Rows[4].HeaderCell.Value = "Rest times (min)";
@@ -79,7 +79,7 @@ namespace ErgoCalc
             {
                 item._strLegend = gridVariables[i, 0].Value?.ToString();
                 // Validation routines
-                if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0, 100, true)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0, 100, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
                 item._dMVC = Validation.ValidateNumber(gridVariables[i, 1].Value);
                 item._dMHT = ComputeMHT(item._dMVC);
                 //gridVariables[i, 2].Value = item._dMHT;
@@ -89,7 +89,7 @@ namespace ErgoCalc
                 var arr = gridVariables[i, 3].Value.ToString().Split(' ');
                 foreach( var number in arr)
                 {
-                    if (!Validation.IsValidRange(number, 0, item._dMHT, true)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(number, 0, item._dMHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
                 }
                 item._dWork = arr.Select(double.Parse).ToArray();
 
@@ -97,13 +97,13 @@ namespace ErgoCalc
                 arr = gridVariables[i, 4].Value.ToString().Split(' ');
                 foreach (var number in arr)
                 {
-                    if (!Validation.IsValidRange(number, 0, item._dMHT, true)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(number, 0, item._dMHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
                 }
                 item._dRest = arr.Select(double.Parse).ToArray();
 
                 //if (ValidarTT(item) != true) { return; }
-                if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0, 24, true)) { gridVariables.CurrentCell = gridVariables[i, 5]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.001, 0.1, true)) { gridVariables.CurrentCell = gridVariables[i, 6]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0, 24, true, this)) { gridVariables.CurrentCell = gridVariables[i, 5]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.001, 0.1, true, this)) { gridVariables.CurrentCell = gridVariables[i, 6]; gridVariables.BeginEdit(true); return; }
 
                 //item._dWorkRest[0];
                 item._bCiclos = (byte)Validation.ValidateNumber(gridVariables[i, 5].Value);

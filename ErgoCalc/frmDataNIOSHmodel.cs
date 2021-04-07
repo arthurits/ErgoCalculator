@@ -41,7 +41,7 @@ namespace ErgoCalc
             gridVariables.Rows[3].HeaderCell.Value = "Vertical travel distance (cm)";
             gridVariables.Rows[4].HeaderCell.Value = "Lifting frequency (times/min)";
             gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
-            gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (º)";
+            gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (°)";
             gridVariables.Rows[7].HeaderCell.Value = "Coupling";
 
             // Create custom cells with combobox display

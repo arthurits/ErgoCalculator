@@ -62,7 +62,7 @@ namespace ErgoCalc
             formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
             formsPlot1.plt.TightenLayout(padding: 0);
 
-            formsPlot2.plt.XLabel("Sustained force / kg-f)");
+            formsPlot2.plt.XLabel("Sustained force / kg-f");
             //formsPlot2.plt.YLabel("Frequency?");
             formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
@@ -134,21 +134,23 @@ namespace ErgoCalc
 
         private void CreatePlots()
         {
+            int i = 0;
             foreach (var data in _data)
             {
                 switch(data.data.type)
                 {
                     case MNType.Pulling:
                     case MNType.Pushing:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1);        // Initial force plot
-                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2);    // Sustained force plot
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1, "Task " + ((char)('A' + i)).ToString());        // Initial force plot
+                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2, "Task " + ((char)('A' + i)).ToString());    // Sustained force plot
                         break;
                     case MNType.Carrying:
                     case MNType.Lifting:
                     case MNType.Lowering:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3);        // Weigth plot
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3, "Task " + ((char)('A' + i)).ToString());        // Weigth plot
                         break;
                 }
+                ++i;
             }
             return;
         }
@@ -159,7 +161,7 @@ namespace ErgoCalc
         /// <param name="mean">Mean</param>
         /// <param name="std">Standard deviation</param>
         /// <param name="nPlot">Number of plot control: 1 for Initial force, 2 for sustained force, and 3 for weight</param>
-        private void CreatePlot(double mean, double std, int nPlot)
+        private void CreatePlot(double mean, double std, int nPlot, string strLabel = null)
         {
             Random rand = new Random(0);
             double[] values = DataGen.RandomNormal(rand, pointCount: 1000, mean: mean, stdDev: std);
@@ -187,14 +189,14 @@ namespace ErgoCalc
 
             plot.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             plot.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            plot.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: "Population");
+            plot.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: strLabel);
             //formsPlot1.plt.PlotScatter(hist.bins, hist.countsFracCurve, markerSize: 0, lineWidth: 2, label: "Histogram");
 
             var limit75 = mean - std * 0.674489750196082;
             var limit90 = mean - std * 1.281551565544601;
 
-            plot.plt.PlotVLine(x: limit75, label: "75%", color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
-            plot.plt.PlotVLine(x: limit90, label: "90%", color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
+            plot.plt.PlotVLine(x: limit75, color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
+            plot.plt.PlotVLine(x: limit90, color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
             plot.plt.Axis(y1: 0, y2: null);
             plot.plt.AxisAutoX();
             plot.Render();

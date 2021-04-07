@@ -368,7 +368,7 @@ namespace ErgoCalc
         public bool OpenFile(JsonDocument document)
         {
             _sDatosNIOSH = Array.Empty<modelNIOSH>();
-            bool result = true;
+            bool result = false;
             MessageBox.Show("Document opening not yet implemented");
             return result;
         }
