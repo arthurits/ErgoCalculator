@@ -244,7 +244,15 @@ namespace ErgoCalc
 
         public void Duplicate()
         {
-            throw new NotImplementedException();
+            string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Mostrar la ventana de resultados
+            frmResultsTC frmResults = new frmResultsTC(_data);
+            {
+                MdiParent = this.MdiParent;
+            };
+            if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResults.Show();
         }
 
         public void EditData()

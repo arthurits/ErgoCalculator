@@ -418,7 +418,6 @@ namespace ErgoCalc
             };
             if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
             frmResults.Show();
-
         }
 
         public bool[] GetToolbarEnabledState()

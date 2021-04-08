@@ -58,21 +58,21 @@ namespace ErgoCalc
         {
             formsPlot1.plt.XLabel("Initial force / kg-f");
             //formsPlot1.plt.YLabel("Frequency?");
-            formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            //formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            formsPlot1.plt.TightenLayout(padding: 0);
+            //formsPlot1.plt.TightenLayout(padding: 0);
 
             formsPlot2.plt.XLabel("Sustained force / kg-f");
             //formsPlot2.plt.YLabel("Frequency?");
-            formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            //formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            formsPlot2.plt.TightenLayout(padding: 0);
+            //formsPlot2.plt.TightenLayout(padding: 0, render: true);
 
             formsPlot3.plt.XLabel("Weight / kg");
             //formsPlot3.plt.YLabel("Frequency?");
-            formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            //formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             formsPlot3.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            formsPlot3.plt.TightenLayout(padding: 0);
+            //formsPlot3.plt.TightenLayout(padding: 0);
             //formsPlot3.plt.AxisAutoY();
             //formsPlot3.plt.Axis(y1: 0, y2: 1);
         }
@@ -125,6 +125,9 @@ namespace ErgoCalc
             }
         }
 
+        /// <summary>
+        /// Clears all plottables
+        /// </summary>
         private void ClearPlots()
         {
             formsPlot1.plt.GetPlottables().Clear();
@@ -132,22 +135,27 @@ namespace ErgoCalc
             formsPlot3.plt.GetPlottables().Clear();
         }
 
+        /// <summary>
+        /// Manages the drawing of the 3 plots and the corresponding legends
+        /// </summary>
         private void CreatePlots()
         {
+            string strLegend;
             int i = 0;
             foreach (var data in _data)
             {
-                switch(data.data.type)
+                strLegend = "Task " + ((char)('A' + i)).ToString();
+                switch (data.data.type)
                 {
                     case MNType.Pulling:
                     case MNType.Pushing:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1, "Task " + ((char)('A' + i)).ToString());        // Initial force plot
-                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2, "Task " + ((char)('A' + i)).ToString());    // Sustained force plot
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1, strLegend);        // Initial force plot
+                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2, strLegend);    // Sustained force plot
                         break;
                     case MNType.Carrying:
                     case MNType.Lifting:
                     case MNType.Lowering:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3, "Task " + ((char)('A' + i)).ToString());        // Weigth plot
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3, strLegend);        // Weigth plot
                         break;
                 }
                 ++i;
@@ -161,7 +169,8 @@ namespace ErgoCalc
         /// <param name="mean">Mean</param>
         /// <param name="std">Standard deviation</param>
         /// <param name="nPlot">Number of plot control: 1 for Initial force, 2 for sustained force, and 3 for weight</param>
-        private void CreatePlot(double mean, double std, int nPlot, string strLabel = null)
+        /// <param name="strLegend">Text to show in the legend</param>
+        private void CreatePlot(double mean, double std, int nPlot, string strLegend = null)
         {
             Random rand = new Random(0);
             double[] values = DataGen.RandomNormal(rand, pointCount: 1000, mean: mean, stdDev: std);
@@ -174,22 +183,26 @@ namespace ErgoCalc
             double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 
             ScottPlot.FormsPlot plot = null;
+            PictureBox pctLegend = null;
             switch (nPlot)
             {
                 case 1:
                     plot = formsPlot1;  // Initial force plot
+                    pctLegend = pictureBox1;
                     break;
                 case 2:
                     plot = formsPlot2;  // Sustained force plot
+                    pctLegend = pictureBox2;
                     break;
                 case 3:
                     plot = formsPlot3;  // Weight plot
+                    pctLegend = pictureBox3;
                     break;
             }
 
-            plot.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
+            //plot.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
             plot.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            plot.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: strLabel);
+            plot.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: strLegend);
             //formsPlot1.plt.PlotScatter(hist.bins, hist.countsFracCurve, markerSize: 0, lineWidth: 2, label: "Histogram");
 
             var limit75 = mean - std * 0.674489750196082;
@@ -199,9 +212,16 @@ namespace ErgoCalc
             plot.plt.PlotVLine(x: limit90, color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
             plot.plt.Axis(y1: 0, y2: null);
             plot.plt.AxisAutoX();
+            plot.plt.TightenLayout(padding: 1);
             plot.Render();
+
+            pctLegend.Image = plot.plt.GetLegendBitmap();
         }
 
+        /// <summary>
+        /// Saves and commits data into a JSON structured file
+        /// </summary>
+        /// <param name="writer">The file writer abstraction. It's created and disposed by the caller (the Save function)</param>
         private void SerializeToJSON(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -491,7 +511,15 @@ namespace ErgoCalc
 
         public void Duplicate()
         {
-            throw new NotImplementedException();
+            string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Mostrar la ventana de resultados
+            frmResultsLiberty frmResults = new frmResultsLiberty(_data);
+            {
+                MdiParent = this.MdiParent;
+            };
+            if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResults.Show();
         }
         #endregion IChildResults inferface
     }

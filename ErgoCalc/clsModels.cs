@@ -1441,7 +1441,8 @@ namespace ErgoCalc
 
                         i++;
                     }
-
+                    
+                    //String.Format("{0,-10} | {1,-10} | {2,5}", "Bill", "Gates", 51));
                     strResult = string.Concat("These are the results for the PMV and the PPD indexes according to ISO 7730:",
                             System.Environment.NewLine,
                             string.Concat(strLineD),
@@ -1539,16 +1540,26 @@ namespace ErgoCalc
                 private static extern double LibertyMutualMMH([In, Out] ModelLiberty[] data, int Size);
                 
                 
+                /// <summary>
+                /// Default constructor
+                /// </summary>
                 public CLibertyMutual()
                 {
 
                 }
 
+                /// <summary>
+                /// Parametrized overloaded constructor
+                /// </summary>
+                /// <param name="data"></param>
                 public CLibertyMutual(List<ModelLiberty> data)
                 {
                     _data = data;
                 }
 
+                /// <summary>
+                /// Computation function calling the DLL library
+                /// </summary>
                 public void ComputeMMH()
                 {
                     var tempArray = _data.ToArray();
@@ -1556,7 +1567,10 @@ namespace ErgoCalc
                     _data = new(tempArray);
                 }
                 
-                
+                /// <summary>
+                /// ToString overloaded function converting the internal class data into a structured text output
+                /// </summary>
+                /// <returns>Structured text output</returns>
                 public override string ToString()
                 {
                     // https://stackoverflow.com/questions/26235759/how-to-format-a-double-with-fixed-number-of-significant-digits-regardless-of-th
