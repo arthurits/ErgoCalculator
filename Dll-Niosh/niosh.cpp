@@ -12,7 +12,7 @@
 // Funciones para calcular la ecuación de NIOSH                       //
 //                                                                    //
 ////////////////////////////////////////////////////////////////////////
-extern "C" __declspec(dllexport) double __stdcall CalculateNIOSH(modelNIOSH modelo[], int nIndex[], const int* const nSize)
+extern "C" __declspec(dllexport) double __stdcall CalculateNIOSH(SubTask modelo[], int nIndex[], const int* const nSize)
 {
 	/* 1er paso: calcular los índices de las tareas simples */
 	int i;  /* Indice para el bucle for*/
@@ -29,19 +29,19 @@ extern "C" __declspec(dllexport) double __stdcall CalculateNIOSH(modelNIOSH mode
 		modelo[i].factors.DM = FactorDM(&modelo[i].data.d);
 		modelo[i].factors.AM = FactorAM(&modelo[i].data.a);
 		modelo[i].factors.FM = FactorFM(&modelo[i].data.f, &modelo[i].data.v, &modelo[i].data.td);
-		modelo[i].factors.CM = FactorCM(&modelo[i].data.c, &modelo[i].data.v);
+		modelo[i].factors.CM = FactorCM((int)modelo[i].data.c, &modelo[i].data.v);
 
-		modelo[i].index = NIOSHindex(&modelo[i].data.weight, &modelo[i].factors);
-		modelo[i].indexIF = modelo[i].index * modelo[i].factors.FM;
+		modelo[i].LI = NIOSHindex(&modelo[i].data.weight, &modelo[i].factors);
+		modelo[i].indexIF = modelo[i].LI * modelo[i].factors.FM;
 
-		pIndex[i] = modelo[i].index;
+		pIndex[i] = modelo[i].LI;
 	}
 
 	/* 2º paso: ordenar los índices */
 	HeapSortIndex(pIndex, nIndex, nSize);
 
 	/* 3er paso: calcular el sumatorio con los índices recalculados */
-	double resultado = modelo[nIndex[*nSize - 1]].index;
+	double resultado = modelo[nIndex[*nSize - 1]].LI;
 	modelo[nIndex[*nSize - 1]].data.fa = modelo[nIndex[*nSize - 1]].data.fb = modelo[nIndex[*nSize - 1]].data.f;
 
 	for (i = *nSize - 2; i >= 0; i--)
@@ -60,7 +60,7 @@ extern "C" __declspec(dllexport) double __stdcall CalculateNIOSH(modelNIOSH mode
 	return resultado;
 }
 
-double NIOSHindex(const double* const peso, const multipliersNIOSH* const factores)
+double NIOSHindex(const double* const peso, const factors* const factores)
 {
 	double multiplicacion = 0.0;
 	double indice = 0.0;
@@ -206,24 +206,24 @@ double FactorFM(const double* const frecuencia, const double* const v, const dou
 	return resultado;
 }
 
-double FactorCM(const int* const agarre, const double* const v)
+double FactorCM(int agarre, const double* const v)
 {
 	// Definición de variables
 	double resultado = 0.0;
 
-	switch (*agarre)
+	switch (agarre)
 	{
-	case 1:     // Agarre bueno
-		resultado = 1.0;
+	case NoHandle:
+		resultado = 0.90;
 		break;
-	case 2:     // Agarre regular
+	case Poor:
 		if (*v < 75)
 			resultado = 0.95;
 		else
 			resultado = 1.0;
 		break;
-	case 3:     // Agarre malo
-		resultado = 0.90;
+	case Good:
+		resultado = 1.00;
 		break;
 	default:
 		resultado = 0.0;

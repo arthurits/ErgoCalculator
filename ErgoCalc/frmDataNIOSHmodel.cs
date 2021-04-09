@@ -13,7 +13,7 @@ namespace ErgoCalc
 {
     public partial class frmDataNIOSHmodel : Form, IChildData
     {
-        private modelNIOSH[] _data;
+        private List<SubTask> _data;
         private bool _composite;
         private string strGridHeader = "Task ";
 
@@ -50,9 +50,9 @@ namespace ErgoCalc
 
             tableC.Columns.Add("Display", typeof(String));
             tableC.Columns.Add("Value", typeof(Int32));
-            tableC.Rows.Add("Good", 1);
-            tableC.Rows.Add("Poor", 2);
-            tableC.Rows.Add("No handle", 3);
+            tableC.Rows.Add("Good", 2);
+            tableC.Rows.Add("Poor", 1);
+            tableC.Rows.Add("No handle", 0);
             celdaC.DataSource = tableC;
             celdaC.DisplayMember = "Display";
             celdaC.ValueMember = "Value";
@@ -62,7 +62,7 @@ namespace ErgoCalc
         }
 
         // Overloaded constructor
-        public frmDataNIOSHmodel(modelNIOSH[] data)
+        public frmDataNIOSHmodel(List<SubTask> data)
             : this() // Call the base constructor
         {
             DataToGrid(data);
@@ -94,21 +94,27 @@ namespace ErgoCalc
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            int nSize = Convert.ToInt32(updTasks.Value);
+            SubTask item = new SubTask();
             // Save the values entered
-            _data = new modelNIOSH[Convert.ToInt32(updTasks.Value)];
-            for (Int32 i = 0; i < _data.Length; i++)
+            _data = new List<SubTask>();
+            for (Int32 i = 0; i < nSize; i++)
             {
-                _data[i].data.weight = Convert.ToDouble(gridVariables[i, 0].Value);
-                _data[i].data.h = Convert.ToDouble(gridVariables[i, 1].Value);
-                _data[i].data.v = Convert.ToDouble(gridVariables[i, 2].Value);
-                _data[i].data.d = Convert.ToDouble(gridVariables[i, 3].Value);
-                _data[i].data.f = Convert.ToDouble(gridVariables[i, 4].Value);
-                _data[i].data.td = Convert.ToDouble(gridVariables[i, 5].Value);
-                _data[i].data.a = Convert.ToDouble(gridVariables[i, 6].Value);
-                _data[i].data.c = Convert.ToInt32(gridVariables[i, 7].Value);
+                item.data.weight = Convert.ToDouble(gridVariables[i, 0].Value);
+                item.data.h = Convert.ToDouble(gridVariables[i, 1].Value);
+                item.data.v = Convert.ToDouble(gridVariables[i, 2].Value);
+                item.data.d = Convert.ToDouble(gridVariables[i, 3].Value);
+                item.data.f = Convert.ToDouble(gridVariables[i, 4].Value);
+                item.data.td = Convert.ToDouble(gridVariables[i, 5].Value);
+                item.data.a = Convert.ToDouble(gridVariables[i, 6].Value);
+                item.data.c = (MNCoupling)gridVariables[i, 7].Value;
 
                 if (!String.IsNullOrEmpty(txtConstanteLC.Text))
-                    _data[i].factors.LC = Convert.ToDouble(txtConstanteLC.Text);
+                    item.factors.LC = Convert.ToDouble(txtConstanteLC.Text);
+                else
+                    item.factors.LC = 0.0;
+                
+                _data.Add(item);
             }
 
             // Save the composite option
@@ -120,7 +126,7 @@ namespace ErgoCalc
         private void btnCancel_Click(object sender, EventArgs e)
         {
             // Return empty array
-            _data = new modelNIOSH[0];
+            _data = new List<SubTask>();
         }
 
         #region Private routines
@@ -157,79 +163,88 @@ namespace ErgoCalc
         /// </summary>
         private void DataExample()
         {
-            _data = new modelNIOSH[8];
+            _data = new List<SubTask>();
+            SubTask item = new SubTask();
 
-            _data[0].data.weight = 3.0;
-            _data[0].data.h = 24;
-            _data[0].data.v = 38.5;
-            _data[0].data.d = 76.5;
-            _data[0].data.a = 0;
-            _data[0].data.f = 3;
-            _data[0].data.td = 2;
-            _data[0].data.c = 3;
+            item.data.weight = 3.0;
+            item.data.h = 24;
+            item.data.v = 38.5;
+            item.data.d = 76.5;
+            item.data.a = 0;
+            item.data.f = 3;
+            item.data.td = 2;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[1].data.weight = 3.0;
-            _data[1].data.h = 24;
-            _data[1].data.v = 81;
-            _data[1].data.d = 34;
-            _data[1].data.a = 0;
-            _data[1].data.f = 3;
-            _data[1].data.td = 2;
-            _data[1].data.c = 3;
+            item.data.weight = 3.0;
+            item.data.h = 24;
+            item.data.v = 81;
+            item.data.d = 34;
+            item.data.a = 0;
+            item.data.f = 3;
+            item.data.td = 2;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[2].data.weight = 3.0;
-            _data[2].data.h = 24;
-            _data[2].data.v = 123.5;
-            _data[2].data.d = 8.5;
-            _data[2].data.a = 90;
-            _data[2].data.f = 3;
-            _data[2].data.td = 2;
-            _data[2].data.c = 3;
+            item.data.weight = 3.0;
+            item.data.h = 24;
+            item.data.v = 123.5;
+            item.data.d = 8.5;
+            item.data.a = 90;
+            item.data.f = 3;
+            item.data.td = 2;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[3].data.weight = 3.0;
-            _data[3].data.h = 24;
-            _data[3].data.v = 166;
-            _data[3].data.d = 51;
-            _data[3].data.a = 90;
-            _data[3].data.f = 3;
-            _data[3].data.td = 2;
-            _data[3].data.c = 3;
+            item.data.weight = 3.0;
+            item.data.h = 24;
+            item.data.v = 166;
+            item.data.d = 51;
+            item.data.a = 90;
+            item.data.f = 3;
+            item.data.td = 2;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[4].data.weight = 7.0;
-            _data[4].data.h = 24;
-            _data[4].data.v = 33;
-            _data[4].data.d = 82;
-            _data[4].data.a = 0;
-            _data[4].data.f = 1;
-            _data[4].data.td = 1;
-            _data[4].data.c = 3;
+            item.data.weight = 7.0;
+            item.data.h = 24;
+            item.data.v = 33;
+            item.data.d = 82;
+            item.data.a = 0;
+            item.data.f = 1;
+            item.data.td = 1;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[5].data.weight = 7.0;
-            _data[5].data.h = 24;
-            _data[5].data.v = 75.5;
-            _data[5].data.d = 39.5;
-            _data[5].data.a = 0;
-            _data[5].data.f = 1;
-            _data[5].data.td = 1;
-            _data[5].data.c = 3;
+            item.data.weight = 7.0;
+            item.data.h = 24;
+            item.data.v = 75.5;
+            item.data.d = 39.5;
+            item.data.a = 0;
+            item.data.f = 1;
+            item.data.td = 1;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[6].data.weight = 7.0;
-            _data[6].data.h = 24;
-            _data[6].data.v = 118;
-            _data[6].data.d = 3;
-            _data[6].data.a = 0;
-            _data[6].data.f = 1;
-            _data[6].data.td = 1;
-            _data[6].data.c = 3;
+            item.data.weight = 7.0;
+            item.data.h = 24;
+            item.data.v = 118;
+            item.data.d = 3;
+            item.data.a = 0;
+            item.data.f = 1;
+            item.data.td = 1;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
-            _data[7].data.weight = 7.0;
-            _data[7].data.h = 24;
-            _data[7].data.v = 160.5;
-            _data[7].data.d = 45.5;
-            _data[7].data.a = 0;
-            _data[7].data.f = 2;
-            _data[7].data.td = 1;
-            _data[7].data.c = 3;
+            item.data.weight = 7.0;
+            item.data.h = 24;
+            item.data.v = 160.5;
+            item.data.d = 45.5;
+            item.data.a = 0;
+            item.data.f = 2;
+            item.data.td = 1;
+            item.data.c = MNCoupling.NoHandle;
+            _data.Add(item);
 
             /*
             _data = new modelNIOSH[3];
@@ -267,9 +282,10 @@ namespace ErgoCalc
         /// Shows the data into the grid control
         /// </summary>
         /// <param name="data">Array of Model NIOSH data</param>
-        private void DataToGrid(modelNIOSH[] data)
+        private void DataToGrid(List<SubTask> data)
         {
-            for (Int32 i = 0; i < data.Length; i++)
+            int nSize = data.Count;
+            for (Int32 i = 0; i < nSize; i++)
             {
                 // Add one column whenever necessary
                 if (i > 0) AddColumn(i);
@@ -282,11 +298,11 @@ namespace ErgoCalc
                 gridVariables[i, 4].Value = data[i].data.f.ToString();
                 gridVariables[i, 5].Value = data[i].data.td.ToString();
                 gridVariables[i, 6].Value = data[i].data.a.ToString();
-                gridVariables[i, 7].Value = data[i].data.c;
+                gridVariables[i, 7].Value = (int)data[i].data.c;
             }
 
             // Update the control's value
-            updTasks.Value = data.Length;
+            updTasks.Value = nSize;
         }
 
         /// <summary>
@@ -294,7 +310,7 @@ namespace ErgoCalc
         /// </summary>
         private void DataToGrid()
         {
-            for (Int32 i = 0; i < _data.Length; i++)
+            for (Int32 i = 0; i < _data.Count; i++)
             {
                 // Add one column whenever necessary
                 if (i > 0) AddColumn();
@@ -307,11 +323,11 @@ namespace ErgoCalc
                 gridVariables[i, 4].Value = _data[i].data.f.ToString();
                 gridVariables[i, 5].Value = _data[i].data.td.ToString();
                 gridVariables[i, 6].Value = _data[i].data.a.ToString();
-                gridVariables[i, 7].Value = _data[i].data.c;
+                gridVariables[i, 7].Value = (int)_data[i].data.c;
             }
 
             // Update the control's value
-            updTasks.Value = _data.Length;
+            updTasks.Value = _data.Count;
         }
 
         #endregion
