@@ -108,30 +108,30 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct Data
             {
-                public double weight;  // Peso que se manipula
-                public double h;       // Distancia horizontal
-                public double v;       // Distancia vertical del punto de agarre al suelo
-                public double d;       // Recorrido vertical
-                public double a;       // Ángulo de simetría
-                public double f;       // Frecuencia del levantamiento
-                public double fa;      // Frecuencia acumulada a
-                public double fb;      // Frecuencia acumulada b
-                public double td;      // Duración de la tarea
-                public MNCoupling c;          // Agarre
+                public double weight;   // Peso que se manipula
+                public double h;        // Distancia horizontal
+                public double v;        // Distancia vertical del punto de agarre al suelo
+                public double d;        // Recorrido vertical
+                public double a;        // Ángulo de simetría
+                public double f;        // Frecuencia del levantamiento
+                public double fa;       // Frecuencia acumulada a
+                public double fb;       // Frecuencia acumulada b
+                public double td;       // Duración de la tarea
+                public MNCoupling c;    // Agarre
             };
 
             [StructLayout(LayoutKind.Sequential)]
             public struct Factors
             {
-                public double LC;   // Constante de carga
-                public double HM;   // Factor de distancia horizontal
-                public double VM;   // Factor de distancia vertical
-                public double DM;   // Factor de desplazamiento vertical
-                public double AM;   // Factor de asimetría
-                public double FM;   // Factor de frecuencia
-                public double FMa;  // Factor de frecuencia acumulada a
-                public double FMb;  // Factor de frecuencia acumulada b
-                public double CM;   // Factor de agarre
+                public double LC;       // Constante de carga
+                public double HM;       // Factor de distancia horizontal
+                public double VM;       // Factor de distancia vertical
+                public double DM;       // Factor de desplazamiento vertical
+                public double AM;       // Factor de asimetría
+                public double FM;       // Factor de frecuencia
+                public double FMa;      // Factor de frecuencia acumulada a
+                public double FMb;      // Factor de frecuencia acumulada b
+                public double CM;       // Factor de agarre
             };
 
             [StructLayout(LayoutKind.Sequential)]

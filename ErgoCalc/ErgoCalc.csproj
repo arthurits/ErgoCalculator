@@ -351,7 +351,7 @@
   <ItemGroup>
     <PackageReference Include="ScottPlot" Version="4.0.48" />
     <PackageReference Include="ScottPlot.WinForms" Version="4.0.48" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="old - frmAbout.cs" />

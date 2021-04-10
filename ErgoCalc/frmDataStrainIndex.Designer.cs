@@ -266,7 +266,7 @@
             // 
             // tabDummy
             // 
-            this.tabDummy.Location = new System.Drawing.Point(12, 422);
+            this.tabDummy.Location = new System.Drawing.Point(16, 464);
             this.tabDummy.Name = "tabDummy";
             this.tabDummy.SelectedIndex = 0;
             this.tabDummy.Size = new System.Drawing.Size(88, 77);
