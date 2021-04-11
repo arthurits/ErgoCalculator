@@ -13,6 +13,7 @@ namespace ErgoCalc
 {
     public partial class frmDataNIOSHmodel : Form, IChildData
     {
+        private IndexType _index;
         private List<SubTask> _data;
         private bool _composite;
         private string strGridHeader = "Task ";
@@ -29,6 +30,11 @@ namespace ErgoCalc
             // VS Designer initialization routine
             InitializeComponent();
             txtConstanteLC.Text = "25";
+
+            // Simulate a click on radRSI
+            rad_CheckedChanged(radLI, null);
+
+            listViewTasks.AddGroup();
 
             // Create the first column (zero index base)
             AddColumn();
@@ -68,9 +74,9 @@ namespace ErgoCalc
             DataToGrid(data);
         }
 
-        private void updTasks_ValueChanged(object sender, EventArgs e)
+        private void updSubTasks_ValueChanged(object sender, EventArgs e)
         {
-            Int32 col = Convert.ToInt32(updTasks.Value);
+            Int32 col = Convert.ToInt32(updSubTasks.Value);
             
             // Add or remove columns
             if (col > gridVariables.ColumnCount)
@@ -81,20 +87,76 @@ namespace ErgoCalc
             // Modify the chkComposite state
             if (col > 1)
             {
-                chkComposite.Enabled = true;
+                radCLI.Enabled = true;
+            }
+            else if (col == 1)
+            {
+                radCLI.Enabled = false;
             }
             else
             {
-                chkComposite.Checked = false;
-                chkComposite.Enabled = false;
+                grpIndex.Enabled = false;
             }
-            
+
+            // Set the maximum tasks
+            this.updTasks.Maximum = col - 1;
+
             return;
+        }
+
+        private void updTasks_ValueChanged(object sender, EventArgs e)
+        {
+            Int32 tasks = Convert.ToInt32(updTasks.Value);
+            if (tasks > listViewTasks.Groups.Count)
+            {
+                for (int i = listViewTasks.Groups.Count; i < tasks; i++)
+                    listViewTasks.AddGroup(i);
+            }
+            else if (tasks < listViewTasks.Groups.Count)
+            {
+                for (int i = tasks; i < listViewTasks.Groups.Count; i++)
+                    listViewTasks.RemoveGroup(listViewTasks.Groups.Count - 1);
+            }
+            return;
+        }
+
+        private void rad_CheckedChanged(object sender, EventArgs e)
+        {
+            // Check of the raiser of the event is a checked Checkbox.
+            // Of course we also need to to cast it first.
+            RadioButton rb = sender as RadioButton;
+            if (rb == null) return;
+            if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
+
+            _index = (IndexType)Convert.ToInt32(rb.Tag);
+
+            // Modify tabs and texts
+            if (_index == IndexType.IndexLI)
+            {
+                foreach (DataGridViewColumn col in gridVariables.Columns)
+                {
+                    col.HeaderText = "Task " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                    lblSubTasks.Text = "Number of tasks";
+                }
+                tabData.TabPages[0].Text = "Tasks";
+                tabData.TabPages[1].Parent = tabDummy;
+            }
+            else
+            {
+                foreach (DataGridViewColumn col in gridVariables.Columns)
+                {
+                    col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                    lblSubTasks.Text = "Number of subtasks";
+                }
+                tabData.TabPages[0].Text = "SubTasks";
+                if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabData;
+            }
+
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            int nSize = Convert.ToInt32(updTasks.Value);
+            int nSize = Convert.ToInt32(updSubTasks.Value);
             SubTask item = new SubTask();
             // Save the values entered
             _data = new List<SubTask>();
@@ -118,7 +180,8 @@ namespace ErgoCalc
             }
 
             // Save the composite option
-            _composite = chkComposite.Checked;
+            //_composite = chkComposite.Checked;
+            _composite = (_index != IndexType.IndexLI);
 
             return;
         }
@@ -141,7 +204,7 @@ namespace ErgoCalc
             // Create the new column
             gridVariables.Columns.Add("Column" + (col).ToString() , strGridHeader + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-            gridVariables.Columns[col].Width = 70;
+            gridVariables.Columns[col].Width = 85;
 
             // Give format to the cells
             if (col > 0)
@@ -284,6 +347,19 @@ namespace ErgoCalc
         /// <param name="data">Array of Model NIOSH data</param>
         private void DataToGrid(List<SubTask> data)
         {
+            //switch ((int)_job.model)
+            //{
+            //    case 0:
+            //        radRSI.Checked = true;
+            //        break;
+            //    case 1:
+            //        radCOSI.Checked = true;
+            //        break;
+            //    case 2:
+            //        radCUSI.Checked = true;
+            //        break;
+            //}
+
             int nSize = data.Count;
             for (Int32 i = 0; i < nSize; i++)
             {
@@ -302,7 +378,8 @@ namespace ErgoCalc
             }
 
             // Update the control's value
-            updTasks.Value = nSize;
+            updSubTasks.Value = nSize;
+            updTasks.Value = 1;
         }
 
         /// <summary>
@@ -327,7 +404,8 @@ namespace ErgoCalc
             }
 
             // Update the control's value
-            updTasks.Value = _data.Count;
+            updSubTasks.Value = _data.Count;
+            updTasks.Value = 1;
         }
 
         #endregion
@@ -340,6 +418,26 @@ namespace ErgoCalc
             // Load some data example
             DataExample();
             DataToGrid();
+        }
+
+        private void tabData_Selected(object sender, TabControlEventArgs e)
+        {
+            if (e.TabPageIndex == 1) // tabTasks
+            {
+                int nDummy = (listViewTasks.Items.Find("Dummy", false)).Length;
+                // Create the subtasks, as many as subtasks
+                for (int i = listViewTasks.Items.Count - nDummy; i < updSubTasks.Value; i++)
+                {
+                    if (listViewTasks.Groups.Count != 0)
+                        listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
+                }
+                for (int i = listViewTasks.Items.Count - nDummy; i > updSubTasks.Value; i--)
+                {
+                    listViewTasks.Items.RemoveAt(i - 1);
+                }
+
+                listViewTasks.RemoveEmptyItems();
+            }
         }
     }
 }

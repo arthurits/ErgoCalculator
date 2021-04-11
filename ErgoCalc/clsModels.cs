@@ -97,12 +97,20 @@ namespace ErgoCalc
             using System;
             using System.Collections.Generic;
 
+            public enum IndexType
+            {
+                IndexLI = 0,
+                IndexCLI = 1,
+                IndexSLI = 2,
+                IndexVLI = 3,
+            }
+
             public enum MNCoupling
             {
                 NoHandle = 0,
                 Poor = 1,
                 Good = 2
-            };
+            }
 
             // Definición de tipos
             [StructLayout(LayoutKind.Sequential)]
@@ -118,7 +126,7 @@ namespace ErgoCalc
                 public double fb;       // Frecuencia acumulada b
                 public double td;       // Duración de la tarea
                 public MNCoupling c;    // Agarre
-            };
+            }
 
             [StructLayout(LayoutKind.Sequential)]
             public struct Factors
@@ -132,7 +140,7 @@ namespace ErgoCalc
                 public double FMa;      // Factor de frecuencia acumulada a
                 public double FMb;      // Factor de frecuencia acumulada b
                 public double CM;       // Factor de agarre
-            };
+            }
 
             [StructLayout(LayoutKind.Sequential)]
             public struct SubTask
@@ -145,7 +153,7 @@ namespace ErgoCalc
                 public double LI;
                 public int task;
                 public int order;
-            };
+            }
 
             [StructLayout(LayoutKind.Sequential)]
             public struct Task
@@ -159,6 +167,7 @@ namespace ErgoCalc
             [StructLayout(LayoutKind.Sequential)]
             public struct Job
             {
+                public IndexType nIndex;
                 public int nTasks;
             }
 
@@ -845,7 +854,7 @@ namespace ErgoCalc
                 public double h;       // Duración de la tarea
                 public double ea;       // Esfuerzos acumulados a
                 public double eb;       // Esfuerzos acumulados b
-            };
+            }
 
             [StructLayout(LayoutKind.Sequential)]
             public struct MultipliersRSI
@@ -857,7 +866,7 @@ namespace ErgoCalc
                 public double HM;   // Factor de duración de la tarea
                 public double EMa;  // Factor de esfuerzos acumulados a
                 public double EMb;  // Factor de esfuerzos acumulados a
-            };
+            }
 
             [StructLayout(LayoutKind.Sequential)]
             public struct ModelSubTask
@@ -868,7 +877,7 @@ namespace ErgoCalc
                 public MultipliersRSI factors;      // Subtask factors
                 public double index;                // The RSI index for this subtask
                 public int ItemIndex;
-            };
+            }
 
             // https://docs.microsoft.com/es-es/dotnet/standard/native-interop/customize-struct-marshaling
             [StructLayout(LayoutKind.Sequential)]

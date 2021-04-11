@@ -84,7 +84,7 @@ namespace System.Windows.Forms
         protected override void OnMouseUp(MouseEventArgs e)
         {
             //var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
-            if (heldDownItem != null)
+            if (heldDownItem != null && heldDownItem.Name != "Dummy")
             {
                 var group = this.GetItemAt(e.X, e.Y);
                 if (group != null)

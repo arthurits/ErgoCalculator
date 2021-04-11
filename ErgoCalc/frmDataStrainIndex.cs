@@ -210,7 +210,7 @@ namespace ErgoCalc
             //gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
             gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
             gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-            gridVariables.Columns[col].Width = 70;
+            gridVariables.Columns[col].Width = 85;
 
             // Give format to the cells
             // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
