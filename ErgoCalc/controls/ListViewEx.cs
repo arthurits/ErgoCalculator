@@ -63,7 +63,9 @@ namespace System.Windows.Forms
         protected override void OnMouseDown(MouseEventArgs e)
         {
             //listView1.AutoArrange = false;
+
             heldDownItem = this.GetItemAt(e.X, e.Y);
+
             //heldDownGroup = this.gett
             if (heldDownItem != null)
             {
@@ -91,7 +93,7 @@ namespace System.Windows.Forms
                 {
                     if (this.Groups[heldDownItem.Group.Header].Items.Count == 1)
                     {
-                        var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty);
+                        var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty) { Name = "Dummy" };
                         emptyItem.Group = heldDownItem.Group;
                         //emptyItem.Tag = heldDownItem.Group.Name;
                         this.Items.Add(emptyItem);

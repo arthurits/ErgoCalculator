@@ -139,9 +139,9 @@
             this.listViewTasks.AllowDrop = true;
             this.listViewTasks.FullRowSelect = true;
             this.listViewTasks.HideSelection = false;
-            this.listViewTasks.Location = new System.Drawing.Point(0, 67);
+            this.listViewTasks.Location = new System.Drawing.Point(0, 34);
             this.listViewTasks.Name = "listViewTasks";
-            this.listViewTasks.Size = new System.Drawing.Size(737, 261);
+            this.listViewTasks.Size = new System.Drawing.Size(737, 294);
             this.listViewTasks.TabIndex = 7;
             this.listViewTasks.UseCompatibleStateImageBehavior = false;
             // 
@@ -200,7 +200,7 @@
             // lblTasks
             // 
             this.lblTasks.AutoSize = true;
-            this.lblTasks.Location = new System.Drawing.Point(15, 21);
+            this.lblTasks.Location = new System.Drawing.Point(12, 7);
             this.lblTasks.Name = "lblTasks";
             this.lblTasks.Size = new System.Drawing.Size(111, 17);
             this.lblTasks.TabIndex = 9;
@@ -208,7 +208,7 @@
             // 
             // updTasks
             // 
-            this.updTasks.Location = new System.Drawing.Point(132, 21);
+            this.updTasks.Location = new System.Drawing.Point(129, 7);
             this.updTasks.Minimum = new decimal(new int[] {
             1,
             0,
