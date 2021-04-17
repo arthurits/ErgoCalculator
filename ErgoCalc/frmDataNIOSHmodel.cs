@@ -15,6 +15,7 @@ namespace ErgoCalc
     {
         private IndexType _index;
         private List<SubTask> _data;
+        private ClassData _classData;
         private bool _composite;
         private string strGridHeader = "Task ";
 
@@ -156,12 +157,19 @@ namespace ErgoCalc
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            // The form does not return unless all fields are validated. This avoids closing the dialog
+            this.DialogResult = DialogResult.None;
+
+            // Validate input before getting the values
+            if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
+
             int nSize = Convert.ToInt32(updSubTasks.Value);
-            SubTask item = new SubTask();
+            SubTask item;
             // Save the values entered
             _data = new List<SubTask>();
             for (Int32 i = 0; i < nSize; i++)
             {
+                item = new SubTask();
                 item.data.weight = Convert.ToDouble(gridVariables[i, 0].Value);
                 item.data.h = Convert.ToDouble(gridVariables[i, 1].Value);
                 item.data.v = Convert.ToDouble(gridVariables[i, 2].Value);
@@ -183,6 +191,65 @@ namespace ErgoCalc
             //_composite = chkComposite.Checked;
             _composite = (_index != IndexType.IndexLI);
 
+
+            // Test: new saving routine
+            _classData = new ClassData();
+            _classData.Jobs.Add(new Job() { nIndex = _index, nTasks = listViewTasks.Groups.Count });
+            if (_index == IndexType.IndexLI)
+                _classData.Tasks.Add(new Task() { CLI = -1, job = 0, order = 1, nSubTasks = Convert.ToInt32(updSubTasks.Value) });
+            else
+            {
+                for (int i = 0; i < Convert.ToInt32(updTasks.Value); i++)
+                {
+                    _classData.Tasks.Add(new Task()
+                    {
+                        CLI = -1,
+                        job = 0,
+                        order = i,
+                        nSubTasks = listViewTasks.Groups[i].Items.Count
+                    });
+                }
+            }
+
+            //SubTask item;
+            var LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
+            for (int i=0; i < Convert.ToInt32(updSubTasks.Value); i++)
+            {
+                item = new SubTask();
+                item.data.weight = Convert.ToDouble(gridVariables[i, 0].Value);
+                item.data.h = Convert.ToDouble(gridVariables[i, 1].Value);
+                item.data.v = Convert.ToDouble(gridVariables[i, 2].Value);
+                item.data.d = Convert.ToDouble(gridVariables[i, 3].Value);
+                item.data.f = Convert.ToDouble(gridVariables[i, 4].Value);
+                item.data.td = Convert.ToDouble(gridVariables[i, 5].Value);
+                item.data.a = Convert.ToDouble(gridVariables[i, 6].Value);
+                item.data.c = (MNCoupling)gridVariables[i, 7].Value;
+
+                item.factors.LC = LC;
+
+                item.indexIF = -1;
+                item.LI = -1;
+                item.order = i;
+
+                if (_index == IndexType.IndexLI)
+                    item.task = 0;
+                else
+                {
+                    for (int j = 0; j < listViewTasks.Groups.Count; j++)
+                    {
+                        if (listViewTasks.Groups[j].Items.ContainsKey("SubTask " + ((char)('A' + i)).ToString()))
+                        {
+                            item.task = j;
+                            break;
+                        }
+                    }
+                }
+
+                _classData.SubTasks.Add(item);
+            }
+
+            // Return OK thus closing the dialog
+            this.DialogResult = DialogResult.OK;
             return;
         }
 
@@ -429,7 +496,7 @@ namespace ErgoCalc
                 for (int i = listViewTasks.Items.Count - nDummy; i < updSubTasks.Value; i++)
                 {
                     if (listViewTasks.Groups.Count != 0)
-                        listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
+                        listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]) { Name = "SubTask " + ((char)('A' + i)).ToString() });
                 }
                 for (int i = listViewTasks.Items.Count - nDummy; i > updSubTasks.Value; i--)
                 {

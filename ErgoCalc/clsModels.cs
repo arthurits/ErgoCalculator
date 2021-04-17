@@ -171,6 +171,24 @@ namespace ErgoCalc
                 public int nTasks;
             }
 
+            public class ClassData
+            {
+                private List<SubTask> _subTasks;
+                private List<Task> _tasks;
+                private List<Job> _jobs;
+
+                public List<SubTask> SubTasks { get => _subTasks; set => _subTasks = value; }
+                public List<Task> Tasks { get => _tasks; set => _tasks = value; }
+                public List<Job> Jobs { get => _jobs; set => _jobs = value; }
+
+                public ClassData()
+                {
+                    _subTasks = new List<SubTask>();
+                    _tasks = new List<Task>();
+                    _jobs = new List<Job>();
+                }
+            }       
+
             // Definición de la clase que encapsula la llamada a la DLL
             public class cModelNIOSH
             {
