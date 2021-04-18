@@ -248,6 +248,9 @@ namespace ErgoCalc
                 _classData.SubTasks.Add(item);
             }
 
+            // TEST: if this is not appropiate, then we should store data iterating only throu listViewTask and not gridView
+            _classData.SubTasks.Sort((s1, s2) => s1.task.CompareTo(s2.task));
+
             // Return OK thus closing the dialog
             this.DialogResult = DialogResult.OK;
             return;
