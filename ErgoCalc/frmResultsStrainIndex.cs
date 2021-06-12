@@ -184,22 +184,22 @@ namespace ErgoCalc
                     var plot = new ScottPlot.Plot(600, 450);
                     //var formsplot2 = new ScottPlot.FormsPlot(plot);
 
-                    plot.Title(strPlotTitle, fontSize: 22);
-                    plot.YLabel("Index value", fontSize: 22);
-                    plot.XLabel(strTaskText.TrimEnd(), fontSize: 22); ;
+                    plot.XAxis2.Label(strPlotTitle, size: 22);
+                    plot.YAxis.Label("Index value", size: 22);
+                    plot.XAxis.Label(strTaskText.TrimEnd(), size: 22); ;
 
-                    plot.PlotBar(dataX, dataRSI, label: "RSI");
+                    plot.AddBar(dataRSI, dataX).Label = "RSI";
                     if (_job.JobTasks[j].index != -1)
-                        plot.PlotScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                        plot.AddScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
                     plot.AxisAuto();
                     plot.XTicks(dataX, labels);
-                    plot.Ticks(fontSize: 18);
-                    plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+                    plot.XAxis.Grid(false);
+                    plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
                     //formsplot2.Render();
 
                     //plot.CoordinateFromPixel();
 
-                    using (var plotImage = plot.GetBitmap())
+                    using (var plotImage = plot.Render())
                     {
                         Clipboard.SetImage(plotImage);
                     }
@@ -240,18 +240,21 @@ namespace ErgoCalc
                     strPlotTitle = strPlotTitle.Remove(strPlotTitle.Length - 3, 3);
 
                     var plot = new ScottPlot.Plot(600, 450);
-                    plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
-                    plot.YLabel("Index value", fontSize: 22);
-                    plot.XLabel("Tasks", fontSize: 22); ;
+                    //plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
+                    plot.XAxis2.Label(string.Concat("CUSI results for Tasks ", strPlotTitle), size: 22);
+                    plot.YAxis.Label("Index value", size: 22);
+                    plot.XAxis.Label("Tasks", size: 22); ;
 
-                    plot.PlotBar(dataX, dataRSI, label: "COSI");
-                    plot.PlotScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                    plot.AddBar(dataRSI, dataX).Label = "COSI";
+                    plot.AddScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
                     plot.AxisAuto();
                     plot.XTicks(dataX, labels);
-                    plot.Ticks(fontSize: 18);
-                    plot.Grid(enableVertical: false, lineStyle: ScottPlot.LineStyle.Dot);
+                    plot.XAxis.TickLabelStyle(fontSize: 18);
+                    //plot.Ticks(fontSize: 18);
+                    plot.XAxis.Grid(false);
+                    plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
 
-                    using (var plotImage = plot.GetBitmap())
+                    using (var plotImage = plot.Render())
                     {
                         Clipboard.SetImage(plotImage);
                     }

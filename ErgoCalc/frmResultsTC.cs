@@ -122,19 +122,20 @@ namespace ErgoCalc
                     line[i - 100] = 1000 * CPsy.GetHumRatioFromRelHum(i / 10.0, j / 100.0, 101325);
                 }
                 OrdinateVal.Add(line);
-                formsPlot1.plt.PlotScatter(abscissa, line, markerShape: ScottPlot.MarkerShape.none, color: Color.LightGray);
+                formsPlot1.Plot.AddScatter(abscissa, line, markerShape: ScottPlot.MarkerShape.none, color: Color.LightGray);
             }
 
-            formsPlot1.plt.XLabel("Air temperature (°C)");
-            formsPlot1.plt.YLabel("g water / kg dry air");
+            formsPlot1.Plot.XLabel("Air temperature (°C)");
+            formsPlot1.Plot.YLabel("g water / kg dry air");
         }
 
         private void CreatePlots()
         {
             // Delete any poits if any
             // https://github.com/ScottPlot/ScottPlot/discussions/673
-            formsPlot1.plt.GetPlottables().RemoveAll(x => x is ScottPlot.PlottableScatter && ((ScottPlot.PlottableScatter)x).ys.Length == 1);
-            formsPlot2.plt.GetPlottables().Clear();
+            foreach (var chart in formsPlot1.Plot.GetPlottables().Where(x => x is ScottPlot.Plottable.ScatterPlot && ((ScottPlot.Plottable.ScatterPlot)x).Ys.Length == 1))
+                formsPlot1.Plot.Remove(chart);
+            formsPlot2.Plot.Clear();
 
             // Psychrometric plot
             var CPsy = new Psychrometrics(UnitSystem.SI);
@@ -142,10 +143,20 @@ namespace ErgoCalc
             foreach (var data in _data)
             {
                 var result = 1000 * CPsy.GetHumRatioFromRelHum(data.data.TempAir, data.data.RelHumidity / 100, 101325);
-                formsPlot1.plt.PlotPoint(data.data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), markerSize: 7);
+                formsPlot1.Plot.AddPoint(data.data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), size: 7);
                 i++;
             }
-            pictureBox1.Image = formsPlot1.plt.GetLegendBitmap();
+            var legendA = formsPlot1.Plot.RenderLegend();
+            var bitmapA = new Bitmap(legendA.Width + 2, legendA.Height + 2);
+            using Graphics GraphicsA = Graphics.FromImage(bitmapA);
+            GraphicsA.DrawRectangle(new Pen(Color.Black),
+                                    0,
+                                    0,
+                                    legendA.Width + 1,
+                                    legendA.Height + 1);
+            GraphicsA.DrawImage(legendA, 1, 1);
+            pictureBox1.Image = bitmapA;
+
             formsPlot1.Render();
 
             // Heat-loss plot
@@ -174,16 +185,26 @@ namespace ErgoCalc
 
             // Plot the bar charts in reverse order (highest first)
             //formsPlot2.plt.Legend(backColor: Color.White, shadowDirection: shadowDirection.none, location: legendLocation.lowerRight, fixedLineWidth: true);
-            formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot2.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
             
-            formsPlot2.plt.PlotBar(xsStacked, HL_6, label: "Convection");
-            formsPlot2.plt.PlotBar(xsStacked, HL_5, label: "Radiation");
-            formsPlot2.plt.PlotBar(xsStacked, HL_4, label: "Dry");
-            formsPlot2.plt.PlotBar(xsStacked, HL_3, label: "Latent");
-            formsPlot2.plt.PlotBar(xsStacked, HL_2, label: "Sweating");
-            formsPlot2.plt.PlotBar(xsStacked, HL_1, label: "Skin");
-            formsPlot2.plt.XTicks(xsStacked, xsLabels);
-            pictureBox2.Image = formsPlot2.plt.GetLegendBitmap();
+            formsPlot2.Plot.AddBar(HL_6, xsStacked).Label = "Convection";
+            formsPlot2.Plot.AddBar(HL_5, xsStacked).Label = "Radiation";
+            formsPlot2.Plot.AddBar(HL_4, xsStacked).Label = "Dry";
+            formsPlot2.Plot.AddBar(HL_3, xsStacked).Label = "Latent";
+            formsPlot2.Plot.AddBar(HL_2, xsStacked).Label = "Sweating";
+            formsPlot2.Plot.AddBar(HL_1, xsStacked).Label = "Skin";
+            formsPlot2.Plot.XTicks(xsStacked, xsLabels);
+
+            var legendB = formsPlot2.Plot.RenderLegend();
+            var bitmapB = new Bitmap(legendB.Width + 2, legendB.Height + 2);
+            using Graphics GraphicsB = Graphics.FromImage(bitmapB);
+            GraphicsB.DrawRectangle(new Pen(Color.Black),
+                                    0,
+                                    0,
+                                    legendB.Width + 1,
+                                    legendB.Height + 1);
+            GraphicsB.DrawImage(legendB, 1, 1);
+            pictureBox2.Image = bitmapB;
 
             formsPlot2.Render();
 

@@ -56,22 +56,22 @@ namespace ErgoCalc
         #region Private routines
         private void InitializePlot()
         {
-            formsPlot1.plt.XLabel("Initial force / kg-f");
+            formsPlot1.Plot.XLabel("Initial force / kg-f");
             //formsPlot1.plt.YLabel("Frequency?");
             //formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot1.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot1.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
             //formsPlot1.plt.TightenLayout(padding: 0);
 
-            formsPlot2.plt.XLabel("Sustained force / kg-f");
+            formsPlot2.Plot.XLabel("Sustained force / kg-f");
             //formsPlot2.plt.YLabel("Frequency?");
             //formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot2.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot2.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
             //formsPlot2.plt.TightenLayout(padding: 0, render: true);
 
-            formsPlot3.plt.XLabel("Weight / kg");
+            formsPlot3.Plot.XLabel("Weight / kg");
             //formsPlot3.plt.YLabel("Frequency?");
             //formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot3.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
+            formsPlot3.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
             //formsPlot3.plt.TightenLayout(padding: 0);
             //formsPlot3.plt.AxisAutoY();
             //formsPlot3.plt.Axis(y1: 0, y2: 1);
@@ -130,9 +130,9 @@ namespace ErgoCalc
         /// </summary>
         private void ClearPlots()
         {
-            formsPlot1.plt.GetPlottables().Clear();
-            formsPlot2.plt.GetPlottables().Clear();
-            formsPlot3.plt.GetPlottables().Clear();
+            formsPlot1.Plot.Clear();
+            formsPlot2.Plot.Clear();
+            formsPlot3.Plot.Clear();
         }
 
         /// <summary>
@@ -201,21 +201,32 @@ namespace ErgoCalc
             }
 
             //plot.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            plot.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            plot.plt.PlotScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: strLegend);
+            plot.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
+            plot.Plot.AddScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: strLegend);
             //formsPlot1.plt.PlotScatter(hist.bins, hist.countsFracCurve, markerSize: 0, lineWidth: 2, label: "Histogram");
 
             var limit75 = mean - std * 0.674489750196082;
             var limit90 = mean - std * 1.281551565544601;
 
-            plot.plt.PlotVLine(x: limit75, color: Color.DarkGray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
-            plot.plt.PlotVLine(x: limit90, color: Color.Gray, lineWidth: 1.2, lineStyle: LineStyle.Solid);
-            plot.plt.Axis(y1: 0, y2: null);
-            plot.plt.AxisAutoX();
-            plot.plt.TightenLayout(padding: 1);
+            plot.Plot.AddVerticalLine(x: limit75, color: Color.DarkGray, width: 1.2f, style: LineStyle.Solid);
+            plot.Plot.AddVerticalLine(x: limit90, color: Color.Gray, width: 1.2f, style: LineStyle.Solid);
+            plot.Plot.SetAxisLimits(yMin: 0, yMax: null);
+            plot.Plot.AxisAutoX();
+            //plot.Plot.TightenLayout(padding: 1);
+            //plot.Plot.Frameless();
             plot.Render();
 
-            pctLegend.Image = plot.plt.GetLegendBitmap();
+            var legendA = plot.Plot.RenderLegend();
+            var bitmapA = new Bitmap(legendA.Width + 2, legendA.Height + 2);
+            using Graphics GraphicsA = Graphics.FromImage(bitmapA);
+            GraphicsA.DrawRectangle(new Pen(Color.Black),
+                                    0,
+                                    0,
+                                    legendA.Width + 1,
+                                    legendA.Height + 1);
+            GraphicsA.DrawImage(legendA, 1, 1);
+
+            pctLegend.Image = bitmapA;
         }
 
         /// <summary>

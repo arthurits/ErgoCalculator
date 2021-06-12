@@ -61,7 +61,7 @@ namespace ErgoCalc
     {
         #region Propiedades de la clase
         private ScottPlot.FormsPlot _plot;
-        private ScottPlot.PlottableScatter _serie;
+        private ScottPlot.Plottable.ScatterPlot _serie;
         //private LiveCharts.WinForms.CartesianChart _chart;
         //private LiveCharts.Wpf.AxesCollection _axisX;
         //private LiveCharts.Wpf.AxesCollection _axisY;
@@ -94,7 +94,7 @@ namespace ErgoCalc
                 if (value > -1)
                 {
                     //var plots = _plot.plt.GetPlottables()[_nCurva];
-                    _serie = (ScottPlot.PlottableScatter)_plot.plt.GetPlottables()[_nCurva];
+                    _serie = (ScottPlot.Plottable.ScatterPlot)_plot.Plot.GetPlottables()[_nCurva];
                 }
             }
         }
@@ -106,12 +106,12 @@ namespace ErgoCalc
         ReadOnly(false),
         Description("Color palette"),
         Category("Plot options")]
-        public ScottPlot.Drawing.Colorset ColorPalette
+        public ScottPlot.Drawing.Palette ColorPalette
         {
-            get => _plot.plt.Colorset();
+            get => _plot.Plot.Palette;
             set
             {
-                _plot.plt.Colorset(value);
+                _plot.Plot.Palette = value;
                 _plot.Render();
             }
         }
@@ -125,11 +125,11 @@ namespace ErgoCalc
         Category("Plot options")]
         public bool ShowGrid
         {
-            get => _plot.plt.GetSettings().HorizontalGridLines.Visible;
+            get => true;
             set
             {
-                _plot.plt.GetSettings().HorizontalGridLines.Visible = value;
-                _plot.plt.GetSettings().VerticalGridLines.Visible = value;
+                _plot.Plot.YAxis.Grid(enable: value);
+                _plot.Plot.XAxis.Grid(enable: value);
                 _plot.Render();
             }
         }
@@ -143,10 +143,10 @@ namespace ErgoCalc
         Category("Plot options")]
         public bool LegendGrid
         {
-            get => _plot.plt.GetSettings().Legend.Visible;
+            get => _plot.Plot.Legend().IsVisible;
             set
             {
-                _plot.plt.GetSettings().Legend.Visible = value;
+                _plot.Plot.Legend(enable: value);
                 _plot.Render();
             }
         }
@@ -160,8 +160,8 @@ namespace ErgoCalc
         Category("Text and labels")]
         public string PlotTitle
         {
-            get => _plot.plt.GetSettings().title.text;
-            set { _plot.plt.Title(value); _plot.Render(); }
+            get => _plot.Plot.YAxis2.Label();
+            set { _plot.Plot.Title(label: value); _plot.Render(); }
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace ErgoCalc
         Category("Text and labels")]
         public string AxisXTitle
         {
-            get => _plot.plt.GetSettings().xLabel.text;
-            set { _plot.plt.XLabel(value); _plot.Render(); }
+            get => _plot.Plot.XAxis.Label();
+            set { _plot.Plot.XAxis.Label(label: value); _plot.Render(); }
         }
 
         /// <summary>
@@ -186,8 +186,8 @@ namespace ErgoCalc
         Category("Text and labels")]
         public string AxisYTitle
         {
-            get => _plot.plt.GetSettings().yLabel.text;
-            set { _plot.plt.YLabel(value); _plot.Render(); }
+            get => _plot.Plot.YAxis.Label();
+            set { _plot.Plot.YAxis.Label(label: value); _plot.Render(); }
         }
 
 
@@ -200,14 +200,14 @@ namespace ErgoCalc
         Category("Series options")]
         public Color CurvaColor
         {
-            get => _nCurva == -1 ? Color.Red : _serie.color;
+            get => _nCurva == -1 ? Color.Red : _serie.Color;
             set
             {
                 if (_nCurva == -1)
                  errorNoCurveSelected();
                 else
                 {
-                    _serie.color = Color.FromArgb(value.A, value.R, value.G, value.B);
+                    _serie.Color = Color.FromArgb(value.A, value.R, value.G, value.B);
                     _plot.Render();
                 }
             }
@@ -222,8 +222,8 @@ namespace ErgoCalc
         Category("Series options")]
         public double Width
         {
-            get => _serie == null ? 0.0 : _serie.lineWidth;
-            set { _serie.lineWidth = value; _plot.Render(); }
+            get => _serie == null ? 0.0 : _serie.LineWidth;
+            set { _serie.LineWidth = value; _plot.Render(); }
         }
 
         /// <summary>
@@ -235,8 +235,8 @@ namespace ErgoCalc
         Category("Series options")]
         public string Name
         {
-            get => _serie == null ? String.Empty : _serie.label;
-            set { _serie.label = value; _plot.Render(); }
+            get => _serie == null ? String.Empty : _serie.Label;
+            set { _serie.Label = value; _plot.Render(); }
         }
 
         /// <summary>
@@ -248,8 +248,8 @@ namespace ErgoCalc
         Category("Series options")]
         public bool Visibility
         {
-            get => _serie == null ? true : _serie.visible;
-            set { _serie.visible = value; _plot.Render(); }
+            get => _serie == null ? true : _serie.IsVisible;
+            set { _serie.IsVisible = value; _plot.Render(); }
         }
 
 

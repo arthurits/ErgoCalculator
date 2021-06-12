@@ -33,7 +33,7 @@ namespace ErgoCalc
             this.mnuSub.Visible = false;
             _chartOptions = new ChartOptions(chart, 1)
             {
-                NúmeroCurva = chart.plt.GetPlottables().Count - 1
+                NúmeroCurva = chart.Plot.GetPlottables().Length - 1
             };
 
             propertyGrid1.SelectedObject = _chartOptions;
@@ -62,7 +62,7 @@ namespace ErgoCalc
         {
             _datos = (List<datosWR>)datos;
             CalcularCurva();
-            _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+            _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
         }
 
         /// <summary>
@@ -71,16 +71,18 @@ namespace ErgoCalc
         private void InitializeChart()
         {
             chart.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
-            chart.MouseClicked += new System.Windows.Forms.MouseEventHandler(chart_MouseClicked);
+            chart.MouseClick += new System.Windows.Forms.MouseEventHandler(chart_MouseClick);
             //chart.MouseMoved += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
             //chart.MouseMove += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
-            chart.plt.Title("WR model", fontSize: 16);
-            chart.plt.YLabel("% Maximum holding time", fontSize: 14);
-            chart.plt.XLabel("Time / s", fontSize: 14);
-            chart.plt.Colorset(ScottPlot.Drawing.Colorset.Nord);
-            chart.plt.Axis(0, null, 0, 100);
-            chart.plt.Grid(lineWidth: 1, color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
-            chart.plt.Legend(location: ScottPlot.legendLocation.lowerRight);
+            chart.Plot.XAxis2.Label("WR model", size: 16);
+            chart.Plot.YAxis.Label("% Maximum holding time", size: 14);
+            chart.Plot.XAxis.Label("Time / s", size: 14);
+            chart.Plot.Palette=ScottPlot.Drawing.Palette.Nord;
+            chart.Plot.SetAxisLimits(0, null, 0, 100);
+            chart.Plot.Grid(color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
+            chart.Plot.XAxis.MajorGrid(lineWidth: 1);
+            chart.Plot.YAxis.MajorGrid(lineWidth: 1);
+            chart.Plot.Legend(location: ScottPlot.Alignment.LowerRight);
         }
 
         private void PlotCurves()
@@ -88,11 +90,11 @@ namespace ErgoCalc
             foreach (var datos in _datos)
             {
                 //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-                chart.plt.PlotScatter(datos._dPointsX, datos._dPointsY, label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+                chart.Plot.AddScatter(datos._dPointsX, datos._dPointsY, label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
             }
 
-            chart.plt.AxisAutoX();
-            chart.plt.Axis(0, null, 0, 100);
+            chart.Plot.AxisAutoX();
+            chart.Plot.SetAxisLimits(0, null, 0, 100);
             chart.Render();
         }
 
@@ -106,12 +108,12 @@ namespace ErgoCalc
                 if (model.Curva(datos))
                 {
                     //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-                    chart.plt.PlotScatter(datos._dPointsX, datos._dPointsY, label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+                    chart.Plot.AddScatter(datos._dPointsX, datos._dPointsY, label: datos._strLegend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
                 }
             }
             
-            chart.plt.AxisAutoX();
-            chart.plt.Axis(0, null, 0, 100);
+            chart.Plot.AxisAutoX();
+            chart.Plot.SetAxisLimits(0, null, 0, 100);
             chart.Render();
 
             /*
@@ -135,7 +137,7 @@ namespace ErgoCalc
             */
         }
 
-        private void chart_MouseClicked(object sender, MouseEventArgs e)
+        private void chart_MouseClick(object sender, MouseEventArgs e)
         {
             // https://github.com/ScottPlot/ScottPlot/discussions/645
             //double x = chart.plt.CoordinateFromPixelX(e.X);
@@ -201,7 +203,7 @@ namespace ErgoCalc
                 // If the file name is not an empty string open it for saving.  
                 if (result == DialogResult.OK && saveFileDlg.FileName != "")
                 {
-                    chart.plt.SaveFig(saveFileDlg.FileName);
+                    chart.Plot.SaveFig(saveFileDlg.FileName);
                 }
             }
         }
@@ -214,7 +216,7 @@ namespace ErgoCalc
                 _datos = (List<datosWR>)frmDatosWR.GetData;
                 //_datos.Add(frmDatosWR.getData());
                 CalcularCurva();
-                _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+                _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
                 propertyGrid1.Refresh();
             }
             // Cerrar el formulario de entrada de datos
@@ -223,10 +225,10 @@ namespace ErgoCalc
 
         private void toolStripWR_RemoveLine_Click(object sender, EventArgs e)
         {
-            var i = chart.plt.GetPlottables().Count;
+            var i = chart.Plot.GetPlottables().Length;
             if (i > 0)
             { 
-                chart.plt.Remove(chart.plt.GetPlottables()[i - 1]);
+                chart.Plot.Remove(chart.Plot.GetPlottables()[i - 1]);
                 chart.Render();
                 _chartOptions.NúmeroCurva = i - 2;
                 propertyGrid1.Refresh();
@@ -314,10 +316,32 @@ namespace ErgoCalc
                         }
                         break;
                     case 2:
-                        foreach (var plot in chart.plt.GetPlottables())
+                        foreach (var plot in chart.Plot.GetPlottables())
                         {
-                            if (plot.GetType() == typeof(ScottPlot.PlottableScatter))
-                                ((ScottPlot.PlottableScatter)plot).SaveCSV(SaveDlg.FileName);
+                            if (plot.GetType() == typeof(ScottPlot.Plottable.ScatterPlot))
+                            {
+                                //((ScottPlot.Plottable.ScatterPlot)plot).SaveCSV(SaveDlg.FileName);
+                                var chart = (ScottPlot.Plottable.ScatterPlot)plot;
+                                StringBuilder csv = new StringBuilder();
+                                for (int i = 0; i < chart.Ys.Length; i++)
+                                    csv.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}{2}{3}", chart.Xs[i], ", ", chart.Ys[i], "\n");
+                                System.IO.File.WriteAllText(SaveDlg.FileName, csv.ToString());
+                            }
+
+                            /*
+                            public void SaveCSV(string filePath, string delimiter = ", ", string separator = "\n")
+                            {
+                                System.IO.File.WriteAllText(filePath, GetCSV(delimiter, separator));
+                            }
+
+                            public string GetCSV(string delimiter = ", ", string separator = "\n")
+                            {
+                                StringBuilder csv = new StringBuilder();
+                                for (int i = 0; i < ys.Length; i++)
+                                    csv.AppendFormat("{0}{1}{2}{3}", xs[i], delimiter, ys[i], separator);
+                                return csv.ToString();
+                            }
+                            */
                         }
                         break;
                 }
@@ -385,7 +409,7 @@ namespace ErgoCalc
             {
                 //CalcularCurva();
                 PlotCurves();
-                _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+                _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
             }
 
             return result;
@@ -400,9 +424,9 @@ namespace ErgoCalc
                 // Get the edited input data
                 _datos = (List<datosWR>)frmDatosWR.GetData;
                 //_datos.Add(frmDatosWR.getData());
-                chart.plt.GetPlottables().Clear();
+                chart.Plot.Clear();
                 CalcularCurva();
-                _chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+                _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
             }
             return;
         }
