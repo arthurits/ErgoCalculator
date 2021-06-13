@@ -150,12 +150,12 @@ namespace ErgoCalc
                     case MNType.Pulling:
                     case MNType.Pushing:
                         CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 1, strLegend);        // Initial force plot
-                        CreatePlot(data.Sustained.MAL, data.Initial.MAL * data.Sustained.CV, 2, strLegend);    // Sustained force plot
+                        CreatePlot(data.Sustained.MAL, data.Sustained.MAL * data.Sustained.CV, 2, strLegend);    // Sustained force plot
                         break;
                     case MNType.Carrying:
                     case MNType.Lifting:
                     case MNType.Lowering:
-                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3, strLegend);        // Weigth plot
+                        CreatePlot(data.Initial.MAL, data.Initial.MAL * data.Initial.CV, 3, strLegend);        // Weight plot
                         break;
                 }
                 ++i;
@@ -208,8 +208,8 @@ namespace ErgoCalc
             var limit75 = mean - std * 0.674489750196082;
             var limit90 = mean - std * 1.281551565544601;
 
-            plot.Plot.AddVerticalLine(x: limit75, color: Color.DarkGray, width: 1.2f, style: LineStyle.Solid);
-            plot.Plot.AddVerticalLine(x: limit90, color: Color.Gray, width: 1.2f, style: LineStyle.Solid);
+            plot.Plot.AddVerticalLine(x: limit75, color: Color.DarkGray, width: 1.2f, style: LineStyle.Solid).Label = "75%";
+            plot.Plot.AddVerticalLine(x: limit90, color: Color.Gray, width: 1.2f, style: LineStyle.Solid).Label = "90%";
             plot.Plot.SetAxisLimits(yMin: 0, yMax: null);
             plot.Plot.AxisAutoX();
             //plot.Plot.TightenLayout(padding: 1);
