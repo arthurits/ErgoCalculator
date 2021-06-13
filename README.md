@@ -12,9 +12,9 @@ Sponsor this project!
 
 ## Use and installation
 This download is a portable software. Please follow this instructions:
-* Dowload the file
-* Unzip the contents to your desired folder
-* Execute (or create a direct link to) ErgoCalcLauncher.exe
+* Dowload the zip file.
+* Unzip the contents to your desired folder.
+* Execute (or create a direct link to) `ErgoCalcLauncher.exe`.
 
 ## Functionalities
 * Work-rest model developed by J. Dul, M. Douwes, M., and P Smitt in 1991 and suggested in [ISO 11226:2000 — Evaluation of static working postures](https://www.iso.org/standard/25573.html)
