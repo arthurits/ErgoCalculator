@@ -1,5 +1,5 @@
-# ErgoCalc
-Software implementing ergonomics algorithms (revised strain index, NIOSH lifting index, Liberty Mutual equations, metabolic rate, etc.). Written in .NET 5 (C# WinForms).
+# <img src="ErgoCalc/images/logo@256.png?raw=true" height="28" width="28"> ErgoCalc
+Software implementing ergonomics algorithms (revised strain index, NIOSH lifting index, Liberty Mutual equations, metabolic rate, etc.). Written in .NET 6 (C# WinForms).
 
 ![Software logo](/Media/Splash.png?raw=true "Software logo")
 
