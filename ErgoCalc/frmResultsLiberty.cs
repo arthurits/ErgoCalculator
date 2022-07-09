@@ -178,7 +178,7 @@ namespace ErgoCalc
             // create a Population object from the data
             var pop = new ScottPlot.Statistics.Population(values);
 
-            var hist = new ScottPlot.Statistics.Histogram(values, min: mean - 3 * std, max: mean + 3 * std);
+            var hist = ScottPlot.Statistics.Common.Histogram(values, min: mean - 3 * std, max: mean + 3 * std, binSize: pop.span / 100);
             double[] curveXs = DataGen.Range(pop.minus3stDev, pop.plus3stDev, .1);
             double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 

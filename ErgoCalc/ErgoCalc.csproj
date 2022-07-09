@@ -349,9 +349,9 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ScottPlot" Version="4.1.16" />
-    <PackageReference Include="ScottPlot.WinForms" Version="4.1.16" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="ScottPlot" Version="4.1.51" />
+    <PackageReference Include="ScottPlot.WinForms" Version="4.1.51" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="old - frmAbout.cs" />

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Arthurits Ltd.")]
 [assembly: AssemblyProduct("ErgoCalc")]
-[assembly: AssemblyCopyright("Copyright © 2009-2021")]
+[assembly: AssemblyCopyright("Copyright © 2009-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.0.0")]
-[assembly: AssemblyFileVersion("1.6.0.0")]
+[assembly: AssemblyVersion("1.7.0.0")]
+[assembly: AssemblyFileVersion("1.7.0.0")]
 
 // Needed to avoid warnings for ScottPlot 4.0.48
 //[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows7.0")]
