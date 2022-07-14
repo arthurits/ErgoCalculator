@@ -16,6 +16,7 @@ namespace ErgoCalc
     public partial class frmResultNIOSHmodel : Form, IChildResults
     {
         // Variable definition
+        public ClassData data { get; set; } 
         private List<SubTask> _sDatosNIOSH;
         private cModelNIOSH _classNIOSH;
         private ResultsOptions _options;
@@ -56,10 +57,15 @@ namespace ErgoCalc
 
         }
 
-        public frmResultNIOSHmodel(ClassData data, bool composite)
+        public frmResultNIOSHmodel(ClassData Data, bool composite)
             : this()
         {
-
+            data = Data;
+            _sDatosNIOSH = data.SubTasks;
+            _composite = composite;
+            Int32[] order = new Int32[data.SubTasks.Count];
+            for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
+            _classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
         }
 
         private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
