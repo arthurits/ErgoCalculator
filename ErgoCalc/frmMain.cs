@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 // Para guardar la posición en el archivo XML
 //using System.Runtime.Serialization.Formatters.Soap;
-using System.Runtime.InteropServices;
-
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 // Namespaces personales
 using Utilidades;

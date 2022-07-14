@@ -173,19 +173,12 @@ namespace ErgoCalc
 
             public class ClassData
             {
-                private List<SubTask> _subTasks;
-                private List<Task> _tasks;
-                private List<Job> _jobs;
-
-                public List<SubTask> SubTasks { get => _subTasks; set => _subTasks = value; }
-                public List<Task> Tasks { get => _tasks; set => _tasks = value; }
-                public List<Job> Jobs { get => _jobs; set => _jobs = value; }
+                public List<SubTask> SubTasks { get; set; } = new();
+                public List<Task> Tasks { get; set; } = new();
+                public List<Job> Jobs { get; set; } = new();
 
                 public ClassData()
                 {
-                    _subTasks = new List<SubTask>();
-                    _tasks = new List<Task>();
-                    _jobs = new List<Job>();
                 }
             }       
 

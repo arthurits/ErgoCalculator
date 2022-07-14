@@ -44,7 +44,7 @@ namespace ErgoCalc
         }
 
         public frmResultNIOSHmodel(object data, bool composite)
-            :this()
+            : this()
         {
             _sDatosNIOSH = (List<SubTask>)data;
             _composite = composite;
@@ -56,18 +56,24 @@ namespace ErgoCalc
 
         }
 
+        public frmResultNIOSHmodel(ClassData data, bool composite)
+            : this()
+        {
+
+        }
+
         private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
         {
             ShowResults();
         }
 
         private void rtbShowResult_DoubleClick(object sender, EventArgs e)
-        {            
+        {
             frmResultNIOSHModel_Shown(null, EventArgs.Empty);
         }
 
         #region Private routines
-        
+
         /// <summary>
         /// Computes the numerical results and shows them in the RichTextBox
         /// </summary>
@@ -80,7 +86,7 @@ namespace ErgoCalc
             Double resultado = 0.0;
 
             if (nSize == 0) return;
-            
+
             for (Int32 i = 0; i < nSize; i++) orden[i] = i;
 
             // Call the DLL function
@@ -129,6 +135,19 @@ namespace ErgoCalc
 
         }
 
+        /// <summary>
+        /// Serialize ModelJob structure to JSON
+        /// </summary>
+        /// <param name="writer">The already created writer</param>
+        private void SerializeToJSON(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WriteString("Document type", "NIOSH lifting equation");
+            //_classNIOSH.ToString();
+            writer.WriteEndObject();
+            writer.Flush();
+        }
+
         #endregion Private routines
 
         #region IChild interface
@@ -141,7 +160,7 @@ namespace ErgoCalc
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
                 DefaultExt = "*.txt",
-                Filter = "RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+                Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
                 FilterIndex = 1,
                 Title = "Save NIOSH model results",
                 OverwritePrompt = true,
@@ -167,12 +186,18 @@ namespace ErgoCalc
                     switch (saveFileDialog1.FilterIndex)
                     {
                         case 1:
-                            rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
+                            using (var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true }))
+                            {
+                                SerializeToJSON(writer);
+                            }
                             break;
                         case 2:
-                            rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                            rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
                             break;
                         case 3:
+                            rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                            break;
+                        case 4:
                             rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
                             break;
                     }
