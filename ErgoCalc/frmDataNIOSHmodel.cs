@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.NIOSHModel;
+using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc
 {
@@ -16,6 +17,7 @@ namespace ErgoCalc
         private IndexType _index;
         private List<SubTask> _data;
         private ClassData _classData;
+        private JobNew _nioshLifting;
         private bool _composite;
         private string strGridHeader = "Task ";
 
@@ -24,6 +26,8 @@ namespace ErgoCalc
         #endregion IChildData interface
 
         public bool GetComposite => _composite;
+
+        public ClassData GetClassData => _classData;
 
         // Default constructor
         public frmDataNIOSHmodel()
@@ -249,7 +253,59 @@ namespace ErgoCalc
             }
 
             // TEST: if this is not appropiate, then we should store data iterating only throu listViewTask and not gridView
-            _classData.SubTasks.Sort((s1, s2) => s1.task.CompareTo(s2.task));
+            //_classData.SubTasks.Sort((s1, s2) => s1.task.CompareTo(s2.task));
+
+
+            // New test
+            int ItemIndex;
+            _nioshLifting = new();
+            if (_index == IndexType.IndexLI)
+                _nioshLifting.numberTasks = Convert.ToInt32(updSubTasks.Value);
+            else
+                _nioshLifting.numberTasks = Convert.ToInt32(updTasks.Value);
+
+            _nioshLifting.jobTasks = new TaskNew[_nioshLifting.numberTasks];
+            _nioshLifting.order = new int[_nioshLifting.numberTasks];
+            _nioshLifting.model = radLI.Checked ? IndexTypeNew.IndexLI : IndexTypeNew.IndexCLI;
+
+            //var LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
+            for (int i = 0; i < _nioshLifting.numberTasks; i++)
+            {
+                _nioshLifting.jobTasks[i] = new();
+                _nioshLifting.order[i] = i;
+
+                _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexTypeNew.IndexLI ? 1 : listViewTasks.Groups[i].Items.Count;
+                _nioshLifting.jobTasks[i].order = new int[_nioshLifting.jobTasks[i].numberSubTasks];
+                _nioshLifting.jobTasks[i].subTasks = new SubTaskNew[_nioshLifting.jobTasks[i].numberSubTasks];
+                _nioshLifting.jobTasks[i].CLI = -1;
+
+                for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
+                {
+                    _nioshLifting.jobTasks[i].subTasks[j] = new();
+                    ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                    _nioshLifting.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
+
+                    //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
+                    //if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
+                    //if (!Validation.IsValidRange(gridVariables[ItemIndex, 2].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 2]; gridVariables.BeginEdit(true); return; }
+                    //if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, -180, -180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
+                    //if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 8, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
+
+                    _nioshLifting.jobTasks[i].subTasks[j].data.weight = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.v = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.d = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.f = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.td = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.a = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
+                    _nioshLifting.jobTasks[i].subTasks[j].data.c = (Coupling)gridVariables[ItemIndex, 7].Value;
+
+                    _nioshLifting.jobTasks[i].subTasks[j].factors.LC = LC;
+
+                    //_nioshLifting.jobTasks[i].h += _nioshLifting.jobTasks[i].subTasks[j].data.h;  // Calculate mean
+                    _nioshLifting.jobTasks[i].order[j] = j;
+                }
+            }
 
             // Return OK thus closing the dialog
             this.DialogResult = DialogResult.OK;

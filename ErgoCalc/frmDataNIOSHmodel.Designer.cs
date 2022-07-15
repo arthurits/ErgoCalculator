@@ -138,7 +138,6 @@
             // 
             this.listViewTasks.AllowDrop = true;
             this.listViewTasks.FullRowSelect = true;
-            this.listViewTasks.HideSelection = false;
             this.listViewTasks.Location = new System.Drawing.Point(0, 34);
             this.listViewTasks.Name = "listViewTasks";
             this.listViewTasks.Size = new System.Drawing.Size(737, 294);
@@ -190,10 +189,10 @@
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
             this.tabTasks.Controls.Add(this.listViewTasks);
-            this.tabTasks.Location = new System.Drawing.Point(4, 25);
+            this.tabTasks.Location = new System.Drawing.Point(4, 24);
             this.tabTasks.Name = "tabTasks";
             this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTasks.Size = new System.Drawing.Size(737, 328);
+            this.tabTasks.Size = new System.Drawing.Size(737, 329);
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 
@@ -325,6 +324,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmDataNIOSHmodel";
+            this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "NIOSH model data";

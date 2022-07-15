@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.NIOSHModel;
+using ErgoCalc.Models.Lifting;
 using System.Text.Json;
 
 namespace ErgoCalc
@@ -63,10 +64,46 @@ namespace ErgoCalc
             data = Data;
             _sDatosNIOSH = data.SubTasks;
             _composite = composite;
-            Int32[] order = new Int32[data.SubTasks.Count];
-            for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
-            _classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
+            if (_composite == false)
+            {
+                Int32[] order = new Int32[data.SubTasks.Count];
+                for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
+                _classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
+            }
+            else
+            {
+                List<SubTask> subT;
+                for (int i = 0; i < data.Tasks.Count; i++)
+                {
+                    subT = new();
+                    for (int j = 0; j < data.SubTasks.Count; j++)
+                    {
+                        if (data.SubTasks[j].task == i)
+                            subT.Add(data.SubTasks[j]);
+                    }
+                    _sDatosNIOSH = subT;
+                    Int32[] order = new Int32[subT.Count];
+                    for (int k = 0; k < subT.Count; k++) order[k] = k;
+                    _classNIOSH = new cModelNIOSH(_sDatosNIOSH, order, composite);
+                }
+            }
         }
+
+        //public frmResultNIOSHmodel(JobNew Data, bool composite)
+        //    : this()
+        //{
+        //    data = Data;
+        //    _sDatosNIOSH = data.SubTasks;
+        //    _composite = composite;
+        //    Int32[] order = new Int32[data.SubTasks.Count];
+        //    for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
+        //    _classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
+
+        //    if (Data.model == IndexTypeNew.IndexLI)
+        //    {
+        //        List
+        //    }
+        //}
 
         private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
         {
