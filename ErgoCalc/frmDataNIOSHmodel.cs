@@ -29,6 +29,8 @@ namespace ErgoCalc
 
         public ClassData GetClassData => _classData;
 
+        public JobNew GetNioshLifting => _nioshLifting;
+
         // Default constructor
         public frmDataNIOSHmodel()
         {
@@ -275,14 +277,15 @@ namespace ErgoCalc
                 _nioshLifting.order[i] = i;
 
                 _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexTypeNew.IndexLI ? 1 : listViewTasks.Groups[i].Items.Count;
-                _nioshLifting.jobTasks[i].order = new int[_nioshLifting.jobTasks[i].numberSubTasks];
+                _nioshLifting.jobTasks[i].model = _nioshLifting.model;
+                _nioshLifting.jobTasks[i].OrderCLI = new int[_nioshLifting.jobTasks[i].numberSubTasks];
                 _nioshLifting.jobTasks[i].subTasks = new SubTaskNew[_nioshLifting.jobTasks[i].numberSubTasks];
                 _nioshLifting.jobTasks[i].CLI = -1;
 
                 for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
                 {
                     _nioshLifting.jobTasks[i].subTasks[j] = new();
-                    ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                    ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? i : listViewTasks.Groups[i].Items[j].Index;
                     _nioshLifting.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
 
                     //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
@@ -303,7 +306,7 @@ namespace ErgoCalc
                     _nioshLifting.jobTasks[i].subTasks[j].factors.LC = LC;
 
                     //_nioshLifting.jobTasks[i].h += _nioshLifting.jobTasks[i].subTasks[j].data.h;  // Calculate mean
-                    _nioshLifting.jobTasks[i].order[j] = j;
+                    //_nioshLifting.jobTasks[i].OrderCLI[j] = j;
                 }
             }
 

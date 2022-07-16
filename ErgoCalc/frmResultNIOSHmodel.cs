@@ -22,6 +22,7 @@ namespace ErgoCalc
         private cModelNIOSH _classNIOSH;
         private ResultsOptions _options;
         private bool _composite;
+        private JobNew job;
 
         public frmResultNIOSHmodel()
         {
@@ -89,21 +90,31 @@ namespace ErgoCalc
             }
         }
 
-        //public frmResultNIOSHmodel(JobNew Data, bool composite)
-        //    : this()
-        //{
-        //    data = Data;
-        //    _sDatosNIOSH = data.SubTasks;
-        //    _composite = composite;
-        //    Int32[] order = new Int32[data.SubTasks.Count];
-        //    for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
-        //    _classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
+        public frmResultNIOSHmodel(JobNew Data)
+            : this()
+        {
+            job = Data;
+            //_sDatosNIOSH = data.SubTasks;
+            //_composite = (Data.model == IndexTypeNew.IndexCLI);
+            //Int32[] order = new Int32[data.SubTasks.Count];
+            //for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
+            //_classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
 
-        //    if (Data.model == IndexTypeNew.IndexLI)
-        //    {
-        //        List
-        //    }
-        //}
+            if (Data.model == IndexTypeNew.IndexLI)
+            {
+                foreach(TaskNew task in job.jobTasks)
+                {
+                    NIOSHLifting.ComputeLI(task.subTasks);
+                }
+            }
+            else if (Data.model == IndexTypeNew.IndexCLI)
+            {
+                foreach (TaskNew task in job.jobTasks)
+                {
+                    NIOSHLifting.ComputeCLI(task);
+                }
+            }
+        }
 
         private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
         {
@@ -122,8 +133,12 @@ namespace ErgoCalc
         /// </summary>
         private void ShowResults()
         {
+            rtbShowResult.Text = job.ToString();
+            FormatText();
+
             // Variable definition
-            Int32 nSize = _sDatosNIOSH.Count;
+            //Int32 nSize = _sDatosNIOSH.Count;
+            Int32 nSize = 0;
             Int32[] orden = new Int32[nSize];
             Boolean error = false;
             Double resultado = 0.0;
@@ -357,12 +372,15 @@ namespace ErgoCalc
                 rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
             }
 
-            nStart = rtbShowResult.Find("The NIOSH lifting index is:", nStart + 1, -1, RichTextBoxFinds.MatchCase);
-            if (nStart > -1)
-            {//nEnd = rtbShowResult.Text.Length;
+            while (true)
+            {
+                nStart = rtbShowResult.Find("The NIOSH lifting index is:", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+                if (nStart == -1) break;
+                //nEnd = rtbShowResult.Text.Length;
                 nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
                 rtbShowResult.Select(nStart, nEnd - nStart);
                 rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+
             }
 
 
@@ -370,27 +388,6 @@ namespace ErgoCalc
             rtbShowResult.SelectionStart = 0;
             rtbShowResult.SelectionLength = 0;
 
-
-            //// Underline
-            //string line = rtbShowResult.Lines[2];
-            //rtbShowResult.Select(rtbShowResult.Find("Description", 0, RichTextBoxFinds.MatchCase), line.Length);
-            ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(2), line.Length);
-            //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
-
-            //line = rtbShowResult.Lines[9];
-            //rtbShowResult.Select(rtbShowResult.Find("Description", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
-            ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(9), line.Length);
-            //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
-
-            //// Bold results
-            //line = rtbShowResult.Lines[16];
-            //rtbShowResult.Select(rtbShowResult.Find("The", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
-            ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(16), line.Length);
-            //rtbShowResult.SelectionFont = new Font(rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
-
-            //// Set the cursor at the beginning of the text
-            //rtbShowResult.SelectionStart = 0;
-            //rtbShowResult.SelectionLength = 0;
         }
 
         #endregion IChild interface
