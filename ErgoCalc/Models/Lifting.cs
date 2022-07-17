@@ -383,47 +383,15 @@ public class JobNew
     {
         string str = string.Empty;
 
-        
-        if (model==IndexTypeNew.IndexLI)
-        {
-            var task = new TaskNew();
-            task.OrderCLI = new int[numberTasks];
-            List<SubTaskNew> subTasks = new();
-            for (int i = 0; i < numberTasks; i++)
-                subTasks.Add(jobTasks[i].subTasks[0]);
-            task.numberSubTasks = numberTasks;
-            task.subTasks=subTasks.ToArray();
-            
-            str = task.ToString();
-        }
-        else if (model == IndexTypeNew.IndexCLI)
-        {
-            foreach (TaskNew task in jobTasks)
-            {
-                str += task.ToString() + Environment.NewLine + Environment.NewLine;
-            }
-        }
+        foreach (TaskNew task in jobTasks)
+            str += task.ToString() + Environment.NewLine + Environment.NewLine;
+
         return str;
     }
 }
 
 public static class NIOSHLifting
 {
-    //public List<SubTaskNew> SubTasks { get; set; } = new();
-    //public List<TaskNew> Tasks { get; set; } = new();
-    //public List<JobNew> Jobs { get; set; } = new();
-
-    //public JobNew Job { get; set; }
-
-    //public NIOSHLifting(JobNew job)
-    //{
-    //    Job = job;
-    //}
-
-    //public void Compute()
-    //{
-
-    //}
 
     public static void ComputeLI(SubTaskNew[] subT)
     {

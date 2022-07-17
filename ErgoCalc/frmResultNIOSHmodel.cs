@@ -17,12 +17,12 @@ namespace ErgoCalc
     public partial class frmResultNIOSHmodel : Form, IChildResults
     {
         // Variable definition
-        public ClassData data { get; set; } 
-        private List<SubTask> _sDatosNIOSH;
-        private cModelNIOSH _classNIOSH;
+        //public ClassData data { get; set; } 
+        //private List<SubTask> _sDatosNIOSH;
+        //private cModelNIOSH _classNIOSH;
         private ResultsOptions _options;
-        private bool _composite;
-        private JobNew job;
+        //private bool _composite;
+        private JobNew _job;
 
         public frmResultNIOSHmodel()
         {
@@ -30,7 +30,7 @@ namespace ErgoCalc
             InitializeComponent();
 
             // Set private variable default values            
-            _classNIOSH = new cModelNIOSH();
+            //_classNIOSH = new cModelNIOSH();
             _options = new ResultsOptions(this.rtbShowResult);
 
             // ToolStrip
@@ -46,70 +46,21 @@ namespace ErgoCalc
             splitContainer1.IsSplitterFixed = true;
         }
 
-        public frmResultNIOSHmodel(object data, bool composite)
-            : this()
-        {
-            _sDatosNIOSH = (List<SubTask>)data;
-            _composite = composite;
-
-            int nSize = ((List<SubTask>)data).Count;
-            Int32[] order = new Int32[nSize];
-            for (Int32 i = 0; i < nSize; i++) order[i] = i;
-            _classNIOSH = new cModelNIOSH((List<SubTask>)data, order, composite);
-
-        }
-
-        public frmResultNIOSHmodel(ClassData Data, bool composite)
-            : this()
-        {
-            data = Data;
-            _sDatosNIOSH = data.SubTasks;
-            _composite = composite;
-            if (_composite == false)
-            {
-                Int32[] order = new Int32[data.SubTasks.Count];
-                for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
-                _classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
-            }
-            else
-            {
-                List<SubTask> subT;
-                for (int i = 0; i < data.Tasks.Count; i++)
-                {
-                    subT = new();
-                    for (int j = 0; j < data.SubTasks.Count; j++)
-                    {
-                        if (data.SubTasks[j].task == i)
-                            subT.Add(data.SubTasks[j]);
-                    }
-                    _sDatosNIOSH = subT;
-                    Int32[] order = new Int32[subT.Count];
-                    for (int k = 0; k < subT.Count; k++) order[k] = k;
-                    _classNIOSH = new cModelNIOSH(_sDatosNIOSH, order, composite);
-                }
-            }
-        }
-
         public frmResultNIOSHmodel(JobNew Data)
             : this()
         {
-            job = Data;
-            //_sDatosNIOSH = data.SubTasks;
-            //_composite = (Data.model == IndexTypeNew.IndexCLI);
-            //Int32[] order = new Int32[data.SubTasks.Count];
-            //for (Int32 i = 0; i < data.SubTasks.Count; i++) order[i] = i;
-            //_classNIOSH = new cModelNIOSH(data.SubTasks, order, composite);
+            _job = Data;
 
             if (Data.model == IndexTypeNew.IndexLI)
             {
-                foreach(TaskNew task in job.jobTasks)
+                foreach(TaskNew task in _job.jobTasks)
                 {
                     NIOSHLifting.ComputeLI(task.subTasks);
                 }
             }
             else if (Data.model == IndexTypeNew.IndexCLI)
             {
-                foreach (TaskNew task in job.jobTasks)
+                foreach (TaskNew task in _job.jobTasks)
                 {
                     NIOSHLifting.ComputeCLI(task);
                 }
@@ -133,63 +84,63 @@ namespace ErgoCalc
         /// </summary>
         private void ShowResults()
         {
-            rtbShowResult.Text = job.ToString();
+            rtbShowResult.Text = _job.ToString();
             FormatText();
 
-            // Variable definition
-            //Int32 nSize = _sDatosNIOSH.Count;
-            Int32 nSize = 0;
-            Int32[] orden = new Int32[nSize];
-            Boolean error = false;
-            Double resultado = 0.0;
+            //// Variable definition
+            ////Int32 nSize = _sDatosNIOSH.Count;
+            //Int32 nSize = 0;
+            //Int32[] orden = new Int32[nSize];
+            //Boolean error = false;
+            //Double resultado = 0.0;
 
-            if (nSize == 0) return;
+            //if (nSize == 0) return;
 
-            for (Int32 i = 0; i < nSize; i++) orden[i] = i;
+            //for (Int32 i = 0; i < nSize; i++) orden[i] = i;
 
-            // Call the DLL function
-            try
-            {
-                resultado = _classNIOSH.CalculateNIOSH(_sDatosNIOSH, orden, ref nSize);
-            }
-            catch (EntryPointNotFoundException)
-            {
-                error = true;
-                MessageBox.Show(
-                    "The program calculation kernel's been tampered with.\nThe NIOSH index could not be computed.",
-                    "NIOSH index error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                this.Close();
-            }
-            catch (DllNotFoundException)
-            {
-                error = true;
-                MessageBox.Show(
-                    "Some files are missing. Please\nreinstall the application.",
-                    "NIOSH index error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                error = true;
-                MessageBox.Show(
-                    "Error in the calculation kernel:\n" + ex.ToString(),
-                    "Unexpected error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                this.Close();
-            }
+            //// Call the DLL function
+            //try
+            //{
+            //    resultado = _classNIOSH.CalculateNIOSH(_sDatosNIOSH, orden, ref nSize);
+            //}
+            //catch (EntryPointNotFoundException)
+            //{
+            //    error = true;
+            //    MessageBox.Show(
+            //        "The program calculation kernel's been tampered with.\nThe NIOSH index could not be computed.",
+            //        "NIOSH index error",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //    this.Close();
+            //}
+            //catch (DllNotFoundException)
+            //{
+            //    error = true;
+            //    MessageBox.Show(
+            //        "Some files are missing. Please\nreinstall the application.",
+            //        "NIOSH index error",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //    this.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    error = true;
+            //    MessageBox.Show(
+            //        "Error in the calculation kernel:\n" + ex.ToString(),
+            //        "Unexpected error",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //    this.Close();
+            //}
 
-            // Call the routine that shows the results
-            //if (error == false) ResultsToRichText(_sDatosNIOSH, orden, resultado, _composite);
-            if (error == false)
-            {
-                rtbShowResult.Text = _classNIOSH.ToString();
-                FormatText();
-            }
+            //// Call the routine that shows the results
+            ////if (error == false) ResultsToRichText(_sDatosNIOSH, orden, resultado, _composite);
+            //if (error == false)
+            //{
+            //    rtbShowResult.Text = _classNIOSH.ToString();
+            //    FormatText();
+            //}
 
         }
 
@@ -201,7 +152,72 @@ namespace ErgoCalc
         {
             writer.WriteStartObject();
             writer.WriteString("Document type", "NIOSH lifting equation");
-            //_classNIOSH.ToString();
+
+            writer.WriteNumber("Model", (int)_job.model);
+            writer.WriteNumber("Index", _job.index);
+            writer.WriteNumber("Number of tasks", _job.numberTasks);
+
+            writer.WritePropertyName("Tasks order");
+            writer.WriteStartArray();
+            for (int j = 0; j < _job.numberTasks; j++)
+                writer.WriteNumberValue(_job.order[j]);
+            writer.WriteEndArray();
+
+            writer.WritePropertyName("Tasks");
+            writer.WriteStartArray();
+            for (int i = 0; i < _job.numberTasks; i++)
+            {
+                writer.WriteStartObject();
+
+                writer.WriteNumber("Model", (int)_job.jobTasks[i].model);
+                writer.WriteNumber("CLI", _job.jobTasks[i].CLI);
+                writer.WriteNumber("Number of sub-tasks", _job.jobTasks[i].numberSubTasks);
+
+                writer.WritePropertyName("Sub-tasks order");
+                writer.WriteStartArray();
+                for (int j = 0; j < _job.jobTasks[i].numberSubTasks; j++)
+                    writer.WriteNumberValue(_job.jobTasks[i].OrderCLI[j]);
+                writer.WriteEndArray();
+
+                writer.WritePropertyName("Sub-tasks");
+                writer.WriteStartArray();
+                for (int j = 0; j < _job.jobTasks[i].numberSubTasks; j++)
+                {
+                    writer.WriteStartObject();
+                    writer.WriteNumber("Weight", _job.jobTasks[i].subTasks[j].data.weight);
+                    writer.WriteNumber("Horizontal distance", _job.jobTasks[i].subTasks[j].data.h);
+                    writer.WriteNumber("Vertical distance", _job.jobTasks[i].subTasks[j].data.v);
+                    writer.WriteNumber("Distance", _job.jobTasks[i].subTasks[j].data.d);
+                    writer.WriteNumber("Asymmetry angle", _job.jobTasks[i].subTasks[j].data.a);
+                    writer.WriteNumber("Frequency", _job.jobTasks[i].subTasks[j].data.f);
+                    writer.WriteNumber("Frequency (a)", _job.jobTasks[i].subTasks[j].data.fa);
+                    writer.WriteNumber("Frequency (b)", _job.jobTasks[i].subTasks[j].data.fb);
+                    writer.WriteNumber("Subtask duration", _job.jobTasks[i].subTasks[j].data.td);
+                    writer.WriteNumber("Coupling", (int)_job.jobTasks[i].subTasks[j].data.c);
+
+                    writer.WriteNumber("Load constant", _job.jobTasks[i].subTasks[j].factors.LC);
+                    writer.WriteNumber("H multiplier", _job.jobTasks[i].subTasks[j].factors.HM);
+                    writer.WriteNumber("V multiplier", _job.jobTasks[i].subTasks[j].factors.VM);
+                    writer.WriteNumber("D multiplier", _job.jobTasks[i].subTasks[j].factors.DM);
+                    writer.WriteNumber("A multiplier", _job.jobTasks[i].subTasks[j].factors.AM);
+                    writer.WriteNumber("F multiplier", _job.jobTasks[i].subTasks[j].factors.FM);
+                    writer.WriteNumber("Fa multiplier", _job.jobTasks[i].subTasks[j].factors.FMa);
+                    writer.WriteNumber("Fb multiplier", _job.jobTasks[i].subTasks[j].factors.FMb);
+                    writer.WriteNumber("C multiplier", _job.jobTasks[i].subTasks[j].factors.CM);
+
+                    writer.WriteNumber("LI index", _job.jobTasks[i].subTasks[j].LI);
+                    writer.WriteNumber("IF index", _job.jobTasks[i].subTasks[j].indexIF);
+                    writer.WriteNumber("Item index", _job.jobTasks[i].subTasks[j].itemIndex);
+                    writer.WriteNumber("Task", _job.jobTasks[i].subTasks[j].task);
+                    writer.WriteNumber("Order", _job.jobTasks[i].subTasks[j].order);
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndArray();
+
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+
             writer.WriteEndObject();
             writer.Flush();
         }
@@ -245,9 +261,7 @@ namespace ErgoCalc
                     {
                         case 1:
                             using (var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true }))
-                            {
                                 SerializeToJSON(writer);
-                            }
                             break;
                         case 2:
                             rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
@@ -274,20 +288,93 @@ namespace ErgoCalc
 
         public bool OpenFile(JsonDocument document)
         {
-            _sDatosNIOSH = new List<SubTask>();
-            bool result = false;
-            MessageBox.Show("Document opening not yet implemented");
+            bool result = true;
+            JobNew job = new();
+            JsonElement root = document.RootElement;
+
+            try
+            {
+                job.model = (IndexTypeNew)root.GetProperty("Model").GetInt32();
+                job.index = root.GetProperty("Index").GetDouble();
+                job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
+
+                job.order = new int[job.numberTasks];
+                int i = 0;
+                foreach (JsonElement TaskOrder in root.GetProperty("Tasks order").EnumerateArray())
+                {
+                    job.order[i] = TaskOrder.GetInt32();
+                    i++;
+                }
+
+                job.jobTasks = new TaskNew[job.numberTasks];
+                i = 0;
+                JsonElement SubTasks;
+                JsonElement Order;
+                foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
+                {
+                    job.jobTasks[i] = new();
+                    job.jobTasks[i].model = (IndexTypeNew)Task.GetProperty("Model").GetInt32();
+                    job.jobTasks[i].CLI = Task.GetProperty("CLI").GetDouble();
+                    job.jobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
+                    job.jobTasks[i].subTasks = new SubTaskNew[job.jobTasks[i].numberSubTasks];
+                    job.jobTasks[i].OrderCLI = new int[job.jobTasks[i].numberSubTasks];
+                    
+                    Order = Task.GetProperty("Sub-tasks order");
+                    for (int j = 0; j < job.jobTasks[i].numberSubTasks; j++)
+                        job.jobTasks[i].OrderCLI[j] = Order[j].GetInt32();
+
+                    SubTasks = Task.GetProperty("Sub-tasks");
+                    for (int j = 0; j < job.jobTasks[i].numberSubTasks; j++)
+                    {
+                        job.jobTasks[i].subTasks[j] = new();
+                        job.jobTasks[i].subTasks[j].data.weight = SubTasks[j].GetProperty("Weight").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.h = SubTasks[j].GetProperty("Horizontal distance").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.v = SubTasks[j].GetProperty("Vertical distance").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.d = SubTasks[j].GetProperty("Distance").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.a = SubTasks[j].GetProperty("Asymmetry angle").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.f = SubTasks[j].GetProperty("Frequency").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.fa = SubTasks[j].GetProperty("Frequency (a)").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.fb = SubTasks[j].GetProperty("Frequency (b)").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.td = SubTasks[j].GetProperty("Subtask duration").GetDouble();
+                        job.jobTasks[i].subTasks[j].data.c = (Coupling)SubTasks[j].GetProperty("Coupling").GetInt32();
+                        
+                        job.jobTasks[i].subTasks[j].factors.LC = SubTasks[j].GetProperty("Load constant").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.VM = SubTasks[j].GetProperty("V multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.AM = SubTasks[j].GetProperty("A multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.FM = SubTasks[j].GetProperty("F multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.FMa = SubTasks[j].GetProperty("Fa multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.FMb = SubTasks[j].GetProperty("Fb multiplier").GetDouble();
+                        job.jobTasks[i].subTasks[j].factors.CM = SubTasks[j].GetProperty("C multiplier").GetDouble();
+
+                        job.jobTasks[i].subTasks[j].LI = SubTasks[j].GetProperty("LI index").GetDouble();
+                        job.jobTasks[i].subTasks[j].indexIF = SubTasks[j].GetProperty("IF index").GetDouble();
+                        job.jobTasks[i].subTasks[j].itemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
+                        job.jobTasks[i].subTasks[j].task = SubTasks[j].GetProperty("Task").GetInt32();
+                        job.jobTasks[i].subTasks[j].order = SubTasks[j].GetProperty("Order").GetInt32();
+                    }
+
+                    i++;
+                }
+
+                _job = job;
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+
             return result;
         }
 
         public void EditData()
         {
-            using var frm = new frmDataNIOSHmodel(_sDatosNIOSH);
+            using var frm = new frmDataNIOSHmodel(_job);
 
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
-                _sDatosNIOSH = (List<SubTask>)frm.GetData;
-                //ClearPlots();
+                _job = frm.GetNioshLifting;
                 ShowResults();
             }
             return;
@@ -298,7 +385,7 @@ namespace ErgoCalc
             string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
             // Mostrar la ventana de resultados
-            frmResultNIOSHmodel frmResults = new frmResultNIOSHmodel(_sDatosNIOSH, _composite)
+            frmResultNIOSHmodel frmResults = new frmResultNIOSHmodel(_job)
             {
                 MdiParent = this.MdiParent
             };

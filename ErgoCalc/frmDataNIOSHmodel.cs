@@ -75,7 +75,7 @@ namespace ErgoCalc
         }
 
         // Overloaded constructor
-        public frmDataNIOSHmodel(List<SubTask> data)
+        public frmDataNIOSHmodel(JobNew data)
             : this() // Call the base constructor
         {
             DataToGrid(data);
@@ -262,7 +262,7 @@ namespace ErgoCalc
             int ItemIndex;
             _nioshLifting = new();
             if (_index == IndexType.IndexLI)
-                _nioshLifting.numberTasks = Convert.ToInt32(updSubTasks.Value);
+                _nioshLifting.numberTasks = 1;
             else
                 _nioshLifting.numberTasks = Convert.ToInt32(updTasks.Value);
 
@@ -276,7 +276,7 @@ namespace ErgoCalc
                 _nioshLifting.jobTasks[i] = new();
                 _nioshLifting.order[i] = i;
 
-                _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexTypeNew.IndexLI ? 1 : listViewTasks.Groups[i].Items.Count;
+                _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexTypeNew.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
                 _nioshLifting.jobTasks[i].model = _nioshLifting.model;
                 _nioshLifting.jobTasks[i].OrderCLI = new int[_nioshLifting.jobTasks[i].numberSubTasks];
                 _nioshLifting.jobTasks[i].subTasks = new SubTaskNew[_nioshLifting.jobTasks[i].numberSubTasks];
@@ -285,7 +285,7 @@ namespace ErgoCalc
                 for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
                 {
                     _nioshLifting.jobTasks[i].subTasks[j] = new();
-                    ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? i : listViewTasks.Groups[i].Items[j].Index;
+                    ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
                     _nioshLifting.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
 
                     //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
@@ -509,6 +509,15 @@ namespace ErgoCalc
             // Update the control's value
             updSubTasks.Value = nSize;
             updTasks.Value = 1;
+        }
+
+        /// <summary>
+        /// Shows the data into the grid control
+        /// </summary>
+        /// <param name="data">Array of Model NIOSH data</param>
+        private void DataToGrid(JobNew data)
+        {
+
         }
 
         /// <summary>
