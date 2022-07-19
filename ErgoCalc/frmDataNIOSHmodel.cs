@@ -9,7 +9,6 @@ public partial class frmDataNIOSHmodel : Form, IChildData
 {
     private IndexTypeNew _index;
     private JobNew _nioshLifting;
-    private string strGridHeader = "Task ";
 
     #region IChildData interface
     public object GetData => _nioshLifting;
@@ -156,8 +155,6 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         // Validate input before getting the values
         if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
 
-        
-        double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
         // New test
         int ItemIndex;
         _nioshLifting = new();
@@ -170,7 +167,7 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         _nioshLifting.order = new int[_nioshLifting.numberTasks];
         _nioshLifting.model = radLI.Checked ? IndexTypeNew.IndexLI : IndexTypeNew.IndexCLI;
 
-        //var LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
+        double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
         for (int i = 0; i < _nioshLifting.numberTasks; i++)
         {
             _nioshLifting.jobTasks[i] = new();
@@ -185,7 +182,17 @@ public partial class frmDataNIOSHmodel : Form, IChildData
             for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
             {
                 _nioshLifting.jobTasks[i].subTasks[j] = new();
-                ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                //ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                if (_nioshLifting.model == IndexTypeNew.IndexLI)
+                    ItemIndex = j;
+                else
+                {
+                    ItemIndex = 0 - 'A';
+                    for (int k = listViewTasks.Groups[i].Items[j].Text.IndexOf(" "); k < listViewTasks.Groups[i].Items[j].Text.Length-1; k++)
+                    {
+                        ItemIndex += listViewTasks.Groups[i].Items[j].Text[k + 1];
+                    }
+                }
                 _nioshLifting.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
                 _nioshLifting.jobTasks[i].subTasks[j].task = i;
 
@@ -227,12 +234,15 @@ public partial class frmDataNIOSHmodel : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    private void AddColumn(Int32 col)
+    private void AddColumn(int col)
     {
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
+        string strName = "Task ";
+        if (_index != IndexTypeNew.IndexLI) strName = "SubTask ";
+
         // Create the new column
-        gridVariables.Columns.Add("Column" + (col).ToString() , strGridHeader + ((char)('A' + col)).ToString());
+        gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 85;
 
@@ -393,23 +403,32 @@ public partial class frmDataNIOSHmodel : Form, IChildData
             for (var i = 0; i < _nioshLifting.jobTasks[j].subTasks.Length; i++)
             {
                 //Column 0 is already created in the constructor;
-                if ((i + j) > 0) AddColumn();
+                //if ((i + j) > 0) AddColumn(nCol);
+
+                for (int k = nCol; k <= _nioshLifting.jobTasks[j].subTasks[i].itemIndex; k++)
+                {
+                    if (k > 0)
+                    {
+                        nCol = k;
+                        AddColumn(nCol);
+                        nCol++;
+                    }
+                }
 
                 // Populate the DataGridView with data
-                gridVariables[nCol, 0].Value = _nioshLifting.jobTasks[j].subTasks[i].data.weight.ToString();
-                gridVariables[nCol, 1].Value = _nioshLifting.jobTasks[j].subTasks[i].data.h.ToString();
-                gridVariables[nCol, 2].Value = _nioshLifting.jobTasks[j].subTasks[i].data.v.ToString();
-                gridVariables[nCol, 3].Value = _nioshLifting.jobTasks[j].subTasks[i].data.d.ToString();
-                gridVariables[nCol, 4].Value = _nioshLifting.jobTasks[j].subTasks[i].data.f.ToString();
-                gridVariables[nCol, 5].Value = _nioshLifting.jobTasks[j].subTasks[i].data.td.ToString();
-                gridVariables[nCol, 6].Value = _nioshLifting.jobTasks[j].subTasks[i].data.a.ToString();
-                gridVariables[nCol, 7].Value = (int)_nioshLifting.jobTasks[j].subTasks[i].data.c;
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 0].Value = _nioshLifting.jobTasks[j].subTasks[i].data.weight.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 1].Value = _nioshLifting.jobTasks[j].subTasks[i].data.h.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 2].Value = _nioshLifting.jobTasks[j].subTasks[i].data.v.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 3].Value = _nioshLifting.jobTasks[j].subTasks[i].data.d.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 4].Value = _nioshLifting.jobTasks[j].subTasks[i].data.f.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 5].Value = _nioshLifting.jobTasks[j].subTasks[i].data.td.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 6].Value = _nioshLifting.jobTasks[j].subTasks[i].data.a.ToString();
+                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 7].Value = (int)_nioshLifting.jobTasks[j].subTasks[i].data.c;
 
                 // Classify
                 listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
+                //listViewTasks.Items.Insert(_nioshLifting.jobTasks[j].subTasks[i].itemIndex, new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
-
-                nCol++;
             }
         }
         // Update the control's value

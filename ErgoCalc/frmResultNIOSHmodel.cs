@@ -8,7 +8,6 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
-using ErgoCalc.Models.NIOSHModel;
 using ErgoCalc.Models.Lifting;
 using System.Text.Json;
 
@@ -51,20 +50,6 @@ namespace ErgoCalc
         {
             _job = Data;
 
-            if (Data.model == IndexTypeNew.IndexLI)
-            {
-                foreach(TaskNew task in _job.jobTasks)
-                {
-                    NIOSHLifting.ComputeLI(task.subTasks);
-                }
-            }
-            else if (Data.model == IndexTypeNew.IndexCLI)
-            {
-                foreach (TaskNew task in _job.jobTasks)
-                {
-                    NIOSHLifting.ComputeCLI(task);
-                }
-            }
         }
 
         private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
@@ -84,6 +69,23 @@ namespace ErgoCalc
         /// </summary>
         private void ShowResults()
         {
+            // Make computations
+            if (_job.model == IndexTypeNew.IndexLI)
+            {
+                foreach (TaskNew task in _job.jobTasks)
+                {
+                    NIOSHLifting.ComputeLI(task.subTasks);
+                }
+            }
+            else if (_job.model == IndexTypeNew.IndexCLI)
+            {
+                foreach (TaskNew task in _job.jobTasks)
+                {
+                    NIOSHLifting.ComputeCLI(task);
+                }
+            }
+
+            // Show results
             rtbShowResult.Text = _job.ToString();
             FormatText();
 
