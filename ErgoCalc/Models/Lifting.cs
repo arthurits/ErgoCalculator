@@ -8,7 +8,7 @@ public enum IndexTypeNew
     IndexLI = 0,
     IndexCLI = 1,
     IndexSLI = 2,
-    IndexVLI = 3,
+    IndexVLI = 3
 }
 
 public enum Coupling
