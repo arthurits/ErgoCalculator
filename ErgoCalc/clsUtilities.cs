@@ -106,7 +106,7 @@ namespace ErgoCalc
         ReadOnly(false),
         Description("Color palette"),
         Category("Plot options")]
-        public ScottPlot.Drawing.Palette ColorPalette
+        public ScottPlot.IPalette ColorPalette
         {
             get => _plot.Plot.Palette;
             set

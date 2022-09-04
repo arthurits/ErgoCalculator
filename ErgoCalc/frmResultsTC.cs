@@ -185,7 +185,7 @@ namespace ErgoCalc
 
             // Plot the bar charts in reverse order (highest first)
             //formsPlot2.plt.Legend(backColor: Color.White, shadowDirection: shadowDirection.none, location: legendLocation.lowerRight, fixedLineWidth: true);
-            formsPlot2.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
+            formsPlot2.Plot.Palette = ScottPlot.Palette.Nord;
             
             formsPlot2.Plot.AddBar(HL_6, xsStacked).Label = "Convection";
             formsPlot2.Plot.AddBar(HL_5, xsStacked).Label = "Radiation";

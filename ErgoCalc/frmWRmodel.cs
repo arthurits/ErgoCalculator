@@ -77,7 +77,7 @@ namespace ErgoCalc
             chart.Plot.XAxis2.Label("WR model", size: 16);
             chart.Plot.YAxis.Label("% Maximum holding time", size: 14);
             chart.Plot.XAxis.Label("Time / s", size: 14);
-            chart.Plot.Palette=ScottPlot.Drawing.Palette.Nord;
+            chart.Plot.Palette = ScottPlot.Palette.Nord;
             chart.Plot.SetAxisLimits(0, null, 0, 100);
             chart.Plot.Grid(color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
             chart.Plot.XAxis.MajorGrid(lineWidth: 1);

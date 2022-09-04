@@ -59,19 +59,19 @@ namespace ErgoCalc
             formsPlot1.Plot.XLabel("Initial force / kg-f");
             //formsPlot1.plt.YLabel("Frequency?");
             //formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot1.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
+            formsPlot1.Plot.Palette = ScottPlot.Palette.Nord;
             //formsPlot1.plt.TightenLayout(padding: 0);
 
             formsPlot2.Plot.XLabel("Sustained force / kg-f");
             //formsPlot2.plt.YLabel("Frequency?");
             //formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot2.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
+            formsPlot2.Plot.Palette = ScottPlot.Palette.Nord;
             //formsPlot2.plt.TightenLayout(padding: 0, render: true);
 
             formsPlot3.Plot.XLabel("Weight / kg");
             //formsPlot3.plt.YLabel("Frequency?");
             //formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            formsPlot3.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
+            formsPlot3.Plot.Palette = ScottPlot.Palette.Nord;
             //formsPlot3.plt.TightenLayout(padding: 0);
             //formsPlot3.plt.AxisAutoY();
             //formsPlot3.plt.Axis(y1: 0, y2: 1);
@@ -201,7 +201,7 @@ namespace ErgoCalc
             }
 
             //plot.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
-            plot.Plot.Palette = ScottPlot.Drawing.Palette.Nord;
+            plot.Plot.Palette = ScottPlot.Palette.Nord;
             plot.Plot.AddScatter(curveXs, curveYs, markerSize: 0, lineWidth: 2, label: strLegend);
             //formsPlot1.plt.PlotScatter(hist.bins, hist.countsFracCurve, markerSize: 0, lineWidth: 2, label: "Histogram");
 
