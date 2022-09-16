@@ -133,6 +133,7 @@ public partial class frmDataNIOSHmodel : Form, IChildData
             }
             tabData.TabPages[0].Text = "Tasks";
             tabData.TabPages[1].Parent = tabDummy;
+            //if (updTasks.Value > 1) updTasks.Value = 1;
         }
         else
         {
@@ -143,6 +144,7 @@ public partial class frmDataNIOSHmodel : Form, IChildData
             }
             tabData.TabPages[0].Text = "SubTasks";
             if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabData;
+            //if (updTasks.Value < 2) updTasks.Value++;
         }
 
     }
@@ -154,6 +156,10 @@ public partial class frmDataNIOSHmodel : Form, IChildData
 
         // Validate input before getting the values
         if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
+        double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
+
+        this.listViewTasks.RemoveEmptyGroups();
+        updTasks.Value = listViewTasks.Groups.Count;
 
         // New test
         int ItemIndex;
@@ -165,9 +171,11 @@ public partial class frmDataNIOSHmodel : Form, IChildData
 
         _nioshLifting.jobTasks = new TaskNew[_nioshLifting.numberTasks];
         _nioshLifting.order = new int[_nioshLifting.numberTasks];
-        _nioshLifting.model = radLI.Checked ? IndexTypeNew.IndexLI : IndexTypeNew.IndexCLI;
+        if (radLI.Checked) _nioshLifting.model = IndexTypeNew.IndexLI;
+        if (radCLI.Checked && updTasks.Value > 1) _nioshLifting.model = IndexTypeNew.IndexCLI;
+        //_nioshLifting.model = radLI.Checked ? IndexTypeNew.IndexLI : IndexTypeNew.IndexCLI;
 
-        double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
+        
         for (int i = 0; i < _nioshLifting.numberTasks; i++)
         {
             _nioshLifting.jobTasks[i] = new();
