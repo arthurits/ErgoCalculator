@@ -92,6 +92,296 @@ namespace ErgoCalc
 
         }
 
+        namespace NIOSHModel
+        {
+            using System;
+            using System.Collections.Generic;
+
+            public enum IndexType
+            {
+                IndexLI = 0,
+                IndexCLI = 1,
+                IndexSLI = 2,
+                IndexVLI = 3,
+            }
+
+            public enum MNCoupling
+            {
+                NoHandle = 0,
+                Poor = 1,
+                Good = 2
+            }
+
+            // Definición de tipos
+            [StructLayout(LayoutKind.Sequential)]
+            public struct Data
+            {
+                public double weight;   // Peso que se manipula
+                public double h;        // Distancia horizontal
+                public double v;        // Distancia vertical del punto de agarre al suelo
+                public double d;        // Recorrido vertical
+                public double a;        // Ángulo de simetría
+                public double f;        // Frecuencia del levantamiento
+                public double fa;       // Frecuencia acumulada a
+                public double fb;       // Frecuencia acumulada b
+                public double td;       // Duración de la tarea
+                public MNCoupling c;    // Agarre
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct Factors
+            {
+                public double LC;       // Constante de carga
+                public double HM;       // Factor de distancia horizontal
+                public double VM;       // Factor de distancia vertical
+                public double DM;       // Factor de desplazamiento vertical
+                public double AM;       // Factor de asimetría
+                public double FM;       // Factor de frecuencia
+                public double FMa;      // Factor de frecuencia acumulada a
+                public double FMb;      // Factor de frecuencia acumulada b
+                public double CM;       // Factor de agarre
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct SubTask
+            {
+                [MarshalAs(UnmanagedType.Struct)]
+                public Data data;
+                [MarshalAs(UnmanagedType.Struct)]
+                public Factors factors;
+                public double indexIF;
+                public double LI;
+                public int task;
+                public int order;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct Task
+            {
+                public double CLI;
+                public int order;
+                public int nSubTasks;
+                public int job;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct Job
+            {
+                public IndexType nIndex;
+                public int nTasks;
+            }
+
+            public class ClassData
+            {
+                public List<SubTask> SubTasks { get; set; } = new();
+                public List<Task> Tasks { get; set; } = new();
+                public List<Job> Jobs { get; set; } = new();
+
+                public ClassData()
+                {
+                }
+            }       
+
+            // Definición de la clase que encapsula la llamada a la DLL
+            public class cModelNIOSH
+            {
+                private List<SubTask> _data;
+                private double _result;
+                private int[] _order;
+                private bool _composite;
+
+                [DllImport("dlls/niosh.dll", EntryPoint = "CalculateNIOSH")]
+                private static extern double CalculateNIOSH_DLL([In, Out] SubTask[] datos, int[] orden, ref int nSize);
+
+                public cModelNIOSH()
+                {
+
+                }
+
+                public cModelNIOSH(List<SubTask> data, int[] order, bool composite)
+                    :this()
+                {
+                    _data = data;
+                    _order = order;
+                    _composite = composite;
+                }
+
+                public double CalculateNIOSH(List<SubTask> datos, int[] orden, ref int nSize)
+                {
+                    var tempArray = datos.ToArray();
+                    _result = CalculateNIOSH_DLL(tempArray, orden, ref nSize);
+                    _data = new(tempArray);
+                    _order = orden;
+
+                    return _result;
+                }
+
+                public override string ToString()
+                {
+                    Int32 i, length = _data.Count;
+                    Int32[] ordenacion = new Int32[length];
+                    var strResult = new System.Text.StringBuilder(2200);
+                    String strEquationT;
+                    String strEquationN;
+                    String[] strLineD = new String[11];
+                    String[] strLineR = new String[13];
+                    //String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+                    //String[] coupling = new String[] { "Good", "Poor", "No hndl" };
+
+                    for (i = 0; i < length; i++) ordenacion[_order[i]] = length - i;
+
+                    for (i = 0; i < length; i++)
+                    {
+                        strLineD[0] += "\t\t" + "Task " + ((char)('A' + i)).ToString();
+                        strLineD[1] += "\t\t" + _data[i].data.weight.ToString();
+                        strLineD[2] += "\t\t" + _data[i].data.h.ToString();
+                        strLineD[3] += "\t\t" + _data[i].data.v.ToString();
+                        strLineD[4] += "\t\t" + _data[i].data.d.ToString();
+                        strLineD[5] += "\t\t" + _data[i].data.f.ToString();
+                        strLineD[6] += "\t\t" + _data[i].data.fa.ToString();
+                        strLineD[7] += "\t\t" + _data[i].data.fb.ToString();
+                        strLineD[8] += "\t\t" + _data[i].data.td.ToString();
+                        strLineD[9] += "\t\t" + _data[i].data.a.ToString();
+                        strLineD[10] += "\t" + _data[i].data.c;
+
+                        strLineR[0] += "\t\t" + "Task " + ((char)('A' + i)).ToString();
+                        strLineR[1] += "\t\t" + _data[i].factors.LC.ToString("0.####");
+                        strLineR[2] += "\t\t" + _data[i].factors.HM.ToString("0.####");
+                        strLineR[3] += "\t\t" + _data[i].factors.VM.ToString("0.####");
+                        strLineR[4] += "\t\t" + _data[i].factors.DM.ToString("0.####");
+                        strLineR[5] += "\t\t" + _data[i].factors.FM.ToString("0.####");
+                        strLineR[6] += "\t\t" + _data[i].factors.FMa.ToString("0.####");
+                        strLineR[7] += "\t\t" + _data[i].factors.FMb.ToString("0.####");
+                        strLineR[8] += "\t\t" + _data[i].factors.AM.ToString("0.####");
+                        strLineR[9] += "\t\t" + _data[i].factors.CM.ToString("0.####");
+                        strLineR[10] += "\t\t" + _data[i].indexIF.ToString("0.####");
+                        if (_composite == true)
+                            strLineR[11] += "\t";
+                        strLineR[11] += "\t" + _data[i].LI.ToString("0.####");
+                        strLineR[12] += "\t\t" + ordenacion[i].ToString();
+
+                        //ordenacion[length - _order[i] - 1] = i;
+                        //ordenacion[_order[i]] = length - i - 1;
+                    }
+
+                    for (i = 0; i < length; i++) ordenacion[i] = _order[length - i - 1];
+
+                    //rtbShowResult.AcceptsTab = true;
+                    //rtbShowResult.SelectionTabs = new int[] { 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500};
+
+                    strResult.Append("These are the results obtained from the NIOSH lifting model:");
+                    strResult.Append(System.Environment.NewLine);
+                    strResult.Append(System.Environment.NewLine);
+
+                    // Initial data
+                    strResult.Append("Initial data" + "\t\t" + strLineD[0] + "\n");
+                    strResult.Append("Weight lifted (kg):\t" + strLineD[1] + "\n");
+                    strResult.Append("Horizontal distance (cm):" + strLineD[2] + "\n");
+                    strResult.Append("Vertical distance (cm):" + strLineD[3] + "\n");
+                    strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + "\n");
+                    strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + "\n");
+                    if (length > 1 && _composite == true)
+                    {
+                        strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + "\n");
+                        strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + "\n");
+                    }
+                    strResult.Append("Task duration (hours):" + strLineD[8] + "\n");
+                    strResult.Append("Twisting angle (°):\t" + strLineD[9] + "\n");
+                    strResult.Append("Coupling:\t\t\t" + strLineD[10] + "\n\n");
+
+                    // Multipliers
+                    strResult.Append("Multipliers" + "\t\t" + strLineR[0] + "\n");
+                    strResult.Append("Lifting constant (LC):" + strLineR[1] + "\n");
+                    strResult.Append("Horizontal multiplier (HM):" + strLineR[2] + "\n");
+                    strResult.Append("Vertical multiplier (VM):" + strLineR[3] + "\n");
+                    strResult.Append("Distance multiplier(DM):" + strLineR[4] + "\n");
+                    strResult.Append("Frequency multiplier(FM):" + strLineR[5] + "\n");
+                    if (length > 1 && _composite == true)
+                    {
+                        strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + "\n");
+                        strResult.Append("Frequency B multiplier (FMb):\t" + strLineR[7].TrimStart('\t') + "\n");
+                    }
+                    strResult.Append("Twisting angle multiplier (AM):\t" + strLineR[8].TrimStart('\t') + "\n");
+                    strResult.Append("Coupling multiplier (CM):" + strLineR[9] + "\n\n");
+
+                    if (length > 1)
+                    {
+                        if (_composite == true)
+                        {
+                            strResult.Append("Lifting index (IF):\t" + strLineR[10] + "\n");
+                            strResult.Append("Lifting index (LI):\t" + strLineR[11] + "\n");
+                            strResult.Append("Tasks order:\t\t" + strLineR[12] + "\n\n");
+                        }
+                        else
+                        {
+                            strResult.Append("Lifting index:\t\t" + strLineR[11] + "\n\n");
+                        }
+                    }
+
+                    // Print NIOSH final equation
+                    strResult.Append("The NIOSH lifting index is computed as follows:\n\n");
+                    if (length > 1)
+                    {
+                        if (_composite == true)
+                        {
+                            var strName = ((char)('A' + ordenacion[0])).ToString();
+                            strEquationT = "CLI = Index(" + strName + ")"; //((char)('A' + i)).ToString()
+                            strEquationN = "CLI = " + _data[ordenacion[0]].LI.ToString("0.####");
+                            for (i = 1; i < length; i++)
+                            {
+                                strName = ((char)('A' + ordenacion[i])).ToString();
+                                strEquationT += " + IndexIF(" + strName + ") * (1/FMa(" + strName + ") - 1/FMb(" + strName + "))";
+                                strEquationN += " + " + _data[ordenacion[i]].indexIF.ToString("0.####") + " * (1/" + _data[ordenacion[i]].factors.FMa.ToString("0.####") + " - 1/" + _data[ordenacion[i]].factors.FMb.ToString("0.####") + ")";
+                            }
+                            strEquationN += " = " + _result.ToString("0.####");
+                            strResult.Append(strEquationT + "\n");
+                            strResult.Append(strEquationN + "\n\n");
+                            strResult.Append("The NIOSH lifting index is: " + _result.ToString("0.####") + "\n");
+                        }
+                        else
+                        {
+                            strEquationT = "LI = Weight / (LC * HM * VM * DM * FM * AM * CM)";
+                            strResult.Append(strEquationT + "\n");
+                            for (i = 0; i < length; i++)
+                            {
+                                strEquationN = "LI = " + _data[i].data.weight.ToString("0.####") + " / (";
+                                strEquationN += _data[i].factors.LC.ToString("0.####") + " * ";
+                                strEquationN += _data[i].factors.HM.ToString("0.####") + " * ";
+                                strEquationN += _data[i].factors.VM.ToString("0.####") + " * ";
+                                strEquationN += _data[i].factors.DM.ToString("0.####") + " * ";
+                                strEquationN += _data[i].factors.FM.ToString("0.####") + " * ";
+                                strEquationN += _data[i].factors.AM.ToString("0.####") + " * ";
+                                strEquationN += _data[i].factors.CM.ToString("0.####") + ") = ";
+                                strEquationN += _data[i].LI.ToString("0.####");
+                                strResult.Append(strEquationN + "\n");
+                            }
+                            strResult.Append("\n");
+                        }
+                    }
+                    else
+                    {
+                        strEquationT = "LI = Weight / (LC * HM * VM * DM * FM * AM * CM)";
+                        strEquationN = "LI = " + _data[0].data.weight.ToString("0.####") + " / (";
+                        strEquationN += _data[0].factors.LC.ToString("0.####") + " * ";
+                        strEquationN += _data[0].factors.HM.ToString("0.####") + " * ";
+                        strEquationN += _data[0].factors.VM.ToString("0.####") + " * ";
+                        strEquationN += _data[0].factors.DM.ToString("0.####") + " * ";
+                        strEquationN += _data[0].factors.FM.ToString("0.####") + " * ";
+                        strEquationN += _data[0].factors.AM.ToString("0.####") + " * ";
+                        strEquationN += _data[0].factors.CM.ToString("0.####") + ") = ";
+                        strEquationN += _data[0].LI.ToString("0.####");
+
+                        strResult.Append(strEquationT + "\n");
+                        strResult.Append(strEquationN + "\n\n");
+                        strResult.Append("The NIOSH lifting index is: " + _data[0].LI.ToString("0.####") + "\n");
+                    };
+
+                    return strResult.ToString();
+                }
+            }
+
+        }
+
         namespace WRmodel
         {
             using System;

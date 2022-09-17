@@ -21,7 +21,7 @@ namespace ErgoCalc
         //private cModelNIOSH _classNIOSH;
         private ResultsOptions _options;
         //private bool _composite;
-        private JobNew _job;
+        private Job _job;
 
         public frmResultNIOSHmodel()
         {
@@ -45,7 +45,7 @@ namespace ErgoCalc
             splitContainer1.IsSplitterFixed = true;
         }
 
-        public frmResultNIOSHmodel(JobNew Data)
+        public frmResultNIOSHmodel(Job Data)
             : this()
         {
             _job = Data;
@@ -70,16 +70,16 @@ namespace ErgoCalc
         private void ShowResults()
         {
             // Make computations
-            if (_job.model == IndexTypeNew.IndexLI)
+            if (_job.model == IndexType.IndexLI)
             {
-                foreach (TaskNew task in _job.jobTasks)
+                foreach (Task task in _job.jobTasks)
                 {
                     NIOSHLifting.ComputeLI(task.subTasks);
                 }
             }
-            else if (_job.model == IndexTypeNew.IndexCLI)
+            else if (_job.model == IndexType.IndexCLI)
             {
-                foreach (TaskNew task in _job.jobTasks)
+                foreach (Task task in _job.jobTasks)
                 {
                     NIOSHLifting.ComputeCLI(task);
                 }
@@ -291,12 +291,12 @@ namespace ErgoCalc
         public bool OpenFile(JsonDocument document)
         {
             bool result = true;
-            JobNew job = new();
+            Job job = new();
             JsonElement root = document.RootElement;
 
             try
             {
-                job.model = (IndexTypeNew)root.GetProperty("Model").GetInt32();
+                job.model = (IndexType)root.GetProperty("Model").GetInt32();
                 job.index = root.GetProperty("Index").GetDouble();
                 job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
 
@@ -308,17 +308,17 @@ namespace ErgoCalc
                     i++;
                 }
 
-                job.jobTasks = new TaskNew[job.numberTasks];
+                job.jobTasks = new Task[job.numberTasks];
                 i = 0;
                 JsonElement SubTasks;
                 JsonElement Order;
                 foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
                 {
                     job.jobTasks[i] = new();
-                    job.jobTasks[i].model = (IndexTypeNew)Task.GetProperty("Model").GetInt32();
+                    job.jobTasks[i].model = (IndexType)Task.GetProperty("Model").GetInt32();
                     job.jobTasks[i].CLI = Task.GetProperty("CLI").GetDouble();
                     job.jobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                    job.jobTasks[i].subTasks = new SubTaskNew[job.jobTasks[i].numberSubTasks];
+                    job.jobTasks[i].subTasks = new SubTask[job.jobTasks[i].numberSubTasks];
                     job.jobTasks[i].OrderCLI = new int[job.jobTasks[i].numberSubTasks];
                     
                     Order = Task.GetProperty("Sub-tasks order");

@@ -7,14 +7,14 @@ namespace ErgoCalc;
 
 public partial class frmDataNIOSHmodel : Form, IChildData
 {
-    private IndexTypeNew _index;
-    private JobNew _nioshLifting;
+    private IndexType _index;
+    private Job _nioshLifting;
 
     #region IChildData interface
     public object GetData => _nioshLifting;
     #endregion IChildData interface
 
-    public JobNew GetNioshLifting => _nioshLifting;
+    public Job GetNioshLifting => _nioshLifting;
 
     // Default constructor
     public frmDataNIOSHmodel()
@@ -60,7 +60,7 @@ public partial class frmDataNIOSHmodel : Form, IChildData
     }
 
     // Overloaded constructor
-    public frmDataNIOSHmodel(JobNew data)
+    public frmDataNIOSHmodel(Job data)
         : this() // Call the base constructor
     {
         _nioshLifting = data;
@@ -121,10 +121,10 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         if (rb == null) return;
         if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
 
-        _index = (IndexTypeNew)Convert.ToInt32(rb.Tag);
+        _index = (IndexType)Convert.ToInt32(rb.Tag);
 
         // Modify tabs and texts
-        if (_index == IndexTypeNew.IndexLI)
+        if (_index == IndexType.IndexLI)
         {
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
@@ -164,15 +164,15 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         // New test
         int ItemIndex;
         _nioshLifting = new();
-        if (_index == IndexTypeNew.IndexLI)
+        if (_index == IndexType.IndexLI)
             _nioshLifting.numberTasks = 1;
         else
             _nioshLifting.numberTasks = Convert.ToInt32(updTasks.Value);
 
-        _nioshLifting.jobTasks = new TaskNew[_nioshLifting.numberTasks];
+        _nioshLifting.jobTasks = new Task[_nioshLifting.numberTasks];
         _nioshLifting.order = new int[_nioshLifting.numberTasks];
-        if (radLI.Checked) _nioshLifting.model = IndexTypeNew.IndexLI;
-        if (radCLI.Checked && updTasks.Value > 1) _nioshLifting.model = IndexTypeNew.IndexCLI;
+        if (radLI.Checked) _nioshLifting.model = IndexType.IndexLI;
+        if (radCLI.Checked && updTasks.Value > 1) _nioshLifting.model = IndexType.IndexCLI;
         //_nioshLifting.model = radLI.Checked ? IndexTypeNew.IndexLI : IndexTypeNew.IndexCLI;
 
         
@@ -181,17 +181,17 @@ public partial class frmDataNIOSHmodel : Form, IChildData
             _nioshLifting.jobTasks[i] = new();
             _nioshLifting.order[i] = i;
 
-            _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexTypeNew.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
+            _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexType.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
             _nioshLifting.jobTasks[i].model = _nioshLifting.model;
             _nioshLifting.jobTasks[i].OrderCLI = new int[_nioshLifting.jobTasks[i].numberSubTasks];
-            _nioshLifting.jobTasks[i].subTasks = new SubTaskNew[_nioshLifting.jobTasks[i].numberSubTasks];
+            _nioshLifting.jobTasks[i].subTasks = new SubTask[_nioshLifting.jobTasks[i].numberSubTasks];
             _nioshLifting.jobTasks[i].CLI = -1;
 
             for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
             {
                 _nioshLifting.jobTasks[i].subTasks[j] = new();
                 //ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
-                if (_nioshLifting.model == IndexTypeNew.IndexLI)
+                if (_nioshLifting.model == IndexType.IndexLI)
                     ItemIndex = j;
                 else
                 {
@@ -247,7 +247,7 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         string strName = "Task ";
-        if (_index != IndexTypeNew.IndexLI) strName = "SubTask ";
+        if (_index != IndexType.IndexLI) strName = "SubTask ";
 
         // Create the new column
         gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
@@ -277,15 +277,15 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         _nioshLifting = new()
         {
             numberTasks = 1,
-            model = IndexTypeNew.IndexLI,
-            jobTasks = new TaskNew[1]
+            model = IndexType.IndexLI,
+            jobTasks = new Task[1]
         };
 
-        _nioshLifting.jobTasks[0] = new TaskNew
+        _nioshLifting.jobTasks[0] = new Task
         {
             numberSubTasks = 8,
-            model = IndexTypeNew.IndexLI,
-            subTasks = new SubTaskNew[8]
+            model = IndexType.IndexLI,
+            subTasks = new SubTask[8]
         };
 
         _nioshLifting.jobTasks[0].subTasks[0] = new();

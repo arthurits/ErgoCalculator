@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ErgoCalc.Models.Lifting;
 
-public enum IndexTypeNew
+public enum IndexType
 {
     IndexLI = 0,
     IndexCLI = 1,
@@ -128,7 +128,7 @@ public class Multipliers
 /// <summary>
 /// Subtask definition
 /// </summary>
-public class SubTaskNew
+public class SubTask
 {
     public Data data { get; set; } = new();
     public Multipliers factors { get; set; } = new();
@@ -147,12 +147,12 @@ public class SubTaskNew
 /// <summary>
 /// Task definition
 /// </summary>
-public class TaskNew
+public class Task
 {
     /// <summary>
     /// Set of subtasks in the task
     /// </summary>
-    public SubTaskNew[] subTasks { get; set; } = Array.Empty<SubTaskNew>();
+    public SubTask[] subTasks { get; set; } = Array.Empty<SubTask>();
 
     /// <summary>
     /// Reordering of the subtasks from lower LI to higher LI
@@ -167,7 +167,7 @@ public class TaskNew
     /// <summary>
     /// 
     /// </summary>
-    public IndexTypeNew model { get; set; } = IndexTypeNew.IndexLI;
+    public IndexType model { get; set; } = IndexType.IndexLI;
 
     /// <summary>
     /// Number of subtasks in the task
@@ -176,7 +176,7 @@ public class TaskNew
     //public int order;
     //public int job;
 
-    public TaskNew()
+    public Task()
     {
     }
 
@@ -219,7 +219,7 @@ public class TaskNew
             strLineR[8] += "\t\t" + subTasks[i].factors.AM.ToString("0.####");
             strLineR[9] += "\t\t" + subTasks[i].factors.CM.ToString("0.####");
             
-            if (model == IndexTypeNew.IndexCLI)
+            if (model == IndexType.IndexCLI)
             {
                 strLineR[10] += "\t\t" + subTasks[i].indexIF.ToString("0.####");
                 strLineR[11] += "\t";
@@ -248,7 +248,7 @@ public class TaskNew
         strResult.Append("Vertical distance (cm):" + strLineD[3] + "\n");
         strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + "\n");
         strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + "\n");
-        if (length > 1 && model == IndexTypeNew.IndexCLI)
+        if (length > 1 && model == IndexType.IndexCLI)
         {
             strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + "\n");
             strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + "\n");
@@ -264,7 +264,7 @@ public class TaskNew
         strResult.Append("Vertical multiplier (VM):" + strLineR[3] + "\n");
         strResult.Append("Distance multiplier(DM):" + strLineR[4] + "\n");
         strResult.Append("Frequency multiplier(FM):" + strLineR[5] + "\n");
-        if (length > 1 && model == IndexTypeNew.IndexCLI)
+        if (length > 1 && model == IndexType.IndexCLI)
         {
             strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + "\n");
             strResult.Append("Frequency B multiplier (FMb):\t" + strLineR[7].TrimStart('\t') + "\n");
@@ -274,7 +274,7 @@ public class TaskNew
 
         if (length > 1)
         {
-            if (model == IndexTypeNew.IndexCLI)
+            if (model == IndexType.IndexCLI)
             {
                 strResult.Append("Lifting index (IF):\t" + strLineR[10] + "\n");
                 strResult.Append("Lifting index (LI):\t" + strLineR[11] + "\n");
@@ -290,7 +290,7 @@ public class TaskNew
         strResult.Append("The NIOSH lifting index is computed as follows:\n\n");
         if (length > 1)
         {
-            if (model == IndexTypeNew.IndexCLI)
+            if (model == IndexType.IndexCLI)
             {
                 var strName = ((char)('A' + subTasks[OrderCLI[0]].itemIndex)).ToString();
                 strEquationT = "CLI = Index(" + strName + ")"; //((char)('A' + i)).ToString()
@@ -348,12 +348,15 @@ public class TaskNew
     }
 }
 
-public class JobNew
+/// <summary>
+/// Job definition
+/// </summary>
+public class Job
 {
     /// <summary>
     /// Set of tasks in the job
     /// </summary>
-    public TaskNew[] jobTasks { get; set; } = Array.Empty<TaskNew>();
+    public Task[] jobTasks { get; set; } = Array.Empty<Task>();
 
     /// <summary>
     /// Reordering of the subtasks from lower CLI to higher CLI
@@ -368,14 +371,14 @@ public class JobNew
     /// <summary>
     /// 
     /// </summary>
-    public IndexTypeNew model { get; set; } = IndexTypeNew.IndexLI;
+    public IndexType model { get; set; } = IndexType.IndexLI;
 
     /// <summary>
     /// Number of tasks in the job
     /// </summary>
     public int numberTasks { get; set; } = 0;
 
-    public JobNew()
+    public Job()
     {
     }
 
@@ -383,7 +386,7 @@ public class JobNew
     {
         string str = string.Empty;
 
-        foreach (TaskNew task in jobTasks)
+        foreach (Task task in jobTasks)
             str += task.ToString() + Environment.NewLine + Environment.NewLine;
 
         return str;
@@ -393,7 +396,7 @@ public class JobNew
 public static class NIOSHLifting
 {
 
-    public static void ComputeLI(SubTaskNew[] subT)
+    public static void ComputeLI(SubTask[] subT)
     {
         //double[] pIndex = new double[subT.Length];
 
@@ -414,30 +417,9 @@ public static class NIOSHLifting
         }
     }
 
-    private static double MultiplyFactors(double weight, Multipliers factors)
+    public static double ComputeCLI(Task task)
     {
-        double product = 0.0;
-        double result = 0.0;
-
-        product = factors.LC *
-            factors.HM *
-            factors.VM *
-            factors.DM *
-            factors.AM *
-            factors.FM *
-            factors.CM;
-
-        if (product == 0)    // División entre 0
-            result = 0;
-        else
-            result = weight / product;
-
-        return result;
-    }
-
-    public static double ComputeCLI(TaskNew task)
-    {
-        // First compute the LI indices for each subtask
+        // First compute the LI index for each subtask
         ComputeLI(task.subTasks);
 
         // 2nd step: Sort the LI indexes from highest to lowest
@@ -471,6 +453,27 @@ public static class NIOSHLifting
         task.CLI = result;
 
         // Finally, return the index
+        return result;
+    }
+    
+    private static double MultiplyFactors(double weight, Multipliers factors)
+    {
+        double product = 0.0;
+        double result = 0.0;
+
+        product = factors.LC *
+            factors.HM *
+            factors.VM *
+            factors.DM *
+            factors.AM *
+            factors.FM *
+            factors.CM;
+
+        if (product == 0)    // División entre 0
+            result = 0;
+        else
+            result = weight / product;
+
         return result;
     }
 
@@ -554,6 +557,13 @@ public static class NIOSHLifting
         return multiplier;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="frequency"></param>
+    /// <param name="v"></param>
+    /// <param name="td"></param>
+    /// <returns></returns>
     private static double FactorFM(double frequency, double v, double td)
     {
         // Definición de variables
