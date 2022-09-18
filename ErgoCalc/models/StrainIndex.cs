@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ErgoCalc.Models.Pushing;
+namespace ErgoCalc.Models.StrainIndex;
 
 public enum IndexType
 {
@@ -68,7 +68,7 @@ public class Job
     public int IndexType { get; set; } = 0;          // 0 for RSI, 1 for COSI, and 2 for CUSI
 };
 
-public static class Pushing
+public static class StrainIndex
 {
 	public static void IndexRSI(SubTask[] subT)
 	{
