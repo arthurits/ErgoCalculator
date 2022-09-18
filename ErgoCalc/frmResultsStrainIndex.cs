@@ -22,7 +22,7 @@ namespace ErgoCalc
         //private ModelSubTask[] _subtasks;
         //private ModelTask[] _tasks;
         private string _strPath;
-        private ModelJob _job;
+        private Job _job;
         //private cModelStrain _classDLL;
 
         public frmResultsStrainIndex()
@@ -51,7 +51,7 @@ namespace ErgoCalc
 
         }
 
-        public frmResultsStrainIndex(ModelJob job)
+        public frmResultsStrainIndex(Job job)
             :this()
         {
             //_index = index;
@@ -74,7 +74,7 @@ namespace ErgoCalc
             // Make computations
             if (_job.model == IndexType.RSI)
             {
-                foreach (ModelTask task in _job.JobTasks)
+                foreach (Task task in _job.JobTasks)
                 {
                     //NIOSHLifting.ComputeLI(task.subTasks);
                     StrainIndex.IndexRSI(task.SubTasks);
@@ -82,7 +82,7 @@ namespace ErgoCalc
             }
             else if (_job.model == IndexType.COSI)
             {
-                foreach (ModelTask task in _job.JobTasks)
+                foreach (Task task in _job.JobTasks)
                 {
                     //NIOSHLifting.ComputeCLI(task);
                     StrainIndex.IndexCOSI(task);
@@ -415,7 +415,7 @@ namespace ErgoCalc
         public bool OpenFile(JsonDocument document)
         {
             bool result = true;
-            ModelJob job = new();
+            Job job = new();
             JsonElement root = document.RootElement;
 
             try
@@ -432,14 +432,14 @@ namespace ErgoCalc
                     i++;
                 }
 
-                job.JobTasks = new Models.StrainIndex.ModelTask[job.numberTasks];
+                job.JobTasks = new Models.StrainIndex.Task[job.numberTasks];
                 i = 0;
                 JsonElement SubTasks;
                 JsonElement Order;
                 foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
                 {
                     job.JobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                    job.JobTasks[i].SubTasks = new Models.StrainIndex.ModelSubTask[job.JobTasks[i].numberSubTasks];
+                    job.JobTasks[i].SubTasks = new Models.StrainIndex.SubTask[job.JobTasks[i].numberSubTasks];
                     job.JobTasks[i].order = new int[job.JobTasks[i].numberSubTasks];
 
                     SubTasks = Task.GetProperty("Sub-tasks");

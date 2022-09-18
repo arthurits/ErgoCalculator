@@ -16,12 +16,12 @@ public partial class frmDataStrainIndex : Form
 {
     //private ModelSubTask[] _subtasks;
     //private int[][] _tasks;
-    private ModelJob _job;
+    private Job _job;
     private IndexType _index;
 
     //public ModelSubTask[] SubTasks { get => _subtasks; }
     //public int[][] Tasks { get => _tasks;}
-    public ModelJob Job { get => _job; }
+    public Job Job { get => _job; }
     public IndexType Index { get => _index;}
 
     // Default constructor
@@ -49,7 +49,7 @@ public partial class frmDataStrainIndex : Form
     }
 
     // Overloaded constructor
-    public frmDataStrainIndex(ModelJob job)
+    public frmDataStrainIndex(Job job)
         : this() // Call the base constructor
     {
         _job = job;
@@ -155,7 +155,7 @@ public partial class frmDataStrainIndex : Form
         _job = new();
         _job.numberTasks = _index == IndexType.RSI ? 1 : listViewTasks.Groups.Count;
         _job.order = new int[_job.numberTasks];
-        _job.JobTasks = new ModelTask[_job.numberTasks];
+        _job.JobTasks = new Task[_job.numberTasks];
         _job.index = -1;
         _job.model = radRSI.Checked ? IndexType.RSI : (radCOSI.Checked ? IndexType.COSI : IndexType.CUSI);
         //_job.model = (IndexType)Enum.Parse(typeof(IndexType), this.groupIndex.Handle.ToString());
@@ -167,7 +167,7 @@ public partial class frmDataStrainIndex : Form
 
             _job.JobTasks[i].numberSubTasks = _index == IndexType.RSI ? (int)updSubtasks.Value : listViewTasks.Groups[i].Items.Count;
             _job.JobTasks[i].order = new int[_job.JobTasks[i].numberSubTasks];
-            _job.JobTasks[i].SubTasks = new ModelSubTask[_job.JobTasks[i].numberSubTasks];
+            _job.JobTasks[i].SubTasks = new SubTask[_job.JobTasks[i].numberSubTasks];
             _job.JobTasks[i].index = -1;
             for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
             {
@@ -245,9 +245,9 @@ public partial class frmDataStrainIndex : Form
     private void DataExample()
     {
         _job.numberTasks = 1;
-        _job.JobTasks = new ModelTask[_job.numberTasks];
+        _job.JobTasks = new Task[_job.numberTasks];
         _job.JobTasks[0].numberSubTasks = 8;
-        _job.JobTasks[0].SubTasks = new ModelSubTask[_job.JobTasks[0].numberSubTasks];
+        _job.JobTasks[0].SubTasks = new SubTask[_job.JobTasks[0].numberSubTasks];
         //_job.JobTasks[1].numberSubTasks = 2;
         //_job.JobTasks[1].SubTasks = new ModelSubTask[_job.JobTasks[1].numberSubTasks];
 
@@ -307,13 +307,13 @@ public partial class frmDataStrainIndex : Form
         {
             numberTasks = 2,
             model = IndexType.RSI,
-            JobTasks = new ModelTask[2]
+            JobTasks = new Task[2]
         };
         
         _job.JobTasks[0] = new()
         {
             numberSubTasks = 3,
-            SubTasks = new ModelSubTask[3]
+            SubTasks = new SubTask[3]
         };
 
         _job.JobTasks[0].SubTasks[0] = new();
@@ -340,7 +340,7 @@ public partial class frmDataStrainIndex : Form
         _job.JobTasks[1] = new()
         {
             numberSubTasks = 2,
-            SubTasks = new ModelSubTask[2]
+            SubTasks = new SubTask[2]
         };
 
         _job.JobTasks[1].SubTasks[0] = new();

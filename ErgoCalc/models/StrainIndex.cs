@@ -37,7 +37,7 @@ public class Multipliers
     public double EMb { get; set; } = 0;  // Factor de esfuerzos acumulados b
 };
 
-public class ModelSubTask
+public class SubTask
 {
 	public Data data { get; set; } = new();				// Subtask data
 	public Multipliers factors { get; set; } = new(); // Subtask factors
@@ -45,9 +45,9 @@ public class ModelSubTask
     public int ItemIndex { get; set; } = 0;
 };
 
-public class ModelTask
+public class Task
 {
-    public ModelSubTask[] SubTasks { get; set; } = Array.Empty<ModelSubTask>(); // Set of subtasks in the job
+    public SubTask[] SubTasks { get; set; } = Array.Empty<SubTask>(); // Set of subtasks in the job
     public int[] order { get; set; } = Array.Empty<int>();     // Reordering of the subtasks from lower RSI to higher RSI
     public double h { get; set; } = 0;       // The total time (in hours) that the task is performed per day
     public double ha { get; set; } = 0;      // Duración de la tarea acumulada a
@@ -193,9 +193,9 @@ public class ModelTask
     }
 };
 
-public class ModelJob
+public class Job
 {
-    public ModelTask[] JobTasks { get; set; } = Array.Empty<ModelTask>();    // Set of tasks in the job
+    public Task[] JobTasks { get; set; } = Array.Empty<Task>();    // Set of tasks in the job
     public int[] order { get; set; } = Array.Empty<int>();             // Reordering of the subtasks from lower COSI to higher COSI
     public double index { get; set; } = 0;           // The CUSI index for this job
     public int numberTasks { get; set; } = 0;             // Number of tasks in the job
@@ -206,7 +206,7 @@ public class ModelJob
         int[] ordenacion = new int[numberTasks];
         string strTasks = string.Empty;
 
-        foreach (ModelTask task in JobTasks)
+        foreach (Task task in JobTasks)
             strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
 
         string strCUSI = string.Empty;
@@ -283,7 +283,7 @@ public class ModelJob
 
 public static class StrainIndex
 {
-	public static void IndexRSI(ModelSubTask[] subT)
+	public static void IndexRSI(SubTask[] subT)
 	{
         /* 1er paso: calcular los índices de las tareas simples */
         int i;  /* Indice para el bucle for*/
@@ -311,7 +311,7 @@ public static class StrainIndex
 
     }
 
-	public static void IndexCOSI(ModelTask task)
+	public static void IndexCOSI(Task task)
 	{
         // First compute the RSI index for each subtask
         IndexRSI(task.SubTasks);
@@ -354,7 +354,7 @@ public static class StrainIndex
         // return task.index;
     }
 
-	public static void IndexCUSI(ModelJob job)
+	public static void IndexCUSI(Job job)
 	{
         // First compute the COSI index for each subtask
         double[] indexOrder = new double[job.JobTasks.Length];
