@@ -158,24 +158,22 @@ public partial class frmDataNIOSHmodel : Form, IChildData
         if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
         double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
 
-        this.listViewTasks.RemoveEmptyGroups();
+        listViewTasks.RemoveEmptyGroups();
+        listViewTasks.RemoveEmptyItems();
         updTasks.Value = listViewTasks.Groups.Count;
 
         // New test
         int ItemIndex;
         _nioshLifting = new();
-        if (_index == IndexType.IndexLI)
-            _nioshLifting.numberTasks = 1;
-        else
-            _nioshLifting.numberTasks = Convert.ToInt32(updTasks.Value);
-
+        _nioshLifting.numberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
         _nioshLifting.jobTasks = new Task[_nioshLifting.numberTasks];
         _nioshLifting.order = new int[_nioshLifting.numberTasks];
         if (radLI.Checked) _nioshLifting.model = IndexType.IndexLI;
-        if (radCLI.Checked && updTasks.Value > 1) _nioshLifting.model = IndexType.IndexCLI;
-        //_nioshLifting.model = radLI.Checked ? IndexTypeNew.IndexLI : IndexTypeNew.IndexCLI;
+        if (radCLI.Checked) _nioshLifting.model = IndexType.IndexCLI;
+        if (radVLI.Checked) _nioshLifting.model = IndexType.IndexVLI;
+        if (radSLI.Checked) _nioshLifting.model = IndexType.IndexSLI;
 
-        
+
         for (int i = 0; i < _nioshLifting.numberTasks; i++)
         {
             _nioshLifting.jobTasks[i] = new();
@@ -190,17 +188,18 @@ public partial class frmDataNIOSHmodel : Form, IChildData
             for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
             {
                 _nioshLifting.jobTasks[i].subTasks[j] = new();
-                //ItemIndex = _nioshLifting.model == IndexTypeNew.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
-                if (_nioshLifting.model == IndexType.IndexLI)
-                    ItemIndex = j;
-                else
-                {
-                    ItemIndex = 0 - 'A';
-                    for (int k = listViewTasks.Groups[i].Items[j].Text.IndexOf(" "); k < listViewTasks.Groups[i].Items[j].Text.Length-1; k++)
-                    {
-                        ItemIndex += listViewTasks.Groups[i].Items[j].Text[k + 1];
-                    }
-                }
+                ItemIndex = _nioshLifting.model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                //if (_nioshLifting.model == IndexType.IndexLI)
+                //    ItemIndex = j;
+                //else
+                //{
+                //    ItemIndex = 0 - 'A';
+                //    for (int k = listViewTasks.Groups[i].Items[j].Text.IndexOf(" "); k < listViewTasks.Groups[i].Items[j].Text.Length-1; k++)
+                //    {
+                //        ItemIndex += listViewTasks.Groups[i].Items[j].Text[k + 1];
+                //    }
+                //}
+
                 _nioshLifting.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
                 _nioshLifting.jobTasks[i].subTasks[j].task = i;
 

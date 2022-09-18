@@ -207,7 +207,7 @@ namespace ErgoCalc
                     writer.WriteNumber("Fb multiplier", _job.jobTasks[i].subTasks[j].factors.FMb);
                     writer.WriteNumber("C multiplier", _job.jobTasks[i].subTasks[j].factors.CM);
 
-                    writer.WriteNumber("LI index", _job.jobTasks[i].subTasks[j].LI);
+                    writer.WriteNumber("LI index", _job.jobTasks[i].subTasks[j].indexLI);
                     writer.WriteNumber("IF index", _job.jobTasks[i].subTasks[j].indexIF);
                     writer.WriteNumber("Item index", _job.jobTasks[i].subTasks[j].itemIndex);
                     writer.WriteNumber("Task", _job.jobTasks[i].subTasks[j].task);
@@ -350,7 +350,7 @@ namespace ErgoCalc
                         job.jobTasks[i].subTasks[j].factors.FMb = SubTasks[j].GetProperty("Fb multiplier").GetDouble();
                         job.jobTasks[i].subTasks[j].factors.CM = SubTasks[j].GetProperty("C multiplier").GetDouble();
 
-                        job.jobTasks[i].subTasks[j].LI = SubTasks[j].GetProperty("LI index").GetDouble();
+                        job.jobTasks[i].subTasks[j].indexLI = SubTasks[j].GetProperty("LI index").GetDouble();
                         job.jobTasks[i].subTasks[j].indexIF = SubTasks[j].GetProperty("IF index").GetDouble();
                         job.jobTasks[i].subTasks[j].itemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
                         job.jobTasks[i].subTasks[j].task = SubTasks[j].GetProperty("Task").GetInt32();

@@ -12,7 +12,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 // Para llamar a la DLL
-using ErgoCalc.Models.Strain;
+using ErgoCalc.Models.StrainIndex;
 
 namespace ErgoCalc
 {
@@ -23,7 +23,7 @@ namespace ErgoCalc
         //private ModelTask[] _tasks;
         private string _strPath;
         private ModelJob _job;
-        private cModelStrain _classDLL;
+        //private cModelStrain _classDLL;
 
         public frmResultsStrainIndex()
         {
@@ -35,7 +35,7 @@ namespace ErgoCalc
             if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
 
             // Initialize private variables
-            _classDLL = new cModelStrain();
+            //_classDLL = new cModelStrain();
 
             propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
             splitContainer1.Panel1Collapsed = false;
@@ -56,7 +56,7 @@ namespace ErgoCalc
         {
             //_index = index;
             _job = job;
-            _classDLL = new cModelStrain(job);
+            //_classDLL = new cModelStrain(job);
             //_subtasks = subtasks;
             //_tasks = tasks;
             //_classDLL.IndexType = index;
@@ -71,41 +71,63 @@ namespace ErgoCalc
             // Variable definition
             Boolean error = false;
 
+            // Make computations
+            if (_job.model == IndexType.RSI)
+            {
+                foreach (ModelTask task in _job.JobTasks)
+                {
+                    //NIOSHLifting.ComputeLI(task.subTasks);
+                    StrainIndex.IndexRSI(task.SubTasks);
+                }
+            }
+            else if (_job.model == IndexType.COSI)
+            {
+                foreach (ModelTask task in _job.JobTasks)
+                {
+                    //NIOSHLifting.ComputeCLI(task);
+                    StrainIndex.IndexCOSI(task);
+                }
+            }
+            else if (_job.model ==IndexType.CUSI)
+            {
+                    StrainIndex.IndexCUSI(_job);
+            }
+
             // Call the DLL function
-            try
-            {
-                //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
-                //_classDLL.RSI(_subtasks, orden, ref nSize);
-                _classDLL.StrainIndex();
-                _job = _classDLL.Job;
-            }
-            catch (EntryPointNotFoundException)
-            {
-                error = true;
-                MessageBox.Show(
-                    "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
-                    "RSI index error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            catch (DllNotFoundException)
-            {
-                error = true;
-                MessageBox.Show(
-                    "DLL files are missing. Please\nreinstall the application.",
-                    "RSI index error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                error = true;
-                MessageBox.Show(
-                    "Error in the calculation kernel:\n" + ex.ToString(),
-                    "Unexpected error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
+            //try
+            //{
+            //    //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
+            //    //_classDLL.RSI(_subtasks, orden, ref nSize);
+            //    _classDLL.StrainIndex();
+            //    _job = _classDLL.Job;
+            //}
+            //catch (EntryPointNotFoundException)
+            //{
+            //    error = true;
+            //    MessageBox.Show(
+            //        "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
+            //        "RSI index error",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //}
+            //catch (DllNotFoundException)
+            //{
+            //    error = true;
+            //    MessageBox.Show(
+            //        "DLL files are missing. Please\nreinstall the application.",
+            //        "RSI index error",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //}
+            //catch (Exception ex)
+            //{
+            //    error = true;
+            //    MessageBox.Show(
+            //        "Error in the calculation kernel:\n" + ex.ToString(),
+            //        "Unexpected error",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error);
+            //}
 
             // Call the routine that shows the results
             if (error == false)
@@ -393,14 +415,14 @@ namespace ErgoCalc
         public bool OpenFile(JsonDocument document)
         {
             bool result = true;
-            ModelJob job;
+            ModelJob job = new();
             JsonElement root = document.RootElement;
 
             try
             {
                 job.index = root.GetProperty("CUSI index").GetDouble();
                 job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
-                job.model = (Models.Strain.IndexType)root.GetProperty("Index type").GetInt32();
+                job.model = (Models.StrainIndex.IndexType)root.GetProperty("Index type").GetInt32();
 
                 job.order = new int[job.numberTasks];
                 int i = 0;
@@ -410,14 +432,14 @@ namespace ErgoCalc
                     i++;
                 }
 
-                job.JobTasks = new Models.Strain.ModelTask[job.numberTasks];
+                job.JobTasks = new Models.StrainIndex.ModelTask[job.numberTasks];
                 i = 0;
                 JsonElement SubTasks;
                 JsonElement Order;
                 foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
                 {
                     job.JobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                    job.JobTasks[i].SubTasks = new Models.Strain.ModelSubTask[job.JobTasks[i].numberSubTasks];
+                    job.JobTasks[i].SubTasks = new Models.StrainIndex.ModelSubTask[job.JobTasks[i].numberSubTasks];
                     job.JobTasks[i].order = new int[job.JobTasks[i].numberSubTasks];
 
                     SubTasks = Task.GetProperty("Sub-tasks");
@@ -455,7 +477,7 @@ namespace ErgoCalc
                     i++;
                 }
                 
-                _classDLL.Job = job;
+                //_classDLL.Job = job;
             }
             catch (Exception)
             {
@@ -534,7 +556,7 @@ namespace ErgoCalc
             {
                 // Mostrar la ventana de resultados
                 _job = frmDataStrain.Job;
-                _classDLL = new cModelStrain(_job);
+                //_classDLL = new cModelStrain(_job);
                 this.rtbShowResult.Clear();
                 frmResultsStrainIndex_Shown(null, EventArgs.Empty);
             }

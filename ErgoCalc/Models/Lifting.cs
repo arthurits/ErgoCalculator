@@ -133,7 +133,7 @@ public class SubTask
     public Data data { get; set; } = new();
     public Multipliers factors { get; set; } = new();
     public double indexIF { get; set; } = 0;
-    public double LI { get; set; } = 0;
+    public double indexLI { get; set; } = 0;
     public int task { get; set; } = 0;
     public int order { get; set; } = 0;
     public int itemIndex { get; set; } = 0;
@@ -226,7 +226,7 @@ public class Task
                 strLineR[12] += "\t\t" + (OrderCLI[i] + 1).ToString();
             }
             
-            strLineR[11] += "\t" + subTasks[i].LI.ToString("0.####");
+            strLineR[11] += "\t" + subTasks[i].indexLI.ToString("0.####");
             
             //ordenacion[length - _order[i] - 1] = i;
             //ordenacion[_order[i]] = length - i - 1;
@@ -294,7 +294,7 @@ public class Task
             {
                 var strName = ((char)('A' + subTasks[OrderCLI[0]].itemIndex)).ToString();
                 strEquationT = "CLI = Index(" + strName + ")"; //((char)('A' + i)).ToString()
-                strEquationN = "CLI = " + subTasks[OrderCLI[0]].LI.ToString("0.####");
+                strEquationN = "CLI = " + subTasks[OrderCLI[0]].indexLI.ToString("0.####");
                 for (i = 1; i < length; i++)
                 {
                     strName = ((char)('A' + subTasks[OrderCLI[i]].itemIndex)).ToString();
@@ -320,7 +320,7 @@ public class Task
                     strEquationN += subTasks[i].factors.FM.ToString("0.####") + " * ";
                     strEquationN += subTasks[i].factors.AM.ToString("0.####") + " * ";
                     strEquationN += subTasks[i].factors.CM.ToString("0.####") + ") = ";
-                    strEquationN += subTasks[i].LI.ToString("0.####");
+                    strEquationN += subTasks[i].indexLI.ToString("0.####");
                     strResult.Append(strEquationN + "\n");
                 }
                 strResult.Append("\n");
@@ -337,11 +337,11 @@ public class Task
             strEquationN += subTasks[0].factors.FM.ToString("0.####") + " * ";
             strEquationN += subTasks[0].factors.AM.ToString("0.####") + " * ";
             strEquationN += subTasks[0].factors.CM.ToString("0.####") + ") = ";
-            strEquationN += subTasks[0].LI.ToString("0.####");
+            strEquationN += subTasks[0].indexLI.ToString("0.####");
 
             strResult.Append(strEquationT + "\n");
             strResult.Append(strEquationN + "\n\n");
-            strResult.Append("The NIOSH lifting index is: " + subTasks[0].LI.ToString("0.####") + "\n");
+            strResult.Append("The NIOSH lifting index is: " + subTasks[0].indexLI.ToString("0.####") + "\n");
         };
 
         return strResult.ToString();
@@ -410,8 +410,8 @@ public static class NIOSHLifting
             subT[i].factors.FM = FactorFM(subT[i].data.f, subT[i].data.v, subT[i].data.td);
             subT[i].factors.CM = FactorCM(subT[i].data.c, subT[i].data.v);
 
-            subT[i].LI = MultiplyFactors(subT[i].data.weight, subT[i].factors);
-            subT[i].indexIF = subT[i].LI * subT[i].factors.FM;
+            subT[i].indexLI = MultiplyFactors(subT[i].data.weight, subT[i].factors);
+            subT[i].indexIF = subT[i].indexLI * subT[i].factors.FM;
 
             //pIndex[i] = subT[i].LI;
         }
@@ -427,7 +427,7 @@ public static class NIOSHLifting
         int[] values = new int[task.subTasks.Length];
         for (int i = 0; i < task.subTasks.Length; i++)
         {
-            indexOrder[i] = task.subTasks[i].indexIF;
+            indexOrder[i] = task.subTasks[i].indexLI;
             values[i] = i;
         }
         Array.Sort(indexOrder, values);
@@ -436,7 +436,7 @@ public static class NIOSHLifting
         Array.Copy(values, task.OrderCLI, values.Length);
 
         // 3rd step: Compute the cumulative index
-        double result = task.subTasks[values[0]].LI;
+        double result = task.subTasks[values[0]].indexLI;
         task.subTasks[values[0]].data.fa = task.subTasks[values[0]].data.fb = task.subTasks[values[0]].data.f;
         task.subTasks[values[0]].order = 0;
 
@@ -569,7 +569,7 @@ public static class NIOSHLifting
         // Definición de variables
         int nIndice = 0;
         int nColumna = 0;
-        int nLongitud = 18;
+        //int nLongitud = 18; // freq.Length
         double multiplier = 0.0;
         double[] freq = new double[] { 0.2, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
         double[][] fm = new double[][]
@@ -612,10 +612,10 @@ public static class NIOSHLifting
         //    return fm[nColumna][++nIndice];
 
         if (nIndice == -1)
-            return fm[nColumna][++nIndice];
+            return fm[nColumna][0];
 
-        if (nIndice >= (nLongitud))
-            return fm[nColumna][nIndice];
+        if (nIndice >= freq.Length - 1)
+            return fm[nColumna][freq.Length - 1];
 
         multiplier = LinearInterpolation(frequency,
             freq[nIndice],
