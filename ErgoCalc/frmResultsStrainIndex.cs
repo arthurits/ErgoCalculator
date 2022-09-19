@@ -12,11 +12,8 @@ namespace ErgoCalc;
 public partial class frmResultsStrainIndex : Form, IChildResults
 {
     // Variable definition
-    //private ModelSubTask[] _subtasks;
-    //private ModelTask[] _tasks;
     private string _strPath;
     private Job _job;
-    //private cModelStrain _classDLL;
 
     public frmResultsStrainIndex()
     {
@@ -26,9 +23,6 @@ public partial class frmResultsStrainIndex : Form, IChildResults
 
         _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
         if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
-
-        // Initialize private variables
-        //_classDLL = new cModelStrain();
 
         propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
         splitContainer1.Panel1Collapsed = false;
@@ -40,8 +34,6 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         //ToolStripButton bot = botón.Items["toolStripMain_Settings"] as ToolStripButton;
 
         //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
-
-
     }
 
     public frmResultsStrainIndex(Job job)
