@@ -416,20 +416,27 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         // Displays a SaveFileDialog so the user can save the Image  
         // assigned to Button2.  
-        SaveFileDialog SaveDlg = new SaveFileDialog
+        SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.rtf",
             Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 2,
+            FileName = _job.Model switch
+            {
+                IndexType.RSI => "RSI results",
+                IndexType.COSI => "COSI results",
+                IndexType.CUSI => "CUSI results",
+                _ => "Results",
+            },
             Title = "Save Strain Index results",
             OverwritePrompt = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
 
         DialogResult result;
-        using (new CenterWinDialog((Form)this.Parent))
-        { 
-            result = SaveDlg.ShowDialog((Form)this.Parent);
+        using (new CenterWinDialog(this.MdiParent))
+        {
+            result = SaveDlg.ShowDialog(this);
         }
 
         // If the file name is not an empty string open it for saving.  
