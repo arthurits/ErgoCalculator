@@ -281,34 +281,28 @@ public class Job
 
 public static class StrainIndex
 {
+    /// <summary>
+    /// Compute the revised strain index
+    /// </summary>
+    /// <param name="subT">Array of independent subtasks whose RSI is computed</param>
 	public static void IndexRSI(SubTask[] subT)
 	{
-        /* 1er paso: calcular los índices de las tareas simples */
-        int i;  /* Indice para el bucle for*/
-
-        // double *pIndex = NULL;   /* Matriz con los índices individuales para ordenar*/
-        // pIndex = (double*)malloc(*nSize * sizeof(double));
-        // if (pIndex == NULL) return 0.0;
-
-        for (i = 0; i < subT.Length; i++)
+        for (int i = 0; i < subT.Length; i++)
         {
             subT[i].factors.IM = FactorIM(subT[i].data.i);
             subT[i].factors.EM = FactorEM(subT[i].data.e);
             subT[i].factors.DM = FactorDM(subT[i].data.d);
             subT[i].factors.PM = FactorPM(subT[i].data.p);
             subT[i].factors.HM = FactorHM(subT[i].data.h);
-            //modelo[i].factors.CM = FactorCM(&modelo[i].data.c, &modelo[i].data.v);
 
             subT[i].index = MultiplyFactors(subT[i].factors);
-            //modelo[i].indexIF = modelo[i].index * modelo[i].factors.FM;
-
-            // pIndex[i] = modelo[i].index;
         }
-
-        //return subT[i - 1].index;
-
     }
 
+    /// <summary>
+    /// Compute the COSI index at the task level
+    /// </summary>
+    /// <param name="task">Task whose COSI index is computed</param>
 	public static void IndexCOSI(Task task)
 	{
         // First compute the RSI index for each subtask
@@ -352,6 +346,10 @@ public static class StrainIndex
         // return task.index;
     }
 
+    /// <summary>
+    /// Compute the CUSI index at the job level
+    /// </summary>
+    /// <param name="job">Job whose CUSI index is computed</param>
 	public static void IndexCUSI(Job job)
 	{
         // First compute the COSI index for each subtask
@@ -389,16 +387,16 @@ public static class StrainIndex
     /// <summary>
     /// Función para la multiplicación de los factores
     /// </summary>
-    /// <param name="factores">Apuntador a los factores</param>
+    /// <param name="factors">Apuntador a los factores</param>
     /// <returns>Resultado de la multiplicación</returns>
-    private static double MultiplyFactors(Multipliers factores)
+    private static double MultiplyFactors(Multipliers factors)
     {
         // Definición de variables
-        double result = factores.IM *
-            factores.EM *
-            factores.DM *
-            factores.PM *
-            factores.HM;
+        double result = factors.IM *
+            factors.EM *
+            factors.DM *
+            factors.PM *
+            factors.HM;
 
         return result;
     }
