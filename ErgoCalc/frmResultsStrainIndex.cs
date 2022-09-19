@@ -49,17 +49,17 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         Boolean error = false;
 
         // Make computations
-        if (_job.model == IndexType.RSI)
+        if (_job.Model == IndexType.RSI)
         {
             foreach (Task task in _job.JobTasks)
                 StrainIndex.IndexRSI(task.SubTasks);
         }
-        else if (_job.model == IndexType.COSI)
+        else if (_job.Model == IndexType.COSI)
         {
             foreach (Task task in _job.JobTasks)
                 StrainIndex.IndexCOSI(task);
         }
-        else if (_job.model ==IndexType.CUSI)
+        else if (_job.Model ==IndexType.CUSI)
         {
                 StrainIndex.IndexCUSI(_job);
         }
@@ -95,14 +95,14 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         {
             var orgdata = Clipboard.GetDataObject();
 
-            for (int j = 0; j < _job.numberTasks; j++)
+            for (int j = 0; j < _job.NumberTasks; j++)
             {
-                dataX = new double[_job.JobTasks[j].numberSubTasks];
-                dataRSI = new double[_job.JobTasks[j].numberSubTasks];
-                dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
-                labels = new string[_job.JobTasks[j].numberSubTasks];
+                dataX = new double[_job.JobTasks[j].NumberSubTasks];
+                dataRSI = new double[_job.JobTasks[j].NumberSubTasks];
+                dataCOSI = new double[_job.JobTasks[j].NumberSubTasks];
+                labels = new string[_job.JobTasks[j].NumberSubTasks];
 
-                if (_job.model == IndexType.RSI)
+                if (_job.Model == IndexType.RSI)
                 {
                     strTaskText = "Tasks";
                     strPlotTitle = "RSI results";
@@ -113,17 +113,17 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                     strPlotTitle = string.Concat("RSI & COSI results for Task ", ((char)('A' + j)).ToString());
                 }
 
-                for (int i = 0; i < _job.JobTasks[j].numberSubTasks; i++)
+                for (int i = 0; i < _job.JobTasks[j].NumberSubTasks; i++)
                 {
 
-                    nOrder = _job.JobTasks[j].order[i];
+                    nOrder = _job.JobTasks[j].Order[i];
 
                     dataX[i] = i + 1;
-                    dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].index;
+                    dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].IndexRSI;
                     if (i == 0)
-                        nCOSI = _job.JobTasks[j].SubTasks[nOrder].index;
+                        nCOSI = _job.JobTasks[j].SubTasks[nOrder].IndexRSI;
                     else
-                        nCOSI += _job.JobTasks[j].SubTasks[nOrder].index * (_job.JobTasks[j].SubTasks[nOrder].factors.EMa - _job.JobTasks[j].SubTasks[nOrder].factors.EMb) / _job.JobTasks[j].SubTasks[nOrder].factors.EM;
+                        nCOSI += _job.JobTasks[j].SubTasks[nOrder].IndexRSI * (_job.JobTasks[j].SubTasks[nOrder].Factors.EMa - _job.JobTasks[j].SubTasks[nOrder].Factors.EMb) / _job.JobTasks[j].SubTasks[nOrder].Factors.EM;
                     dataCOSI[i] = nCOSI;
                     //labels[i] = string.Concat(strTaskText, ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
                     labels[i] = ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString();
@@ -136,7 +136,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 plot.XAxis.Label(strTaskText, size: 22);
 
                 plot.AddBar(dataRSI, dataX).Label = "RSI";
-                if (_job.JobTasks[j].index != -1)
+                if (_job.JobTasks[j].IndexCOSI != -1)
                     plot.AddScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
                 plot.AxisAuto();
                 plot.XTicks(dataX, labels);
@@ -161,23 +161,23 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 string code = rtbShowResult.Rtf;
             }
 
-            if (_job.model == IndexType.CUSI)
+            if (_job.Model == IndexType.CUSI)
             {
-                dataX = new double[_job.numberTasks];
-                dataRSI = new double[_job.numberTasks];
-                dataCOSI = new double[_job.numberTasks];
-                labels = new string[_job.numberTasks];
+                dataX = new double[_job.NumberTasks];
+                dataRSI = new double[_job.NumberTasks];
+                dataCOSI = new double[_job.NumberTasks];
+                labels = new string[_job.NumberTasks];
                 strPlotTitle = string.Empty;
 
-                for (int i = 0; i < _job.numberTasks; i++)
+                for (int i = 0; i < _job.NumberTasks; i++)
                 {
-                    nOrder = _job.order[_job.numberTasks - 1 - i];
+                    nOrder = _job.Order[_job.NumberTasks - 1 - i];
                     dataX[i] = i + 1;
-                    dataRSI[i] = _job.JobTasks[nOrder].index;
+                    dataRSI[i] = _job.JobTasks[nOrder].IndexCOSI;
                     if (i == 0)
-                        nCOSI = _job.JobTasks[nOrder].index;
+                        nCOSI = _job.JobTasks[nOrder].IndexCOSI;
                     else
-                        nCOSI += _job.JobTasks[nOrder].index * (_job.JobTasks[nOrder].HMa - _job.JobTasks[nOrder].HMb) / _job.JobTasks[nOrder].HM;
+                        nCOSI += _job.JobTasks[nOrder].IndexCOSI * (_job.JobTasks[nOrder].HMa - _job.JobTasks[nOrder].HMb) / _job.JobTasks[nOrder].HM;
                     dataCOSI[i] = nCOSI;
                     //labels[i] = string.Concat("Task ", ((char)('A' + nOrder)).ToString());
                     labels[i] = ((char)('A' + nOrder)).ToString();
@@ -266,32 +266,32 @@ public partial class frmResultsStrainIndex : Form, IChildResults
 
         writer.WritePropertyName("Tasks");
         writer.WriteStartArray();
-        for (int i = 0; i < _job.numberTasks; i++)
+        for (int i = 0; i < _job.NumberTasks; i++)
         {
             writer.WriteStartObject();
 
             writer.WritePropertyName("Sub-tasks");
             writer.WriteStartArray();
-            for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
+            for (int j = 0; j < _job.JobTasks[i].NumberSubTasks; j++)
             {
                 writer.WriteStartObject();
-                writer.WriteNumber("Intensity", _job.JobTasks[i].SubTasks[j].data.i);
-                writer.WriteNumber("Efforts", _job.JobTasks[i].SubTasks[j].data.e);
-                writer.WriteNumber("EffortsA", _job.JobTasks[i].SubTasks[j].data.ea);
-                writer.WriteNumber("EffortsB", _job.JobTasks[i].SubTasks[j].data.eb);
-                writer.WriteNumber("Duration", _job.JobTasks[i].SubTasks[j].data.d);
-                writer.WriteNumber("Posture", _job.JobTasks[i].SubTasks[j].data.p);
-                writer.WriteNumber("Hours", _job.JobTasks[i].SubTasks[j].data.h);
+                writer.WriteNumber("Intensity", _job.JobTasks[i].SubTasks[j].Data.i);
+                writer.WriteNumber("Efforts", _job.JobTasks[i].SubTasks[j].Data.e);
+                writer.WriteNumber("EffortsA", _job.JobTasks[i].SubTasks[j].Data.ea);
+                writer.WriteNumber("EffortsB", _job.JobTasks[i].SubTasks[j].Data.eb);
+                writer.WriteNumber("Duration", _job.JobTasks[i].SubTasks[j].Data.d);
+                writer.WriteNumber("Posture", _job.JobTasks[i].SubTasks[j].Data.p);
+                writer.WriteNumber("Hours", _job.JobTasks[i].SubTasks[j].Data.h);
 
-                writer.WriteNumber("I multiplier", _job.JobTasks[i].SubTasks[j].factors.IM);
-                writer.WriteNumber("E multiplier", _job.JobTasks[i].SubTasks[j].factors.EM);
-                writer.WriteNumber("Ea multiplier", _job.JobTasks[i].SubTasks[j].factors.EMa);
-                writer.WriteNumber("Eb multiplier", _job.JobTasks[i].SubTasks[j].factors.EMb);
-                writer.WriteNumber("D multiplier", _job.JobTasks[i].SubTasks[j].factors.DM);
-                writer.WriteNumber("P multiplier", _job.JobTasks[i].SubTasks[j].factors.PM);
-                writer.WriteNumber("H multiplier", _job.JobTasks[i].SubTasks[j].factors.HM);
+                writer.WriteNumber("I multiplier", _job.JobTasks[i].SubTasks[j].Factors.IM);
+                writer.WriteNumber("E multiplier", _job.JobTasks[i].SubTasks[j].Factors.EM);
+                writer.WriteNumber("Ea multiplier", _job.JobTasks[i].SubTasks[j].Factors.EMa);
+                writer.WriteNumber("Eb multiplier", _job.JobTasks[i].SubTasks[j].Factors.EMb);
+                writer.WriteNumber("D multiplier", _job.JobTasks[i].SubTasks[j].Factors.DM);
+                writer.WriteNumber("P multiplier", _job.JobTasks[i].SubTasks[j].Factors.PM);
+                writer.WriteNumber("H multiplier", _job.JobTasks[i].SubTasks[j].Factors.HM);
 
-                writer.WriteNumber("RSI index", _job.JobTasks[i].SubTasks[j].index);
+                writer.WriteNumber("RSI index", _job.JobTasks[i].SubTasks[j].IndexRSI);
                 writer.WriteNumber("Item index", _job.JobTasks[i].SubTasks[j].ItemIndex);
                 writer.WriteEndObject();
             }
@@ -299,8 +299,8 @@ public partial class frmResultsStrainIndex : Form, IChildResults
 
             writer.WritePropertyName("Sub-tasks order");
             writer.WriteStartArray();
-            for (int j = 0; j < _job.JobTasks[i].numberSubTasks; j++)
-                writer.WriteNumberValue(_job.JobTasks[i].order[j]);
+            for (int j = 0; j < _job.JobTasks[i].NumberSubTasks; j++)
+                writer.WriteNumberValue(_job.JobTasks[i].Order[j]);
             writer.WriteEndArray();
 
             writer.WriteNumber("h factor", _job.JobTasks[i].h);
@@ -309,23 +309,23 @@ public partial class frmResultsStrainIndex : Form, IChildResults
             writer.WriteNumber("H multiplier", _job.JobTasks[i].HM);
             writer.WriteNumber("Ha multiplier", _job.JobTasks[i].HMa);
             writer.WriteNumber("Hb multiplier", _job.JobTasks[i].HMb);
-            writer.WriteNumber("COSI index", _job.JobTasks[i].index);
-            writer.WriteNumber("Number of sub-tasks", _job.JobTasks[i].numberSubTasks);
+            writer.WriteNumber("COSI index", _job.JobTasks[i].IndexCOSI);
+            writer.WriteNumber("Number of sub-tasks", _job.JobTasks[i].NumberSubTasks);
 
             writer.WriteEndObject();
         }
         writer.WriteEndArray();
 
         writer.WriteStartArray("Tasks order");
-        for (int i = 0; i < _job.numberTasks; i++)
+        for (int i = 0; i < _job.NumberTasks; i++)
         {
-            writer.WriteNumberValue(_job.order[i]);
+            writer.WriteNumberValue(_job.Order[i]);
         }
         writer.WriteEndArray();
 
-        writer.WriteNumber("CUSI index", _job.index);
-        writer.WriteNumber("Number of tasks", _job.numberTasks);
-        writer.WriteNumber("Index type", (int)_job.model);
+        writer.WriteNumber("CUSI index", _job.IndexCUSI);
+        writer.WriteNumber("Number of tasks", _job.NumberTasks);
+        writer.WriteNumber("Index type", (int)_job.Model);
         //object val = Convert.ChangeType(_job.model, _job.model.GetTypeCode());
 
         writer.WriteEndObject();
@@ -344,53 +344,53 @@ public partial class frmResultsStrainIndex : Form, IChildResults
 
         try
         {
-            job.index = root.GetProperty("CUSI index").GetDouble();
-            job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
-            job.model = (Models.StrainIndex.IndexType)root.GetProperty("Index type").GetInt32();
+            job.IndexCUSI = root.GetProperty("CUSI index").GetDouble();
+            job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
+            job.Model = (Models.StrainIndex.IndexType)root.GetProperty("Index type").GetInt32();
 
-            job.order = new int[job.numberTasks];
+            job.Order = new int[job.NumberTasks];
             int i = 0;
             foreach (JsonElement TaskOrder in root.GetProperty("Tasks order").EnumerateArray())
             {
-                job.order[i] = TaskOrder.GetInt32();
+                job.Order[i] = TaskOrder.GetInt32();
                 i++;
             }
 
-            job.JobTasks = new Models.StrainIndex.Task[job.numberTasks];
+            job.JobTasks = new Models.StrainIndex.Task[job.NumberTasks];
             i = 0;
             JsonElement SubTasks;
             JsonElement Order;
             foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
             {
-                job.JobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                job.JobTasks[i].SubTasks = new Models.StrainIndex.SubTask[job.JobTasks[i].numberSubTasks];
-                job.JobTasks[i].order = new int[job.JobTasks[i].numberSubTasks];
+                job.JobTasks[i].NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
+                job.JobTasks[i].SubTasks = new Models.StrainIndex.SubTask[job.JobTasks[i].NumberSubTasks];
+                job.JobTasks[i].Order = new int[job.JobTasks[i].NumberSubTasks];
 
                 SubTasks = Task.GetProperty("Sub-tasks");
                 Order = Task.GetProperty("Sub-tasks order");
-                for (int j = 0; j < job.JobTasks[i].numberSubTasks; j++)
+                for (int j = 0; j < job.JobTasks[i].NumberSubTasks; j++)
                 {
-                    job.JobTasks[i].SubTasks[j].data.i = SubTasks[j].GetProperty("Intensity").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.e = SubTasks[j].GetProperty("Efforts").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.ea = SubTasks[j].GetProperty("EffortsA").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.eb = SubTasks[j].GetProperty("EffortsB").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.d = SubTasks[j].GetProperty("Duration").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.p = SubTasks[j].GetProperty("Posture").GetDouble();
-                    job.JobTasks[i].SubTasks[j].data.h = SubTasks[j].GetProperty("Hours").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.IM = SubTasks[j].GetProperty("I multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.EM = SubTasks[j].GetProperty("E multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.EMa = SubTasks[j].GetProperty("Ea multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.EMb = SubTasks[j].GetProperty("Eb multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.PM = SubTasks[j].GetProperty("P multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
-                    job.JobTasks[i].SubTasks[j].index = SubTasks[j].GetProperty("RSI index").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.i = SubTasks[j].GetProperty("Intensity").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.e = SubTasks[j].GetProperty("Efforts").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.ea = SubTasks[j].GetProperty("EffortsA").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.eb = SubTasks[j].GetProperty("EffortsB").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.d = SubTasks[j].GetProperty("Duration").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.p = SubTasks[j].GetProperty("Posture").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Data.h = SubTasks[j].GetProperty("Hours").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.IM = SubTasks[j].GetProperty("I multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.EM = SubTasks[j].GetProperty("E multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.EMa = SubTasks[j].GetProperty("Ea multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.EMb = SubTasks[j].GetProperty("Eb multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.PM = SubTasks[j].GetProperty("P multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].Factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
+                    job.JobTasks[i].SubTasks[j].IndexRSI = SubTasks[j].GetProperty("RSI index").GetDouble();
                     job.JobTasks[i].SubTasks[j].ItemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
 
-                    job.JobTasks[i].order[j] = Order[j].GetInt32();
+                    job.JobTasks[i].Order[j] = Order[j].GetInt32();
                 }
 
-                job.JobTasks[i].index = Task.GetProperty("COSI index").GetDouble();
+                job.JobTasks[i].IndexCOSI = Task.GetProperty("COSI index").GetDouble();
                 job.JobTasks[i].h = Task.GetProperty("h factor").GetDouble();
                 job.JobTasks[i].ha = Task.GetProperty("ha factor").GetDouble();
                 job.JobTasks[i].hb = Task.GetProperty("hb factor").GetDouble();
