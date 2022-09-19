@@ -88,7 +88,7 @@ public class Task
         }
         strLineF[5] = string.Concat(System.Environment.NewLine, "Duration multiplier");
         strLineF[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture mult.");
-        strLineF[7] = string.Concat(System.Environment.NewLine, strName, "multiplier", "\t");
+        strLineF[7] = string.Concat(System.Environment.NewLine, strName, "duration multiplier");
 
         if (index == -1)
         {
@@ -115,10 +115,9 @@ public class Task
                 strLineD[4] += "\t\t" + SubTasks[i].data.eb.ToString();
             }
             strLineD[5] += "\t\t" + SubTasks[i].data.d.ToString();
-            strLineD[6] += "\t" + SubTasks[i].data.p.ToString() + "\t";    //strLineD[4].TrimEnd(new char[] { '\t' });
+            strLineD[6] += "\t" + SubTasks[i].data.p.ToString() + "\t";
             strLineD[7] += "\t" + SubTasks[i].data.h.ToString() + "\t";
 
-            //strLineR[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
             strLineF[0] += "\t\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
             strLineF[1] += "\t\t" + SubTasks[i].factors.IM.ToString("0.####");
             strLineF[2] += "\t\t" + SubTasks[i].factors.EM.ToString("0.####");
@@ -134,6 +133,10 @@ public class Task
             if (index != -1)
                 strLineF[9] += "\t\t" + (order[i] + 1).ToString("0.####");
         }
+
+        strLineD[6] = strLineD[6].TrimEnd();    // Also strLineD[6].TrimEnd(new char[] { '\t' })
+        strLineD[7] = strLineD[7].TrimEnd();
+        strLineF[6] = strLineF[6].TrimEnd();
 
         strEqT = string.Concat(System.Environment.NewLine, System.Environment.NewLine);
         strEqR = string.Empty;
