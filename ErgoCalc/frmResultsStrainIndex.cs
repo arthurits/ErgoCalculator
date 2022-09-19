@@ -171,7 +171,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
 
                 for (int i = 0; i < _job.NumberTasks; i++)
                 {
-                    nOrder = _job.Order[_job.NumberTasks - 1 - i];
+                    nOrder = _job.Order[i];
                     dataX[i] = i + 1;
                     dataRSI[i] = _job.JobTasks[nOrder].IndexCOSI;
                     if (i == 0)
