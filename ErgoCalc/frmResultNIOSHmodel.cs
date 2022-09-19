@@ -230,9 +230,7 @@ namespace ErgoCalc
 
         public void Save(string path)
         {
-            // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
-            // Displays a SaveFileDialog so the user can save the Image  
-            // assigned to Button2
+            // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
             SaveFileDialog SaveDlg = new()
             {
                 DefaultExt = "*.txt",
@@ -242,6 +240,8 @@ namespace ErgoCalc
                 {
                     IndexType.IndexLI => "LI results",
                     IndexType.IndexCLI => "CLI results",
+                    IndexType.IndexVLI => "VLI results",
+                    IndexType.IndexSLI => "SLI results",
                     _ => "Results",
                 },
                 Title = "Save NIOSH model results",

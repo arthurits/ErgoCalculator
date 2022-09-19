@@ -57,7 +57,6 @@ public class Task
     {
         int i;
         int subLength = SubTasks.Length;
-        //int[] ordenacion = new int[subLength];
         String strName = IndexCOSI == -1 ? "Task " : "SubT ";
 
         string[] strLineD = new string[8];
@@ -99,8 +98,6 @@ public class Task
             strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Subtask RSI index:");
             strLineF[9] = string.Concat(System.Environment.NewLine, "Subtasks order:", "\t");
         }
-
-        //for (i = 0; i < subLength; i++) ordenacion[order[i]] = subLength - 1 - i;
 
         for (i = 0; i < subLength; i++)
         {
@@ -201,7 +198,6 @@ public class Job
 
     public override string ToString()
     {
-        int[] ordenacion = new int[NumberTasks];
         string strTasks = string.Empty;
 
         foreach (Task task in JobTasks)
@@ -226,8 +222,6 @@ public class Job
             strLineF[4] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Task COSI index");
             strLineF[5] = string.Concat(System.Environment.NewLine, "Task order");
 
-            for (int i = 0; i < NumberTasks; i++) ordenacion[Order[i]] = NumberTasks - 1 - i;
-
             for (int i = 0; i < NumberTasks; i++)
             {
                 strLineD[0] += string.Concat("\t\t", "Task ", ((char)('A' + i)).ToString());
@@ -240,22 +234,22 @@ public class Job
                 strLineF[2] += string.Concat("\t\t", JobTasks[i].HMa.ToString("0.####"));
                 strLineF[3] += string.Concat("\t\t", JobTasks[i].HMb.ToString("0.####"));
                 strLineF[4] += string.Concat("\t\t", JobTasks[i].IndexCOSI.ToString("0.####"));
-                strLineF[5] += string.Concat("\t\t", (ordenacion[i] + 1).ToString("0.####"));
+                strLineF[5] += string.Concat("\t\t", (Order[i] + 1).ToString("0.####"));
             }
 
             string strEqT = string.Concat(System.Environment.NewLine, System.Environment.NewLine);
             string strEqR = string.Empty;
 
             strEqT += string.Concat("The CUSI index is computed as follows:", System.Environment.NewLine, System.Environment.NewLine);
-            strEqT += string.Concat("CUSI = ", "COSI(", ((char)('A' + Order[NumberTasks - 1])).ToString(), ")");
-            strEqR += string.Concat("CUSI = ", JobTasks[Order[NumberTasks - 1]].IndexCOSI.ToString("0.####"));
+            strEqT += string.Concat("CUSI = ", "COSI(", ((char)('A' + Order[0])).ToString(), ")");
+            strEqR += string.Concat("CUSI = ", JobTasks[Order[0]].IndexCOSI.ToString("0.####"));
 
             string strLetter;
             for (int i = 1; i < NumberTasks; i++)
             {
-                strLetter = ((char)('A' + Order[NumberTasks - 1 - i])).ToString();
+                strLetter = ((char)('A' + Order[i])).ToString();
                 strEqT += string.Concat(" + ", "COSI(", strLetter, ") * (HMa(", strLetter, ") - HMb(", strLetter, ")) / (HM(", strLetter, "))");
-                strEqR += string.Concat(" + ", JobTasks[Order[NumberTasks - 1 - i]].IndexCOSI.ToString("0.####"), " * (", JobTasks[Order[NumberTasks - 1 - i]].HMa.ToString("0.####"), " - ", JobTasks[Order[NumberTasks - 1 - i]].HMb.ToString("0.####"), ") / ", JobTasks[Order[NumberTasks - 1 - i]].HM.ToString("0.####"));
+                strEqR += string.Concat(" + ", JobTasks[Order[i]].IndexCOSI.ToString("0.####"), " * (", JobTasks[Order[i]].HMa.ToString("0.####"), " - ", JobTasks[Order[i]].HMb.ToString("0.####"), ") / ", JobTasks[Order[i]].HM.ToString("0.####"));
             }
             strEqR += string.Concat(" = ", IndexCUSI.ToString("0.####"));
             strEqR += string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The CUSI index is: ", IndexCUSI.ToString("0.####"));
@@ -274,8 +268,6 @@ public class Job
         }
 
         return string.Concat(string.Concat(strTasks), strCUSI);
-
-        return strTasks;
     }
 };
 

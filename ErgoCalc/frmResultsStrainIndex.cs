@@ -356,20 +356,22 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 i++;
             }
 
-            job.JobTasks = new Models.StrainIndex.Task[job.NumberTasks];
+            job.JobTasks = new Task[job.NumberTasks];
             i = 0;
             JsonElement SubTasks;
             JsonElement Order;
             foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
             {
+                job.JobTasks[i] = new();
                 job.JobTasks[i].NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                job.JobTasks[i].SubTasks = new Models.StrainIndex.SubTask[job.JobTasks[i].NumberSubTasks];
+                job.JobTasks[i].SubTasks = new SubTask[job.JobTasks[i].NumberSubTasks];
                 job.JobTasks[i].Order = new int[job.JobTasks[i].NumberSubTasks];
 
                 SubTasks = Task.GetProperty("Sub-tasks");
                 Order = Task.GetProperty("Sub-tasks order");
                 for (int j = 0; j < job.JobTasks[i].NumberSubTasks; j++)
                 {
+                    job.JobTasks[i].SubTasks[j] = new();
                     job.JobTasks[i].SubTasks[j].Data.i = SubTasks[j].GetProperty("Intensity").GetDouble();
                     job.JobTasks[i].SubTasks[j].Data.e = SubTasks[j].GetProperty("Efforts").GetDouble();
                     job.JobTasks[i].SubTasks[j].Data.ea = SubTasks[j].GetProperty("EffortsA").GetDouble();
@@ -401,7 +403,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 i++;
             }
             
-            //_classDLL.Job = job;
+            _job = job;
         }
         catch (Exception)
         {
@@ -413,9 +415,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
     
     public void Save(string path)
     {
-        // https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
-        // Displays a SaveFileDialog so the user can save the Image  
-        // assigned to Button2.  
+        // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.rtf",
@@ -458,7 +458,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                         }
                         break;
                     case 2:
-                        rtbShowResult.SaveFile(fs,RichTextBoxStreamType.RichText);
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
                         break;
                     case 3:
                         rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
