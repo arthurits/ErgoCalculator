@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-// Para llamar a la DLL
 using ErgoCalc.Models.StrainIndex;
 
 namespace ErgoCalc
@@ -54,15 +53,7 @@ namespace ErgoCalc
         public frmResultsStrainIndex(Job job)
             :this()
         {
-            //_index = index;
             _job = job;
-            //_classDLL = new cModelStrain(job);
-            //_subtasks = subtasks;
-            //_tasks = tasks;
-            //_classDLL.IndexType = index;
-            //_classDLL.SubTasks = subtasks;
-            //_classDLL.Tasks = tasks;
-            //_sData = datos;
         }
 
         private void frmResultsStrainIndex_Shown(object sender, EventArgs e)
@@ -75,59 +66,17 @@ namespace ErgoCalc
             if (_job.model == IndexType.RSI)
             {
                 foreach (Task task in _job.JobTasks)
-                {
-                    //NIOSHLifting.ComputeLI(task.subTasks);
                     StrainIndex.IndexRSI(task.SubTasks);
-                }
             }
             else if (_job.model == IndexType.COSI)
             {
                 foreach (Task task in _job.JobTasks)
-                {
-                    //NIOSHLifting.ComputeCLI(task);
                     StrainIndex.IndexCOSI(task);
-                }
             }
             else if (_job.model ==IndexType.CUSI)
             {
                     StrainIndex.IndexCUSI(_job);
             }
-
-            // Call the DLL function
-            //try
-            //{
-            //    //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
-            //    //_classDLL.RSI(_subtasks, orden, ref nSize);
-            //    _classDLL.StrainIndex();
-            //    _job = _classDLL.Job;
-            //}
-            //catch (EntryPointNotFoundException)
-            //{
-            //    error = true;
-            //    MessageBox.Show(
-            //        "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
-            //        "RSI index error",
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Error);
-            //}
-            //catch (DllNotFoundException)
-            //{
-            //    error = true;
-            //    MessageBox.Show(
-            //        "DLL files are missing. Please\nreinstall the application.",
-            //        "RSI index error",
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    error = true;
-            //    MessageBox.Show(
-            //        "Error in the calculation kernel:\n" + ex.ToString(),
-            //        "Unexpected error",
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Error);
-            //}
 
             // Call the routine that shows the results
             if (error == false)
@@ -136,11 +85,6 @@ namespace ErgoCalc
                 CreatePlots();
                 FormatText();
             }
-
-            //}
-            //else
-                // When this method is called artificially from code, don't do anything
-                //if (sender != null) this.Close();
 
         }
 
