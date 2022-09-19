@@ -102,7 +102,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 dataCOSI = new double[_job.JobTasks[j].numberSubTasks];
                 labels = new string[_job.JobTasks[j].numberSubTasks];
 
-                if (_job.JobTasks[j].index == -1)
+                if (_job.model == IndexType.RSI)
                 {
                     strTaskText = "Tasks";
                     strPlotTitle = "RSI results";
@@ -116,10 +116,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 for (int i = 0; i < _job.JobTasks[j].numberSubTasks; i++)
                 {
 
-                    if (_job.JobTasks[j].index == -1)
-                        nOrder = _job.JobTasks[j].order[i];
-                    else
-                        nOrder = _job.JobTasks[j].order[_job.JobTasks[j].numberSubTasks - 1 - i];
+                    nOrder = _job.JobTasks[j].order[i];
 
                     dataX[i] = i + 1;
                     dataRSI[i] = _job.JobTasks[j].SubTasks[nOrder].index;
@@ -132,13 +129,11 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                     labels[i] = ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString();
                 }
 
-                //var plot = new ScottPlot.Plot(1200, 900);
                 var plot = new ScottPlot.Plot(600, 450);
-                //var formsplot2 = new ScottPlot.FormsPlot(plot);
 
                 plot.XAxis2.Label(strPlotTitle, size: 22);
                 plot.YAxis.Label("Index value", size: 22);
-                plot.XAxis.Label(strTaskText.TrimEnd(), size: 22); ;
+                plot.XAxis.Label(strTaskText, size: 22);
 
                 plot.AddBar(dataRSI, dataX).Label = "RSI";
                 if (_job.JobTasks[j].index != -1)
@@ -147,7 +142,6 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 plot.XTicks(dataX, labels);
                 plot.XAxis.Grid(false);
                 plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
-                //formsplot2.Render();
 
                 //plot.CoordinateFromPixel();
 
@@ -167,7 +161,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
                 string code = rtbShowResult.Rtf;
             }
 
-            if (_job.index != -1)
+            if (_job.model == IndexType.CUSI)
             {
                 dataX = new double[_job.numberTasks];
                 dataRSI = new double[_job.numberTasks];
