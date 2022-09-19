@@ -237,7 +237,7 @@
     <None Update="examples\NTP 874.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="examples\NTP RSI.ergo">
+    <None Update="examples\NTP 1169.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="examples\Thermal comfort.ergo">
@@ -360,9 +360,6 @@
     <EmbeddedResource Remove="controls\ListViewEx.resx" />
     <EmbeddedResource Remove="controls\TablessTabControl.resx" />
     <EmbeddedResource Remove="old - frmAbout.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="examples\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Dll-Ocra\x64\Release\ocra.dll" Link="dlls\ocra.dll">
