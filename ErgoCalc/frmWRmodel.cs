@@ -11,12 +11,12 @@ using ErgoCalc.Models.WR;
 namespace ErgoCalc;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-public partial class frmWRmodel : Form, IChildResults
+public partial class FrmWRmodel : Form, IChildResults
 {
     private List<DataWR> _datos;
     private ChartOptions _chartOptions;
 
-    public frmWRmodel()
+    public FrmWRmodel()
     {
         InitializeComponent();
         InitializeChart();
@@ -50,7 +50,7 @@ public partial class frmWRmodel : Form, IChildResults
         
     }
 
-    public frmWRmodel(object datos)
+    public FrmWRmodel(object datos)
         :this()
     {
         _datos = (List<DataWR>)datos;
@@ -171,7 +171,7 @@ public partial class frmWRmodel : Form, IChildResults
     private void toolStripWR_SaveChart_Click(object sender, EventArgs e)
     {
         // Displays a SaveFileDialog so the user can save the Image  
-        SaveFileDialog saveFileDlg = new SaveFileDialog
+        SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.png",
             //Filter = "PNG file (*.png)|*.png|All files (*.*)|*.*",
@@ -180,6 +180,7 @@ public partial class frmWRmodel : Form, IChildResults
                       "|BMP Files (*.bmp)|*.bmp;*.bmp" +
                       "|All files (*.*)|*.*",
             FilterIndex = 1,
+            FileName = "WorkRest plot",
             Title = "Save plot image",
             OverwritePrompt = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -187,12 +188,12 @@ public partial class frmWRmodel : Form, IChildResults
 
         using (new CenterWinDialog(this))
         {
-            DialogResult result = saveFileDlg.ShowDialog();
+            DialogResult result = SaveDlg.ShowDialog();
 
             // If the file name is not an empty string open it for saving.  
-            if (result == DialogResult.OK && saveFileDlg.FileName != "")
+            if (result == DialogResult.OK && SaveDlg.FileName != "")
             {
-                chart.Plot.SaveFig(saveFileDlg.FileName);
+                chart.Plot.SaveFig(SaveDlg.FileName);
             }
         }
     }
@@ -279,7 +280,7 @@ public partial class frmWRmodel : Form, IChildResults
             DefaultExt = "*.csv",
             Filter = "ERGO file (*.ergo)|*.ergo|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 1,
-            FileName = "WR results",
+            FileName = "WorkRest results",
             Title = "Save scatter-plot data",
             OverwritePrompt = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -428,7 +429,7 @@ public partial class frmWRmodel : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmWRmodel frmResults = new frmWRmodel(_datos)
+        FrmWRmodel frmResults = new FrmWRmodel(_datos)
         {
             MdiParent = this.MdiParent
         };
@@ -482,6 +483,4 @@ public partial class frmWRmodel : Form, IChildResults
     }
 
     #endregion IChildResults interface
-
-
 }

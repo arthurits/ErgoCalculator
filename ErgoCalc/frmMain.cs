@@ -241,7 +241,7 @@ namespace ErgoCalc
                     if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
                     {
                         // Mostrar la ventana de resultados
-                        frmWRmodel frmWR = new frmWRmodel(frmDatosWR.GetData);
+                        FrmWRmodel frmWR = new FrmWRmodel(frmDatosWR.GetData);
                         frmWR.MdiParent = this;
                         if (File.Exists(_strPath + @"\images\logo.ico")) frmWR.Icon = new Icon(_strPath + @"\images\logo.ico");
                         frmWR.Show();
@@ -487,12 +487,12 @@ namespace ErgoCalc
         private void frmMain_MdiChildActivate(object sender, EventArgs e)
         {
             ToolStripManager.RevertMerge(this.toolStripMain);
-            if (ActiveMdiChild is frmWRmodel)
+            if (ActiveMdiChild is FrmWRmodel)
             {
                 // The frmChild.FormToolStrip is a property that exposes the
                 // toolstrip on your child form
                 // ToolStripManager.Merge(frmChild.toolStripWR, this.toolStripMain);
-                ToolStripManager.Merge(((frmWRmodel)ActiveMdiChild).ChildToolStrip, this.toolStripMain);
+                ToolStripManager.Merge(((FrmWRmodel)ActiveMdiChild).ChildToolStrip, this.toolStripMain);
                 //this.Controls.Add(frmChild.toolStripWR);
                 //((frmWRmodel)ActiveMdiChild).toolStripWR.Visible = true;
                 //this.tspTop.Join(((frmWRmodel)ActiveMdiChild).toolStripWR, 1);
@@ -594,7 +594,7 @@ namespace ErgoCalc
                 switch (strType)
                 {
                     case "Work-Rest model":
-                        frm = new frmWRmodel() { MdiParent = this };
+                        frm = new FrmWRmodel() { MdiParent = this };
                         break;
                     case "NIOSH lifting equation":
                         frm = new frmResultNIOSHmodel() { MdiParent = this };
