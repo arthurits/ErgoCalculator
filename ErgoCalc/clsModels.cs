@@ -92,404 +92,404 @@ namespace ErgoCalc
 
         }
 
-        namespace WRmodel
-        {
-            using System;
+        //namespace WRmodel
+        //{
+        //    using System;
 
-            // Definición de tipos
-            [StructLayout(LayoutKind.Sequential)]
-            public struct datosDLL
-            {
-                public double dMHT;
-                public double dPaso;
-                public int nCiclos;
-                public int nPuntos;
+        //    // Definición de tipos
+        //    [StructLayout(LayoutKind.Sequential)]
+        //    public struct datosDLL
+        //    {
+        //        public double dMHT;
+        //        public double dPaso;
+        //        public int nCiclos;
+        //        public int nPuntos;
 
-                public datosDLL (double maxTime, double paso, int ciclos, int puntos)
-                {
-                    dMHT = maxTime;
-                    dPaso = paso;
-                    nCiclos = ciclos;
-                    nPuntos = puntos;
-                }
+        //        public datosDLL (double maxTime, double paso, int ciclos, int puntos)
+        //        {
+        //            dMHT = maxTime;
+        //            dPaso = paso;
+        //            nCiclos = ciclos;
+        //            nPuntos = puntos;
+        //        }
 
-                public override string ToString()
-                {
-                    string strCadena = string.Format("[Maximum holding time]:\t{0:0.###}\r\n[Paso]:\t{1:0.###}\r\n[Número de ciclos]:\t{2:0.###}\r\n[Número de puntos]:\t{3:0.###}", dMHT, dPaso, nCiclos,nPuntos);
-                    return strCadena;
-                }
-            }
+        //        public override string ToString()
+        //        {
+        //            string strCadena = string.Format("[Maximum holding time]:\t{0:0.###}\r\n[Paso]:\t{1:0.###}\r\n[Número de ciclos]:\t{2:0.###}\r\n[Número de puntos]:\t{3:0.###}", dMHT, dPaso, nCiclos,nPuntos);
+        //            return strCadena;
+        //        }
+        //    }
 
-            public struct datosWR
-            {
-                public double _dMVC;
-                public double _dMHT;
-                //public double[][] _dPoints;
-                public double[] _dPointsX;
-                public double[] _dPointsY;
-                //public double[][] _dWorkRest;
-                public double[] _dWork;
-                public double[] _dRest;
-                //public double[] _dWorkRestDrop;
-                public double _dPaso;
-                public int _nCurva;
-                public int _nPuntos;
-                public byte _bCiclos;
-                public string _strLegend;
+        //    public struct datosWR
+        //    {
+        //        public double _dMVC;
+        //        public double _dMHT;
+        //        //public double[][] _dPoints;
+        //        public double[] _dPointsX;
+        //        public double[] _dPointsY;
+        //        //public double[][] _dWorkRest;
+        //        public double[] _dWork;
+        //        public double[] _dRest;
+        //        //public double[] _dWorkRestDrop;
+        //        public double _dPaso;
+        //        public int _nCurva;
+        //        public int _nPuntos;
+        //        public byte _bCiclos;
+        //        public string _strLegend;
 
-                public override string ToString()
-                {
-                    System.String strCadena;
-                    System.String strTiempoT = "";
-                    System.String strTiempoD = "";
-                    char[] charEspacio = { ' ' };
+        //        public override string ToString()
+        //        {
+        //            System.String strCadena;
+        //            System.String strTiempoT = "";
+        //            System.String strTiempoD = "";
+        //            char[] charEspacio = { ' ' };
 
-                    foreach (double d in _dWork)
-                        strTiempoT += d.ToString() + " ";
-                    strTiempoT = strTiempoT.TrimEnd(charEspacio);
+        //            foreach (double d in _dWork)
+        //                strTiempoT += d.ToString() + " ";
+        //            strTiempoT = strTiempoT.TrimEnd(charEspacio);
 
-                    foreach (double d in _dRest)
-                        strTiempoD += d.ToString() + " ";
-                    strTiempoD = strTiempoD.TrimEnd(charEspacio);
+        //            foreach (double d in _dRest)
+        //                strTiempoD += d.ToString() + " ";
+        //            strTiempoD = strTiempoD.TrimEnd(charEspacio);
 
-                    strCadena = "[Maximum voluntary contraction]: " + _dMVC.ToString() + "\r\n";
-                    strCadena += "[Maximum holding time (min)]: " + _dMHT.ToString() + "\r\n";
-                    strCadena += "[Work times (min)]: " + strTiempoT + "\r\n";
-                    strCadena += "[Rest times (min)]: " + strTiempoD + "\r\n";
-                    strCadena += "[Number of cycles]: " + _bCiclos.ToString() + "\r\n";
-                    strCadena += "[Step]: " + _dPaso.ToString() + "\r\n";
-                    strCadena += "[Curve number]: " + _nCurva.ToString();
-                    return strCadena;
-                }
+        //            strCadena = "[Maximum voluntary contraction]: " + _dMVC.ToString() + "\r\n";
+        //            strCadena += "[Maximum holding time (min)]: " + _dMHT.ToString() + "\r\n";
+        //            strCadena += "[Work times (min)]: " + strTiempoT + "\r\n";
+        //            strCadena += "[Rest times (min)]: " + strTiempoD + "\r\n";
+        //            strCadena += "[Number of cycles]: " + _bCiclos.ToString() + "\r\n";
+        //            strCadena += "[Step]: " + _dPaso.ToString() + "\r\n";
+        //            strCadena += "[Curve number]: " + _nCurva.ToString();
+        //            return strCadena;
+        //        }
 
-            }
+        //    }
 
-            // Definición de la clase que encapsula la llamada a la DLL
-            public class cWRmodel
-            {
+        //    // Definición de la clase que encapsula la llamada a la DLL
+        //    public class cWRmodel
+        //    {
 
-                #region DLL function declaration
+        //        #region DLL function declaration
 
-                /// <summary>
-                /// Calcula el MHT mediante la ecuación de Sjogaard
-                /// </summary>
-                /// <param name="dMVC">Maximum voluntary contraction</param>
-                /// <returns></returns>
-                [DllImport("dlls/wrmodel.dll", EntryPoint = "Sjogaard")]
-                private static extern double Sjogaard_DLL(double dMVC);
+        //        /// <summary>
+        //        /// Calcula el MHT mediante la ecuación de Sjogaard
+        //        /// </summary>
+        //        /// <param name="dMVC">Maximum voluntary contraction</param>
+        //        /// <returns></returns>
+        //        [DllImport("dlls/wrmodel.dll", EntryPoint = "Sjogaard")]
+        //        private static extern double Sjogaard_DLL(double dMVC);
 
-                /// <summary>
-                /// Calcula la curva de trabajo-descanso
-                /// </summary>
-                /// <param name="array"></param>
-                /// <param name="tamaño"></param>
-                /// <param name="datos"></param>
-                /// <returns></returns>
-                [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva")]
-                private static extern System.IntPtr Curva_DLL(System.IntPtr array, int tamaño, ref datosDLL datos);
+        //        /// <summary>
+        //        /// Calcula la curva de trabajo-descanso
+        //        /// </summary>
+        //        /// <param name="array"></param>
+        //        /// <param name="tamaño"></param>
+        //        /// <param name="datos"></param>
+        //        /// <returns></returns>
+        //        [DllImport("dlls/wrmodel.dll", EntryPoint = "Curva")]
+        //        private static extern System.IntPtr Curva_DLL(System.IntPtr array, int tamaño, ref datosDLL datos);
 
-                [DllImport("dlls/wrmodel.dll", EntryPoint = "WRCurve")]
-                private static extern void WRCurve(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, int nCycles, double dMHT, double dStep);
+        //        [DllImport("dlls/wrmodel.dll", EntryPoint = "WRCurve")]
+        //        private static extern void WRCurve(double[] Work, double[] Rest, int nWR, [In, Out] double[] PointsX, [In, Out] double[] PointsY, int nPoints, int nCycles, double dMHT, double dStep);
 
-                /// <summary>
-                /// Libera la memoria reservada por la DLL
-                /// </summary>
-                /// <param name="ptr">Apuntador a la matriz que devuelve la función CurvaDLL</param>
-                /// <returns></returns>
-                [DllImport("dlls/wrmodel.dll", EntryPoint = "FreeMemory")]
-                private static extern System.IntPtr FreeMemory_DLL(System.IntPtr ptr);
+        //        /// <summary>
+        //        /// Libera la memoria reservada por la DLL
+        //        /// </summary>
+        //        /// <param name="ptr">Apuntador a la matriz que devuelve la función CurvaDLL</param>
+        //        /// <returns></returns>
+        //        [DllImport("dlls/wrmodel.dll", EntryPoint = "FreeMemory")]
+        //        private static extern System.IntPtr FreeMemory_DLL(System.IntPtr ptr);
 
-                #endregion
+        //        #endregion
                 
-                /// <summary>
-                /// Constructor de la clase.
-                /// </summary>
-                public cWRmodel()
-                {
-                }
+        //        /// <summary>
+        //        /// Constructor de la clase.
+        //        /// </summary>
+        //        public cWRmodel()
+        //        {
+        //        }
 
 
-                #region Class functions
+        //        #region Class functions
 
-                public bool Curva(datosWR datos)
-                {
-                    // Definición de variables
-                    bool result = true;
+        //        public bool Curva(datosWR datos)
+        //        {
+        //            // Definición de variables
+        //            bool result = true;
                     
-                    datos._dMHT = Sjogaard(datos._dMVC);
+        //            datos._dMHT = Sjogaard(datos._dMVC);
                     
-                    try
-                    {    
-                        WRCurve(datos._dWork,
-                            datos._dRest,
-                            datos._dWork.Length,
-                            datos._dPointsX,
-                            datos._dPointsY,
-                            datos._nPuntos,
-                            datos._bCiclos,
-                            datos._dMHT,
-                            datos._dPaso);
-                    }
-                    catch(Exception)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Error calling WRCurve function", "Error");
-                        result = false;
-                    }
+        //            try
+        //            {    
+        //                WRCurve(datos._dWork,
+        //                    datos._dRest,
+        //                    datos._dWork.Length,
+        //                    datos._dPointsX,
+        //                    datos._dPointsY,
+        //                    datos._nPuntos,
+        //                    datos._bCiclos,
+        //                    datos._dMHT,
+        //                    datos._dPaso);
+        //            }
+        //            catch(Exception)
+        //            {
+        //                System.Windows.Forms.MessageBox.Show("Error calling WRCurve function", "Error");
+        //                result = false;
+        //            }
  
-                    // Finalizar
-                    return result;
-                }
+        //            // Finalizar
+        //            return result;
+        //        }
                 
-                public double Sjogaard(double dMVC)
-                {
-                    double result = -1.0;
-                    try
-                    {
-                        result = Sjogaard_DLL(dMVC);
-                    }
-                    catch(Exception)
-                    {
-                        System.Windows.Forms.MessageBox.Show("Error calling Sjogaard function", "Error");
-                    }
-                    return result;
-                }
+        //        public double Sjogaard(double dMVC)
+        //        {
+        //            double result = -1.0;
+        //            try
+        //            {
+        //                result = Sjogaard_DLL(dMVC);
+        //            }
+        //            catch(Exception)
+        //            {
+        //                System.Windows.Forms.MessageBox.Show("Error calling Sjogaard function", "Error");
+        //            }
+        //            return result;
+        //        }
 
-                /// <summary>
-                /// Deprecated. Superseeded by Curva
-                /// </summary>
-                /// <param name="datos"></param>
-                /// <returns></returns>
-                public double[][] CurvaDeprecated(datosWR datos)
-                {
-                    // Definición de variables
-                    // La matriz arrayCurva se inicializa a "empty" porque la función puede devolver
-                    //   una matriz "empty" si no ha podido realizar el cálculo.
-                    Double[][] arrayCurva = Array.Empty<double[]>();
-                    IntPtr ptrTiempos = IntPtr.Zero;
-                    IntPtr ptrResultado = IntPtr.Zero;
+        //        /// <summary>
+        //        /// Deprecated. Superseeded by Curva
+        //        /// </summary>
+        //        /// <param name="datos"></param>
+        //        /// <returns></returns>
+        //        public double[][] CurvaDeprecated(datosWR datos)
+        //        {
+        //            // Definición de variables
+        //            // La matriz arrayCurva se inicializa a "empty" porque la función puede devolver
+        //            //   una matriz "empty" si no ha podido realizar el cálculo.
+        //            Double[][] arrayCurva = Array.Empty<double[]>();
+        //            IntPtr ptrTiempos = IntPtr.Zero;
+        //            IntPtr ptrResultado = IntPtr.Zero;
 
-                    // Definición de las variables que se pasan a la función
-                    int longitud = datos._dWork.Length;
-                    datosDLL structDatos;
-                    structDatos.dMHT = datos._dMHT;
-                    structDatos.dPaso = datos._dPaso;
-                    structDatos.nCiclos = Convert.ToInt32(datos._bCiclos);
-                    structDatos.nPuntos = datos._nPuntos;
+        //            // Definición de las variables que se pasan a la función
+        //            int longitud = datos._dWork.Length;
+        //            datosDLL structDatos;
+        //            structDatos.dMHT = datos._dMHT;
+        //            structDatos.dPaso = datos._dPaso;
+        //            structDatos.nCiclos = Convert.ToInt32(datos._bCiclos);
+        //            structDatos.nPuntos = datos._nPuntos;
 
-                    try
-                    {
-                        // Pasar la matriz a la memoria no gestionada
-                        ptrTiempos = marshalJuggedToC(new double[][] { datos._dWork, datos._dRest });
+        //            try
+        //            {
+        //                // Pasar la matriz a la memoria no gestionada
+        //                ptrTiempos = marshalJuggedToC(new double[][] { datos._dWork, datos._dRest });
 
-                        // Llamar a la función de la DLL que devuelve la curva calculada
-                        ptrResultado = Curva_DLL(ptrTiempos, longitud, ref structDatos);
+        //                // Llamar a la función de la DLL que devuelve la curva calculada
+        //                ptrResultado = Curva_DLL(ptrTiempos, longitud, ref structDatos);
 
-                        // Si la función no ha devuelto nada
-                        if (ptrResultado == IntPtr.Zero)
-                        {
-                            throw new MemoryAllocation("Could not allocate memory.");
-                        }
+        //                // Si la función no ha devuelto nada
+        //                if (ptrResultado == IntPtr.Zero)
+        //                {
+        //                    throw new MemoryAllocation("Could not allocate memory.");
+        //                }
 
-                        // Pasar el resultado de la DLL a la memoria gestionada
-                        arrayCurva = marshalJuggedFromC(ptrResultado, 2, datos._nPuntos);
-                    }
-                    catch (Exception e)
-                    {
-                        System.Windows.Forms.MessageBox.Show(
-                            e.Message,
-                            "Memory allocation",
-                            System.Windows.Forms.MessageBoxButtons.OK,
-                            System.Windows.Forms.MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-                        // Liberar la memoria reservada por la rutina marshalJuggedToC
-                        //marshalFreeMemory(ptrTiempos, datos._dWorkRest.Length);
-                        marshalFreeMemory(ptrTiempos, 2);
+        //                // Pasar el resultado de la DLL a la memoria gestionada
+        //                arrayCurva = marshalJuggedFromC(ptrResultado, 2, datos._nPuntos);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                System.Windows.Forms.MessageBox.Show(
+        //                    e.Message,
+        //                    "Memory allocation",
+        //                    System.Windows.Forms.MessageBoxButtons.OK,
+        //                    System.Windows.Forms.MessageBoxIcon.Error);
+        //            }
+        //            finally
+        //            {
+        //                // Liberar la memoria reservada por la rutina marshalJuggedToC
+        //                //marshalFreeMemory(ptrTiempos, datos._dWorkRest.Length);
+        //                marshalFreeMemory(ptrTiempos, 2);
 
-                        // Liberar la memoria reservada por la DLL (en caso de que la haya podido reservar)
-                        if (ptrResultado != IntPtr.Zero)
-                        {
-                            FreeMemory_DLL(Marshal.ReadIntPtr(ptrResultado, 0));
-                            FreeMemory_DLL(ptrResultado);
-                        }
-                    }
+        //                // Liberar la memoria reservada por la DLL (en caso de que la haya podido reservar)
+        //                if (ptrResultado != IntPtr.Zero)
+        //                {
+        //                    FreeMemory_DLL(Marshal.ReadIntPtr(ptrResultado, 0));
+        //                    FreeMemory_DLL(ptrResultado);
+        //                }
+        //            }
 
-                    // Finalizar
-                    return arrayCurva;
-                }
+        //            // Finalizar
+        //            return arrayCurva;
+        //        }
 
                 
 
-                #endregion
+        //        #endregion
 
-                #region Marshalling private routines
+        //        #region Marshalling private routines
 
-                /// <summary>
-                /// Preparar una matriz jagged para pasarla a una DLL
-                /// http://social.msdn.microsoft.com/Forums/en-US/clr/thread/d421bf2a-5a74-46b4-bf07-363d1c058017/
-                /// </summary>
-                /// <param name="array">Matriz jagged</param>
-                /// <returns>Puntero de punteros</returns>
-                private IntPtr marshalJuggedToC(double[][] array)
-                {
-                    Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
-                    Int32 sizeofDouble = Marshal.SizeOf(typeof(double));
+        //        /// <summary>
+        //        /// Preparar una matriz jagged para pasarla a una DLL
+        //        /// http://social.msdn.microsoft.com/Forums/en-US/clr/thread/d421bf2a-5a74-46b4-bf07-363d1c058017/
+        //        /// </summary>
+        //        /// <param name="array">Matriz jagged</param>
+        //        /// <returns>Puntero de punteros</returns>
+        //        private IntPtr marshalJuggedToC(double[][] array)
+        //        {
+        //            Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
+        //            Int32 sizeofDouble = Marshal.SizeOf(typeof(double));
 
-                    IntPtr p1 = Marshal.AllocCoTaskMem(array.Length * sizeofPtr);
-                    IntPtr v1;
-                    for (Int32 i = 0; i < array.Length; i++)
-                    {
-                        v1 = Marshal.AllocCoTaskMem(array[i].Length * sizeofDouble);
-                        Marshal.Copy(array[i], 0, v1, array[i].Length);
-                        Marshal.WriteIntPtr(p1, i * sizeofPtr, v1);
-                    }
+        //            IntPtr p1 = Marshal.AllocCoTaskMem(array.Length * sizeofPtr);
+        //            IntPtr v1;
+        //            for (Int32 i = 0; i < array.Length; i++)
+        //            {
+        //                v1 = Marshal.AllocCoTaskMem(array[i].Length * sizeofDouble);
+        //                Marshal.Copy(array[i], 0, v1, array[i].Length);
+        //                Marshal.WriteIntPtr(p1, i * sizeofPtr, v1);
+        //            }
 
-                    // Queda pendiente de liberar las memorias reservadas para v1
-                    // También debe liberarse la memoria reservada para p1
+        //            // Queda pendiente de liberar las memorias reservadas para v1
+        //            // También debe liberarse la memoria reservada para p1
 
-                    return p1;
-                }
+        //            return p1;
+        //        }
 
-                /// <summary>
-                /// Toma una matriz jagged y la pasa a código managed
-                /// </summary>
-                /// <param name="carray">Puntero a punteros</param>
-                /// <param name="nI">Tamaño de la primera dimensión</param>
-                /// <param name="nJ">Tamaño de la segunda dimensión</param>
-                /// <returns>Managed jagged matrix</returns>
-                private double[][] marshalJuggedFromC(IntPtr carray, int nI, int nJ)
-                {
-                    IntPtr v1;
-                    int sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
-                    double[][] retval = new double[nI][];
-                    for (int i = 0; i < retval.Length; i++)
-                    {
-                        retval[i] = new double[nJ];
-                        v1 = Marshal.ReadIntPtr(carray, i * sizeofPtr);
-                        Marshal.Copy(v1, retval[i], 0, nJ);
-                        // Marshal.FreeCoTaskMem(v1);    // Se libera este puntero creado en la rutina marshalJuggedToC
-                    }
+        //        /// <summary>
+        //        /// Toma una matriz jagged y la pasa a código managed
+        //        /// </summary>
+        //        /// <param name="carray">Puntero a punteros</param>
+        //        /// <param name="nI">Tamaño de la primera dimensión</param>
+        //        /// <param name="nJ">Tamaño de la segunda dimensión</param>
+        //        /// <returns>Managed jagged matrix</returns>
+        //        private double[][] marshalJuggedFromC(IntPtr carray, int nI, int nJ)
+        //        {
+        //            IntPtr v1;
+        //            int sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
+        //            double[][] retval = new double[nI][];
+        //            for (int i = 0; i < retval.Length; i++)
+        //            {
+        //                retval[i] = new double[nJ];
+        //                v1 = Marshal.ReadIntPtr(carray, i * sizeofPtr);
+        //                Marshal.Copy(v1, retval[i], 0, nJ);
+        //                // Marshal.FreeCoTaskMem(v1);    // Se libera este puntero creado en la rutina marshalJuggedToC
+        //            }
 
-                    // Marshal.FreeCoTaskMem(carray);  // Se libera la memoria del puntero a punteros (opcional)
-                    return retval;
-                }
+        //            // Marshal.FreeCoTaskMem(carray);  // Se libera la memoria del puntero a punteros (opcional)
+        //            return retval;
+        //        }
 
-                /// <summary>
-                /// Libera la memoria reservada por la rutina marshalJuggedToC
-                /// </summary>
-                /// <param name="matriz">es un puntero a punteros</param>
-                /// <param name="nElementos">número de elementos</param>
-                private void marshalFreeMemory(IntPtr matriz, Int32 nElementos)
-                {
-                    // Definición de variables
-                    IntPtr ptr;
-                    Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
+        //        /// <summary>
+        //        /// Libera la memoria reservada por la rutina marshalJuggedToC
+        //        /// </summary>
+        //        /// <param name="matriz">es un puntero a punteros</param>
+        //        /// <param name="nElementos">número de elementos</param>
+        //        private void marshalFreeMemory(IntPtr matriz, Int32 nElementos)
+        //        {
+        //            // Definición de variables
+        //            IntPtr ptr;
+        //            Int32 sizeofPtr = Marshal.SizeOf(typeof(IntPtr));
 
-                    // Se libera la memoria de cada una de las filas de la matriz
-                    for (Int32 i = 0; i < nElementos; i++)
-                    {
-                        ptr = Marshal.ReadIntPtr(matriz, i * sizeofPtr);
-                        Marshal.FreeCoTaskMem(ptr);
-                    }
+        //            // Se libera la memoria de cada una de las filas de la matriz
+        //            for (Int32 i = 0; i < nElementos; i++)
+        //            {
+        //                ptr = Marshal.ReadIntPtr(matriz, i * sizeofPtr);
+        //                Marshal.FreeCoTaskMem(ptr);
+        //            }
 
-                    // Se libera la memoria de la matriz
-                    Marshal.FreeCoTaskMem(matriz);
-                }
+        //            // Se libera la memoria de la matriz
+        //            Marshal.FreeCoTaskMem(matriz);
+        //        }
 
-                #endregion
+        //        #endregion
 
-                #region Deprecated
+        //        #region Deprecated
 
-                /*        
-                /// <summary>
-                /// Calcular el Holding Time (en min) a partir del MVC (en %).
-                /// Se utiliza la ecuación propuesta por Sjonjard.
-                /// </summary>
-                /// <param name="d_mvc">Contracción máxima voluntaria (MVC)</param>
-                /// <returns>Devuelve el valor HT para cada MVC</returns>
-                public double Sjogaard(double dMVC)
-                {
-                    // Definición de variables
-                    double resultado = 0.0;
-                    resultado = 5710 / Math.Pow(dMVC, 2.14);
+        //        /*        
+        //        /// <summary>
+        //        /// Calcular el Holding Time (en min) a partir del MVC (en %).
+        //        /// Se utiliza la ecuación propuesta por Sjonjard.
+        //        /// </summary>
+        //        /// <param name="d_mvc">Contracción máxima voluntaria (MVC)</param>
+        //        /// <returns>Devuelve el valor HT para cada MVC</returns>
+        //        public double Sjogaard(double dMVC)
+        //        {
+        //            // Definición de variables
+        //            double resultado = 0.0;
+        //            resultado = 5710 / Math.Pow(dMVC, 2.14);
             
-                    return resultado;
-                }
+        //            return resultado;
+        //        }
 
-                /// <summary>
-                /// Calcula los puntos de la curva según el modelo WR.
-                /// </summary>
-                /// <param name="datos">struct con los datos introducidos por el usuario</param>
-                /// <returns>Devuelve una matriz de 2 dimensiones con datos dobles.</returns>
-                public double [][] Curva(datosWR datos)
-                {
-                    // Definición de variables
-                    // Es más práctico crear una "jagged array" para extraer las columnas y
-                    //  pasarlas al gráfico
-                    double[][] arrayCurva= new double [2][];
+        //        /// <summary>
+        //        /// Calcula los puntos de la curva según el modelo WR.
+        //        /// </summary>
+        //        /// <param name="datos">struct con los datos introducidos por el usuario</param>
+        //        /// <returns>Devuelve una matriz de 2 dimensiones con datos dobles.</returns>
+        //        public double [][] Curva(datosWR datos)
+        //        {
+        //            // Definición de variables
+        //            // Es más práctico crear una "jagged array" para extraer las columnas y
+        //            //  pasarlas al gráfico
+        //            double[][] arrayCurva= new double [2][];
             
-                    // Cálculo del número de puntos de la curva
-                    int nSize = datos._bCiclos * datos._dTrabajoDescanso[0].Length + 1;
-                    foreach (double d in datos._dTrabajoDescanso [1]) 
-                        nSize += ((int)(d / datos._dPaso ))*datos._bCiclos;
+        //            // Cálculo del número de puntos de la curva
+        //            int nSize = datos._bCiclos * datos._dTrabajoDescanso[0].Length + 1;
+        //            foreach (double d in datos._dTrabajoDescanso [1]) 
+        //                nSize += ((int)(d / datos._dPaso ))*datos._bCiclos;
             
-                    // Inicialización de la matriz
-                    arrayCurva[0] = new double [nSize];
-                    arrayCurva[1] = new double [nSize];
-                    arrayCurva[0][0] = 0;
-                    arrayCurva[1][0] = 100;
+        //            // Inicialización de la matriz
+        //            arrayCurva[0] = new double [nSize];
+        //            arrayCurva[1] = new double [nSize];
+        //            arrayCurva[0][0] = 0;
+        //            arrayCurva[1][0] = 100;
             
-                    // Llamar a la función recursiva para calcular los valores
-                    CurvaRecursiva(ref arrayCurva, datos, 0, 0);
+        //            // Llamar a la función recursiva para calcular los valores
+        //            CurvaRecursiva(ref arrayCurva, datos, 0, 0);
 
-                    // Devolver los resultados
-                    return arrayCurva;
-                }
+        //            // Devolver los resultados
+        //            return arrayCurva;
+        //        }
 
-                /// <summary>
-                /// Función privada que de forma recursiva calcula los valores del modelo WR
-                /// </summary>
-                /// <param name="matriz">Matriz de 2 dimensiones que contiene los datos</param>
-                /// <param name="datos">Índice del elemento que está vacío y se va a rellenar</param>
-                /// <param name="nIndice">Último índice utilizado en la matriz</param>
-                /// <param name="nIteración">Número de iteración</param>
-                private void CurvaRecursiva(ref double [][] matriz, datosWR datos, int nIndice, int nIteración)
-                {
-                    // Definición de variables
-                    int i;
-                    double dHT=datos._dTrabajoDescanso[0][nIteración];
-                    double dHTp=datos._dTrabajoDescansop[0][nIteración];
-                    double offsetX = matriz[0][nIndice];
-                    double offsetY = matriz[1][nIndice];
+        //        /// <summary>
+        //        /// Función privada que de forma recursiva calcula los valores del modelo WR
+        //        /// </summary>
+        //        /// <param name="matriz">Matriz de 2 dimensiones que contiene los datos</param>
+        //        /// <param name="datos">Índice del elemento que está vacío y se va a rellenar</param>
+        //        /// <param name="nIndice">Último índice utilizado en la matriz</param>
+        //        /// <param name="nIteración">Número de iteración</param>
+        //        private void CurvaRecursiva(ref double [][] matriz, datosWR datos, int nIndice, int nIteración)
+        //        {
+        //            // Definición de variables
+        //            int i;
+        //            double dHT=datos._dTrabajoDescanso[0][nIteración];
+        //            double dHTp=datos._dTrabajoDescansop[0][nIteración];
+        //            double offsetX = matriz[0][nIndice];
+        //            double offsetY = matriz[1][nIndice];
 
-                    // Datos durante el ciclo de trabajo
-                    matriz[0][nIndice + 1] = offsetX + dHT;
-                    matriz[1][nIndice + 1] = offsetY - dHTp;
+        //            // Datos durante el ciclo de trabajo
+        //            matriz[0][nIndice + 1] = offsetX + dHT;
+        //            matriz[1][nIndice + 1] = offsetY - dHTp;
 
-                    // Datos durante el ciclo de descanso
-                    for(i=1; i<=(datos._dTrabajoDescanso[1][nIteración]/datos._dPaso); i++)
-                    {
-                        matriz[0][nIndice + 1 + i] = (offsetX + dHT) + i * datos._dPaso;
-                        //matriz[1][nIndice + 1 + i] = (offsetY - dHTp) + dHTp * Math.Exp(-0.164 * dHT / (i * datos._dPaso));
-                        matriz[1][nIndice + 1 + i] = (offsetY) * Math.Exp(-0.5 * (i * datos._dPaso) / datos._dMHT) + 100 * (1 - Math.Exp(-0.5 * (i * datos._dPaso) / datos._dMHT)) - dHTp * (1 - Math.Exp(-0.164 * dHT / (i * datos._dPaso)));
-                    }
+        //            // Datos durante el ciclo de descanso
+        //            for(i=1; i<=(datos._dTrabajoDescanso[1][nIteración]/datos._dPaso); i++)
+        //            {
+        //                matriz[0][nIndice + 1 + i] = (offsetX + dHT) + i * datos._dPaso;
+        //                //matriz[1][nIndice + 1 + i] = (offsetY - dHTp) + dHTp * Math.Exp(-0.164 * dHT / (i * datos._dPaso));
+        //                matriz[1][nIndice + 1 + i] = (offsetY) * Math.Exp(-0.5 * (i * datos._dPaso) / datos._dMHT) + 100 * (1 - Math.Exp(-0.5 * (i * datos._dPaso) / datos._dMHT)) - dHTp * (1 - Math.Exp(-0.164 * dHT / (i * datos._dPaso)));
+        //            }
 
-                    // Recursividad
-                    if ((nIndice + i + 1) < matriz[0].GetLength(0))
-                    {
-                        nIteración = (nIteración+1 < datos._dTrabajoDescanso[0].Length) ? nIteración : -1;                
-                        CurvaRecursiva(ref matriz, datos, nIndice + i, nIteración + 1);
-                    }
-                    else
-                        return;
-                }
-                */
+        //            // Recursividad
+        //            if ((nIndice + i + 1) < matriz[0].GetLength(0))
+        //            {
+        //                nIteración = (nIteración+1 < datos._dTrabajoDescanso[0].Length) ? nIteración : -1;                
+        //                CurvaRecursiva(ref matriz, datos, nIndice + i, nIteración + 1);
+        //            }
+        //            else
+        //                return;
+        //        }
+        //        */
 
-                #endregion
+        //        #endregion
 
-            }
-        }
+        //    }
+        //}
 
         namespace MetRate
         {

@@ -71,14 +71,15 @@ public partial class frmDataWRmodel : Form, IChildData
         // The form does not return unless all fields are validated
         this.DialogResult = DialogResult.None;
 
-        DataWR item = new DataWR();
+        DataWR item;
         for (int i = 0; i < gridVariables.ColumnCount; i++)
         {
+            item = new();
             item.Legend = gridVariables[i, 0].Value?.ToString();
             // Validation routines
             if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0, 100, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
             item.MVC = Validation.ValidateNumber(gridVariables[i, 1].Value);
-            item.MHT = ComputeMHT(item.MVC);
+            item.MHT = WorkRest.ComputeMHT(item.MVC);
             //gridVariables[i, 2].Value = item._dMHT;
 
             if (gridVariables[i, 3].Value == null) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
@@ -132,7 +133,7 @@ public partial class frmDataWRmodel : Form, IChildData
         {
             var dgv = (DataGridView)sender;
             //var cell = dgv?.Rows?[rowIdx.Value]?.Cells?[colIdx.Value]?.Value;
-            dgv.Rows[2].Cells[colIdx.Value].Value = ComputeMHT(Validation.ValidateNumber(dgv.Rows[1].Cells[colIdx.Value].Value)).ToString("0.##");
+            dgv.Rows[2].Cells[colIdx.Value].Value = WorkRest.ComputeMHT(Validation.ValidateNumber(dgv.Rows[1].Cells[colIdx.Value].Value)).ToString("0.##");
 
             //if (dgv.Columns[colIdx.Value].Name == "Maximum voluntary contraction (%)")
             //{
@@ -238,11 +239,5 @@ public partial class frmDataWRmodel : Form, IChildData
         gridVariables[0, 6].Value = 0.01;
     }
 
-    private double ComputeMHT(double MVC)
-    {
-        return (5710.0 / Math.Pow(MVC, 2.14));
-    }
-
-    #endregion Private routines
-            
+    #endregion Private routines            
 }

@@ -274,11 +274,12 @@ public partial class frmWRmodel : Form, IChildResults
     public void Save(string path)
     {   
         // Displays a SaveFileDialog so the user can save the Image  
-        SaveFileDialog SaveDlg = new SaveFileDialog
+        SaveFileDialog SaveDlg = new ()
         {
             DefaultExt = "*.csv",
             Filter = "ERGO file (*.ergo)|*.ergo|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 1,
+            FileName = "WR results",
             Title = "Save scatter-plot data",
             OverwritePrompt = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -311,10 +312,10 @@ public partial class frmWRmodel : Form, IChildResults
                         {
                             //((ScottPlot.Plottable.ScatterPlot)plot).SaveCSV(SaveDlg.FileName);
                             var chart = (ScottPlot.Plottable.ScatterPlot)plot;
-                            StringBuilder csv = new StringBuilder();
+                            StringBuilder csv = new();
                             for (int i = 0; i < chart.Ys.Length; i++)
                                 csv.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}{2}{3}", chart.Xs[i], ", ", chart.Ys[i], "\n");
-                            System.IO.File.WriteAllText(SaveDlg.FileName, csv.ToString());
+                            File.WriteAllText(SaveDlg.FileName, csv.ToString());
                         }
 
                         /*
@@ -348,7 +349,7 @@ public partial class frmWRmodel : Form, IChildResults
 
         bool result = true;
         int Length;
-        DataWR data = new();
+        DataWR data;
         _datos = new List<DataWR>();
         JsonElement root = document.RootElement;
 
@@ -356,6 +357,8 @@ public partial class frmWRmodel : Form, IChildResults
         {
             foreach (JsonElement curve in root.GetProperty("WR curves").EnumerateArray())
             {
+                data = new();
+
                 data.PlotCurve = curve.GetProperty("Curve #").GetInt32();
                 data.Legend = curve.GetProperty("Curve legend").GetString();
                 data.MHT = curve.GetProperty("MHT").GetDouble();

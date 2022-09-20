@@ -5,7 +5,7 @@ namespace ErgoCalc.Models.WR;
 public class DataWR
 {
     /// <summary>
-    /// Maximum voluntary contraction.
+    /// Maximum voluntary contraction (%).
     /// </summary>
     public double MVC { get; set; } = 0;
     /// <summary>
@@ -63,12 +63,12 @@ public class DataWR
             strTiempoD += d.ToString() + " ";
         strTiempoD = strTiempoD.TrimEnd();
 
-        strCadena = "[Maximum voluntary contraction]: " + MVC.ToString() + "\r\n";
+        strCadena = "[Maximum voluntary contraction (%)]: " + MVC.ToString() + "\r\n";
         strCadena += "[Maximum holding time (min)]: " + MHT.ToString() + "\r\n";
-        strCadena += "[Work times (min)]: " + strTiempoT + "\r\n";
-        strCadena += "[Rest times (min)]: " + strTiempoD + "\r\n";
+        strCadena += "[Working times (min)]: " + strTiempoT + "\r\n";
+        strCadena += "[Resting times (min)]: " + strTiempoD + "\r\n";
         strCadena += "[Number of cycles]: " + Cycles.ToString() + "\r\n";
-        strCadena += "[Step]: " + PlotStep.ToString() + "\r\n";
+        strCadena += "[Plot step]: " + PlotStep.ToString() + "\r\n";
         strCadena += "[Curve number]: " + PlotCurve.ToString();
         return strCadena;
     }
@@ -82,17 +82,20 @@ public static class WorkRest
     /// Computes the Holding Time (in minutes) from the MVC (in %).
     /// It uses the equation suggested by Sjogaard.
     /// </summary>
-    /// <param name="dMVC">Maximum voluntary contraction (MVC)</param>
-    /// <returns>Devuelve el valor HT para cada MVC</returns>
-    public static double Sjogaard(double dMVC)
+    /// <param name="MVC">Maximum voluntary contraction (percentage)</param>
+    /// <returns>Returns the HT (in minutes) associated with the given MVC</returns>
+    public static double ComputeMHT(double MVC)
     {
         // Sjogaard equation
-        double result = 5710 / Math.Pow(dMVC, 2.14);
+        double result = 5710 / Math.Pow(MVC, 2.14);
 
         return result;
     }
 
-
+    /// <summary>
+    /// Cumputes the WR curve
+    /// </summary>
+    /// <param name="data">Class containing the needed data and storing the results</param>
     public static void WRCurve(DataWR data)
     {
         //WRCurve(data.WorkingTimes, data.RestingTimes, data.WorkingTimes.Length, data.PointsX, data.PointsY, data.Points, data.Cycles, data.MHT, data.PlotStep);
