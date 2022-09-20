@@ -42,9 +42,9 @@
             this.lblTasks.AutoSize = true;
             this.lblTasks.Location = new System.Drawing.Point(13, 256);
             this.lblTasks.Name = "lblTasks";
-            this.lblTasks.Size = new System.Drawing.Size(39, 17);
+            this.lblTasks.Size = new System.Drawing.Size(46, 17);
             this.lblTasks.TabIndex = 4;
-            this.lblTasks.Text = "Task";
+            this.lblTasks.Text = "Tasks";
             // 
             // btnAccept
             // 
