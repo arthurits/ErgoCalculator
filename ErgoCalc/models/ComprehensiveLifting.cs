@@ -75,6 +75,32 @@ public static class ComprehensiveLifting
         return;
     }
 
+    private static double Factor(double[][] data, double value, Gender gender = Gender.Male)
+    {
+        // Definición de variables
+        int column = gender == Gender.Male ? 1 : 2;
+        double result;
+
+        int nIndice = Locate(data[0], value);
+
+        // Si el valor pedido está fuera del rango de valores de la matriz
+        // entonces se devuelve el valor del extremo
+        if (nIndice == -1 || nIndice == (data[0].Length - 1))
+        {
+            if (nIndice == -1) nIndice++;
+            return data[column][nIndice];
+        }
+
+        // Hacer una interpolación lineal
+        result = InterpolacionLineal(value,
+            data[0][nIndice],
+            data[0][nIndice + 1],
+            data[column][nIndice],
+            data[column][nIndice + 1]);
+
+        return result;
+    }
+
     /// <summary>
     /// Computes the H factor
     /// </summary>
@@ -92,7 +118,7 @@ public static class ComprehensiveLifting
             new double [] {1.00,0.87,0.79,0.73,0.70,0.68,0.63,0.52,0.43 },
             new double [] {1.00,0.84,0.73,0.66,0.64,0.65,0.61,0.50,0.41 }
         };
-
+        var test = Factor(fFactor, value, gender);
         int nIndice = Locate(fFactor[0], value);
 
         // Si el valor pedido está fuera del rango de valores de la matriz
