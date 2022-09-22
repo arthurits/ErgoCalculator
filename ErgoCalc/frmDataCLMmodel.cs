@@ -4,8 +4,8 @@ using System.Windows.Forms;
 
 using ErgoCalc.Models.CLMmodel;
 
-namespace ErgoCalc
-{
+namespace ErgoCalc;
+
     public partial class frmDataCLMmodel : Form
     {
         public modelCLM [] _sData;
@@ -251,4 +251,3 @@ namespace ErgoCalc
             return _sData;
         }
     }
-}
