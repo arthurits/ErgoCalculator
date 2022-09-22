@@ -1,3 +1,5 @@
+using System;
+
 namespace ErgoCalc.Models.CLM;
 
 public enum Gender
@@ -8,41 +10,63 @@ public enum Gender
 
 public class Data
 {
-    public Gender Gender;     // 1: masculino    2: femenino
-    public double Weight;
-    public double h;
-    public double v;
-    public double d;
-    public double f;
-    public double td;
-    public double t;
-    public int c;
-    public double hs;
-    public double ag;
-    public double bw;
+    public Gender Gender { get; set; } = Gender.Male;
+    public double Weight { get; set; } = 0;
+    public double h { get; set; } = 0;
+    public double v { get; set; } = 0;
+    public double d { get; set; } = 0;
+    public double f { get; set; } = 0;
+    public double td { get; set; } = 0;
+    public double t { get; set; } = 0;
+    public int c { get; set; } = 0;
+    public double hs { get; set; } = 0;
+    public double ag { get; set; } = 0;
+    public double bw { get; set; } = 0;
 };
 
 public class Multipliers
 {
-    public double fH;
-    public double fV;
-    public double fD;
-    public double fF;
-    public double fTD;
-    public double fT;
-    public double fC;
-    public double fHS;
-    public double fAG;
-    public double fBW;
+    public double fH { get; set; } = 0;
+    public double fV { get; set; } = 0;
+    public double fD { get; set; } = 0;
+    public double fF { get; set; } = 0;
+    public double fTD { get; set; } = 0;
+    public double fT { get; set; } = 0;
+    public double fC { get; set; } = 0;
+    public double fHS { get; set; } = 0;
+    public double fAG { get; set; } = 0;
+    public double fBW { get; set; } = 0;
 };
 
 
-public class Model
+public class Task
 {
-    public Data Data;
-    public Multipliers Factors;
-    public double IndexLSI;
+    public Data Data { get; set; } = new();
+    public Multipliers Factors { get; set; } = new();
+    public double IndexLSI { get; set; } = 0;
+
+    public override string ToString()
+    {
+        return string.Empty;
+    }
 };
+
+
+public class Job
+{
+    public Task[] Tasks { get; set; } = Array.Empty<Task>();
+    
+    public override string ToString()
+    {
+        string strTasks = string.Empty;
+
+        foreach (Task task in Tasks)
+            strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
+
+        return strTasks;
+
+    }
+}
 
 /// <summary>
 /// Contains functions to compute the comprehensive lifting model (CLM).
@@ -53,7 +77,7 @@ public static class ComprehensiveLifting
     /// Computes the factor values and the LSI index from the CLM model
     /// </summary>
     /// <param name="model"></param>
-    public static void CalculateLSI(Model[] model)
+    public static void CalculateLSI(Task[] model)
     {
         /* Realizar los cálculos para cada tarea */
         for (int i = 0; i < model.Length; i++)
@@ -85,11 +109,10 @@ public static class ComprehensiveLifting
 
         // Si el valor pedido está fuera del rango de valores de la matriz
         // entonces se devuelve el valor del extremo
-        if (nIndice == -1 || nIndice == (data[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return data[column][nIndice];
-        }
+        if (nIndice <= 0)
+            return data[0][0];
+        if (nIndice >= data[0].Length - 1)
+            return data[0][^1];
 
         // Hacer una interpolación lineal
         result = InterpolacionLineal(value,
@@ -110,34 +133,16 @@ public static class ComprehensiveLifting
     private static double FactorH(double value, Gender gender)
     {
         // Definición de variables
-        int column = gender == Gender.Male ? 1 : 2;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double[] {25,30,35,40,45,50,55,60,65 },
             new double [] {1.00,0.87,0.79,0.73,0.70,0.68,0.63,0.52,0.43 },
             new double [] {1.00,0.84,0.73,0.66,0.64,0.65,0.61,0.50,0.41 }
         };
-        var test = Factor(fFactor, value, gender);
-        int nIndice = Locate(fFactor[0], value);
-
-        // Si el valor pedido está fuera del rango de valores de la matriz
-        // entonces se devuelve el valor del extremo
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        // Hacer una interpolación lineal
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        
+        double result = Factor(factor, value, gender);
 
         return result;
-
     }
 
     /// <summary>
@@ -149,28 +154,14 @@ public static class ComprehensiveLifting
     private static double FactorV(double value, Gender gender)
     {
         // Definición de variables
-        int column = gender == Gender.Male ? 1 : 2;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double [36] {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175 },
             new double [36] {0.62, 0.64, 0.67, 0.69, 0.72, 0.75, 0.77, 0.80, 0.82, 0.85, 0.87, 0.90, 0.92, 0.95, 0.98, 1.00, 0.99, 0.98, 0.97, 0.96, 0.94, 0.93, 0.92, 0.91, 0.89, 0.88, 0.87, 0.84, 0.83, 0.82, 0.80, 0.79, 0.77, 0.76, 0.73, 0.71 },
             new double [36] {0.74, 0.76, 0.77, 0.79, 0.81, 0.83, 0.84, 0.86, 0.88, 0.90, 0.91, 0.93, 0.95, 0.97, 0.98, 1.00, 0.99, 0.98, 0.96, 0.95, 0.93, 0.90, 0.88, 0.86, 0.83, 0.81, 0.78, 0.76, 0.72, 0.70, 0.67, 0.65, 0.62, 0.60, 0.56, 0.54 }
         };
-
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        
+        double result = Factor(factor, value, gender);
 
         return result;
     }
@@ -184,31 +175,16 @@ public static class ComprehensiveLifting
     private static double FactorD(double value, Gender gender)
     {
         // Definición de variables
-        int column = gender == Gender.Male ? 1 : 2;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double[30] {25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170 },
             new double[30] {1, 0.97, 0.94, 0.91, 0.88, 0.86, 0.84, 0.83, 0.81, 0.80, 0.79, 0.78, 0.77, 0.76, 0.75, 0.73, 0.72, 0.71, 0.69, 0.68, 0.67, 0.66, 0.64, 0.63, 0.61, 0.59, 0.57, 0.55, 0.52, 0.49 },
             new double[30] {1, 0.99, 0.97, 0.96, 0.95, 0.94, 0.92, 0.89, 0.87, 0.84, 0.82, 0.80, 0.79, 0.78, 0.77, 0.77, 0.76, 0.75, 0.75, 0.75, 0.74, 0.74, 0.74, 0.74, 0.74, 0.74, 0.73, 0.73, 0.73, 0.73 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, gender);
 
         return result;
-
     }
 
     /// <summary>
@@ -220,28 +196,14 @@ public static class ComprehensiveLifting
     private static double FactorF(double value, Gender gender)
     {
         // Definición de variables
-        int column = gender == Gender.Male ? 1 : 2;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double [18] {0.2, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 },
             new double [18] {1, 0.99, 0.95, 0.89, 0.83, 0.78, 0.73, 0.69, 0.65, 0.62, 0.59, 0.56, 0.54, 0.52, 0.50, 0.49, 0.47, 0.46 },
             new double [18] {1, 0.99, 0.91, 0.87, 0.84, 0.8 , 0.77, 0.74, 0.7 , 0.68, 0.66, 0.65, 0.64, 0.63, 0.63, 0.62, 0.61, 0.6 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, gender);
 
         return result;
     }
@@ -254,27 +216,13 @@ public static class ComprehensiveLifting
     private static double FactorTD(double value)
     {
         // Definición de variables
-        int column = 1;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double [] {0, 1, 2, 3, 4, 5, 6, 7, 8 },
             new double [] {1.00, 1.00, 0.76, 0.66, 0.60, 0.57, 0.54, 0.50, 0.45 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, Gender.Male);
 
         return result;
     }
@@ -287,27 +235,13 @@ public static class ComprehensiveLifting
     private static double FactorT(double value)
     {
         // Definición de variables
-        int column = 1;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double[] {0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130 },
             new double[] {1.00, 0.98, 0.95, 0.93, 0.90, 0.88, 0.86, 0.83, 0.81, 0.78, 0.76, 0.74, 0.71, 0.69 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, Gender.Male);
 
         return result;
     }
@@ -338,27 +272,13 @@ public static class ComprehensiveLifting
     private static double FactorHS(double value)
     {
         // Definición de variables
-        int column = 1;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double[] { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 },
             new double[] {1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.98, 0.95, 0.93, 0.90, 0.88, 0.86, 0.83, 0.81, 0.78, 0.76, 0.74, 0.71, 0.69 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, Gender.Male);
 
         return result;
     }
@@ -372,28 +292,14 @@ public static class ComprehensiveLifting
     private static double FactorAG(double value, Gender gender)
     {
         // Definición de variables
-        int column = gender == Gender.Male ? 1 : 2;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double [] {20, 25, 30, 35, 40, 45, 50, 55, 60 },
             new double [] {1, 0.91, 0.88, 0.88, 0.86, 0.78, 0.69, 0.62, 0.59 },
             new double [] {1, 0.95, 0.90, 0.87, 0.82, 0.79, 0.72, 0.64, 0.49 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, gender);
 
         return result;
     }
@@ -407,28 +313,14 @@ public static class ComprehensiveLifting
     private static double FactorBW(double value, Gender gender)
     {
         // Definición de variables
-        int column = gender == Gender.Male ? 1 : 2;
-        double result;
-        double[][] fFactor =
+        double[][] factor =
         {
             new double [] {40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100 },
             new double [] {0.70, 0.70, 0.70, 0.70, 0.70, 0.80, 1.00, 1.20, 1.30, 1.41, 1.45, 1.45, 1.45 },
             new double [] {1.00, 1.00, 1.00, 1.00, 1.00, 1.20, 1.40, 1.68, 1.85, 1.98, 2.05, 2.05, 2.05 }
         };
 
-        int nIndice = Locate(fFactor[0], value);
-
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[column][nIndice];
-        }
-
-        result = InterpolacionLineal(value,
-            fFactor[0][nIndice],
-            fFactor[0][nIndice + 1],
-            fFactor[column][nIndice],
-            fFactor[column][nIndice + 1]);
+        double result = Factor(factor, value, gender);
 
         return result;
     }
@@ -453,11 +345,10 @@ public static class ComprehensiveLifting
 
         int nIndice = Locate(fFactor[column], value);
 
-        if (nIndice == -1 || nIndice == (fFactor[0].Length - 1))
-        {
-            if (nIndice == -1) nIndice++;
-            return fFactor[0][nIndice];
-        }
+        if (nIndice <= 0)
+            return fFactor[0][0];
+        if (nIndice >= fFactor[0].Length - 1)
+            return fFactor[0][^1];
 
         result = InterpolacionLineal(value,
             fFactor[column][nIndice],

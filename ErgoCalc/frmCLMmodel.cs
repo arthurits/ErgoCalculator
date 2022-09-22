@@ -8,16 +8,15 @@ using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 
-// Para llamar a la DLL
 using ErgoCalc.Models.CLMmodel;
+using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc
 {
     public partial class frmCLMmodel : Form, IChildResults
     {
         // Variable definition
-        private modelCLM [] _sDatosCLM;
-        private cModelCLM _classDLL;
+        private Job _job;
         private ResultsOptions _options;
 
         public frmCLMmodel()
@@ -25,7 +24,6 @@ namespace ErgoCalc
             InitializeComponent();
 
             // Initialize private variable
-            _classDLL = new cModelCLM();
             _options = new ResultsOptions(rtbShowResult);
 
             propertyGrid1.SelectedObject = _options;
@@ -36,64 +34,48 @@ namespace ErgoCalc
         public frmCLMmodel(modelCLM[] datos)
             :this()
         {
-            _sDatosCLM = datos;
+            _job = new Job();
+            _job.Tasks = new Task[datos.Length];
+            for (int i =0; i < datos.Length; i++)
+            {
+                _job.Tasks[i] = new();
+                _job.Tasks[i].Data = new();
+                _job.Tasks[i].Data.Gender = datos[i].data.gender == 1 ? Gender.Male : Gender.Female;
+                _job.Tasks[i].Data.Weight = datos[i].data.weight;
+                _job.Tasks[i].Data.h = datos[i].data.h;
+                _job.Tasks[i].Data.v = datos[i].data.v;
+                _job.Tasks[i].Data.d = datos[i].data.d;
+                _job.Tasks[i].Data.f = datos[i].data.f;
+                _job.Tasks[i].Data.td = datos[i].data.td;
+                _job.Tasks[i].Data.t = datos[i].data.t;
+                _job.Tasks[i].Data.c = datos[i].data.c;
+                _job.Tasks[i].Data.hs = datos[i].data.hs;
+                _job.Tasks[i].Data.ag = datos[i].data.ag;
+                _job.Tasks[i].Data.bw = datos[i].data.bw;
+
+                _job.Tasks[i].Factors = new();
+                _job.Tasks[i].Factors.fH = datos[i].factors.fH;
+                _job.Tasks[i].Factors.fD = datos[i].factors.fD;
+                _job.Tasks[i].Factors.fF = datos[i].factors.fF;
+                _job.Tasks[i].Factors.fTD = datos[i].factors.fTD;
+                _job.Tasks[i].Factors.fT = datos[i].factors.fT;
+                _job.Tasks[i].Factors.fC = datos[i].factors.fC;
+                _job.Tasks[i].Factors.fHS = datos[i].factors.fHS;
+                _job.Tasks[i].Factors.fAG = datos[i].factors.fAG;
+                _job.Tasks[i].Factors.fBW = datos[i].factors.fBW;
+
+                _job.Tasks[i].IndexLSI = datos[i].indexLSI;
+            }
+
         }
 
         private void frmCLMmodel_Shown(object sender, EventArgs e)
         {
-
             // Variable definition
-            Int32 nSize;
             Boolean error = false;
-            //frmDataCLMmodel frm = new frmDataCLMmodel(_sDatosCLM);
 
-            // Show dialog
-            //if (frm.ShowDialog() == DialogResult.OK)
-            //{
-                // Retrieve data from the dialog
-                //_sDatosCLM = frm._sData;
-                nSize = _sDatosCLM.Length;
-
-                // Call the DLL function
-                try
-                {
-                    _classDLL.CalculateLSI(_sDatosCLM, ref nSize);
-                }
-                catch (EntryPointNotFoundException)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "The program calculation kernel's been tampered with.\nThe LSI could not be computed.",
-                        "LSI index error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                catch (DllNotFoundException)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "Some files are missing. Please\nreinstall the application.",
-                        "LSI index error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    error = true;
-                    MessageBox.Show(
-                        "Error in the calculation kernel:\n" + ex.ToString(),
-                        "Unexpected error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-
-                // Call the routine that shows the results
-                if (error == false) ShowResults(_sDatosCLM);
-            //}
-            //else
-                // When this method is called artificially from code, don't do anything
-                //if (sender != null) this.Close();
-
+            ComprehensiveLifting.CalculateLSI(_job.Tasks);
+            if (error == false) ShowResults();
         }
 
         private void rtbShowResult_DoubleClick(object sender, EventArgs e)
@@ -108,59 +90,60 @@ namespace ErgoCalc
         }
 
         #region Private routines
+
         /// <summary>
         /// Shows the numerical results in the RTF control
         /// </summary>
         /// <param name="sData">Data and results array</param>
-        private void ShowResults(modelCLM [] sData)
+        private void ShowResults()
         {
-            Int32 i, length = sData.Length;
+            Int32 i, length = _job.Tasks.Length;
             String[] strLineD = new String[13];
             String[] strLineR = new String[14];
-            String[] gender = new String[] {"Male", "Female"};            
-            String[] coupling = new String[] {"Good", "Poor", "No hndl" };
+            String[] gender = new String[] { "Male", "Female" };
+            String[] coupling = new String[] { "Good", "Poor", "No hndl" };
             String[] strTasks = new String[] { "A", "B", "C", "D", "E" };
 
             for (i = 0; i < length; i++)
             {
                 strLineD[0] += "\t\t" + "Task " + strTasks[i];
-                strLineD[1] += "\t\t" + gender[sData[i].data.gender - 1];
-                strLineD[2] += "\t\t" + sData[i].data.weight.ToString();
-                strLineD[3] += "\t\t" + sData[i].data.h.ToString();
-                strLineD[4] += "\t\t" + sData[i].data.v.ToString();
-                strLineD[5] += "\t\t" + sData[i].data.d.ToString();
-                strLineD[6] += "\t\t" + sData[i].data.f.ToString();
-                strLineD[7] += "\t\t" + sData[i].data.td.ToString();
-                strLineD[8] += "\t\t" + sData[i].data.t.ToString();
-                strLineD[9] += "\t\t" + coupling[sData[i].data.c - 1];
-                strLineD[10] += "\t\t" + sData[i].data.hs.ToString();
-                strLineD[11] += "\t\t" + sData[i].data.ag.ToString();
-                strLineD[12] += "\t\t" + sData[i].data.bw.ToString();
+                strLineD[1] += "\t\t" + _job.Tasks[i].Data.Gender;
+                strLineD[2] += "\t\t" + _job.Tasks[i].Data.Weight.ToString();
+                strLineD[3] += "\t\t" + _job.Tasks[i].Data.h.ToString();
+                strLineD[4] += "\t\t" + _job.Tasks[i].Data.v.ToString();
+                strLineD[5] += "\t\t" + _job.Tasks[i].Data.d.ToString();
+                strLineD[6] += "\t\t" + _job.Tasks[i].Data.f.ToString();
+                strLineD[7] += "\t\t" + _job.Tasks[i].Data.td.ToString();
+                strLineD[8] += "\t\t" + _job.Tasks[i].Data.t.ToString();
+                strLineD[9] += "\t\t" + _job.Tasks[i].Data.c;
+                strLineD[10] += "\t\t" + _job.Tasks[i].Data.hs.ToString();
+                strLineD[11] += "\t\t" + _job.Tasks[i].Data.ag.ToString();
+                strLineD[12] += "\t\t" + _job.Tasks[i].Data.bw.ToString();
 
                 strLineR[0] += "\t\t" + "Task " + strTasks[i];
-                strLineR[1] += "\t\t" + sData[i].factors.fH.ToString("0.####");
-                strLineR[2] += "\t\t" + sData[i].factors.fV.ToString("0.####");
-                strLineR[3] += "\t\t" + sData[i].factors.fD.ToString("0.####");
-                strLineR[4] += "\t\t" + sData[i].factors.fF.ToString("0.####");
-                strLineR[5] += "\t\t" + sData[i].factors.fTD.ToString("0.####");
-                strLineR[6] += "\t\t" + sData[i].factors.fT.ToString("0.####");
-                strLineR[7] += "\t\t" + sData[i].factors.fC.ToString("0.####");
-                strLineR[8] += "\t\t" + sData[i].factors.fHS.ToString("0.####");
-                strLineR[9] += "\t\t" + sData[i].factors.fAG.ToString("0.####");
-                strLineR[10] += "\t\t" + sData[i].factors.fBW.ToString("0.####");
-                strLineR[11] += "\t\t" + (sData[i].data.weight / (
-                                                            sData[i].factors.fH *
-                                                            sData[i].factors.fV *
-                                                            sData[i].factors.fD *
-                                                            sData[i].factors.fF *
-                                                            sData[i].factors.fTD *
-                                                            sData[i].factors.fT *
-                                                            sData[i].factors.fC *
-                                                            sData[i].factors.fHS *
-                                                            sData[i].factors.fAG *
-                                                            sData[i].factors.fBW)).ToString("0.####");
-                strLineR[12] += "\t\t" + (100 - 10 * sData[i].indexLSI).ToString("0.####");
-                strLineR[13] += "\t" + sData[i].indexLSI.ToString("0.####");
+                strLineR[1] += "\t\t" + _job.Tasks[i].Factors.fH.ToString("0.####");
+                strLineR[2] += "\t\t" + _job.Tasks[i].Factors.fV.ToString("0.####");
+                strLineR[3] += "\t\t" + _job.Tasks[i].Factors.fD.ToString("0.####");
+                strLineR[4] += "\t\t" + _job.Tasks[i].Factors.fF.ToString("0.####");
+                strLineR[5] += "\t\t" + _job.Tasks[i].Factors.fTD.ToString("0.####");
+                strLineR[6] += "\t\t" + _job.Tasks[i].Factors.fT.ToString("0.####");
+                strLineR[7] += "\t\t" + _job.Tasks[i].Factors.fC.ToString("0.####");
+                strLineR[8] += "\t\t" + _job.Tasks[i].Factors.fHS.ToString("0.####");
+                strLineR[9] += "\t\t" + _job.Tasks[i].Factors.fAG.ToString("0.####");
+                strLineR[10] += "\t\t" + _job.Tasks[i].Factors.fBW.ToString("0.####");
+                strLineR[11] += "\t\t" + (_job.Tasks[i].Data.Weight / (
+                                                            _job.Tasks[i].Factors.fH *
+                                                            _job.Tasks[i].Factors.fV *
+                                                            _job.Tasks[i].Factors.fD *
+                                                            _job.Tasks[i].Factors.fF *
+                                                            _job.Tasks[i].Factors.fTD *
+                                                            _job.Tasks[i].Factors.fT *
+                                                            _job.Tasks[i].Factors.fC *
+                                                            _job.Tasks[i].Factors.fHS *
+                                                            _job.Tasks[i].Factors.fAG *
+                                                            _job.Tasks[i].Factors.fBW)).ToString("0.####");
+                strLineR[12] += "\t\t" + (100 - 10 * _job.Tasks[i].IndexLSI).ToString("0.####");
+                strLineR[13] += "\t" + _job.Tasks[i].IndexLSI.ToString("0.####");
 
             }
             rtbShowResult.Text = "The LSI index from the following data:";
@@ -182,7 +165,7 @@ namespace ErgoCalc
             rtbShowResult.AppendText("WBGT temperature (ºC):\t" + strLineD[10] + "\n");
             rtbShowResult.AppendText("Age (years):\t\t" + strLineD[11] + "\n");
             rtbShowResult.AppendText("Body weight (kg):\t\t" + strLineD[12] + "\n\n");
-            
+
             // Print results
             rtbShowResult.SelectionFont = new Font(rtbShowResult.Font.Name, rtbShowResult.Font.Size, FontStyle.Underline | FontStyle.Bold);
             rtbShowResult.AppendText("Description\t\t" + strLineR[0] + "\n");
@@ -204,7 +187,7 @@ namespace ErgoCalc
             rtbShowResult.SelectionFont = new Font(rtbShowResult.Font.Name, rtbShowResult.Font.Size - 1, FontStyle.Regular);
         }
 
-        #endregion
+        #endregion Private routines
 
         #region IChildResults
         public void Save(string path)
