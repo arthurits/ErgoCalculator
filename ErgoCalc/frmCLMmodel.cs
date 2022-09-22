@@ -12,7 +12,7 @@ using ErgoCalc.Models.CLMmodel;
 using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc
-{
+
     public partial class frmCLMmodel : Form, IChildResults
     {
         // Variable definition
@@ -270,4 +270,3 @@ namespace ErgoCalc
         }
 
     }
-}
