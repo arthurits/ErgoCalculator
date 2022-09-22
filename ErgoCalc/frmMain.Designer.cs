@@ -38,6 +38,8 @@
             this.mnuMainFrm_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainFrm_Help_About = new System.Windows.Forms.ToolStripMenuItem();
             this.staMainFrm = new System.Windows.Forms.StatusStrip();
+            this.statusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripLabelUILanguage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripMain_Exit = new System.Windows.Forms.ToolStripButton();
             this.toolStripMain_Open = new System.Windows.Forms.ToolStripButton();
@@ -56,6 +58,7 @@
             this.tspTop = new System.Windows.Forms.ToolStripPanel();
             this.tspBottom = new System.Windows.Forms.ToolStripPanel();
             this.mnuMainFrm.SuspendLayout();
+            this.staMainFrm.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,12 +136,33 @@
             // 
             // staMainFrm
             // 
-            this.staMainFrm.Location = new System.Drawing.Point(0, 596);
+            this.staMainFrm.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.staMainFrm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStripLabel,
+            this.statusStripLabelUILanguage});
+            this.staMainFrm.Location = new System.Drawing.Point(0, 590);
             this.staMainFrm.Name = "staMainFrm";
             this.staMainFrm.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.staMainFrm.Size = new System.Drawing.Size(957, 22);
+            this.staMainFrm.Size = new System.Drawing.Size(957, 28);
             this.staMainFrm.TabIndex = 1;
             this.staMainFrm.Text = "statusStrip1";
+            // 
+            // statusStripLabel
+            // 
+            this.statusStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabel.Name = "statusStripLabel";
+            this.statusStripLabel.Size = new System.Drawing.Size(841, 23);
+            this.statusStripLabel.Spring = true;
+            this.statusStripLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // statusStripLabelUILanguage
+            // 
+            this.statusStripLabelUILanguage.AutoSize = false;
+            this.statusStripLabelUILanguage.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.statusStripLabelUILanguage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabelUILanguage.Name = "statusStripLabelUILanguage";
+            this.statusStripLabelUILanguage.Size = new System.Drawing.Size(65, 23);
+            this.statusStripLabelUILanguage.Click += new System.EventHandler(this.Language_Click);
             // 
             // toolStripMain
             // 
@@ -341,6 +365,8 @@
             this.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.frmMain_ControlRemoved);
             this.mnuMainFrm.ResumeLayout(false);
             this.mnuMainFrm.PerformLayout();
+            this.staMainFrm.ResumeLayout(false);
+            this.staMainFrm.PerformLayout();
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
             this.ResumeLayout(false);
@@ -377,5 +403,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton toolStripMain_AddLine;
         private System.Windows.Forms.ToolStripButton toolStripMain_RemoveLine;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripLabel;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelUILanguage;
     }
 }

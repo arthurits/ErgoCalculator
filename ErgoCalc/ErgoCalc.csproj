@@ -3,7 +3,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
 <UseWindowsForms>true</UseWindowsForms>
-<UseWPF>true</UseWPF>
+<UseWPF>False</UseWPF>
     <OldToolsVersion>3.5</OldToolsVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publicar\</PublishUrl>
@@ -48,6 +48,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>images\logo.ico</ApplicationIcon>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

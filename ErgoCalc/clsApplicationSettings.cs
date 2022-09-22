@@ -4,151 +4,207 @@ using System.Xml;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Utilidades
+namespace Utilidades;
+
+class clsApplicationSettings
 {
-    class clsApplicationSettings
+    // Nombre del archivo que almacena los datos.
+    private readonly string _fileName;
+
+    // Documento XML para guardar los datos.
+    private readonly XmlDocument _document;
+
+    public clsApplicationSettings(string fileName)
     {
-        // Nombre del archivo que almacena los datos.
-        private readonly string _fileName;
+        //
+        // TODO: Add constructor logic here
+        //
 
-        // Documento XML para guardar los datos.
-        private readonly XmlDocument _document;
+        // Assign the file name.
+        _fileName = fileName;
 
-        public clsApplicationSettings(string fileName)
+        // If the file already exists, load it. Otherwise, create a new document.
+        _document = new XmlDocument();
+        try
         {
-            //
-            // TODO: Add constructor logic here
-            //
-
-            // Assign the file name.
-            _fileName = fileName;
-
-            // If the file already exists, load it. Otherwise, create a new document.
+            _document.Load(this._fileName);
+        }
+        catch (Exception)
+        {
+            // Create a new XML document and set the root node.
             _document = new XmlDocument();
-            try
-            {
-                _document.Load(this._fileName);
-            }
-            catch (Exception)
-            {
-                // Create a new XML document and set the root node.
-                _document = new XmlDocument();
-                _document.AppendChild(_document.CreateElement("ProgramSettings"));
-            }
-        }
-
-        /// <summary>
-        /// Guarda los datos en el archivo
-        /// </summary>
-        public void Save()
-        {
-            _document.Save(this._fileName);
-        }
-
-        /// <summary>
-        /// Lee un valor XML del archivo de datos
-        /// </summary>
-        /// <param name="section">Sección del archivo XML</param>
-        /// <param name="name">Nombre del nodo</param>
-        /// <returns>Cadena de texto del archivo XML</returns>
-        public string GetValue(string section, string name)
-        {
-            try
-            {
-                return _document.DocumentElement.SelectSingleNode(section + "/" + name).InnerText;
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
-
-        /// <summary>
-        /// Guarda un valor XML en el archivo de datos
-        /// </summary>
-        /// <param name="section">Sección del archivo XML</param>
-        /// <param name="name">Nombre del nodo</param>
-        /// <param name="value">Valor a guardar</param>
-        public void SetValue(string section, string name, string value)
-        {
-            // If the section does not exist, create it.
-            XmlNode sectionNode = _document.DocumentElement.SelectSingleNode(section);
-            if (sectionNode == null)
-                sectionNode = _document.DocumentElement.AppendChild(_document.CreateElement(section));
-            // If the node does not exist, create it.
-            XmlNode node = sectionNode.SelectSingleNode(name);
-            if (node == null)
-                node = sectionNode.AppendChild(_document.CreateElement(name));
-
-            // Set the value.
-            node.InnerText = value;
+            _document.AppendChild(_document.CreateElement("ProgramSettings"));
         }
     }
 
-    class ApplicationSettingsData
+    /// <summary>
+    /// Guarda los datos en el archivo
+    /// </summary>
+    public void Save()
     {
-        #region Member variables
-
-        public bool bCenterWindow;
-        public bool bTransparency;
-        public byte nTransparencyValue;
-        public bool bOnlyParents;
-        public Color cRectColor;
-        public Int32 nRectWidth;
-        //public Int32 idioma;
-
-        #endregion Member variables
-
-        #region Class constructors
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public ApplicationSettingsData()
-        {
-            SetDefaults();
-        }
-
-        /// <summary>
-        /// Overloaded constructor.
-        /// </summary>
-        /// <param name="settings"></param>
-        public ApplicationSettingsData(ApplicationSettingsData settings)
-        {
-            bCenterWindow       = settings.bCenterWindow;
-            bTransparency       = settings.bTransparency;
-            nTransparencyValue  = settings.nTransparencyValue;
-            bOnlyParents        = settings.bOnlyParents;
-            cRectColor          = settings.cRectColor;
-            nRectWidth          = settings.nRectWidth;
-            //idioma = (Int32)Language.System;
-        }
-
-        #endregion Class constructors
-
-        #region Class methods
-
-        /// <summary>
-        /// Sets the member variable default values.
-        /// </summary>
-        public void SetDefaults()
-        {
-            bCenterWindow       = true;
-            bTransparency       = false;
-            nTransparencyValue  = 0;
-            bOnlyParents        = false;
-            cRectColor          = Color.Black;
-            nRectWidth          = 1;
-        }
-        
-        #endregion Class methods
+        _document.Save(this._fileName);
     }
 
-    public class AppSettings
+    /// <summary>
+    /// Lee un valor XML del archivo de datos
+    /// </summary>
+    /// <param name="section">Sección del archivo XML</param>
+    /// <param name="name">Nombre del nodo</param>
+    /// <returns>Cadena de texto del archivo XML</returns>
+    public string GetValue(string section, string name)
     {
-        public Int32 Left { get; set; }
-        public Int32 Top { get; set; }
-        public Int32 Width { get; set; }
-        public Int32 Height { get; set; }
+        try
+        {
+            return _document.DocumentElement.SelectSingleNode(section + "/" + name).InnerText;
+        }
+        catch (Exception)
+        {
+            return "";
+        }
     }
+
+    /// <summary>
+    /// Guarda un valor XML en el archivo de datos
+    /// </summary>
+    /// <param name="section">Sección del archivo XML</param>
+    /// <param name="name">Nombre del nodo</param>
+    /// <param name="value">Valor a guardar</param>
+    public void SetValue(string section, string name, string value)
+    {
+        // If the section does not exist, create it.
+        XmlNode sectionNode = _document.DocumentElement.SelectSingleNode(section);
+        if (sectionNode == null)
+            sectionNode = _document.DocumentElement.AppendChild(_document.CreateElement(section));
+        // If the node does not exist, create it.
+        XmlNode node = sectionNode.SelectSingleNode(name);
+        if (node == null)
+            node = sectionNode.AppendChild(_document.CreateElement(name));
+
+        // Set the value.
+        node.InnerText = value;
+    }
+}
+
+class ApplicationSettingsData
+{
+    #region Member variables
+
+    public bool bCenterWindow;
+    public bool bTransparency;
+    public byte nTransparencyValue;
+    public bool bOnlyParents;
+    public Color cRectColor;
+    public Int32 nRectWidth;
+    //public Int32 idioma;
+
+    #endregion Member variables
+
+    #region Class constructors
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public ApplicationSettingsData()
+    {
+        SetDefaults();
+    }
+
+    /// <summary>
+    /// Overloaded constructor.
+    /// </summary>
+    /// <param name="settings"></param>
+    public ApplicationSettingsData(ApplicationSettingsData settings)
+    {
+        bCenterWindow       = settings.bCenterWindow;
+        bTransparency       = settings.bTransparency;
+        nTransparencyValue  = settings.nTransparencyValue;
+        bOnlyParents        = settings.bOnlyParents;
+        cRectColor          = settings.cRectColor;
+        nRectWidth          = settings.nRectWidth;
+        //idioma = (Int32)Language.System;
+    }
+
+    #endregion Class constructors
+
+    #region Class methods
+
+    /// <summary>
+    /// Sets the member variable default values.
+    /// </summary>
+    public void SetDefaults()
+    {
+        bCenterWindow       = true;
+        bTransparency       = false;
+        nTransparencyValue  = 0;
+        bOnlyParents        = false;
+        cRectColor          = Color.Black;
+        nRectWidth          = 1;
+    }
+    
+    #endregion Class methods
+}
+
+public class AppSettings
+{
+    /// <summary>
+    /// Stores the settings file name
+    /// </summary>
+    [JsonIgnore]
+    public string SettingsFileName { get; set; } = "configuration.json";
+
+    /// <summary>
+    /// Remember window position on start up
+    /// </summary>
+    [JsonPropertyName("Window position")]
+    public bool WindowPosition { get; set; } = true;
+    [JsonPropertyName("Window left")]
+    public int Left { get; set; } = 0;
+    [JsonPropertyName("Window top")]
+    public int Top { get; set; } = 0;
+    [JsonPropertyName("Window width")]
+    public int Width { get; set; } = 973;
+    [JsonPropertyName("Window height")]
+    public int Height { get; set; } = 657;
+
+    /// <summary>
+    /// Culture used throughout the app
+    /// </summary>
+    [JsonIgnore]
+    public System.Globalization.CultureInfo AppCulture { get; set; } = System.Globalization.CultureInfo.CurrentCulture;
+
+    /// <summary>
+    /// Define the culture used throughout the app by asigning a culture string name
+    /// </summary>
+    [JsonPropertyName("Culture name")]
+    public string AppCultureName
+    {
+        get { return AppCulture.Name; }
+        set { AppCulture = new System.Globalization.CultureInfo(value); }
+    }
+
+    /// <summary>
+    /// True if open/save dialogs should remember the user's previous path
+    /// </summary>
+    [JsonPropertyName("Remember path in FileDlg?")]
+    public bool RememberFileDialogPath { get; set; } = true;
+    /// <summary>
+    /// Default path for saving files to disk
+    /// </summary>
+    [JsonPropertyName("Default save path")]
+    public string DefaultSavePath { get; set; } = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);
+    /// <summary>
+    /// User-defined path for saving files to disk
+    /// </summary>
+    [JsonPropertyName("User save path")]
+    public string UserSavePath { get; set; } = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);
+    /// <summary>
+    /// Default path for reading files from disk
+    /// </summary>
+    [JsonPropertyName("Default open path")]
+    public string DefaultOpenPath { get; set; } = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\examples";
+    /// <summary>
+    /// User-defined path for reading files from disk
+    /// </summary>
+    [JsonPropertyName("User open path")]
+    public string UserOpenPath { get; set; } = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\examples";
 }
