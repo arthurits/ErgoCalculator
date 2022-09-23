@@ -10,23 +10,35 @@ using System.Windows.Forms;
 
 namespace ErgoCalc;
 
+public enum ModelType
+{
+    WorkRest,
+    CumulativeLifting,
+    NioshLifting,
+    StrainIndex,
+    OcraCheck,
+    MetabolicRate,
+    ThermalComfort,
+    LibertyMutual,
+}
+
 partial class frmMain
 {
     private void mnuMainFrm_File_New_Click(object sender, EventArgs e)
     {
-        frmNew frmNew = new frmNew();
+        FrmNew frmNew = new FrmNew();
         if (frmNew.ShowDialog() == DialogResult.Cancel) return;
 
         Form frmData = frmNew.Model switch
         {
-            1 => new frmDataWRmodel(),
-            2 => new frmDataCLMmodel(),
-            3 => new frmDataNIOSHmodel(),
-            4 => new frmDataStrainIndex(),
-            5 => new frmDataOCRAcheck(),
-            6 => new frmMet(),
-            7 => new frmDataTC(),
-            8 => new frmDataLiberty(),
+            ModelType.WorkRest => new frmDataWRmodel(),
+            ModelType.CumulativeLifting => new frmDataCLMmodel(),
+            ModelType.NioshLifting => new frmDataNIOSHmodel(),
+            ModelType.StrainIndex => new frmDataStrainIndex(),
+            ModelType.OcraCheck => new frmDataOCRAcheck(),
+            ModelType.MetabolicRate => new frmMet(),
+            ModelType.ThermalComfort => new frmDataTC(),
+            ModelType.LibertyMutual => new frmDataLiberty(),
             _ => new Form()
         };
 
@@ -39,14 +51,14 @@ partial class frmMain
             {
                 Form frmResults = frmNew.Model switch
                 {
-                    1 => new FrmWRmodel(frm.GetData),
-                    2 => new frmCLMmodel(frm.GetData),
-                    3 => new frmResultNIOSHmodel(frm.GetData),
-                    4 => new frmResultsStrainIndex(frm.GetData),
-                    5 => new frmResultsOCRAcheck(frm.GetData),
-                    6 => new frmMetResult(frm.GetData),
-                    7 => new frmResultsTC(frm.GetData),
-                    8 => new frmResultsLiberty(frm.GetData),
+                    ModelType.WorkRest => new FrmWRmodel(frm.GetData),
+                    ModelType.CumulativeLifting => new frmCLMmodel(frm.GetData),
+                    ModelType.NioshLifting => new frmResultNIOSHmodel(frm.GetData),
+                    ModelType.StrainIndex => new frmResultsStrainIndex(frm.GetData),
+                    ModelType.OcraCheck => new frmResultsOCRAcheck(frm.GetData),
+                    ModelType.MetabolicRate => new frmMetResult(frm.GetData),
+                    ModelType.ThermalComfort => new frmResultsTC(frm.GetData),
+                    ModelType.LibertyMutual => new frmResultsLiberty(frm.GetData),
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;

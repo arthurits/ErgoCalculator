@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmNew
+    partial class FrmNew
     {
         /// <summary>
         /// Required designer variable.
@@ -72,7 +72,7 @@
             this.btnAccept.TabIndex = 5;
             this.btnAccept.Text = "&Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
-            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            this.btnAccept.Click += new System.EventHandler(this.Accept_Click);
             // 
             // btnCancel
             // 
