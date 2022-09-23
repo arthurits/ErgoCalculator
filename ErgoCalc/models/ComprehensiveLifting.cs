@@ -8,6 +8,14 @@ public enum Gender
     Female = 1
 }
 
+public enum Coupling
+{
+    NoHandle = 0,
+    Poor = 1,
+    Good = 2
+}
+
+
 public class Data
 {
     public Gender Gender { get; set; } = Gender.Male;
@@ -18,7 +26,7 @@ public class Data
     public double f { get; set; } = 0;
     public double td { get; set; } = 0;
     public double t { get; set; } = 0;
-    public int c { get; set; } = 0;
+    public Coupling c { get; set; } = Coupling.Good;
     public double hs { get; set; } = 0;
     public double ag { get; set; } = 0;
     public double bw { get; set; } = 0;
@@ -82,18 +90,25 @@ public static class ComprehensiveLifting
         /* Realizar los cálculos para cada tarea */
         for (int i = 0; i < model.Length; i++)
         {
-            model[i].Factors.fH = FactorH(model[i].Data.h, model[i].Data.Gender);
-            model[i].Factors.fV = FactorV(model[i].Data.v, model[i].Data.Gender);
-            model[i].Factors.fD = FactorD(model[i].Data.d, model[i].Data.Gender);
-            model[i].Factors.fF = FactorF(model[i].Data.f, model[i].Data.Gender);
-            model[i].Factors.fTD = FactorTD(model[i].Data.td);
-            model[i].Factors.fT = FactorT(model[i].Data.t);
-            model[i].Factors.fC = FactorC(model[i].Data.c);
-            model[i].Factors.fHS = FactorHS(model[i].Data.hs);
-            model[i].Factors.fAG = FactorAG(model[i].Data.ag, model[i].Data.Gender);
-            model[i].Factors.fBW = FactorBW(model[i].Data.bw, model[i].Data.Gender);
+            if (model[i].Data.Weight > 0)
+            {
+                model[i].Factors.fH = FactorH(model[i].Data.h, model[i].Data.Gender);
+                model[i].Factors.fV = FactorV(model[i].Data.v, model[i].Data.Gender);
+                model[i].Factors.fD = FactorD(model[i].Data.d, model[i].Data.Gender);
+                model[i].Factors.fF = FactorF(model[i].Data.f, model[i].Data.Gender);
+                model[i].Factors.fTD = FactorTD(model[i].Data.td);
+                model[i].Factors.fT = FactorT(model[i].Data.t);
+                model[i].Factors.fC = FactorC(model[i].Data.c);
+                model[i].Factors.fHS = FactorHS(model[i].Data.hs);
+                model[i].Factors.fAG = FactorAG(model[i].Data.ag, model[i].Data.Gender);
+                model[i].Factors.fBW = FactorBW(model[i].Data.bw, model[i].Data.Gender);
 
-            model[i].IndexLSI = LSIindex(model[i].Data.Gender, model[i].Data.Weight, model[i].Factors);
+                model[i].IndexLSI = LSIindex(model[i].Data.Gender, model[i].Data.Weight, model[i].Factors);
+            }
+            else
+            {
+                model[i].IndexLSI = double.NaN;
+            }
         }
 
         return;
@@ -110,9 +125,9 @@ public static class ComprehensiveLifting
         // Si el valor pedido está fuera del rango de valores de la matriz
         // entonces se devuelve el valor del extremo
         if (nIndice <= 0)
-            return data[0][0];
+            return data[column][0];
         if (nIndice >= data[0].Length - 1)
-            return data[0][^1];
+            return data[column][^1];
 
         // Hacer una interpolación lineal
         result = InterpolacionLineal(value,
@@ -251,14 +266,14 @@ public static class ComprehensiveLifting
     /// </summary>
     /// <param name="value"></param>
     /// <returns>C factor</returns>
-    private static double FactorC(int value)
+    private static double FactorC(Coupling value)
     {
         // Definición de variables
         double resultado =  value switch
         {
-            1 => 1.0,
-            2 => 0.925,
-            3 => 0.850,
+            Coupling.Good => 1.0,
+            Coupling.Poor => 0.925,
+            Coupling.NoHandle => 0.850,
             _ => 0.0,
         };
         return resultado;
@@ -372,6 +387,8 @@ public static class ComprehensiveLifting
         double multiplicacion;
         double porcentaje;
         double indice;
+
+        //if (peso <= 0) return double.NaN;
 
         multiplicacion = factores.fH *
             factores.fV *

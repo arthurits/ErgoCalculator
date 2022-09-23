@@ -2,21 +2,22 @@
 using System.Data;
 using System.Windows.Forms;
 
-using ErgoCalc.Models.CLMmodel;
+using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
 
 public partial class frmDataCLMmodel : Form
 {
-    public modelCLM[] _sData;
+    public Job _job;
+    public Job GetData => _job;
+
     public frmDataCLMmodel()
     {
         // VS initialization routine
         InitializeComponent();
 
-        #region DataGrid View customization
         // Create the first column (zero index base)
-        AddColumn(0);
+        AddColumn();
 
         // Create the header rows
         gridVariables.RowCount = 12;
@@ -39,54 +40,32 @@ public partial class frmDataCLMmodel : Form
         DataTable tableG = new DataTable();
         DataTable tableC = new DataTable();
 
-        tableG.Columns.Add("Display", typeof(String));
-        tableG.Columns.Add("Value", typeof(Int32));
-        tableG.Rows.Add("Male", 1);
-        tableG.Rows.Add("Female", 2);
+        tableG.Columns.Add("Display", typeof(string));
+        tableG.Columns.Add("Value", typeof(int));
+        tableG.Rows.Add(Gender.Male.ToString(), (int)Gender.Male);
+        tableG.Rows.Add(Gender.Female.ToString(), (int)Gender.Female);
         celdaG.DataSource = tableG;
         celdaG.DisplayMember = "Display";
         celdaG.ValueMember = "Value";
 
-        tableC.Columns.Add("Display", typeof(String));
-        tableC.Columns.Add("Value", typeof(Int32));
-        tableC.Rows.Add("Good", 1);
-        tableC.Rows.Add("Poor", 2);
-        tableC.Rows.Add("No handle", 3);
+        tableC.Columns.Add("Display", typeof(string));
+        tableC.Columns.Add("Value", typeof(int));
+        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
+        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
+        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
         celdaC.DataSource = tableC;
         celdaC.DisplayMember = "Display";
         celdaC.ValueMember = "Value";
 
         gridVariables.Rows[0].Cells[0] = celdaG;
         gridVariables.Rows[8].Cells[0] = celdaC;
-        #endregion
     }
 
-    public frmDataCLMmodel(modelCLM[] data)
+    public frmDataCLMmodel(Job job)
         : this() // Call the base constructor
     {
-
-        for (Int32 i = 0; i < data.Length; i++)
-        {
-            // Add one column whenever necessary
-            if (i > 0) AddColumn(i);
-
-            // Populate the DataGridView with data
-            gridVariables[i, 0].Value = data[i].data.gender;
-            gridVariables[i, 1].Value = data[i].data.weight.ToString();
-            gridVariables[i, 2].Value = data[i].data.h.ToString();
-            gridVariables[i, 3].Value = data[i].data.v.ToString();
-            gridVariables[i, 4].Value = data[i].data.d.ToString();
-            gridVariables[i, 5].Value = data[i].data.f.ToString();
-            gridVariables[i, 6].Value = data[i].data.td.ToString();
-            gridVariables[i, 7].Value = data[i].data.t.ToString();
-            gridVariables[i, 8].Value = data[i].data.c;
-            gridVariables[i, 9].Value = data[i].data.hs.ToString();
-            gridVariables[i, 10].Value = data[i].data.ag.ToString();
-            gridVariables[i, 11].Value = data[i].data.bw.ToString();
-        }
-
-        // Update the control's value
-        updTasks.Value = data.Length;
+        _job = job;
+        DataToGrid();
     }
 
     private void updTasks_ValueChanged(object sender, EventArgs e)
@@ -95,9 +74,10 @@ public partial class frmDataCLMmodel : Form
 
         // Add or remove columns
         if (col > gridVariables.ColumnCount)
-            AddColumn(col - 1);
+            for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
         else if (col < gridVariables.ColumnCount)
-            gridVariables.Columns.RemoveAt(col);
+            for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+
 
         // Modify the chkComposite state
         if (col > 1)
@@ -115,29 +95,38 @@ public partial class frmDataCLMmodel : Form
 
     private void btnOK_Click(object sender, EventArgs e)
     {
+        // The form does not return unless all fields are validated. This avoids closing the dialog
+        this.DialogResult = DialogResult.None;
+
+        _job = new();
+
         // Save the values entered
-        _sData = new modelCLM[Convert.ToInt32(updTasks.Value)];
-        for (Int32 i = 0; i < _sData.Length; i++)
+        _job.Tasks = new Task[Convert.ToInt32(updTasks.Value)];
+        for (Int32 i = 0; i < _job.Tasks.Length; i++)
         {
-            _sData[i].data.gender = Convert.ToInt32(gridVariables[i, 0].Value);
-            _sData[i].data.weight = Convert.ToDouble(gridVariables[i, 1].Value);
-            _sData[i].data.h = Convert.ToDouble(gridVariables[i, 2].Value);
-            _sData[i].data.v = Convert.ToDouble(gridVariables[i, 3].Value);
-            _sData[i].data.d = Convert.ToDouble(gridVariables[i, 4].Value);
-            _sData[i].data.f = Convert.ToDouble(gridVariables[i, 5].Value);
-            _sData[i].data.td = Convert.ToDouble(gridVariables[i, 6].Value);
-            _sData[i].data.t = Convert.ToDouble(gridVariables[i, 7].Value);
-            _sData[i].data.c = Convert.ToInt32(gridVariables[i, 8].Value);
-            _sData[i].data.hs = Convert.ToDouble(gridVariables[i, 9].Value);
-            _sData[i].data.ag = Convert.ToDouble(gridVariables[i, 10].Value);
-            _sData[i].data.bw = Convert.ToDouble(gridVariables[i, 11].Value);
+            _job.Tasks[i] = new Task();
+            _job.Tasks[i].Data.Gender = (Gender)Convert.ToInt32(gridVariables[i, 0].Value);
+            _job.Tasks[i].Data.Weight = Convert.ToDouble(gridVariables[i, 1].Value);
+            _job.Tasks[i].Data.h = Convert.ToDouble(gridVariables[i, 2].Value);
+            _job.Tasks[i].Data.v = Convert.ToDouble(gridVariables[i, 3].Value);
+            _job.Tasks[i].Data.d = Convert.ToDouble(gridVariables[i, 4].Value);
+            _job.Tasks[i].Data.f = Convert.ToDouble(gridVariables[i, 5].Value);
+            _job.Tasks[i].Data.td = Convert.ToDouble(gridVariables[i, 6].Value);
+            _job.Tasks[i].Data.t = Convert.ToDouble(gridVariables[i, 7].Value);
+            _job.Tasks[i].Data.c = (Coupling)Convert.ToInt32(gridVariables[i, 8].Value);
+            _job.Tasks[i].Data.hs = Convert.ToDouble(gridVariables[i, 9].Value);
+            _job.Tasks[i].Data.ag = Convert.ToDouble(gridVariables[i, 10].Value);
+            _job.Tasks[i].Data.bw = Convert.ToDouble(gridVariables[i, 11].Value);
         }
+
+        // Return OK thus closing the dialog
+        this.DialogResult = DialogResult.OK;
     }
 
     private void btnCancel_Click(object sender, EventArgs e)
     {
         // Return empty array
-        _sData = new modelCLM[0];
+        _job = new();
     }
 
     #region Private routines
@@ -147,12 +136,12 @@ public partial class frmDataCLMmodel : Form
     /// <param name="col">Column number (zero based)</param>
     private void AddColumn(Int32 col)
     {
-        String[] strTasks = new String[] { "A", "B", "C", "D", "E" };
+        if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         // Create the new column
-        gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
+        gridVariables.Columns.Add("Column" + (col).ToString(), "Task " + ((char)('A' + col)).ToString());
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-        gridVariables.Columns[col].Width = 70;
+        gridVariables.Columns[col].Width = 85;
 
         // Give format to the cells
         if (col > 0)
@@ -165,73 +154,12 @@ public partial class frmDataCLMmodel : Form
     }
 
     /// <summary>
-    /// Creates some data to show as an example
+    /// Adds a column to the DataGrid View and formates it
     /// </summary>
-    /// <returns>Array of Model CLM data</returns>
-    private modelCLM[] DataExample()
+    private void AddColumn()
     {
-        modelCLM[] data = new modelCLM[2];
-
-        data[0].data.gender = 1;
-        data[0].data.weight = 5;
-        data[0].data.h = 50;
-        data[0].data.v = 70;
-        data[0].data.d = 55;
-        data[0].data.f = 2;
-        data[0].data.td = 1;
-        data[0].data.t = 45;
-        data[0].data.c = 2;
-        data[0].data.hs = 27;
-        data[0].data.ag = 50;
-        data[0].data.bw = 70;
-
-        data[1].data.gender = 2;
-        data[1].data.weight = 5;
-        data[1].data.h = 50;
-        data[1].data.v = 70;
-        data[1].data.d = 55;
-        data[1].data.f = 2;
-        data[1].data.td = 1;
-        data[1].data.t = 45;
-        data[1].data.c = 2;
-        data[1].data.hs = 27;
-        data[1].data.ag = 50;
-        data[1].data.bw = 70;
-
-        return data;
+        AddColumn(gridVariables.Columns.Count);
     }
-
-    /// <summary>
-    /// Shows the data into the grid control
-    /// </summary>
-    /// <param name="data">Array of Model CLM data</param>
-    private void DataToGrid(modelCLM[] data)
-    {
-        for (Int32 i = 0; i < data.Length; i++)
-        {
-            // Add one column whenever necessary
-            if (i > 0) AddColumn(i);
-
-            // Populate the DataGridView with data
-            gridVariables[i, 0].Value = data[i].data.gender;
-            gridVariables[i, 1].Value = data[i].data.weight.ToString();
-            gridVariables[i, 2].Value = data[i].data.h.ToString();
-            gridVariables[i, 3].Value = data[i].data.v.ToString();
-            gridVariables[i, 4].Value = data[i].data.d.ToString();
-            gridVariables[i, 5].Value = data[i].data.f.ToString();
-            gridVariables[i, 6].Value = data[i].data.td.ToString();
-            gridVariables[i, 7].Value = data[i].data.t.ToString();
-            gridVariables[i, 8].Value = data[i].data.c;
-            gridVariables[i, 9].Value = data[i].data.hs.ToString();
-            gridVariables[i, 10].Value = data[i].data.ag.ToString();
-            gridVariables[i, 11].Value = data[i].data.bw.ToString();
-        }
-
-        // Update the control's value
-        updTasks.Value = data.Length;
-    }
-
-    #endregion
 
     /// <summary>
     /// Loads an example into the interface
@@ -239,15 +167,81 @@ public partial class frmDataCLMmodel : Form
     public void LoadExample()
     {
         // Loads some data example into the grid
-        DataToGrid(DataExample());
+        DataExample();
+        DataToGrid();
     }
 
     /// <summary>
-    /// Returns the data introduced by the user. Data is up-to-date after user has clicked OK button
+    /// Creates some data to show as an example
     /// </summary>
-    /// <returns>Array of Model NIOSH data</returns>
-    public modelCLM[] getData()
+    private void DataExample()
     {
-        return _sData;
+        _job = new();
+        _job.Tasks = new Task[2];
+
+        _job.Tasks[0] = new Task();
+        _job.Tasks[0].Data.Gender = Gender.Male;
+        _job.Tasks[0].Data.Weight = 5;
+        _job.Tasks[0].Data.h = 50;
+        _job.Tasks[0].Data.v = 70;
+        _job.Tasks[0].Data.d = 55;
+        _job.Tasks[0].Data.f = 2;
+        _job.Tasks[0].Data.td = 1;
+        _job.Tasks[0].Data.t = 45;
+        _job.Tasks[0].Data.c = Coupling.Poor;
+        _job.Tasks[0].Data.hs = 27;
+        _job.Tasks[0].Data.ag = 50;
+        _job.Tasks[0].Data.bw = 70;
+
+        _job.Tasks[1] = new();
+        _job.Tasks[1].Data.Gender = Gender.Female;
+        _job.Tasks[1].Data.Weight = 5;
+        _job.Tasks[1].Data.h = 50;
+        _job.Tasks[1].Data.v = 70;
+        _job.Tasks[1].Data.d = 55;
+        _job.Tasks[1].Data.f = 2;
+        _job.Tasks[1].Data.td = 1;
+        _job.Tasks[1].Data.t = 45;
+        _job.Tasks[1].Data.c = Coupling.Poor;
+        _job.Tasks[1].Data.hs = 27;
+        _job.Tasks[1].Data.ag = 50;
+        _job.Tasks[1].Data.bw = 70;
     }
+
+    /// <summary>
+    /// Shows the data into the grid control
+    /// </summary>
+    private void DataToGrid()
+    {
+        for (Int32 i = 0; i < _job.Tasks.Length; i++)
+        {
+            // Add one column whenever necessary
+            if (i > 0) AddColumn(i);
+
+            // Populate the DataGridView with data
+            gridVariables[i, 0].Value = (int)_job.Tasks[i].Data.Gender;
+            gridVariables[i, 1].Value = _job.Tasks[i].Data.Weight.ToString();
+            gridVariables[i, 2].Value = _job.Tasks[i].Data.h.ToString();
+            gridVariables[i, 3].Value = _job.Tasks[i].Data.v.ToString();
+            gridVariables[i, 4].Value = _job.Tasks[i].Data.d.ToString();
+            gridVariables[i, 5].Value = _job.Tasks[i].Data.f.ToString();
+            gridVariables[i, 6].Value = _job.Tasks[i].Data.td.ToString();
+            gridVariables[i, 7].Value = _job.Tasks[i].Data.t.ToString();
+            gridVariables[i, 8].Value = (int)_job.Tasks[i].Data.c;
+            gridVariables[i, 9].Value = _job.Tasks[i].Data.hs.ToString();
+            gridVariables[i, 10].Value = _job.Tasks[i].Data.ag.ToString();
+            gridVariables[i, 11].Value = _job.Tasks[i].Data.bw.ToString();
+        }
+
+        // Update the control's value
+        updTasks.Value = _job.Tasks.Length;
+    }
+
+    private void DataToGrid(Job job)
+    {
+        _job = job;
+        DataToGrid();
+    }
+
+    #endregion
 }

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Text.Json;
 using System.Windows.Forms;
 
-using ErgoCalc.Models.CLMmodel;
 using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
@@ -26,42 +25,10 @@ public partial class frmCLMmodel : Form, IChildResults
         //rtbShowResult.Size = this.ClientSize;
     }
 
-    public frmCLMmodel(modelCLM[] datos)
+    public frmCLMmodel(Job job)
         : this()
     {
-        _job = new Job();
-        _job.Tasks = new Task[datos.Length];
-        for (int i = 0; i < datos.Length; i++)
-        {
-            _job.Tasks[i] = new();
-            _job.Tasks[i].Data = new();
-            _job.Tasks[i].Data.Gender = datos[i].data.gender == 1 ? Gender.Male : Gender.Female;
-            _job.Tasks[i].Data.Weight = datos[i].data.weight;
-            _job.Tasks[i].Data.h = datos[i].data.h;
-            _job.Tasks[i].Data.v = datos[i].data.v;
-            _job.Tasks[i].Data.d = datos[i].data.d;
-            _job.Tasks[i].Data.f = datos[i].data.f;
-            _job.Tasks[i].Data.td = datos[i].data.td;
-            _job.Tasks[i].Data.t = datos[i].data.t;
-            _job.Tasks[i].Data.c = datos[i].data.c;
-            _job.Tasks[i].Data.hs = datos[i].data.hs;
-            _job.Tasks[i].Data.ag = datos[i].data.ag;
-            _job.Tasks[i].Data.bw = datos[i].data.bw;
-
-            _job.Tasks[i].Factors = new();
-            _job.Tasks[i].Factors.fH = datos[i].factors.fH;
-            _job.Tasks[i].Factors.fD = datos[i].factors.fD;
-            _job.Tasks[i].Factors.fF = datos[i].factors.fF;
-            _job.Tasks[i].Factors.fTD = datos[i].factors.fTD;
-            _job.Tasks[i].Factors.fT = datos[i].factors.fT;
-            _job.Tasks[i].Factors.fC = datos[i].factors.fC;
-            _job.Tasks[i].Factors.fHS = datos[i].factors.fHS;
-            _job.Tasks[i].Factors.fAG = datos[i].factors.fAG;
-            _job.Tasks[i].Factors.fBW = datos[i].factors.fBW;
-
-            _job.Tasks[i].IndexLSI = datos[i].indexLSI;
-        }
-
+        _job = job;
     }
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)

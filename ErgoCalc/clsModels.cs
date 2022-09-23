@@ -30,64 +30,64 @@ namespace ErgoCalc
         // Para acceder a todos los servicios Interop
         using System.Runtime.InteropServices;
 
-        namespace CLMmodel
-        {
-            /* Definición de tipos */
-            [StructLayout(LayoutKind.Sequential)]
-            public struct dataCLM
-            {
-                public int gender;     // 1: masculino    2: femenino
-                public double weight;
-                public double h;
-                public double v;
-                public double d;
-                public double f;
-                public double td;
-                public double t;
-                public int c;
-                public double hs;
-                public double ag;
-                public double bw;
-            };
+        //namespace CLMmodel
+        //{
+        //    /* Definición de tipos */
+        //    [StructLayout(LayoutKind.Sequential)]
+        //    public struct dataCLM
+        //    {
+        //        public int gender;     // 1: masculino    2: femenino
+        //        public double weight;
+        //        public double h;
+        //        public double v;
+        //        public double d;
+        //        public double f;
+        //        public double td;
+        //        public double t;
+        //        public int c;
+        //        public double hs;
+        //        public double ag;
+        //        public double bw;
+        //    };
 
-            [StructLayout(LayoutKind.Sequential)]
-            public struct multipliersCLM
-            {
-                public double fH;
-                public double fV;
-                public double fD;
-                public double fF;
-                public double fTD;
-                public double fT;
-                public double fC;
-                public double fHS;
-                public double fAG;
-                public double fBW;
-            };
+        //    [StructLayout(LayoutKind.Sequential)]
+        //    public struct multipliersCLM
+        //    {
+        //        public double fH;
+        //        public double fV;
+        //        public double fD;
+        //        public double fF;
+        //        public double fTD;
+        //        public double fT;
+        //        public double fC;
+        //        public double fHS;
+        //        public double fAG;
+        //        public double fBW;
+        //    };
 
-            [StructLayout(LayoutKind.Sequential, Pack = 1)]
-            public struct modelCLM
-            {
-                [MarshalAs(UnmanagedType.Struct)]
-                public dataCLM data;
-                [MarshalAs(UnmanagedType.Struct)]
-                public multipliersCLM factors;
-                public double indexLSI;
-            };
+        //    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        //    public struct modelCLM
+        //    {
+        //        [MarshalAs(UnmanagedType.Struct)]
+        //        public dataCLM data;
+        //        [MarshalAs(UnmanagedType.Struct)]
+        //        public multipliersCLM factors;
+        //        public double indexLSI;
+        //    };
 
-            // Definición de la clase que encapsula la llamada a la DLL
-            public class cModelCLM
-            {
-                [DllImport("dlls/clm.dll", EntryPoint = "CalculateLSI")]
-                private static extern void CalculateLSI_DLL([In, Out] modelCLM[] datos, ref int nSize);
+        //    // Definición de la clase que encapsula la llamada a la DLL
+        //    public class cModelCLM
+        //    {
+        //        [DllImport("dlls/clm.dll", EntryPoint = "CalculateLSI")]
+        //        private static extern void CalculateLSI_DLL([In, Out] modelCLM[] datos, ref int nSize);
 
-                public void CalculateLSI(modelCLM[] datos, ref int nSize)
-                {
-                    CalculateLSI_DLL(datos, ref nSize);
-                    return;
-                }            
-            }
-        }
+        //        public void CalculateLSI(modelCLM[] datos, ref int nSize)
+        //        {
+        //            CalculateLSI_DLL(datos, ref nSize);
+        //            return;
+        //        }            
+        //    }
+        //}
 
         namespace MetRate
         {

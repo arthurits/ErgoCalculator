@@ -48,7 +48,7 @@ partial class frmMain
                 if (frmDatosCLM.ShowDialog(this) == DialogResult.OK)
                 {
                     // Mostrar la ventaja de resultados
-                    frmCLMmodel frmCLM = new frmCLMmodel(frmDatosCLM.getData());
+                    frmCLMmodel frmCLM = new frmCLMmodel(frmDatosCLM.GetData);
                     frmCLM.MdiParent = this;
                     if (File.Exists(_strPath + @"\images\logo.ico")) frmCLM.Icon = new Icon(_strPath + @"\images\logo.ico");
                     frmCLM.Show();
