@@ -27,5 +27,10 @@ namespace ErgoCalc
         private void radioButton_CheckedChanged(object sender, EventArgs e)
         {
         }
+
+        public void LoadExample()
+        {
+
+        }
     }
 }

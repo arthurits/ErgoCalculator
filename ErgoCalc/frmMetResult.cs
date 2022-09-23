@@ -34,6 +34,13 @@ namespace ErgoCalc
             _nOpciones=nDatos;
         }
 
+        public frmMetResult(object data)
+            : this() // Call the base constructor
+        {
+            if (data.GetType() == _nOpciones.GetType())
+                _nOpciones = (int[])data;
+        }
+
         private void frmMetResult_Load(object sender, EventArgs e)
         {
             // Definir las variables

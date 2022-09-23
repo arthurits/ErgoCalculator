@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,10 +18,7 @@ namespace ErgoCalc
         private List<ModelLiberty> _data;
         private string strGridHeader = "Task ";
 
-        #region IChildData interface
         public object GetData => _data;
-
-        #endregion IChildData interface
 
         public frmDataLiberty()
         {
@@ -213,6 +211,11 @@ namespace ErgoCalc
         }
 
         #endregion Form events
+
+        public void LoadExample()
+        {
+
+        }
 
         #region Private routines
         /// <summary>

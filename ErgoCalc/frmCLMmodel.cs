@@ -31,6 +31,12 @@ public partial class frmCLMmodel : Form, IChildResults
         _job = job;
     }
 
+    public frmCLMmodel(object data)
+        : this()
+    {
+        if (data.GetType() == typeof(Job)) _job = (Job)data;
+    }
+
     private void frmCLMmodel_Shown(object sender, EventArgs e)
     {
         // Variable definition

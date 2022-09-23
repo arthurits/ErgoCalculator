@@ -163,5 +163,10 @@ namespace ErgoCalc
 
         #endregion Private routines
 
+        public void LoadExample()
+        {
+
+        }
+
     }
 }

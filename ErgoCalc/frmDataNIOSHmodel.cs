@@ -10,11 +10,8 @@ public partial class frmDataNIOSHmodel : Form, IChildData
     private IndexType _index;
     private Job _nioshLifting;
 
-    #region IChildData interface
     public object GetData => _nioshLifting;
-    #endregion IChildData interface
-
-    public Job GetNioshLifting => _nioshLifting;
+    public Job GetJob => _nioshLifting;
 
     // Default constructor
     public frmDataNIOSHmodel()

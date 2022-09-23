@@ -15,143 +15,46 @@ partial class frmMain
     private void mnuMainFrm_File_New_Click(object sender, EventArgs e)
     {
         frmNew frmNew = new frmNew();
-        Form frmData = new Form();
-        Form frmResults = new Form();
         if (frmNew.ShowDialog() == DialogResult.Cancel) return;
 
-        switch (frmNew.Model)
+        Form frmData = frmNew.Model switch
         {
-            case 1: // WR model
+            1 => new frmDataWRmodel(),
+            2 => new frmDataCLMmodel(),
+            3 => new frmDataNIOSHmodel(),
+            4 => new frmDataStrainIndex(),
+            5 => new frmDataOCRAcheck(),
+            6 => new frmMet(),
+            7 => new frmDataTC(),
+            8 => new frmDataLiberty(),
+            _ => new Form()
+        };
 
-                // Llamar al formulario para introducir los datos
-                frmDataWRmodel frmDatosWR = new frmDataWRmodel();
-                if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
+        if (frmData is IChildData)
+        {
+            IChildData frm = frmData as IChildData;
+            frm.LoadExample();
+
+            if (frmData.ShowDialog(this) == DialogResult.OK)
+            {
+                Form frmResults = frmNew.Model switch
                 {
-                    // Mostrar la ventana de resultados
-                    FrmWRmodel frmWR = new FrmWRmodel(frmDatosWR.GetData);
-                    frmWR.MdiParent = this;
-                    if (File.Exists(_strPath + @"\images\logo.ico")) frmWR.Icon = new Icon(_strPath + @"\images\logo.ico");
-                    frmWR.Show();
-
-                    // Cerrar el formulario de entrada de datos
-                    frmDatosWR.Dispose();
-                }
-
-                break;
-
-            case 2: // CLM model
-
-                // Llamar al formulario para introducir los datos y cargar un ejemplo
-                frmDataCLMmodel frmDatosCLM = new frmDataCLMmodel();
-                frmDatosCLM.LoadExample();
-
-                if (frmDatosCLM.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Mostrar la ventaja de resultados
-                    frmCLMmodel frmCLM = new frmCLMmodel(frmDatosCLM.GetData);
-                    frmCLM.MdiParent = this;
-                    if (File.Exists(_strPath + @"\images\logo.ico")) frmCLM.Icon = new Icon(_strPath + @"\images\logo.ico");
-                    frmCLM.Show();
-
-                    // Cerrar el formulario de entrada de datos
-                    frmDatosCLM.Dispose();
-                }
-
-                break;
-
-            case 3: // NIOSH model
-
-                // Llamar al formulario para introducir los datos y cargar un ejemplo
-                frmDataNIOSHmodel frmDatosNIOSH = new frmDataNIOSHmodel();
-                frmDatosNIOSH.LoadExample();
-
-                if (frmDatosNIOSH.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Mostrar la ventana de resultados
-                    frmResultNIOSHmodel frmNIOSH = new frmResultNIOSHmodel(frmDatosNIOSH.GetNioshLifting);
-                    frmNIOSH.MdiParent = this;
-                    if (File.Exists(_strPath + @"\images\logo.ico")) frmNIOSH.Icon = new Icon(_strPath + @"\images\logo.ico");
-                    frmNIOSH.Show();
-
-                    // Cerrar el formulario de entrada de datos
-                    frmDatosNIOSH.Dispose();
-                }
-
-                break;
-
-            case 4: // Revised strain index
-
-                // Llamar al formulario para introducir los datos
-                frmDataStrainIndex frmDataStrain = new frmDataStrainIndex();
-                frmDataStrain.LoadExample();
-
-                if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Mostrar la ventana de resultados
-                    frmResultsStrainIndex frmStrainIndex = new frmResultsStrainIndex(frmDataStrain.Job);
-                    frmStrainIndex.MdiParent = this;
-                    //if (File.Exists(_strPath + @"\images\logo.ico")) frmStrainIndex.Icon = new Icon(_strPath + @"\images\logo.ico");
-                    frmStrainIndex.Show();
-                }
-                // Cerrar el formulario de entrada de datos
-                frmDataStrain.Dispose();
-                break;
-
-            case 5: // OCRA checklist
-                frmData = new frmDataOCRAcheck();
-                frmResults = new frmResultsOCRAcheck(((IChildData)frmData).GetData);
-                break;
-
-            case 6: // Metabolic rate
-
-                // Llamar al formulario para introducir los datos
-                frmMet frmMet = new frmMet();
-                if (frmMet.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Recuperar los datos introducidos por el usuario
-                    Int32[] nDatos = frmMet.getData();
-                    frmMet.Dispose();
-
-
-                    // Mostrar el formulario con los resultados del cálculo
-                    frmMetResult frmResult = new frmMetResult(nDatos);
-                    frmResult.MdiParent = this;
-                    if (File.Exists(_strPath + @"\images\logo.ico")) frmResult.Icon = new Icon(_strPath + @"\images\logo.ico");
-                    frmResult.Show();
-                }
-                break;
-
-            case 7: // Thermal comfort
-                frmData = new frmDataTC();
-                if (frmData.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Mostrar la ventana de resultados
-                    frmResults = new frmResultsTC(((IChildData)frmData).GetData);
-                    frmResults.MdiParent = this;
-                    frmResults.Show();
-                }
-                break;
-            case 8: // Liberty mutual 
-                frmData = new frmDataLiberty();
-                if (frmData.ShowDialog(this) == DialogResult.OK)
-                {
-                    // Mostrar la ventana de resultados
-                    frmResults = new frmResultsLiberty(((IChildData)frmData).GetData);
-                    frmResults.MdiParent = this;
-                    frmResults.Show();
-                }
-                break;
+                    1 => new FrmWRmodel(frm.GetData),
+                    2 => new frmCLMmodel(frm.GetData),
+                    3 => new frmResultNIOSHmodel(frm.GetData),
+                    4 => new frmResultsStrainIndex(frm.GetData),
+                    5 => new frmResultsOCRAcheck(frm.GetData),
+                    6 => new frmMetResult(frm.GetData),
+                    7 => new frmResultsTC(frm.GetData),
+                    8 => new frmResultsLiberty(frm.GetData),
+                    _ => new Form()
+                };
+                frmResults.MdiParent = this;
+                if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+                frmResults.Show();
+            }
+            frmData.Dispose();
         }
-
-
-        //if (frmData.ShowDialog(this) == DialogResult.OK)
-        //{
-        //    frmResults.MdiParent = this;
-        //    frmResults.Show();
-        //}
-
-        frmData.Dispose();
-
     }
 
     private void mnuMainFrm_File_Exit_Click(object sender, EventArgs e)

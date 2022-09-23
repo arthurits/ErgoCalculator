@@ -42,6 +42,12 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         _job = job;
     }
 
+    public frmResultsStrainIndex(object data)
+        : this()
+    {
+        if(data.GetType() == typeof(Job)) _job = (Job)data;
+    }
+
     private void frmResultsStrainIndex_Shown(object sender, EventArgs e)
     {
         //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
@@ -486,7 +492,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
         {
             // Mostrar la ventana de resultados
-            _job = frmDataStrain.Job;
+            _job = (Job)frmDataStrain.GetData;
             //_classDLL = new cModelStrain(_job);
             this.rtbShowResult.Clear();
             frmResultsStrainIndex_Shown(null, EventArgs.Empty);

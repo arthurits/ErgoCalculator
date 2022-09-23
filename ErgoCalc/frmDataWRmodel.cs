@@ -228,7 +228,7 @@ public partial class frmDataWRmodel : Form, IChildData
         return Convert.ToInt32(nSize);
     }
 
-    private void LoadExample()
+    public void LoadExample()
     {
         gridVariables[0, 0].Value = "Example";
         gridVariables[0, 1].Value = 15;
@@ -240,4 +240,5 @@ public partial class frmDataWRmodel : Form, IChildData
     }
 
     #endregion Private routines            
+
 }

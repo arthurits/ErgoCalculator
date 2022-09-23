@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Data;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
 
-public partial class frmDataCLMmodel : Form
+public partial class frmDataCLMmodel : Form, IChildData
 {
-    public Job _job;
-    public Job GetData => _job;
+    private Job _job;
+    public object GetData => _job;
 
     public frmDataCLMmodel()
     {

@@ -36,6 +36,13 @@ public partial class frmResultNIOSHmodel : Form, IChildResults
         _job = Data;
     }
 
+    public frmResultNIOSHmodel(object data)
+        : this()
+    {
+        if (data.GetType()==typeof(Job))
+            _job = (Job)data;
+    }
+
     private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
     {
         ShowResults();
@@ -311,7 +318,7 @@ public partial class frmResultNIOSHmodel : Form, IChildResults
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
-            _job = frm.GetNioshLifting;
+            _job = frm.GetJob;
             ShowResults();
         }
         return;

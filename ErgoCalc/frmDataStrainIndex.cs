@@ -12,17 +12,14 @@ using ErgoCalc.Models.StrainIndex;
 
 namespace ErgoCalc;
 
-public partial class frmDataStrainIndex : Form
+public partial class frmDataStrainIndex : Form, IChildData
 {
-    //private ModelSubTask[] _subtasks;
-    //private int[][] _tasks;
     private Job _job;
     private IndexType _index;
 
-    //public ModelSubTask[] SubTasks { get => _subtasks; }
-    //public int[][] Tasks { get => _tasks;}
-    public Job Job { get => _job; }
-    public IndexType Index { get => _index;}
+    public object GetData => _job;
+    public Job GetJob => _job;
+    public IndexType Index => _index;
 
     // Default constructor
     public frmDataStrainIndex()

@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace ErgoCalc
 {
-    public partial class frmMet : Form
+    public partial class frmMet : Form, IChildData
     {
         // Declare private variables
         private Int32[] _nLevel1 = new Int32[] { -1, -1 };
-
+        public object GetData => _nLevel1;
         public frmMet()
         {
             // VS Designer initialization routine
@@ -313,6 +313,10 @@ namespace ErgoCalc
                 for (Int16 i = 0; i < gridLevel2A.ColumnCount; i++)
                     gridLevel2A.Rows[row].Cells[i] = (DataGridViewComboBoxCell)gridLevel2A.Rows[row - 1].Cells[i].Clone();
             }
+        }
+
+        public void LoadExample()
+        {
         }
 
         #endregion
