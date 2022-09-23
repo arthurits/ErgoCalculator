@@ -132,9 +132,7 @@
     <Compile Update="frmMetResult.Designer.cs">
       <DependentUpon>frmMetResult.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmNew.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmNew.cs" />
     <Compile Update="frmNew.Designer.cs">
       <DependentUpon>frmNew.cs</DependentUpon>
     </Compile>
