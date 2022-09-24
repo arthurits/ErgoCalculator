@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.ThermalComfort;
@@ -18,8 +17,9 @@ namespace ErgoCalc;
 
 public partial class frmResultsTC : Form, IChildResults
 {
-    private List<ModelTC> _data;
+    //private List<ModelTC> _data;
     private CThermalModels _modelTC;
+    private Job _job;
     private string _strPath;
 
     public frmResultsTC()
@@ -40,10 +40,16 @@ public partial class frmResultsTC : Form, IChildResults
         splitContainer1.IsSplitterFixed = true;
     }
 
+    public frmResultsTC(Job job)
+        : this()
+    {
+        _job = job;
+    }
+
     public frmResultsTC(object data)
         :this()
     {
-        _data = (List<ModelTC>)data;
+        if (data.GetType() == typeof(Job)) _job = (Job)data;
     }
 
     private void frmResultsTC_Shown(object sender, EventArgs e)
@@ -55,49 +61,13 @@ public partial class frmResultsTC : Form, IChildResults
 
     private void ShowResults()
     {
-        Boolean error = false;
+        // Variable definition
+        bool error = false;
 
-        _modelTC = new CThermalModels(_data);
-        // Call the DLL function
-        try
-        {
-            //_classDLL.StrainIndex(_classDLL.Parameters, orden, ref nSize);
-            //_classDLL.RSI(_subtasks, orden, ref nSize);
-            _modelTC.ThermalComfort();
-            _data = _modelTC.GetData;
-        }
-        catch (EntryPointNotFoundException)
-        {
-            error = true;
-            MessageBox.Show(
-                "The program calculation kernel's been tampered with.\nThermal Comfort could not be computed.",
-                "Thermal Comfort error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
-        }
-        catch (DllNotFoundException)
-        {
-            error = true;
-            MessageBox.Show(
-                "DLL files are missing. Please\nreinstall the application.",
-                "Thermal Comfort error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
-        }
-        catch (Exception ex)
-        {
-            error = true;
-            MessageBox.Show(
-                "Error in the Thermal Comfort calculation kernel:\n" + ex.ToString(),
-                "Unexpected error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
-        }
-
-        // Call the routine that shows the results
+        error = !ThermalComfort.ComfortPMV(_job);
         if (error == false)
         {
-            rtbShowResult.Text = _modelTC.ToString();
+            rtbShowResult.Text = _job.ToString();
             CreatePlots();
             FormatText();
         }
@@ -140,10 +110,10 @@ public partial class frmResultsTC : Form, IChildResults
         // Psychrometric plot
         var CPsy = new Psychrometrics(UnitSystem.SI);
         int i = 0;
-        foreach (var data in _data)
+        foreach (Task task in _job.Tasks)
         {
-            var result = 1000 * CPsy.GetHumRatioFromRelHum(data.data.TempAir, data.data.RelHumidity / 100, 101325);
-            formsPlot1.Plot.AddPoint(data.data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), size: 7);
+            var result = 1000 * CPsy.GetHumRatioFromRelHum(task.Data.TempAir, task.Data.RelHumidity / 100, 101325);
+            formsPlot1.Plot.AddPoint(task.Data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), size: 7);
             i++;
         }
         var legendA = formsPlot1.Plot.RenderLegend();
@@ -160,7 +130,7 @@ public partial class frmResultsTC : Form, IChildResults
         formsPlot1.Render();
 
         // Heat-loss plot
-        int nSeries = _data.Count;
+        int nSeries = _job.Tasks.Length;
         string[] xsLabels = new string[nSeries];
         double[] xsStacked = new double[nSeries];
         double[] HL_1 = new double[nSeries];
@@ -170,16 +140,16 @@ public partial class frmResultsTC : Form, IChildResults
         double[] HL_5 = new double[nSeries];
         double[] HL_6 = new double[nSeries];
         i = 0;
-        foreach(var data in _data)
+        foreach(Task task in _job.Tasks)
         {
             xsLabels[i] = "Case " + ((char)('A' + i)).ToString();
             xsStacked[i] = i;
-            HL_1[i] = data.factors.HL_Skin;
-            HL_2[i] = HL_1[i] + data.factors.HL_Sweating;
-            HL_3[i] = HL_2[i] + data.factors.HL_Latent;
-            HL_4[i] = HL_3[i] + data.factors.HL_Dry;
-            HL_5[i] = HL_4[i] + data.factors.HL_Radiation;
-            HL_6[i] = HL_5[i] + data.factors.HL_Convection;
+            HL_1[i] = task.Variables.HL_Skin;
+            HL_2[i] = HL_1[i] + task.Variables.HL_Sweating;
+            HL_3[i] = HL_2[i] + task.Variables.HL_Latent;
+            HL_4[i] = HL_3[i] + task.Variables.HL_Dry;
+            HL_5[i] = HL_4[i] + task.Variables.HL_Radiation;
+            HL_6[i] = HL_5[i] + task.Variables.HL_Convection;
             i++;
         }
 
@@ -214,35 +184,36 @@ public partial class frmResultsTC : Form, IChildResults
     {
         writer.WriteStartObject();
         writer.WriteString("Document type", "Thermal comfort model");
-        
-        writer.WritePropertyName("Cases");
+        writer.WriteNumber("Number of tasks", 2);
+
+        writer.WritePropertyName("Tasks");
         writer.WriteStartArray();
 
-        foreach (var data in _data)
+        foreach (Task task in _job.Tasks)
         {
             writer.WriteStartObject();
 
             writer.WritePropertyName("Data");
             writer.WriteStartObject();
-            writer.WriteNumber("Air temperature", data.data.TempAir);
-            writer.WriteNumber("Radiant temperature", data.data.TempRad);
-            writer.WriteNumber("Air velocity", data.data.Velocity);
-            writer.WriteNumber("Relative humidity", data.data.RelHumidity);
-            writer.WriteNumber("Clothing", data.data.Clothing);
-            writer.WriteNumber("Metabolic rate", data.data.MetRate);
-            writer.WriteNumber("External work", data.data.ExternalWork);
+            writer.WriteNumber("Air temperature", task.Data.TempAir);
+            writer.WriteNumber("Radiant temperature", task.Data.TempRad);
+            writer.WriteNumber("Air velocity", task.Data.Velocity);
+            writer.WriteNumber("Relative humidity", task.Data.RelHumidity);
+            writer.WriteNumber("Clothing", task.Data.Clothing);
+            writer.WriteNumber("Metabolic rate", task.Data.MetRate);
+            writer.WriteNumber("External work", task.Data.ExternalWork);
             writer.WriteEndObject();
 
-            writer.WritePropertyName("Results");
+            writer.WritePropertyName("Variables");
             writer.WriteStartObject();
-            writer.WriteNumber("PMV", data.factors.PMV);
-            writer.WriteNumber("PPD", data.factors.PPD);
-            writer.WriteNumber("Heat loss - Skin", data.factors.HL_Skin);
-            writer.WriteNumber("Heat loss - Sweating", data.factors.HL_Sweating);
-            writer.WriteNumber("Heat loss - Latent", data.factors.HL_Latent);
-            writer.WriteNumber("Heat loss - Dry", data.factors.HL_Dry);
-            writer.WriteNumber("Heat loss - Radiation", data.factors.HL_Radiation);
-            writer.WriteNumber("Heat loss - Convection", data.factors.HL_Convection);
+            writer.WriteNumber("PMV", task.Variables.PMV);
+            writer.WriteNumber("PPD", task.Variables.PPD);
+            writer.WriteNumber("Heat loss - Skin", task.Variables.HL_Skin);
+            writer.WriteNumber("Heat loss - Sweating", task.Variables.HL_Sweating);
+            writer.WriteNumber("Heat loss - Latent", task.Variables.HL_Latent);
+            writer.WriteNumber("Heat loss - Dry", task.Variables.HL_Dry);
+            writer.WriteNumber("Heat loss - Radiation", task.Variables.HL_Radiation);
+            writer.WriteNumber("Heat loss - Convection", task.Variables.HL_Convection);
             writer.WriteEndObject();
 
             writer.WriteEndObject();
@@ -268,7 +239,7 @@ public partial class frmResultsTC : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmResultsTC frmResults = new frmResultsTC(_data);
+        frmResultsTC frmResults = new frmResultsTC(_job);
         {
             MdiParent = this.MdiParent;
         };
@@ -278,11 +249,11 @@ public partial class frmResultsTC : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new frmDataTC(_data);
+        using var frm = new frmDataTC(_job);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
-            _data = (List<ModelTC>)frm.GetData;
+            _job = (Job)frm.GetData;
             ShowResults();
         }
     }
@@ -326,33 +297,38 @@ public partial class frmResultsTC : Form, IChildResults
     public bool OpenFile(JsonDocument document)
     {
         bool result = true;
-        ModelTC data = new ModelTC();
-        _data = new List<ModelTC>();
+        Job job = new();
         JsonElement root = document.RootElement;
-
+        job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
+        job.Tasks = new Task[job.NumberTasks];
+        
+        int i = 0;
         try
         {
-            foreach (JsonElement curve in root.GetProperty("Cases").EnumerateArray())
+            foreach (JsonElement curve in root.GetProperty("Tasks").EnumerateArray())
             {
-                data.data.TempAir = curve.GetProperty("Data").GetProperty("Air temperature").GetDouble();
-                data.data.TempRad = curve.GetProperty("Data").GetProperty("Radiant temperature").GetDouble();
-                data.data.Velocity = curve.GetProperty("Data").GetProperty("Air velocity").GetDouble();
-                data.data.RelHumidity = curve.GetProperty("Data").GetProperty("Relative humidity").GetDouble();
-                data.data.Clothing = curve.GetProperty("Data").GetProperty("Clothing").GetDouble();
-                data.data.MetRate = curve.GetProperty("Data").GetProperty("Metabolic rate").GetDouble();
-                data.data.ExternalWork = curve.GetProperty("Data").GetProperty("External work").GetDouble();
+                job.Tasks[i] = new();
+                job.Tasks[i].Data.TempAir = curve.GetProperty("Data").GetProperty("Air temperature").GetDouble();
+                job.Tasks[i].Data.TempRad = curve.GetProperty("Data").GetProperty("Radiant temperature").GetDouble();
+                job.Tasks[i].Data.Velocity = curve.GetProperty("Data").GetProperty("Air velocity").GetDouble();
+                job.Tasks[i].Data.RelHumidity = curve.GetProperty("Data").GetProperty("Relative humidity").GetDouble();
+                job.Tasks[i].Data.Clothing = curve.GetProperty("Data").GetProperty("Clothing").GetDouble();
+                job.Tasks[i].Data.MetRate = curve.GetProperty("Data").GetProperty("Metabolic rate").GetDouble();
+                job.Tasks[i].Data.ExternalWork = curve.GetProperty("Data").GetProperty("External work").GetDouble();
 
-                data.factors.PMV = curve.GetProperty("Results").GetProperty("PMV").GetDouble();
-                data.factors.PPD = curve.GetProperty("Results").GetProperty("PPD").GetDouble();
-                data.factors.HL_Skin = curve.GetProperty("Results").GetProperty("Heat loss - Skin").GetDouble();
-                data.factors.HL_Sweating = curve.GetProperty("Results").GetProperty("Heat loss - Sweating").GetDouble();
-                data.factors.HL_Latent = curve.GetProperty("Results").GetProperty("Heat loss - Latent").GetDouble();
-                data.factors.HL_Dry = curve.GetProperty("Results").GetProperty("Heat loss - Dry").GetDouble();
-                data.factors.HL_Radiation = curve.GetProperty("Results").GetProperty("Heat loss - Radiation").GetDouble();
-                data.factors.HL_Convection = curve.GetProperty("Results").GetProperty("Heat loss - Convection").GetDouble();
-
-                _data.Add(data);
+                job.Tasks[i].Variables.PMV = curve.GetProperty("Variables").GetProperty("PMV").GetDouble();
+                job.Tasks[i].Variables.PPD = curve.GetProperty("Variables").GetProperty("PPD").GetDouble();
+                job.Tasks[i].Variables.HL_Skin = curve.GetProperty("Variables").GetProperty("Heat loss - Skin").GetDouble();
+                job.Tasks[i].Variables.HL_Sweating = curve.GetProperty("Variables").GetProperty("Heat loss - Sweating").GetDouble();
+                job.Tasks[i].Variables.HL_Latent = curve.GetProperty("Variables").GetProperty("Heat loss - Latent").GetDouble();
+                job.Tasks[i].Variables.HL_Dry = curve.GetProperty("Variables").GetProperty("Heat loss - Dry").GetDouble();
+                job.Tasks[i].Variables.HL_Radiation = curve.GetProperty("Variables").GetProperty("Heat loss - Radiation").GetDouble();
+                job.Tasks[i].Variables.HL_Convection = curve.GetProperty("Variables").GetProperty("Heat loss - Convection").GetDouble();
+                
+                i++;
             }
+
+            _job = job;
         }
         catch (Exception)
         {

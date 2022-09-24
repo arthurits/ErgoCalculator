@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.ThermalComfort;
@@ -14,13 +13,11 @@ namespace ErgoCalc;
 
 public partial class frmDataTC : Form, IChildData
 {
-    private List<ModelTC> _data;
+    //private List<ModelTC> _data;
+    private Job _job;
 
-    #region IChildData interface
-    public object GetData => _data;
-
-    #endregion IChildData interface
-
+    public object GetData => _job;
+    public Job GetJob => _job;
 
     public frmDataTC()
     {
@@ -31,8 +28,8 @@ public partial class frmDataTC : Form, IChildData
 
         // Create the header rows
         gridVariables.RowCount = 7;
-        gridVariables.Rows[0].HeaderCell.Value = "Air temperature (C)";
-        gridVariables.Rows[1].HeaderCell.Value = "Radiant temperature (C)";
+        gridVariables.Rows[0].HeaderCell.Value = "Air temperature (°C)";
+        gridVariables.Rows[1].HeaderCell.Value = "Radiant temperature (°C)";
         gridVariables.Rows[2].HeaderCell.Value = "Air velocity (m/s)";
         gridVariables.Rows[3].HeaderCell.Value = "Relative humidity (%)";
         gridVariables.Rows[4].HeaderCell.Value = "Clothing insulation (clo)";
@@ -40,53 +37,39 @@ public partial class frmDataTC : Form, IChildData
         gridVariables.Rows[6].HeaderCell.Value = "External work (mets)";
         gridVariables[0, 6].Value = 0;
 
-        // Initialize private variable
-        _data = new List<ModelTC>();
     }
 
-    public frmDataTC(List<ModelTC> data)
-        :this()
+    public frmDataTC(Job job)
+        : this()
     {
-        //DataToGrid(data);
-
-        int nDataNumber = data.Count;
-        
-        // Update the control which in turn updates the grid's column number
-        updTasks.Value = nDataNumber;
-        
-        // Shows the data into the grid control
-        for (var j = 0; j < nDataNumber; j++)
-        {
-            //Column 0 is already created in the constructor;
-            if (j > 0) AddColumn();
-
-            // Populate the DataGridView with data
-            gridVariables[j, 0].Value = data[j].data.TempAir.ToString();
-            gridVariables[j, 1].Value = data[j].data.TempRad.ToString();
-            gridVariables[j, 2].Value = data[j].data.Velocity.ToString();
-            gridVariables[j, 3].Value = data[j].data.RelHumidity.ToString();
-            gridVariables[j, 4].Value = data[j].data.Clothing.ToString();
-            gridVariables[j, 5].Value = data[j].data.MetRate.ToString();
-            gridVariables[j, 6].Value = data[j].data.ExternalWork.ToString();
-        }
+        _job = job;
+        DataToGrid();
     }
 
     #region Form events
     private void btnOK_Click(object sender, EventArgs e)
     {
-        ModelTC item = new ModelTC();
+        // The form does not return unless all fields are validated. This avoids closing the dialog
+        this.DialogResult = DialogResult.None;
 
-        for (int i = 0; i < gridVariables.ColumnCount; i++)
+        _job = new();
+        
+        // Save the values entered
+        _job.Tasks = new Task[Convert.ToInt32(updSubtasks.Value)];
+        for (int i = 0; i < _job.Tasks.Length; i++)
         {
-            item.data.TempAir = Convert.ToDouble(gridVariables[i, 0].Value);
-            item.data.TempRad = Convert.ToDouble(gridVariables[i, 1].Value);
-            item.data.Velocity = Convert.ToDouble(gridVariables[i, 2].Value);
-            item.data.RelHumidity = Convert.ToDouble(gridVariables[i, 3].Value);
-            item.data.Clothing = Convert.ToDouble(gridVariables[i, 4].Value);
-            item.data.MetRate = Convert.ToDouble(gridVariables[i, 5].Value);
-            item.data.ExternalWork = Convert.ToDouble(gridVariables[i, 6].Value);
-            _data.Add(item);
+            _job.Tasks[i] = new Task();
+            _job.Tasks[i].Data.TempAir = Convert.ToDouble(gridVariables[i, 0].Value);
+            _job.Tasks[i].Data.TempRad = Convert.ToDouble(gridVariables[i, 1].Value);
+            _job.Tasks[i].Data.Velocity = Convert.ToDouble(gridVariables[i, 2].Value);
+            _job.Tasks[i].Data.RelHumidity = Convert.ToDouble(gridVariables[i, 3].Value);
+            _job.Tasks[i].Data.Clothing = Convert.ToDouble(gridVariables[i, 4].Value);
+            _job.Tasks[i].Data.MetRate = Convert.ToDouble(gridVariables[i, 5].Value);
+            _job.Tasks[i].Data.ExternalWork = Convert.ToDouble(gridVariables[i, 6].Value);
         }
+
+        // Return OK thus closing the dialog
+        this.DialogResult = DialogResult.OK;
     }
 
     private void updSubtasks_ValueChanged(object sender, EventArgs e)
@@ -139,25 +122,23 @@ public partial class frmDataTC : Form, IChildData
     /// <summary>
     /// Shows the data into the grid control
     /// </summary>
-    private void DataToGrid(List<ModelTC> data)
+    private void DataToGrid()
     {
-        int nDataNumber = data.Count;
-        
-        updTasks.Value = nDataNumber;
+        updSubtasks.Value = _job.Tasks.Length;
 
-        for (var j = 0; j < nDataNumber; j++)
+        for (int i = 0; i < _job.Tasks.Length; i++)
         {
             //Column 0 is already created in the constructor;
-            if (j > 0) AddColumn();
+            //if (i > 0) AddColumn();
 
             // Populate the DataGridView with data
-            gridVariables[j, 0].Value = data[j].data.TempAir.ToString();
-            gridVariables[j, 1].Value = data[j].data.TempRad.ToString();
-            gridVariables[j, 2].Value = data[j].data.Velocity.ToString();
-            gridVariables[j, 3].Value = data[j].data.RelHumidity.ToString();
-            gridVariables[j, 4].Value = data[j].data.Clothing.ToString();
-            gridVariables[j, 5].Value = data[j].data.MetRate.ToString();
-            gridVariables[j, 6].Value = data[j].data.ExternalWork.ToString();
+            gridVariables[i, 0].Value = _job.Tasks[i].Data.TempAir.ToString();
+            gridVariables[i, 1].Value = _job.Tasks[i].Data.TempRad.ToString();
+            gridVariables[i, 2].Value = _job.Tasks[i].Data.Velocity.ToString();
+            gridVariables[i, 3].Value = _job.Tasks[i].Data.RelHumidity.ToString();
+            gridVariables[i, 4].Value = _job.Tasks[i].Data.Clothing.ToString();
+            gridVariables[i, 5].Value = _job.Tasks[i].Data.MetRate.ToString();
+            gridVariables[i, 6].Value = _job.Tasks[i].Data.ExternalWork.ToString();
         }
     }
 
@@ -165,7 +146,28 @@ public partial class frmDataTC : Form, IChildData
 
     public void LoadExample()
     {
+        _job = new Job();
+        _job.NumberTasks = 2;
+        _job.Tasks = new Task[_job.NumberTasks];
 
+        _job.Tasks[0] = new Task();
+        _job.Tasks[0].Data.TempAir = 25;
+        _job.Tasks[0].Data.TempRad = 25;
+        _job.Tasks[0].Data.Velocity = 0.1;
+        _job.Tasks[0].Data.RelHumidity = 50;
+        _job.Tasks[0].Data.Clothing = 0.61;
+        _job.Tasks[0].Data.MetRate = 1;
+        _job.Tasks[0].Data.ExternalWork = 0;
+
+        _job.Tasks[1] = new Task();
+        _job.Tasks[1].Data.TempAir = 26;
+        _job.Tasks[1].Data.TempRad = 26;
+        _job.Tasks[1].Data.Velocity = 0.1;
+        _job.Tasks[1].Data.RelHumidity = 50;
+        _job.Tasks[1].Data.Clothing = 0.8;
+        _job.Tasks[1].Data.MetRate = 1;
+        _job.Tasks[1].Data.ExternalWork = 0;
+
+        DataToGrid();
     }
-
 }

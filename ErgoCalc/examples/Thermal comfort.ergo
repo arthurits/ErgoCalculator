@@ -1,6 +1,7 @@
 {
   "Document type": "Thermal comfort model",
-  "Cases": [
+  "Number of tasks": 2,
+  "Tasks": [
     {
       "Data": {
         "Air temperature": 25,
@@ -11,7 +12,7 @@
         "Metabolic rate": 1,
         "External work": 0
       },
-      "Results": {
+      "Variables": {
         "PMV": -0.15619094650249288,
         "PPD": 5.5055471709707575,
         "Heat loss - Skin": 11.415708085459748,
@@ -32,7 +33,7 @@
         "Metabolic rate": 1,
         "External work": 0
       },
-      "Results": {
+      "Variables": {
         "PMV": 0.49515921480881825,
         "PPD": 10.123549734979676,
         "Heat loss - Skin": 11.120153760017356,

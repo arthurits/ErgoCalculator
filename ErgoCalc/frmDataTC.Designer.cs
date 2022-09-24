@@ -107,6 +107,7 @@ namespace ErgoCalc
             this.groupIndex.Controls.Add(this.radCUSI);
             this.groupIndex.Controls.Add(this.radCOSI);
             this.groupIndex.Controls.Add(this.radRSI);
+            this.groupIndex.Enabled = false;
             this.groupIndex.Location = new System.Drawing.Point(6, 316);
             this.groupIndex.Name = "groupIndex";
             this.groupIndex.Size = new System.Drawing.Size(278, 61);
@@ -221,7 +222,6 @@ namespace ErgoCalc
             // 
             this.listViewTasks.AllowDrop = true;
             this.listViewTasks.FullRowSelect = true;
-            this.listViewTasks.HideSelection = false;
             this.listViewTasks.Location = new System.Drawing.Point(6, 42);
             this.listViewTasks.Name = "listViewTasks";
             this.listViewTasks.Size = new System.Drawing.Size(725, 377);
