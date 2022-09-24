@@ -123,26 +123,16 @@ partial class frmMain
             using JsonDocument document = JsonDocument.Parse(jsonString, options);
             var strType = document.RootElement.TryGetProperty("Document type", out JsonElement docuValue) ? docuValue.ToString() : "Error";
 
-            Form frm = default;
-
-            switch (strType)
+            Form frm = strType switch
             {
-                case "Work-Rest model":
-                    frm = new FrmWRmodel() { MdiParent = this };
-                    break;
-                case "NIOSH lifting equation":
-                    frm = new frmResultNIOSHmodel() { MdiParent = this };
-                    break;
-                case "Strain index":
-                    frm = new frmResultsStrainIndex() { MdiParent = this };
-                    break;
-                case "Thermal comfort model":
-                    frm = new frmResultsTC() { MdiParent = this };
-                    break;
-                case "LM-MMH model":
-                    frm = new frmResultsLiberty() { MdiParent = this };
-                    break;
-            }
+                "Work-Rest model" => new FrmWRmodel(),
+                "NIOSH lifting equation" => new frmResultNIOSHmodel(),
+                "Strain index" => new frmResultsStrainIndex(),
+                "Thermal comfort model" => new frmResultsTC(),
+                "LM-MMH model" => new frmResultsLiberty(),
+                _ => default
+            };
+            frm.MdiParent = this;
 
             if (frm != default)
             {
