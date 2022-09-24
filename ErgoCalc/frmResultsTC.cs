@@ -17,8 +17,6 @@ namespace ErgoCalc;
 
 public partial class frmResultsTC : Form, IChildResults
 {
-    //private List<ModelTC> _data;
-    private CThermalModels _modelTC;
     private Job _job;
     private string _strPath;
 
@@ -29,9 +27,6 @@ public partial class frmResultsTC : Form, IChildResults
 
         InitializeComponent();
         InitializePlot();
-        
-        // Initialize private variables
-        _modelTC = new CThermalModels();
 
         propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
         splitContainer1.Panel1Collapsed = false;
