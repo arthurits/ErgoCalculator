@@ -123,4 +123,107 @@ public class Job
 
 public static class ThermalComfort
 {
+    /// <summary>
+    /// https://github.com/CenterForTheBuiltEnvironment/comfort_tool/blob/master/static/js/comfortmodels.js
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public static bool ComfortPMV(Job job)
+    {
+        bool result = true;
+        foreach (Task task in job.Tasks)
+        {
+            if (SingleComfortPMV(task) == false)
+            {
+                result = false;
+                break;
+            }
+        }
+        
+        return result;
+    }
+
+    private static bool SingleComfortPMV(Task task)
+    {
+        // Variable definition
+        double pa = task.Data.RelHumidity * 10 * Math.Exp(16.6536 - 4030.183 / (task.Data.TempAir + 235));
+
+        double dInsulation = 0.155 * task.Data.Clothing;   // Thermal insulation of the clothing in M2K/W
+        double dMetRate = task.Data.MetRate * 58.15;       // Metabolic rate in W/M2
+        double dExtWork = task.Data.ExternalWork * 58.15;  // External work in W/M2
+        double dNeatHeat = dMetRate - dExtWork;             // Internal heat production in the human body
+        double fcl;
+        if (dInsulation <= 0.078)
+            fcl = 1 + 1.29 * dInsulation;
+        else
+            fcl = 1.05 + 0.645 * dInsulation;
+
+
+        // Heat transf. coeff. by forced convection
+        double hcf = 12.1 * Math.Sqrt(task.Data.Velocity);
+        double taa = task.Data.TempAir + 273;
+        double tra = task.Data.TempRad + 273;
+        // we have verified that using the equation below or this tcla = taa + (35.5 - ta) / (3.5 * (6.45 * icl + .1)) does not affect the PMV value
+        double tcla = taa + (35.5 - task.Data.TempAir) / (3.5 * dInsulation + 0.1);
+
+        // Intermediate variables
+        double p1 = dInsulation * fcl;
+        double p2 = p1 * 3.96;
+        double p3 = p1 * 100;
+        double p4 = p1 * taa;
+        double p5 = 308.7 - 0.028 * dNeatHeat + p2 * Math.Pow(tra / 100, 4);
+        double xn = tcla / 100;
+        double xf = tcla / 50;
+        double eps = 0.00015;
+
+        // Iteration
+        double hcn = 0;
+        double hc = 0;
+        int n = 0;
+        while (Math.Abs(xn - xf) > eps)
+        {
+            xf = (xf + xn) / 2;
+            hcn = 2.38 * Math.Pow(Math.Abs(100.0 * xf - taa), 0.25);
+            if (hcf > hcn) hc = hcf;
+            else hc = hcn;
+            xn = (p5 + p4 * hc - p2 * Math.Pow(xf, 4)) / (100 + p3 * hc);
+            ++n;
+            if (n > 150)
+            {
+                //alert("Max iterations exceeded");
+                return false;
+            }
+        }
+
+        double tcl = 100 * xn - 273;
+
+
+        // heat loss diff. through skin
+        task.Variables.HL_Skin = 3.05 * 0.001 * (5733 - 6.99 * dNeatHeat - pa);
+
+        // heat loss by sweating
+        if (dNeatHeat > 58.15)
+            task.Variables.HL_Sweating = 0.42 * (dNeatHeat - 58.15);
+        else
+            task.Variables.HL_Sweating = 0;
+
+        // latent respiration heat loss
+        task.Variables.HL_Latent = 1.7 * 0.00001 * dMetRate * (5867 - pa);
+
+        // dry respiration heat loss
+        task.Variables.HL_Dry = 0.0014 * dMetRate * (34 - task.Data.TempAir);
+
+        // heat loss by radiation
+        task.Variables.HL_Radiation = 3.96 * fcl * (Math.Pow(xn, 4) - Math.Pow(tra / 100, 4));
+
+        // heat loss by convection
+        task.Variables.HL_Convection = fcl * hc * (tcl - task.Data.TempAir);
+
+        // PMV and PPD indexes
+        task.Variables.PMV = 0.303 * Math.Exp(-0.036 * dMetRate) + 0.028;
+        task.Variables.PMV *= (dNeatHeat - task.Variables.HL_Skin - task.Variables.HL_Sweating - task.Variables.HL_Latent - task.Variables.HL_Dry - task.Variables.HL_Radiation - task.Variables.HL_Convection);
+        task.Variables.PPD = 100.0 - 95.0 * Math.Exp(-0.03353 * Math.Pow(task.Variables.PMV, 4.0) - 0.2179 * Math.Pow(task.Variables.PMV, 2.0));
+
+        return true;
+    }
 }
