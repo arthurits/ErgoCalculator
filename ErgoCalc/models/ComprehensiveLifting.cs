@@ -1,4 +1,6 @@
 using System;
+using System.Drawing;
+using System.IO;
 
 namespace ErgoCalc.Models.CLM;
 
@@ -14,7 +16,6 @@ public enum Coupling
     Poor = 1,
     Good = 2
 }
-
 
 public class Data
 {
@@ -46,11 +47,12 @@ public class Multipliers
     public double fBW { get; set; } = 0;
 };
 
-
 public class Task
 {
     public Data Data { get; set; } = new();
     public Multipliers Factors { get; set; } = new();
+    public double BaseWeight { get; set; } = 0;
+    public double Percentage { get; set; } = 0;
     public double IndexLSI { get; set; } = 0;
 
     public override string ToString()
@@ -58,7 +60,6 @@ public class Task
         return string.Empty;
     }
 };
-
 
 public class Job
 {
@@ -68,11 +69,83 @@ public class Job
     {
         string strTasks = string.Empty;
 
-        foreach (Task task in Tasks)
-            strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
+        //foreach (Task task in Tasks)
+        //    strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
 
-        return strTasks;
+        string[] strLineD = new string[13];
+        string[] strLineR = new string[14];
 
+        // Data array
+        strLineD[0] = string.Concat("Description", "\t\t\t");
+        strLineD[1] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t");
+        strLineD[2] = string.Concat(System.Environment.NewLine, "Weight lifted (kg)", "\t");
+        strLineD[3] = string.Concat(System.Environment.NewLine, "Horizontal distance (cm)", "\t");
+        strLineD[4] = string.Concat(System.Environment.NewLine, "Vertical distance (cm)", "\t");
+        strLineD[5] = string.Concat(System.Environment.NewLine, "Vertical travel distance (cm)");
+        strLineD[6] = string.Concat(System.Environment.NewLine, "Lifting frequency (times/min)");
+        strLineD[7] = string.Concat(System.Environment.NewLine, "Task duration (hours)", "\t");
+        strLineD[8] = string.Concat(System.Environment.NewLine, "Twisting angle (°)", "\t");
+        strLineD[9] = string.Concat(System.Environment.NewLine, "Coupling", "\t\t");
+        strLineD[10] = string.Concat(System.Environment.NewLine, "WBGT temperature (°C)", "\t");
+        strLineD[11] = string.Concat(System.Environment.NewLine, "Age (years)", "\t\t");
+        strLineD[12] = string.Concat(System.Environment.NewLine, "Body weight (kg)", "\t");
+
+        // Results array
+        strLineR[0] = string.Concat("Description", "\t\t\t");
+        strLineR[1] = string.Concat(System.Environment.NewLine, "Horizontal multiplier", "\t");
+        strLineR[2] = string.Concat(System.Environment.NewLine, "Vertical multiplier", "\t");
+        strLineR[3] = string.Concat(System.Environment.NewLine, "Distance multiplier", "\t");
+        strLineR[4] = string.Concat(System.Environment.NewLine, "Frequency multiplier", "\t");
+        strLineR[5] = string.Concat(System.Environment.NewLine, "Task duration multiplier", "\t");
+        strLineR[6] = string.Concat(System.Environment.NewLine, "Twisting multiplier", "\t");
+        strLineR[7] = string.Concat(System.Environment.NewLine, "Coupling multiplier", "\t");
+        strLineR[8] = string.Concat(System.Environment.NewLine, "WBGT multiplier", "\t");
+        strLineR[9] = string.Concat(System.Environment.NewLine, "Age multiplier:\t\t");
+        strLineR[10] = string.Concat(System.Environment.NewLine, "Body weight multiplier", "\t");
+        strLineR[11] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Base weight", "\t\t");
+        strLineR[12] = string.Concat(System.Environment.NewLine, "Population percentage", "\t");
+        strLineR[13] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The LSI index is", "\t");
+        
+        for (int i = 0; i < Tasks.Length; i++)
+        {
+            strLineD[0] += "\t" + "Task " + ((char)('A' + i)).ToString();
+            strLineD[1] += "\t\t" + Tasks[i].Data.Gender.ToString();
+            strLineD[2] += "\t\t" + Tasks[i].Data.Weight.ToString();
+            strLineD[3] += "\t\t" + Tasks[i].Data.h.ToString();
+            strLineD[4] += "\t\t" + Tasks[i].Data.v.ToString();
+            strLineD[5] += "\t\t" + Tasks[i].Data.d.ToString();
+            strLineD[6] += "\t\t" + Tasks[i].Data.f.ToString();
+            strLineD[7] += "\t\t" + Tasks[i].Data.td.ToString();
+            strLineD[8] += "\t\t" + Tasks[i].Data.t.ToString();
+            strLineD[9] += "\t\t" + Tasks[i].Data.c.ToString();
+            strLineD[10] += "\t\t" + Tasks[i].Data.hs.ToString();
+            strLineD[11] += "\t\t" + Tasks[i].Data.ag.ToString();
+            strLineD[12] += "\t\t" + Tasks[i].Data.bw.ToString();
+
+            strLineR[0] += "\t" + "Task " + ((char)('A' + i)).ToString();
+            strLineR[1] += "\t\t" + Tasks[i].Factors.fH.ToString("0.####");
+            strLineR[2] += "\t\t" + Tasks[i].Factors.fV.ToString("0.####");
+            strLineR[3] += "\t\t" + Tasks[i].Factors.fD.ToString("0.####");
+            strLineR[4] += "\t\t" + Tasks[i].Factors.fF.ToString("0.####");
+            strLineR[5] += "\t\t" + Tasks[i].Factors.fTD.ToString("0.####");
+            strLineR[6] += "\t\t" + Tasks[i].Factors.fT.ToString("0.####");
+            strLineR[7] += "\t\t" + Tasks[i].Factors.fC.ToString("0.####");
+            strLineR[8] += "\t\t" + Tasks[i].Factors.fHS.ToString("0.####");
+            strLineR[9] += "\t\t" + Tasks[i].Factors.fAG.ToString("0.####");
+            strLineR[10] += "\t\t" + Tasks[i].Factors.fBW.ToString("0.####");
+            strLineR[11] += "\t\t" + Tasks[i].BaseWeight.ToString("0.####");
+            strLineR[12] += "\t\t" + Tasks[i].Percentage.ToString("0.####");
+            strLineR[13] += "\t\t" + Tasks[i].IndexLSI.ToString("0.####");
+        }
+
+        return string.Concat("The LSI index from the following data:",
+                            System.Environment.NewLine,
+                            System.Environment.NewLine,
+                            string.Concat(strLineD),
+                            System.Environment.NewLine,
+                            System.Environment.NewLine,
+                            string.Concat(strLineR),
+                            System.Environment.NewLine);
     }
 }
 
@@ -103,10 +176,12 @@ public static class ComprehensiveLifting
                 model[i].Factors.fAG = FactorAG(model[i].Data.ag, model[i].Data.Gender);
                 model[i].Factors.fBW = FactorBW(model[i].Data.bw, model[i].Data.Gender);
 
-                model[i].IndexLSI = LSIindex(model[i].Data.Gender, model[i].Data.Weight, model[i].Factors);
+                (model[i].BaseWeight, model[i].Percentage, model[i].IndexLSI) = LSIindex(model[i].Data.Gender, model[i].Data.Weight, model[i].Factors);
             }
             else
             {
+                model[i].BaseWeight = double.NaN;
+                model[i].Percentage = double.NaN;
                 model[i].IndexLSI = double.NaN;
             }
         }
@@ -381,7 +456,7 @@ public static class ComprehensiveLifting
     /// <param name="peso"></param>
     /// <param name="factores"></param>
     /// <returns>LSI index</returns>
-    private static double LSIindex(Gender gender, double peso, Multipliers factores)
+    private static (double weight, double percentage, double index) LSIindex(Gender gender, double peso, Multipliers factores)
     {
         double pesoBase;
         double multiplicacion;
@@ -401,8 +476,12 @@ public static class ComprehensiveLifting
             factores.fAG *
             factores.fBW;
 
-        if (multiplicacion == 0)    // División entre 0
-            indice = 0;
+        if (multiplicacion == 0)    // Zero division
+        {
+            pesoBase = double.NaN;
+            porcentaje = double.NaN;
+            indice = double.NaN;
+        }
         else
         {
             pesoBase = peso / multiplicacion;
@@ -410,7 +489,7 @@ public static class ComprehensiveLifting
             indice = 10 - porcentaje / 10;
         }
 
-        return indice;
+        return (pesoBase, porcentaje, indice);
     }
 
 
