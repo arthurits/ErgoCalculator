@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.ThermalComfort;
 using PsychroLib;
-using ScottPlot;
 
 namespace ErgoCalc;
 
@@ -54,12 +50,18 @@ public partial class frmResultsTC : Form, IChildResults
 
     #region Private routines
 
-    private void ShowResults()
+    /// <summary>
+    /// Computes the PMV and PPD indexes and shows the results in the RichTextBox control
+    /// </summary>
+    /// <param name="Compute">False if the index is already computed, true otherwise</param>
+    private void ShowResults(bool Compute = true)
     {
         // Variable definition
         bool error = false;
 
-        error = !ThermalComfort.ComfortPMV(_job);
+        if (Compute)
+            error = !ThermalComfort.ComfortPMV(_job);
+
         if (error == false)
         {
             rtbShowResult.Text = _job.ToString();
@@ -332,9 +334,7 @@ public partial class frmResultsTC : Form, IChildResults
 
         if (result)
         {
-            //CalcularCurva();
-            //PlotCurves();
-            //_chartOptions.NúmeroCurva = chart.plt.GetPlottables().Count - 1;
+            ShowResults(false);
         }
 
         return result;

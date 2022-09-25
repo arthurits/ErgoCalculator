@@ -94,7 +94,7 @@ public partial class frmDataCLMmodel : Form, IChildData
         return;
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void Accept_Click(object sender, EventArgs e)
     {
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
@@ -125,7 +125,7 @@ public partial class frmDataCLMmodel : Form, IChildData
         this.DialogResult = DialogResult.OK;
     }
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void Cancel_Click(object sender, EventArgs e)
     {
         // Return empty array
         _job = new();

@@ -243,7 +243,7 @@ public partial class frmCLMmodel : Form, IChildResults
             // Mostrar la ventana de resultados
             _job = (Job)frmData.GetData;
             this.rtbShowResult.Clear();
-            frmCLMmodel_Shown(null, EventArgs.Empty);
+            ShowResults();
         }
         // Cerrar el formulario de entrada de datos
         frmData.Dispose();

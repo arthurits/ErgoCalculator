@@ -99,7 +99,7 @@
             this.btnOK.TabIndex = 3;
             this.btnOK.Text = "&Accept";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.Accept_Click);
             // 
             // btnCancel
             // 
@@ -111,7 +111,7 @@
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // chkComposite
             // 
