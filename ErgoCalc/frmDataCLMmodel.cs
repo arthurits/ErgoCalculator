@@ -131,6 +131,13 @@ public partial class frmDataCLMmodel : Form, IChildData
         _job = new();
     }
 
+    private void Example_Click(object sender, EventArgs e)
+    {
+        // Loads some data example into the grid
+        DataExample();
+        DataToGrid();
+    }
+
     #region Private routines
     /// <summary>
     /// Adds a column to the DataGrid View and formates it
@@ -168,9 +175,6 @@ public partial class frmDataCLMmodel : Form, IChildData
     /// </summary>
     public void LoadExample()
     {
-        // Loads some data example into the grid
-        DataExample();
-        DataToGrid();
     }
 
     /// <summary>
@@ -246,4 +250,5 @@ public partial class frmDataCLMmodel : Form, IChildData
     }
 
     #endregion
+
 }
