@@ -24,7 +24,7 @@ public enum ModelType
 
 partial class frmMain
 {
-    private void mnuMainFrm_File_New_Click(object sender, EventArgs e)
+    private void New_Click(object sender, EventArgs e)
     {
         FrmNew frmNew = new FrmNew();
         if (frmNew.ShowDialog() == DialogResult.Cancel) return;
@@ -69,28 +69,19 @@ partial class frmMain
         }
     }
 
-    private void mnuMainFrm_File_Exit_Click(object sender, EventArgs e)
+    private void Exit_Click(object sender, EventArgs e)
     {
         // Exit the application by calling the frmMain_FormClosing event
         this.Close();
     }
 
-    private void mnuMainFrm_Help_About_Click(object sender, EventArgs e)
+    private void About_Click(object sender, EventArgs e)
     {
         frmAbout frmAbout = new frmAbout();
         frmAbout.ShowDialog();
     }
-    private void toolStripMain_Exit_Click(object sender, EventArgs e)
-    {
-        Close();
-    }
 
-    private void toolStripMain_New_Click(object sender, EventArgs e)
-    {
-        mnuMainFrm_File_New_Click(null, null);
-    }
-
-    private void toolStripMain_Open_Click(object sender, EventArgs e)
+    private void Open_Click(object sender, EventArgs e)
     {
         OpenFileDialog openDlg = new OpenFileDialog
         {
@@ -154,38 +145,33 @@ partial class frmMain
         return;
     }
 
-    private void toolStripMain_Save_Click(object sender, EventArgs e)
+    private void Save_Click(object sender, EventArgs e)
     {
         if (this.ActiveMdiChild != null)
-            ((IChildResults)this.ActiveMdiChild).Save("");
+            ((IChildResults)this.ActiveMdiChild).Save(string.Empty);
     }
 
-    private void toolStripMain_Copy_Click(object sender, EventArgs e)
+    private void Copy_Click(object sender, EventArgs e)
     {
         if (this.ActiveMdiChild != null)
             ((IChildResults)this.ActiveMdiChild).Duplicate();
     }
 
-    private void toolStripMain_EditData_Click(object sender, EventArgs e)
+    private void EditData_Click(object sender, EventArgs e)
     {
         if (this.ActiveMdiChild != null)
             ((IChildResults)this.ActiveMdiChild).EditData();
     }
 
-    private void toolStripMain_Settings_Click(object sender, EventArgs e)
+    private void Settings_Click(object sender, EventArgs e)
     {
         if (this.ActiveMdiChild != null)
             ((IChildResults)this.ActiveMdiChild).ShowHideSettings();
     }
 
-    private void toolStripMain_Settings_EnabledChanged(object sender, EventArgs e)
+    private void Settings_EnabledChanged(object sender, EventArgs e)
     {
         if (this.toolStripMain_Settings.Enabled == false) this.toolStripMain_Settings.Checked = false;
-    }
-
-    private void toolStripMain_About_Click(object sender, EventArgs e)
-    {
-        mnuMainFrm_Help_About_Click(null, null);
     }
 
     private void Language_Click(object sender, EventArgs e)

@@ -417,6 +417,6 @@ namespace ErgoCalc
             statusStripLabelUILanguage.ToolTipText = "User interface language";
             //statusStripLabelUILanguage.ToolTipText = StringsRM.GetString("strToolTipUILanguage", _settings.AppCulture) ?? "User interface language";
         }
-    }
 
+    }
 }

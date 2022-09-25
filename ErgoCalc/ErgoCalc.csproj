@@ -209,6 +209,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Update="examples\Comprehensive lifting.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="examples\LM-MMH.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

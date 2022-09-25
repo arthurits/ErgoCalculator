@@ -95,7 +95,7 @@
             this.mnuMainFrm_File_New.Name = "mnuMainFrm_File_New";
             this.mnuMainFrm_File_New.Size = new System.Drawing.Size(107, 22);
             this.mnuMainFrm_File_New.Text = "&New...";
-            this.mnuMainFrm_File_New.Click += new System.EventHandler(this.mnuMainFrm_File_New_Click);
+            this.mnuMainFrm_File_New.Click += new System.EventHandler(this.New_Click);
             // 
             // toolStripSeparator1
             // 
@@ -110,7 +110,7 @@
             this.mnuMainFrm_File_Exit.Name = "mnuMainFrm_File_Exit";
             this.mnuMainFrm_File_Exit.Size = new System.Drawing.Size(107, 22);
             this.mnuMainFrm_File_Exit.Text = "&Exit";
-            this.mnuMainFrm_File_Exit.Click += new System.EventHandler(this.mnuMainFrm_File_Exit_Click);
+            this.mnuMainFrm_File_Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
             // mnuMainForm_Window
             // 
@@ -132,7 +132,7 @@
             this.mnuMainFrm_Help_About.Name = "mnuMainFrm_Help_About";
             this.mnuMainFrm_Help_About.Size = new System.Drawing.Size(116, 22);
             this.mnuMainFrm_Help_About.Text = "&About...";
-            this.mnuMainFrm_Help_About.Click += new System.EventHandler(this.mnuMainFrm_Help_About_Click);
+            this.mnuMainFrm_Help_About.Click += new System.EventHandler(this.About_Click);
             // 
             // staMainFrm
             // 
@@ -151,7 +151,7 @@
             // 
             this.statusStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabel.Name = "statusStripLabel";
-            this.statusStripLabel.Size = new System.Drawing.Size(841, 23);
+            this.statusStripLabel.Size = new System.Drawing.Size(872, 23);
             this.statusStripLabel.Spring = true;
             this.statusStripLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -199,7 +199,7 @@
             this.toolStripMain_Exit.Text = "Exit";
             this.toolStripMain_Exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Exit.ToolTipText = "From Main";
-            this.toolStripMain_Exit.Click += new System.EventHandler(this.toolStripMain_Exit_Click);
+            this.toolStripMain_Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
             // toolStripMain_Open
             // 
@@ -209,7 +209,7 @@
             this.toolStripMain_Open.Size = new System.Drawing.Size(77, 67);
             this.toolStripMain_Open.Text = "Open model";
             this.toolStripMain_Open.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripMain_Open.Click += new System.EventHandler(this.toolStripMain_Open_Click);
+            this.toolStripMain_Open.Click += new System.EventHandler(this.Open_Click);
             // 
             // toolStripMain_Save
             // 
@@ -220,7 +220,7 @@
             this.toolStripMain_Save.Text = "Save";
             this.toolStripMain_Save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Save.ToolTipText = "Save data";
-            this.toolStripMain_Save.Click += new System.EventHandler(this.toolStripMain_Save_Click);
+            this.toolStripMain_Save.Click += new System.EventHandler(this.Save_Click);
             // 
             // toolStripMain_SaveChart
             // 
@@ -246,7 +246,7 @@
             this.toolStripMain_New.Text = "New";
             this.toolStripMain_New.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_New.ToolTipText = "New model";
-            this.toolStripMain_New.Click += new System.EventHandler(this.toolStripMain_New_Click);
+            this.toolStripMain_New.Click += new System.EventHandler(this.New_Click);
             // 
             // toolStripMain_Copy
             // 
@@ -257,7 +257,7 @@
             this.toolStripMain_Copy.Text = "Duplicate";
             this.toolStripMain_Copy.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Copy.ToolTipText = "Duplicate window";
-            this.toolStripMain_Copy.Click += new System.EventHandler(this.toolStripMain_Copy_Click);
+            this.toolStripMain_Copy.Click += new System.EventHandler(this.Copy_Click);
             // 
             // toolStripMain_EditData
             // 
@@ -268,7 +268,7 @@
             this.toolStripMain_EditData.Text = "Edit data";
             this.toolStripMain_EditData.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_EditData.ToolTipText = "Edit model data";
-            this.toolStripMain_EditData.Click += new System.EventHandler(this.toolStripMain_EditData_Click);
+            this.toolStripMain_EditData.Click += new System.EventHandler(this.EditData_Click);
             // 
             // toolStripSeparator4
             // 
@@ -304,8 +304,8 @@
             this.toolStripMain_Settings.Text = "Settings";
             this.toolStripMain_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Settings.ToolTipText = "Toggle settings";
-            this.toolStripMain_Settings.Click += new System.EventHandler(this.toolStripMain_Settings_Click);
-            this.toolStripMain_Settings.EnabledChanged += new System.EventHandler(this.toolStripMain_Settings_EnabledChanged);
+            this.toolStripMain_Settings.Click += new System.EventHandler(this.Settings_Click);
+            this.toolStripMain_Settings.EnabledChanged += new System.EventHandler(this.Settings_EnabledChanged);
             // 
             // toolStripSeparator3
             // 
@@ -320,7 +320,7 @@
             this.toolStripMain_About.Size = new System.Drawing.Size(52, 67);
             this.toolStripMain_About.Text = "About";
             this.toolStripMain_About.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripMain_About.Click += new System.EventHandler(this.toolStripMain_About_Click);
+            this.toolStripMain_About.Click += new System.EventHandler(this.About_Click);
             // 
             // tspTop
             // 
