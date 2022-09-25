@@ -39,38 +39,197 @@ public partial class frmCLMmodel : Form, IChildResults
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)
     {
+        ShowResults();
+    }
+
+    /// <summary>
+    /// Computes the LSI index and shows the results in the RichTextBox control
+    /// </summary>
+    /// <param name="Compute">False if the index is already computed, true otherwise</param>
+    private void ShowResults(bool Compute = true)
+    {
         // Variable definition
         Boolean error = false;
 
-        ComprehensiveLifting.CalculateLSI(_job.Tasks);
+        if (Compute) ComprehensiveLifting.CalculateLSI(_job.Tasks);
         if (error == false)
         {
-            rtbShowResult.Text=_job.ToString();
+            rtbShowResult.Text = _job.ToString();
             FormatText();
         }
     }
 
-    private void rtbShowResult_DoubleClick(object sender, EventArgs e)
+    /// <summary>
+    /// Serializes the Job data into a json file
+    /// </summary>
+    /// <param name="writer"></param>
+    private void SerializeToJSON(Utf8JsonWriter writer)
     {
-        frmCLMmodel_Shown(null, EventArgs.Empty);
-    }
+        writer.WriteStartObject();
+        writer.WriteString("Document type", "Comprehensive lifting model");
+        writer.WriteNumber("Number of tasks", _job.NumberTasks);
 
-    private void frmCLMmodel_Resize(object sender, EventArgs e)
-    {
-        // Resize the control to fit the form's client area
-        //rtbShowResult.Size = this.ClientSize;
+        writer.WritePropertyName("Tasks");
+        writer.WriteStartArray();
+
+        foreach (Task task in _job.Tasks)
+        {
+            writer.WriteStartObject();
+
+            writer.WritePropertyName("Data");
+            writer.WriteStartObject();
+            writer.WriteNumber("Gender", (int)task.Data.Gender);
+            writer.WriteNumber("Base weight", task.Data.Weight);
+            writer.WriteNumber("Horizontal distance", task.Data.h);
+            writer.WriteNumber("Vertical distance", task.Data.v);
+            writer.WriteNumber("Distance travelled", task.Data.d);
+            writer.WriteNumber("Frequency", task.Data.f);
+            writer.WriteNumber("Twisting angle", task.Data.t);
+            writer.WriteNumber("Task duration", task.Data.td);
+            writer.WriteNumber("Coupling", (int)task.Data.c);
+            writer.WriteNumber("Heat stress", task.Data.hs);
+            writer.WriteNumber("Age", task.Data.ag);
+            writer.WriteNumber("Body weight", task.Data.bw);
+            writer.WriteEndObject();
+
+            writer.WritePropertyName("Variables");
+            writer.WriteStartObject();
+            writer.WriteNumber("H multiplier", task.Factors.fH);
+            writer.WriteNumber("V multiplier", task.Factors.fV);
+            writer.WriteNumber("D multiplier", task.Factors.fD);
+            writer.WriteNumber("F multiplier", task.Factors.fF);
+            writer.WriteNumber("T multiplier", task.Factors.fT);
+            writer.WriteNumber("TD multiplier", task.Factors.fTD);
+            writer.WriteNumber("C multiplier", task.Factors.fC);
+            writer.WriteNumber("HS multiplier", task.Factors.fHS);
+            writer.WriteNumber("AG multiplier", task.Factors.fAG);
+            writer.WriteNumber("BW multiplier", task.Factors.fBW);
+            writer.WriteEndObject();
+
+            writer.WriteNumber("Maximum weight", task.BaseWeight);
+            writer.WriteNumber("Percentage", task.Percentage);
+            writer.WriteNumber("Index LSI", task.IndexLSI);
+
+            writer.WriteEndObject();
+        }
+
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+
+        writer.Flush();
     }
 
     #region IChildResults
     public void Save(string path)
     {
-        throw new NotImplementedException();
+        // Displays a SaveFileDialog so the user can save the Image  
+        SaveFileDialog SaveDlg = new SaveFileDialog
+        {
+            DefaultExt = "*.csv",
+            Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
+            FilterIndex = 1,
+            Title = "Save CLM data",
+            OverwritePrompt = true,
+            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        };
+
+        DialogResult result;
+        using (new CenterWinDialog(this))
+        {
+            result = SaveDlg.ShowDialog(this.Parent);
+        }
+
+        // If the file name is not an empty string open it for saving.  
+        if (result == DialogResult.OK && SaveDlg.FileName != "")
+        {
+            using var fs = SaveDlg.OpenFile();
+
+            switch (SaveDlg.FilterIndex)
+            {
+                case 1:
+                    if (fs != null)
+                    {
+                        using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
+                        SerializeToJSON(writer);
+                        //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
+                    }
+                    break;
+                case 2:
+                    rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
+                    break;
+                case 3:
+                    rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                    break;
+                case 4:
+                    rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
+                    break;
+            }
+
+            using (new CenterWinDialog(this.MdiParent))
+            {
+                MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
     }
 
     public bool OpenFile(JsonDocument document)
     {
         bool result = true;
-        MessageBox.Show("Json Open not yet implemented");
+        Job job = new();
+
+        JsonElement root = document.RootElement;
+        job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
+        job.Tasks = new Task[job.NumberTasks];
+
+        int i = 0;
+        try
+        {
+            foreach (JsonElement curve in root.GetProperty("Tasks").EnumerateArray())
+            {
+                job.Tasks[i] = new();
+                job.Tasks[i].Data.Gender = (Gender)curve.GetProperty("Data").GetProperty("Gender").GetInt32();
+                job.Tasks[i].Data.Weight = curve.GetProperty("Data").GetProperty("Base weight").GetDouble();
+                job.Tasks[i].Data.h = curve.GetProperty("Data").GetProperty("Horizontal distance").GetDouble();
+                job.Tasks[i].Data.v = curve.GetProperty("Data").GetProperty("Vertical distance").GetDouble();
+                job.Tasks[i].Data.d = curve.GetProperty("Data").GetProperty("Distance travelled").GetDouble();
+                job.Tasks[i].Data.f = curve.GetProperty("Data").GetProperty("Frequency").GetDouble();
+                job.Tasks[i].Data.t = curve.GetProperty("Data").GetProperty("Twisting angle").GetDouble();
+                job.Tasks[i].Data.td = curve.GetProperty("Data").GetProperty("Task duration").GetDouble();
+                job.Tasks[i].Data.c = (Coupling)curve.GetProperty("Data").GetProperty("Coupling").GetInt32();
+                job.Tasks[i].Data.hs = curve.GetProperty("Data").GetProperty("Heat stress").GetDouble();
+                job.Tasks[i].Data.ag = curve.GetProperty("Data").GetProperty("Age").GetDouble();
+                job.Tasks[i].Data.bw = curve.GetProperty("Data").GetProperty("Body weight").GetDouble();
+
+                job.Tasks[i].Factors.fH = curve.GetProperty("Variables").GetProperty("H multiplier").GetDouble();
+                job.Tasks[i].Factors.fV = curve.GetProperty("Variables").GetProperty("V multiplier").GetDouble();
+                job.Tasks[i].Factors.fD = curve.GetProperty("Variables").GetProperty("D multiplier").GetDouble();
+                job.Tasks[i].Factors.fF = curve.GetProperty("Variables").GetProperty("F multiplier").GetDouble();
+                job.Tasks[i].Factors.fT = curve.GetProperty("Variables").GetProperty("T multiplier").GetDouble();
+                job.Tasks[i].Factors.fTD = curve.GetProperty("Variables").GetProperty("TD multiplier").GetDouble();
+                job.Tasks[i].Factors.fC = curve.GetProperty("Variables").GetProperty("C multiplier").GetDouble();
+                job.Tasks[i].Factors.fHS = curve.GetProperty("Variables").GetProperty("HS multiplier").GetDouble();
+                job.Tasks[i].Factors.fAG = curve.GetProperty("Variables").GetProperty("AG multiplier").GetDouble();
+                job.Tasks[i].Factors.fBW = curve.GetProperty("Variables").GetProperty("BW multiplier").GetDouble();
+
+                job.Tasks[i].BaseWeight = curve.GetProperty("Maximum weight").GetDouble();
+                job.Tasks[i].Percentage = curve.GetProperty("Percentage").GetDouble();
+                job.Tasks[i].IndexLSI = curve.GetProperty("Index LSI").GetDouble();
+
+                i++;
+            }
+
+            _job = job;
+        }
+        catch (Exception)
+        {
+            result = false;
+        }
+
+        if (result)
+        {
+            ShowResults(false);
+        }
+
         return result;
     }
 
@@ -102,7 +261,7 @@ public partial class frmCLMmodel : Form, IChildResults
 
     public bool[] GetToolbarEnabledState()
     {
-        return new bool[] { true, true, false, false, true, true, true, true, true, false, false, true, true, true };
+        return new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true };
     }
 
     public ToolStrip ChildToolStrip
@@ -146,15 +305,5 @@ public partial class frmCLMmodel : Form, IChildResults
         rtbShowResult.SelectionLength = 0;
     }
     #endregion IChildResults
-
-    private void frmCLMmodel_Load(object sender, EventArgs e)
-    {
-        //Win32.Win32API.AnimateWindow(this.Handle, 100, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_CENTER);
-    }
-
-    private void frmCLMmodel_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        //Win32.Win32API.AnimateWindow(this.Handle, 100, Win32.Win32API.AnimateWindowFlags.AW_HIDE | Win32.Win32API.AnimateWindowFlags.AW_BLEND);
-    }
 
 }

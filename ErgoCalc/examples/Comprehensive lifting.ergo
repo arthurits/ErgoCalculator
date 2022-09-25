@@ -1,0 +1,68 @@
+{
+  "Document type": "Comprehensive lifting model",
+  "Number of tasks": 2,
+  "Tasks": [
+    {
+      "Data": {
+        "Gender": 0,
+        "Base weight": 5,
+        "Horizontal distance": 50,
+        "Vertical distance": 70,
+        "Distance travelled": 55,
+        "Frequency": 2,
+        "Twisting angle": 45,
+        "Task duration": 2,
+        "Coupling": 1,
+        "Heat stress": 27,
+        "Age": 50,
+        "Body weight": 70
+      },
+      "Variables": {
+        "H multiplier": 0.68,
+        "V multiplier": 0.98,
+        "D multiplier": 0.84,
+        "F multiplier": 0.89,
+        "T multiplier": 0.89,
+        "TD multiplier": 0.76,
+        "C multiplier": 0.925,
+        "HS multiplier": 1,
+        "AG multiplier": 0.69,
+        "BW multiplier": 1
+      },
+      "Maximum weight": 23.247234733877598,
+      "Percentage": 57.36014988782252,
+      "Index LSI": 4.2639850112177475
+    },
+    {
+      "Data": {
+        "Gender": 0,
+        "Base weight": 5,
+        "Horizontal distance": 50,
+        "Vertical distance": 70,
+        "Distance travelled": 55,
+        "Frequency": 2,
+        "Twisting angle": 45,
+        "Task duration": 2,
+        "Coupling": 1,
+        "Heat stress": 27,
+        "Age": 35,
+        "Body weight": 70
+      },
+      "Variables": {
+        "H multiplier": 0.68,
+        "V multiplier": 0.98,
+        "D multiplier": 0.84,
+        "F multiplier": 0.89,
+        "T multiplier": 0.89,
+        "TD multiplier": 0.76,
+        "C multiplier": 0.925,
+        "HS multiplier": 1,
+        "AG multiplier": 0.88,
+        "BW multiplier": 1
+      },
+      "Maximum weight": 18.22794541633584,
+      "Percentage": 74.01342577372239,
+      "Index LSI": 2.5986574226277614
+    }
+  ]
+}

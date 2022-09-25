@@ -86,10 +86,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "frmCLMmodel";
             this.Text = "CLM model results";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCLMmodel_FormClosing);
-            this.Load += new System.EventHandler(this.frmCLMmodel_Load);
             this.Shown += new System.EventHandler(this.frmCLMmodel_Shown);
-            this.Resize += new System.EventHandler(this.frmCLMmodel_Resize);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

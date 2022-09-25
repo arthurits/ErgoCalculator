@@ -130,12 +130,14 @@ partial class frmMain
                 "Strain index" => new frmResultsStrainIndex(),
                 "Thermal comfort model" => new frmResultsTC(),
                 "LM-MMH model" => new frmResultsLiberty(),
+                "Comprehensive lifting model" => new frmCLMmodel(),
                 _ => default
             };
-            frm.MdiParent = this;
 
             if (frm != default)
             {
+                frm.MdiParent = this;
+
                 if (((IChildResults)frm).OpenFile(document))
                 {
                     if (File.Exists(_strPath + @"\images\logo.ico")) frm.Icon = new Icon(_strPath + @"\images\logo.ico");

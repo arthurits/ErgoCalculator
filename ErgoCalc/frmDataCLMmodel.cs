@@ -102,6 +102,7 @@ public partial class frmDataCLMmodel : Form, IChildData
         _job = new();
 
         // Save the values entered
+        _job.NumberTasks = Convert.ToInt32(updTasks.Value);
         _job.Tasks = new Task[Convert.ToInt32(updTasks.Value)];
         for (Int32 i = 0; i < _job.Tasks.Length; i++)
         {

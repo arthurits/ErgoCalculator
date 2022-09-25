@@ -64,6 +64,8 @@ public class Task
 public class Job
 {
     public Task[] Tasks { get; set; } = Array.Empty<Task>();
+
+    public int NumberTasks { get; set; } = 0;
     
     public override string ToString()
     {
