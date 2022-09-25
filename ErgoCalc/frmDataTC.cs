@@ -47,7 +47,7 @@ public partial class frmDataTC : Form, IChildData
     }
 
     #region Form events
-    private void btnOK_Click(object sender, EventArgs e)
+    private void OK_Click(object sender, EventArgs e)
     {
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
@@ -55,7 +55,7 @@ public partial class frmDataTC : Form, IChildData
         _job = new();
         
         // Save the values entered
-        _job.Tasks = new Task[Convert.ToInt32(updSubtasks.Value)];
+        _job.Tasks = new Task[Convert.ToInt32(updTasks.Value)];
         for (int i = 0; i < _job.Tasks.Length; i++)
         {
             _job.Tasks[i] = new Task();
@@ -72,9 +72,16 @@ public partial class frmDataTC : Form, IChildData
         this.DialogResult = DialogResult.OK;
     }
 
-    private void updSubtasks_ValueChanged(object sender, EventArgs e)
+    private void Example_Click(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updSubtasks.Value);
+        // Loads some data example into the grid
+        DataExample();
+        DataToGrid();
+    }
+
+    private void Tasks_ValueChanged(object sender, EventArgs e)
+    {
+        Int32 col = Convert.ToInt32(updTasks.Value);
 
         // Add or remove columns
         if (col > gridVariables.ColumnCount)
@@ -119,32 +126,12 @@ public partial class frmDataTC : Form, IChildData
         AddColumn(gridVariables.Columns.Count);
     }
 
-    /// <summary>
-    /// Shows the data into the grid control
-    /// </summary>
-    private void DataToGrid()
+    public void LoadExample()
     {
-        updSubtasks.Value = _job.Tasks.Length;
 
-        for (int i = 0; i < _job.Tasks.Length; i++)
-        {
-            //Column 0 is already created in the constructor;
-            //if (i > 0) AddColumn();
-
-            // Populate the DataGridView with data
-            gridVariables[i, 0].Value = _job.Tasks[i].Data.TempAir.ToString();
-            gridVariables[i, 1].Value = _job.Tasks[i].Data.TempRad.ToString();
-            gridVariables[i, 2].Value = _job.Tasks[i].Data.Velocity.ToString();
-            gridVariables[i, 3].Value = _job.Tasks[i].Data.RelHumidity.ToString();
-            gridVariables[i, 4].Value = _job.Tasks[i].Data.Clothing.ToString();
-            gridVariables[i, 5].Value = _job.Tasks[i].Data.MetRate.ToString();
-            gridVariables[i, 6].Value = _job.Tasks[i].Data.ExternalWork.ToString();
-        }
     }
 
-    #endregion Private routines
-
-    public void LoadExample()
+    private void DataExample()
     {
         _job = new Job();
         _job.NumberTasks = 2;
@@ -167,7 +154,31 @@ public partial class frmDataTC : Form, IChildData
         _job.Tasks[1].Data.Clothing = 0.8;
         _job.Tasks[1].Data.MetRate = 1;
         _job.Tasks[1].Data.ExternalWork = 0;
-
-        DataToGrid();
     }
+
+    /// <summary>
+    /// Shows the data into the grid control
+    /// </summary>
+    private void DataToGrid()
+    {
+        updTasks.Value = _job.Tasks.Length;
+
+        for (int i = 0; i < _job.Tasks.Length; i++)
+        {
+            //Column 0 is already created in the constructor;
+            //if (i > 0) AddColumn();
+
+            // Populate the DataGridView with data
+            gridVariables[i, 0].Value = _job.Tasks[i].Data.TempAir.ToString();
+            gridVariables[i, 1].Value = _job.Tasks[i].Data.TempRad.ToString();
+            gridVariables[i, 2].Value = _job.Tasks[i].Data.Velocity.ToString();
+            gridVariables[i, 3].Value = _job.Tasks[i].Data.RelHumidity.ToString();
+            gridVariables[i, 4].Value = _job.Tasks[i].Data.Clothing.ToString();
+            gridVariables[i, 5].Value = _job.Tasks[i].Data.MetRate.ToString();
+            gridVariables[i, 6].Value = _job.Tasks[i].Data.ExternalWork.ToString();
+        }
+    }
+
+    #endregion Private routines
+
 }
