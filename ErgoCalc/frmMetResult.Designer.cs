@@ -46,10 +46,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 440);
             this.Controls.Add(this.rtbShowResult);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "frmMetResult";
             this.Text = "Metabolic rate results";
-            this.Load += new System.EventHandler(this.frmMetResult_Load);
+            this.Shown += new System.EventHandler(this.frmMetResult_Shown);
             this.ResumeLayout(false);
 
         }

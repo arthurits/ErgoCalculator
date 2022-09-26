@@ -7,13 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ErgoCalc.Models.MetabolicRate;
+
 namespace ErgoCalc
 {
     public partial class frmMet : Form, IChildData
     {
         // Declare private variables
-        private Int32[] _nLevel1 = new Int32[] { -1, -1 };
-        public object GetData => _nLevel1;
+        //private Int32[] _nLevel1 = new Int32[] { -1, -1 };
+
+        private Job _job;
+
+        public object GetData => _job;
         public frmMet()
         {
             // VS Designer initialization routine
@@ -63,6 +68,13 @@ namespace ErgoCalc
                 AddRow(0);
 
 
+        }
+
+        public frmMet(Job job)
+            :this()
+        {
+            _job = job;
+            //DataToGrid();
         }
 
         private void cboOcupaciones_SelectedValueChanged(object sender, EventArgs e)
@@ -216,17 +228,11 @@ namespace ErgoCalc
         private void btnAccept_Click(object sender, EventArgs e)
         {
             // Store the user selections in the public variables in order to be accessed later from another WinForm
-            _nLevel1[0] = Convert.ToInt32(cboCategorias.SelectedValue) - 1;
-            _nLevel1[1] = Convert.ToInt32(cboClase.SelectedValue) - 1;
-        }
-
-        /// <summary>
-        /// Function to retrieve the data entered by the user
-        /// </summary>
-        /// <returns>Single array containing the data</returns>
-        public Int32[] getData()
-        {
-            return _nLevel1;
+            _job = new Job();
+            _job.Tasks = new Task[1];
+            _job.Tasks[0] = new Task();
+            _job.Tasks[0].Data.Category = Convert.ToInt32(cboCategorias.SelectedValue) - 1;
+            _job.Tasks[0].Data.Type = Convert.ToInt32(cboClase.SelectedValue) - 1;
         }
 
         #region Private routines

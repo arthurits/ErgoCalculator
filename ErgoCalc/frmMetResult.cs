@@ -5,86 +5,125 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Windows.Forms;
 
-using ErgoCalc.Models.MetRate;
+//using ErgoCalc.Models.MetRate;
+using ErgoCalc.Models.MetabolicRate;
 
 namespace ErgoCalc
 {
-    public partial class frmMetResult : Form
+    public partial class frmMetResult : Form, IChildResults
     {
         // Variable definition
-        private Int32[] _nOpciones;
-        private Double[] _dResults;
+        private Job _job;
+
+        public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         // Default constructor
         public frmMetResult()
         {
             // VS initializer
             InitializeComponent();
-
-            // Inicializar las variables miembro
-            _dResults = new Double[5];
         }
 
         // Overloaded constructor
-        public frmMetResult(Int32[] nDatos)
+        public frmMetResult(Job job)
             : this() // Call the base constructor
         {
-            _nOpciones=nDatos;
+            _job = job;
         }
 
         public frmMetResult(object data)
             : this() // Call the base constructor
         {
-            if (data.GetType() == _nOpciones.GetType())
-                _nOpciones = (int[])data;
+            if (data.GetType() == typeof(Job))
+                _job = (Job)data;
         }
-
-        private void frmMetResult_Load(object sender, EventArgs e)
+        
+        private void frmMetResult_Shown(object sender, EventArgs e)
         {
-            // Definir las variables
-            cMetRate cMet = new cMetRate();
-
-            // Realizar los cálculos
-            unsafe
-            {
-                fixed (Int32* _pOpciones = _nOpciones)
-                {
-                    fixed (Double* _pResults = _dResults) cMet.CalculateMetRate(_pOpciones, _pResults);
-                }
-            }
-
-            // Presentar los resultados
             ShowResults();
         }
 
-
         #region Private routines
 
-        private void ShowResults()
+        /// <summary>
+        /// Computes the metabolic rate and shows the results in the RichTextBox control
+        /// </summary>
+        /// <param name="Compute">False if the index is already computed, true otherwise</param>
+        private void ShowResults(bool Compute = true)
         {
-            // Escribir los resultados en la ventana
-            rtbShowResult.Text = "These are the metabolic rate results according to the norm UNE-EN ISO 8996:2004 criteria.";
-            rtbShowResult.AppendText("\n\n");
+            bool error = false;
 
-            // Nivel 1A
-            rtbShowResult.AppendText("Level 1.a computation for a" + "\n");
-            rtbShowResult.AppendText("Metabolic rate range: " + _dResults[0].ToString("0") + " to " + _dResults[1].ToString("0"));
-            rtbShowResult.AppendText("\n\n");
+            if (Compute) MetabolicRate.CalculateMetRate(_job);
 
-            // Nivel 1B
-            rtbShowResult.AppendText("Level 1.b computation for a" + "\n");
-            rtbShowResult.AppendText("Mean metabolic rate: " + _dResults[2].ToString("0") + "\n");
-            rtbShowResult.AppendText("Metabolic rate range: " + _dResults[3].ToString("0") + " to " + _dResults[4].ToString("0")+ "\n");
-            rtbShowResult.AppendText("\n\n");
+            if (error == false)
+            {
+                // Escribir los resultados en la ventana
+                rtbShowResult.Text = _job.ToString();
+                FormatText();
+            }
+        }
 
-            // Nivel 2A
+        public void Save(string path)
+        {
+            
+        }
+
+        public bool OpenFile(JsonDocument document)
+        {
+            return false;
+        }
+
+        public bool[] GetToolbarEnabledState()
+        {
+            return new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true };
+        }
+
+        public void ShowHideSettings()
+        {
+            //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
+            return;
+        }
+
+        public bool PanelCollapsed()
+        {
+            //return this.splitContainer1.Panel1Collapsed;
+            return false;
+        }
+
+        public void FormatText()
+        {
+            
+        }
+
+        public void EditData()
+        {
+            // Llamar al formulario para introducir los datos
+            frmMet frmData = new frmMet(_job);
+
+            if (frmData.ShowDialog(this) == DialogResult.OK)
+            {
+                // Mostrar la ventana de resultados
+                _job = (Job)frmData.GetData;
+                this.rtbShowResult.Clear();
+                ShowResults();
+            }
+            // Cerrar el formulario de entrada de datos
+            frmData.Dispose();
+        }
+
+        public void Duplicate()
+        {
+            //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+
+            // Mostrar la ventana de resultados
+            frmMetResult frmResults = new frmMetResult(_job) { MdiParent = this.MdiParent };
+            //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+            frmResults.Show();
         }
         #endregion
-
-
-
 
 
     }
