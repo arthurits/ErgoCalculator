@@ -30,68 +30,6 @@ namespace ErgoCalc
         // Para acceder a todos los servicios Interop
         using System.Runtime.InteropServices;
 
-        namespace MetRate
-        {
-            public class cMetRate
-            {
-                unsafe public void CalculateMetRate(int* aData,double* aResults)
-                {
-                    // Calculate the metabolic rate in according to level 1 A                    
-                    CalculateLevel1A(aData, aResults);
-                    CalculateLevel1B(aData, aResults);
-                    return;
-                }
-
-                unsafe private void CalculateLevel1A(int* pData, double* pResults)
-                {
-                    // Variable definition
-                    double[] dInf = new double[] { 115.0,  85.0, 70.0,  75.0, 110.0, 105.0, 110.0,  90.0, 110.0, 100.0, 55.0, 140.0, 105.0, 140.0, 170.0, 125.0,  80.0,  90.0,  70.0,  75.0,  75.0, 115.0, 70.0, 110.0,  85.0, 100.0,  85.0, 70.0,  80.0,  70.0, 55.0,  75.0,  70.0,  80.0, 65.0};
-                    double[] dSup = new double[] { 190.0, 110.0, 95.0, 100.0, 160.0, 140.0, 175.0, 125.0, 140.0, 130.0, 70.0, 240.0, 165.0, 240.0, 220.0, 145.0, 140.0, 200.0, 110.0, 125.0, 125.0, 175.0, 85.0, 110.0, 100.0, 120.0, 100.0, 85.0, 115.0, 100.0, 70.0, 125.0, 100.0, 115.0, 145.0};
-                    
-                    // Calculate the result
-                    if (*pData >= 0 && *pData < 35)
-                    {
-                        *pResults = dInf[*pData];
-                        *(pResults + 1) = dSup[*pData];
-                    }
-                    else
-                    {
-                        *pResults = -1.0;
-                        *(pResults + 1) = -1.0;
-                    }
-
-                    // Return from function
-                    return;
-                }
-
-                unsafe private void CalculateLevel1B(int* pData, double* pResults)
-                {
-                    // Variable definition
-                    double[] dMedio = new double[] { 65.0, 100.0, 165.0, 230.0, 290.0};
-                    double[] dInf = new double[] { 55.0, 70.0, 130.0, 200.0, 260.0};
-                    double[] dSup = new double[] { 70.0, 130.0, 200.0, 260.0, 10000.0};
-
-                    // Calculate the result
-                    if (*(pData + 1) >= 0 && *(pData + 1) < 5)
-                    {
-                        *(pResults + 2) = dMedio[*(pData + 1)];
-                        *(pResults + 3) = dInf[*(pData + 1)];
-                        *(pResults + 4) = dSup[*(pData + 1)];
-                    }
-                    else
-                    {
-                        *(pResults + 2) = -1.0;
-                        *(pResults + 3) = -1.0;
-                        *(pResults + 4) = -1.0;
-                    }
-
-                    // Return from function
-                    return;
-                }
-
-            }
-        }
-
         namespace LibertyMutual
         {
             using System;
