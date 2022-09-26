@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmMetResult
+    partial class FrmResultsMet
     {
         /// <summary>
         /// Required designer variable.
@@ -34,20 +34,21 @@
             // rtbShowResult
             // 
             this.rtbShowResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbShowResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.rtbShowResult.Location = new System.Drawing.Point(0, 0);
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.Size = new System.Drawing.Size(609, 440);
             this.rtbShowResult.TabIndex = 0;
             this.rtbShowResult.Text = "";
             // 
-            // frmMetResult
+            // FrmResultsMet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 440);
             this.Controls.Add(this.rtbShowResult);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Name = "frmMetResult";
+            this.Name = "FrmResultsMet";
             this.Text = "Metabolic rate results";
             this.Shown += new System.EventHandler(this.frmMetResult_Shown);
             this.ResumeLayout(false);

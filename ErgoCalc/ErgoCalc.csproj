@@ -90,11 +90,11 @@
     <Compile Update="frmDataWRmodel.Designer.cs">
       <DependentUpon>frmDataWRmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMet.cs">
+    <Compile Update="frmDataMet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmMet.Designer.cs">
-      <DependentUpon>frmMet.cs</DependentUpon>
+    <Compile Update="frmDataMet.Designer.cs">
+      <DependentUpon>frmDataMet.cs</DependentUpon>
     </Compile>
     <Compile Update="frmAbout.cs">
       <SubType>Form</SubType>
@@ -126,11 +126,11 @@
     <Compile Update="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMetResult.cs">
+    <Compile Update="frmResultsMet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmMetResult.Designer.cs">
-      <DependentUpon>frmMetResult.cs</DependentUpon>
+    <Compile Update="frmResultsMet.Designer.cs">
+      <DependentUpon>frmResultsMet.cs</DependentUpon>
     </Compile>
     <Compile Update="frmNew.cs" />
     <Compile Update="frmNew.Designer.cs">
@@ -162,8 +162,8 @@
     <EmbeddedResource Update="frmDataWRmodel.resx">
       <DependentUpon>frmDataWRmodel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmMet.resx">
-      <DependentUpon>frmMet.cs</DependentUpon>
+    <EmbeddedResource Update="frmDataMet.resx">
+      <DependentUpon>frmDataMet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
@@ -185,8 +185,8 @@
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmMetResult.resx">
-      <DependentUpon>frmMetResult.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultsMet.resx">
+      <DependentUpon>frmResultsMet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="frmNew.resx">
       <DependentUpon>frmNew.cs</DependentUpon>

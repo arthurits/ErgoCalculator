@@ -33,7 +33,7 @@ partial class frmMain
             ModelType.NioshLifting => new frmDataNIOSHmodel(),
             ModelType.StrainIndex => new frmDataStrainIndex(),
             ModelType.OcraCheck => new frmDataOCRAcheck(),
-            ModelType.MetabolicRate => new frmMet(),
+            ModelType.MetabolicRate => new FrmDataMet(),
             ModelType.ThermalComfort => new frmDataTC(),
             ModelType.LibertyMutual => new frmDataLiberty(),
             _ => new Form()
@@ -53,7 +53,7 @@ partial class frmMain
                     ModelType.NioshLifting => new frmResultNIOSHmodel(frm.GetData),
                     ModelType.StrainIndex => new frmResultsStrainIndex(frm.GetData),
                     ModelType.OcraCheck => new frmResultsOCRAcheck(frm.GetData),
-                    ModelType.MetabolicRate => new frmMetResult(frm.GetData),
+                    ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
                     ModelType.ThermalComfort => new frmResultsTC(frm.GetData),
                     ModelType.LibertyMutual => new frmResultsLiberty(frm.GetData),
                     _ => new Form()
