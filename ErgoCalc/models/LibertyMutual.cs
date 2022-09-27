@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ErgoCalc.Models.LibertyMutual2;
+namespace ErgoCalc.Models.LibertyMutual;
 
 public enum TaskType : int
 {

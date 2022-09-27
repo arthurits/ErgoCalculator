@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 
-using ErgoCalc.Models.LibertyMutual2;
+using ErgoCalc.Models.LibertyMutual;
 
 namespace ErgoCalc;
 

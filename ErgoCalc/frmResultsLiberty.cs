@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Windows.Forms;
 
 //using ScottPlot;
-using ErgoCalc.Models.LibertyMutual2;
+using ErgoCalc.Models.LibertyMutual;
 
 namespace ErgoCalc
 {
