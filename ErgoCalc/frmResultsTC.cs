@@ -57,12 +57,12 @@ public partial class frmResultsTC : Form, IChildResults
     private void ShowResults(bool Compute = true)
     {
         // Variable definition
-        bool error = false;
+        bool result = false;
 
         if (Compute)
-            error = !ThermalComfort.ComfortPMV(_job);
+            result = ThermalComfort.ComfortPMV(_job);
 
-        if (error == false)
+        if (result == true)
         {
             rtbShowResult.Text = _job.ToString();
             CreatePlots();
@@ -181,7 +181,7 @@ public partial class frmResultsTC : Form, IChildResults
     {
         writer.WriteStartObject();
         writer.WriteString("Document type", "Thermal comfort model");
-        writer.WriteNumber("Number of tasks", 2);
+        writer.WriteNumber("Number of tasks", _job.NumberTasks);
 
         writer.WritePropertyName("Tasks");
         writer.WriteStartArray();

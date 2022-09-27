@@ -1,6 +1,7 @@
 {
   "Document type": "LM-MMH model",
-  "Cases": [
+  "Number of tasks": 2,
+  "Tasks": [
     {
       "Data": {
         "Type": 1,
@@ -13,7 +14,7 @@
         "Gender": 1
       },
       "Scale factors initial": {
-        "Reference load (RF)": 34.9,
+        "Reference load (RL)": 34.9,
         "Horizontal reach factor (H)": 0.7657945875618006,
         "Vertical range middle factor (VRM)": 0.9478848022295474,
         "Horizontal travel distance factor (DH)": 0,
@@ -26,7 +27,7 @@
         "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 10.372373690143064
       },
       "Scale factors sustained": {
-        "Reference load (RF)": 0,
+        "Reference load (RL)": 0,
         "Horizontal reach factor (H)": 0,
         "Vertical range middle factor (VRM)": 0,
         "Horizontal travel distance factor (DH)": 0,
@@ -51,7 +52,7 @@
         "Gender": 0
       },
       "Scale factors initial": {
-        "Reference load (RF)": 69.8,
+        "Reference load (RL)": 69.8,
         "Horizontal reach factor (H)": 0,
         "Vertical range middle factor (VRM)": 0,
         "Horizontal travel distance factor (DH)": 0.7600336165296006,
@@ -64,7 +65,7 @@
         "MAL \u2014 Maximum acceptable load \u2014 90% (kg or kg-f)": 15.922118071797655
       },
       "Scale factors sustained": {
-        "Reference load (RF)": 61,
+        "Reference load (RL)": 61,
         "Horizontal reach factor (H)": 0,
         "Vertical range middle factor (VRM)": 0,
         "Horizontal travel distance factor (DH)": 0.6856851780259426,

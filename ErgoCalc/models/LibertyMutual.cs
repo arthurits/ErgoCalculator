@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ErgoCalc.Models.LibertyMutual2;
 
-public enum Type : int
+public enum TaskType : int
 {
     Carrying,
     Lifting,
@@ -47,7 +47,7 @@ public class Data
     /// The frequency per minute. It must range from 1 per day (i.e. 1/480 = ?0.0021/min) to 20/min
     /// </summary>
     public double Freq { get; set; } = 0;
-    public Type Type { get; set; } = Type.Carrying;
+    public TaskType Type { get; set; } = TaskType.Carrying;
     public Gender Gender { get; set; } = Gender.Male;
 };
 
@@ -204,7 +204,7 @@ public class Job
             strLineF[0] += string.Concat("\t\t", strGridHeader, ((char)('A' + i)).ToString());
 
             strThresholds[0] += string.Concat(i == 0 ? "\t" : "\t\t", strGridHeader, ((char)('A' + i)).ToString());
-            if (data.Data.Type == Type.Pulling || data.Data.Type == Type.Pushing)
+            if (data.Data.Type == TaskType.Pulling || data.Data.Type == TaskType.Pushing)
             {
                 strLineD[2] += string.Concat("\t\t", "------");
                 strLineD[3] += string.Concat("\t\t", "------");
@@ -243,7 +243,7 @@ public class Job
             }
             else // Lift, lower, and carry
             {
-                if (data.Data.Type == Type.Carrying)
+                if (data.Data.Type == TaskType.Carrying)
                 {
                     strLineD[2] += string.Concat("\t\t", "------");
                     strLineD[3] += string.Concat("\t\t", "------");
@@ -322,26 +322,27 @@ public static class LibertyMutual
     private static double zscore75 = 0.6744897501960818; // https://planetcalc.com/7803/
     private static double zscore90 = 1.2815515655446008;	// https://planetcalc.com/7803/
 
-    public static double LibertyMutualMMH(Job job)
+    public static bool LibertyMutualMMH(Job job)
     {
+        bool result = true;
 
         foreach (ModelLiberty task in job.Tasks)
         {
             switch (task.Data.Type)
             {
-                case Type.Carrying:
+                case TaskType.Carrying:
                     Carrying(task);
                     break;
-                case Type.Lifting:
+                case TaskType.Lifting:
                     Lifting(task);
                     break;
-                case Type.Lowering:
+                case TaskType.Lowering:
                     Lowering(task);
                     break;
-                case Type.Pulling:
+                case TaskType.Pulling:
                     Pulling(task);
                     break;
-                case Type.Pushing:
+                case TaskType.Pushing:
                     Pushing(task);
                     break;
             }
@@ -353,7 +354,7 @@ public static class LibertyMutual
             task.Sustained.MAL90 = task.Sustained.MAL * (1 - task.Sustained.CV * zscore90);
         }
 
-        return 0.0;
+        return result;
     }
 
 
