@@ -77,6 +77,7 @@ namespace ErgoCalc
             this.groupIndex.Controls.Add(this.radPull);
             this.groupIndex.Controls.Add(this.radLow);
             this.groupIndex.Controls.Add(this.radLift);
+            this.groupIndex.Enabled = false;
             this.groupIndex.Location = new System.Drawing.Point(282, 274);
             this.groupIndex.Name = "groupIndex";
             this.groupIndex.Size = new System.Drawing.Size(475, 61);
