@@ -32,17 +32,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
         listViewTasks.AddGroup();
 
-        // Create the first column (zero index base)
-        AddColumn();
-
-        // Create the header rows
-        gridVariables.RowCount = 5;
-        gridVariables.Rows[0].HeaderCell.Value = "Intensity of exertion";
-        gridVariables.Rows[1].HeaderCell.Value = "Efforts per minute";
-        gridVariables.Rows[2].HeaderCell.Value = "Duration per exertion";
-        gridVariables.Rows[3].HeaderCell.Value = "Hand/wrist posture";
-        gridVariables.Rows[4].HeaderCell.Value = "Duration of task per day";
-
     }
 
     // Overloaded constructor
@@ -99,6 +88,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
             for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
 
         // Modify the chkComposite state
+        groupIndex.Enabled = col > 0;
         if (col > 1)
         {
             radCOSI.Enabled = true;
@@ -110,13 +100,9 @@ public partial class FrmDataStrainIndex : Form, IChildData
             radCOSI.Enabled = false;
             radCUSI.Enabled = false;
         }
-        else
-        {
-            groupIndex.Enabled = false;
-        }
 
         // Set the maximum tasks
-        this.updTasks.Maximum = col - 1;
+        if (col > 1) this.updTasks.Maximum = col - 1;
 
         return;
     }
@@ -137,7 +123,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         return;
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void Accept_Click(object sender, EventArgs e)
     {
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
@@ -199,6 +185,14 @@ public partial class FrmDataStrainIndex : Form, IChildData
         return;
     }
 
+    private void Example_Click(object sender, EventArgs e)
+    {
+        // Load some data example
+        updSubtasks.Value = 0;
+        DataExample2();
+        DataToGrid();
+        //tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
+    }
 
     #region Private routines
     /// <summary>
@@ -224,6 +218,8 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
         // Give format to the cells
         // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+        if (col == 0)
+            AddRows();
 
         return;
     }
@@ -237,10 +233,25 @@ public partial class FrmDataStrainIndex : Form, IChildData
     }
 
     /// <summary>
+    /// Adds the headercell values for each row
+    /// </summary>
+    private void AddRows()
+    {
+        // Create the header rows
+        gridVariables.RowCount = 5;
+        gridVariables.Rows[0].HeaderCell.Value = "Intensity of exertion";
+        gridVariables.Rows[1].HeaderCell.Value = "Efforts per minute";
+        gridVariables.Rows[2].HeaderCell.Value = "Duration per exertion";
+        gridVariables.Rows[3].HeaderCell.Value = "Hand/wrist posture";
+        gridVariables.Rows[4].HeaderCell.Value = "Duration of task per day";
+    }
+    
+    /// <summary>
     /// Creates some data to show as an example
     /// </summary>
     private void DataExample()
     {
+        _job = new();
         _job.NumberTasks = 1;
         _job.JobTasks = new Task[_job.NumberTasks];
         _job.JobTasks[0].NumberSubTasks = 8;
@@ -374,6 +385,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 break;
         }
 
+        updTasks.Maximum = _job.NumberTasks;
         updTasks.Value = _job.NumberTasks;
         Int32 nCol = 0;
         for (var j = 0; j < _job.NumberTasks; j++)
@@ -382,7 +394,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
             for (var i = 0; i < _job.JobTasks[j].SubTasks.Length; i++)
             {
                 //Column 0 is already created in the constructor;
-                if ((i + j) > 0) AddColumn();
+                AddColumn();
 
                 // Populate the DataGridView with data
                 gridVariables[nCol, 0].Value = _job.JobTasks[j].SubTasks[i].Data.i.ToString();
@@ -400,19 +412,14 @@ public partial class FrmDataStrainIndex : Form, IChildData
         }
         // Update the control's value
         updSubtasks.Value = nCol;
-        updTasks.Value = _job.NumberTasks;
+        //updTasks.Value = _job.NumberTasks;
     }
 
     #endregion
 
     public void LoadExample()
     {
-        // Load some data example
-        DataExample2();
-        DataToGrid();
-        tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
 
-        return;
     }
 
     private void tabDataStrain_Selected(object sender, TabControlEventArgs e)
@@ -432,6 +439,8 @@ public partial class FrmDataStrainIndex : Form, IChildData
             }
             
             listViewTasks.RemoveEmptyItems();
+            listViewTasks.ShowAllGroups();
         }
     }
+
 }

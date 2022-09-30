@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace System.Windows.Forms;
@@ -119,15 +120,37 @@ public partial class ListViewEx : System.Windows.Forms.ListView
         var strHeader = "Task " + ((char)('A' + index)).ToString();
         var _index = this.Groups.Add(new ListViewGroup(strHeader, strHeader));
         //var _index = this.Groups.Add(new ListViewGroup(strHeader) { Name = strHeader });
+        AddEmptyItem(_index);
+    }
+
+    /// <summary>
+    /// Adds a dummy item in a group
+    /// </summary>
+    /// <param name="group">Zero-index group where the item will be added</param>
+    public void AddEmptyItem(int group)
+    {
         var emptyItem = new ListViewItem(String.Empty)
         {
-            Group = this.Groups[_index],
+            Group = this.Groups[group],
             Name = DummyName,
-            Tag = this.Groups[_index].Name
+            Tag = this.Groups[group].Name
         };
         this.Items.Add(emptyItem);
     }
 
+    /// <summary>
+    /// Shows all groups by adding an empty item whenever some group does not have any item
+    /// </summary>
+    public void ShowAllGroups()
+    {
+        int i = 0;
+        foreach(ListViewGroup group in this.Groups)
+        {
+            if (group.Items.Count == 0)
+                AddEmptyItem(i);
+            i++;
+        }
+    }
     /// <summary>
     /// Deletes all empty items in the ListView
     /// </summary>
