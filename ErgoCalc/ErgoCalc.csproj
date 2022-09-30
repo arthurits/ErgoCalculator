@@ -356,6 +356,7 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="clsModels.cs" />
     <Compile Remove="old - frmAbout.cs" />
     <Compile Remove="old - frmAbout.Designer.cs" />
     <Compile Remove="TablessTabControl.cs" />
