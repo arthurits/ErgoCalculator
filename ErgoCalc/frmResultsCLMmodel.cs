@@ -7,13 +7,13 @@ using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
 
-public partial class frmCLMmodel : Form, IChildResults
+public partial class FrmResultsCLMmodel : Form, IChildResults
 {
     // Variable definition
     private Job _job;
     private ResultsOptions _options;
 
-    public frmCLMmodel()
+    public FrmResultsCLMmodel()
     {
         InitializeComponent();
 
@@ -25,13 +25,13 @@ public partial class frmCLMmodel : Form, IChildResults
         //rtbShowResult.Size = this.ClientSize;
     }
 
-    public frmCLMmodel(Job job)
+    public FrmResultsCLMmodel(Job job)
         : this()
     {
         _job = job;
     }
 
-    public frmCLMmodel(object data)
+    public FrmResultsCLMmodel(object data)
         : this()
     {
         if (data.GetType() == typeof(Job)) _job = (Job)data;
@@ -236,7 +236,7 @@ public partial class frmCLMmodel : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        frmDataCLMmodel frmData = new frmDataCLMmodel(_job);
+        FrmDataCLMmodel frmData = new FrmDataCLMmodel(_job);
 
         if (frmData.ShowDialog(this) == DialogResult.OK)
         {
@@ -254,7 +254,7 @@ public partial class frmCLMmodel : Form, IChildResults
         //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmCLMmodel frmResults = new frmCLMmodel(_job) { MdiParent = this.MdiParent };
+        FrmResultsCLMmodel frmResults = new FrmResultsCLMmodel(_job) { MdiParent = this.MdiParent };
         //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
         frmResults.Show();
     }

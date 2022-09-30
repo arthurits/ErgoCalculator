@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmDataStrainIndex
+    partial class FrmDataStrainIndex
     {
         /// <summary>
         /// Required designer variable.

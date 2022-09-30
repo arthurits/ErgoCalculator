@@ -14,7 +14,7 @@ using Microsoft.VisualBasic;
 namespace ErgoCalc
 {
 
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
 
         // For loading and saving program settings.
@@ -28,7 +28,7 @@ namespace ErgoCalc
         //private ToolStripPanel tspBottom;
         private readonly string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
-        public frmMain()
+        public FrmMain()
         {
             // Load settings
             LoadProgramSettingsJSON();
@@ -336,12 +336,12 @@ namespace ErgoCalc
         private void frmMain_MdiChildActivate(object sender, EventArgs e)
         {
             ToolStripManager.RevertMerge(this.toolStripMain);
-            if (ActiveMdiChild is FrmWRmodel)
+            if (ActiveMdiChild is FrmResultsWRmodel)
             {
                 // The frmChild.FormToolStrip is a property that exposes the
                 // toolstrip on your child form
                 // ToolStripManager.Merge(frmChild.toolStripWR, this.toolStripMain);
-                ToolStripManager.Merge(((FrmWRmodel)ActiveMdiChild).ChildToolStrip, this.toolStripMain);
+                ToolStripManager.Merge(((FrmResultsWRmodel)ActiveMdiChild).ChildToolStrip, this.toolStripMain);
                 //this.Controls.Add(frmChild.toolStripWR);
                 //((frmWRmodel)ActiveMdiChild).toolStripWR.Visible = true;
                 //this.tspTop.Join(((frmWRmodel)ActiveMdiChild).toolStripWR, 1);

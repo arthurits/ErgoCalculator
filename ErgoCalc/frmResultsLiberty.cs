@@ -10,14 +10,14 @@ using ErgoCalc.Models.LibertyMutual;
 
 namespace ErgoCalc
 {
-    public partial class frmResultsLiberty : Form, IChildResults
+    public partial class FrmResultsLiberty : Form, IChildResults
     {
         private Job _job;
         private readonly string _strPath;
 
         public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public frmResultsLiberty()
+        public FrmResultsLiberty()
         {
             _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
@@ -36,7 +36,7 @@ namespace ErgoCalc
         }
 
 
-        public frmResultsLiberty(object data)
+        public FrmResultsLiberty(object data)
             : this()
         {
             if (data.GetType() == typeof(Job)) _job = (Job)data;
@@ -482,7 +482,7 @@ namespace ErgoCalc
 
         public void EditData()
         {
-            using var frm = new frmDataLiberty(_job);
+            using var frm = new FrmDataLiberty(_job);
 
             if (frm.ShowDialog(this) == DialogResult.OK)
             {
@@ -496,7 +496,7 @@ namespace ErgoCalc
             string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
             // Mostrar la ventana de resultados
-            frmResultsLiberty frmResults = new frmResultsLiberty(_job);
+            FrmResultsLiberty frmResults = new FrmResultsLiberty(_job);
             {
                 MdiParent = this.MdiParent;
             };

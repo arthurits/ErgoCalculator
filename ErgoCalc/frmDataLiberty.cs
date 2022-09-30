@@ -6,7 +6,7 @@ using ErgoCalc.Models.LibertyMutual;
 
 namespace ErgoCalc;
 
-public partial class frmDataLiberty : Form, IChildData
+public partial class FrmDataLiberty : Form, IChildData
 {
     private Job _job;
     //private List<ModelLiberty> _data;
@@ -14,7 +14,7 @@ public partial class frmDataLiberty : Form, IChildData
 
     public object GetData => _job;
 
-    public frmDataLiberty()
+    public FrmDataLiberty()
     {
         InitializeComponent();
         
@@ -67,7 +67,7 @@ public partial class frmDataLiberty : Form, IChildData
 
     }
 
-    public frmDataLiberty(Job job)
+    public FrmDataLiberty(Job job)
         : this()
     {
         _job = job;

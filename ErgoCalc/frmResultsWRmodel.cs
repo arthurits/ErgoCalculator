@@ -11,12 +11,12 @@ using ErgoCalc.Models.WR;
 namespace ErgoCalc;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-public partial class FrmWRmodel : Form, IChildResults
+public partial class FrmResultsWRmodel : Form, IChildResults
 {
     private List<DataWR> _datos;
     private ChartOptions _chartOptions;
 
-    public FrmWRmodel()
+    public FrmResultsWRmodel()
     {
         InitializeComponent();
         InitializeChart();
@@ -50,7 +50,7 @@ public partial class FrmWRmodel : Form, IChildResults
         
     }
 
-    public FrmWRmodel(object datos)
+    public FrmResultsWRmodel(object datos)
         :this()
     {
         _datos = (List<DataWR>)datos;
@@ -200,7 +200,7 @@ public partial class FrmWRmodel : Form, IChildResults
     private void toolStripWR_AddLine_Click(object sender, EventArgs e)
     {
         // Llamar al formulario para introducir los datos
-        frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos);
+        FrmDataWRmodel frmDatosWR = new FrmDataWRmodel(_datos);
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
             _datos = (List<DataWR>)frmDatosWR.GetData;
@@ -411,7 +411,7 @@ public partial class FrmWRmodel : Form, IChildResults
     public void EditData()
     {
         // Show the form with the data in order to edit it
-        frmDataWRmodel frmDatosWR = new frmDataWRmodel(_datos);
+        FrmDataWRmodel frmDatosWR = new FrmDataWRmodel(_datos);
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
             // Get the edited input data
@@ -429,7 +429,7 @@ public partial class FrmWRmodel : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        FrmWRmodel frmResults = new FrmWRmodel(_datos)
+        FrmResultsWRmodel frmResults = new FrmResultsWRmodel(_datos)
         {
             MdiParent = this.MdiParent
         };

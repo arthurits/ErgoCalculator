@@ -5,7 +5,7 @@ using ErgoCalc.Models.ThermalComfort;
 
 namespace ErgoCalc;
 
-public partial class frmDataTC : Form, IChildData
+public partial class FrmDataTC : Form, IChildData
 {
     //private List<ModelTC> _data;
     private Job _job;
@@ -13,7 +13,7 @@ public partial class frmDataTC : Form, IChildData
     public object GetData => _job;
     public Job GetJob => _job;
 
-    public frmDataTC()
+    public FrmDataTC()
     {
         InitializeComponent();
 
@@ -33,7 +33,7 @@ public partial class frmDataTC : Form, IChildData
 
     }
 
-    public frmDataTC(Job job)
+    public FrmDataTC(Job job)
         : this()
     {
         _job = job;

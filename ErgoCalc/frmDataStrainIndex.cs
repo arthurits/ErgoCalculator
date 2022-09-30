@@ -12,7 +12,7 @@ using ErgoCalc.Models.StrainIndex;
 
 namespace ErgoCalc;
 
-public partial class frmDataStrainIndex : Form, IChildData
+public partial class FrmDataStrainIndex : Form, IChildData
 {
     private Job _job;
     private IndexType _index;
@@ -22,7 +22,7 @@ public partial class frmDataStrainIndex : Form, IChildData
     public IndexType Index => _index;
 
     // Default constructor
-    public frmDataStrainIndex()
+    public FrmDataStrainIndex()
     {
         // VS Designer initialization routine
         InitializeComponent();
@@ -46,7 +46,7 @@ public partial class frmDataStrainIndex : Form, IChildData
     }
 
     // Overloaded constructor
-    public frmDataStrainIndex(Job job)
+    public FrmDataStrainIndex(Job job)
         : this() // Call the base constructor
     {
         _job = job;

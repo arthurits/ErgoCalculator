@@ -1,7 +1,7 @@
 ﻿
 namespace ErgoCalc
 {
-    partial class frmResultsLiberty
+    partial class FrmResultsLiberty
     {
         /// <summary>
         /// Required designer variable.

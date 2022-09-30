@@ -19,7 +19,7 @@ public enum ModelType
     LibertyMutual,
 }
 
-partial class frmMain
+partial class FrmMain
 {
     private void New_Click(object sender, EventArgs e)
     {
@@ -28,14 +28,14 @@ partial class frmMain
 
         Form frmData = frmNew.Model switch
         {
-            ModelType.WorkRest => new frmDataWRmodel(),
-            ModelType.CumulativeLifting => new frmDataCLMmodel(),
-            ModelType.NioshLifting => new frmDataNIOSHmodel(),
-            ModelType.StrainIndex => new frmDataStrainIndex(),
-            ModelType.OcraCheck => new frmDataOCRAcheck(),
+            ModelType.WorkRest => new FrmDataWRmodel(),
+            ModelType.CumulativeLifting => new FrmDataCLMmodel(),
+            ModelType.NioshLifting => new FrmDataNIOSHmodel(),
+            ModelType.StrainIndex => new FrmDataStrainIndex(),
+            ModelType.OcraCheck => new FrmDataOCRAcheck(),
             ModelType.MetabolicRate => new FrmDataMet(),
-            ModelType.ThermalComfort => new frmDataTC(),
-            ModelType.LibertyMutual => new frmDataLiberty(),
+            ModelType.ThermalComfort => new FrmDataTC(),
+            ModelType.LibertyMutual => new FrmDataLiberty(),
             _ => new Form()
         };
 
@@ -48,14 +48,14 @@ partial class frmMain
             {
                 Form frmResults = frmNew.Model switch
                 {
-                    ModelType.WorkRest => new FrmWRmodel(frm.GetData),
-                    ModelType.CumulativeLifting => new frmCLMmodel(frm.GetData),
-                    ModelType.NioshLifting => new frmResultNIOSHmodel(frm.GetData),
-                    ModelType.StrainIndex => new frmResultsStrainIndex(frm.GetData),
-                    ModelType.OcraCheck => new frmResultsOCRAcheck(frm.GetData),
+                    ModelType.WorkRest => new FrmResultsWRmodel(frm.GetData),
+                    ModelType.CumulativeLifting => new FrmResultsCLMmodel(frm.GetData),
+                    ModelType.NioshLifting => new FrmResultNIOSHmodel(frm.GetData),
+                    ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData),
+                    ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
-                    ModelType.ThermalComfort => new frmResultsTC(frm.GetData),
-                    ModelType.LibertyMutual => new frmResultsLiberty(frm.GetData),
+                    ModelType.ThermalComfort => new FrmResultsTC(frm.GetData),
+                    ModelType.LibertyMutual => new FrmResultsLiberty(frm.GetData),
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
@@ -110,15 +110,16 @@ partial class frmMain
             // Dilemma: this should be wrapped in a try-catch, but variables will be out of scope and syntax would be cumbersome
             using JsonDocument document = JsonDocument.Parse(jsonString, options);
             var strType = document.RootElement.TryGetProperty("Document type", out JsonElement docuValue) ? docuValue.ToString() : "Error";
+            //string cultureName = document.RootElement.TryGetProperty("Culture name", out docuValue) ? docuValue.ToString() : string.Empty;
 
             Form frm = strType switch
             {
-                "Work-Rest model" => new FrmWRmodel(),
-                "NIOSH lifting equation" => new frmResultNIOSHmodel(),
-                "Strain index" => new frmResultsStrainIndex(),
-                "Thermal comfort model" => new frmResultsTC(),
-                "LM-MMH model" => new frmResultsLiberty(),
-                "Comprehensive lifting model" => new frmCLMmodel(),
+                "Work-Rest model" => new FrmResultsWRmodel(),
+                "NIOSH lifting equation" => new FrmResultNIOSHmodel(),
+                "Strain index" => new FrmResultsStrainIndex(),
+                "Thermal comfort model" => new FrmResultsTC(),
+                "LM-MMH model" => new FrmResultsLiberty(),
+                "Comprehensive lifting model" => new FrmResultsCLMmodel(),
                 _ => default
             };
 

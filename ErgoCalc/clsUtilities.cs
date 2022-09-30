@@ -258,7 +258,7 @@ namespace ErgoCalc
         /// </summary>
         private void errorNoCurveSelected()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             System.Windows.Forms.MessageBox.Show(
                 resources.GetString("MsgBoxPropiedadesMensaje"),
                 resources.GetString("MsgBoxPropiedadesTítulo"),

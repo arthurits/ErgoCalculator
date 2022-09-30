@@ -1,7 +1,7 @@
 ﻿
 namespace ErgoCalc
 {
-    partial class frmResultsOCRAcheck
+    partial class FrmResultsOCRAcheck
     {
         /// <summary>
         /// Required designer variable.

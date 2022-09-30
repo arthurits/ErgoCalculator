@@ -11,12 +11,12 @@ using PsychroLib;
 
 namespace ErgoCalc;
 
-public partial class frmResultsTC : Form, IChildResults
+public partial class FrmResultsTC : Form, IChildResults
 {
     private Job _job;
     private string _strPath;
 
-    public frmResultsTC()
+    public FrmResultsTC()
     {
         _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
         if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
@@ -31,13 +31,13 @@ public partial class frmResultsTC : Form, IChildResults
         splitContainer1.IsSplitterFixed = true;
     }
 
-    public frmResultsTC(Job job)
+    public FrmResultsTC(Job job)
         : this()
     {
         _job = job;
     }
 
-    public frmResultsTC(object data)
+    public FrmResultsTC(object data)
         :this()
     {
         if (data.GetType() == typeof(Job)) _job = (Job)data;
@@ -236,7 +236,7 @@ public partial class frmResultsTC : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmResultsTC frmResults = new frmResultsTC(_job);
+        FrmResultsTC frmResults = new FrmResultsTC(_job);
         {
             MdiParent = this.MdiParent;
         };
@@ -246,7 +246,7 @@ public partial class frmResultsTC : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new frmDataTC(_job);
+        using var frm = new FrmDataTC(_job);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {

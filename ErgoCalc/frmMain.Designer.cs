@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.mnuMainFrm = new System.Windows.Forms.MenuStrip();
             this.mnuMainFrm_File = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainFrm_File_New = new System.Windows.Forms.ToolStripMenuItem();

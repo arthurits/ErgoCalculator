@@ -9,13 +9,13 @@ using ErgoCalc.Models.StrainIndex;
 
 namespace ErgoCalc;
 
-public partial class frmResultsStrainIndex : Form, IChildResults
+public partial class FrmResultsStrainIndex : Form, IChildResults
 {
     // Variable definition
     private string _strPath;
     private Job _job;
 
-    public frmResultsStrainIndex()
+    public FrmResultsStrainIndex()
     {
         InitializeComponent();
 
@@ -36,13 +36,13 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
     }
 
-    public frmResultsStrainIndex(Job job)
+    public FrmResultsStrainIndex(Job job)
         :this()
     {
         _job = job;
     }
 
-    public frmResultsStrainIndex(object data)
+    public FrmResultsStrainIndex(object data)
         : this()
     {
         if(data.GetType() == typeof(Job)) _job = (Job)data;
@@ -487,7 +487,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        frmDataStrainIndex frmDataStrain = new frmDataStrainIndex(_job);
+        FrmDataStrainIndex frmDataStrain = new FrmDataStrainIndex(_job);
 
         if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
         {
@@ -508,7 +508,7 @@ public partial class frmResultsStrainIndex : Form, IChildResults
         //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmResultsStrainIndex frmResults = new frmResultsStrainIndex(_job) { MdiParent = this.MdiParent };
+        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job) { MdiParent = this.MdiParent };
         //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
         frmResults.Show();
     }

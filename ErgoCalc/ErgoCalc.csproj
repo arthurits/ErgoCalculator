@@ -102,11 +102,11 @@
     <Compile Update="frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmCLMmodel.cs">
+    <Compile Update="frmResultsCLMmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmCLMmodel.Designer.cs">
-      <DependentUpon>frmCLMmodel.cs</DependentUpon>
+    <Compile Update="frmResultsCLMmodel.Designer.cs">
+      <DependentUpon>frmResultsCLMmodel.cs</DependentUpon>
     </Compile>
     <Compile Update="frmDataCLMmodel.cs">
       <SubType>Form</SubType>
@@ -142,11 +142,11 @@
     <Compile Update="frmResultNIOSHmodel.Designer.cs">
       <DependentUpon>frmResultNIOSHmodel.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmWRmodel.cs">
+    <Compile Update="frmResultsWRmodel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmWRmodel.Designer.cs">
-      <DependentUpon>frmWRmodel.cs</DependentUpon>
+    <Compile Update="frmResultsWRmodel.Designer.cs">
+      <DependentUpon>frmResultsWRmodel.cs</DependentUpon>
     </Compile>
     <Compile Update="controls\RadioButtonClick.cs">
       <SubType>Component</SubType>
@@ -169,8 +169,8 @@
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmCLMmodel.resx">
-      <DependentUpon>frmCLMmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultsCLMmodel.resx">
+      <DependentUpon>frmResultsCLMmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="frmDataCLMmodel.resx">
@@ -195,8 +195,8 @@
       <DependentUpon>frmResultNIOSHmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmWRmodel.resx">
-      <DependentUpon>frmWRmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultsWRmodel.resx">
+      <DependentUpon>frmResultsWRmodel.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">

@@ -11,12 +11,12 @@ namespace ErgoCalc;
 public partial class FrmLanguage : Form
 {
     private AppSettings _settings = new();
-    private readonly System.Resources.ResourceManager StringsRM = new("ErgoCalc.localization.strings", typeof(frmMain).Assembly);
+    private readonly System.Resources.ResourceManager StringsRM = new("ErgoCalc.localization.strings", typeof(FrmMain).Assembly);
 
     public FrmLanguage()
     {
         InitializeComponent();
-        FillDefinedCultures("ErgoCalc.localization.strings", typeof(frmMain).Assembly);
+        FillDefinedCultures("ErgoCalc.localization.strings", typeof(FrmMain).Assembly);
         UpdateUI_Language();
     }
 

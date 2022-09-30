@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmCLMmodel
+    partial class FrmResultsCLMmodel
     {
         /// <summary>
         /// Required designer variable.
