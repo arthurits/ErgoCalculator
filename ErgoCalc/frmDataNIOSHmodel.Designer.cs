@@ -47,6 +47,7 @@
             this.radSLI = new System.Windows.Forms.RadioButton();
             this.radCLI = new System.Windows.Forms.RadioButton();
             this.radLI = new System.Windows.Forms.RadioButton();
+            this.btnExample = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.updSubTasks)).BeginInit();
             this.tabData.SuspendLayout();
             this.tabSubtasks.SuspendLayout();
@@ -67,19 +68,9 @@
             0,
             0,
             0});
-            this.updSubTasks.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.updSubTasks.Name = "updSubTasks";
             this.updSubTasks.Size = new System.Drawing.Size(63, 22);
             this.updSubTasks.TabIndex = 1;
-            this.updSubTasks.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.updSubTasks.ValueChanged += new System.EventHandler(this.updSubTasks_ValueChanged);
             // 
             // lblSubTasks
@@ -104,7 +95,7 @@
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "&Accept";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.Accept_Click);
             // 
             // btnCancel
             // 
@@ -116,7 +107,7 @@
             this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "&Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // lblConstanteLC
             // 
@@ -129,7 +120,7 @@
             // 
             // txtConstanteLC
             // 
-            this.txtConstanteLC.Location = new System.Drawing.Point(191, 469);
+            this.txtConstanteLC.Location = new System.Drawing.Point(174, 469);
             this.txtConstanteLC.Name = "txtConstanteLC";
             this.txtConstanteLC.Size = new System.Drawing.Size(33, 23);
             this.txtConstanteLC.TabIndex = 3;
@@ -189,10 +180,10 @@
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
             this.tabTasks.Controls.Add(this.listViewTasks);
-            this.tabTasks.Location = new System.Drawing.Point(4, 24);
+            this.tabTasks.Location = new System.Drawing.Point(4, 25);
             this.tabTasks.Name = "tabTasks";
             this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTasks.Size = new System.Drawing.Size(737, 329);
+            this.tabTasks.Size = new System.Drawing.Size(737, 328);
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 
@@ -225,7 +216,7 @@
             // 
             // tabDummy
             // 
-            this.tabDummy.Location = new System.Drawing.Point(362, 430);
+            this.tabDummy.Location = new System.Drawing.Point(669, 380);
             this.tabDummy.Name = "tabDummy";
             this.tabDummy.SelectedIndex = 0;
             this.tabDummy.Size = new System.Drawing.Size(84, 75);
@@ -240,7 +231,7 @@
             this.grpIndex.Controls.Add(this.radLI);
             this.grpIndex.Location = new System.Drawing.Point(16, 378);
             this.grpIndex.Name = "grpIndex";
-            this.grpIndex.Size = new System.Drawing.Size(314, 69);
+            this.grpIndex.Size = new System.Drawing.Size(314, 65);
             this.grpIndex.TabIndex = 10;
             this.grpIndex.TabStop = false;
             this.grpIndex.Text = "Index type";
@@ -279,6 +270,7 @@
             // 
             this.radCLI.AutoSize = true;
             this.radCLI.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.radCLI.Enabled = false;
             this.radCLI.Location = new System.Drawing.Point(80, 30);
             this.radCLI.Name = "radCLI";
             this.radCLI.Size = new System.Drawing.Size(46, 21);
@@ -304,13 +296,24 @@
             this.radLI.UseVisualStyleBackColor = true;
             this.radLI.CheckedChanged += new System.EventHandler(this.rad_CheckedChanged);
             // 
-            // frmDataNIOSHmodel
+            // btnExample
+            // 
+            this.btnExample.Location = new System.Drawing.Point(306, 462);
+            this.btnExample.Name = "btnExample";
+            this.btnExample.Size = new System.Drawing.Size(133, 34);
+            this.btnExample.TabIndex = 11;
+            this.btnExample.Text = "Example";
+            this.btnExample.UseVisualStyleBackColor = true;
+            this.btnExample.Click += new System.EventHandler(this.Example_Click);
+            // 
+            // FrmDataNIOSHmodel
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(774, 511);
+            this.Controls.Add(this.btnExample);
             this.Controls.Add(this.grpIndex);
             this.Controls.Add(this.tabDummy);
             this.Controls.Add(this.tabData);
@@ -323,7 +326,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataNIOSHmodel";
+            this.Name = "FrmDataNIOSHmodel";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -364,5 +367,6 @@
         private System.Windows.Forms.RadioButton radSLI;
         private System.Windows.Forms.RadioButton radCLI;
         private System.Windows.Forms.RadioButton radLI;
+        private System.Windows.Forms.Button btnExample;
     }
 }

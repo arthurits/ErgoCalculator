@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+
 using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
@@ -26,33 +27,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
         listViewTasks.AddGroup();
 
         // Create the first column (zero index base)
-        AddColumn();
-
-        // Create the header rows
-        gridVariables.RowCount = 8;
-        gridVariables.Rows[0].HeaderCell.Value = "Weight lifted (kg)";
-        gridVariables.Rows[1].HeaderCell.Value = "Horizontal distance (cm)";
-        gridVariables.Rows[2].HeaderCell.Value = "Vertical distance (cm)";
-        gridVariables.Rows[3].HeaderCell.Value = "Vertical travel distance (cm)";
-        gridVariables.Rows[4].HeaderCell.Value = "Lifting frequency (times/min)";
-        gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
-        gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (°)";
-        gridVariables.Rows[7].HeaderCell.Value = "Coupling";
-
-        // Create custom cells with combobox display
-        DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-        DataTable tableC = new DataTable();
-
-        tableC.Columns.Add("Display", typeof(String));
-        tableC.Columns.Add("Value", typeof(Int32));
-        tableC.Rows.Add("Good", 2);
-        tableC.Rows.Add("Poor", 1);
-        tableC.Rows.Add("No handle", 0);
-        celdaC.DataSource = tableC;
-        celdaC.DisplayMember = "Display";
-        celdaC.ValueMember = "Value";
-
-        gridVariables.Rows[7].Cells[0] = celdaC;
+        //AddColumn();
 
     }
 
@@ -75,21 +50,19 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
             for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
 
         // Modify the chkComposite state
+        grpIndex.Enabled = col > 0;
         if (col > 1)
         {
             radCLI.Enabled = true;
         }
         else if (col == 1)
         {
+            radLI.Checked = true;
             radCLI.Enabled = false;
-        }
-        else
-        {
-            grpIndex.Enabled = false;
         }
 
         // Set the maximum tasks
-        this.updTasks.Maximum = col - 1;
+        if (col > 1) this.updTasks.Maximum = col - 1;
 
         return;
     }
@@ -146,7 +119,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
 
     }
 
-    private void btnOK_Click(object sender, EventArgs e)
+    private void Accept_Click(object sender, EventArgs e)
     {
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
@@ -227,10 +200,18 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
         return;
     }
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void Cancel_Click(object sender, EventArgs e)
     {
         // Return empty array
         _nioshLifting = new();
+    }
+
+    private void Example_Click(object sender, EventArgs e)
+    {
+        // Loads some data example into the grid
+        updSubTasks.Value = 0;
+        DataExample();
+        DataToGrid();
     }
 
     #region Private routines
@@ -253,6 +234,8 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
         // Give format to the cells
         if (col > 0)
             gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+        else if (col == 0)
+            AddRows();
 
         return;
     }
@@ -263,6 +246,38 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
     private void AddColumn()
     {
         AddColumn(gridVariables.Columns.Count);
+    }
+
+    /// <summary>
+    /// Adds the headercell values for each row
+    /// </summary>
+    private void AddRows()
+    {
+        // Create the header rows
+        gridVariables.RowCount = 8;
+        gridVariables.Rows[0].HeaderCell.Value = "Weight lifted (kg)";
+        gridVariables.Rows[1].HeaderCell.Value = "Horizontal distance (cm)";
+        gridVariables.Rows[2].HeaderCell.Value = "Vertical distance (cm)";
+        gridVariables.Rows[3].HeaderCell.Value = "Vertical travel distance (cm)";
+        gridVariables.Rows[4].HeaderCell.Value = "Lifting frequency (times/min)";
+        gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
+        gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (°)";
+        gridVariables.Rows[7].HeaderCell.Value = "Coupling";
+
+        // Create custom cells with combobox display
+        DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
+        DataTable tableC = new DataTable();
+
+        tableC.Columns.Add("Display", typeof(String));
+        tableC.Columns.Add("Value", typeof(Int32));
+        tableC.Rows.Add(ErgoCalc.Models.Lifting.Coupling.Good.ToString(), ErgoCalc.Models.Lifting.Coupling.Good);
+        tableC.Rows.Add(ErgoCalc.Models.Lifting.Coupling.Poor.ToString(), ErgoCalc.Models.Lifting.Coupling.Poor);
+        tableC.Rows.Add(ErgoCalc.Models.Lifting.Coupling.NoHandle, ErgoCalc.Models.Lifting.Coupling.NoHandle);
+        celdaC.DataSource = tableC;
+        celdaC.DisplayMember = "Display";
+        celdaC.ValueMember = "Value";
+
+        gridVariables.Rows[7].Cells[0] = celdaC;
     }
 
     /// <summary>
@@ -407,7 +422,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
             for (var i = 0; i < _nioshLifting.jobTasks[j].subTasks.Length; i++)
             {
                 //Column 0 is already created in the constructor;
-                //if ((i + j) > 0) AddColumn(nCol);
+                if ((i + j) == 0) AddColumn();
 
                 for (int k = nCol; k <= _nioshLifting.jobTasks[j].subTasks[i].itemIndex; k++)
                 {
@@ -417,6 +432,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
                         AddColumn(nCol);
                         nCol++;
                     }
+
                 }
 
                 // Populate the DataGridView with data
@@ -430,14 +446,15 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
                 gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 7].Value = (int)_nioshLifting.jobTasks[j].subTasks[i].data.c;
 
                 // Classify
-                listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
+                if (j > 0)
+                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items.Insert(_nioshLifting.jobTasks[j].subTasks[i].itemIndex, new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
             }
         }
         // Update the control's value
         updSubTasks.Value = nCol;
-        updTasks.Value = _nioshLifting.numberTasks;
+        //updTasks.Value = _nioshLifting.numberTasks;
     }
 
     #endregion
@@ -447,9 +464,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
     /// </summary>
     public void LoadExample()
     {
-        // Load some data example
-        DataExample();
-        DataToGrid();
+
     }
 
     private void tabData_Selected(object sender, TabControlEventArgs e)
@@ -471,4 +486,6 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
             listViewTasks.RemoveEmptyItems();
         }
     }
+
+    
 }

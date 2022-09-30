@@ -10,6 +10,7 @@ namespace System.Windows.Forms;
 //[Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner)), System.ComponentModel.DesignerCategory("")]
 public partial class ListViewEx : System.Windows.Forms.ListView
 {
+    public string DummyName { get; set; } = "Dummy";
     private System.Windows.Forms.ListViewItem heldDownItem;
     //private System.Windows.Forms.ListViewGroup heldDownGroup;
     private System.Drawing.Point heldDownPoint;
@@ -78,14 +79,14 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     protected override void OnMouseUp(MouseEventArgs e)
     {
         //var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
-        if (heldDownItem != null && heldDownItem.Name != "Dummy")
+        if (heldDownItem != null && heldDownItem.Name != DummyName)
         {
             var group = this.GetItemAt(e.X, e.Y);
             if (group != null)
             {
                 if (this.Groups[heldDownItem.Group.Header].Items.Count == 1)
                 {
-                    var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty) { Name = "Dummy" };
+                    var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty) { Name = DummyName };
                     emptyItem.Group = heldDownItem.Group;
                     //emptyItem.Tag = heldDownItem.Group.Name;
                     this.Items.Add(emptyItem);
@@ -121,7 +122,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
         var emptyItem = new ListViewItem(String.Empty)
         {
             Group = this.Groups[_index],
-            Name = "Dummy",
+            Name = DummyName,
             Tag = this.Groups[_index].Name
         };
         this.Items.Add(emptyItem);
@@ -133,8 +134,10 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     public void RemoveEmptyItems()
     {
         for (int i = 0; i < this.Groups.Count; i++)
+        {
             RemoveEmptyItems(i);
-        // this.Items.RemoveByKey("Dummy");
+        }
+        // this.Items.RemoveByKey(DummyName);
     }
     /// <summary>
     /// Delete any empty item in a given group
@@ -142,9 +145,10 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     /// <param name="GroupIndex">Group index</param>
     public void RemoveEmptyItems(int GroupIndex)
     {
-        for (int i = this.Groups[GroupIndex].Items.Count; i > 0; i--)
+        int totalItems = this.Groups[GroupIndex].Items.Count;
+        for (int i = totalItems; i > 0; i--)
         {
-            if (this.Groups[GroupIndex].Items[i - 1].Name == "Dummy")
+            if (totalItems > 1 && this.Groups[GroupIndex].Items[i - 1].Name == DummyName)
                 this.Items.Remove(this.Groups[GroupIndex].Items[i - 1]);
         }
     }
@@ -173,7 +177,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
         {
             if (this.Groups[i - 1].Items.Count <= 1)
             {
-                if (this.Groups[i - 1].Items[0].Name == "Dummy")
+                if (this.Groups[i - 1].Items[0].Name == DummyName)
                     this.RemoveGroup(i - 1);
             }
         }
@@ -209,12 +213,12 @@ public partial class ListViewEx : System.Windows.Forms.ListView
             for (int i = this.Groups[index].Items.Count; i > 0; i--)
             {
                 // If a "Dummy" item, delete. Otherwise, move it to the lower group
-                if (this.Groups[index].Items[i - 1].Name == "Dummy")
+                if (this.Groups[index].Items[i - 1].Name == DummyName)
                     this.Items.Remove(this.Groups[index].Items[i - 1]);
                 else
                     this.Groups[index].Items[i - 1].Group = this.Groups[index - 1];
             }
-            //DeleteEmptyItems(index - 1);
+            RemoveEmptyItems(index - 1);
         }
 
         // Finally, delete group
