@@ -236,7 +236,7 @@ public partial class frmResultsCLM : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        frmDataCLM frmData = new frmDataCLM(_job);
+        FrmDataCLM frmData = new FrmDataCLM(_job);
 
         if (frmData.ShowDialog(this) == DialogResult.OK)
         {

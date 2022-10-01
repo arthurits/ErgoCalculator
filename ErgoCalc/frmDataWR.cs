@@ -88,7 +88,6 @@ public partial class FrmDataWR : Form, IChildData
     private void Example_Click(object sender, EventArgs e)
     {
         // Loads some data example into the grid
-        updTasks.Value = 0;
         DataExample();
         DataToGrid();
     }
@@ -197,6 +196,7 @@ public partial class FrmDataWR : Form, IChildData
     /// <param name="data">List containing the data</param>
     private void DataToGrid()
     {
+        // This creates the necessary gridVariables columns
         updTasks.Value = _job.NumberTasks;
 
         for (int i = 0; i < _job.NumberTasks; i++)

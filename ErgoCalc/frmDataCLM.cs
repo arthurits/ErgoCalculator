@@ -7,69 +7,24 @@ using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
 
-public partial class frmDataCLM : Form, IChildData
+public partial class FrmDataCLM : Form, IChildData
 {
     private Job _job;
     public object GetData => _job;
 
-    public frmDataCLM()
+    public FrmDataCLM()
     {
-        // VS initialization routine
-        InitializeComponent();
-
-        // Create the first column (zero index base)
-        AddColumn();
-
-        // Create the header rows
-        gridVariables.RowCount = 12;
-        gridVariables.Rows[0].HeaderCell.Value = "Gender";
-        gridVariables.Rows[1].HeaderCell.Value = "Weight lifted (kg)";
-        gridVariables.Rows[2].HeaderCell.Value = "Horizontal distance (cm)";
-        gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (cm)";
-        gridVariables.Rows[4].HeaderCell.Value = "Vertical travel distance (cm)";
-        gridVariables.Rows[5].HeaderCell.Value = "Lifting frequency (times/min)";
-        gridVariables.Rows[6].HeaderCell.Value = "Task duration (hours)";
-        gridVariables.Rows[7].HeaderCell.Value = "Twisting angle (º)";
-        gridVariables.Rows[8].HeaderCell.Value = "Coupling";
-        gridVariables.Rows[9].HeaderCell.Value = "WBGT temperature (ºC)";
-        gridVariables.Rows[10].HeaderCell.Value = "Age (years)";
-        gridVariables.Rows[11].HeaderCell.Value = "Body weight (kg)";
-
-        // Create custom cells with combobox display
-        DataGridViewComboBoxCell celdaG = new DataGridViewComboBoxCell();
-        DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-        DataTable tableG = new DataTable();
-        DataTable tableC = new DataTable();
-
-        tableG.Columns.Add("Display", typeof(string));
-        tableG.Columns.Add("Value", typeof(int));
-        tableG.Rows.Add(Gender.Male.ToString(), (int)Gender.Male);
-        tableG.Rows.Add(Gender.Female.ToString(), (int)Gender.Female);
-        celdaG.DataSource = tableG;
-        celdaG.DisplayMember = "Display";
-        celdaG.ValueMember = "Value";
-
-        tableC.Columns.Add("Display", typeof(string));
-        tableC.Columns.Add("Value", typeof(int));
-        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
-        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
-        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
-        celdaC.DataSource = tableC;
-        celdaC.DisplayMember = "Display";
-        celdaC.ValueMember = "Value";
-
-        gridVariables.Rows[0].Cells[0] = celdaG;
-        gridVariables.Rows[8].Cells[0] = celdaC;
+        InitializeComponent();       
     }
 
-    public frmDataCLM(Job job)
+    public FrmDataCLM(Job job)
         : this() // Call the base constructor
     {
         _job = job;
         DataToGrid();
     }
 
-    private void updTasks_ValueChanged(object sender, EventArgs e)
+    private void Tasks_ValueChanged(object sender, EventArgs e)
     {
         Int32 col = Convert.ToInt32(updTasks.Value);
 
@@ -103,8 +58,8 @@ public partial class frmDataCLM : Form, IChildData
 
         // Save the values entered
         _job.NumberTasks = Convert.ToInt32(updTasks.Value);
-        _job.Tasks = new Task[Convert.ToInt32(updTasks.Value)];
-        for (Int32 i = 0; i < _job.Tasks.Length; i++)
+        _job.Tasks = new Task[_job.NumberTasks];
+        for (Int32 i = 0; i < _job.NumberTasks; i++)
         {
             _job.Tasks[i] = new Task();
             _job.Tasks[i].Data.Gender = (Gender)Convert.ToInt32(gridVariables[i, 0].Value);
@@ -158,6 +113,8 @@ public partial class frmDataCLM : Form, IChildData
             gridVariables.Rows[0].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[0].Cells[col - 1].Clone();
             gridVariables.Rows[8].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
         }
+        else if (col == 0)
+            AddRows();
 
         return;
     }
@@ -168,6 +125,53 @@ public partial class frmDataCLM : Form, IChildData
     private void AddColumn()
     {
         AddColumn(gridVariables.Columns.Count);
+    }
+
+    /// <summary>
+    /// Adds the headercell values for each row
+    /// </summary>
+    private void AddRows()
+    {
+        // Create the header rows
+        gridVariables.RowCount = 12;
+        gridVariables.Rows[0].HeaderCell.Value = "Gender";
+        gridVariables.Rows[1].HeaderCell.Value = "Weight lifted (kg)";
+        gridVariables.Rows[2].HeaderCell.Value = "Horizontal distance (cm)";
+        gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (cm)";
+        gridVariables.Rows[4].HeaderCell.Value = "Vertical travel distance (cm)";
+        gridVariables.Rows[5].HeaderCell.Value = "Lifting frequency (times/min)";
+        gridVariables.Rows[6].HeaderCell.Value = "Task duration (hours)";
+        gridVariables.Rows[7].HeaderCell.Value = "Twisting angle (º)";
+        gridVariables.Rows[8].HeaderCell.Value = "Coupling";
+        gridVariables.Rows[9].HeaderCell.Value = "WBGT temperature (ºC)";
+        gridVariables.Rows[10].HeaderCell.Value = "Age (years)";
+        gridVariables.Rows[11].HeaderCell.Value = "Body weight (kg)";
+
+        // Create custom cells with combobox display
+        DataGridViewComboBoxCell celdaG = new DataGridViewComboBoxCell();
+        DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
+        DataTable tableG = new DataTable();
+        DataTable tableC = new DataTable();
+
+        tableG.Columns.Add("Display", typeof(string));
+        tableG.Columns.Add("Value", typeof(int));
+        tableG.Rows.Add(Gender.Male.ToString(), (int)Gender.Male);
+        tableG.Rows.Add(Gender.Female.ToString(), (int)Gender.Female);
+        celdaG.DataSource = tableG;
+        celdaG.DisplayMember = "Display";
+        celdaG.ValueMember = "Value";
+
+        tableC.Columns.Add("Display", typeof(string));
+        tableC.Columns.Add("Value", typeof(int));
+        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
+        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
+        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
+        celdaC.DataSource = tableC;
+        celdaC.DisplayMember = "Display";
+        celdaC.ValueMember = "Value";
+
+        gridVariables.Rows[0].Cells[0] = celdaG;
+        gridVariables.Rows[8].Cells[0] = celdaC;
     }
 
     /// <summary>
@@ -183,7 +187,8 @@ public partial class frmDataCLM : Form, IChildData
     private void DataExample()
     {
         _job = new();
-        _job.Tasks = new Task[2];
+        _job.NumberTasks = 2;
+        _job.Tasks = new Task[_job.NumberTasks];
 
         _job.Tasks[0] = new Task();
         _job.Tasks[0].Data.Gender = Gender.Male;
@@ -219,11 +224,11 @@ public partial class frmDataCLM : Form, IChildData
     /// </summary>
     private void DataToGrid()
     {
+        // Update the control's value. This creates the necessary griVariables columns
+        updTasks.Value = _job.Tasks.Length;
+
         for (Int32 i = 0; i < _job.Tasks.Length; i++)
         {
-            // Add one column whenever necessary
-            if (i > 0) AddColumn(i);
-
             // Populate the DataGridView with data
             gridVariables[i, 0].Value = (int)_job.Tasks[i].Data.Gender;
             gridVariables[i, 1].Value = _job.Tasks[i].Data.Weight.ToString();
@@ -238,15 +243,6 @@ public partial class frmDataCLM : Form, IChildData
             gridVariables[i, 10].Value = _job.Tasks[i].Data.ag.ToString();
             gridVariables[i, 11].Value = _job.Tasks[i].Data.bw.ToString();
         }
-
-        // Update the control's value
-        updTasks.Value = _job.Tasks.Length;
-    }
-
-    private void DataToGrid(Job job)
-    {
-        _job = job;
-        DataToGrid();
     }
 
     #endregion

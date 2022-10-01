@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmDataCLM
+    partial class FrmDataCLM
     {
         /// <summary>
         /// Required designer variable.
@@ -48,20 +48,10 @@
             0,
             0,
             0});
-            this.updTasks.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.updTasks.Name = "updTasks";
             this.updTasks.Size = new System.Drawing.Size(63, 23);
             this.updTasks.TabIndex = 0;
-            this.updTasks.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.updTasks.ValueChanged += new System.EventHandler(this.updTasks_ValueChanged);
+            this.updTasks.ValueChanged += new System.EventHandler(this.Tasks_ValueChanged);
             // 
             // gridVariables
             // 
@@ -123,7 +113,7 @@
             this.btnExample.UseVisualStyleBackColor = true;
             this.btnExample.Click += new System.EventHandler(this.Example_Click);
             // 
-            // frmDataCLMmodel
+            // frmDataCLM
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -141,7 +131,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataCLMmodel";
+            this.Name = "frmDataCLM";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "CLM model data";
