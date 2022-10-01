@@ -9,16 +9,16 @@ using ErgoCalc.Models.WR;
 
 namespace ErgoCalc;
 
-public partial class FrmDataWRmodel : Form, IChildData
+public partial class frmDataWR : Form, IChildData
 {
     // Propiedades de la clase
     public List<DataWR> _data;
     private string strGridHeader = "Task ";
-    private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDataWRmodel));
+    private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDataWR));
 
     public object GetData => _data;
 
-    public FrmDataWRmodel()
+    public frmDataWR()
     {
         InitializeComponent();
 
@@ -56,7 +56,7 @@ public partial class FrmDataWRmodel : Form, IChildData
 
     }
 
-    public FrmDataWRmodel (List<DataWR> data)
+    public frmDataWR (List<DataWR> data)
         :this()
     {
         DataToGrid(data);

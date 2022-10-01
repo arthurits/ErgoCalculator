@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class FrmDataWRmodel
+    partial class frmDataWR
     {
         /// <summary>
         /// Required designer variable.

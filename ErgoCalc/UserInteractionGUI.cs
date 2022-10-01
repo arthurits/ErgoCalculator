@@ -28,9 +28,9 @@ partial class FrmMain
 
         Form frmData = frmNew.Model switch
         {
-            ModelType.WorkRest => new FrmDataWRmodel(),
-            ModelType.CumulativeLifting => new FrmDataCLMmodel(),
-            ModelType.NioshLifting => new FrmDataNIOSHmodel(),
+            ModelType.WorkRest => new frmDataWR(),
+            ModelType.CumulativeLifting => new frmDataCLM(),
+            ModelType.NioshLifting => new frmDataNIOSH(),
             ModelType.StrainIndex => new FrmDataStrainIndex(),
             ModelType.OcraCheck => new FrmDataOCRAcheck(),
             ModelType.MetabolicRate => new FrmDataMet(),
@@ -48,9 +48,9 @@ partial class FrmMain
             {
                 Form frmResults = frmNew.Model switch
                 {
-                    ModelType.WorkRest => new FrmResultsWRmodel(frm.GetData),
-                    ModelType.CumulativeLifting => new FrmResultsCLMmodel(frm.GetData),
-                    ModelType.NioshLifting => new FrmResultNIOSHmodel(frm.GetData),
+                    ModelType.WorkRest => new frmResultsWR(frm.GetData),
+                    ModelType.CumulativeLifting => new frmResultsCLM(frm.GetData),
+                    ModelType.NioshLifting => new frmResultNIOSH(frm.GetData),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
@@ -114,12 +114,12 @@ partial class FrmMain
 
             Form frm = strType switch
             {
-                "Work-Rest model" => new FrmResultsWRmodel(),
-                "NIOSH lifting equation" => new FrmResultNIOSHmodel(),
+                "Work-Rest model" => new frmResultsWR(),
+                "NIOSH lifting equation" => new frmResultNIOSH(),
                 "Strain index" => new FrmResultsStrainIndex(),
                 "Thermal comfort model" => new FrmResultsTC(),
                 "LM-MMH model" => new FrmResultsLiberty(),
-                "Comprehensive lifting model" => new FrmResultsCLMmodel(),
+                "Comprehensive lifting model" => new frmResultsCLM(),
                 _ => default
             };
 

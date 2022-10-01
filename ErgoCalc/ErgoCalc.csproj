@@ -84,11 +84,11 @@
     <Compile Update="frmDataStrainIndex.Designer.cs">
       <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataWRmodel.cs">
+    <Compile Update="frmDataWR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataWRmodel.Designer.cs">
-      <DependentUpon>frmDataWRmodel.cs</DependentUpon>
+    <Compile Update="frmDataWR.Designer.cs">
+      <DependentUpon>frmDataWR.cs</DependentUpon>
     </Compile>
     <Compile Update="frmDataMet.cs">
       <SubType>Form</SubType>
@@ -102,23 +102,23 @@
     <Compile Update="frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsCLMmodel.cs">
+    <Compile Update="frmResultsCLM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmResultsCLMmodel.Designer.cs">
-      <DependentUpon>frmResultsCLMmodel.cs</DependentUpon>
+    <Compile Update="frmResultsCLM.Designer.cs">
+      <DependentUpon>frmResultsCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataCLMmodel.cs">
+    <Compile Update="frmDataCLM.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataCLMmodel.Designer.cs">
-      <DependentUpon>frmDataCLMmodel.cs</DependentUpon>
+    <Compile Update="frmDataCLM.Designer.cs">
+      <DependentUpon>frmDataCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataNIOSHmodel.cs">
+    <Compile Update="frmDataNIOSH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmDataNIOSHmodel.Designer.cs">
-      <DependentUpon>frmDataNIOSHmodel.cs</DependentUpon>
+    <Compile Update="frmDataNIOSH.Designer.cs">
+      <DependentUpon>frmDataNIOSH.cs</DependentUpon>
     </Compile>
     <Compile Update="frmMain.cs">
       <SubType>Form</SubType>
@@ -136,17 +136,17 @@
     <Compile Update="frmNew.Designer.cs">
       <DependentUpon>frmNew.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultNIOSHmodel.cs">
+    <Compile Update="frmResultNIOSH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmResultNIOSHmodel.Designer.cs">
-      <DependentUpon>frmResultNIOSHmodel.cs</DependentUpon>
+    <Compile Update="frmResultNIOSH.Designer.cs">
+      <DependentUpon>frmResultNIOSH.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsWRmodel.cs">
+    <Compile Update="frmResultsWR.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="frmResultsWRmodel.Designer.cs">
-      <DependentUpon>frmResultsWRmodel.cs</DependentUpon>
+    <Compile Update="frmResultsWR.Designer.cs">
+      <DependentUpon>frmResultsWR.cs</DependentUpon>
     </Compile>
     <Compile Update="controls\RadioButtonClick.cs">
       <SubType>Component</SubType>
@@ -159,8 +159,8 @@
       <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataWRmodel.resx">
-      <DependentUpon>frmDataWRmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmDataWR.resx">
+      <DependentUpon>frmDataWR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Update="frmDataMet.resx">
       <DependentUpon>frmDataMet.cs</DependentUpon>
@@ -169,16 +169,16 @@
       <DependentUpon>frmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultsCLMmodel.resx">
-      <DependentUpon>frmResultsCLMmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultsCLM.resx">
+      <DependentUpon>frmResultsCLM.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataCLMmodel.resx">
-      <DependentUpon>frmDataCLMmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmDataCLM.resx">
+      <DependentUpon>frmDataCLM.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataNIOSHmodel.resx">
-      <DependentUpon>frmDataNIOSHmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmDataNIOSH.resx">
+      <DependentUpon>frmDataNIOSH.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="frmMain.resx">
@@ -191,12 +191,12 @@
     <EmbeddedResource Update="frmNew.resx">
       <DependentUpon>frmNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultNIOSHmodel.resx">
-      <DependentUpon>frmResultNIOSHmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultNIOSH.resx">
+      <DependentUpon>frmResultNIOSH.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultsWRmodel.resx">
-      <DependentUpon>frmResultsWRmodel.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultsWR.resx">
+      <DependentUpon>frmResultsWR.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">

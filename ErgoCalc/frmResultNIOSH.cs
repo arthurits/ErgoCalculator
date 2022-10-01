@@ -7,12 +7,12 @@ using System.Windows.Forms;
 using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
-public partial class FrmResultNIOSHmodel : Form, IChildResults
+public partial class frmResultNIOSH : Form, IChildResults
 {
     // Variable definition
     private Job _job;
 
-    public FrmResultNIOSHmodel()
+    public frmResultNIOSH()
     {
         // VS designer initialization
         InitializeComponent();
@@ -30,13 +30,13 @@ public partial class FrmResultNIOSHmodel : Form, IChildResults
         splitContainer1.IsSplitterFixed = true;
     }
 
-    public FrmResultNIOSHmodel(Job Data)
+    public frmResultNIOSH(Job Data)
         : this()
     {
         _job = Data;
     }
 
-    public FrmResultNIOSHmodel(object data)
+    public frmResultNIOSH(object data)
         : this()
     {
         if (data.GetType()==typeof(Job))
@@ -314,7 +314,7 @@ public partial class FrmResultNIOSHmodel : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new FrmDataNIOSHmodel(_job);
+        using var frm = new frmDataNIOSH(_job);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
@@ -329,7 +329,7 @@ public partial class FrmResultNIOSHmodel : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        FrmResultNIOSHmodel frmResults = new FrmResultNIOSHmodel(_job)
+        frmResultNIOSH frmResults = new frmResultNIOSH(_job)
         {
             MdiParent = this.MdiParent
         };

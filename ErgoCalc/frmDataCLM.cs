@@ -7,12 +7,12 @@ using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
 
-public partial class FrmDataCLMmodel : Form, IChildData
+public partial class frmDataCLM : Form, IChildData
 {
     private Job _job;
     public object GetData => _job;
 
-    public FrmDataCLMmodel()
+    public frmDataCLM()
     {
         // VS initialization routine
         InitializeComponent();
@@ -62,7 +62,7 @@ public partial class FrmDataCLMmodel : Form, IChildData
         gridVariables.Rows[8].Cells[0] = celdaC;
     }
 
-    public FrmDataCLMmodel(Job job)
+    public frmDataCLM(Job job)
         : this() // Call the base constructor
     {
         _job = job;

@@ -6,7 +6,7 @@ using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
 
-public partial class FrmDataNIOSHmodel : Form, IChildData
+public partial class frmDataNIOSH : Form, IChildData
 {
     private IndexType _index;
     private Job _nioshLifting;
@@ -15,7 +15,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
     public Job GetJob => _nioshLifting;
 
     // Default constructor
-    public FrmDataNIOSHmodel()
+    public frmDataNIOSH()
     {
         // VS Designer initialization routine
         InitializeComponent();
@@ -32,7 +32,7 @@ public partial class FrmDataNIOSHmodel : Form, IChildData
     }
 
     // Overloaded constructor
-    public FrmDataNIOSHmodel(Job data)
+    public frmDataNIOSH(Job data)
         : this() // Call the base constructor
     {
         _nioshLifting = data;
