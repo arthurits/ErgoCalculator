@@ -266,9 +266,9 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
-        tableC.Rows.Add(ErgoCalc.Models.Lifting.Coupling.Good.ToString(), ErgoCalc.Models.Lifting.Coupling.Good);
-        tableC.Rows.Add(ErgoCalc.Models.Lifting.Coupling.Poor.ToString(), ErgoCalc.Models.Lifting.Coupling.Poor);
-        tableC.Rows.Add(ErgoCalc.Models.Lifting.Coupling.NoHandle, ErgoCalc.Models.Lifting.Coupling.NoHandle);
+        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
+        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
+        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
         celdaC.DataSource = tableC;
         celdaC.DisplayMember = "Display";
         celdaC.ValueMember = "Value";
