@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmDataWR
+    partial class FrmDataWR
     {
         /// <summary>
         /// Required designer variable.
@@ -33,6 +33,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.gridVariables = new System.Windows.Forms.DataGridView();
             this.updTasks = new System.Windows.Forms.NumericUpDown();
+            this.btnExample = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridVariables)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).BeginInit();
             this.SuspendLayout();
@@ -82,7 +83,7 @@
             this.gridVariables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.gridVariables.Size = new System.Drawing.Size(593, 220);
             this.gridVariables.TabIndex = 1;
-            this.gridVariables.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridVariables_CellEndEdit);
+            this.gridVariables.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.Variables_CellEndEdit);
             // 
             // updTasks
             // 
@@ -91,32 +92,33 @@
             this.updTasks.Location = new System.Drawing.Point(67, 254);
             this.updTasks.Margin = new System.Windows.Forms.Padding(4);
             this.updTasks.Maximum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.updTasks.Minimum = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
             this.updTasks.Name = "updTasks";
             this.updTasks.Size = new System.Drawing.Size(53, 23);
             this.updTasks.TabIndex = 7;
-            this.updTasks.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.updTasks.ValueChanged += new System.EventHandler(this.updTasks_ValueChanged);
+            this.updTasks.ValueChanged += new System.EventHandler(this.Tasks_ValueChanged);
             // 
-            // frmDataWRmodel
+            // btnExample
+            // 
+            this.btnExample.Location = new System.Drawing.Point(289, 249);
+            this.btnExample.Name = "btnExample";
+            this.btnExample.Size = new System.Drawing.Size(95, 30);
+            this.btnExample.TabIndex = 8;
+            this.btnExample.Text = "&Example";
+            this.btnExample.UseVisualStyleBackColor = true;
+            this.btnExample.Click += new System.EventHandler(this.Example_Click);
+            // 
+            // FrmDataWR
             // 
             this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(619, 296);
+            this.Controls.Add(this.btnExample);
             this.Controls.Add(this.updTasks);
             this.Controls.Add(this.gridVariables);
             this.Controls.Add(this.btnCancel);
@@ -127,7 +129,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataWRmodel";
+            this.Name = "FrmDataWR";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -146,5 +148,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.DataGridView gridVariables;
         private System.Windows.Forms.NumericUpDown updTasks;
+        private System.Windows.Forms.Button btnExample;
     }
 }

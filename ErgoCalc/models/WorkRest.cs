@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks.Sources;
 
 namespace ErgoCalc.Models.WR;
 
@@ -52,27 +53,52 @@ public class DataWR
     public override string ToString()
     {
         string strCadena;
-        string strTiempoT = "";
-        string strTiempoD = "";
 
-        foreach (double d in WorkingTimes)
-            strTiempoT += d.ToString() + " ";
-        strTiempoT = strTiempoT.TrimEnd();
-
-        foreach (double d in RestingTimes)
-            strTiempoD += d.ToString() + " ";
-        strTiempoD = strTiempoD.TrimEnd();
-
-        strCadena = "[Maximum voluntary contraction (%)]: " + MVC.ToString() + "\r\n";
-        strCadena += "[Maximum holding time (min)]: " + MHT.ToString() + "\r\n";
-        strCadena += "[Working times (min)]: " + strTiempoT + "\r\n";
-        strCadena += "[Resting times (min)]: " + strTiempoD + "\r\n";
-        strCadena += "[Number of cycles]: " + Cycles.ToString() + "\r\n";
-        strCadena += "[Plot step]: " + PlotStep.ToString() + "\r\n";
+        strCadena = "[Maximum voluntary contraction (%)]: " + MVC.ToString() + Environment.NewLine;
+        strCadena += "[Maximum holding time (min)]: " + MHT.ToString() + Environment.NewLine;
+        strCadena += "[Working times (min)]: " + String.Join(" ", WorkingTimes) + Environment.NewLine;
+        strCadena += "[Resting times (min)]: " + String.Join(" ", RestingTimes) + Environment.NewLine;
+        strCadena += "[Number of cycles]: " + Cycles.ToString() + Environment.NewLine;
+        strCadena += "[Plot step]: " + PlotStep.ToString() + Environment.NewLine;
         strCadena += "[Curve number]: " + PlotCurve.ToString();
         return strCadena;
     }
 
+}
+
+public class Job
+{
+    public DataWR[] Tasks { get; set; } = Array.Empty<DataWR>();
+    public int NumberTasks { get; set; } = 0;
+    public override string ToString()
+    {
+        string[] results = new string[7]
+        {
+            "[Maximum voluntary contraction (%)]: ",
+            "[Maximum holding time (min)]: ",
+            "[Working times (min)]: ",
+            "[Resting times (min)]: ",
+            "[Number of cycles]: ",
+            "[Plot step]: ",
+            "[Curve number]: "
+        };
+
+        foreach (DataWR task in Tasks)
+        {
+            results[0] += "\t" + task.MVC.ToString();
+            results[1] += "\t" + task.MHT.ToString();
+            results[2] += "\t" + String.Join(" ", task.WorkingTimes);
+            results[3] += "\t" + String.Join(" ", task.RestingTimes);
+            results[4] += "\t" + task.Cycles.ToString();
+            results[5] += "\t" + task.PlotStep.ToString();
+            results[6] += "\t" + task.PlotCurve.ToString();
+        }
+
+        //for (int i=0; i<results.Length; i++)
+        //    results[i] = results[i].TrimEnd();
+
+        return String.Join(Environment.NewLine, results);
+    }
 }
 
 public static class WorkRest

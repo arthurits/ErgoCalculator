@@ -9,60 +9,25 @@ using ErgoCalc.Models.WR;
 
 namespace ErgoCalc;
 
-public partial class frmDataWR : Form, IChildData
+public partial class FrmDataWR : Form, IChildData
 {
     // Propiedades de la clase
-    public List<DataWR> _data;
+    public Job _job;
     private string strGridHeader = "Task ";
-    private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDataWR));
+    private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDataWR));
 
-    public object GetData => _data;
+    public object GetData => _job;
 
-    public frmDataWR()
+    public FrmDataWR()
     {
         InitializeComponent();
-
-        AddColumn();
-
-        // Create the header rows
-        gridVariables.RowCount = 7;
-        gridVariables.Rows[0].HeaderCell.Value = "Name";
-        gridVariables.Rows[1].HeaderCell.Value = "Max. voluntary contraction (%)";
-        gridVariables.Rows[2].HeaderCell.Value = "Maximum holding time (min)";
-        gridVariables.Rows[3].HeaderCell.Value = "Working times (min)";
-        gridVariables.Rows[4].HeaderCell.Value = "Rest times (min)";
-        gridVariables.Rows[5].HeaderCell.Value = "Number of cycles";
-        gridVariables.Rows[6].HeaderCell.Value = "Numeric step";
-
-        // Set default cell value
-        gridVariables[0, 6].Value = 0.1;
-
-        var cell = new DataGridViewCellStyle();
-        cell.BackColor = Color.White;
-        cell.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        cell.SelectionBackColor = Color.White;
-        cell.SelectionForeColor = Color.Gray;
-        cell.ForeColor = Color.Gray;
-        gridVariables.Rows[2].DefaultCellStyle = cell;
-        gridVariables.Rows[2].ReadOnly = true;
-
-        // Initialize private variables
-        _data = new List<DataWR>();
-
-        //var str = _resources.GetString("errorValidarMVCFieldLength");
-
-        // Uncomment to load example 
-        //LoadExample();
-
     }
 
-    public frmDataWR (List<DataWR> data)
-        :this()
+    public FrmDataWR(Job job)
+        : this()
     {
-        DataToGrid(data);
-
-        updTasks.Value = data.Count;
-
+        _job= job;
+        DataToGrid();
     }
 
     #region Form control's events
@@ -71,56 +36,64 @@ public partial class frmDataWR : Form, IChildData
         // The form does not return unless all fields are validated
         this.DialogResult = DialogResult.None;
 
-        DataWR item;
-        for (int i = 0; i < gridVariables.ColumnCount; i++)
+        _job = new();
+        _job.NumberTasks = gridVariables.ColumnCount;
+        _job.Tasks = new DataWR[_job.NumberTasks];
+
+        for (int i = 0; i < _job.NumberTasks; i++)
         {
-            item = new();
-            item.Legend = gridVariables[i, 0].Value?.ToString();
+            _job.Tasks[i] = new();
+            _job.Tasks[i].Legend = gridVariables[i, 0].Value?.ToString();
             // Validation routines
             if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0, 100, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
-            item.MVC = Validation.ValidateNumber(gridVariables[i, 1].Value);
-            item.MHT = WorkRest.ComputeMHT(item.MVC);
+            _job.Tasks[i].MVC = Validation.ValidateNumber(gridVariables[i, 1].Value);
+            _job.Tasks[i].MHT = WorkRest.ComputeMHT(_job.Tasks[i].MVC);
             //gridVariables[i, 2].Value = item._dMHT;
 
             if (gridVariables[i, 3].Value == null) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
             //item._dWorkRest = new double[2][];
-            var arr = gridVariables[i, 3].Value.ToString().Split(' ');
+            string[] arr = gridVariables[i, 3].Value.ToString().Split(' ');
             foreach( var number in arr)
             {
-                if (!Validation.IsValidRange(number, 0, item.MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
             }
-            item.WorkingTimes = arr.Select(double.Parse).ToArray();
+            _job.Tasks[i].WorkingTimes = arr.Select(double.Parse).ToArray();
 
             if (gridVariables[i, 4].Value == null) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
             arr = gridVariables[i, 4].Value.ToString().Split(' ');
             foreach (var number in arr)
             {
-                if (!Validation.IsValidRange(number, 0, item.MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
             }
-            item.RestingTimes = arr.Select(double.Parse).ToArray();
+            _job.Tasks[i].RestingTimes = arr.Select(double.Parse).ToArray();
 
             //if (ValidarTT(item) != true) { return; }
             if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0, 24, true, this)) { gridVariables.CurrentCell = gridVariables[i, 5]; gridVariables.BeginEdit(true); return; }
             if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.001, 0.1, true, this)) { gridVariables.CurrentCell = gridVariables[i, 6]; gridVariables.BeginEdit(true); return; }
 
             //item._dWorkRest[0];
-            item.Cycles = (byte)Validation.ValidateNumber(gridVariables[i, 5].Value);
-            item.PlotStep = Validation.ValidateNumber(gridVariables[i, 6].Value);
+            _job.Tasks[i].Cycles = (byte)Validation.ValidateNumber(gridVariables[i, 5].Value);
+            _job.Tasks[i].PlotStep = Validation.ValidateNumber(gridVariables[i, 6].Value);
 
-            item.Points = ComputeNumberOfPoints(item);
+            _job.Tasks[i].Points = ComputeNumberOfPoints(_job.Tasks[i]);
             //item._dPoints = new double[2][];
-            item.PointsX = new double[item.Points];
-            item.PointsY = new double[item.Points];
-
-            // Save the column data once it's been approved
-            _data.Add(item);
+            _job.Tasks[i].PointsX = new double[_job.Tasks[i].Points];
+            _job.Tasks[i].PointsY = new double[_job.Tasks[i].Points];
 
         }
         // Return OK and close the dialog
         this.DialogResult = DialogResult.OK;
     }
 
-    private void gridVariables_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+    private void Example_Click(object sender, EventArgs e)
+    {
+        // Loads some data example into the grid
+        updTasks.Value = 0;
+        DataExample();
+        DataToGrid();
+    }
+
+    private void Variables_CellEndEdit(object sender, DataGridViewCellEventArgs e)
     {
         // https://stackoverflow.com/questions/19537784/datagridview-event-to-catch-when-cell-value-has-been-changed-by-user/58062911#58062911
 
@@ -145,9 +118,9 @@ public partial class frmDataWR : Form, IChildData
         };
     }
 
-    private void updTasks_ValueChanged(object sender, EventArgs e)
+    private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updTasks.Value);
+        int col = Convert.ToInt32(updTasks.Value);
 
         // Add or remove columns
         if (col > gridVariables.ColumnCount)
@@ -174,7 +147,10 @@ public partial class frmDataWR : Form, IChildData
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 70;
 
-        if (col > 0) gridVariables[col, 6].Value = 0.1;
+        if (col > 0)
+            gridVariables[col, 6].Value = 0.1;
+        else if (col == 0)
+            AddRows();
 
         return;
     }
@@ -188,27 +164,98 @@ public partial class frmDataWR : Form, IChildData
     }
 
     /// <summary>
+    /// Adds the headercell values for each row
+    /// </summary>
+    private void AddRows()
+    {
+        // Create the header rows
+        gridVariables.RowCount = 7;
+        gridVariables.Rows[0].HeaderCell.Value = "Name";
+        gridVariables.Rows[1].HeaderCell.Value = "Max. voluntary contraction (%)";
+        gridVariables.Rows[2].HeaderCell.Value = "Maximum holding time (min)";
+        gridVariables.Rows[3].HeaderCell.Value = "Working times (min)";
+        gridVariables.Rows[4].HeaderCell.Value = "Rest times (min)";
+        gridVariables.Rows[5].HeaderCell.Value = "Number of cycles";
+        gridVariables.Rows[6].HeaderCell.Value = "Numeric step";
+
+        // Set default cell value
+        gridVariables[0, 6].Value = 0.1;
+
+        var cell = new DataGridViewCellStyle();
+        cell.BackColor = Color.White;
+        cell.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        cell.SelectionBackColor = Color.White;
+        cell.SelectionForeColor = Color.Gray;
+        cell.ForeColor = Color.Gray;
+        gridVariables.Rows[2].DefaultCellStyle = cell;
+        gridVariables.Rows[2].ReadOnly = true;
+    }
+
+    /// <summary>
     /// Places the data into the grid control, creating a new column for each case
     /// </summary>
     /// <param name="data">List containing the data</param>
-    private void DataToGrid(List<DataWR> data)
+    private void DataToGrid()
     {
-        int nDataNumber = data.Count;
+        updTasks.Value = _job.NumberTasks;
 
-        for (var j = 0; j < nDataNumber; j++)
+        for (int i = 0; i < _job.NumberTasks; i++)
         {
             //Column 0 is already created in the constructor;
-            if (j > 0) AddColumn();
+            //AddColumn();
 
             // Populate the DataGridView with data
-            gridVariables[j, 0].Value = data[j].Legend;
-            gridVariables[j, 1].Value = (int)data[j].MVC;
-            gridVariables[j, 2].Value = data[j].MHT.ToString("0.##");
-            gridVariables[j, 3].Value = string.Join(" ", data[j].WorkingTimes);
-            gridVariables[j, 4].Value = string.Join(" ", data[j].RestingTimes);
-            gridVariables[j, 5].Value = data[j].Cycles;
-            gridVariables[j, 6].Value = data[j].PlotStep;
+            gridVariables[i, 0].Value = _job.Tasks[i].Legend;
+            gridVariables[i, 1].Value = (int)_job.Tasks[i].MVC;
+            gridVariables[i, 2].Value = _job.Tasks[i].MHT.ToString("0.##");
+            gridVariables[i, 3].Value = string.Join(" ", _job.Tasks[i].WorkingTimes);
+            gridVariables[i, 4].Value = string.Join(" ", _job.Tasks[i].RestingTimes);
+            gridVariables[i, 5].Value = _job.Tasks[i].Cycles;
+            gridVariables[i, 6].Value = _job.Tasks[i].PlotStep;
         }
+    }
+
+    private void DataExample()
+    {
+        _job = new();
+        _job.NumberTasks = 4;
+        _job.Tasks = new DataWR[_job.NumberTasks];
+
+        _job.Tasks[0] = new();
+        _job.Tasks[0].Legend = "Case 2-1";
+        _job.Tasks[0].MVC = 20;
+        _job.Tasks[0].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
+        _job.Tasks[0].WorkingTimes = new double[] { 8 };
+        _job.Tasks[0].RestingTimes = new double[] { 8 };
+        _job.Tasks[0].Cycles = 2;
+        _job.Tasks[0].PlotStep = 0.01;
+
+        _job.Tasks[1] = new();
+        _job.Tasks[1].Legend = "Case 2-2";
+        _job.Tasks[1].MVC = 20;
+        _job.Tasks[1].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
+        _job.Tasks[1].WorkingTimes = new double[] { 4 };
+        _job.Tasks[1].RestingTimes = new double[] { 4 };
+        _job.Tasks[1].Cycles = 4;
+        _job.Tasks[1].PlotStep = 0.01;
+
+        _job.Tasks[2] = new();
+        _job.Tasks[2].Legend = "Case 2-3";
+        _job.Tasks[2].MVC = 20;
+        _job.Tasks[2].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
+        _job.Tasks[2].WorkingTimes = new double[] { 2 };
+        _job.Tasks[2].RestingTimes = new double[] { 2 };
+        _job.Tasks[2].Cycles = 8;
+        _job.Tasks[2].PlotStep = 0.01;
+
+        _job.Tasks[3] = new();
+        _job.Tasks[3].Legend = "Case 2-4";
+        _job.Tasks[3].MVC = 20;
+        _job.Tasks[3].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
+        _job.Tasks[3].WorkingTimes = new double[] { 1 };
+        _job.Tasks[3].RestingTimes = new double[] { 1 };
+        _job.Tasks[3].Cycles = 16;
+        _job.Tasks[3].PlotStep = 0.01;
     }
 
     private int ComputeNumberOfPoints(DataWR data)
@@ -230,13 +277,7 @@ public partial class frmDataWR : Form, IChildData
 
     public void LoadExample()
     {
-        gridVariables[0, 0].Value = "Example";
-        gridVariables[0, 1].Value = 15;
-        //gridVariables[0, 2].Value = "Maximum holding time (min)";
-        gridVariables[0, 3].Value = "4 3 2";
-        gridVariables[0, 4].Value = "4 3 2";
-        gridVariables[0, 5].Value = 2;
-        gridVariables[0, 6].Value = 0.01;
+
     }
 
     #endregion Private routines            

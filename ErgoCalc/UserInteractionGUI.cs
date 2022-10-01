@@ -28,7 +28,7 @@ partial class FrmMain
 
         Form frmData = frmNew.Model switch
         {
-            ModelType.WorkRest => new frmDataWR(),
+            ModelType.WorkRest => new FrmDataWR(),
             ModelType.CumulativeLifting => new frmDataCLM(),
             ModelType.NioshLifting => new frmDataNIOSH(),
             ModelType.StrainIndex => new FrmDataStrainIndex(),

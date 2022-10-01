@@ -1,5 +1,6 @@
 {
   "Document type": "Work-Rest model",
+  "Number of tasks": 4,
   "WR curves": [
     {
       "Curve #": 0,
@@ -9,10 +10,10 @@
       "Step": 0.1,
       "Points": 163,
       "Cycles": 2,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         8
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         8
       ],
       "Points X": [
@@ -354,10 +355,10 @@
       "Step": 0.1,
       "Points": 165,
       "Cycles": 4,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         4
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         4
       ],
       "Points X": [
@@ -703,10 +704,10 @@
       "Step": 0.1,
       "Points": 169,
       "Cycles": 8,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         2
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         2
       ],
       "Points X": [
@@ -1060,10 +1061,10 @@
       "Step": 0.1,
       "Points": 177,
       "Cycles": 16,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         1
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         1
       ],
       "Points X": [

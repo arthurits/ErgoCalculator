@@ -1,28 +1,24 @@
 {
   "Document type": "Work-Rest model",
+  "Number of tasks": 1,
   "WR curves": [
     {
       "Curve #": 0,
-      "Curve legend": null,
+      "Curve legend": "Task A",
       "MHT": 17.370039812751113,
       "MVC": 15,
       "Step": 0.01,
       "Points": 1807,
       "Cycles": 2,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         4,
         3,
         2
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         4,
         3,
         2
-      ],
-      "Work-Rest drop (REC)": [
-        23.028156775228883,
-        17.271117581421663,
-        11.514078387614441
       ],
       "Points X": [
         0,

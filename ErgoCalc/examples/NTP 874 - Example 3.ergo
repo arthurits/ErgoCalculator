@@ -1,20 +1,21 @@
 {
   "Document type": "Work-Rest model",
+  "Number of tasks": 2,
   "WR curves": [
     {
       "Curve #": 0,
-      "Curve legend": "Ej 3 - 1",
+      "Curve legend": "Case 3-1",
       "MHT": 9.38494901336721,
       "MVC": 20,
       "Step": 0.1,
       "Points": 187,
       "Cycles": 2,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         4,
         3,
         2
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         4,
         3,
         2
@@ -400,18 +401,18 @@
     },
     {
       "Curve #": 0,
-      "Curve legend": "Ej 3 - 2",
+      "Curve legend": "Case 3-2",
       "MHT": 9.38494901336721,
       "MVC": 20,
       "Step": 0.1,
       "Points": 187,
       "Cycles": 2,
-      "Work times (minutes)": [
+      "Working times (minutes)": [
         2,
         3,
         4
       ],
-      "Rest times (minutes)": [
+      "Resting times (minutes)": [
         2,
         3,
         4

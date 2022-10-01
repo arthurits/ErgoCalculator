@@ -38,7 +38,7 @@
             this.algoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.chart = new ScottPlot.FormsPlot();
+            this.plot = new ScottPlot.FormsPlot();
             this.toolStripWR = new System.Windows.Forms.ToolStrip();
             this.toolStripWR_SaveChart = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_AddLine = new System.Windows.Forms.ToolStripButton();
@@ -122,7 +122,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.chart);
+            this.splitContainer1.Panel2.Controls.Add(this.plot);
             this.splitContainer1.Size = new System.Drawing.Size(673, 450);
             this.splitContainer1.SplitterDistance = 198;
             this.splitContainer1.SplitterWidth = 5;
@@ -139,12 +139,12 @@
             // 
             // chart
             // 
-            this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chart.Location = new System.Drawing.Point(0, 0);
-            this.chart.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.chart.Name = "chart";
-            this.chart.Size = new System.Drawing.Size(470, 450);
-            this.chart.TabIndex = 2;
+            this.plot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.plot.Location = new System.Drawing.Point(0, 0);
+            this.plot.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.plot.Name = "chart";
+            this.plot.Size = new System.Drawing.Size(470, 450);
+            this.plot.TabIndex = 2;
             // 
             // toolStripWR
             // 
@@ -250,6 +250,6 @@
         private System.Windows.Forms.ToolStripButton toolStripWR_AddLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_RemoveLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_SaveChart;
-        private ScottPlot.FormsPlot chart;
+        private ScottPlot.FormsPlot plot;
     }
 }

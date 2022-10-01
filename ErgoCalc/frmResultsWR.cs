@@ -13,23 +13,24 @@ namespace ErgoCalc;
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
 public partial class frmResultsWR : Form, IChildResults
 {
-    private List<DataWR> _datos;
-    private ChartOptions _chartOptions;
+    //private List<DataWR> _datos;
+    private Job _job;
+    private ChartOptions _plotOptions;
 
     public frmResultsWR()
     {
         InitializeComponent();
         InitializeChart();
 
-        _datos = new List<DataWR>();
+        //_datos = new List<DataWR>();
 
         this.mnuSub.Visible = false;
-        _chartOptions = new ChartOptions(chart, 1)
+        _plotOptions = new ChartOptions(plot, 1)
         {
-            NúmeroCurva = chart.Plot.GetPlottables().Length - 1
+            NúmeroCurva = plot.Plot.GetPlottables().Length - 1
         };
 
-        propertyGrid1.SelectedObject = _chartOptions;
+        propertyGrid1.SelectedObject = _plotOptions;
         splitContainer1.Panel1Collapsed = false;
         splitContainer1.SplitterDistance = 0;
         splitContainer1.SplitterWidth = 1;
@@ -50,12 +51,15 @@ public partial class frmResultsWR : Form, IChildResults
         
     }
 
-    public frmResultsWR(object datos)
-        :this()
+    public frmResultsWR(object data)
+        : this()
     {
-        _datos = (List<DataWR>)datos;
-        CalcularCurva();
-        _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
+        if (data.GetType() == typeof(Job))
+        {
+            _job = (Job)data;
+            CalcularCurva();
+            _plotOptions.NúmeroCurva = plot.Plot.GetPlottables().Length - 1;
+        }
     }
 
     /// <summary>
@@ -63,67 +67,47 @@ public partial class frmResultsWR : Form, IChildResults
     /// </summary>
     private void InitializeChart()
     {
-        chart.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
-        chart.MouseClick += new System.Windows.Forms.MouseEventHandler(chart_MouseClick);
+        plot.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
+        plot.MouseClick += new System.Windows.Forms.MouseEventHandler(chart_MouseClick);
         //chart.MouseMoved += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
         //chart.MouseMove += new System.Windows.Forms.MouseEventHandler(chart_DoubleClick);
-        chart.Plot.XAxis2.Label("WR model", size: 16);
-        chart.Plot.YAxis.Label("% Maximum holding time", size: 14);
-        chart.Plot.XAxis.Label("Time / s", size: 14);
-        chart.Plot.Palette = ScottPlot.Palette.Nord;
-        chart.Plot.SetAxisLimits(0, null, 0, 100);
-        chart.Plot.Grid(color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
-        chart.Plot.XAxis.MajorGrid(lineWidth: 1);
-        chart.Plot.YAxis.MajorGrid(lineWidth: 1);
-        chart.Plot.Legend(location: ScottPlot.Alignment.LowerRight);
+        plot.Plot.XAxis2.Label("WR model", size: 16);
+        plot.Plot.YAxis.Label("% Maximum holding time", size: 14);
+        plot.Plot.XAxis.Label("Time / s", size: 14);
+        plot.Plot.Palette = ScottPlot.Palette.Nord;
+        plot.Plot.SetAxisLimits(0, null, 0, 100);
+        plot.Plot.Grid(color: Color.FromArgb(234, 234, 234), lineStyle: ScottPlot.LineStyle.Solid);
+        plot.Plot.XAxis.MajorGrid(lineWidth: 1);
+        plot.Plot.YAxis.MajorGrid(lineWidth: 1);
+        plot.Plot.Legend(location: ScottPlot.Alignment.LowerRight);
     }
 
     private void PlotCurves()
     {
-        foreach (var datos in _datos)
+        foreach (DataWR task in _job.Tasks)
         {
             //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-            chart.Plot.AddScatter(datos.PointsX, datos.PointsY, label: datos.Legend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+            plot.Plot.AddScatter(task.PointsX, task.PointsY, label: task.Legend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
         }
 
-        chart.Plot.AxisAutoX();
-        chart.Plot.SetAxisLimits(0, null, 0, 100);
-        chart.Render();
+        plot.Plot.AxisAutoX();
+        plot.Plot.SetAxisLimits(0, null, 0, 100);
+        plot.Render();
     }
 
     private void CalcularCurva()
     {
-        foreach (var datos in _datos)
+        foreach (DataWR task in _job.Tasks)
         {
             // Calcular los puntos de la curva.
-            WorkRest.WRCurve(datos);
+            WorkRest.WRCurve(task);
             //chartB.plt.Add(new ScottPlot.PlottableScatter(valores[0], valores[1]));
-            chart.Plot.AddScatter(datos.PointsX, datos.PointsY, label: datos.Legend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
+            plot.Plot.AddScatter(task.PointsX, task.PointsY, label: task.Legend, lineWidth: 3, markerShape: ScottPlot.MarkerShape.none);
         }
         
-        chart.Plot.AxisAutoX();
-        chart.Plot.SetAxisLimits(0, null, 0, 100);
-        chart.Render();
-
-        /*
-       ChartValues<System.Windows.Point> puntos = new ChartValues<System.Windows.Point>();
-       for (int i=0; i<valores[0].Length; i++)
-       {
-           puntos.Add(new System.Windows.Point(valores[0][i], valores[1][i]));
-       }
-        */
-
-        //chartA.Series[1].Values = puntos;
-
-        /*
-        this.chart1.DataSource = valores;
-        this.chart1.Series.Add("Ejemplo");
-        this.chart1.Series["Ejemplo"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-        this.chart1.Series["Ejemplo"].BorderWidth = 2;
-        this.chart1.Series["Ejemplo"].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-        this.chart1.Series["Ejemplo"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
-        this.chart1.Series["Ejemplo"].Points.DataBindXY(valores[0], valores[1]);
-        */
+        plot.Plot.AxisAutoX();
+        plot.Plot.SetAxisLimits(0, null, 0, 100);
+        plot.Render();
     }
 
     private void chart_MouseClick(object sender, MouseEventArgs e)
@@ -193,20 +177,20 @@ public partial class frmResultsWR : Form, IChildResults
             // If the file name is not an empty string open it for saving.  
             if (result == DialogResult.OK && SaveDlg.FileName != "")
             {
-                chart.Plot.SaveFig(SaveDlg.FileName);
+                plot.Plot.SaveFig(SaveDlg.FileName);
             }
         }
     }
     private void toolStripWR_AddLine_Click(object sender, EventArgs e)
     {
         // Llamar al formulario para introducir los datos
-        frmDataWR frmDatosWR = new frmDataWR(_datos);
+        FrmDataWR frmDatosWR = new FrmDataWR(_job);
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
-            _datos = (List<DataWR>)frmDatosWR.GetData;
+            _job = (Job)frmDatosWR.GetData;
             //_datos.Add(frmDatosWR.getData());
             CalcularCurva();
-            _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
+            _plotOptions.NúmeroCurva = plot.Plot.GetPlottables().Length - 1;
             propertyGrid1.Refresh();
         }
         // Cerrar el formulario de entrada de datos
@@ -215,12 +199,12 @@ public partial class frmResultsWR : Form, IChildResults
 
     private void toolStripWR_RemoveLine_Click(object sender, EventArgs e)
     {
-        var i = chart.Plot.GetPlottables().Length;
+        var i = plot.Plot.GetPlottables().Length;
         if (i > 0)
         { 
-            chart.Plot.Remove(chart.Plot.GetPlottables()[i - 1]);
-            chart.Render();
-            _chartOptions.NúmeroCurva = i - 2;
+            plot.Plot.Remove(plot.Plot.GetPlottables()[i - 1]);
+            plot.Render();
+            _plotOptions.NúmeroCurva = i - 2;
             propertyGrid1.Refresh();
         }
     }
@@ -229,36 +213,37 @@ public partial class frmResultsWR : Form, IChildResults
     {
         writer.WriteStartObject();
         writer.WriteString("Document type", "Work-Rest model");
+        writer.WriteNumber("Number of tasks", _job.NumberTasks);
         
         writer.WritePropertyName("WR curves");
         writer.WriteStartArray();
 
-        foreach ( var data in _datos)
+        foreach (DataWR task in _job.Tasks)
         {
             writer.WriteStartObject();
 
-            writer.WriteNumber("Curve #", data.PlotCurve);
-            writer.WriteString("Curve legend", data.Legend);
-            writer.WriteNumber("MHT", data.MHT);
-            writer.WriteNumber("MVC", data.MVC);
-            writer.WriteNumber("Step", data.PlotStep);
-            writer.WriteNumber("Points", data.Points);
-            writer.WriteNumber("Cycles", data.Cycles);
+            writer.WriteNumber("Curve #", task.PlotCurve);
+            writer.WriteString("Curve legend", task.Legend);
+            writer.WriteNumber("MHT", task.MHT);
+            writer.WriteNumber("MVC", task.MVC);
+            writer.WriteNumber("Step", task.PlotStep);
+            writer.WriteNumber("Points", task.Points);
+            writer.WriteNumber("Cycles", task.Cycles);
             
-            writer.WritePropertyName("Work times (minutes)");
-            JsonSerializer.Serialize(writer, data.WorkingTimes, new JsonSerializerOptions { WriteIndented = true });
+            writer.WritePropertyName("Working times (minutes)");
+            JsonSerializer.Serialize(writer, task.WorkingTimes, new JsonSerializerOptions { WriteIndented = true });
 
-            writer.WritePropertyName("Rest times (minutes)");
-            JsonSerializer.Serialize(writer, data.RestingTimes, new JsonSerializerOptions { WriteIndented = true });
+            writer.WritePropertyName("Resting times (minutes)");
+            JsonSerializer.Serialize(writer, task.RestingTimes, new JsonSerializerOptions { WriteIndented = true });
 
             //writer.WritePropertyName("Work-Rest drop (REC)");
             //JsonSerializer.Serialize(writer, data._dWorkRestDrop, new JsonSerializerOptions { WriteIndented = true });
 
             writer.WritePropertyName("Points X");
-            JsonSerializer.Serialize(writer, data.PointsX, new JsonSerializerOptions { WriteIndented = true });
+            JsonSerializer.Serialize(writer, task.PointsX, new JsonSerializerOptions { WriteIndented = true });
 
             writer.WritePropertyName("Points Y");
-            JsonSerializer.Serialize(writer, data.PointsY, new JsonSerializerOptions { WriteIndented = true });
+            JsonSerializer.Serialize(writer, task.PointsY, new JsonSerializerOptions { WriteIndented = true });
 
             writer.WriteEndObject();
 
@@ -307,7 +292,7 @@ public partial class frmResultsWR : Form, IChildResults
                     }
                     break;
                 case 2:
-                    foreach (var plot in chart.Plot.GetPlottables())
+                    foreach (var plot in plot.Plot.GetPlottables())
                     {
                         if (plot.GetType() == typeof(ScottPlot.Plottable.ScatterPlot))
                         {
@@ -350,48 +335,48 @@ public partial class frmResultsWR : Form, IChildResults
 
         bool result = true;
         int Length;
-        DataWR data;
-        _datos = new List<DataWR>();
+
+        Job job = new();
         JsonElement root = document.RootElement;
 
         try
         {
+            job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
+            job.Tasks = new DataWR[job.NumberTasks];
+            int i = 0;
             foreach (JsonElement curve in root.GetProperty("WR curves").EnumerateArray())
             {
-                data = new();
+                job.Tasks[i] = new();
 
-                data.PlotCurve = curve.GetProperty("Curve #").GetInt32();
-                data.Legend = curve.GetProperty("Curve legend").GetString();
-                data.MHT = curve.GetProperty("MHT").GetDouble();
-                data.MVC = curve.GetProperty("MVC").GetDouble();
-                data.PlotStep = curve.GetProperty("Step").GetDouble();
-                data.Points = curve.GetProperty("Points").GetInt32();
-                data.Cycles = curve.GetProperty("Cycles").GetByte();
+                job.Tasks[i].PlotCurve = curve.GetProperty("Curve #").GetInt32();
+                job.Tasks[i].Legend = curve.GetProperty("Curve legend").GetString();
+                job.Tasks[i].MHT = curve.GetProperty("MHT").GetDouble();
+                job.Tasks[i].MVC = curve.GetProperty("MVC").GetDouble();
+                job.Tasks[i].PlotStep = curve.GetProperty("Step").GetDouble();
+                job.Tasks[i].Points = curve.GetProperty("Points").GetInt32();
+                job.Tasks[i].Cycles = curve.GetProperty("Cycles").GetByte();
 
-                //data._dPoints = new double[2][];
                 Length = curve.GetProperty("Points X").GetArrayLength();
-                data.PointsX = new double[Length];
-                data.PointsX= JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points X").ToString());
+                job.Tasks[i].PointsX = new double[Length];
+                job.Tasks[i].PointsX= JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points X").ToString());
 
                 //Length = curve.GetProperty("Points Y").GetArrayLength();
-                data.PointsY = new double[Length];
-                data.PointsY = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points Y").ToString());
+                job.Tasks[i].PointsY = new double[Length];
+                job.Tasks[i].PointsY = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Points Y").ToString());
 
-                //data._dWorkRest = new double[2][];
-                Length = curve.GetProperty("Work times (minutes)").GetArrayLength();
-                data.WorkingTimes = new double[Length];
-                data.WorkingTimes = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work times (minutes)").ToString());
+                Length = curve.GetProperty("Working times (minutes)").GetArrayLength();
+                job.Tasks[i].WorkingTimes = new double[Length];
+                job.Tasks[i].WorkingTimes = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Working times (minutes)").ToString());
 
-                //Length = curve.GetProperty("Rest times (minutes)").GetArrayLength();
-                data.RestingTimes = new double[Length];
-                data.RestingTimes = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Rest times (minutes)").ToString());
+                Length = curve.GetProperty("Resting times (minutes)").GetArrayLength();
+                job.Tasks[i].RestingTimes = new double[Length];
+                job.Tasks[i].RestingTimes = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Resting times (minutes)").ToString());
 
-                //Length = curve.GetProperty("Work-Rest drop (REC)").GetArrayLength();
-                //data._dWorkRestDrop = new double[Length];
-                //data._dWorkRestDrop = JsonSerializer.Deserialize<double[]>(curve.GetProperty("Work-Rest drop (REC)").ToString());
-
-                _datos.Add(data);
+                i++;
             }
+
+            _job = job;
+
         }
         catch (Exception)
         {
@@ -402,7 +387,7 @@ public partial class frmResultsWR : Form, IChildResults
         {
             //CalcularCurva();
             PlotCurves();
-            _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
+            _plotOptions.NúmeroCurva = plot.Plot.GetPlottables().Length - 1;
         }
 
         return result;
@@ -411,15 +396,15 @@ public partial class frmResultsWR : Form, IChildResults
     public void EditData()
     {
         // Show the form with the data in order to edit it
-        frmDataWR frmDatosWR = new frmDataWR(_datos);
+        FrmDataWR frmDatosWR = new FrmDataWR(_job);
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
             // Get the edited input data
-            _datos = (List<DataWR>)frmDatosWR.GetData;
+            _job = (Job)frmDatosWR.GetData;
             //_datos.Add(frmDatosWR.getData());
-            chart.Plot.Clear();
+            plot.Plot.Clear();
             CalcularCurva();
-            _chartOptions.NúmeroCurva = chart.Plot.GetPlottables().Length - 1;
+            _plotOptions.NúmeroCurva = plot.Plot.GetPlottables().Length - 1;
         }
         return;
     }
@@ -429,7 +414,7 @@ public partial class frmResultsWR : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmResultsWR frmResults = new frmResultsWR(_datos)
+        frmResultsWR frmResults = new frmResultsWR(_job)
         {
             MdiParent = this.MdiParent
         };
