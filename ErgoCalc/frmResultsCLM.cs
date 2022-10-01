@@ -7,13 +7,13 @@ using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
 
-public partial class frmResultsCLM : Form, IChildResults
+public partial class FrmResultsCLM : Form, IChildResults
 {
     // Variable definition
     private Job _job;
     private ResultsOptions _options;
 
-    public frmResultsCLM()
+    public FrmResultsCLM()
     {
         InitializeComponent();
 
@@ -25,13 +25,13 @@ public partial class frmResultsCLM : Form, IChildResults
         //rtbShowResult.Size = this.ClientSize;
     }
 
-    public frmResultsCLM(Job job)
+    public FrmResultsCLM(Job job)
         : this()
     {
         _job = job;
     }
 
-    public frmResultsCLM(object data)
+    public FrmResultsCLM(object data)
         : this()
     {
         if (data.GetType() == typeof(Job)) _job = (Job)data;
@@ -254,7 +254,7 @@ public partial class frmResultsCLM : Form, IChildResults
         //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmResultsCLM frmResults = new frmResultsCLM(_job) { MdiParent = this.MdiParent };
+        FrmResultsCLM frmResults = new FrmResultsCLM(_job) { MdiParent = this.MdiParent };
         //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
         frmResults.Show();
     }

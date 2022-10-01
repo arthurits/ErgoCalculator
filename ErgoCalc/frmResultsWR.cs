@@ -11,13 +11,13 @@ using ErgoCalc.Models.WR;
 namespace ErgoCalc;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-public partial class frmResultsWR : Form, IChildResults
+public partial class FrmResultsWR : Form, IChildResults
 {
     //private List<DataWR> _datos;
     private Job _job;
     private ChartOptions _plotOptions;
 
-    public frmResultsWR()
+    public FrmResultsWR()
     {
         InitializeComponent();
         InitializeChart();
@@ -51,7 +51,7 @@ public partial class frmResultsWR : Form, IChildResults
         
     }
 
-    public frmResultsWR(object data)
+    public FrmResultsWR(object data)
         : this()
     {
         if (data.GetType() == typeof(Job))
@@ -414,7 +414,7 @@ public partial class frmResultsWR : Form, IChildResults
         string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        frmResultsWR frmResults = new frmResultsWR(_job)
+        FrmResultsWR frmResults = new FrmResultsWR(_job)
         {
             MdiParent = this.MdiParent
         };
