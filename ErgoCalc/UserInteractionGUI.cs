@@ -30,7 +30,7 @@ partial class FrmMain
         {
             ModelType.WorkRest => new FrmDataWR(),
             ModelType.CumulativeLifting => new FrmDataCLM(),
-            ModelType.NioshLifting => new frmDataNIOSH(),
+            ModelType.NioshLifting => new FrmDataNIOSH(),
             ModelType.StrainIndex => new FrmDataStrainIndex(),
             ModelType.OcraCheck => new FrmDataOCRAcheck(),
             ModelType.MetabolicRate => new FrmDataMet(),
@@ -50,7 +50,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => new frmResultsWR(frm.GetData),
                     ModelType.CumulativeLifting => new frmResultsCLM(frm.GetData),
-                    ModelType.NioshLifting => new frmResultNIOSH(frm.GetData),
+                    ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
@@ -115,7 +115,7 @@ partial class FrmMain
             Form frm = strType switch
             {
                 "Work-Rest model" => new frmResultsWR(),
-                "NIOSH lifting equation" => new frmResultNIOSH(),
+                "NIOSH lifting equation" => new FrmResultNIOSH(),
                 "Strain index" => new FrmResultsStrainIndex(),
                 "Thermal comfort model" => new FrmResultsTC(),
                 "LM-MMH model" => new FrmResultsLiberty(),

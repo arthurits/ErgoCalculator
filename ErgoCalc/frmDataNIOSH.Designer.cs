@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmDataNIOSH
+    partial class FrmDataNIOSH
     {
         /// <summary>
         /// Required designer variable.
@@ -64,14 +64,14 @@
             this.updSubTasks.Location = new System.Drawing.Point(140, 288);
             this.updSubTasks.Margin = new System.Windows.Forms.Padding(4);
             this.updSubTasks.Maximum = new decimal(new int[] {
-            8,
+            10,
             0,
             0,
             0});
             this.updSubTasks.Name = "updSubTasks";
             this.updSubTasks.Size = new System.Drawing.Size(63, 22);
             this.updSubTasks.TabIndex = 1;
-            this.updSubTasks.ValueChanged += new System.EventHandler(this.updSubTasks_ValueChanged);
+            this.updSubTasks.ValueChanged += new System.EventHandler(this.SubTasks_ValueChanged);
             // 
             // lblSubTasks
             // 
@@ -128,6 +128,7 @@
             // listViewTasks
             // 
             this.listViewTasks.AllowDrop = true;
+            this.listViewTasks.DummyName = "Dummy";
             this.listViewTasks.FullRowSelect = true;
             this.listViewTasks.Location = new System.Drawing.Point(0, 34);
             this.listViewTasks.Name = "listViewTasks";
@@ -180,10 +181,10 @@
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
             this.tabTasks.Controls.Add(this.listViewTasks);
-            this.tabTasks.Location = new System.Drawing.Point(4, 25);
+            this.tabTasks.Location = new System.Drawing.Point(4, 24);
             this.tabTasks.Name = "tabTasks";
             this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTasks.Size = new System.Drawing.Size(737, 328);
+            this.tabTasks.Size = new System.Drawing.Size(737, 329);
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 
@@ -212,7 +213,7 @@
             0,
             0,
             0});
-            this.updTasks.ValueChanged += new System.EventHandler(this.updTasks_ValueChanged);
+            this.updTasks.ValueChanged += new System.EventHandler(this.Tasks_ValueChanged);
             // 
             // tabDummy
             // 
@@ -306,7 +307,7 @@
             this.btnExample.UseVisualStyleBackColor = true;
             this.btnExample.Click += new System.EventHandler(this.Example_Click);
             // 
-            // FrmDataNIOSHmodel
+            // frmDataNIOSH
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -326,7 +327,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmDataNIOSHmodel";
+            this.Name = "frmDataNIOSH";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

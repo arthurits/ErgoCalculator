@@ -6,7 +6,7 @@ using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
 
-public partial class frmDataNIOSH : Form, IChildData
+public partial class FrmDataNIOSH : Form, IChildData
 {
     private IndexType _index;
     private Job _nioshLifting;
@@ -15,7 +15,7 @@ public partial class frmDataNIOSH : Form, IChildData
     public Job GetJob => _nioshLifting;
 
     // Default constructor
-    public frmDataNIOSH()
+    public FrmDataNIOSH()
     {
         // VS Designer initialization routine
         InitializeComponent();
@@ -25,21 +25,17 @@ public partial class frmDataNIOSH : Form, IChildData
         rad_CheckedChanged(radLI, null);
 
         listViewTasks.AddGroup();
-
-        // Create the first column (zero index base)
-        //AddColumn();
-
     }
 
     // Overloaded constructor
-    public frmDataNIOSH(Job data)
+    public FrmDataNIOSH(Job data)
         : this() // Call the base constructor
     {
         _nioshLifting = data;
         DataToGrid();
     }
 
-    private void updSubTasks_ValueChanged(object sender, EventArgs e)
+    private void SubTasks_ValueChanged(object sender, EventArgs e)
     {
         Int32 col = Convert.ToInt32(updSubTasks.Value);
         
@@ -67,7 +63,7 @@ public partial class frmDataNIOSH : Form, IChildData
         return;
     }
 
-    private void updTasks_ValueChanged(object sender, EventArgs e)
+    private void Tasks_ValueChanged(object sender, EventArgs e)
     {
         Int32 tasks = Convert.ToInt32(updTasks.Value);
         if (tasks > listViewTasks.Groups.Count)
@@ -209,7 +205,7 @@ public partial class frmDataNIOSH : Form, IChildData
     private void Example_Click(object sender, EventArgs e)
     {
         // Loads some data example into the grid
-        updSubTasks.Value = 0;
+        //updSubTasks.Value = 0;
         DataExample();
         DataToGrid();
     }
@@ -413,27 +409,15 @@ public partial class frmDataNIOSH : Form, IChildData
                 radLI.Checked = true;
                 break;
         }
-
+        updSubTasks.Value = 0;
+        updTasks.Maximum = _nioshLifting.numberTasks;
         updTasks.Value = _nioshLifting.numberTasks;
         int nCol = 0;
         for (var j = 0; j < _nioshLifting.numberTasks; j++)
         {
-            //nCol++;
             for (var i = 0; i < _nioshLifting.jobTasks[j].subTasks.Length; i++)
             {
-                //Column 0 is already created in the constructor;
-                if ((i + j) == 0) AddColumn();
-
-                for (int k = nCol; k <= _nioshLifting.jobTasks[j].subTasks[i].itemIndex; k++)
-                {
-                    if (k > 0)
-                    {
-                        nCol = k;
-                        AddColumn(nCol);
-                        nCol++;
-                    }
-
-                }
+                AddColumn();
 
                 // Populate the DataGridView with data
                 gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 0].Value = _nioshLifting.jobTasks[j].subTasks[i].data.weight.ToString();
@@ -446,15 +430,17 @@ public partial class frmDataNIOSH : Form, IChildData
                 gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 7].Value = (int)_nioshLifting.jobTasks[j].subTasks[i].data.c;
 
                 // Classify
-                if (j > 0)
+                //if (j > 0)
                     listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items.Insert(_nioshLifting.jobTasks[j].subTasks[i].itemIndex, new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
+
+                nCol++;
             }
         }
+        
         // Update the control's value
         updSubTasks.Value = nCol;
-        //updTasks.Value = _nioshLifting.numberTasks;
     }
 
     #endregion
