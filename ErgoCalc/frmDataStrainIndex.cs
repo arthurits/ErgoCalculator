@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.StrainIndex;
-//using ErgoCalc;
 
 namespace ErgoCalc;
 
@@ -18,8 +17,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     private IndexType _index;
 
     public object GetData => _job;
-    public Job GetJob => _job;
-    public IndexType Index => _index;
 
     // Default constructor
     public FrmDataStrainIndex()
@@ -40,7 +37,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         _job = job;
         DataToGrid();
-        tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
+        //tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
     }
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -77,7 +74,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         }
     }
 
-    private void updSubtasks_ValueChanged(object sender, EventArgs e)
+    private void Subtasks_ValueChanged(object sender, EventArgs e)
     {
         Int32 col = Convert.ToInt32(updSubtasks.Value);
 
@@ -107,7 +104,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         return;
     }
 
-    private void updTasks_ValueChanged(object sender, EventArgs e)
+    private void Tasks_ValueChanged(object sender, EventArgs e)
     {
         Int32 tasks = Convert.ToInt32(updTasks.Value);
         if (tasks > listViewTasks.Groups.Count)
@@ -191,7 +188,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
         updSubtasks.Value = 0;
         DataExample2();
         DataToGrid();
-        //tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
     }
 
     #region Private routines
@@ -201,8 +197,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// <param name="col">Column number (zero based)</param>
     private void AddColumn(Int32 col)
     {
-        //String[] strTasks = new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
-
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
@@ -216,8 +210,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 85;
 
-        // Give format to the cells
-        // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+        // Add the row headers after the first column is created
         if (col == 0)
             AddRows();
 

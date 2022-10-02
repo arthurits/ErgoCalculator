@@ -9,7 +9,6 @@ namespace ErgoCalc;
 public partial class FrmDataLiberty : Form, IChildData
 {
     private Job _job;
-    //private List<ModelLiberty> _data;
     private string strGridHeader = "Task ";
 
     public object GetData => _job;
@@ -17,54 +16,9 @@ public partial class FrmDataLiberty : Form, IChildData
     public FrmDataLiberty()
     {
         InitializeComponent();
-        
-        // Create the first column (zero index base)
-        AddColumn();
-
-        // Create the header rows
-        gridVariables.RowCount = 8;
-        gridVariables.Rows[0].HeaderCell.Value = "Type";
-        gridVariables.Rows[1].HeaderCell.Value = "Horizontal reach H (m)";
-        gridVariables.Rows[2].HeaderCell.Value = "Vertical range middle VRM (m)";
-        gridVariables.Rows[3].HeaderCell.Value = "Horizontal distance DH (m)";
-        gridVariables.Rows[4].HeaderCell.Value = "Vertical distance DV (m)";
-        gridVariables.Rows[5].HeaderCell.Value = "Vertical height V (m)";
-        gridVariables.Rows[6].HeaderCell.Value = "Frequency F (actions/min)";
-        gridVariables.Rows[7].HeaderCell.Value = "Gender";
-        //gridVariables.Rows[1].Visible = false;
-
-        // Create custom cells with combobox display
-        DataGridViewComboBoxCell cellType = new DataGridViewComboBoxCell();
-        DataTable tabType = new DataTable();
-
-        tabType.Columns.Add("Type", typeof(String));
-        tabType.Columns.Add("TypeValue", typeof(Int32));
-        tabType.Rows.Add("Carrying", 0);
-        tabType.Rows.Add("Lifting", 1);
-        tabType.Rows.Add("Lowering", 2);
-        tabType.Rows.Add("Pulling", 3);
-        tabType.Rows.Add("Pushing", 4);
-        cellType.DataSource = tabType;
-        cellType.DisplayMember = "Type";
-        cellType.ValueMember = "TypeValue";
-
-        gridVariables.Rows[0].Cells[0] = cellType;
-
-        DataGridViewComboBoxCell cellGender = new DataGridViewComboBoxCell();
-        DataTable tabGender = new DataTable();
-
-        tabGender.Columns.Add("Gender", typeof(String));
-        tabGender.Columns.Add("GenderValue", typeof(Int32));
-        tabGender.Rows.Add("Male", 0);
-        tabGender.Rows.Add("Female", 1);
-        cellGender.DataSource = tabGender;
-        cellGender.DisplayMember = "Gender";
-        cellGender.ValueMember = "GenderValue";
-
-        gridVariables.Rows[7].Cells[0] = cellGender;
-
-        gridVariables.CurrentCellDirtyStateChanged += gridVariables_CurrentCellDirtyStateChanged;
-
+               
+        // This event is used to change cell values upon the user interacting with some other cells
+        gridVariables.CurrentCellDirtyStateChanged += Variables_CurrentCellDirtyStateChanged;
     }
 
     public FrmDataLiberty(Job job)
@@ -152,7 +106,7 @@ public partial class FrmDataLiberty : Form, IChildData
         DataToGrid();
     }
 
-    private void updTasks_ValueChanged(object sender, EventArgs e)
+    private void Tasks_ValueChanged(object sender, EventArgs e)
     {
         Int32 col = Convert.ToInt32(updTasks.Value);
 
@@ -163,7 +117,7 @@ public partial class FrmDataLiberty : Form, IChildData
             for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
     }
 
-    void gridVariables_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+    private void Variables_CurrentCellDirtyStateChanged(object sender, EventArgs e)
     {
         var CurrentCell = gridVariables.CurrentCell;
         if (!(CurrentCell is DataGridViewComboBoxCell)) return;
@@ -193,9 +147,14 @@ public partial class FrmDataLiberty : Form, IChildData
                 gridVariables.Rows[1].Cells[CurrentCell.ColumnIndex].Value = "——";
                 gridVariables.Rows[2].Cells[CurrentCell.ColumnIndex].Value = "——";
                 gridVariables.Rows[4].Cells[CurrentCell.ColumnIndex].Value = "——";
+                if ((string)gridVariables.Rows[3].Cells[CurrentCell.ColumnIndex].Value == "——") gridVariables.Rows[3].Cells[CurrentCell.ColumnIndex].Value = string.Empty;
+                if ((string)gridVariables.Rows[5].Cells[CurrentCell.ColumnIndex].Value == "——") gridVariables.Rows[5].Cells[CurrentCell.ColumnIndex].Value = string.Empty;
                 break;
             case 1:
             case 2:
+                if ((string)gridVariables.Rows[1].Cells[CurrentCell.ColumnIndex].Value == "——") gridVariables.Rows[1].Cells[CurrentCell.ColumnIndex].Value = string.Empty;
+                if ((string)gridVariables.Rows[2].Cells[CurrentCell.ColumnIndex].Value == "——") gridVariables.Rows[2].Cells[CurrentCell.ColumnIndex].Value = string.Empty;
+                if ((string)gridVariables.Rows[4].Cells[CurrentCell.ColumnIndex].Value == "——") gridVariables.Rows[4].Cells[CurrentCell.ColumnIndex].Value = string.Empty;
                 gridVariables.Rows[3].Cells[CurrentCell.ColumnIndex].Value = "——";
                 gridVariables.Rows[5].Cells[CurrentCell.ColumnIndex].Value = "——";
                 break;
@@ -231,7 +190,37 @@ public partial class FrmDataLiberty : Form, IChildData
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 90;
 
-        //if (col > 0) gridVariables[col, 6].Value = 0;
+        // Add the row headers after the first column is created
+        if (col == 0)
+        {
+            AddRows();
+
+            // Create custom cells with combobox display
+            DataGridViewComboBoxCell cellType = new DataGridViewComboBoxCell();
+            DataTable tabType = new DataTable();
+            tabType.Columns.Add("Type", typeof(String));
+            tabType.Columns.Add("TypeValue", typeof(Int32));
+            tabType.Rows.Add("Carrying", 0);
+            tabType.Rows.Add("Lifting", 1);
+            tabType.Rows.Add("Lowering", 2);
+            tabType.Rows.Add("Pulling", 3);
+            tabType.Rows.Add("Pushing", 4);
+            cellType.DataSource = tabType;
+            cellType.DisplayMember = "Type";
+            cellType.ValueMember = "TypeValue";
+            gridVariables.Rows[0].Cells[0] = cellType;
+
+            DataGridViewComboBoxCell cellGender = new DataGridViewComboBoxCell();
+            DataTable tabGender = new DataTable();
+            tabGender.Columns.Add("Gender", typeof(String));
+            tabGender.Columns.Add("GenderValue", typeof(Int32));
+            tabGender.Rows.Add("Male", 0);
+            tabGender.Rows.Add("Female", 1);
+            cellGender.DataSource = tabGender;
+            cellGender.DisplayMember = "Gender";
+            cellGender.ValueMember = "GenderValue";
+            gridVariables.Rows[7].Cells[0] = cellGender;
+        }
 
         // Give format (ComboBox) to the added column cells
         if (col > 0)
@@ -251,6 +240,23 @@ public partial class FrmDataLiberty : Form, IChildData
         AddColumn(gridVariables.Columns.Count);
     }
 
+    /// <summary>
+    /// Adds the headercell values for each row
+    /// </summary>
+    private void AddRows()
+    {
+        // Create the header rows
+        gridVariables.RowCount = 8;
+        gridVariables.Rows[0].HeaderCell.Value = "Type";
+        gridVariables.Rows[1].HeaderCell.Value = "Horizontal reach H (m)";
+        gridVariables.Rows[2].HeaderCell.Value = "Vertical range middle VRM (m)";
+        gridVariables.Rows[3].HeaderCell.Value = "Horizontal distance DH (m)";
+        gridVariables.Rows[4].HeaderCell.Value = "Vertical distance DV (m)";
+        gridVariables.Rows[5].HeaderCell.Value = "Vertical height V (m)";
+        gridVariables.Rows[6].HeaderCell.Value = "Frequency F (actions/min)";
+        gridVariables.Rows[7].HeaderCell.Value = "Gender";
+    }
+
     public void LoadExample()
     {
 
@@ -261,11 +267,11 @@ public partial class FrmDataLiberty : Form, IChildData
     /// </summary>
     private void DataToGrid()
     {
+        // This creates the necessary grid columns in the corresponding ValueChanged event
+        updTasks.Value = _job.NumberTasks;
+
         for (int i = 0; i < _job.NumberTasks; i++)
         {
-            //Column 0 is already created in the constructor;
-            if (i > 0) AddColumn();
-
             // Populate the DataGridView with data
             gridVariables[i, 0].Value = (int)_job.Tasks[i].Data.Type;
             gridVariables[i, 1].Value = _job.Tasks[i].Data.HorzReach.ToString();
@@ -289,8 +295,6 @@ public partial class FrmDataLiberty : Form, IChildData
             }
 
         }
-
-        updTasks.Value = _job.NumberTasks;
     }
 
     private void DataExample()

@@ -9,10 +9,9 @@ namespace ErgoCalc;
 public partial class FrmDataNIOSH : Form, IChildData
 {
     private IndexType _index;
-    private Job _nioshLifting;
+    private Job _job;
 
-    public object GetData => _nioshLifting;
-    public Job GetJob => _nioshLifting;
+    public object GetData => _job;
 
     // Default constructor
     public FrmDataNIOSH()
@@ -31,7 +30,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     public FrmDataNIOSH(Job data)
         : this() // Call the base constructor
     {
-        _nioshLifting = data;
+        _job = data;
         DataToGrid();
     }
 
@@ -130,31 +129,31 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         // New test
         int ItemIndex;
-        _nioshLifting = new();
-        _nioshLifting.numberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
-        _nioshLifting.jobTasks = new Task[_nioshLifting.numberTasks];
-        _nioshLifting.order = new int[_nioshLifting.numberTasks];
-        if (radLI.Checked) _nioshLifting.model = IndexType.IndexLI;
-        if (radCLI.Checked) _nioshLifting.model = IndexType.IndexCLI;
-        if (radVLI.Checked) _nioshLifting.model = IndexType.IndexVLI;
-        if (radSLI.Checked) _nioshLifting.model = IndexType.IndexSLI;
+        _job = new();
+        _job.numberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
+        _job.jobTasks = new Task[_job.numberTasks];
+        _job.order = new int[_job.numberTasks];
+        if (radLI.Checked) _job.model = IndexType.IndexLI;
+        if (radCLI.Checked) _job.model = IndexType.IndexCLI;
+        if (radVLI.Checked) _job.model = IndexType.IndexVLI;
+        if (radSLI.Checked) _job.model = IndexType.IndexSLI;
 
 
-        for (int i = 0; i < _nioshLifting.numberTasks; i++)
+        for (int i = 0; i < _job.numberTasks; i++)
         {
-            _nioshLifting.jobTasks[i] = new();
-            _nioshLifting.order[i] = i;
+            _job.jobTasks[i] = new();
+            _job.order[i] = i;
 
-            _nioshLifting.jobTasks[i].numberSubTasks = _nioshLifting.model == IndexType.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
-            _nioshLifting.jobTasks[i].model = _nioshLifting.model;
-            _nioshLifting.jobTasks[i].OrderCLI = new int[_nioshLifting.jobTasks[i].numberSubTasks];
-            _nioshLifting.jobTasks[i].subTasks = new SubTask[_nioshLifting.jobTasks[i].numberSubTasks];
-            _nioshLifting.jobTasks[i].CLI = -1;
+            _job.jobTasks[i].numberSubTasks = _job.model == IndexType.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
+            _job.jobTasks[i].model = _job.model;
+            _job.jobTasks[i].OrderCLI = new int[_job.jobTasks[i].numberSubTasks];
+            _job.jobTasks[i].subTasks = new SubTask[_job.jobTasks[i].numberSubTasks];
+            _job.jobTasks[i].CLI = -1;
 
-            for (int j = 0; j < _nioshLifting.jobTasks[i].numberSubTasks; j++)
+            for (int j = 0; j < _job.jobTasks[i].numberSubTasks; j++)
             {
-                _nioshLifting.jobTasks[i].subTasks[j] = new();
-                ItemIndex = _nioshLifting.model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                _job.jobTasks[i].subTasks[j] = new();
+                ItemIndex = _job.model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
                 //if (_nioshLifting.model == IndexType.IndexLI)
                 //    ItemIndex = j;
                 //else
@@ -166,8 +165,8 @@ public partial class FrmDataNIOSH : Form, IChildData
                 //    }
                 //}
 
-                _nioshLifting.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
-                _nioshLifting.jobTasks[i].subTasks[j].task = i;
+                _job.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
+                _job.jobTasks[i].subTasks[j].task = i;
 
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
@@ -175,16 +174,16 @@ public partial class FrmDataNIOSH : Form, IChildData
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, -180, -180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 8, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
 
-                _nioshLifting.jobTasks[i].subTasks[j].data.weight = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.v = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.d = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.f = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.td = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.a = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
-                _nioshLifting.jobTasks[i].subTasks[j].data.c = (Coupling)gridVariables[ItemIndex, 7].Value;
+                _job.jobTasks[i].subTasks[j].data.weight = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
+                _job.jobTasks[i].subTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
+                _job.jobTasks[i].subTasks[j].data.v = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
+                _job.jobTasks[i].subTasks[j].data.d = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
+                _job.jobTasks[i].subTasks[j].data.f = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
+                _job.jobTasks[i].subTasks[j].data.td = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
+                _job.jobTasks[i].subTasks[j].data.a = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
+                _job.jobTasks[i].subTasks[j].data.c = (Coupling)gridVariables[ItemIndex, 7].Value;
 
-                _nioshLifting.jobTasks[i].subTasks[j].factors.LC = LC;
+                _job.jobTasks[i].subTasks[j].factors.LC = LC;
 
                 //_nioshLifting.jobTasks[i].h += _nioshLifting.jobTasks[i].subTasks[j].data.h;  // Calculate mean
                 //_nioshLifting.jobTasks[i].OrderCLI[j] = j;
@@ -199,7 +198,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     private void Cancel_Click(object sender, EventArgs e)
     {
         // Return empty array
-        _nioshLifting = new();
+        _job = new();
     }
 
     private void Example_Click(object sender, EventArgs e)
@@ -227,11 +226,28 @@ public partial class FrmDataNIOSH : Form, IChildData
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 85;
 
-        // Give format to the cells
+        // Add the row headers after the first column is created
+        if (col == 0)
+        {
+            AddRows();
+
+            // Create custom cells with combobox display
+            DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
+            DataTable tableC = new DataTable();
+            tableC.Columns.Add("Display", typeof(String));
+            tableC.Columns.Add("Value", typeof(Int32));
+            tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
+            tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
+            tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
+            celdaC.DataSource = tableC;
+            celdaC.DisplayMember = "Display";
+            celdaC.ValueMember = "Value";
+            gridVariables.Rows[7].Cells[0] = celdaC;
+        }
+
+        // Give format (ComboBox) to the added column cells
         if (col > 0)
             gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
-        else if (col == 0)
-            AddRows();
 
         return;
     }
@@ -259,21 +275,6 @@ public partial class FrmDataNIOSH : Form, IChildData
         gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
         gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (°)";
         gridVariables.Rows[7].HeaderCell.Value = "Coupling";
-
-        // Create custom cells with combobox display
-        DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-        DataTable tableC = new DataTable();
-
-        tableC.Columns.Add("Display", typeof(String));
-        tableC.Columns.Add("Value", typeof(Int32));
-        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
-        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
-        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
-        celdaC.DataSource = tableC;
-        celdaC.DisplayMember = "Display";
-        celdaC.ValueMember = "Value";
-
-        gridVariables.Rows[7].Cells[0] = celdaC;
     }
 
     /// <summary>
@@ -281,108 +282,108 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void DataExample()
     {
-        _nioshLifting = new()
+        _job = new()
         {
             numberTasks = 1,
             model = IndexType.IndexLI,
             jobTasks = new Task[1]
         };
 
-        _nioshLifting.jobTasks[0] = new Task
+        _job.jobTasks[0] = new Task
         {
             numberSubTasks = 8,
             model = IndexType.IndexLI,
             subTasks = new SubTask[8]
         };
 
-        _nioshLifting.jobTasks[0].subTasks[0] = new();
-        _nioshLifting.jobTasks[0].subTasks[0].itemIndex = 0;
-        _nioshLifting.jobTasks[0].subTasks[0].data.weight = 3.0;
-        _nioshLifting.jobTasks[0].subTasks[0].data.weight = 3.0;
-        _nioshLifting.jobTasks[0].subTasks[0].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[0].data.v = 38.5;
-        _nioshLifting.jobTasks[0].subTasks[0].data.d = 76.5;
-        _nioshLifting.jobTasks[0].subTasks[0].data.a = 0;
-        _nioshLifting.jobTasks[0].subTasks[0].data.f = 3;
-        _nioshLifting.jobTasks[0].subTasks[0].data.td = 2;
-        _nioshLifting.jobTasks[0].subTasks[0].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[0] = new();
+        _job.jobTasks[0].subTasks[0].itemIndex = 0;
+        _job.jobTasks[0].subTasks[0].data.weight = 3.0;
+        _job.jobTasks[0].subTasks[0].data.weight = 3.0;
+        _job.jobTasks[0].subTasks[0].data.h = 24;
+        _job.jobTasks[0].subTasks[0].data.v = 38.5;
+        _job.jobTasks[0].subTasks[0].data.d = 76.5;
+        _job.jobTasks[0].subTasks[0].data.a = 0;
+        _job.jobTasks[0].subTasks[0].data.f = 3;
+        _job.jobTasks[0].subTasks[0].data.td = 2;
+        _job.jobTasks[0].subTasks[0].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[1] = new();
-        _nioshLifting.jobTasks[0].subTasks[1].itemIndex = 1;
-        _nioshLifting.jobTasks[0].subTasks[1].data.weight = 3.0;
-        _nioshLifting.jobTasks[0].subTasks[1].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[1].data.v = 81;
-        _nioshLifting.jobTasks[0].subTasks[1].data.d = 34;
-        _nioshLifting.jobTasks[0].subTasks[1].data.a = 0;
-        _nioshLifting.jobTasks[0].subTasks[1].data.f = 3;
-        _nioshLifting.jobTasks[0].subTasks[1].data.td = 2;
-        _nioshLifting.jobTasks[0].subTasks[1].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[1] = new();
+        _job.jobTasks[0].subTasks[1].itemIndex = 1;
+        _job.jobTasks[0].subTasks[1].data.weight = 3.0;
+        _job.jobTasks[0].subTasks[1].data.h = 24;
+        _job.jobTasks[0].subTasks[1].data.v = 81;
+        _job.jobTasks[0].subTasks[1].data.d = 34;
+        _job.jobTasks[0].subTasks[1].data.a = 0;
+        _job.jobTasks[0].subTasks[1].data.f = 3;
+        _job.jobTasks[0].subTasks[1].data.td = 2;
+        _job.jobTasks[0].subTasks[1].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[2] = new();
-        _nioshLifting.jobTasks[0].subTasks[2].itemIndex = 2;
-        _nioshLifting.jobTasks[0].subTasks[2].data.weight = 3.0;
-        _nioshLifting.jobTasks[0].subTasks[2].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[2].data.v = 123.5;
-        _nioshLifting.jobTasks[0].subTasks[2].data.d = 8.5;
-        _nioshLifting.jobTasks[0].subTasks[2].data.a = 90;
-        _nioshLifting.jobTasks[0].subTasks[2].data.f = 3;
-        _nioshLifting.jobTasks[0].subTasks[2].data.td = 2;
-        _nioshLifting.jobTasks[0].subTasks[2].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[2] = new();
+        _job.jobTasks[0].subTasks[2].itemIndex = 2;
+        _job.jobTasks[0].subTasks[2].data.weight = 3.0;
+        _job.jobTasks[0].subTasks[2].data.h = 24;
+        _job.jobTasks[0].subTasks[2].data.v = 123.5;
+        _job.jobTasks[0].subTasks[2].data.d = 8.5;
+        _job.jobTasks[0].subTasks[2].data.a = 90;
+        _job.jobTasks[0].subTasks[2].data.f = 3;
+        _job.jobTasks[0].subTasks[2].data.td = 2;
+        _job.jobTasks[0].subTasks[2].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[3] = new();
-        _nioshLifting.jobTasks[0].subTasks[3].itemIndex = 3;
-        _nioshLifting.jobTasks[0].subTasks[3].data.weight = 3.0;
-        _nioshLifting.jobTasks[0].subTasks[3].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[3].data.v = 166;
-        _nioshLifting.jobTasks[0].subTasks[3].data.d = 51;
-        _nioshLifting.jobTasks[0].subTasks[3].data.a = 90;
-        _nioshLifting.jobTasks[0].subTasks[3].data.f = 3;
-        _nioshLifting.jobTasks[0].subTasks[3].data.td = 2;
-        _nioshLifting.jobTasks[0].subTasks[3].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[3] = new();
+        _job.jobTasks[0].subTasks[3].itemIndex = 3;
+        _job.jobTasks[0].subTasks[3].data.weight = 3.0;
+        _job.jobTasks[0].subTasks[3].data.h = 24;
+        _job.jobTasks[0].subTasks[3].data.v = 166;
+        _job.jobTasks[0].subTasks[3].data.d = 51;
+        _job.jobTasks[0].subTasks[3].data.a = 90;
+        _job.jobTasks[0].subTasks[3].data.f = 3;
+        _job.jobTasks[0].subTasks[3].data.td = 2;
+        _job.jobTasks[0].subTasks[3].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[4] = new();
-        _nioshLifting.jobTasks[0].subTasks[4].itemIndex = 4;
-        _nioshLifting.jobTasks[0].subTasks[4].data.weight = 7.0;
-        _nioshLifting.jobTasks[0].subTasks[4].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[4].data.v = 33;
-        _nioshLifting.jobTasks[0].subTasks[4].data.d = 82;
-        _nioshLifting.jobTasks[0].subTasks[4].data.a = 0;
-        _nioshLifting.jobTasks[0].subTasks[4].data.f = 1;
-        _nioshLifting.jobTasks[0].subTasks[4].data.td = 1;
-        _nioshLifting.jobTasks[0].subTasks[4].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[4] = new();
+        _job.jobTasks[0].subTasks[4].itemIndex = 4;
+        _job.jobTasks[0].subTasks[4].data.weight = 7.0;
+        _job.jobTasks[0].subTasks[4].data.h = 24;
+        _job.jobTasks[0].subTasks[4].data.v = 33;
+        _job.jobTasks[0].subTasks[4].data.d = 82;
+        _job.jobTasks[0].subTasks[4].data.a = 0;
+        _job.jobTasks[0].subTasks[4].data.f = 1;
+        _job.jobTasks[0].subTasks[4].data.td = 1;
+        _job.jobTasks[0].subTasks[4].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[5] = new();
-        _nioshLifting.jobTasks[0].subTasks[5].itemIndex = 5;
-        _nioshLifting.jobTasks[0].subTasks[5].data.weight = 7.0;
-        _nioshLifting.jobTasks[0].subTasks[5].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[5].data.v = 75.5;
-        _nioshLifting.jobTasks[0].subTasks[5].data.d = 39.5;
-        _nioshLifting.jobTasks[0].subTasks[5].data.a = 0;
-        _nioshLifting.jobTasks[0].subTasks[5].data.f = 1;
-        _nioshLifting.jobTasks[0].subTasks[5].data.td = 1;
-        _nioshLifting.jobTasks[0].subTasks[5].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[5] = new();
+        _job.jobTasks[0].subTasks[5].itemIndex = 5;
+        _job.jobTasks[0].subTasks[5].data.weight = 7.0;
+        _job.jobTasks[0].subTasks[5].data.h = 24;
+        _job.jobTasks[0].subTasks[5].data.v = 75.5;
+        _job.jobTasks[0].subTasks[5].data.d = 39.5;
+        _job.jobTasks[0].subTasks[5].data.a = 0;
+        _job.jobTasks[0].subTasks[5].data.f = 1;
+        _job.jobTasks[0].subTasks[5].data.td = 1;
+        _job.jobTasks[0].subTasks[5].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[6] = new();
-        _nioshLifting.jobTasks[0].subTasks[6].itemIndex = 6;
-        _nioshLifting.jobTasks[0].subTasks[6].data.weight = 7.0;
-        _nioshLifting.jobTasks[0].subTasks[6].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[6].data.v = 118;
-        _nioshLifting.jobTasks[0].subTasks[6].data.d = 3;
-        _nioshLifting.jobTasks[0].subTasks[6].data.a = 0;
-        _nioshLifting.jobTasks[0].subTasks[6].data.f = 1;
-        _nioshLifting.jobTasks[0].subTasks[6].data.td = 1;
-        _nioshLifting.jobTasks[0].subTasks[6].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[6] = new();
+        _job.jobTasks[0].subTasks[6].itemIndex = 6;
+        _job.jobTasks[0].subTasks[6].data.weight = 7.0;
+        _job.jobTasks[0].subTasks[6].data.h = 24;
+        _job.jobTasks[0].subTasks[6].data.v = 118;
+        _job.jobTasks[0].subTasks[6].data.d = 3;
+        _job.jobTasks[0].subTasks[6].data.a = 0;
+        _job.jobTasks[0].subTasks[6].data.f = 1;
+        _job.jobTasks[0].subTasks[6].data.td = 1;
+        _job.jobTasks[0].subTasks[6].data.c = Coupling.NoHandle;
 
-        _nioshLifting.jobTasks[0].subTasks[7] = new();
-        _nioshLifting.jobTasks[0].subTasks[7].itemIndex = 7;
-        _nioshLifting.jobTasks[0].subTasks[7].data.weight = 7.0;
-        _nioshLifting.jobTasks[0].subTasks[7].data.h = 24;
-        _nioshLifting.jobTasks[0].subTasks[7].data.v = 160.5;
-        _nioshLifting.jobTasks[0].subTasks[7].data.d = 45.5;
-        _nioshLifting.jobTasks[0].subTasks[7].data.a = 0;
-        _nioshLifting.jobTasks[0].subTasks[7].data.f = 2;
-        _nioshLifting.jobTasks[0].subTasks[7].data.td = 1;
-        _nioshLifting.jobTasks[0].subTasks[7].data.c = Coupling.NoHandle;
+        _job.jobTasks[0].subTasks[7] = new();
+        _job.jobTasks[0].subTasks[7].itemIndex = 7;
+        _job.jobTasks[0].subTasks[7].data.weight = 7.0;
+        _job.jobTasks[0].subTasks[7].data.h = 24;
+        _job.jobTasks[0].subTasks[7].data.v = 160.5;
+        _job.jobTasks[0].subTasks[7].data.d = 45.5;
+        _job.jobTasks[0].subTasks[7].data.a = 0;
+        _job.jobTasks[0].subTasks[7].data.f = 2;
+        _job.jobTasks[0].subTasks[7].data.td = 1;
+        _job.jobTasks[0].subTasks[7].data.c = Coupling.NoHandle;
     }
 
     /// <summary>
@@ -391,7 +392,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// <param name="data">Array of Model NIOSH data</param>
     private void DataToGrid()
     {
-        switch ((int)_nioshLifting.model)
+        switch ((int)_job.model)
         {
             case 0:
                 radLI.Checked = true;
@@ -410,28 +411,28 @@ public partial class FrmDataNIOSH : Form, IChildData
                 break;
         }
         updSubTasks.Value = 0;
-        updTasks.Maximum = _nioshLifting.numberTasks;
-        updTasks.Value = _nioshLifting.numberTasks;
+        updTasks.Maximum = _job.numberTasks;
+        updTasks.Value = _job.numberTasks;
         int nCol = 0;
-        for (var j = 0; j < _nioshLifting.numberTasks; j++)
+        for (var j = 0; j < _job.numberTasks; j++)
         {
-            for (var i = 0; i < _nioshLifting.jobTasks[j].subTasks.Length; i++)
+            for (var i = 0; i < _job.jobTasks[j].subTasks.Length; i++)
             {
                 AddColumn();
 
                 // Populate the DataGridView with data
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 0].Value = _nioshLifting.jobTasks[j].subTasks[i].data.weight.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 1].Value = _nioshLifting.jobTasks[j].subTasks[i].data.h.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 2].Value = _nioshLifting.jobTasks[j].subTasks[i].data.v.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 3].Value = _nioshLifting.jobTasks[j].subTasks[i].data.d.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 4].Value = _nioshLifting.jobTasks[j].subTasks[i].data.f.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 5].Value = _nioshLifting.jobTasks[j].subTasks[i].data.td.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 6].Value = _nioshLifting.jobTasks[j].subTasks[i].data.a.ToString();
-                gridVariables[_nioshLifting.jobTasks[j].subTasks[i].itemIndex, 7].Value = (int)_nioshLifting.jobTasks[j].subTasks[i].data.c;
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 0].Value = _job.jobTasks[j].subTasks[i].data.weight.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 1].Value = _job.jobTasks[j].subTasks[i].data.h.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 2].Value = _job.jobTasks[j].subTasks[i].data.v.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 3].Value = _job.jobTasks[j].subTasks[i].data.d.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 4].Value = _job.jobTasks[j].subTasks[i].data.f.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 5].Value = _job.jobTasks[j].subTasks[i].data.td.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 6].Value = _job.jobTasks[j].subTasks[i].data.a.ToString();
+                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 7].Value = (int)_job.jobTasks[j].subTasks[i].data.c;
 
                 // Classify
                 //if (j > 0)
-                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
+                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _job.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items.Insert(_nioshLifting.jobTasks[j].subTasks[i].itemIndex, new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
                 //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
 

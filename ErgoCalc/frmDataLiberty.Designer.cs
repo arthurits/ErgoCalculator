@@ -165,24 +165,14 @@ namespace ErgoCalc
             this.updTasks.Location = new System.Drawing.Point(148, 285);
             this.updTasks.Margin = new System.Windows.Forms.Padding(4);
             this.updTasks.Maximum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.updTasks.Minimum = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
             this.updTasks.Name = "updTasks";
             this.updTasks.Size = new System.Drawing.Size(63, 23);
             this.updTasks.TabIndex = 7;
-            this.updTasks.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.updTasks.ValueChanged += new System.EventHandler(this.updTasks_ValueChanged);
+            this.updTasks.ValueChanged += new System.EventHandler(this.Tasks_ValueChanged);
             // 
             // columnHeader1
             // 
@@ -216,7 +206,7 @@ namespace ErgoCalc
             this.gridVariables.Size = new System.Drawing.Size(748, 245);
             this.gridVariables.TabIndex = 10;
             // 
-            // frmDataLiberty
+            // FrmDataLiberty
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -235,7 +225,7 @@ namespace ErgoCalc
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataLiberty";
+            this.Name = "FrmDataLiberty";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

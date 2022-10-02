@@ -50,7 +50,7 @@ namespace ErgoCalc
             this.btnOK.TabIndex = 4;
             this.btnOK.Text = "&Accept";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.OK_Click);
+            this.btnOK.Click += new System.EventHandler(this.Accept_Click);
             // 
             // btnCancel
             // 
@@ -91,19 +91,9 @@ namespace ErgoCalc
             0,
             0,
             0});
-            this.updTasks.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.updTasks.Name = "updTasks";
             this.updTasks.Size = new System.Drawing.Size(63, 23);
             this.updTasks.TabIndex = 10;
-            this.updTasks.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.updTasks.ValueChanged += new System.EventHandler(this.Tasks_ValueChanged);
             // 
             // gridVariables
@@ -132,7 +122,7 @@ namespace ErgoCalc
             this.btnExample.UseVisualStyleBackColor = true;
             this.btnExample.Click += new System.EventHandler(this.Example_Click);
             // 
-            // frmDataTC
+            // FrmDataTC
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -150,7 +140,7 @@ namespace ErgoCalc
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataTC";
+            this.Name = "FrmDataTC";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

@@ -7,30 +7,13 @@ namespace ErgoCalc;
 
 public partial class FrmDataTC : Form, IChildData
 {
-    //private List<ModelTC> _data;
     private Job _job;
-
+    private string strGridHeader = "Case ";
     public object GetData => _job;
-    public Job GetJob => _job;
 
     public FrmDataTC()
     {
         InitializeComponent();
-
-        // Create the first column (zero index base)
-        AddColumn();
-
-        // Create the header rows
-        gridVariables.RowCount = 7;
-        gridVariables.Rows[0].HeaderCell.Value = "Air temperature (°C)";
-        gridVariables.Rows[1].HeaderCell.Value = "Radiant temperature (°C)";
-        gridVariables.Rows[2].HeaderCell.Value = "Air velocity (m/s)";
-        gridVariables.Rows[3].HeaderCell.Value = "Relative humidity (%)";
-        gridVariables.Rows[4].HeaderCell.Value = "Clothing insulation (clo)";
-        gridVariables.Rows[5].HeaderCell.Value = "Metabolic rate (mets)";
-        gridVariables.Rows[6].HeaderCell.Value = "External work (mets)";
-        gridVariables[0, 6].Value = 0;
-
     }
 
     public FrmDataTC(Job job)
@@ -41,7 +24,7 @@ public partial class FrmDataTC : Form, IChildData
     }
 
     #region Form events
-    private void OK_Click(object sender, EventArgs e)
+    private void Accept_Click(object sender, EventArgs e)
     {
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
@@ -75,7 +58,7 @@ public partial class FrmDataTC : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updTasks.Value);
+        int col = Convert.ToInt32(updTasks.Value);
 
         // Add or remove columns
         if (col > gridVariables.ColumnCount)
@@ -96,18 +79,17 @@ public partial class FrmDataTC : Form, IChildData
         //if (col == 0) return;
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
-        string strName = "Case ";
-        //if (_index != IndexType.RSI) strName = "SubTask ";
-
         // Create the new column
-        gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
+        gridVariables.Columns.Add("Column" + (col).ToString(), strGridHeader + ((char)('A' + col)).ToString());
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 70;
 
-        if (col > 0) gridVariables[col, 6].Value = 0;
+        // Add the row headers after the first column is created
+        if (col == 0)
+            AddRows();
 
-        // Give format to the cells
-        // if (col > 0) gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+        // Default numeric values after the row headers have been created
+        gridVariables[col, 6].Value = 0;
 
         return;
     }
@@ -118,6 +100,22 @@ public partial class FrmDataTC : Form, IChildData
     private void AddColumn()
     {
         AddColumn(gridVariables.Columns.Count);
+    }
+
+    /// <summary>
+    /// Adds the headercell values for each row
+    /// </summary>
+    private void AddRows()
+    {
+        // Create the header rows
+        gridVariables.RowCount = 7;
+        gridVariables.Rows[0].HeaderCell.Value = "Air temperature (°C)";
+        gridVariables.Rows[1].HeaderCell.Value = "Radiant temperature (°C)";
+        gridVariables.Rows[2].HeaderCell.Value = "Air velocity (m/s)";
+        gridVariables.Rows[3].HeaderCell.Value = "Relative humidity (%)";
+        gridVariables.Rows[4].HeaderCell.Value = "Clothing insulation (clo)";
+        gridVariables.Rows[5].HeaderCell.Value = "Metabolic rate (mets)";
+        gridVariables.Rows[6].HeaderCell.Value = "External work (mets)";
     }
 
     public void LoadExample()
@@ -155,13 +153,11 @@ public partial class FrmDataTC : Form, IChildData
     /// </summary>
     private void DataToGrid()
     {
+        // This creates the necessary grid columns in the corresponding ValueChanged event
         updTasks.Value = _job.Tasks.Length;
 
         for (int i = 0; i < _job.Tasks.Length; i++)
         {
-            //Column 0 is already created in the constructor;
-            //if (i > 0) AddColumn();
-
             // Populate the DataGridView with data
             gridVariables[i, 0].Value = _job.Tasks[i].Data.TempAir.ToString();
             gridVariables[i, 1].Value = _job.Tasks[i].Data.TempRad.ToString();

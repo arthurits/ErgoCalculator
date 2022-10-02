@@ -182,7 +182,7 @@
             this.updSubtasks.Name = "updSubtasks";
             this.updSubtasks.Size = new System.Drawing.Size(63, 23);
             this.updSubtasks.TabIndex = 7;
-            this.updSubtasks.ValueChanged += new System.EventHandler(this.updSubtasks_ValueChanged);
+            this.updSubtasks.ValueChanged += new System.EventHandler(this.Subtasks_ValueChanged);
             // 
             // gridVariables
             // 
@@ -249,7 +249,7 @@
             0,
             0,
             0});
-            this.updTasks.ValueChanged += new System.EventHandler(this.updTasks_ValueChanged);
+            this.updTasks.ValueChanged += new System.EventHandler(this.Tasks_ValueChanged);
             // 
             // columnHeader1
             // 

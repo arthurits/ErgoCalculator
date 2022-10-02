@@ -146,10 +146,12 @@ public partial class FrmDataWR : Form, IChildData
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = 70;
 
-        if (col > 0)
-            gridVariables[col, 6].Value = 0.1;
-        else if (col == 0)
+        // Add the row headers after the first column is created        
+        if (col == 0)
             AddRows();
+
+        // Default numeric values after the row headers have been created
+        gridVariables[col, 6].Value = 0.1;
 
         return;
     }
@@ -177,9 +179,7 @@ public partial class FrmDataWR : Form, IChildData
         gridVariables.Rows[5].HeaderCell.Value = "Number of cycles";
         gridVariables.Rows[6].HeaderCell.Value = "Numeric step";
 
-        // Set default cell value
-        gridVariables[0, 6].Value = 0.1;
-
+        // Set the default cell style
         var cell = new DataGridViewCellStyle();
         cell.BackColor = Color.White;
         cell.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -196,14 +196,11 @@ public partial class FrmDataWR : Form, IChildData
     /// <param name="data">List containing the data</param>
     private void DataToGrid()
     {
-        // This creates the necessary gridVariables columns
+        // This creates the necessary grid columns in the corresponding ValueChanged event
         updTasks.Value = _job.NumberTasks;
 
         for (int i = 0; i < _job.NumberTasks; i++)
         {
-            //Column 0 is already created in the constructor;
-            //AddColumn();
-
             // Populate the DataGridView with data
             gridVariables[i, 0].Value = _job.Tasks[i].Legend;
             gridVariables[i, 1].Value = (int)_job.Tasks[i].MVC;
@@ -258,6 +255,12 @@ public partial class FrmDataWR : Form, IChildData
         _job.Tasks[3].PlotStep = 0.01;
     }
 
+    /// <summary>
+    /// Computes the number of point needed to create the plot according to the WR model
+    /// </summary>
+    /// <param name="data">Data defining the WR model</param>
+    /// <returns></returns>
+    /// <exception cref="NotAnInteger">If PlotStep is not an integer</exception>
     private int ComputeNumberOfPoints(DataWR data)
     {
         // Cálculo del número de puntos de la curva y comprobar que cada tiempo de descanso
