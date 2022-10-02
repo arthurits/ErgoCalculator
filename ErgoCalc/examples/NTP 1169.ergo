@@ -1,5 +1,13 @@
 {
   "Document type": "Strain index",
+  "Index type": 2,
+  "CUSI index": 9.041417313792156,
+  "Number of tasks": 2,
+  "Number of subtasks": 5,
+  "Tasks order": [
+    0,
+    1
+  ],
   "Tasks": [
     {
       "Sub-tasks": [
@@ -59,9 +67,9 @@
         }
       ],
       "Sub-tasks order": [
-        0,
+        2,
         1,
-        2
+        0
       ],
       "h factor": 4,
       "ha factor": 4,
@@ -112,8 +120,8 @@
         }
       ],
       "Sub-tasks order": [
-        0,
-        1
+        1,
+        0
       ],
       "h factor": 4,
       "ha factor": 8,
@@ -124,12 +132,5 @@
       "COSI index": 5.146092082377586,
       "Number of sub-tasks": 2
     }
-  ],
-  "Tasks order": [
-    1,
-    0
-  ],
-  "CUSI index": 9.041417313792156,
-  "Number of tasks": 2,
-  "Index type": 2
+  ]
 }

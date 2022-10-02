@@ -36,7 +36,7 @@ public partial class FrmDataNIOSH : Form, IChildData
 
     private void SubTasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updSubTasks.Value);
+        int col = Convert.ToInt32(updSubTasks.Value);
         
         // Add or remove columns
         if (col > gridVariables.ColumnCount)
@@ -121,7 +121,7 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         // Validate input before getting the values
         if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
-        double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
+        //double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
 
         listViewTasks.RemoveEmptyGroups();
         listViewTasks.RemoveEmptyItems();
@@ -130,30 +130,32 @@ public partial class FrmDataNIOSH : Form, IChildData
         // New test
         int ItemIndex;
         _job = new();
-        _job.numberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
-        _job.jobTasks = new Task[_job.numberTasks];
-        _job.order = new int[_job.numberTasks];
-        if (radLI.Checked) _job.model = IndexType.IndexLI;
-        if (radCLI.Checked) _job.model = IndexType.IndexCLI;
-        if (radVLI.Checked) _job.model = IndexType.IndexVLI;
-        if (radSLI.Checked) _job.model = IndexType.IndexSLI;
+        _job.NumberSubTasks = gridVariables.ColumnCount;
+        _job.NumberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
+        _job.Tasks = new Task[_job.NumberTasks];
+        _job.Order = new int[_job.NumberTasks];
+        
+        if (radLI.Checked) _job.Model = IndexType.IndexLI;
+        if (radCLI.Checked) _job.Model = IndexType.IndexCLI;
+        if (radVLI.Checked) _job.Model = IndexType.IndexVLI;
+        if (radSLI.Checked) _job.Model = IndexType.IndexSLI;
 
 
-        for (int i = 0; i < _job.numberTasks; i++)
+        for (int i = 0; i < _job.NumberTasks; i++)
         {
-            _job.jobTasks[i] = new();
-            _job.order[i] = i;
+            _job.Tasks[i] = new();
+            _job.Order[i] = i;
 
-            _job.jobTasks[i].numberSubTasks = _job.model == IndexType.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
-            _job.jobTasks[i].model = _job.model;
-            _job.jobTasks[i].OrderCLI = new int[_job.jobTasks[i].numberSubTasks];
-            _job.jobTasks[i].subTasks = new SubTask[_job.jobTasks[i].numberSubTasks];
-            _job.jobTasks[i].CLI = -1;
+            _job.Tasks[i].NumberSubTasks = _job.Model == IndexType.IndexLI ? Convert.ToInt32(updSubTasks.Value) : listViewTasks.Groups[i].Items.Count;
+            _job.Tasks[i].Model = _job.Model;
+            _job.Tasks[i].OrderCLI = new int[_job.Tasks[i].NumberSubTasks];
+            _job.Tasks[i].SubTasks = new SubTask[_job.Tasks[i].NumberSubTasks];
+            _job.Tasks[i].IndexCLI = -1;
 
-            for (int j = 0; j < _job.jobTasks[i].numberSubTasks; j++)
+            for (int j = 0; j < _job.Tasks[i].NumberSubTasks; j++)
             {
-                _job.jobTasks[i].subTasks[j] = new();
-                ItemIndex = _job.model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                _job.Tasks[i].SubTasks[j] = new();
+                ItemIndex = _job.Model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
                 //if (_nioshLifting.model == IndexType.IndexLI)
                 //    ItemIndex = j;
                 //else
@@ -165,8 +167,8 @@ public partial class FrmDataNIOSH : Form, IChildData
                 //    }
                 //}
 
-                _job.jobTasks[i].subTasks[j].itemIndex = ItemIndex;
-                _job.jobTasks[i].subTasks[j].task = i;
+                _job.Tasks[i].SubTasks[j].ItemIndex = ItemIndex;
+                _job.Tasks[i].SubTasks[j].Task = i;
 
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
@@ -174,16 +176,17 @@ public partial class FrmDataNIOSH : Form, IChildData
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, -180, -180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 8, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
 
-                _job.jobTasks[i].subTasks[j].data.weight = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
-                _job.jobTasks[i].subTasks[j].data.h = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
-                _job.jobTasks[i].subTasks[j].data.v = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
-                _job.jobTasks[i].subTasks[j].data.d = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
-                _job.jobTasks[i].subTasks[j].data.f = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
-                _job.jobTasks[i].subTasks[j].data.td = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
-                _job.jobTasks[i].subTasks[j].data.a = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
-                _job.jobTasks[i].subTasks[j].data.c = (Coupling)gridVariables[ItemIndex, 7].Value;
+                _job.Tasks[i].SubTasks[j].Data.LC = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
+                _job.Tasks[i].SubTasks[j].Data.Weight = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
+                _job.Tasks[i].SubTasks[j].Data.h = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
+                _job.Tasks[i].SubTasks[j].Data.v = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
+                _job.Tasks[i].SubTasks[j].Data.d = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
+                _job.Tasks[i].SubTasks[j].Data.f = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
+                _job.Tasks[i].SubTasks[j].Data.td = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
+                _job.Tasks[i].SubTasks[j].Data.a = Convert.ToDouble(gridVariables[ItemIndex, 7].Value);
+                _job.Tasks[i].SubTasks[j].Data.c = (Coupling)gridVariables[ItemIndex, 8].Value;
 
-                _job.jobTasks[i].subTasks[j].factors.LC = LC;
+                //_job.Tasks[i].SubTasks[j].Data.LC = LC;
 
                 //_nioshLifting.jobTasks[i].h += _nioshLifting.jobTasks[i].subTasks[j].data.h;  // Calculate mean
                 //_nioshLifting.jobTasks[i].OrderCLI[j] = j;
@@ -242,12 +245,15 @@ public partial class FrmDataNIOSH : Form, IChildData
             celdaC.DataSource = tableC;
             celdaC.DisplayMember = "Display";
             celdaC.ValueMember = "Value";
-            gridVariables.Rows[7].Cells[0] = celdaC;
+            gridVariables.Rows[8].Cells[0] = celdaC;
         }
 
         // Give format (ComboBox) to the added column cells
         if (col > 0)
-            gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+            gridVariables.Rows[8].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
+
+        // Default numeric values after the row headers have been created
+        gridVariables[col, 0].Value = 25;
 
         return;
     }
@@ -266,15 +272,16 @@ public partial class FrmDataNIOSH : Form, IChildData
     private void AddRows()
     {
         // Create the header rows
-        gridVariables.RowCount = 8;
-        gridVariables.Rows[0].HeaderCell.Value = "Weight lifted (kg)";
-        gridVariables.Rows[1].HeaderCell.Value = "Horizontal distance (cm)";
-        gridVariables.Rows[2].HeaderCell.Value = "Vertical distance (cm)";
-        gridVariables.Rows[3].HeaderCell.Value = "Vertical travel distance (cm)";
-        gridVariables.Rows[4].HeaderCell.Value = "Lifting frequency (times/min)";
-        gridVariables.Rows[5].HeaderCell.Value = "Task duration (hours)";
-        gridVariables.Rows[6].HeaderCell.Value = "Twisting angle (°)";
-        gridVariables.Rows[7].HeaderCell.Value = "Coupling";
+        gridVariables.RowCount = 9;
+        gridVariables.Rows[0].HeaderCell.Value = "Load constant (kg)";
+        gridVariables.Rows[1].HeaderCell.Value = "Weight lifted (kg)";
+        gridVariables.Rows[2].HeaderCell.Value = "Horizontal distance (cm)";
+        gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (cm)";
+        gridVariables.Rows[4].HeaderCell.Value = "Vertical travel distance (cm)";
+        gridVariables.Rows[5].HeaderCell.Value = "Lifting frequency (times/min)";
+        gridVariables.Rows[6].HeaderCell.Value = "Task duration (hours)";
+        gridVariables.Rows[7].HeaderCell.Value = "Twisting angle (°)";
+        gridVariables.Rows[8].HeaderCell.Value = "Coupling";
     }
 
     /// <summary>
@@ -284,106 +291,115 @@ public partial class FrmDataNIOSH : Form, IChildData
     {
         _job = new()
         {
-            numberTasks = 1,
-            model = IndexType.IndexLI,
-            jobTasks = new Task[1]
+            NumberTasks = 1,
+            NumberSubTasks = 8,
+            Model = IndexType.IndexLI,
+            Tasks = new Task[1]
         };
 
-        _job.jobTasks[0] = new Task
+        _job.Tasks[0] = new Task
         {
-            numberSubTasks = 8,
-            model = IndexType.IndexLI,
-            subTasks = new SubTask[8]
+            NumberSubTasks = 8,
+            Model = IndexType.IndexLI,
+            SubTasks = new SubTask[8]
         };
 
-        _job.jobTasks[0].subTasks[0] = new();
-        _job.jobTasks[0].subTasks[0].itemIndex = 0;
-        _job.jobTasks[0].subTasks[0].data.weight = 3.0;
-        _job.jobTasks[0].subTasks[0].data.weight = 3.0;
-        _job.jobTasks[0].subTasks[0].data.h = 24;
-        _job.jobTasks[0].subTasks[0].data.v = 38.5;
-        _job.jobTasks[0].subTasks[0].data.d = 76.5;
-        _job.jobTasks[0].subTasks[0].data.a = 0;
-        _job.jobTasks[0].subTasks[0].data.f = 3;
-        _job.jobTasks[0].subTasks[0].data.td = 2;
-        _job.jobTasks[0].subTasks[0].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[0] = new();
+        _job.Tasks[0].SubTasks[0].ItemIndex = 0;
+        _job.Tasks[0].SubTasks[0].Data.LC = 25;
+        _job.Tasks[0].SubTasks[0].Data.Weight = 3.0;
+        _job.Tasks[0].SubTasks[0].Data.Weight = 3.0;
+        _job.Tasks[0].SubTasks[0].Data.h = 24;
+        _job.Tasks[0].SubTasks[0].Data.v = 38.5;
+        _job.Tasks[0].SubTasks[0].Data.d = 76.5;
+        _job.Tasks[0].SubTasks[0].Data.a = 0;
+        _job.Tasks[0].SubTasks[0].Data.f = 3;
+        _job.Tasks[0].SubTasks[0].Data.td = 2;
+        _job.Tasks[0].SubTasks[0].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[1] = new();
-        _job.jobTasks[0].subTasks[1].itemIndex = 1;
-        _job.jobTasks[0].subTasks[1].data.weight = 3.0;
-        _job.jobTasks[0].subTasks[1].data.h = 24;
-        _job.jobTasks[0].subTasks[1].data.v = 81;
-        _job.jobTasks[0].subTasks[1].data.d = 34;
-        _job.jobTasks[0].subTasks[1].data.a = 0;
-        _job.jobTasks[0].subTasks[1].data.f = 3;
-        _job.jobTasks[0].subTasks[1].data.td = 2;
-        _job.jobTasks[0].subTasks[1].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[1] = new();
+        _job.Tasks[0].SubTasks[1].ItemIndex = 1;
+        _job.Tasks[0].SubTasks[1].Data.LC = 25;
+        _job.Tasks[0].SubTasks[1].Data.Weight = 3.0;
+        _job.Tasks[0].SubTasks[1].Data.h = 24;
+        _job.Tasks[0].SubTasks[1].Data.v = 81;
+        _job.Tasks[0].SubTasks[1].Data.d = 34;
+        _job.Tasks[0].SubTasks[1].Data.a = 0;
+        _job.Tasks[0].SubTasks[1].Data.f = 3;
+        _job.Tasks[0].SubTasks[1].Data.td = 2;
+        _job.Tasks[0].SubTasks[1].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[2] = new();
-        _job.jobTasks[0].subTasks[2].itemIndex = 2;
-        _job.jobTasks[0].subTasks[2].data.weight = 3.0;
-        _job.jobTasks[0].subTasks[2].data.h = 24;
-        _job.jobTasks[0].subTasks[2].data.v = 123.5;
-        _job.jobTasks[0].subTasks[2].data.d = 8.5;
-        _job.jobTasks[0].subTasks[2].data.a = 90;
-        _job.jobTasks[0].subTasks[2].data.f = 3;
-        _job.jobTasks[0].subTasks[2].data.td = 2;
-        _job.jobTasks[0].subTasks[2].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[2] = new();
+        _job.Tasks[0].SubTasks[2].ItemIndex = 2;
+        _job.Tasks[0].SubTasks[2].Data.LC = 25;
+        _job.Tasks[0].SubTasks[2].Data.Weight = 3.0;
+        _job.Tasks[0].SubTasks[2].Data.h = 24;
+        _job.Tasks[0].SubTasks[2].Data.v = 123.5;
+        _job.Tasks[0].SubTasks[2].Data.d = 8.5;
+        _job.Tasks[0].SubTasks[2].Data.a = 90;
+        _job.Tasks[0].SubTasks[2].Data.f = 3;
+        _job.Tasks[0].SubTasks[2].Data.td = 2;
+        _job.Tasks[0].SubTasks[2].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[3] = new();
-        _job.jobTasks[0].subTasks[3].itemIndex = 3;
-        _job.jobTasks[0].subTasks[3].data.weight = 3.0;
-        _job.jobTasks[0].subTasks[3].data.h = 24;
-        _job.jobTasks[0].subTasks[3].data.v = 166;
-        _job.jobTasks[0].subTasks[3].data.d = 51;
-        _job.jobTasks[0].subTasks[3].data.a = 90;
-        _job.jobTasks[0].subTasks[3].data.f = 3;
-        _job.jobTasks[0].subTasks[3].data.td = 2;
-        _job.jobTasks[0].subTasks[3].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[3] = new();
+        _job.Tasks[0].SubTasks[3].ItemIndex = 3;
+        _job.Tasks[0].SubTasks[3].Data.LC = 25;
+        _job.Tasks[0].SubTasks[3].Data.Weight = 3.0;
+        _job.Tasks[0].SubTasks[3].Data.h = 24;
+        _job.Tasks[0].SubTasks[3].Data.v = 166;
+        _job.Tasks[0].SubTasks[3].Data.d = 51;
+        _job.Tasks[0].SubTasks[3].Data.a = 90;
+        _job.Tasks[0].SubTasks[3].Data.f = 3;
+        _job.Tasks[0].SubTasks[3].Data.td = 2;
+        _job.Tasks[0].SubTasks[3].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[4] = new();
-        _job.jobTasks[0].subTasks[4].itemIndex = 4;
-        _job.jobTasks[0].subTasks[4].data.weight = 7.0;
-        _job.jobTasks[0].subTasks[4].data.h = 24;
-        _job.jobTasks[0].subTasks[4].data.v = 33;
-        _job.jobTasks[0].subTasks[4].data.d = 82;
-        _job.jobTasks[0].subTasks[4].data.a = 0;
-        _job.jobTasks[0].subTasks[4].data.f = 1;
-        _job.jobTasks[0].subTasks[4].data.td = 1;
-        _job.jobTasks[0].subTasks[4].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[4] = new();
+        _job.Tasks[0].SubTasks[4].ItemIndex = 4;
+        _job.Tasks[0].SubTasks[4].Data.LC = 25;
+        _job.Tasks[0].SubTasks[4].Data.Weight = 7.0;
+        _job.Tasks[0].SubTasks[4].Data.h = 24;
+        _job.Tasks[0].SubTasks[4].Data.v = 33;
+        _job.Tasks[0].SubTasks[4].Data.d = 82;
+        _job.Tasks[0].SubTasks[4].Data.a = 0;
+        _job.Tasks[0].SubTasks[4].Data.f = 1;
+        _job.Tasks[0].SubTasks[4].Data.td = 1;
+        _job.Tasks[0].SubTasks[4].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[5] = new();
-        _job.jobTasks[0].subTasks[5].itemIndex = 5;
-        _job.jobTasks[0].subTasks[5].data.weight = 7.0;
-        _job.jobTasks[0].subTasks[5].data.h = 24;
-        _job.jobTasks[0].subTasks[5].data.v = 75.5;
-        _job.jobTasks[0].subTasks[5].data.d = 39.5;
-        _job.jobTasks[0].subTasks[5].data.a = 0;
-        _job.jobTasks[0].subTasks[5].data.f = 1;
-        _job.jobTasks[0].subTasks[5].data.td = 1;
-        _job.jobTasks[0].subTasks[5].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[5] = new();
+        _job.Tasks[0].SubTasks[5].ItemIndex = 5;
+        _job.Tasks[0].SubTasks[5].Data.LC = 25;
+        _job.Tasks[0].SubTasks[5].Data.Weight = 7.0;
+        _job.Tasks[0].SubTasks[5].Data.h = 24;
+        _job.Tasks[0].SubTasks[5].Data.v = 75.5;
+        _job.Tasks[0].SubTasks[5].Data.d = 39.5;
+        _job.Tasks[0].SubTasks[5].Data.a = 0;
+        _job.Tasks[0].SubTasks[5].Data.f = 1;
+        _job.Tasks[0].SubTasks[5].Data.td = 1;
+        _job.Tasks[0].SubTasks[5].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[6] = new();
-        _job.jobTasks[0].subTasks[6].itemIndex = 6;
-        _job.jobTasks[0].subTasks[6].data.weight = 7.0;
-        _job.jobTasks[0].subTasks[6].data.h = 24;
-        _job.jobTasks[0].subTasks[6].data.v = 118;
-        _job.jobTasks[0].subTasks[6].data.d = 3;
-        _job.jobTasks[0].subTasks[6].data.a = 0;
-        _job.jobTasks[0].subTasks[6].data.f = 1;
-        _job.jobTasks[0].subTasks[6].data.td = 1;
-        _job.jobTasks[0].subTasks[6].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[6] = new();
+        _job.Tasks[0].SubTasks[6].ItemIndex = 6;
+        _job.Tasks[0].SubTasks[6].Data.LC = 25;
+        _job.Tasks[0].SubTasks[6].Data.Weight = 7.0;
+        _job.Tasks[0].SubTasks[6].Data.h = 24;
+        _job.Tasks[0].SubTasks[6].Data.v = 118;
+        _job.Tasks[0].SubTasks[6].Data.d = 3;
+        _job.Tasks[0].SubTasks[6].Data.a = 0;
+        _job.Tasks[0].SubTasks[6].Data.f = 1;
+        _job.Tasks[0].SubTasks[6].Data.td = 1;
+        _job.Tasks[0].SubTasks[6].Data.c = Coupling.NoHandle;
 
-        _job.jobTasks[0].subTasks[7] = new();
-        _job.jobTasks[0].subTasks[7].itemIndex = 7;
-        _job.jobTasks[0].subTasks[7].data.weight = 7.0;
-        _job.jobTasks[0].subTasks[7].data.h = 24;
-        _job.jobTasks[0].subTasks[7].data.v = 160.5;
-        _job.jobTasks[0].subTasks[7].data.d = 45.5;
-        _job.jobTasks[0].subTasks[7].data.a = 0;
-        _job.jobTasks[0].subTasks[7].data.f = 2;
-        _job.jobTasks[0].subTasks[7].data.td = 1;
-        _job.jobTasks[0].subTasks[7].data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[7] = new();
+        _job.Tasks[0].SubTasks[7].ItemIndex = 7;
+        _job.Tasks[0].SubTasks[7].Data.LC = 25;
+        _job.Tasks[0].SubTasks[7].Data.Weight = 7.0;
+        _job.Tasks[0].SubTasks[7].Data.h = 24;
+        _job.Tasks[0].SubTasks[7].Data.v = 160.5;
+        _job.Tasks[0].SubTasks[7].Data.d = 45.5;
+        _job.Tasks[0].SubTasks[7].Data.a = 0;
+        _job.Tasks[0].SubTasks[7].Data.f = 2;
+        _job.Tasks[0].SubTasks[7].Data.td = 1;
+        _job.Tasks[0].SubTasks[7].Data.c = Coupling.NoHandle;
     }
 
     /// <summary>
@@ -392,7 +408,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// <param name="data">Array of Model NIOSH data</param>
     private void DataToGrid()
     {
-        switch ((int)_job.model)
+        switch ((int)_job.Model)
         {
             case 0:
                 radLI.Checked = true;
@@ -410,38 +426,30 @@ public partial class FrmDataNIOSH : Form, IChildData
                 radLI.Checked = true;
                 break;
         }
-        updSubTasks.Value = 0;
-        updTasks.Maximum = _job.numberTasks;
-        updTasks.Value = _job.numberTasks;
+        updSubTasks.Value = _job.NumberSubTasks;
+        updTasks.Value = _job.NumberTasks;
         int nCol = 0;
-        for (var j = 0; j < _job.numberTasks; j++)
+        for (var j = 0; j < _job.NumberTasks; j++)
         {
-            for (var i = 0; i < _job.jobTasks[j].subTasks.Length; i++)
+            for (var i = 0; i < _job.Tasks[j].SubTasks.Length; i++)
             {
-                AddColumn();
-
                 // Populate the DataGridView with data
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 0].Value = _job.jobTasks[j].subTasks[i].data.weight.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 1].Value = _job.jobTasks[j].subTasks[i].data.h.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 2].Value = _job.jobTasks[j].subTasks[i].data.v.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 3].Value = _job.jobTasks[j].subTasks[i].data.d.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 4].Value = _job.jobTasks[j].subTasks[i].data.f.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 5].Value = _job.jobTasks[j].subTasks[i].data.td.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 6].Value = _job.jobTasks[j].subTasks[i].data.a.ToString();
-                gridVariables[_job.jobTasks[j].subTasks[i].itemIndex, 7].Value = (int)_job.jobTasks[j].subTasks[i].data.c;
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 0].Value = _job.Tasks[j].SubTasks[i].Data.LC.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 1].Value = _job.Tasks[j].SubTasks[i].Data.Weight.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 2].Value = _job.Tasks[j].SubTasks[i].Data.h.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 3].Value = _job.Tasks[j].SubTasks[i].Data.v.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 4].Value = _job.Tasks[j].SubTasks[i].Data.d.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 5].Value = _job.Tasks[j].SubTasks[i].Data.f.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 6].Value = _job.Tasks[j].SubTasks[i].Data.td.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 7].Value = _job.Tasks[j].SubTasks[i].Data.a.ToString();
+                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
 
-                // Classify
-                //if (j > 0)
-                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _job.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
-                //listViewTasks.Items.Insert(_nioshLifting.jobTasks[j].subTasks[i].itemIndex, new ListViewItem("SubTask " + ((char)('A' + _nioshLifting.jobTasks[j].subTasks[i].itemIndex)).ToString(), listViewTasks.Groups[j]));
-                //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
+                listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString(), listViewTasks.Groups[j]));
 
                 nCol++;
             }
         }
         
-        // Update the control's value
-        updSubTasks.Value = nCol;
     }
 
     #endregion

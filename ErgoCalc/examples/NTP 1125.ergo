@@ -1,5 +1,12 @@
 {
   "Document type": "Strain index",
+  "Index type": 0,
+  "CUSI index": -1,
+  "Number of tasks": 1,
+  "Number of subtasks": 1,
+  "Tasks order": [
+    0
+  ],
   "Tasks": [
     {
       "Sub-tasks": [
@@ -34,11 +41,5 @@
       "COSI index": -1,
       "Number of sub-tasks": 1
     }
-  ],
-  "Tasks order": [
-    0
-  ],
-  "CUSI index": -1,
-  "Number of tasks": 1,
-  "Index type": 0
+  ]
 }

@@ -1,3 +1,102 @@
 {
-  "Document type": "NIOSH lifting equation"
+  "Document type": "NIOSH lifting equation",
+  "Model": 1,
+  "Index": 0,
+  "Number of tasks": 1,
+  "Number of subtasks": 3,
+  "Tasks order": [
+    0
+  ],
+  "Tasks": [
+    {
+      "Model": 1,
+      "CLI": 2.1482749946788955,
+      "Number of sub-tasks": 3,
+      "Sub-tasks order": [
+        1,
+        2,
+        0
+      ],
+      "Sub-tasks": [
+        {
+          "Load constant": 23,
+          "Weight": 20,
+          "Horizontal distance": 25,
+          "Vertical distance": 75,
+          "Distance": 5,
+          "Asymmetry angle": 0,
+          "Frequency": 1,
+          "Frequency (a)": 5,
+          "Frequency (b)": 4,
+          "Subtask duration": 2,
+          "Coupling": 2,
+          "H multiplier": 1,
+          "V multiplier": 1,
+          "D multiplier": 1,
+          "A multiplier": 1,
+          "F multiplier": 0.88,
+          "Fa multiplier": 0.6,
+          "Fb multiplier": 0.72,
+          "C multiplier": 1,
+          "LI index": 0.9881422924901186,
+          "IF index": 0.8695652173913044,
+          "Item index": 0,
+          "Task": 0,
+          "Order": 2
+        },
+        {
+          "Load constant": 23,
+          "Weight": 25,
+          "Horizontal distance": 30,
+          "Vertical distance": 75,
+          "Distance": 5,
+          "Asymmetry angle": 0,
+          "Frequency": 2,
+          "Frequency (a)": 2,
+          "Frequency (b)": 2,
+          "Subtask duration": 2,
+          "Coupling": 0,
+          "H multiplier": 0.8333333333333334,
+          "V multiplier": 1,
+          "D multiplier": 1,
+          "A multiplier": 1,
+          "F multiplier": 0.84,
+          "Fa multiplier": 0,
+          "Fb multiplier": 0,
+          "C multiplier": 0.9,
+          "LI index": 1.7253278122843339,
+          "IF index": 1.4492753623188404,
+          "Item index": 1,
+          "Task": 0,
+          "Order": 0
+        },
+        {
+          "Load constant": 23,
+          "Weight": 15,
+          "Horizontal distance": 30,
+          "Vertical distance": 75,
+          "Distance": 5,
+          "Asymmetry angle": 45,
+          "Frequency": 2,
+          "Frequency (a)": 4,
+          "Frequency (b)": 2,
+          "Subtask duration": 2,
+          "Coupling": 2,
+          "H multiplier": 0.8333333333333334,
+          "V multiplier": 1,
+          "D multiplier": 1,
+          "A multiplier": 0.856,
+          "F multiplier": 0.84,
+          "Fa multiplier": 0.72,
+          "Fb multiplier": 0.84,
+          "C multiplier": 1,
+          "LI index": 1.0884077320485286,
+          "IF index": 0.914262494920764,
+          "Item index": 2,
+          "Task": 0,
+          "Order": 1
+        }
+      ]
+    }
+  ]
 }

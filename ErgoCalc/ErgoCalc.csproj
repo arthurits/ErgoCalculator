@@ -215,6 +215,9 @@
     <None Update="examples\LM-MMH.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="examples\NIOSH test.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="examples\NTP 1125.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -230,13 +233,22 @@
     <None Update="examples\NTP 874 - Ejemplo 3.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="examples\NTP 874 - Example 1.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\NTP 874 - Example 2.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="examples\NTP 874 - Example 3.ergo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="examples\NTP 874 bis.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="examples\NTP 874 new.ergo">
+    <None Update="examples\WR test 2.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="examples\NTP 874.ergo">
+    <None Update="examples\WR test 1.ergo">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="examples\NTP 1169.ergo">

@@ -61,16 +61,16 @@ public partial class FrmResultNIOSH : Form, IChildResults
     private void ShowResults()
     {
         // Make computations
-        if (_job.model == IndexType.IndexLI)
+        if (_job.Model == IndexType.IndexLI)
         {
-            foreach (Task task in _job.jobTasks)
+            foreach (Task task in _job.Tasks)
             {
-                NIOSHLifting.ComputeLI(task.subTasks);
+                NIOSHLifting.ComputeLI(task.SubTasks);
             }
         }
-        else if (_job.model == IndexType.IndexCLI)
+        else if (_job.Model == IndexType.IndexCLI)
         {
-            foreach (Task task in _job.jobTasks)
+            foreach (Task task in _job.Tasks)
             {
                 NIOSHLifting.ComputeCLI(task);
             }
@@ -91,63 +91,70 @@ public partial class FrmResultNIOSH : Form, IChildResults
         writer.WriteStartObject();
         writer.WriteString("Document type", "NIOSH lifting equation");
 
-        writer.WriteNumber("Model", (int)_job.model);
-        writer.WriteNumber("Index", _job.index);
-        writer.WriteNumber("Number of tasks", _job.numberTasks);
+        writer.WriteNumber("Model", (int)_job.Model);
+        writer.WriteNumber("Index", _job.Index);
+        writer.WriteNumber("Number of tasks", _job.NumberTasks);
+        writer.WriteNumber("Number of subtasks", _job.NumberSubTasks);
+
+        //writer.WritePropertyName("Tasks order");
+        //writer.WriteStartArray();
+        //for (int j = 0; j < _job.NumberTasks; j++)
+        //    writer.WriteNumberValue(_job.Order[j]);
+        //writer.WriteEndArray();
 
         writer.WritePropertyName("Tasks order");
-        writer.WriteStartArray();
-        for (int j = 0; j < _job.numberTasks; j++)
-            writer.WriteNumberValue(_job.order[j]);
-        writer.WriteEndArray();
+        JsonSerializer.Serialize(writer, _job.Order);
 
         writer.WritePropertyName("Tasks");
         writer.WriteStartArray();
-        for (int i = 0; i < _job.numberTasks; i++)
+        for (int i = 0; i < _job.NumberTasks; i++)
         {
             writer.WriteStartObject();
 
-            writer.WriteNumber("Model", (int)_job.jobTasks[i].model);
-            writer.WriteNumber("CLI", _job.jobTasks[i].CLI);
-            writer.WriteNumber("Number of sub-tasks", _job.jobTasks[i].numberSubTasks);
+            writer.WriteNumber("Model", (int)_job.Tasks[i].Model);
+            writer.WriteNumber("CLI", _job.Tasks[i].IndexCLI);
+            writer.WriteNumber("Number of sub-tasks", _job.Tasks[i].NumberSubTasks);
+
+            //writer.WritePropertyName("Sub-tasks order");
+            //writer.WriteStartArray();
+            //for (int j = 0; j < _job.Tasks[i].NumberSubTasks; j++)
+            //    writer.WriteNumberValue(_job.Tasks[i].OrderCLI[j]);
+            //writer.WriteEndArray();
 
             writer.WritePropertyName("Sub-tasks order");
-            writer.WriteStartArray();
-            for (int j = 0; j < _job.jobTasks[i].numberSubTasks; j++)
-                writer.WriteNumberValue(_job.jobTasks[i].OrderCLI[j]);
-            writer.WriteEndArray();
+            JsonSerializer.Serialize(writer, _job.Tasks[i].OrderCLI);
 
             writer.WritePropertyName("Sub-tasks");
             writer.WriteStartArray();
-            for (int j = 0; j < _job.jobTasks[i].numberSubTasks; j++)
+            for (int j = 0; j < _job.Tasks[i].NumberSubTasks; j++)
             {
                 writer.WriteStartObject();
-                writer.WriteNumber("Weight", _job.jobTasks[i].subTasks[j].data.weight);
-                writer.WriteNumber("Horizontal distance", _job.jobTasks[i].subTasks[j].data.h);
-                writer.WriteNumber("Vertical distance", _job.jobTasks[i].subTasks[j].data.v);
-                writer.WriteNumber("Distance", _job.jobTasks[i].subTasks[j].data.d);
-                writer.WriteNumber("Asymmetry angle", _job.jobTasks[i].subTasks[j].data.a);
-                writer.WriteNumber("Frequency", _job.jobTasks[i].subTasks[j].data.f);
-                writer.WriteNumber("Frequency (a)", _job.jobTasks[i].subTasks[j].data.fa);
-                writer.WriteNumber("Frequency (b)", _job.jobTasks[i].subTasks[j].data.fb);
-                writer.WriteNumber("Subtask duration", _job.jobTasks[i].subTasks[j].data.td);
-                writer.WriteNumber("Coupling", (int)_job.jobTasks[i].subTasks[j].data.c);
+                writer.WriteNumber("Load constant", _job.Tasks[i].SubTasks[j].Data.LC);
+                writer.WriteNumber("Weight", _job.Tasks[i].SubTasks[j].Data.Weight);
+                writer.WriteNumber("Horizontal distance", _job.Tasks[i].SubTasks[j].Data.h);
+                writer.WriteNumber("Vertical distance", _job.Tasks[i].SubTasks[j].Data.v);
+                writer.WriteNumber("Distance", _job.Tasks[i].SubTasks[j].Data.d);
+                writer.WriteNumber("Asymmetry angle", _job.Tasks[i].SubTasks[j].Data.a);
+                writer.WriteNumber("Frequency", _job.Tasks[i].SubTasks[j].Data.f);
+                writer.WriteNumber("Frequency (a)", _job.Tasks[i].SubTasks[j].Data.fa);
+                writer.WriteNumber("Frequency (b)", _job.Tasks[i].SubTasks[j].Data.fb);
+                writer.WriteNumber("Subtask duration", _job.Tasks[i].SubTasks[j].Data.td);
+                writer.WriteNumber("Coupling", (int)_job.Tasks[i].SubTasks[j].Data.c);
 
-                writer.WriteNumber("Load constant", _job.jobTasks[i].subTasks[j].factors.LC);
-                writer.WriteNumber("H multiplier", _job.jobTasks[i].subTasks[j].factors.HM);
-                writer.WriteNumber("V multiplier", _job.jobTasks[i].subTasks[j].factors.VM);
-                writer.WriteNumber("D multiplier", _job.jobTasks[i].subTasks[j].factors.DM);
-                writer.WriteNumber("A multiplier", _job.jobTasks[i].subTasks[j].factors.AM);
-                writer.WriteNumber("F multiplier", _job.jobTasks[i].subTasks[j].factors.FM);
-                writer.WriteNumber("Fa multiplier", _job.jobTasks[i].subTasks[j].factors.FMa);
-                writer.WriteNumber("Fb multiplier", _job.jobTasks[i].subTasks[j].factors.FMb);
-                writer.WriteNumber("C multiplier", _job.jobTasks[i].subTasks[j].factors.CM);
+                writer.WriteNumber("H multiplier", _job.Tasks[i].SubTasks[j].Factors.HM);
+                writer.WriteNumber("V multiplier", _job.Tasks[i].SubTasks[j].Factors.VM);
+                writer.WriteNumber("D multiplier", _job.Tasks[i].SubTasks[j].Factors.DM);
+                writer.WriteNumber("A multiplier", _job.Tasks[i].SubTasks[j].Factors.AM);
+                writer.WriteNumber("F multiplier", _job.Tasks[i].SubTasks[j].Factors.FM);
+                writer.WriteNumber("Fa multiplier", _job.Tasks[i].SubTasks[j].Factors.FMa);
+                writer.WriteNumber("Fb multiplier", _job.Tasks[i].SubTasks[j].Factors.FMb);
+                writer.WriteNumber("C multiplier", _job.Tasks[i].SubTasks[j].Factors.CM);
 
-                writer.WriteNumber("LI index", _job.jobTasks[i].subTasks[j].indexLI);
-                writer.WriteNumber("IF index", _job.jobTasks[i].subTasks[j].indexIF);
-                writer.WriteNumber("Item index", _job.jobTasks[i].subTasks[j].itemIndex);
-                writer.WriteNumber("Task", _job.jobTasks[i].subTasks[j].task);
-                writer.WriteNumber("Order", _job.jobTasks[i].subTasks[j].order);
+                writer.WriteNumber("LI index", _job.Tasks[i].SubTasks[j].IndexLI);
+                writer.WriteNumber("IF index", _job.Tasks[i].SubTasks[j].IndexIF);
+                writer.WriteNumber("Item index", _job.Tasks[i].SubTasks[j].ItemIndex);
+                writer.WriteNumber("Task", _job.Tasks[i].SubTasks[j].Task);
+                writer.WriteNumber("Order", _job.Tasks[i].SubTasks[j].Order);
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
@@ -172,7 +179,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
             DefaultExt = "*.txt",
             Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 1,
-            FileName = _job.model switch
+            FileName = _job.Model switch
             {
                 IndexType.IndexLI => "LI results",
                 IndexType.IndexCLI => "CLI results",
@@ -238,65 +245,73 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
         try
         {
-            job.model = (IndexType)root.GetProperty("Model").GetInt32();
-            job.index = root.GetProperty("Index").GetDouble();
-            job.numberTasks = root.GetProperty("Number of tasks").GetInt32();
+            job.Model = (IndexType)root.GetProperty("Model").GetInt32();
+            job.Index = root.GetProperty("Index").GetDouble();
+            job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
+            job.NumberSubTasks = root.GetProperty("Number of subtasks").GetInt32();
 
-            job.order = new int[job.numberTasks];
+            //job.Order = new int[job.NumberTasks];
+            //int i = 0;
+            //foreach (JsonElement TaskOrder in root.GetProperty("Tasks order").EnumerateArray())
+            //{
+            //    job.Order[i] = TaskOrder.GetInt32();
+            //    i++;
+            //}
+
+            int Length = root.GetProperty("Tasks order").GetArrayLength();
+            job.Order = new int[Length];
+            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString());
+
+            job.Tasks = new Task[job.NumberTasks];
             int i = 0;
-            foreach (JsonElement TaskOrder in root.GetProperty("Tasks order").EnumerateArray())
-            {
-                job.order[i] = TaskOrder.GetInt32();
-                i++;
-            }
-
-            job.jobTasks = new Task[job.numberTasks];
-            i = 0;
             JsonElement SubTasks;
-            JsonElement Order;
+            //JsonElement Order;
             foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
             {
-                job.jobTasks[i] = new();
-                job.jobTasks[i].model = (IndexType)Task.GetProperty("Model").GetInt32();
-                job.jobTasks[i].CLI = Task.GetProperty("CLI").GetDouble();
-                job.jobTasks[i].numberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
-                job.jobTasks[i].subTasks = new SubTask[job.jobTasks[i].numberSubTasks];
-                job.jobTasks[i].OrderCLI = new int[job.jobTasks[i].numberSubTasks];
+                job.Tasks[i] = new();
+                job.Tasks[i].Model = (IndexType)Task.GetProperty("Model").GetInt32();
+                job.Tasks[i].IndexCLI = Task.GetProperty("CLI").GetDouble();
+                job.Tasks[i].NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
+                job.Tasks[i].SubTasks = new SubTask[job.Tasks[i].NumberSubTasks];
+                job.Tasks[i].OrderCLI = new int[job.Tasks[i].NumberSubTasks];
                 
-                Order = Task.GetProperty("Sub-tasks order");
-                for (int j = 0; j < job.jobTasks[i].numberSubTasks; j++)
-                    job.jobTasks[i].OrderCLI[j] = Order[j].GetInt32();
+                //Order = Task.GetProperty("Sub-tasks order");
+                //for (int j = 0; j < job.Tasks[i].NumberSubTasks; j++)
+                //    job.Tasks[i].OrderCLI[j] = Order[j].GetInt32();
+
+                //Length = Task.GetProperty("Sub-tasks order").GetArrayLength();
+                job.Tasks[i].OrderCLI = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString());
 
                 SubTasks = Task.GetProperty("Sub-tasks");
-                for (int j = 0; j < job.jobTasks[i].numberSubTasks; j++)
+                for (int j = 0; j < job.Tasks[i].NumberSubTasks; j++)
                 {
-                    job.jobTasks[i].subTasks[j] = new();
-                    job.jobTasks[i].subTasks[j].data.weight = SubTasks[j].GetProperty("Weight").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.h = SubTasks[j].GetProperty("Horizontal distance").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.v = SubTasks[j].GetProperty("Vertical distance").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.d = SubTasks[j].GetProperty("Distance").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.a = SubTasks[j].GetProperty("Asymmetry angle").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.f = SubTasks[j].GetProperty("Frequency").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.fa = SubTasks[j].GetProperty("Frequency (a)").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.fb = SubTasks[j].GetProperty("Frequency (b)").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.td = SubTasks[j].GetProperty("Subtask duration").GetDouble();
-                    job.jobTasks[i].subTasks[j].data.c = (Coupling)SubTasks[j].GetProperty("Coupling").GetInt32();
+                    job.Tasks[i].SubTasks[j] = new();
+                    job.Tasks[i].SubTasks[j].Data.LC = SubTasks[j].GetProperty("Load constant").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.Weight = SubTasks[j].GetProperty("Weight").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.h = SubTasks[j].GetProperty("Horizontal distance").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.v = SubTasks[j].GetProperty("Vertical distance").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.d = SubTasks[j].GetProperty("Distance").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.a = SubTasks[j].GetProperty("Asymmetry angle").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.f = SubTasks[j].GetProperty("Frequency").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.fa = SubTasks[j].GetProperty("Frequency (a)").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.fb = SubTasks[j].GetProperty("Frequency (b)").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.td = SubTasks[j].GetProperty("Subtask duration").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.c = (Coupling)SubTasks[j].GetProperty("Coupling").GetInt32();
                     
-                    job.jobTasks[i].subTasks[j].factors.LC = SubTasks[j].GetProperty("Load constant").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.VM = SubTasks[j].GetProperty("V multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.AM = SubTasks[j].GetProperty("A multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.FM = SubTasks[j].GetProperty("F multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.FMa = SubTasks[j].GetProperty("Fa multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.FMb = SubTasks[j].GetProperty("Fb multiplier").GetDouble();
-                    job.jobTasks[i].subTasks[j].factors.CM = SubTasks[j].GetProperty("C multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.VM = SubTasks[j].GetProperty("V multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.AM = SubTasks[j].GetProperty("A multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.FM = SubTasks[j].GetProperty("F multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.FMa = SubTasks[j].GetProperty("Fa multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.FMb = SubTasks[j].GetProperty("Fb multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.CM = SubTasks[j].GetProperty("C multiplier").GetDouble();
 
-                    job.jobTasks[i].subTasks[j].indexLI = SubTasks[j].GetProperty("LI index").GetDouble();
-                    job.jobTasks[i].subTasks[j].indexIF = SubTasks[j].GetProperty("IF index").GetDouble();
-                    job.jobTasks[i].subTasks[j].itemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
-                    job.jobTasks[i].subTasks[j].task = SubTasks[j].GetProperty("Task").GetInt32();
-                    job.jobTasks[i].subTasks[j].order = SubTasks[j].GetProperty("Order").GetInt32();
+                    job.Tasks[i].SubTasks[j].IndexLI = SubTasks[j].GetProperty("LI index").GetDouble();
+                    job.Tasks[i].SubTasks[j].IndexIF = SubTasks[j].GetProperty("IF index").GetDouble();
+                    job.Tasks[i].SubTasks[j].ItemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
+                    job.Tasks[i].SubTasks[j].Task = SubTasks[j].GetProperty("Task").GetInt32();
+                    job.Tasks[i].SubTasks[j].Order = SubTasks[j].GetProperty("Order").GetInt32();
                 }
 
                 i++;

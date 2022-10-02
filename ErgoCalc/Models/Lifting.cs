@@ -23,9 +23,14 @@ public enum Coupling
 public class Data
 {
     /// <summary>
+    /// Load constant in kg
+    /// </summary>
+    public double LC { get; set; } = 0;
+
+    /// <summary>
     /// Weight in kg
     /// </summary>
-    public double weight { get; set; } = 0;
+    public double Weight { get; set; } = 0;
 
     /// <summary>
     /// Horizontal distance in meters
@@ -129,13 +134,13 @@ public class Multipliers
 /// </summary>
 public class SubTask
 {
-    public Data data { get; set; } = new();
-    public Multipliers factors { get; set; } = new();
-    public double indexIF { get; set; } = 0;
-    public double indexLI { get; set; } = 0;
-    public int task { get; set; } = 0;
-    public int order { get; set; } = 0;
-    public int itemIndex { get; set; } = 0;
+    public Data Data { get; set; } = new();
+    public Multipliers Factors { get; set; } = new();
+    public double IndexIF { get; set; } = 0;
+    public double IndexLI { get; set; } = 0;
+    public int Task { get; set; } = 0;
+    public int Order { get; set; } = 0;
+    public int ItemIndex { get; set; } = 0;
 
     public override string ToString()
     {
@@ -151,7 +156,7 @@ public class Task
     /// <summary>
     /// Set of subtasks in the task
     /// </summary>
-    public SubTask[] subTasks { get; set; } = Array.Empty<SubTask>();
+    public SubTask[] SubTasks { get; set; } = Array.Empty<SubTask>();
 
     /// <summary>
     /// Reordering of the subtasks from lower LI to higher LI
@@ -161,19 +166,18 @@ public class Task
     /// <summary>
     /// The composite lifting index for this task
     /// </summary>
-    public double CLI { get; set; } = 0;
+    public double IndexCLI { get; set; } = 0;
 
     /// <summary>
     /// 
     /// </summary>
-    public IndexType model { get; set; } = IndexType.IndexLI;
+    public IndexType Model { get; set; } = IndexType.IndexLI;
 
     /// <summary>
-    /// Number of subtasks in the task
+    /// Number of sub-tasks in the task
     /// </summary>
-    public int numberSubTasks { get; set; } = 0;
-    //public int order;
-    //public int job;
+    public int NumberSubTasks { get; set; } = 0;
+    
 
     public Task()
     {
@@ -181,7 +185,7 @@ public class Task
 
     public override string ToString()
     {
-        Int32 i, length = subTasks.Length;
+        Int32 i, length = SubTasks.Length;
         //Int32[] ordenacion = new Int32[length];
         var strResult = new System.Text.StringBuilder(2200);
         String strEquationT;
@@ -195,37 +199,37 @@ public class Task
 
         for (i = 0; i < length; i++)
         {
-            strLineD[0] += "\t\t" + "Task " + ((char)('A' + subTasks[i].itemIndex)).ToString();
-            strLineD[1] += "\t\t" + subTasks[i].data.weight.ToString();
-            strLineD[2] += "\t\t" + subTasks[i].data.h.ToString();
-            strLineD[3] += "\t\t" + subTasks[i].data.v.ToString();
-            strLineD[4] += "\t\t" + subTasks[i].data.d.ToString();
-            strLineD[5] += "\t\t" + subTasks[i].data.f.ToString();
-            strLineD[6] += "\t\t" + subTasks[i].data.fa.ToString();
-            strLineD[7] += "\t\t" + subTasks[i].data.fb.ToString();
-            strLineD[8] += "\t\t" + subTasks[i].data.td.ToString();
-            strLineD[9] += "\t\t" + subTasks[i].data.a.ToString();
-            strLineD[10] += "\t" + subTasks[i].data.c;
+            strLineD[0] += "\t\t" + "Task " + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
+            strLineD[1] += "\t\t" + SubTasks[i].Data.Weight.ToString();
+            strLineD[2] += "\t\t" + SubTasks[i].Data.h.ToString();
+            strLineD[3] += "\t\t" + SubTasks[i].Data.v.ToString();
+            strLineD[4] += "\t\t" + SubTasks[i].Data.d.ToString();
+            strLineD[5] += "\t\t" + SubTasks[i].Data.f.ToString();
+            strLineD[6] += "\t\t" + SubTasks[i].Data.fa.ToString();
+            strLineD[7] += "\t\t" + SubTasks[i].Data.fb.ToString();
+            strLineD[8] += "\t\t" + SubTasks[i].Data.td.ToString();
+            strLineD[9] += "\t\t" + SubTasks[i].Data.a.ToString();
+            strLineD[10] += "\t" + SubTasks[i].Data.c;
 
-            strLineR[0] += "\t\t" + "Task " + ((char)('A' + subTasks[i].itemIndex)).ToString();
-            strLineR[1] += "\t\t" + subTasks[i].factors.LC.ToString("0.####");
-            strLineR[2] += "\t\t" + subTasks[i].factors.HM.ToString("0.####");
-            strLineR[3] += "\t\t" + subTasks[i].factors.VM.ToString("0.####");
-            strLineR[4] += "\t\t" + subTasks[i].factors.DM.ToString("0.####");
-            strLineR[5] += "\t\t" + subTasks[i].factors.FM.ToString("0.####");
-            strLineR[6] += "\t\t" + subTasks[i].factors.FMa.ToString("0.####");
-            strLineR[7] += "\t\t" + subTasks[i].factors.FMb.ToString("0.####");
-            strLineR[8] += "\t\t" + subTasks[i].factors.AM.ToString("0.####");
-            strLineR[9] += "\t\t" + subTasks[i].factors.CM.ToString("0.####");
+            strLineR[0] += "\t\t" + "Task " + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
+            strLineR[1] += "\t\t" + SubTasks[i].Factors.LC.ToString("0.####");
+            strLineR[2] += "\t\t" + SubTasks[i].Factors.HM.ToString("0.####");
+            strLineR[3] += "\t\t" + SubTasks[i].Factors.VM.ToString("0.####");
+            strLineR[4] += "\t\t" + SubTasks[i].Factors.DM.ToString("0.####");
+            strLineR[5] += "\t\t" + SubTasks[i].Factors.FM.ToString("0.####");
+            strLineR[6] += "\t\t" + SubTasks[i].Factors.FMa.ToString("0.####");
+            strLineR[7] += "\t\t" + SubTasks[i].Factors.FMb.ToString("0.####");
+            strLineR[8] += "\t\t" + SubTasks[i].Factors.AM.ToString("0.####");
+            strLineR[9] += "\t\t" + SubTasks[i].Factors.CM.ToString("0.####");
             
-            if (model == IndexType.IndexCLI)
+            if (Model == IndexType.IndexCLI)
             {
-                strLineR[10] += "\t\t" + subTasks[i].indexIF.ToString("0.####");
+                strLineR[10] += "\t\t" + SubTasks[i].IndexIF.ToString("0.####");
                 strLineR[11] += "\t";
                 strLineR[12] += "\t\t" + (OrderCLI[i] + 1).ToString();
             }
             
-            strLineR[11] += "\t" + subTasks[i].indexLI.ToString("0.####");
+            strLineR[11] += "\t" + SubTasks[i].IndexLI.ToString("0.####");
             
             //ordenacion[length - _order[i] - 1] = i;
             //ordenacion[_order[i]] = length - i - 1;
@@ -247,7 +251,7 @@ public class Task
         strResult.Append("Vertical distance (cm):" + strLineD[3] + "\n");
         strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + "\n");
         strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + "\n");
-        if (length > 1 && model == IndexType.IndexCLI)
+        if (length > 1 && Model == IndexType.IndexCLI)
         {
             strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + "\n");
             strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + "\n");
@@ -263,7 +267,7 @@ public class Task
         strResult.Append("Vertical multiplier (VM):" + strLineR[3] + "\n");
         strResult.Append("Distance multiplier(DM):" + strLineR[4] + "\n");
         strResult.Append("Frequency multiplier(FM):" + strLineR[5] + "\n");
-        if (length > 1 && model == IndexType.IndexCLI)
+        if (length > 1 && Model == IndexType.IndexCLI)
         {
             strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + "\n");
             strResult.Append("Frequency B multiplier (FMb):\t" + strLineR[7].TrimStart('\t') + "\n");
@@ -273,7 +277,7 @@ public class Task
 
         if (length > 1)
         {
-            if (model == IndexType.IndexCLI)
+            if (Model == IndexType.IndexCLI)
             {
                 strResult.Append("Lifting index (IF):\t" + strLineR[10] + "\n");
                 strResult.Append("Lifting index (LI):\t" + strLineR[11] + "\n");
@@ -289,21 +293,21 @@ public class Task
         strResult.Append("The NIOSH lifting index is computed as follows:\n\n");
         if (length > 1)
         {
-            if (model == IndexType.IndexCLI)
+            if (Model == IndexType.IndexCLI)
             {
-                var strName = ((char)('A' + subTasks[OrderCLI[0]].itemIndex)).ToString();
+                var strName = ((char)('A' + SubTasks[OrderCLI[0]].ItemIndex)).ToString();
                 strEquationT = "CLI = Index(" + strName + ")"; //((char)('A' + i)).ToString()
-                strEquationN = "CLI = " + subTasks[OrderCLI[0]].indexLI.ToString("0.####");
+                strEquationN = "CLI = " + SubTasks[OrderCLI[0]].IndexLI.ToString("0.####");
                 for (i = 1; i < length; i++)
                 {
-                    strName = ((char)('A' + subTasks[OrderCLI[i]].itemIndex)).ToString();
+                    strName = ((char)('A' + SubTasks[OrderCLI[i]].ItemIndex)).ToString();
                     strEquationT += " + IndexIF(" + strName + ") * (1/FMa(" + strName + ") - 1/FMb(" + strName + "))";
-                    strEquationN += " + " + subTasks[OrderCLI[i]].indexIF.ToString("0.####") + " * (1/" + subTasks[OrderCLI[i]].factors.FMa.ToString("0.####") + " - 1/" + subTasks[OrderCLI[i]].factors.FMb.ToString("0.####") + ")";
+                    strEquationN += " + " + SubTasks[OrderCLI[i]].IndexIF.ToString("0.####") + " * (1/" + SubTasks[OrderCLI[i]].Factors.FMa.ToString("0.####") + " - 1/" + SubTasks[OrderCLI[i]].Factors.FMb.ToString("0.####") + ")";
                 }
-                strEquationN += " = " + CLI.ToString("0.####");
+                strEquationN += " = " + IndexCLI.ToString("0.####");
                 strResult.Append(strEquationT + "\n");
                 strResult.Append(strEquationN + "\n\n");
-                strResult.Append("The NIOSH lifting index is: " + CLI.ToString("0.####") + "\n");
+                strResult.Append("The NIOSH lifting index is: " + IndexCLI.ToString("0.####") + "\n");
             }
             else
             {
@@ -311,15 +315,15 @@ public class Task
                 strResult.Append(strEquationT + "\n");
                 for (i = 0; i < length; i++)
                 {
-                    strEquationN = "LI = " + subTasks[i].data.weight.ToString("0.####") + " / (";
-                    strEquationN += subTasks[i].factors.LC.ToString("0.####") + " * ";
-                    strEquationN += subTasks[i].factors.HM.ToString("0.####") + " * ";
-                    strEquationN += subTasks[i].factors.VM.ToString("0.####") + " * ";
-                    strEquationN += subTasks[i].factors.DM.ToString("0.####") + " * ";
-                    strEquationN += subTasks[i].factors.FM.ToString("0.####") + " * ";
-                    strEquationN += subTasks[i].factors.AM.ToString("0.####") + " * ";
-                    strEquationN += subTasks[i].factors.CM.ToString("0.####") + ") = ";
-                    strEquationN += subTasks[i].indexLI.ToString("0.####");
+                    strEquationN = "LI = " + SubTasks[i].Data.Weight.ToString("0.####") + " / (";
+                    strEquationN += SubTasks[i].Factors.LC.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Factors.HM.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Factors.VM.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Factors.DM.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Factors.FM.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Factors.AM.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Factors.CM.ToString("0.####") + ") = ";
+                    strEquationN += SubTasks[i].IndexLI.ToString("0.####");
                     strResult.Append(strEquationN + "\n");
                 }
                 strResult.Append("\n");
@@ -328,19 +332,19 @@ public class Task
         else
         {
             strEquationT = "LI = Weight / (LC * HM * VM * DM * FM * AM * CM)";
-            strEquationN = "LI = " + subTasks[0].data.weight.ToString("0.####") + " / (";
-            strEquationN += subTasks[0].factors.LC.ToString("0.####") + " * ";
-            strEquationN += subTasks[0].factors.HM.ToString("0.####") + " * ";
-            strEquationN += subTasks[0].factors.VM.ToString("0.####") + " * ";
-            strEquationN += subTasks[0].factors.DM.ToString("0.####") + " * ";
-            strEquationN += subTasks[0].factors.FM.ToString("0.####") + " * ";
-            strEquationN += subTasks[0].factors.AM.ToString("0.####") + " * ";
-            strEquationN += subTasks[0].factors.CM.ToString("0.####") + ") = ";
-            strEquationN += subTasks[0].indexLI.ToString("0.####");
+            strEquationN = "LI = " + SubTasks[0].Data.Weight.ToString("0.####") + " / (";
+            strEquationN += SubTasks[0].Factors.LC.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Factors.HM.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Factors.VM.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Factors.DM.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Factors.FM.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Factors.AM.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Factors.CM.ToString("0.####") + ") = ";
+            strEquationN += SubTasks[0].IndexLI.ToString("0.####");
 
             strResult.Append(strEquationT + "\n");
             strResult.Append(strEquationN + "\n\n");
-            strResult.Append("The NIOSH lifting index is: " + subTasks[0].indexLI.ToString("0.####") + "\n");
+            strResult.Append("The NIOSH lifting index is: " + SubTasks[0].IndexLI.ToString("0.####") + "\n");
         };
 
         return strResult.ToString();
@@ -355,27 +359,32 @@ public class Job
     /// <summary>
     /// Set of tasks in the job
     /// </summary>
-    public Task[] jobTasks { get; set; } = Array.Empty<Task>();
+    public Task[] Tasks { get; set; } = Array.Empty<Task>();
 
     /// <summary>
     /// Reordering of the subtasks from lower CLI to higher CLI
     /// </summary>
-    public int[] order { get; set; } = Array.Empty<int>();
+    public int[] Order { get; set; } = Array.Empty<int>();
 
     /// <summary>
     /// The global index for this job
     /// </summary>
-    public double index { get; set; } = 0;
+    public double Index { get; set; } = 0;
 
     /// <summary>
-    /// 
+    /// Index type: LI, CLI, VLI, SLI
     /// </summary>
-    public IndexType model { get; set; } = IndexType.IndexLI;
+    public IndexType Model { get; set; } = IndexType.IndexLI;
 
     /// <summary>
     /// Number of tasks in the job
     /// </summary>
-    public int numberTasks { get; set; } = 0;
+    public int NumberTasks { get; set; } = 0;
+
+    /// <summary>
+    /// Number of sub-tasks in the job
+    /// </summary>
+    public int NumberSubTasks { get; set; } = 0;
 
     public Job()
     {
@@ -385,7 +394,7 @@ public class Job
     {
         string str = string.Empty;
 
-        foreach (Task task in jobTasks)
+        foreach (Task task in Tasks)
             str += task.ToString() + Environment.NewLine + Environment.NewLine;
 
         return str;
@@ -401,16 +410,16 @@ public static class NIOSHLifting
 
         for (int i = 0; i < subT.Length; i++)
         {
-            if (subT[i].factors.LC == 0) subT[i].factors.LC = 23.0;
-            subT[i].factors.HM = FactorHM(subT[i].data.h);
-            subT[i].factors.VM = FactorVM(subT[i].data.v);
-            subT[i].factors.DM = FactorDM(subT[i].data.d);
-            subT[i].factors.AM = FactorAM(subT[i].data.a);
-            subT[i].factors.FM = FactorFM(subT[i].data.f, subT[i].data.v, subT[i].data.td);
-            subT[i].factors.CM = FactorCM(subT[i].data.c, subT[i].data.v);
+            //if (subT[i].Factors.LC == 0) subT[i].Factors.LC = 23.0;
+            subT[i].Factors.HM = FactorHM(subT[i].Data.h);
+            subT[i].Factors.VM = FactorVM(subT[i].Data.v);
+            subT[i].Factors.DM = FactorDM(subT[i].Data.d);
+            subT[i].Factors.AM = FactorAM(subT[i].Data.a);
+            subT[i].Factors.FM = FactorFM(subT[i].Data.f, subT[i].Data.v, subT[i].Data.td);
+            subT[i].Factors.CM = FactorCM(subT[i].Data.c, subT[i].Data.v);
 
-            subT[i].indexLI = MultiplyFactors(subT[i].data.weight, subT[i].factors);
-            subT[i].indexIF = subT[i].indexLI * subT[i].factors.FM;
+            subT[i].IndexLI = MultiplyFactors(subT[i].Data.LC, subT[i].Data.Weight, subT[i].Factors);
+            subT[i].IndexIF = subT[i].IndexLI * subT[i].Factors.FM;
 
             //pIndex[i] = subT[i].LI;
         }
@@ -419,14 +428,14 @@ public static class NIOSHLifting
     public static double ComputeCLI(Task task)
     {
         // First compute the LI index for each subtask
-        ComputeLI(task.subTasks);
+        ComputeLI(task.SubTasks);
 
         // 2nd step: Sort the LI indexes from highest to lowest
-        double[] indexOrder = new double[task.subTasks.Length];
-        int[] values = new int[task.subTasks.Length];
-        for (int i = 0; i < task.subTasks.Length; i++)
+        double[] indexOrder = new double[task.SubTasks.Length];
+        int[] values = new int[task.SubTasks.Length];
+        for (int i = 0; i < task.SubTasks.Length; i++)
         {
-            indexOrder[i] = task.subTasks[i].indexLI;
+            indexOrder[i] = task.SubTasks[i].IndexLI;
             values[i] = i;
         }
         Array.Sort(indexOrder, values);
@@ -435,32 +444,32 @@ public static class NIOSHLifting
         Array.Copy(values, task.OrderCLI, values.Length);
 
         // 3rd step: Compute the cumulative index
-        double result = task.subTasks[values[0]].indexLI;
-        task.subTasks[values[0]].data.fa = task.subTasks[values[0]].data.fb = task.subTasks[values[0]].data.f;
-        task.subTasks[values[0]].order = 0;
+        double result = task.SubTasks[values[0]].IndexLI;
+        task.SubTasks[values[0]].Data.fa = task.SubTasks[values[0]].Data.fb = task.SubTasks[values[0]].Data.f;
+        task.SubTasks[values[0]].Order = 0;
 
-        for (int i = 1; i < task.subTasks.Length; i++)
+        for (int i = 1; i < task.SubTasks.Length; i++)
         {
-            task.subTasks[values[i]].data.fa = task.subTasks[values[i -1]].data.fa + task.subTasks[values[i]].data.f;
-            task.subTasks[values[i]].data.fb = task.subTasks[values[i -1 ]].data.fa;
-            task.subTasks[values[i]].factors.FMa = FactorFM(task.subTasks[values[i]].data.fa, task.subTasks[values[i]].data.v, task.subTasks[values[i]].data.td);
-            task.subTasks[values[i]].factors.FMb = FactorFM(task.subTasks[values[i]].data.fb, task.subTasks[values[i]].data.v, task.subTasks[values[i]].data.td);
-            task.subTasks[values[i]].order = i;
-            result += task.subTasks[values[i]].indexIF * (1 / task.subTasks[values[i]].factors.FMa - 1 / task.subTasks[values[i]].factors.FMb);
+            task.SubTasks[values[i]].Data.fa = task.SubTasks[values[i -1]].Data.fa + task.SubTasks[values[i]].Data.f;
+            task.SubTasks[values[i]].Data.fb = task.SubTasks[values[i -1 ]].Data.fa;
+            task.SubTasks[values[i]].Factors.FMa = FactorFM(task.SubTasks[values[i]].Data.fa, task.SubTasks[values[i]].Data.v, task.SubTasks[values[i]].Data.td);
+            task.SubTasks[values[i]].Factors.FMb = FactorFM(task.SubTasks[values[i]].Data.fb, task.SubTasks[values[i]].Data.v, task.SubTasks[values[i]].Data.td);
+            task.SubTasks[values[i]].Order = i;
+            result += task.SubTasks[values[i]].IndexIF * (1 / task.SubTasks[values[i]].Factors.FMa - 1 / task.SubTasks[values[i]].Factors.FMb);
         }
 
-        task.CLI = result;
+        task.IndexCLI = result;
 
         // Finally, return the index
         return result;
     }
     
-    private static double MultiplyFactors(double weight, Multipliers factors)
+    private static double MultiplyFactors(double loadConstant, double weight, Multipliers factors)
     {
         double product = 0.0;
         double result = 0.0;
 
-        product = factors.LC *
+        product = loadConstant *
             factors.HM *
             factors.VM *
             factors.DM *

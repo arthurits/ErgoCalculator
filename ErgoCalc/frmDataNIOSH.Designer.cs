@@ -112,6 +112,7 @@
             // lblConstanteLC
             // 
             this.lblConstanteLC.AutoSize = true;
+            this.lblConstanteLC.Enabled = false;
             this.lblConstanteLC.Location = new System.Drawing.Point(16, 471);
             this.lblConstanteLC.Name = "lblConstanteLC";
             this.lblConstanteLC.Size = new System.Drawing.Size(152, 17);
@@ -120,6 +121,7 @@
             // 
             // txtConstanteLC
             // 
+            this.txtConstanteLC.Enabled = false;
             this.txtConstanteLC.Location = new System.Drawing.Point(174, 469);
             this.txtConstanteLC.Name = "txtConstanteLC";
             this.txtConstanteLC.Size = new System.Drawing.Size(33, 23);
@@ -307,7 +309,7 @@
             this.btnExample.UseVisualStyleBackColor = true;
             this.btnExample.Click += new System.EventHandler(this.Example_Click);
             // 
-            // frmDataNIOSH
+            // FrmDataNIOSH
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -327,7 +329,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataNIOSH";
+            this.Name = "FrmDataNIOSH";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
