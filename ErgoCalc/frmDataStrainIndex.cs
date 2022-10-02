@@ -28,7 +28,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
         radioButton_CheckedChanged(radRSI, null);
 
         listViewTasks.AddGroup();
-
     }
 
     // Overloaded constructor
@@ -37,7 +36,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         _job = job;
         DataToGrid();
-        //tabDataStrain_Selected(null, new TabControlEventArgs(tabTasks, 1, TabControlAction.Selecting));
     }
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -186,7 +184,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     private void Example_Click(object sender, EventArgs e)
     {
         // Load some data example
-        //updSubtasks.Value = 0;
         DataExample2();
         DataToGrid();
     }
@@ -380,17 +377,12 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 break;
         }
         updSubtasks.Value = _job.NumberSubTasks;
-        //updTasks.Maximum = _job.NumberTasks;
         updTasks.Value = _job.NumberTasks;
-        Int32 nCol = 0;
+        int nCol = 0;
         for (var j = 0; j < _job.NumberTasks; j++)
         {
-            //nCol++;
             for (var i = 0; i < _job.Tasks[j].SubTasks.Length; i++)
             {
-                //Column 0 is already created in the constructor;
-                //AddColumn();
-
                 // Populate the DataGridView with data
                 gridVariables[nCol, 0].Value = _job.Tasks[j].SubTasks[i].Data.i.ToString();
                 gridVariables[nCol, 1].Value = _job.Tasks[j].SubTasks[i].Data.e.ToString();
@@ -400,14 +392,11 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
                 // Classify
                 listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + nCol)).ToString(), listViewTasks.Groups[j]));
-                //listViewTasks.Items[nCol].Group = listViewTasks.Groups[j];
 
                 nCol++;
             }
         }
-        // Update the control's value
-        //updSubtasks.Value = nCol;
-        //updTasks.Value = _job.NumberTasks;
+        
     }
 
     #endregion
