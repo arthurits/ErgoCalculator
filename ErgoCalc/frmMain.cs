@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 // Para guardar la posición en el archivo XML
 //using System.Runtime.Serialization.Formatters.Soap;
@@ -9,7 +8,7 @@ using System.Text.Json;
 
 // Namespaces personales
 using Utilidades;
-using Microsoft.VisualBasic;
+
 
 namespace ErgoCalc
 {
@@ -19,7 +18,7 @@ namespace ErgoCalc
 
         // For loading and saving program settings.
         //private ApplicationSettingsData _settings = new ApplicationSettingsData();
-        private AppSettings _settings = new AppSettings();
+        private AppSettings _settings = new();
         private static readonly string _settingsFileName = "Configuration.json";
         private clsApplicationSettings _programSettings;
         private static readonly string _programSettingsFileName = "Configuration.xml";
@@ -336,12 +335,12 @@ namespace ErgoCalc
         private void frmMain_MdiChildActivate(object sender, EventArgs e)
         {
             ToolStripManager.RevertMerge(this.toolStripMain);
-            if (ActiveMdiChild is FrmResultsWR)
+            if (ActiveMdiChild is FrmResultsWR form)
             {
                 // The frmChild.FormToolStrip is a property that exposes the
                 // toolstrip on your child form
                 // ToolStripManager.Merge(frmChild.toolStripWR, this.toolStripMain);
-                ToolStripManager.Merge(((FrmResultsWR)ActiveMdiChild).ChildToolStrip, this.toolStripMain);
+                ToolStripManager.Merge(form.ChildToolStrip, this.toolStripMain);
                 //this.Controls.Add(frmChild.toolStripWR);
                 //((frmWRmodel)ActiveMdiChild).toolStripWR.Visible = true;
                 //this.tspTop.Join(((frmWRmodel)ActiveMdiChild).toolStripWR, 1);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -15,7 +14,7 @@ public partial class FrmResultsWR : Form, IChildResults
 {
     //private List<DataWR> _datos;
     private Job _job;
-    private ChartOptions _plotOptions;
+    private readonly ChartOptions _plotOptions;
 
     public FrmResultsWR()
     {

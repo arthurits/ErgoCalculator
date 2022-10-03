@@ -23,7 +23,7 @@ partial class FrmMain
 {
     private void New_Click(object sender, EventArgs e)
     {
-        FrmNew frmNew = new FrmNew();
+        FrmNew frmNew = new();
         if (frmNew.ShowDialog() == DialogResult.Cancel) return;
 
         Form frmData = frmNew.Model switch
@@ -74,13 +74,13 @@ partial class FrmMain
 
     private void About_Click(object sender, EventArgs e)
     {
-        frmAbout frmAbout = new frmAbout();
+        FrmAbout frmAbout = new();
         frmAbout.ShowDialog();
     }
 
     private void Open_Click(object sender, EventArgs e)
     {
-        OpenFileDialog openDlg = new OpenFileDialog
+        OpenFileDialog openDlg = new()
         {
             DefaultExt = "*.ergo",
             Filter = "ERGO file (*.ergo)|*.ergo|All files (*.*)|*.*",

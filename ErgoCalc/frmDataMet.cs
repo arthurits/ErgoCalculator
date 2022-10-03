@@ -8,12 +8,9 @@ namespace ErgoCalc;
 
 public partial class FrmDataMet : Form, IChildData
 {
-    // Declare private variables
-    //private Int32[] _nLevel1 = new Int32[] { -1, -1 };
-
     private Job _job;
-
     public object GetData => _job;
+
     public FrmDataMet()
     {
         // VS Designer initialization routine
