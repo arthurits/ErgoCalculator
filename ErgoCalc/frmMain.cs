@@ -40,7 +40,7 @@ namespace ErgoCalc
             InitializeToolStrip();
 
             // Set form icon
-            if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
+            this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
             UpdateUI_Language();
         }
@@ -94,73 +94,6 @@ namespace ErgoCalc
         }
         */
 
-        #region Initialization routines
-
-        /// <summary>
-        /// Initialize the ToolStripPanel component: add the child components to it
-        /// </summary>
-        private void InitializeToolStripPanel()
-        {
-            //tspTop = new ToolStripPanel();
-            //tspBottom = new ToolStripPanel();
-            //tspTop.Join(toolStripMain);
-            //tspTop.Join(mnuMainFrm);
-            //tspBottom.Join(this.statusStrip);
-
-
-            //tspTop = new ToolStripPanel();
-            //tspBottom = new ToolStripPanel();
-            //tspTop.Dock = DockStyle.Top;
-            tspTop.Join(toolStripMain);
-            tspTop.Join(mnuMainFrm);
-            //tspBottom.Dock = DockStyle.Bottom;
-            //this.Controls.Add(tspTop);
-            //this.Controls.Add(tspBottom);
-
-
-            // Exit the method
-            return;
-        }
-        /// <summary>
-        /// Set menu icons
-        /// </summary>
-        private void InitializeMenu()
-        {
-            if (File.Exists(_strPath + @"\images\new.ico")) this.mnuMainFrm_File_New.Image = new Icon(_strPath + @"\images\new.ico", 16, 16).ToBitmap();
-            if (File.Exists(_strPath + @"\images\log_off.ico")) this.mnuMainFrm_File_Exit.Image = new Icon(_strPath + @"\images\log_off.ico", 16, 16).ToBitmap();
-            if (File.Exists(_strPath + @"\images\about.ico")) this.mnuMainFrm_Help_About.Image = new Icon(_strPath + @"\images\about.ico", 16, 16).ToBitmap();
-        }
-
-        /// <summary>
-        /// Initialize the ToolStrip component
-        /// </summary>
-        private void InitializeToolStrip()
-        {
-            toolStripMain.Renderer = new customRenderer(Brushes.SteelBlue, Brushes.LightSkyBlue);
-
-            // Set ToolStrip icons
-            if (File.Exists(_strPath + @"\images\log_off.ico")) this.toolStripMain_Exit.Image = new Icon(_strPath + @"\images\log_off.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\open.ico")) this.toolStripMain_Open.Image = new Icon(_strPath + @"\images\open.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\save.ico")) this.toolStripMain_Save.Image = new Icon(_strPath + @"\images\save.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\chart-save.ico")) this.toolStripMain_SaveChart.Image = new Icon(_strPath + @"\images\chart-save.ico", 48, 48).ToBitmap();
-            //this.toolStripMain_SaveChart.Enabled = false;
-            if (File.Exists(_strPath + @"\images\new.ico")) this.toolStripMain_New.Image = new Icon(_strPath + @"\images\new.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\copy.ico")) this.toolStripMain_Copy.Image = new Icon(_strPath + @"\images\copy.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\write.ico")) this.toolStripMain_EditData.Image = new Icon(_strPath + @"\images\write.ico", 48, 48).ToBitmap();
-            if (File.Exists(_strPath + @"\images\chart-add.ico")) this.toolStripMain_AddLine.Image = new Icon(_strPath + @"\images\chart-add.ico", 48, 48).ToBitmap();
-            //this.toolStripMain_AddLine.Enabled = false;
-            if (File.Exists(_strPath + @"\images\chart-delete.ico")) this.toolStripMain_RemoveLine.Image = new Icon(_strPath + @"\images\chart-delete.ico", 48, 48).ToBitmap();
-            //this.toolStripMain_RemoveLine.Enabled = false;
-            if (File.Exists(_strPath + @"\images\settings.ico")) this.toolStripMain_Settings.Image = new Icon(_strPath + @"\images\settings.ico", 48, 48).ToBitmap();
-            this.toolStripMain_Settings.CheckOnClick = true;
-            //this.toolStripMain_Settings.Enabled = false;
-            if (File.Exists(_strPath + @"\images\about.ico")) this.toolStripMain_About.Image = new Icon(_strPath + @"\images\about.ico", 48, 48).ToBitmap();
-
-            ToolBarEnable();
-            // https://stackoverflow.com/questions/6389722/toolstrip-with-check-button-group
-        }
-
-        #endregion Initialization routines
 
         #region Form events
         private void frmMain_Load(object sender, EventArgs e)
