@@ -24,6 +24,8 @@ partial class FrmMain
     private void New_Click(object sender, EventArgs e)
     {
         FrmNew frmNew = new();
+        frmNew.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+
         if (frmNew.ShowDialog() == DialogResult.Cancel) return;
 
         Form frmData = frmNew.Model switch
@@ -59,7 +61,7 @@ partial class FrmMain
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
-                if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+                frmResults.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
                 frmResults.Show();
             }
             frmData.Dispose();
