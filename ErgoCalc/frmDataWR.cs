@@ -13,7 +13,7 @@ public partial class FrmDataWR : Form, IChildData
 {
     // Propiedades de la clase
     public Job _job;
-    private string strGridHeader = "Task ";
+    private readonly string strGridHeader = "Task ";
     private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDataWR));
 
     public object GetData => _job;

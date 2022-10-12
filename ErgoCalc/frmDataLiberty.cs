@@ -9,7 +9,7 @@ namespace ErgoCalc;
 public partial class FrmDataLiberty : Form, IChildData
 {
     private Job _job;
-    private string strGridHeader = "Task ";
+    private readonly string strGridHeader = "Task ";
 
     public object GetData => _job;
 

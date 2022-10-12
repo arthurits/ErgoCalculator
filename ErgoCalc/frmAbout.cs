@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ErgoCalc
 {
-    partial class frmAbout : Form
+    partial class FrmAbout : Form
     {
 
         #region Descriptores de acceso de atributos de ensamblado
@@ -100,7 +96,7 @@ namespace ErgoCalc
         
         #endregion
 
-        public frmAbout()
+        public FrmAbout()
         {
             InitializeComponent();
             // this.Text = String.Format("About {0}", AssemblyTitle);

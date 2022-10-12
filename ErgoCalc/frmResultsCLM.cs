@@ -11,7 +11,7 @@ public partial class FrmResultsCLM : Form, IChildResults
 {
     // Variable definition
     private Job _job;
-    private ResultsOptions _options;
+    private readonly ResultsOptions _options;
 
     public FrmResultsCLM()
     {

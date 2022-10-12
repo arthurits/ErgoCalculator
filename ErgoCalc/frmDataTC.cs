@@ -8,7 +8,7 @@ namespace ErgoCalc;
 public partial class FrmDataTC : Form, IChildData
 {
     private Job _job;
-    private string strGridHeader = "Case ";
+    private readonly string strGridHeader = "Case ";
     public object GetData => _job;
 
     public FrmDataTC()
