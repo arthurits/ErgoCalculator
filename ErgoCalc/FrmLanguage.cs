@@ -4,8 +4,6 @@ using System.Linq;
 using System.Resources;
 using System.Windows.Forms;
 
-using Utilidades;
-
 namespace ErgoCalc;
 
 public partial class FrmLanguage : Form

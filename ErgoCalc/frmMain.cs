@@ -6,9 +6,6 @@ using System.Windows.Forms;
 //using System.Runtime.Serialization.Formatters.Soap;
 using System.Text.Json;
 
-// Namespaces personales
-using Utilidades;
-
 
 namespace ErgoCalc
 {
@@ -20,8 +17,8 @@ namespace ErgoCalc
         //private ApplicationSettingsData _settings = new ApplicationSettingsData();
         private AppSettings _settings = new();
         private static readonly string _settingsFileName = "Configuration.json";
-        private clsApplicationSettings _programSettings;
-        private static readonly string _programSettingsFileName = "Configuration.xml";
+        //private clsApplicationSettings _programSettings;
+        //private static readonly string _programSettingsFileName = "Configuration.xml";
 
         //private ToolStripPanel tspTop;
         //private ToolStripPanel tspBottom;
@@ -97,16 +94,8 @@ namespace ErgoCalc
         #region Form events
         private void frmMain_Load(object sender, EventArgs e)
         {
-            // Load any saved program settings.
-            _programSettings = new clsApplicationSettings(_programSettingsFileName);
-            //LoadProgramSettingsXML();
-
             // Creates the fade in animation of the form
             Win32.Win32API.AnimateWindow(this.Handle, 200, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_CENTER);
-
-            // Close splash screen
-            //if (_frmSplash != null) _frmSplash.Close();
-
         }
 
         private void frmMain_Shown(object sender, EventArgs e)
@@ -119,7 +108,6 @@ namespace ErgoCalc
         private void frmMain_ControlAdded(object sender, ControlEventArgs e)
         {
             //if (e.Control is MdiClient)
-
         }
 
         private void frmMain_ControlRemoved(object sender, ControlEventArgs e)
@@ -164,43 +152,7 @@ namespace ErgoCalc
         /// <summary>
         /// Loads any saved program settings.
         /// </summary>
-        private void LoadProgramSettingsXML()
-        {
-            // Load the saved window settings and resize the window.
-            try
-            {
-                // Load the saved window settings.
-                Int32 left = System.Int32.Parse(_programSettings.GetValue("Window", "Left"));
-                Int32 top = System.Int32.Parse(_programSettings.GetValue("Window", "Top"));
-                Int32 width = System.Int32.Parse(_programSettings.GetValue("Window", "Width"));
-                Int32 height = System.Int32.Parse(_programSettings.GetValue("Window", "Height"));
-
-                // Reposition and resize the window.
-                //this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-                this.StartPosition = FormStartPosition.Manual;
-                this.DesktopLocation = new Point(left, top);
-                this.ClientSize = new Size(width, height);
-
-                // Load saved options.
-                //_idioma = (Language)Int32.Parse(_programSettings.GetValue("Options", "LanguageLCID"));
-            }
-            catch (FileNotFoundException)
-            {
-            }
-            catch (Exception ex)
-            {
-                using (new CenterWinDialog(this))
-                {
-                    MessageBox.Show(this,
-                        "Error loading settings file\n\n" + ex.Message,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void LoadProgramSettingsJSON()
+         private void LoadProgramSettingsJSON()
         {
             try
             {
@@ -232,21 +184,6 @@ namespace ErgoCalc
         /// <summary>
         /// Saves the current program settings.
         /// </summary>
-        private void SaveProgramSettingsXML()
-        {
-            // Save window settings.      
-            _programSettings.SetValue("Window", "Left", this.DesktopLocation.X.ToString());
-            _programSettings.SetValue("Window", "Top", this.DesktopLocation.Y.ToString());
-            _programSettings.SetValue("Window", "Width", this.ClientSize.Width.ToString());
-            _programSettings.SetValue("Window", "Height", this.ClientSize.Height.ToString());
-
-            // Save options.
-            //_programSettings.SetValue("Options", "LanguageLCID", ((Int32)_idioma).ToString());
-
-            // Save the program settings.
-            _programSettings.Save();
-        }
-
         private void SaveProgramSettingsJSON()
         {
             _settings.Left = DesktopLocation.X;
