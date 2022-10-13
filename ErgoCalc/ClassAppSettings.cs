@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace ErgoCalc;
 
@@ -9,6 +10,11 @@ public class AppSettings
     /// </summary>
     [JsonIgnore]
     public string SettingsFileName { get; set; } = "configuration.json";
+    /// <summary>
+    /// Absolute path of the executable
+    /// </summary>
+    [JsonIgnore]
+    public string AppPath { get; set; } = System.IO.Path.GetDirectoryName(System.Environment.ProcessPath) ?? String.Empty;
 
     /// <summary>
     /// Remember window position on start up

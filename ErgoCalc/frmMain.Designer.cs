@@ -348,12 +348,12 @@
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ergonomic calculator";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            this.Load += new System.EventHandler(this.frmMain_Load);
-            this.MdiChildActivate += new System.EventHandler(this.frmMain_MdiChildActivate);
-            this.Shown += new System.EventHandler(this.frmMain_Shown);
-            this.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.frmMain_ControlAdded);
-            this.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.frmMain_ControlRemoved);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.Load += new System.EventHandler(this.FrmMain_Load);
+            this.MdiChildActivate += new System.EventHandler(this.FrmMain_MdiChildActivate);
+            this.Shown += new System.EventHandler(this.FrmMain_Shown);
+            this.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.FrmMain_ControlAdded);
+            this.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.FrmMain_ControlRemoved);
             this.mnuMainFrm.ResumeLayout(false);
             this.mnuMainFrm.PerformLayout();
             this.staMainFrm.ResumeLayout(false);
