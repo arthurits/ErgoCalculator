@@ -88,7 +88,7 @@ partial class FrmMain
             Filter = "ERGO file (*.ergo)|*.ergo|All files (*.*)|*.*",
             FilterIndex = 1,
             Title = "Open ErgoCalc file",
-            InitialDirectory = _strPath + @"\Examples"
+            InitialDirectory = _settings.RememberFileDialogPath ? _settings.UserOpenPath : _settings.DefaultOpenPath
         };
 
         DialogResult result;
@@ -131,7 +131,7 @@ partial class FrmMain
 
                 if (((IChildResults)frm).OpenFile(document))
                 {
-                    if (File.Exists(_strPath + @"\images\logo.ico")) frm.Icon = new Icon(_strPath + @"\images\logo.ico");
+                    frm.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
                     frm.Show();
                 }
                 else

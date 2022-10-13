@@ -19,7 +19,7 @@ public partial class FrmMain
     {
         try
         {
-            var jsonString = File.ReadAllText(_settingsFileName);
+            var jsonString = File.ReadAllText(_settings.SettingsFileName);
             _settings = JsonSerializer.Deserialize<AppSettings>(jsonString);
 
             if (_settings.WindowPosition)
@@ -59,7 +59,7 @@ public partial class FrmMain
             WriteIndented = true
         };
         var jsonString = JsonSerializer.Serialize(_settings, options);
-        File.WriteAllText(_settingsFileName, jsonString);
+        File.WriteAllText(_settings.SettingsFileName, jsonString);
     }
 
     /// <summary>
