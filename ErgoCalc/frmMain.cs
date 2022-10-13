@@ -317,6 +317,7 @@ namespace ErgoCalc
             mnuMainFrm_File.Text = StringResources.MenuMainFile;
             mnuMainFrm_File_Exit.Text = StringResources.MenuMainFileExit;
             mnuMainFrm_File_New.Text = StringResources.MenuMainFileNew;
+            mnuMainFrm_Window.Text = StringResources.MenuMainWindow;
             mnuMainFrm_Help.Text=StringResources.MenuMainHelp;
             mnuMainFrm_Help_About.Text = StringResources.MenuMainHelpAbout;
 

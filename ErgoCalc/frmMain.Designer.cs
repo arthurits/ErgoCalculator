@@ -34,7 +34,7 @@
             this.mnuMainFrm_File_New = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuMainFrm_File_Exit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuMainForm_Window = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuMainFrm_Window = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainFrm_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuMainFrm_Help_About = new System.Windows.Forms.ToolStripMenuItem();
             this.staMainFrm = new System.Windows.Forms.StatusStrip();
@@ -67,10 +67,10 @@
             this.mnuMainFrm.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
             this.mnuMainFrm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuMainFrm_File,
-            this.mnuMainForm_Window,
+            this.mnuMainFrm_Window,
             this.mnuMainFrm_Help});
             this.mnuMainFrm.Location = new System.Drawing.Point(0, 0);
-            this.mnuMainFrm.MdiWindowListItem = this.mnuMainForm_Window;
+            this.mnuMainFrm.MdiWindowListItem = this.mnuMainFrm_Window;
             this.mnuMainFrm.Name = "mnuMainFrm";
             this.mnuMainFrm.Padding = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.mnuMainFrm.Size = new System.Drawing.Size(957, 24);
@@ -112,11 +112,11 @@
             this.mnuMainFrm_File_Exit.Text = "&Exit";
             this.mnuMainFrm_File_Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
-            // mnuMainForm_Window
+            // mnuMainFrm_Window
             // 
-            this.mnuMainForm_Window.Name = "mnuMainForm_Window";
-            this.mnuMainForm_Window.Size = new System.Drawing.Size(63, 20);
-            this.mnuMainForm_Window.Text = "&Window";
+            this.mnuMainFrm_Window.Name = "mnuMainFrm_Window";
+            this.mnuMainFrm_Window.Size = new System.Drawing.Size(63, 20);
+            this.mnuMainFrm_Window.Text = "&Window";
             // 
             // mnuMainFrm_Help
             // 
@@ -151,7 +151,7 @@
             // 
             this.statusStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabel.Name = "statusStripLabel";
-            this.statusStripLabel.Size = new System.Drawing.Size(841, 23);
+            this.statusStripLabel.Size = new System.Drawing.Size(872, 23);
             this.statusStripLabel.Spring = true;
             this.statusStripLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -378,7 +378,7 @@
         private System.Windows.Forms.StatusStrip staMainFrm;
         private System.Windows.Forms.ToolStrip toolStripMain;
         private System.Windows.Forms.ToolStripButton toolStripMain_Exit;
-        private System.Windows.Forms.ToolStripMenuItem mnuMainForm_Window;
+        private System.Windows.Forms.ToolStripMenuItem mnuMainFrm_Window;
         private System.Windows.Forms.ToolStripPanel tspTop;
         private System.Windows.Forms.ToolStripPanel tspBottom;
         private System.Windows.Forms.ToolStripButton toolStripMain_Open;

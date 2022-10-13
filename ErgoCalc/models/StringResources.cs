@@ -45,6 +45,7 @@ public static class StringResources
     public static string MenuMainFile => StringRM.GetString("strMenuMainFile", Culture) ?? "&File";
     public static string MenuMainFileNew => StringRM.GetString("strMenuMainFileNew", Culture) ?? "&New...";
     public static string MenuMainFileExit => StringRM.GetString("strMenuMainFileExit", Culture) ?? "&Exit...";
+    public static string MenuMainWindow => StringRM.GetString("strMenuMainWindow", Culture) ?? "&Window";
     public static string MenuMainHelpAbout => StringRM.GetString("strMenuMainHelpAbout", Culture) ?? "&About...";
     public static string MenuMainHelp => StringRM.GetString("strMenuMainHelp", Culture) ?? "&Help";
 }

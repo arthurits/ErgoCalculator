@@ -133,6 +133,42 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Window.
+        /// </summary>
+        internal static string strMenuMainWindow {
+            get {
+                return ResourceManager.GetString("strMenuMainWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current culture formatting.
+        /// </summary>
+        internal static string strRadCurrentCulture {
+            get {
+                return ResourceManager.GetString("strRadCurrentCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invariant culture formatting.
+        /// </summary>
+        internal static string strRadInvariantCulture {
+            get {
+                return ResourceManager.GetString("strRadInvariantCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select culture.
+        /// </summary>
+        internal static string strRadUserCulture {
+            get {
+                return ResourceManager.GetString("strRadUserCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         internal static string strToolStripAbout {
