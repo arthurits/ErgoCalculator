@@ -1,4 +1,6 @@
-﻿namespace ErgoCalc.models;
+﻿using System;
+
+namespace ErgoCalc;
 
 public static class StringResources
 {
@@ -13,6 +15,9 @@ public static class StringResources
     public static System.Globalization.CultureInfo Culture { get; set; } = System.Globalization.CultureInfo.CurrentCulture;
 
     public static string GetString(string StringName, System.Globalization.CultureInfo Culture) => StringRM.GetString(StringName, Culture) ?? string.Empty;
+
+    public static string BtnAccept => StringRM.GetString("strBtnAccept", Culture) ?? "&Accept";
+    public static string BtnCancel => StringRM.GetString("strBtnCancel", Culture) ?? "&Cancel";
 
     public static string FormTitleUnion => StringRM.GetString("strFormTitleUnion", Culture) ?? " - ";
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";
@@ -48,4 +53,13 @@ public static class StringResources
     public static string MenuMainWindow => StringRM.GetString("strMenuMainWindow", Culture) ?? "&Window";
     public static string MenuMainHelpAbout => StringRM.GetString("strMenuMainHelpAbout", Culture) ?? "&About...";
     public static string MenuMainHelp => StringRM.GetString("strMenuMainHelp", Culture) ?? "&Help";
+
+    // Form Language
+    public static string RadCurrentCulture => StringRM.GetString("strRadCurrentCulture", Culture) ?? "Current culture formatting";
+    public static string RadInvariantCulture => StringRM.GetString("strRadInvariantCulture", Culture) ?? "Invariant culture formatting";
+    public static string RadUserCulture => StringRM.GetString("strRadUserCulture", Culture) ?? "Select culture";
+
+    // Message box
+    public static string MsgBoxExit => StringRM.GetString("strMsgBoxExit", Culture) ?? "Are you sure you want to exit" + Environment.NewLine + "the application?";
+    public static string MsgBoxExitTitle => StringRM.GetString("strMsgBoxExitTitle", Culture) ?? "Exit?";
 }

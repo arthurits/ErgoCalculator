@@ -14,7 +14,7 @@ public partial class FrmLanguage : Form
     public FrmLanguage()
     {
         InitializeComponent();
-        FillDefinedCultures("ErgoLux.localization.strings", typeof(FrmMain).Assembly);
+        FillDefinedCultures(StringResources.StringRM.BaseName, typeof(FrmMain).Assembly);
     }
 
     public FrmLanguage(AppSettings settings)
@@ -120,14 +120,14 @@ public partial class FrmLanguage : Form
     /// <param name="culture">Culture used to display the UI</param>
     private void UpdateUI_Language(System.Globalization.CultureInfo culture)
     {
-        //StringResources.Culture = culture;
+        StringResources.Culture = culture;
 
-        this.Text = "Select culture";
-        this.radCurrentCulture.Text = ("Current culture formatting") + $" ({System.Globalization.CultureInfo.CurrentCulture.Name})";
-        this.radInvariantCulture.Text = "Invariant culture formatting";
-        this.radUserCulture.Text = "Select culture";
-        this.btnCancel.Text = "&Cancel";
-        this.btnAccept.Text = "&Accept";
+        this.Text = StringResources.FormLanguageTitle;
+        this.radCurrentCulture.Text = StringResources.RadCurrentCulture + $" ({System.Globalization.CultureInfo.CurrentCulture.Name})";
+        this.radInvariantCulture.Text = StringResources.RadInvariantCulture;
+        this.radUserCulture.Text = StringResources.RadUserCulture;
+        this.btnCancel.Text = StringResources.BtnCancel;
+        this.btnAccept.Text = StringResources.BtnAccept;
     }
 
     private static System.Collections.Generic.IEnumerable<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)

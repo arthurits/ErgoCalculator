@@ -5,7 +5,6 @@ using System.Windows.Forms;
 // Para guardar la posición en el archivo XML
 //using System.Runtime.Serialization.Formatters.Soap;
 using System.Text.Json;
-using ErgoCalc.models;
 
 namespace ErgoCalc
 {
@@ -126,11 +125,11 @@ namespace ErgoCalc
             using (new CenterWinDialog(this))
             {
                 if (DialogResult.No == MessageBox.Show(this,
-                                                        "Are you sure you want to exit\nthe application?",
-                                                        "Exit?",
-                                                        MessageBoxButtons.YesNo,
-                                                        MessageBoxIcon.Question,
-                                                        MessageBoxDefaultButton.Button2))
+                                        StringResources.MsgBoxExit,
+                                        StringResources.MsgBoxExitTitle,
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question,
+                                        MessageBoxDefaultButton.Button2))
                 {
                     // Cancelar el cierre de la ventana
                     e.Cancel = true;
@@ -305,7 +304,7 @@ namespace ErgoCalc
             frm.Text = StringResources.FormMainTitle + strText;
         }
 
-        private void UpdateUI_Language(int DataLength = default)
+        private void UpdateUI_Language()
         {
             this.SuspendLayout();
 

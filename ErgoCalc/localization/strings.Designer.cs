@@ -61,6 +61,24 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Accept.
+        /// </summary>
+        internal static string strBtnAccept {
+            get {
+                return ResourceManager.GetString("strBtnAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Cancel.
+        /// </summary>
+        internal static string strBtnCancel {
+            get {
+                return ResourceManager.GetString("strBtnCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select culture.
         /// </summary>
         internal static string strFormLanguageTitle {
@@ -138,6 +156,25 @@ namespace ErgoCalc.localization {
         internal static string strMenuMainWindow {
             get {
                 return ResourceManager.GetString("strMenuMainWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to exit
+        ///the application?.
+        /// </summary>
+        internal static string strMsgBoxExit {
+            get {
+                return ResourceManager.GetString("strMsgBoxExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit?.
+        /// </summary>
+        internal static string strMsgBoxExitTitle {
+            get {
+                return ResourceManager.GetString("strMsgBoxExitTitle", resourceCulture);
             }
         }
         

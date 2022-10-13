@@ -182,6 +182,9 @@ partial class FrmMain
 
         if (frm.DialogResult == DialogResult.OK)
             UpdateUI_Language();
+
+        // This is redundant because this asignment is done at the very beginning of UpdateUI_Language
+        StringResources.Culture=_settings.AppCulture;
     }
 
 }

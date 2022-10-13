@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="strBtnAccept" xml:space="preserve">
+    <value>&amp;Accept</value>
+  </data>
+  <data name="strBtnCancel" xml:space="preserve">
+    <value>&amp;Cancel</value>
+  </data>
   <data name="strFormLanguageTitle" xml:space="preserve">
     <value>Select culture</value>
   </data>
@@ -143,6 +149,13 @@
   </data>
   <data name="strMenuMainWindow" xml:space="preserve">
     <value>&amp;Window</value>
+  </data>
+  <data name="strMsgBoxExit" xml:space="preserve">
+    <value>Are you sure you want to exit
+the application?</value>
+  </data>
+  <data name="strMsgBoxExitTitle" xml:space="preserve">
+    <value>Exit?</value>
   </data>
   <data name="strRadCurrentCulture" xml:space="preserve">
     <value>Current culture formatting</value>
