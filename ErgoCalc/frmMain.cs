@@ -5,7 +5,7 @@ using System.Windows.Forms;
 // Para guardar la posición en el archivo XML
 //using System.Runtime.Serialization.Formatters.Soap;
 using System.Text.Json;
-
+using ErgoCalc.models;
 
 namespace ErgoCalc
 {
@@ -280,11 +280,75 @@ namespace ErgoCalc
 
         #endregion
 
+        /// <summary>
+        /// Sets the form's title
+        /// </summary>
+        /// <param name="frm">Form which title is to be set</param>
+        /// <param name="strFileName">String to be added at the default title in 'strFormTitle' string.
+        /// If <see langword="null"/>, no string is added.
+        /// If <see cref="String.Empty"/>, the current added text is mantained.
+        /// Other values are added to the default title.</param>
+        private void SetFormTitle(System.Windows.Forms.Form frm, string? strFileName = null)
+        {
+            string strText = String.Empty;
+            string strSep = StringResources.FormTitleUnion;
+            if (strFileName is not null)
+            {
+                if (strFileName != String.Empty)
+                    strText = $"{strSep}{strFileName}";
+                else
+                {
+                    int index = frm.Text.IndexOf(strSep) > -1 ? frm.Text.IndexOf(strSep) : frm.Text.Length;
+                    strText = frm.Text[index..];
+                }
+            }
+            frm.Text = StringResources.FormMainTitle + strText;
+        }
+
         private void UpdateUI_Language(int DataLength = default)
         {
+            this.SuspendLayout();
+
+            StringResources.Culture = _settings.AppCulture;
+
+            // Update the form's tittle
+            SetFormTitle(this, String.Empty);
+
+            mnuMainFrm_File.Text = StringResources.MenuMainFile;
+            mnuMainFrm_File_Exit.Text = StringResources.MenuMainFileExit;
+            mnuMainFrm_File_New.Text = StringResources.MenuMainFileNew;
+            mnuMainFrm_Help.Text=StringResources.MenuMainHelp;
+            mnuMainFrm_Help_About.Text = StringResources.MenuMainHelpAbout;
+
+            toolStripMain_About.Text=StringResources.ToolStripAbout;
+            toolStripMain_AddLine.Text=StringResources.ToolStripAddLine;
+            toolStripMain_Copy.Text = StringResources.ToolStripDuplicate;
+            toolStripMain_EditData.Text = StringResources.ToolStripEdit;
+            toolStripMain_Exit.Text = StringResources.ToolStripExit;
+            toolStripMain_New.Text = StringResources.ToolStripNew;
+            toolStripMain_Open.Text = StringResources.ToolStripOpen;
+            toolStripMain_RemoveLine.Text = StringResources.ToolStripRemoveLine;
+            toolStripMain_Save.Text = StringResources.ToolStripSave;
+            toolStripMain_SaveChart.Text = StringResources.ToolStripSaveChart;
+            toolStripMain_Settings.Text = StringResources.ToolStripSettings;
+
+            toolStripMain_About.ToolTipText = StringResources.ToolTipAbout;
+            toolStripMain_AddLine.ToolTipText = StringResources.ToolTipAddLine;
+            toolStripMain_Copy.ToolTipText = StringResources.ToolTipDuplicate;
+            toolStripMain_EditData.ToolTipText = StringResources.ToolTipEdit;
+            toolStripMain_Exit.ToolTipText = StringResources.ToolTipExit;
+            toolStripMain_New.ToolTipText = StringResources.ToolTipNew;
+            toolStripMain_Open.ToolTipText = StringResources.ToolTipOpen;
+            toolStripMain_RemoveLine.ToolTipText= StringResources.ToolTipRemoveLine;
+            toolStripMain_Save.ToolTipText = StringResources.ToolTipSave;
+            toolStripMain_SaveChart.ToolTipText = StringResources.ToolTipSaveChart;
+            toolStripMain_Settings.ToolTipText = StringResources.ToolTipSettings;
+
+
             statusStripLabelUILanguage.Text = _settings.AppCulture.Name == String.Empty ? "Invariant" : _settings.AppCulture.Name;
-            statusStripLabelUILanguage.ToolTipText = "User interface language";
-            //statusStripLabelUILanguage.ToolTipText = StringsRM.GetString("strToolTipUILanguage", _settings.AppCulture) ?? "User interface language";
+            statusStripLabelUILanguage.ToolTipText = StringResources.ToolTipUILanguage + ":" + Environment.NewLine + _settings.AppCulture.NativeName;
+
+            this.ResumeLayout();
         }
 
     }

@@ -151,6 +151,11 @@
     <Compile Update="controls\RadioButtonClick.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="localization\strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>strings.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Update="frmResultsStrainIndex.resx">
       <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -198,6 +203,10 @@
     <EmbeddedResource Update="frmResultsWR.resx">
       <DependentUpon>frmResultsWR.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="localization\strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -390,8 +399,5 @@
     <Content Include="..\Dll-Liberty\x64\Release\liberty.dll" Link="dlls\liberty.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="localization\" />
   </ItemGroup>
 </Project>

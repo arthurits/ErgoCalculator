@@ -93,7 +93,7 @@
             this.mnuMainFrm_File_New.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.mnuMainFrm_File_New.MergeIndex = 0;
             this.mnuMainFrm_File_New.Name = "mnuMainFrm_File_New";
-            this.mnuMainFrm_File_New.Size = new System.Drawing.Size(107, 22);
+            this.mnuMainFrm_File_New.Size = new System.Drawing.Size(180, 22);
             this.mnuMainFrm_File_New.Text = "&New...";
             this.mnuMainFrm_File_New.Click += new System.EventHandler(this.New_Click);
             // 
@@ -101,14 +101,14 @@
             // 
             this.toolStripSeparator1.MergeIndex = 1;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // mnuMainFrm_File_Exit
             // 
             this.mnuMainFrm_File_Exit.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.mnuMainFrm_File_Exit.MergeIndex = 4;
             this.mnuMainFrm_File_Exit.Name = "mnuMainFrm_File_Exit";
-            this.mnuMainFrm_File_Exit.Size = new System.Drawing.Size(107, 22);
+            this.mnuMainFrm_File_Exit.Size = new System.Drawing.Size(180, 22);
             this.mnuMainFrm_File_Exit.Text = "&Exit";
             this.mnuMainFrm_File_Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -130,7 +130,7 @@
             // mnuMainFrm_Help_About
             // 
             this.mnuMainFrm_Help_About.Name = "mnuMainFrm_Help_About";
-            this.mnuMainFrm_Help_About.Size = new System.Drawing.Size(116, 22);
+            this.mnuMainFrm_Help_About.Size = new System.Drawing.Size(180, 22);
             this.mnuMainFrm_Help_About.Text = "&About...";
             this.mnuMainFrm_Help_About.Click += new System.EventHandler(this.About_Click);
             // 
@@ -151,7 +151,7 @@
             // 
             this.statusStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabel.Name = "statusStripLabel";
-            this.statusStripLabel.Size = new System.Drawing.Size(872, 23);
+            this.statusStripLabel.Size = new System.Drawing.Size(841, 23);
             this.statusStripLabel.Spring = true;
             this.statusStripLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -162,6 +162,7 @@
             this.statusStripLabelUILanguage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabelUILanguage.Name = "statusStripLabelUILanguage";
             this.statusStripLabelUILanguage.Size = new System.Drawing.Size(65, 23);
+            this.statusStripLabelUILanguage.ToolTipText = "UI culture";
             this.statusStripLabelUILanguage.Click += new System.EventHandler(this.Language_Click);
             // 
             // toolStripMain
@@ -203,7 +204,6 @@
             // 
             // toolStripMain_Open
             // 
-            this.toolStripMain_Open.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Open.Image")));
             this.toolStripMain_Open.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Open.Name = "toolStripMain_Open";
             this.toolStripMain_Open.Size = new System.Drawing.Size(77, 67);
@@ -213,10 +213,9 @@
             // 
             // toolStripMain_Save
             // 
-            this.toolStripMain_Save.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Save.Image")));
             this.toolStripMain_Save.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Save.Name = "toolStripMain_Save";
-            this.toolStripMain_Save.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_Save.Size = new System.Drawing.Size(35, 67);
             this.toolStripMain_Save.Text = "Save";
             this.toolStripMain_Save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Save.ToolTipText = "Save data";
@@ -224,7 +223,6 @@
             // 
             // toolStripMain_SaveChart
             // 
-            this.toolStripMain_SaveChart.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_SaveChart.Image")));
             this.toolStripMain_SaveChart.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_SaveChart.Name = "toolStripMain_SaveChart";
             this.toolStripMain_SaveChart.Size = new System.Drawing.Size(65, 67);
@@ -239,10 +237,9 @@
             // 
             // toolStripMain_New
             // 
-            this.toolStripMain_New.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_New.Image")));
             this.toolStripMain_New.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_New.Name = "toolStripMain_New";
-            this.toolStripMain_New.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_New.Size = new System.Drawing.Size(35, 67);
             this.toolStripMain_New.Text = "New";
             this.toolStripMain_New.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_New.ToolTipText = "New model";
@@ -250,7 +247,6 @@
             // 
             // toolStripMain_Copy
             // 
-            this.toolStripMain_Copy.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Copy.Image")));
             this.toolStripMain_Copy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Copy.Name = "toolStripMain_Copy";
             this.toolStripMain_Copy.Size = new System.Drawing.Size(61, 67);
@@ -261,7 +257,6 @@
             // 
             // toolStripMain_EditData
             // 
-            this.toolStripMain_EditData.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_EditData.Image")));
             this.toolStripMain_EditData.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_EditData.Name = "toolStripMain_EditData";
             this.toolStripMain_EditData.Size = new System.Drawing.Size(57, 67);
@@ -277,7 +272,6 @@
             // 
             // toolStripMain_AddLine
             // 
-            this.toolStripMain_AddLine.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_AddLine.Image")));
             this.toolStripMain_AddLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_AddLine.Name = "toolStripMain_AddLine";
             this.toolStripMain_AddLine.Size = new System.Drawing.Size(55, 67);
@@ -287,7 +281,6 @@
             // 
             // toolStripMain_RemoveLine
             // 
-            this.toolStripMain_RemoveLine.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_RemoveLine.Image")));
             this.toolStripMain_RemoveLine.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_RemoveLine.Name = "toolStripMain_RemoveLine";
             this.toolStripMain_RemoveLine.Size = new System.Drawing.Size(76, 67);
@@ -297,7 +290,6 @@
             // 
             // toolStripMain_Settings
             // 
-            this.toolStripMain_Settings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Settings.Image")));
             this.toolStripMain_Settings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Settings.Name = "toolStripMain_Settings";
             this.toolStripMain_Settings.Size = new System.Drawing.Size(53, 67);
@@ -314,10 +306,9 @@
             // 
             // toolStripMain_About
             // 
-            this.toolStripMain_About.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_About.Image")));
             this.toolStripMain_About.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_About.Name = "toolStripMain_About";
-            this.toolStripMain_About.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_About.Size = new System.Drawing.Size(44, 67);
             this.toolStripMain_About.Text = "About";
             this.toolStripMain_About.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_About.Click += new System.EventHandler(this.About_Click);
@@ -340,7 +331,7 @@
             this.tspBottom.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.tspBottom.Size = new System.Drawing.Size(957, 0);
             // 
-            // frmMain
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -354,7 +345,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.mnuMainFrm;
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ergonomic calculator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
