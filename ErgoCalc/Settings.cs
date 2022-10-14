@@ -22,12 +22,7 @@ public partial class FrmMain
             var jsonString = File.ReadAllText(_settings.SettingsFileName);
             _settings = JsonSerializer.Deserialize<AppSettings>(jsonString);
 
-            if (_settings.WindowPosition)
-            {
-                this.StartPosition = FormStartPosition.Manual;
-                this.DesktopLocation = new Point(_settings.Left, _settings.Top);
-                this.ClientSize = new Size(_settings.Width, _settings.Height);
-            }
+            ApplySettingsJSON(_settings.WindowPosition);
         }
         catch (FileNotFoundException)
         {
