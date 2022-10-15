@@ -10,6 +10,7 @@ public partial class FrmNew : Form
     public FrmNew()
     {
         InitializeComponent();
+        UpdateUI_Language();
     }        
 
     private void Accept_Click(object sender, EventArgs e)
@@ -18,30 +19,30 @@ public partial class FrmNew : Form
         {
             if (rad.Checked)
             {
-                switch (rad.Text)
+                switch (rad.Name)
                 {
-                    case "WR model":
+                    case "radModelWR":
                         Model = ModelType.WorkRest;
                         break;
-                    case "CLM model":
+                    case "radModelCLM":
                         Model = ModelType.CumulativeLifting;
                         break;
-                    case "NIOSH equation (LI, CLI, SLI, VLI)":
+                    case "radModelNIOSH":
                         Model = ModelType.NioshLifting;
                         break;
-                    case "Revised strain index (RSI, COSI, CUSI)":
+                    case "radModelStrain":
                         Model = ModelType.StrainIndex;
                         break;
-                    case "OCRA checklist":
+                    case "radModelOCRA":
                         Model = ModelType.OcraCheck;
                         break;
-                    case "Metabolic rate":
+                    case "radModelMetabolic":
                         Model = ModelType.MetabolicRate;
                         break;
-                    case "Thermal comfort (PMV, PPD)":
+                    case "radModelThermal":
                         Model = ModelType.ThermalComfort;
                         break;
-                    case "LM manual handling":
+                    case "radModelLiberty":
                         Model = ModelType.LibertyMutual;
                         break;
                 }
@@ -57,5 +58,19 @@ public partial class FrmNew : Form
     {
         this.Accept_Click(btnAccept, EventArgs.Empty);
         this.DialogResult = DialogResult.OK;
+    }
+
+    private void UpdateUI_Language()
+    {
+        this.Text = StringResources.FormNewTitle;
+        this.lblSelect.Text = StringResources.LblSelect;
+        this.radModelWR.Text = StringResources.RadModelWR;
+        this.radModelCLM.Text = StringResources.RadModelCLM;
+        this.radModelNIOSH.Text = StringResources.RadModelNIOSH;
+        this.radModelStrain.Text = StringResources.RadModelStrain;
+        this.radModelOCRA.Text = StringResources.RadModelOCRA;
+        this.radModelMetabolic.Text = StringResources.RadModelMetabolic;
+        this.radModelThermal.Text = StringResources.RadModelThermal;
+        this.radModelLiberty.Text = StringResources.RadModelLiberty;
     }
 }

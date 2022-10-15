@@ -97,11 +97,29 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New model.
+        /// </summary>
+        internal static string strFormNewTitle {
+            get {
+                return ResourceManager.GetString("strFormNewTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  - .
         /// </summary>
         internal static string strFormTitleUnion {
             get {
                 return ResourceManager.GetString("strFormTitleUnion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please, select a model to start working with:.
+        /// </summary>
+        internal static string strLblSelect {
+            get {
+                return ResourceManager.GetString("strLblSelect", resourceCulture);
             }
         }
         
@@ -193,6 +211,78 @@ namespace ErgoCalc.localization {
         internal static string strRadInvariantCulture {
             get {
                 return ResourceManager.GetString("strRadInvariantCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comprehensive lifting model (CLM).
+        /// </summary>
+        internal static string strRadModelCLM {
+            get {
+                return ResourceManager.GetString("strRadModelCLM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liberty Mutual manual handling.
+        /// </summary>
+        internal static string strRadModelLiberty {
+            get {
+                return ResourceManager.GetString("strRadModelLiberty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metabolic rate.
+        /// </summary>
+        internal static string strRadModelMetabolic {
+            get {
+                return ResourceManager.GetString("strRadModelMetabolic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NIOSH lifting equation (LI, CLI, SLI, VLI).
+        /// </summary>
+        internal static string strRadModelNIOSH {
+            get {
+                return ResourceManager.GetString("strRadModelNIOSH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OCRA checklist.
+        /// </summary>
+        internal static string strRadModelOCRA {
+            get {
+                return ResourceManager.GetString("strRadModelOCRA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Revised strain index (RSI, COSI, CUSI).
+        /// </summary>
+        internal static string strRadModelStrain {
+            get {
+                return ResourceManager.GetString("strRadModelStrain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thermal comfort (PMV, PPD).
+        /// </summary>
+        internal static string strRadModelThermal {
+            get {
+                return ResourceManager.GetString("strRadModelThermal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WorkRest model (1991).
+        /// </summary>
+        internal static string strRadModelWR {
+            get {
+                return ResourceManager.GetString("strRadModelWR", resourceCulture);
             }
         }
         

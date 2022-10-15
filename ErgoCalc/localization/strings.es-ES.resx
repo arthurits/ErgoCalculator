@@ -129,8 +129,14 @@
   <data name="strFormMainTitle" xml:space="preserve">
     <value>ErgoCalc</value>
   </data>
+  <data name="strFormNewTitle" xml:space="preserve">
+    <value>Nuevo modelo</value>
+  </data>
   <data name="strFormTitleUnion" xml:space="preserve">
     <value> - </value>
+  </data>
+  <data name="strLblSelect" xml:space="preserve">
+    <value>Por favor, selecciona un modelo de evaluación</value>
   </data>
   <data name="strMenuMainFile" xml:space="preserve">
     <value>&amp;Archivo</value>
@@ -162,6 +168,30 @@ salir de la aplicación?</value>
   </data>
   <data name="strRadInvariantCulture" xml:space="preserve">
     <value>Referencia cultural invariable</value>
+  </data>
+  <data name="strRadModelCLM" xml:space="preserve">
+    <value>Modelo CLM para el levantamiento</value>
+  </data>
+  <data name="strRadModelLiberty" xml:space="preserve">
+    <value>Método de la Liberty Mutual para la manipulación</value>
+  </data>
+  <data name="strRadModelMetabolic" xml:space="preserve">
+    <value>Consumo metabólico</value>
+  </data>
+  <data name="strRadModelNIOSH" xml:space="preserve">
+    <value>Ecuación del NIOSH (LI, CLI, SLI, VLI)</value>
+  </data>
+  <data name="strRadModelOCRA" xml:space="preserve">
+    <value>OCRA checklist</value>
+  </data>
+  <data name="strRadModelStrain" xml:space="preserve">
+    <value>Índice Strain Index revisado (RSI, COSI, CUSI)</value>
+  </data>
+  <data name="strRadModelThermal" xml:space="preserve">
+    <value>Bienestar térmico (PMV, PPD)</value>
+  </data>
+  <data name="strRadModelWR" xml:space="preserve">
+    <value>Modelo WorkRest para el cálculo de pausas</value>
   </data>
   <data name="strRadUserCulture" xml:space="preserve">
     <value>Seleccionar referencia cultural</value>
