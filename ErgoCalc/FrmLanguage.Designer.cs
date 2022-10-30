@@ -34,6 +34,9 @@
             this.radUserCulture = new System.Windows.Forms.RadioButton();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
+            this.lblCurrentCulture = new System.Windows.Forms.Label();
+            this.lblInvariantCulture = new System.Windows.Forms.Label();
+            this.lblUserCulture = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cboAllCultures
@@ -103,6 +106,40 @@
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.Accept_Click);
             // 
+            // lblCurrentCulture
+            // 
+            this.lblCurrentCulture.AutoSize = true;
+            this.lblCurrentCulture.BackColor = System.Drawing.Color.Transparent;
+            this.lblCurrentCulture.Location = new System.Drawing.Point(39, 29);
+            this.lblCurrentCulture.MaximumSize = new System.Drawing.Size(275, 0);
+            this.lblCurrentCulture.Name = "lblCurrentCulture";
+            this.lblCurrentCulture.Size = new System.Drawing.Size(102, 19);
+            this.lblCurrentCulture.TabIndex = 6;
+            this.lblCurrentCulture.Text = "Current culture";
+            this.lblCurrentCulture.Click += new System.EventHandler(this.LabelCulture_Click);
+            // 
+            // lblInvariantCulture
+            // 
+            this.lblInvariantCulture.AutoSize = true;
+            this.lblInvariantCulture.Location = new System.Drawing.Point(39, 70);
+            this.lblInvariantCulture.MaximumSize = new System.Drawing.Size(275, 0);
+            this.lblInvariantCulture.Name = "lblInvariantCulture";
+            this.lblInvariantCulture.Size = new System.Drawing.Size(109, 19);
+            this.lblInvariantCulture.TabIndex = 7;
+            this.lblInvariantCulture.Text = "Invariant culture";
+            this.lblInvariantCulture.Click += new System.EventHandler(this.LabelCulture_Click);
+            // 
+            // lblUserCulture
+            // 
+            this.lblUserCulture.AutoSize = true;
+            this.lblUserCulture.Location = new System.Drawing.Point(39, 111);
+            this.lblUserCulture.MaximumSize = new System.Drawing.Size(275, 0);
+            this.lblUserCulture.Name = "lblUserCulture";
+            this.lblUserCulture.Size = new System.Drawing.Size(90, 19);
+            this.lblUserCulture.TabIndex = 8;
+            this.lblUserCulture.Text = "Select culture";
+            this.lblUserCulture.Click += new System.EventHandler(this.LabelCulture_Click);
+            // 
             // FrmLanguage
             // 
             this.AcceptButton = this.btnAccept;
@@ -110,6 +147,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(315, 232);
+            this.Controls.Add(this.lblUserCulture);
+            this.Controls.Add(this.lblInvariantCulture);
+            this.Controls.Add(this.lblCurrentCulture);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.radUserCulture);
@@ -137,5 +177,8 @@
         private System.Windows.Forms.RadioButton radUserCulture;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Label lblCurrentCulture;
+        private System.Windows.Forms.Label lblInvariantCulture;
+        private System.Windows.Forms.Label lblUserCulture;
     }
 }
