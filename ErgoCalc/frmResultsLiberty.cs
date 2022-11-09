@@ -12,16 +12,13 @@ namespace ErgoCalc;
 public partial class FrmResultsLiberty : Form, IChildResults
 {
     private Job _job;
-    private readonly string _strPath;
 
     public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     public FrmResultsLiberty()
     {
-        _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
-
         InitializeComponent();
+
         propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
         splitContainer1.Panel1Collapsed = false;
         splitContainer1.SplitterDistance = 0;
@@ -29,9 +26,6 @@ public partial class FrmResultsLiberty : Form, IChildResults
         splitContainer1.IsSplitterFixed = true;
 
         InitializePlot();
-
-        //this.rtbShowResult.Font = new Font(FontFamily.GenericMonospace, rtbShowResult.Font.Size);
-        // Initialize private variables
     }
 
 
@@ -39,6 +33,12 @@ public partial class FrmResultsLiberty : Form, IChildResults
         : this()
     {
         if (data.GetType() == typeof(Job)) _job = (Job)data;
+    }
+
+    public FrmResultsLiberty(string fileName)
+        :this()
+    {
+
     }
 
     private void frmResultsLiberty_Shown(object sender, EventArgs e)
@@ -315,6 +315,8 @@ public partial class FrmResultsLiberty : Form, IChildResults
                     break;
             }
 
+            FrmMain.SetFormTitle(this, StringResources.FormResultsLiberty, SaveDlg.FileName);
+
             using (new CenterWinDialog(this.MdiParent))
             {
                 MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -487,15 +489,14 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public void Duplicate()
     {
-        string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
-        // Mostrar la ventana de resultados
+        // Show results window
         FrmResultsLiberty frmResults = new FrmResultsLiberty(_job);
         {
             MdiParent = this.MdiParent;
         };
-        if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+        frmResults.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         frmResults.Show();
     }
     #endregion IChildResults inferface
+
 }

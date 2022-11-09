@@ -17,12 +17,6 @@ public partial class FrmResultNIOSH : Form, IChildResults
         // VS designer initialization
         InitializeComponent();
 
-        // ToolStrip
-        var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        if (File.Exists(path + @"\images\save.ico")) this.toolStripNIOSH_Save.Image = new Icon(path + @"\images\save.ico", 48, 48).ToBitmap();
-        if (File.Exists(path + @"\images\settings.ico")) this.toolStripNIOSH_Settings.Image = new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
-        //this.toolStripNIOSH_Settings.CheckOnClick = true;
-
         propertyGrid1.SelectedObject = new ResultsOptions(this.rtbShowResult);
         splitContainer1.Panel1Collapsed = false;
         splitContainer1.SplitterDistance = 0;
@@ -195,10 +189,10 @@ public partial class FrmResultNIOSH : Form, IChildResults
         // If the file name is not an empty string open it for saving.  
         if (result == DialogResult.OK && SaveDlg.FileName != "")
         {
-            System.IO.FileStream fs;
+            using var fs = SaveDlg.OpenFile();
 
             // Saves the text via a FileStream created by the OpenFile method.  
-            if ((fs = (System.IO.FileStream)SaveDlg.OpenFile()) != null)
+            if (fs != null)
             {
                 // Saves the text in the appropriate TextFormat based upon the File type selected in the dialog box.  
                 // NOTE that the FilterIndex property is one-based. 
@@ -219,7 +213,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
                         break;
                 }
 
-                fs.Close();
+                FrmMain.SetFormTitle(this, StringResources.FormResultsNIOSH, SaveDlg.FileName);
 
                 using (new CenterWinDialog(this.MdiParent))
                 {

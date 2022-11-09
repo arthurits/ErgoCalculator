@@ -282,12 +282,14 @@ public partial class FrmResultsWR : Form, IChildResults
             switch (SaveDlg.FilterIndex)
             {
                 case 1:
-                    var fs = SaveDlg.OpenFile();
-                    if (fs != null)
                     {
-                        using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
-                        SerializeToJSON(writer);
-                        //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
+                        using var fs = SaveDlg.OpenFile();
+                        if (fs != null)
+                        {
+                            using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
+                            SerializeToJSON(writer);
+                            //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
+                        }
                     }
                     break;
                 case 2:
@@ -320,6 +322,9 @@ public partial class FrmResultsWR : Form, IChildResults
                     }
                     break;
             }
+
+            FrmMain.SetFormTitle(this, StringResources.FormResultsWR, SaveDlg.FileName);
+
             using (new CenterWinDialog(this.MdiParent))
             {
                 MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);

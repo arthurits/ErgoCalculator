@@ -162,11 +162,12 @@ public partial class FrmMain : Form
     /// Sets the form's title
     /// </summary>
     /// <param name="frm">Form which title is to be set</param>
+    /// <param name="strTextTitle">Base text to be shown as the form's title</param>
     /// <param name="strFileName">String to be added at the default title in 'strFormTitle' string.
     /// If <see langword="null"/>, no string is added.
     /// If <see cref="String.Empty"/>, the current added text is mantained.
     /// Other values are added to the default title.</param>
-    private void SetFormTitle(System.Windows.Forms.Form frm, string? strFileName = null)
+    public static void SetFormTitle(System.Windows.Forms.Form frm, string strTextTitle, string? strFileName = null)
     {
         string strText = String.Empty;
         string strSep = StringResources.FormTitleUnion;
@@ -180,7 +181,7 @@ public partial class FrmMain : Form
                 strText = frm.Text[index..];
             }
         }
-        frm.Text = StringResources.FormMainTitle + strText;
+        frm.Text = strTextTitle + strText;
     }
 
     private void UpdateUI_Language()
@@ -190,7 +191,7 @@ public partial class FrmMain : Form
         StringResources.Culture = _settings.AppCulture;
 
         // Update the form's tittle
-        SetFormTitle(this, String.Empty);
+        SetFormTitle(this, StringResources.FormMainTitle, String.Empty);
 
         mnuMainFrm_File.Text = StringResources.MenuMainFile;
         mnuMainFrm_File_Exit.Text = StringResources.MenuMainFileExit;

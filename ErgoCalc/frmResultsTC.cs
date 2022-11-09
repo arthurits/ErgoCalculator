@@ -390,6 +390,8 @@ public partial class FrmResultsTC : Form, IChildResults
                     break;
             }
 
+            FrmMain.SetFormTitle(this, StringResources.FormResultsTC, SaveDlg.FileName);
+
             using (new CenterWinDialog(this.MdiParent))
             {
                 MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);

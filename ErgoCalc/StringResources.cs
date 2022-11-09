@@ -23,6 +23,12 @@ public static class StringResources
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";
     public static string FormLanguageTitle => StringRM.GetString("strFormLanguageTitle", Culture) ?? "Select culture";
     public static string FormNewTitle => StringRM.GetString("strFormNewTitle", Culture) ?? "New model";
+    public static string FormResultsNIOSH => "NIOSH model results";
+    public static string FormResultsCLM => "CLM model results";
+    public static string FormResultsLiberty => "LM-MMH results";
+    public static string FormResultsStrainIndex => "Strain Index results";
+    public static string FormResultsTC => "Thermal comfort results";
+    public static string FormResultsWR => "WR model results";
 
     public static string ToolStripAbout => StringRM.GetString("strToolStripAbout", Culture) ?? "About";
     public static string ToolStripExit => StringRM.GetString("strToolStripExit", Culture) ?? "Exit";

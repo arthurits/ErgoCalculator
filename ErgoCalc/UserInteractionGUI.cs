@@ -129,6 +129,19 @@ partial class FrmMain
             {
                 frm.MdiParent = this;
 
+                var strTextTitle = strType switch
+                {
+                    "Work-Rest model" => StringResources.FormResultsWR,
+                    "NIOSH lifting equation" => StringResources.FormResultsNIOSH,
+                    "Strain index" => StringResources.FormResultsStrainIndex,
+                    "Thermal comfort model" => StringResources.FormResultsTC,
+                    "LM-MMH model" => StringResources.FormResultsLiberty,
+                    "Comprehensive lifting model" => StringResources.FormResultsCLM,
+                    _ => String.Empty
+                };
+
+                SetFormTitle(frm, strTextTitle, openDlg.FileName);
+
                 if (((IChildResults)frm).OpenFile(document))
                 {
                     frm.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
