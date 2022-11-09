@@ -106,6 +106,78 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CLM model results.
+        /// </summary>
+        internal static string strFormResultsCLM {
+            get {
+                return ResourceManager.GetString("strFormResultsCLM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LM-MMH model results.
+        /// </summary>
+        internal static string strFormResultsLiberty {
+            get {
+                return ResourceManager.GetString("strFormResultsLiberty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metabolic rate results.
+        /// </summary>
+        internal static string strFormResultsMetabolic {
+            get {
+                return ResourceManager.GetString("strFormResultsMetabolic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NIOSH model results.
+        /// </summary>
+        internal static string strFormResultsNIOSH {
+            get {
+                return ResourceManager.GetString("strFormResultsNIOSH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OCRA checklist model results.
+        /// </summary>
+        internal static string strFormResultsOCRAcheck {
+            get {
+                return ResourceManager.GetString("strFormResultsOCRAcheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strain Index model results.
+        /// </summary>
+        internal static string strFormResultsStrainIndex {
+            get {
+                return ResourceManager.GetString("strFormResultsStrainIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thermal comfort results.
+        /// </summary>
+        internal static string strFormResultsTC {
+            get {
+                return ResourceManager.GetString("strFormResultsTC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WR model results.
+        /// </summary>
+        internal static string strFormResultsWR {
+            get {
+                return ResourceManager.GetString("strFormResultsWR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  - .
         /// </summary>
         internal static string strFormTitleUnion {

@@ -132,6 +132,30 @@
   <data name="strFormNewTitle" xml:space="preserve">
     <value>Nuevo modelo</value>
   </data>
+  <data name="strFormResultsCLM" xml:space="preserve">
+    <value>Resultados del modelo CLM</value>
+  </data>
+  <data name="strFormResultsLiberty" xml:space="preserve">
+    <value>Resultados del modelo LM-MMH</value>
+  </data>
+  <data name="strFormResultsMetabolic" xml:space="preserve">
+    <value>Resultados de consumo metabólico</value>
+  </data>
+  <data name="strFormResultsNIOSH" xml:space="preserve">
+    <value>Resultados del modelo NIOSH</value>
+  </data>
+  <data name="strFormResultsStrainIndex" xml:space="preserve">
+    <value>Resultados del modelo Strain Index</value>
+  </data>
+  <data name="strFormResultsTC" xml:space="preserve">
+    <value>Resultados de confort térmico</value>
+  </data>
+  <data name="strFormResultsWR" xml:space="preserve">
+    <value>Resultados del modelo WR</value>
+  </data>
+  <data name="strFormRresultsOCRAcheck" xml:space="preserve">
+    <value>Resultados del modelo OCRA checklist</value>
+  </data>
   <data name="strFormTitleUnion" xml:space="preserve">
     <value> - </value>
   </data>

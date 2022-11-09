@@ -23,12 +23,14 @@ public static class StringResources
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";
     public static string FormLanguageTitle => StringRM.GetString("strFormLanguageTitle", Culture) ?? "Select culture";
     public static string FormNewTitle => StringRM.GetString("strFormNewTitle", Culture) ?? "New model";
-    public static string FormResultsNIOSH => "NIOSH model results";
-    public static string FormResultsCLM => "CLM model results";
-    public static string FormResultsLiberty => "LM-MMH results";
-    public static string FormResultsStrainIndex => "Strain Index results";
-    public static string FormResultsTC => "Thermal comfort results";
-    public static string FormResultsWR => "WR model results";
+    public static string FormResultsNIOSH => StringRM.GetString("strFormResultsNIOSH", Culture) ?? "NIOSH model results";
+    public static string FormResultsCLM => StringRM.GetString("strFormResultsCLM", Culture) ?? "CLM model results";
+    public static string FormResultsLiberty => StringRM.GetString("strFormResultsLiberty", Culture) ?? "LM-MMH results";
+    public static string FormResultsStrainIndex => StringRM.GetString("strFormResultsStrainIndex", Culture) ?? "Strain Index results";
+    public static string FormResultsTC => StringRM.GetString("strFormResultsTC", Culture) ?? "Thermal comfort results";
+    public static string FormResultsWR => StringRM.GetString("strFormResultsWR", Culture) ?? "WR model results";
+    public static string FormResultsMetabolic => StringRM.GetString("strFormResultsMetabolic", Culture) ?? "Metabolic rate results";
+    public static string FormResultsOCRAchecklist => StringRM.GetString("strFormResultsOCRAcheck", Culture) ?? "OCRA checklist model results";
 
     public static string ToolStripAbout => StringRM.GetString("strToolStripAbout", Culture) ?? "About";
     public static string ToolStripExit => StringRM.GetString("strToolStripExit", Culture) ?? "Exit";
