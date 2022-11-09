@@ -83,10 +83,10 @@ public class Data
 /// </summary>
 public class Multipliers
 {
-    /// <summary>
-    /// Load constant in kg
-    /// </summary>
-    public double LC { get; set; } = 0;
+    ///// <summary>
+    ///// Load constant in kg
+    ///// </summary>
+    //public double LC { get; set; } = 0;
 
     /// <summary>
     /// Horizontal distance multiplier
@@ -212,7 +212,7 @@ public class Task
             strLineD[10] += "\t" + SubTasks[i].Data.c;
 
             strLineR[0] += "\t\t" + "Task " + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
-            strLineR[1] += "\t\t" + SubTasks[i].Factors.LC.ToString("0.####");
+            strLineR[1] += "\t\t" + SubTasks[i].Data.LC.ToString("0.####");
             strLineR[2] += "\t\t" + SubTasks[i].Factors.HM.ToString("0.####");
             strLineR[3] += "\t\t" + SubTasks[i].Factors.VM.ToString("0.####");
             strLineR[4] += "\t\t" + SubTasks[i].Factors.DM.ToString("0.####");
@@ -316,7 +316,7 @@ public class Task
                 for (i = 0; i < length; i++)
                 {
                     strEquationN = "LI = " + SubTasks[i].Data.Weight.ToString("0.####") + " / (";
-                    strEquationN += SubTasks[i].Factors.LC.ToString("0.####") + " * ";
+                    strEquationN += SubTasks[i].Data.LC.ToString("0.####") + " * ";
                     strEquationN += SubTasks[i].Factors.HM.ToString("0.####") + " * ";
                     strEquationN += SubTasks[i].Factors.VM.ToString("0.####") + " * ";
                     strEquationN += SubTasks[i].Factors.DM.ToString("0.####") + " * ";
@@ -333,7 +333,7 @@ public class Task
         {
             strEquationT = "LI = Weight / (LC * HM * VM * DM * FM * AM * CM)";
             strEquationN = "LI = " + SubTasks[0].Data.Weight.ToString("0.####") + " / (";
-            strEquationN += SubTasks[0].Factors.LC.ToString("0.####") + " * ";
+            strEquationN += SubTasks[0].Data.LC.ToString("0.####") + " * ";
             strEquationN += SubTasks[0].Factors.HM.ToString("0.####") + " * ";
             strEquationN += SubTasks[0].Factors.VM.ToString("0.####") + " * ";
             strEquationN += SubTasks[0].Factors.DM.ToString("0.####") + " * ";

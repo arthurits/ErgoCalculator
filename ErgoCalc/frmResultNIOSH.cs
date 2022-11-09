@@ -30,16 +30,10 @@ public partial class FrmResultNIOSH : Form, IChildResults
         splitContainer1.IsSplitterFixed = true;
     }
 
-    public FrmResultNIOSH(Job Data)
-        : this()
-    {
-        _job = Data;
-    }
-
     public FrmResultNIOSH(object data)
         : this()
     {
-        if (data.GetType()==typeof(Job))
+        if (data.GetType() == typeof(Job))
             _job = (Job)data;
     }
 
