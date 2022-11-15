@@ -79,6 +79,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Example.
+        /// </summary>
+        internal static string strBtnExample {
+            get {
+                return ResourceManager.GetString("strBtnExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select culture.
         /// </summary>
         internal static string strFormLanguageTitle {
@@ -364,6 +373,24 @@ namespace ErgoCalc.localization {
         internal static string strRadUserCulture {
             get {
                 return ResourceManager.GetString("strRadUserCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtask.
+        /// </summary>
+        internal static string strSubTask {
+            get {
+                return ResourceManager.GetString("strSubTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task.
+        /// </summary>
+        internal static string strTask {
+            get {
+                return ResourceManager.GetString("strTask", resourceCulture);
             }
         }
         

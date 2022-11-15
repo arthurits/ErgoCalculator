@@ -18,6 +18,10 @@ public static class StringResources
 
     public static string BtnAccept => StringRM.GetString("strBtnAccept", Culture) ?? "&Accept";
     public static string BtnCancel => StringRM.GetString("strBtnCancel", Culture) ?? "&Cancel";
+    public static string BtnExample => StringRM.GetString("strBtnExample", Culture) ?? "&Example";
+
+    public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
+    public static string Subtask => StringRM.GetString("strSubtask", Culture) ?? "Subtask";
 
     public static string FormTitleUnion => StringRM.GetString("strFormTitleUnion", Culture) ?? " - ";
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.StrainIndex;
@@ -7,6 +9,7 @@ namespace ErgoCalc;
 
 public partial class FrmDataStrainIndex : Form, IChildData
 {
+    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private Job _job;
     private IndexType _index;
 
@@ -30,6 +33,9 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         _job = job;
         DataToGrid();
+
+        //_culture = culture;
+        //UpdateUI_Language(_culture);
     }
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -421,4 +427,35 @@ public partial class FrmDataStrainIndex : Form, IChildData
         }
     }
 
+    /// <summary>
+    /// Update the form's interface language
+    /// </summary>
+    /// <param name="culture">Culture used to display the UI</param>
+    private void UpdateUI_Language()
+    {
+        UpdateUI_Language(_culture);
+    }
+
+    /// <summary>
+    /// Update the form's interface language
+    /// </summary>
+    /// <param name="culture">Culture used to display the UI</param>
+    private void UpdateUI_Language(System.Globalization.CultureInfo culture)
+    {
+        StringResources.Culture = culture;
+
+        this.btnOK.Text = StringResources.BtnAccept;
+        this.btnCancel.Text = StringResources.BtnCancel;
+        this.btnExample.Text = StringResources.BtnExample;
+
+        // Relocate controls
+        //RelocateControls();
+    }
+
+    /// <summary>
+    /// Relocate controls to compensate for the culture text length in labels
+    /// </summary>
+    private void RelocateControls()
+    {
+    }
 }
