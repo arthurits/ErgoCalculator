@@ -123,6 +123,9 @@
   <data name="strBtnCancel" xml:space="preserve">
     <value>&amp;Cancel</value>
   </data>
+  <data name="strBtnExample" xml:space="preserve">
+    <value>Example</value>
+  </data>
   <data name="strFormLanguageTitle" xml:space="preserve">
     <value>Select culture</value>
   </data>
@@ -219,6 +222,12 @@ the application?</value>
   </data>
   <data name="strRadUserCulture" xml:space="preserve">
     <value>Select culture</value>
+  </data>
+  <data name="strSubTask" xml:space="preserve">
+    <value>Subtask</value>
+  </data>
+  <data name="strTask" xml:space="preserve">
+    <value>Task</value>
   </data>
   <data name="strToolStripAbout" xml:space="preserve">
     <value>About</value>
