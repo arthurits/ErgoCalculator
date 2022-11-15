@@ -1,5 +1,19 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.2
+* (ScottPlott)[https://github.com/ScottPlot/ScottPlot] control has been updated to version 4.1.59.
+* Delete dependency on DLLs models. Each model is now implemented as a single class.
+* Basic and partial multilanguage UI support (English and Spanish).
+
+## ErgoCalculator 1.7.1
+* Update ScottPlot to version 4.1.58
+* Reading the user-input data in the NIOSH model produced undesired effects in some particular cases.
+
+## ErgoCalculator 1.7
+* .NET updated to version 6
+* ScottPlot control updated to version 4.1.51
+* Updated splash screen
+
 ## ErgoCalculator 1.6
 * [ScottPlot](https://github.com/ScottPlot/ScottPlot) control has been upgraded from version 4.0.48 to version 4.1.16.
 * Fixed an issue in the Liberty Mutual model for sustained force MAL 75% and MAL 90%.
