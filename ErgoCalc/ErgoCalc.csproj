@@ -49,6 +49,7 @@
   <PropertyGroup>
     <ApplicationIcon>images\logo.ico</ApplicationIcon>
     <ImplicitUsings>disable</ImplicitUsings>
+    <Version></Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
