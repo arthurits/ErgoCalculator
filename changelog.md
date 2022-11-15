@@ -1,7 +1,7 @@
 # ErgoCalculator Changelog
 
 ## ErgoCalculator 1.7.2
-* (ScottPlott)[https://github.com/ScottPlot/ScottPlot] control has been updated to version 4.1.59.
+* [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.59.
 * Delete dependency on DLLs models. Each model is now implemented as a single class.
 * Basic and partial multilanguage UI support (English and Spanish).
 
