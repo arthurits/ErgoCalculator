@@ -132,13 +132,14 @@
             // textBoxDescription
             // 
             this.textBoxDescription.BackColor = System.Drawing.Color.White;
+            this.textBoxDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxDescription.Location = new System.Drawing.Point(274, 132);
-            this.textBoxDescription.Margin = new System.Windows.Forms.Padding(8, 4, 4, 4);
+            this.textBoxDescription.Location = new System.Drawing.Point(277, 132);
+            this.textBoxDescription.Margin = new System.Windows.Forms.Padding(11, 4, 4, 4);
             this.textBoxDescription.Multiline = true;
             this.textBoxDescription.Name = "textBoxDescription";
             this.textBoxDescription.ReadOnly = true;
-            this.textBoxDescription.Size = new System.Drawing.Size(278, 155);
+            this.textBoxDescription.Size = new System.Drawing.Size(275, 155);
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
             this.textBoxDescription.Text = "Descripción";
@@ -155,7 +156,7 @@
             this.okButton.Text = "&Accept";
             this.okButton.Visible = false;
             // 
-            // frmAbout
+            // FrmAbout
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -169,7 +170,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmAbout";
+            this.Name = "FrmAbout";
             this.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
