@@ -4,6 +4,7 @@
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.59.
 * Delete dependency on DLLs models. Each model is now implemented as a single class.
 * Basic and partial multilanguage UI support (English and Spanish).
+* JSON format is used instead of XML to store and retrieve application settings.
 
 ## ErgoCalculator 1.7.1
 * Update ScottPlot to version 4.1.58
