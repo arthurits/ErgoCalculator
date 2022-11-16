@@ -1,10 +1,4 @@
-﻿
-
-using System.Drawing;
-using System.IO;
-using System.Text.Json;
-using System.Windows.Forms;
-using System;
+﻿using System.Text.Json;
 
 namespace ErgoCalc;
 

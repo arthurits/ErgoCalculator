@@ -18,7 +18,7 @@ public class Variables
     public double E { get; set; } = 0;
 }
 
-public class Task
+public class TaskModel
 {
     public Data Data = new();
     public Variables Results = new();
@@ -26,7 +26,7 @@ public class Task
 
 public class Job
 {
-    public Task[] Tasks { get; set; } = Array.Empty<Task>();
+    public TaskModel[] Tasks { get; set; } = Array.Empty<TaskModel>();
     public int NumberTasks { get; set; }= 0;
 
     public override string ToString()
@@ -58,7 +58,7 @@ public static class MetabolicRate
     {
         bool result = false;
 
-        foreach (Task task in job.Tasks)
+        foreach (TaskModel task in job.Tasks)
         {
             // Calculate the metabolic rate according to level 1A                    
             CalculateLevel1A(task);
@@ -68,7 +68,7 @@ public static class MetabolicRate
         return result;
     }
 
-    private static void CalculateLevel1A(Task task)
+    private static void CalculateLevel1A(TaskModel task)
     {
         // Variable definition
         double[] dInf = new double[] { 115.0, 85.0, 70.0, 75.0, 110.0, 105.0, 110.0, 90.0, 110.0, 100.0, 55.0, 140.0, 105.0, 140.0, 170.0, 125.0, 80.0, 90.0, 70.0, 75.0, 75.0, 115.0, 70.0, 110.0, 85.0, 100.0, 85.0, 70.0, 80.0, 70.0, 55.0, 75.0, 70.0, 80.0, 65.0 };
@@ -90,7 +90,7 @@ public static class MetabolicRate
         return;
     }
 
-    private static void CalculateLevel1B(Task task)
+    private static void CalculateLevel1B(TaskModel task)
     {
         // Variable definition
         double[] dMedio = new double[] { 65.0, 100.0, 165.0, 230.0, 290.0 };

@@ -151,7 +151,7 @@ public class SubTask
 /// <summary>
 /// Task definition
 /// </summary>
-public class Task
+public class TaskModel
 {
     /// <summary>
     /// Set of subtasks in the task
@@ -179,7 +179,7 @@ public class Task
     public int NumberSubTasks { get; set; } = 0;
     
 
-    public Task()
+    public TaskModel()
     {
     }
 
@@ -359,7 +359,7 @@ public class Job
     /// <summary>
     /// Set of tasks in the job
     /// </summary>
-    public Task[] Tasks { get; set; } = Array.Empty<Task>();
+    public TaskModel[] Tasks { get; set; } = Array.Empty<TaskModel>();
 
     /// <summary>
     /// Reordering of the subtasks from lower CLI to higher CLI
@@ -394,7 +394,7 @@ public class Job
     {
         string str = string.Empty;
 
-        foreach (Task task in Tasks)
+        foreach (TaskModel task in Tasks)
             str += task.ToString() + Environment.NewLine + Environment.NewLine;
 
         return str;
@@ -425,7 +425,7 @@ public static class NIOSHLifting
         }
     }
 
-    public static double ComputeCLI(Task task)
+    public static double ComputeCLI(TaskModel task)
     {
         // First compute the LI index for each subtask
         ComputeLI(task.SubTasks);

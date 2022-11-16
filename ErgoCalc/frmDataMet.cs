@@ -221,8 +221,8 @@ public partial class FrmDataMet : Form, IChildData
     {
         // Store the user selections in the public variables in order to be accessed later from another WinForm
         _job = new Job();
-        _job.Tasks = new Task[1];
-        _job.Tasks[0] = new Task();
+        _job.Tasks = new TaskModel[1];
+        _job.Tasks[0] = new TaskModel();
         _job.Tasks[0].Data.Category = Convert.ToInt32(cboCategorias.SelectedValue) - 1;
         _job.Tasks[0].Data.Type = Convert.ToInt32(cboClase.SelectedValue) - 1;
     }

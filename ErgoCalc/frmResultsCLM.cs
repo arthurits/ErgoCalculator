@@ -72,7 +72,7 @@ public partial class FrmResultsCLM : Form, IChildResults
         writer.WritePropertyName("Tasks");
         writer.WriteStartArray();
 
-        foreach (Task task in _job.Tasks)
+        foreach (TaskModel task in _job.Tasks)
         {
             writer.WriteStartObject();
 
@@ -181,7 +181,7 @@ public partial class FrmResultsCLM : Form, IChildResults
 
         JsonElement root = document.RootElement;
         job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
-        job.Tasks = new Task[job.NumberTasks];
+        job.Tasks = new TaskModel[job.NumberTasks];
 
         int i = 0;
         try

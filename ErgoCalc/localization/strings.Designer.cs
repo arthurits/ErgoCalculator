@@ -79,11 +79,57 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        internal static string strBtnDlgFont {
+            get {
+                return ResourceManager.GetString("strBtnDlgFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Example.
         /// </summary>
         internal static string strBtnExample {
             get {
                 return ResourceManager.GetString("strBtnExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Reset.
+        /// </summary>
+        internal static string strBtnReset {
+            get {
+                return ResourceManager.GetString("strBtnReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember open/save dialog previous path.
+        /// </summary>
+        internal static string strChkDlgPath {
+            get {
+                return ResourceManager.GetString("strChkDlgPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to reset all fields
+        ///to their default values?.
+        /// </summary>
+        internal static string strDlgReset {
+            get {
+                return ResourceManager.GetString("strDlgReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset settings?.
+        /// </summary>
+        internal static string strDlgResetTitle {
+            get {
+                return ResourceManager.GetString("strDlgResetTitle", resourceCulture);
             }
         }
         
@@ -192,6 +238,87 @@ namespace ErgoCalc.localization {
         internal static string strFormTitleUnion {
             get {
                 return ResourceManager.GetString("strFormTitleUnion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string strFrmSettings {
+            get {
+                return ResourceManager.GetString("strFrmSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language and culture options.
+        /// </summary>
+        internal static string strGrpCulture {
+            get {
+                return ResourceManager.GetString("strGrpCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current font.
+        /// </summary>
+        internal static string strGrpFont {
+            get {
+                return ResourceManager.GetString("strGrpFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numeric data-formatting string.
+        /// </summary>
+        internal static string strLblDataFormat {
+            get {
+                return ResourceManager.GetString("strLblDataFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change current font.
+        /// </summary>
+        internal static string strLblDlgFont {
+            get {
+                return ResourceManager.GetString("strLblDlgFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font color: {0}.
+        /// </summary>
+        internal static string strLblFontColor {
+            get {
+                return ResourceManager.GetString("strLblFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font name: {0}.
+        /// </summary>
+        internal static string strLblFontName {
+            get {
+                return ResourceManager.GetString("strLblFontName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font size: {0}.
+        /// </summary>
+        internal static string strLblFontSize {
+            get {
+                return ResourceManager.GetString("strLblFontSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font style: {0}.
+        /// </summary>
+        internal static string strLblFontStyle {
+            get {
+                return ResourceManager.GetString("strLblFontStyle", resourceCulture);
             }
         }
         
@@ -382,6 +509,24 @@ namespace ErgoCalc.localization {
         internal static string strSubTask {
             get {
                 return ResourceManager.GetString("strSubTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User interface.
+        /// </summary>
+        internal static string strTabGUI {
+            get {
+                return ResourceManager.GetString("strTabGUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text and font.
+        /// </summary>
+        internal static string strTabPlot {
+            get {
+                return ResourceManager.GetString("strTabPlot", resourceCulture);
             }
         }
         

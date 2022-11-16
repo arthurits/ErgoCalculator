@@ -123,8 +123,24 @@
   <data name="strBtnCancel" xml:space="preserve">
     <value>&amp;Cancelar</value>
   </data>
+  <data name="strBtnDlgFont" xml:space="preserve">
+    <value>Seleccionar</value>
+  </data>
   <data name="strBtnExample" xml:space="preserve">
     <value>Ejemplo</value>
+  </data>
+  <data name="strBtnReset" xml:space="preserve">
+    <value>&amp;Restablecer</value>
+  </data>
+  <data name="strChkDlgPath" xml:space="preserve">
+    <value>Recordar la ruta previa al abrir y guardar</value>
+  </data>
+  <data name="strDlgReset" xml:space="preserve">
+    <value>¿Está seguro de que desea restablecer todos
+los campos a sus valores por defecto?</value>
+  </data>
+  <data name="strDlgResetTitle" xml:space="preserve">
+    <value>¿Restablecer opciones?</value>
   </data>
   <data name="strFormLanguageTitle" xml:space="preserve">
     <value>Seleccionar referencia cultural</value>
@@ -161,6 +177,33 @@
   </data>
   <data name="strFormTitleUnion" xml:space="preserve">
     <value> - </value>
+  </data>
+  <data name="strFrmSettings" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="strGrpCulture" xml:space="preserve">
+    <value>Opciones de idioma y culturales</value>
+  </data>
+  <data name="strGrpFont" xml:space="preserve">
+    <value>Fuente actual</value>
+  </data>
+  <data name="strLblDataFormat" xml:space="preserve">
+    <value>Cadena de formato numérico</value>
+  </data>
+  <data name="strLblDlgFont" xml:space="preserve">
+    <value>Cambiar la fuente actual</value>
+  </data>
+  <data name="strLblFontColor" xml:space="preserve">
+    <value>Color de la fuente: {0}</value>
+  </data>
+  <data name="strLblFontName" xml:space="preserve">
+    <value>Nombre de la fuente: {0}</value>
+  </data>
+  <data name="strLblFontSize" xml:space="preserve">
+    <value>Tamaño de la fuente: {0}</value>
+  </data>
+  <data name="strLblFontStyle" xml:space="preserve">
+    <value>Estilo de la fuente: {0}</value>
   </data>
   <data name="strLblSelect" xml:space="preserve">
     <value>Por favor, selecciona un modelo de evaluación</value>
@@ -225,6 +268,12 @@ salir de la aplicación?</value>
   </data>
   <data name="strSubTask" xml:space="preserve">
     <value>Subtarea</value>
+  </data>
+  <data name="strTabGUI" xml:space="preserve">
+    <value>Interfaz de usuario</value>
+  </data>
+  <data name="strTabPlot" xml:space="preserve">
+    <value>Texto y fuente</value>
   </data>
   <data name="strTask" xml:space="preserve">
     <value>Tarea</value>

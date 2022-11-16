@@ -178,6 +178,13 @@ partial class FrmMain
 
     private void Settings_Click(object sender, EventArgs e)
     {
+        FrmSettings frm = new(_settings);
+        frm.ShowDialog(this);
+        if (frm.DialogResult == DialogResult.OK)
+        {
+            UpdateUI_Language();
+        }
+        
         if (this.ActiveMdiChild != null)
             ((IChildResults)this.ActiveMdiChild).ShowHideSettings();
     }

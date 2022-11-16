@@ -45,7 +45,7 @@ public class Multipliers
     public double fBW { get; set; } = 0;
 };
 
-public class Task
+public class TaskModel
 {
     public Data Data { get; set; } = new();
     public Multipliers Factors { get; set; } = new();
@@ -61,7 +61,7 @@ public class Task
 
 public class Job
 {
-    public Task[] Tasks { get; set; } = Array.Empty<Task>();
+    public TaskModel[] Tasks { get; set; } = Array.Empty<TaskModel>();
 
     public int NumberTasks { get; set; } = 0;
     
@@ -158,7 +158,7 @@ public static class ComprehensiveLifting
     /// Computes the factor values and the LSI index from the CLM model
     /// </summary>
     /// <param name="model"></param>
-    public static void CalculateLSI(Task[] model)
+    public static void CalculateLSI(TaskModel[] model)
     {
         /* Realizar los cálculos para cada tarea */
         for (int i = 0; i < model.Length; i++)

@@ -67,12 +67,12 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         // Make computations
         if (_job.Model == IndexType.RSI)
         {
-            foreach (Task task in _job.Tasks)
+            foreach (TaskModel task in _job.Tasks)
                 StrainIndex.IndexRSI(task.SubTasks);
         }
         else if (_job.Model == IndexType.COSI)
         {
-            foreach (Task task in _job.Tasks)
+            foreach (TaskModel task in _job.Tasks)
                 StrainIndex.IndexCOSI(task);
         }
         else if (_job.Model == IndexType.CUSI)
@@ -379,7 +379,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             job.Order = new int[Length];
             job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString());
 
-            job.Tasks = new Task[job.NumberTasks];
+            job.Tasks = new TaskModel[job.NumberTasks];
             int i = 0;
             JsonElement SubTasks;
             //JsonElement Order;
@@ -602,16 +602,5 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     }
     
     #endregion IChildResults
-
-    private void frmResultsStrainIndex_Load(object sender, EventArgs e)
-    {
-        //Win32.Win32API.AnimateWindow(this.Handle, 100, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_CENTER);
-    }
-
-    private void frmResultsStrainIndex_FormClosing(object sender, FormClosingEventArgs e)
-    {
-        //Win32.Win32API.AnimateWindow(this.Handle, 3000, Win32.Win32API.AnimateWindowFlags.AW_HIDE | Win32.Win32API.AnimateWindowFlags.AW_BLEND);
-    }
-
 
 }

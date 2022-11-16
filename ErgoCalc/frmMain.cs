@@ -155,7 +155,7 @@ public partial class FrmMain : Form
     private void ToolBarEnable()
     {
         // This is the default ToolBar enable status
-        ToolBarEnable(new bool[] { true, true, false, false, true, true, false, false, true, false, false, false, true, true });
+        ToolBarEnable(new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true });
     }
 
     /// <summary>

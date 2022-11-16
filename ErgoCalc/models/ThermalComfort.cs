@@ -80,7 +80,7 @@ public class Variables
     }
 }
 
-public class Task
+public class TaskModel
 {
     /// <summary>
     /// Model data
@@ -107,7 +107,7 @@ public class Task
 
 public class Job
 {
-    public Task[] Tasks { get; set; } = Array.Empty<Task>();
+    public TaskModel[] Tasks { get; set; } = Array.Empty<TaskModel>();
 
     public int NumberTasks { get; set; } = 0;
 
@@ -137,7 +137,7 @@ public class Job
         strLineF[8] = string.Concat(System.Environment.NewLine, "The PPD index", "\t");
 
         int i = 0;
-        foreach (Task task in Tasks)
+        foreach (TaskModel task in Tasks)
         {
             strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
             strLineD[1] += string.Concat("\t\t", task.Data.TempAir.ToString("0.####"));
@@ -181,7 +181,7 @@ public static class ThermalComfort
     public static bool ComfortPMV(Job job)
     {
         bool result = true;
-        foreach (Task task in job.Tasks)
+        foreach (TaskModel task in job.Tasks)
         {
             if (SingleComfortPMV(task) == false)
             {
@@ -193,7 +193,7 @@ public static class ThermalComfort
         return result;
     }
 
-    private static bool SingleComfortPMV(Task task)
+    private static bool SingleComfortPMV(TaskModel task)
     {
         // Variable definition
         double pa = task.Data.RelHumidity * 10 * Math.Exp(16.6536 - 4030.183 / (task.Data.TempAir + 235));

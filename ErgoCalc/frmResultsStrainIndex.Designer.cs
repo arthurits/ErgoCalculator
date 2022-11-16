@@ -88,8 +88,6 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "frmResultsStrainIndex";
             this.Text = "Strain Index results";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmResultsStrainIndex_FormClosing);
-            this.Load += new System.EventHandler(this.frmResultsStrainIndex_Load);
             this.Shown += new System.EventHandler(this.frmResultsStrainIndex_Shown);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

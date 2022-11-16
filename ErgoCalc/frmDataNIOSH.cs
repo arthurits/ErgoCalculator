@@ -132,7 +132,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job = new();
         _job.NumberSubTasks = gridVariables.ColumnCount;
         _job.NumberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
-        _job.Tasks = new Task[_job.NumberTasks];
+        _job.Tasks = new TaskModel[_job.NumberTasks];
         _job.Order = new int[_job.NumberTasks];
         
         if (radLI.Checked) _job.Model = IndexType.IndexLI;
@@ -294,10 +294,10 @@ public partial class FrmDataNIOSH : Form, IChildData
             NumberTasks = 1,
             NumberSubTasks = 8,
             Model = IndexType.IndexLI,
-            Tasks = new Task[1]
+            Tasks = new TaskModel[1]
         };
 
-        _job.Tasks[0] = new Task
+        _job.Tasks[0] = new TaskModel
         {
             NumberSubTasks = 8,
             Model = IndexType.IndexLI,

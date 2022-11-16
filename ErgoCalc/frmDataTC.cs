@@ -32,10 +32,10 @@ public partial class FrmDataTC : Form, IChildData
         _job = new();
         
         // Save the values entered
-        _job.Tasks = new Task[Convert.ToInt32(updTasks.Value)];
+        _job.Tasks = new TaskModel[Convert.ToInt32(updTasks.Value)];
         for (int i = 0; i < _job.Tasks.Length; i++)
         {
-            _job.Tasks[i] = new Task();
+            _job.Tasks[i] = new TaskModel();
             _job.Tasks[i].Data.TempAir = Convert.ToDouble(gridVariables[i, 0].Value);
             _job.Tasks[i].Data.TempRad = Convert.ToDouble(gridVariables[i, 1].Value);
             _job.Tasks[i].Data.Velocity = Convert.ToDouble(gridVariables[i, 2].Value);
@@ -127,9 +127,9 @@ public partial class FrmDataTC : Form, IChildData
     {
         _job = new Job();
         _job.NumberTasks = 2;
-        _job.Tasks = new Task[_job.NumberTasks];
+        _job.Tasks = new TaskModel[_job.NumberTasks];
 
-        _job.Tasks[0] = new Task();
+        _job.Tasks[0] = new TaskModel();
         _job.Tasks[0].Data.TempAir = 25;
         _job.Tasks[0].Data.TempRad = 25;
         _job.Tasks[0].Data.Velocity = 0.1;
@@ -138,7 +138,7 @@ public partial class FrmDataTC : Form, IChildData
         _job.Tasks[0].Data.MetRate = 1;
         _job.Tasks[0].Data.ExternalWork = 0;
 
-        _job.Tasks[1] = new Task();
+        _job.Tasks[1] = new TaskModel();
         _job.Tasks[1].Data.TempAir = 26;
         _job.Tasks[1].Data.TempRad = 26;
         _job.Tasks[1].Data.Velocity = 0.1;

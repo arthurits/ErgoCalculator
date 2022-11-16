@@ -19,6 +19,8 @@ public static class StringResources
     public static string BtnAccept => StringRM.GetString("strBtnAccept", Culture) ?? "&Accept";
     public static string BtnCancel => StringRM.GetString("strBtnCancel", Culture) ?? "&Cancel";
     public static string BtnExample => StringRM.GetString("strBtnExample", Culture) ?? "&Example";
+    public static string BtnReset => StringRM.GetString("strBtnReset", Culture) ?? "&Reset";
+
 
     public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
     public static string Subtask => StringRM.GetString("strSubtask", Culture) ?? "Subtask";
@@ -82,6 +84,25 @@ public static class StringResources
     public static string RadModelMetabolic => StringRM.GetString("strRadModelMetabolic", Culture) ?? "Metabolic rate";
     public static string RadModelThermal => StringRM.GetString("strRadModelThermal", Culture) ?? "Thermal comfort (PMV, PPD)";
     public static string RadModelLiberty => StringRM.GetString("strRadModelLiberty", Culture) ?? "Liberty Mutual manual handling";
+
+    // Form Settings
+    public static string FrmSettings => StringRM.GetString("strFrmSettings", Culture) ?? "Settings";
+    public static string DlgReset => StringRM.GetString("strDlgReset", Culture) ?? "Do you want to reset all fields" +
+            Environment.NewLine + "to their default values?";
+    public static string DlgResetTitle => StringRM.GetString("strDlgResetTitle", Culture) ?? "Reset settings?";
+    public static string TabPlot => StringRM.GetString("strTabPlot", Culture) ?? "Plotting";
+    public static string TabGUI => StringRM.GetString("strTabGUI", Culture) ?? "User interface";
+    public static string GrpCulture => StringRM.GetString("strGrpCulture", Culture) ?? "Select language";
+    public static string ChkDlgPath => StringRM.GetString("strChkDlgPath", Culture) ?? "Remember open/save dialog previous path";
+    public static string LblDataFormat => StringRM.GetString("strLblDataFormat", Culture) ?? "Numeric data-formatting string";
+
+    public static string LblDlgFont => StringRM.GetString("strLblDlgFont", Culture) ?? "Change current font";
+    public static string BtnDlgFont => StringRM.GetString("strBtnDlgFont", Culture) ?? "Select";
+    public static string GrpFont => StringRM.GetString("strGrpFont", Culture) ?? "Current font";
+    public static string LblFontName => StringRM.GetString("strLblFontName", Culture) ?? "Font name: {0}";
+    public static string LblFontStyle => StringRM.GetString("strLblFontStyle", Culture) ?? "Font style: {0}";
+    public static string LblFontSize => StringRM.GetString("strLblFontSize", Culture) ?? "Font size: {0}";
+    public static string LblFontColor => StringRM.GetString("strLblFontColor", Culture) ?? "Font color: {0}";
 
     // Message box
     public static string MsgBoxExit => StringRM.GetString("strMsgBoxExit", Culture) ?? "Are you sure you want to exit" + Environment.NewLine + "the application?";

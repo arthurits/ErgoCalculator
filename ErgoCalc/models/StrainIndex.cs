@@ -40,7 +40,7 @@ public class SubTask
     public int ItemIndex { get; set; } = 0;
 };
 
-public class Task
+public class TaskModel
 {
     public SubTask[] SubTasks { get; set; } = Array.Empty<SubTask>(); // Set of subtasks in the job
     public int[] Order { get; set; } = Array.Empty<int>();     // Reordering of the subtasks from lower RSI to higher RSI
@@ -194,7 +194,7 @@ public class Task
 
 public class Job
 {
-    public Task[] Tasks { get; set; } = Array.Empty<Task>(); // Set of tasks in the job
+    public TaskModel[] Tasks { get; set; } = Array.Empty<TaskModel>(); // Set of tasks in the job
     public int[] Order { get; set; } = Array.Empty<int>();      // Reordering of the subtasks from lower COSI to higher COSI
     
     /// <summary>
@@ -219,7 +219,7 @@ public class Job
     {
         string strTasks = string.Empty;
 
-        foreach (Task task in Tasks)
+        foreach (TaskModel task in Tasks)
             strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
 
         string strCUSI = string.Empty;
@@ -314,7 +314,7 @@ public static class StrainIndex
     /// Compute the COSI index at the task level
     /// </summary>
     /// <param name="task">Task whose COSI index is computed</param>
-	public static void IndexCOSI(Task task)
+	public static void IndexCOSI(TaskModel task)
 	{
         // First compute the RSI index for each subtask
         IndexRSI(task.SubTasks);

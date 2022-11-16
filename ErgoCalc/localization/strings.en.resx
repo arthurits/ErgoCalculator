@@ -123,8 +123,24 @@
   <data name="strBtnCancel" xml:space="preserve">
     <value>&amp;Cancel</value>
   </data>
+  <data name="strBtnDlgFont" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="strBtnExample" xml:space="preserve">
     <value>Example</value>
+  </data>
+  <data name="strBtnReset" xml:space="preserve">
+    <value>&amp;Reset</value>
+  </data>
+  <data name="strChkDlgPath" xml:space="preserve">
+    <value>Remember open/save dialog previous path</value>
+  </data>
+  <data name="strDlgReset" xml:space="preserve">
+    <value>Do you want to reset all fields
+to their default values?</value>
+  </data>
+  <data name="strDlgResetTitle" xml:space="preserve">
+    <value>Reset settings?</value>
   </data>
   <data name="strFormLanguageTitle" xml:space="preserve">
     <value>Select culture</value>
@@ -161,6 +177,33 @@
   </data>
   <data name="strFormTitleUnion" xml:space="preserve">
     <value> - </value>
+  </data>
+  <data name="strFrmSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="strGrpCulture" xml:space="preserve">
+    <value>Language and culture options</value>
+  </data>
+  <data name="strGrpFont" xml:space="preserve">
+    <value>Current font</value>
+  </data>
+  <data name="strLblDataFormat" xml:space="preserve">
+    <value>Numeric data-formatting string</value>
+  </data>
+  <data name="strLblDlgFont" xml:space="preserve">
+    <value>Change current font</value>
+  </data>
+  <data name="strLblFontColor" xml:space="preserve">
+    <value>Font color: {0}</value>
+  </data>
+  <data name="strLblFontName" xml:space="preserve">
+    <value>Font name: {0}</value>
+  </data>
+  <data name="strLblFontSize" xml:space="preserve">
+    <value>Font size: {0}</value>
+  </data>
+  <data name="strLblFontStyle" xml:space="preserve">
+    <value>Font style: {0}</value>
   </data>
   <data name="strLblSelect" xml:space="preserve">
     <value>Please, select a model to start working with:</value>
@@ -225,6 +268,12 @@ the application?</value>
   </data>
   <data name="strSubTask" xml:space="preserve">
     <value>Subtask</value>
+  </data>
+  <data name="strTabGUI" xml:space="preserve">
+    <value>User interface</value>
+  </data>
+  <data name="strTabPlot" xml:space="preserve">
+    <value>Text and font</value>
   </data>
   <data name="strTask" xml:space="preserve">
     <value>Task</value>

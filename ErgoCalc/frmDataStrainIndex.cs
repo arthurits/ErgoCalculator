@@ -134,7 +134,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         _job.NumberSubTasks = gridVariables.ColumnCount;
         _job.NumberTasks = _index == IndexType.RSI ? 1 : listViewTasks.Groups.Count;
         _job.Order = new int[_job.NumberTasks];
-        _job.Tasks = new Task[_job.NumberTasks];
+        _job.Tasks = new TaskModel[_job.NumberTasks];
         _job.IndexCUSI = -1;
         _job.Model = radRSI.Checked ? IndexType.RSI : (radCOSI.Checked ? IndexType.COSI : IndexType.CUSI);
         //_job.model = (IndexType)Enum.Parse(typeof(IndexType), this.groupIndex.Handle.ToString());
@@ -244,7 +244,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         _job = new();
         _job.NumberTasks = 1;
-        _job.Tasks = new Task[_job.NumberTasks];
+        _job.Tasks = new TaskModel[_job.NumberTasks];
         _job.Tasks[0].NumberSubTasks = 8;
         _job.Tasks[0].SubTasks = new SubTask[_job.Tasks[0].NumberSubTasks];
         //_job.JobTasks[1].numberSubTasks = 2;
@@ -307,7 +307,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
             NumberTasks = 2,
             NumberSubTasks = 5,
             Model = IndexType.RSI,
-            Tasks = new Task[2]
+            Tasks = new TaskModel[2]
         };
         
         _job.Tasks[0] = new()

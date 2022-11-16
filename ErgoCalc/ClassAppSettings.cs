@@ -71,4 +71,26 @@ public class AppSettings
     /// </summary>
     [JsonPropertyName("User open path")]
     public string UserOpenPath { get; set; } = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\examples";
+
+
+    [JsonPropertyName("Font family name")]
+    public string FontFamilyName { get; set; } = "Lucida Sans";
+
+    [JsonPropertyName("Font style")]
+    public FontStyle FontStyle { get; set; } = FontStyle.Regular;
+
+    [JsonPropertyName("Font size")]
+    public float FontSize { get; set; } = 9;
+
+    [JsonPropertyName("Font color")]
+    public int FontColor { get; set; } = 000000;
+
+    [JsonPropertyName("Wrap text in new line?")]
+    public bool WordWrap { get; set; } = false;
+
+    [JsonPropertyName("Text back color")]
+    public int TextBackColor { get; set; } = 000000;
+
+    [JsonPropertyName("Text zoom")]
+    public float TextZoom { get; set; } = 1f;
 }

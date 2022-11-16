@@ -51,14 +51,14 @@ public partial class FrmResultNIOSH : Form, IChildResults
         // Make computations
         if (_job.Model == IndexType.IndexLI)
         {
-            foreach (Task task in _job.Tasks)
+            foreach (TaskModel task in _job.Tasks)
             {
                 NIOSHLifting.ComputeLI(task.SubTasks);
             }
         }
         else if (_job.Model == IndexType.IndexCLI)
         {
-            foreach (Task task in _job.Tasks)
+            foreach (TaskModel task in _job.Tasks)
             {
                 NIOSHLifting.ComputeCLI(task);
             }
@@ -250,7 +250,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
             job.Order = new int[Length];
             job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString());
 
-            job.Tasks = new Task[job.NumberTasks];
+            job.Tasks = new TaskModel[job.NumberTasks];
             int i = 0;
             JsonElement SubTasks;
             //JsonElement Order;

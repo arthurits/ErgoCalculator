@@ -107,7 +107,7 @@ public partial class FrmResultsTC : Form, IChildResults
         // Psychrometric plot
         var CPsy = new Psychrometrics(UnitSystem.SI);
         int i = 0;
-        foreach (Task task in _job.Tasks)
+        foreach (TaskModel task in _job.Tasks)
         {
             var result = 1000 * CPsy.GetHumRatioFromRelHum(task.Data.TempAir, task.Data.RelHumidity / 100, 101325);
             formsPlot1.Plot.AddPoint(task.Data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), size: 7);
@@ -137,7 +137,7 @@ public partial class FrmResultsTC : Form, IChildResults
         double[] HL_5 = new double[nSeries];
         double[] HL_6 = new double[nSeries];
         i = 0;
-        foreach(Task task in _job.Tasks)
+        foreach(TaskModel task in _job.Tasks)
         {
             xsLabels[i] = "Case " + ((char)('A' + i)).ToString();
             xsStacked[i] = i;
@@ -186,7 +186,7 @@ public partial class FrmResultsTC : Form, IChildResults
         writer.WritePropertyName("Tasks");
         writer.WriteStartArray();
 
-        foreach (Task task in _job.Tasks)
+        foreach (TaskModel task in _job.Tasks)
         {
             writer.WriteStartObject();
 
@@ -297,7 +297,7 @@ public partial class FrmResultsTC : Form, IChildResults
         Job job = new();
         JsonElement root = document.RootElement;
         job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
-        job.Tasks = new Task[job.NumberTasks];
+        job.Tasks = new TaskModel[job.NumberTasks];
         
         int i = 0;
         try
