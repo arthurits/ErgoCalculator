@@ -207,4 +207,33 @@ partial class FrmMain
         StringResources.Culture=_settings.AppCulture;
     }
 
+    private void LabelEx_Click(object sender, EventArgs e)
+    {
+        if (sender is not null && sender is ToolStripStatusLabelEx LabelEx)
+        {
+            var label = LabelEx;
+            label.Checked = !label.Checked;
+
+            // Change the text color
+            if (label.Checked)
+                label.ForeColor = Color.Black;
+            else
+                label.ForeColor = Color.LightGray;
+
+            // Update the settings
+            switch (label.Name)
+            {
+                case "statusStripLabelWordWrap":
+                    
+                    break;
+                case "statusStripLabelBackColor":
+                    
+                    break;
+                case "statusStripLabelZoom":
+                    
+                    break;
+            }
+        }
+    }
+
 }

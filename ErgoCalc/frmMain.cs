@@ -225,13 +225,14 @@ public partial class FrmMain : Form
         toolStripMain_Settings.ToolTipText = StringResources.ToolTipSettings;
 
 
-        statusStripLabelUILanguage.Text = _settings.AppCulture.Name == String.Empty ? "Invariant" : _settings.AppCulture.Name;
-        statusStripLabelUILanguage.ToolTipText = StringResources.ToolTipUILanguage + ":" + Environment.NewLine + _settings.AppCulture.NativeName;
+        statusStripLabelCulture.Text = _settings.AppCulture.Name == String.Empty ? "Invariant" : _settings.AppCulture.Name;
+        statusStripLabelCulture.ToolTipText = StringResources.ToolTipUILanguage + ":" + Environment.NewLine + _settings.AppCulture.NativeName;
 
         this.ResumeLayout();
     }
 
     #endregion Private routines
+
 }
 
 

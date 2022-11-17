@@ -39,7 +39,10 @@
             this.mnuMainFrm_Help_About = new System.Windows.Forms.ToolStripMenuItem();
             this.staMainFrm = new System.Windows.Forms.StatusStrip();
             this.statusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStripLabelUILanguage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripLabelCulture = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripLabelWordWrap = new System.Windows.Forms.ToolStripStatusLabelEx();
+            this.statusStripLabelBackColor = new System.Windows.Forms.ToolStripStatusLabelEx();
+            this.statusStripLabelZoom = new System.Windows.Forms.ToolStripStatusLabelEx();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripMain_Exit = new System.Windows.Forms.ToolStripButton();
             this.toolStripMain_Open = new System.Windows.Forms.ToolStripButton();
@@ -93,7 +96,7 @@
             this.mnuMainFrm_File_New.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.mnuMainFrm_File_New.MergeIndex = 0;
             this.mnuMainFrm_File_New.Name = "mnuMainFrm_File_New";
-            this.mnuMainFrm_File_New.Size = new System.Drawing.Size(180, 22);
+            this.mnuMainFrm_File_New.Size = new System.Drawing.Size(107, 22);
             this.mnuMainFrm_File_New.Text = "&New...";
             this.mnuMainFrm_File_New.Click += new System.EventHandler(this.New_Click);
             // 
@@ -101,14 +104,14 @@
             // 
             this.toolStripSeparator1.MergeIndex = 1;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(104, 6);
             // 
             // mnuMainFrm_File_Exit
             // 
             this.mnuMainFrm_File_Exit.MergeAction = System.Windows.Forms.MergeAction.Insert;
             this.mnuMainFrm_File_Exit.MergeIndex = 4;
             this.mnuMainFrm_File_Exit.Name = "mnuMainFrm_File_Exit";
-            this.mnuMainFrm_File_Exit.Size = new System.Drawing.Size(180, 22);
+            this.mnuMainFrm_File_Exit.Size = new System.Drawing.Size(107, 22);
             this.mnuMainFrm_File_Exit.Text = "&Exit";
             this.mnuMainFrm_File_Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
@@ -130,7 +133,7 @@
             // mnuMainFrm_Help_About
             // 
             this.mnuMainFrm_Help_About.Name = "mnuMainFrm_Help_About";
-            this.mnuMainFrm_Help_About.Size = new System.Drawing.Size(180, 22);
+            this.mnuMainFrm_Help_About.Size = new System.Drawing.Size(116, 22);
             this.mnuMainFrm_Help_About.Text = "&About...";
             this.mnuMainFrm_Help_About.Click += new System.EventHandler(this.About_Click);
             // 
@@ -139,7 +142,10 @@
             this.staMainFrm.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.staMainFrm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStripLabel,
-            this.statusStripLabelUILanguage});
+            this.statusStripLabelCulture,
+            this.statusStripLabelWordWrap,
+            this.statusStripLabelBackColor,
+            this.statusStripLabelZoom});
             this.staMainFrm.Location = new System.Drawing.Point(0, 590);
             this.staMainFrm.Name = "staMainFrm";
             this.staMainFrm.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
@@ -151,19 +157,58 @@
             // 
             this.statusStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabel.Name = "statusStripLabel";
-            this.statusStripLabel.Size = new System.Drawing.Size(872, 23);
+            this.statusStripLabel.Size = new System.Drawing.Size(752, 23);
             this.statusStripLabel.Spring = true;
             this.statusStripLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // statusStripLabelUILanguage
+            // statusStripLabelCulture
             // 
-            this.statusStripLabelUILanguage.AutoSize = false;
-            this.statusStripLabelUILanguage.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.statusStripLabelUILanguage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelUILanguage.Name = "statusStripLabelUILanguage";
-            this.statusStripLabelUILanguage.Size = new System.Drawing.Size(65, 23);
-            this.statusStripLabelUILanguage.ToolTipText = "UI culture";
-            this.statusStripLabelUILanguage.Click += new System.EventHandler(this.Language_Click);
+            this.statusStripLabelCulture.AutoSize = false;
+            this.statusStripLabelCulture.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right)));
+            this.statusStripLabelCulture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabelCulture.Name = "statusStripLabelCulture";
+            this.statusStripLabelCulture.Size = new System.Drawing.Size(70, 23);
+            this.statusStripLabelCulture.ToolTipText = "UI culture";
+            this.statusStripLabelCulture.Click += new System.EventHandler(this.Language_Click);
+            // 
+            // statusStripLabelWordWrap
+            // 
+            this.statusStripLabelWordWrap.AutoSize = false;
+            this.statusStripLabelWordWrap.BackColor = System.Drawing.Color.Transparent;
+            this.statusStripLabelWordWrap.Checked = false;
+            this.statusStripLabelWordWrap.ForeColor = System.Drawing.Color.LightGray;
+            this.statusStripLabelWordWrap.ForeColorChecked = System.Drawing.Color.Black;
+            this.statusStripLabelWordWrap.ForeColorUnchecked = System.Drawing.Color.LightGray;
+            this.statusStripLabelWordWrap.Name = "statusStripLabelWordWrap";
+            this.statusStripLabelWordWrap.Size = new System.Drawing.Size(28, 23);
+            this.statusStripLabelWordWrap.Text = "W";
+            this.statusStripLabelWordWrap.Click += new System.EventHandler(this.LabelEx_Click);
+            // 
+            // statusStripLabelBackColor
+            // 
+            this.statusStripLabelBackColor.AutoSize = false;
+            this.statusStripLabelBackColor.BackColor = System.Drawing.Color.Transparent;
+            this.statusStripLabelBackColor.Checked = false;
+            this.statusStripLabelBackColor.ForeColor = System.Drawing.Color.LightGray;
+            this.statusStripLabelBackColor.ForeColorChecked = System.Drawing.Color.Black;
+            this.statusStripLabelBackColor.ForeColorUnchecked = System.Drawing.Color.LightGray;
+            this.statusStripLabelBackColor.Name = "statusStripLabelBackColor";
+            this.statusStripLabelBackColor.Size = new System.Drawing.Size(28, 23);
+            this.statusStripLabelBackColor.Text = "C";
+            this.statusStripLabelBackColor.Click += new System.EventHandler(this.LabelEx_Click);
+            // 
+            // statusStripLabelZoom
+            // 
+            this.statusStripLabelZoom.AutoSize = false;
+            this.statusStripLabelZoom.BackColor = System.Drawing.Color.Transparent;
+            this.statusStripLabelZoom.Checked = false;
+            this.statusStripLabelZoom.ForeColor = System.Drawing.Color.LightGray;
+            this.statusStripLabelZoom.ForeColorChecked = System.Drawing.Color.Black;
+            this.statusStripLabelZoom.ForeColorUnchecked = System.Drawing.Color.LightGray;
+            this.statusStripLabelZoom.Name = "statusStripLabelZoom";
+            this.statusStripLabelZoom.Size = new System.Drawing.Size(28, 23);
+            this.statusStripLabelZoom.Text = "Z";
+            this.statusStripLabelZoom.Click += new System.EventHandler(this.LabelEx_Click);
             // 
             // toolStripMain
             // 
@@ -395,6 +440,9 @@
         private System.Windows.Forms.ToolStripButton toolStripMain_AddLine;
         private System.Windows.Forms.ToolStripButton toolStripMain_RemoveLine;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabel;
-        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelUILanguage;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripLabelCulture;
+        private System.Windows.Forms.ToolStripStatusLabelEx statusStripLabelWordWrap;
+        private System.Windows.Forms.ToolStripStatusLabelEx statusStripLabelBackColor;
+        private System.Windows.Forms.ToolStripStatusLabelEx statusStripLabelZoom;
     }
 }
