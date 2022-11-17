@@ -19,6 +19,7 @@ public partial class FrmSettings : Form
     {
         Settings = settings;
         _culture = settings.AppCulture;
+        pctFontColor.BackColor = Color.FromArgb(Settings.FontColor);
         UpdateControls(settings);
     }
 
@@ -52,8 +53,8 @@ public partial class FrmSettings : Form
             this.lblFontName.Text = String.Format(StringResources.LblFontName, Settings.FontFamilyName);
             this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings.FontStyle.ToString());
             this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings.FontSize.ToString());
-            this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings.FontColor.ToString());
-            pctFontColor.ForeColor = fontDlg.Color;
+            this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings.FontColor.ToString("X"));
+            pctFontColor.BackColor = fontDlg.Color;
         }
     }
 
@@ -192,10 +193,10 @@ public partial class FrmSettings : Form
         this.lblDlgFont.Text = StringResources.LblDlgFont;
         this.btnDlgFont.Text=StringResources.BtnDlgFont;
         this.grpFont.Text= StringResources.GrpFont;
-        this.lblFontName.Text = String.Format(StringResources.LblFontName, Settings?.FontFamilyName ?? String.Empty);
-        this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings?.FontStyle.ToString() ?? String.Empty);
-        this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings?.FontSize.ToString() ?? String.Empty);
-        this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings?.FontColor.ToString() ?? String.Empty);
+        this.lblFontName.Text = String.Format(StringResources.LblFontName, Settings?.FontFamilyName);
+        this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings?.FontStyle.ToString());
+        this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings?.FontSize.ToString());
+        this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings?.FontColor.ToString("X"));
 
         this.grpCulture.Text = StringResources.GrpCulture;
         this.radCurrentCulture.Text = StringResources.RadCurrentCulture + $" ({System.Globalization.CultureInfo.CurrentCulture.Name})";
@@ -217,6 +218,9 @@ public partial class FrmSettings : Form
     /// </summary>
     private void RelocateControls()
     {
+        this.btnDlgFont.Left = this.lblDlgFont.Left + this.lblDlgFont.Width + 5;
+        this.pctFontColor.Left = this.lblFontColor.Left + this.lblFontColor.Width + 5;
+
         this.txtDataFormat.Left = this.lblDataFormat.Left + this.lblDataFormat.Width;
         this.lblDataFormat.Top = this.txtDataFormat.Top + (txtDataFormat.Height - lblDataFormat.Height) / 2;
     }

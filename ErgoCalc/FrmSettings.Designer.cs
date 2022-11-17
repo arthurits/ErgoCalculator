@@ -126,9 +126,9 @@
             // 
             // pctFontColor
             // 
-            this.pctFontColor.Location = new System.Drawing.Point(191, 112);
+            this.pctFontColor.Location = new System.Drawing.Point(210, 107);
             this.pctFontColor.Name = "pctFontColor";
-            this.pctFontColor.Size = new System.Drawing.Size(82, 26);
+            this.pctFontColor.Size = new System.Drawing.Size(63, 26);
             this.pctFontColor.TabIndex = 6;
             this.pctFontColor.TabStop = false;
             // 
@@ -161,7 +161,7 @@
             // 
             // btnDlgFont
             // 
-            this.btnDlgFont.Location = new System.Drawing.Point(173, 19);
+            this.btnDlgFont.Location = new System.Drawing.Point(173, 18);
             this.btnDlgFont.Name = "btnDlgFont";
             this.btnDlgFont.Size = new System.Drawing.Size(90, 32);
             this.btnDlgFont.TabIndex = 1;
@@ -172,7 +172,7 @@
             // lblDlgFont
             // 
             this.lblDlgFont.AutoSize = true;
-            this.lblDlgFont.Location = new System.Drawing.Point(50, 27);
+            this.lblDlgFont.Location = new System.Drawing.Point(50, 25);
             this.lblDlgFont.Name = "lblDlgFont";
             this.lblDlgFont.Size = new System.Drawing.Size(73, 19);
             this.lblDlgFont.TabIndex = 0;
