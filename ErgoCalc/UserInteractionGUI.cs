@@ -224,10 +224,14 @@ partial class FrmMain
             switch (label.Name)
             {
                 case "statusStripLabelWordWrap":
-                    
+                    _settings.WordWrap = label.Checked;
                     break;
                 case "statusStripLabelBackColor":
-                    
+                    ColorDialog colorDlg = new();
+                    if (colorDlg.ShowDialog() == DialogResult.OK)
+                    {
+                        _settings.TextBackColor = colorDlg.Color.ToArgb();
+                    }
                     break;
                 case "statusStripLabelZoom":
                     

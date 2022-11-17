@@ -27,6 +27,12 @@ public partial class FrmDataStrainIndex : Form, IChildData
         listViewTasks.AddGroup();
     }
 
+    public FrmDataStrainIndex(CultureInfo culture)
+        :this()
+    {
+        _culture = culture;
+    }
+
     // Overloaded constructor
     public FrmDataStrainIndex(Job job)
         : this() // Call the base constructor
