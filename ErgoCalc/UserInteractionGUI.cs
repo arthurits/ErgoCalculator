@@ -33,7 +33,7 @@ partial class FrmMain
             ModelType.WorkRest => new FrmDataWR(),
             ModelType.CumulativeLifting => new FrmDataCLM(),
             ModelType.NioshLifting => new FrmDataNIOSH(),
-            ModelType.StrainIndex => new FrmDataStrainIndex(),
+            ModelType.StrainIndex => new FrmDataStrainIndex(_settings.AppCulture),
             ModelType.OcraCheck => new FrmDataOCRAcheck(),
             ModelType.MetabolicRate => new FrmDataMet(),
             ModelType.ThermalComfort => new FrmDataTC(),
@@ -43,7 +43,7 @@ partial class FrmMain
 
         if (frmData is IChildData)
         {
-            IChildData frm = frmData as IChildData;
+            IChildData frm = (IChildData)frmData;
             frm.LoadExample();
 
             if (frmData.ShowDialog(this) == DialogResult.OK)
@@ -114,7 +114,7 @@ partial class FrmMain
             var strType = document.RootElement.TryGetProperty("Document type", out JsonElement docuValue) ? docuValue.ToString() : "Error";
             //string cultureName = document.RootElement.TryGetProperty("Culture name", out docuValue) ? docuValue.ToString() : string.Empty;
 
-            Form frm = strType switch
+            Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(),
                 "NIOSH lifting equation" => new FrmResultNIOSH(),
@@ -207,7 +207,50 @@ partial class FrmMain
         StringResources.Culture=_settings.AppCulture;
     }
 
-    private void LabelEx_Click(object sender, EventArgs e)
+    private void LabelColor_Click(object sender, EventArgs e)
+    {
+        if (sender is null) return;
+
+        ColorDialog colorDlg = new();
+        colorDlg.AllowFullOpen = true;
+        colorDlg.FullOpen = true;
+        colorDlg.AnyColor = true;
+        colorDlg.Color = Color.FromArgb(_settings.TextBackColor);
+        if (colorDlg.ShowDialog(this) == DialogResult.OK)
+        {
+            _settings.TextBackColor = colorDlg.Color.ToArgb();
+            foreach (Form frm in MdiChildren)
+            {
+                //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+                var rtbText = frm.Controls[0].Controls[1].Controls[0];
+                if (rtbText is not null)
+                    rtbText.BackColor = colorDlg.Color;
+            }
+            this.statusStripLabelBackColor.BackColor = colorDlg.Color;
+        }
+    }
+
+    private void LabelZoom_Click(object sender, EventArgs e)
+    {
+        if (sender is null) return;
+
+        FrmZoom frmZoom = new(_settings.TextZoom, _settings.AppCulture);
+        frmZoom.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+        if (frmZoom.ShowDialog(this) == DialogResult.OK)
+        {
+            _settings.TextZoom = frmZoom.ZoomLevel;
+            foreach (Form frm in MdiChildren)
+            {
+                //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+                var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
+                if (rtbText is not null)
+                    rtbText.ZoomFactor = _settings.TextZoom;
+            }
+            this.statusStripLabelZoom.Text = $"{_settings.TextZoom}x";
+        }
+    }
+
+    private void LabelWordWrap_Click(object sender, EventArgs e)
     {
         if (sender is not null && sender is ToolStripStatusLabelEx LabelEx)
         {
@@ -221,41 +264,13 @@ partial class FrmMain
                 label.ForeColor = Color.LightGray;
 
             // Update the settings
-            switch (label.Name)
+            _settings.WordWrap = label.Checked;
+            foreach (Form frm in MdiChildren)
             {
-                case "statusStripLabelWordWrap":
-                    foreach (Form frm in MdiChildren)
-                    {
-
-                    }
-                    _settings.WordWrap = label.Checked;
-                    break;
-                case "statusStripLabelBackColor":
-                    ColorDialog colorDlg = new();
-                    colorDlg.AllowFullOpen = true;
-                    colorDlg.FullOpen = true;
-                    colorDlg.AnyColor = true;
-                    if (colorDlg.ShowDialog(this) == DialogResult.OK)
-                    {
-                        foreach (IChildResults frm in MdiChildren)
-                        {
-
-                        }
-                        _settings.TextBackColor = colorDlg.Color.ToArgb();
-                    }
-                    break;
-                case "statusStripLabelZoom":
-                    FrmZoom frmZoom = new(_settings.TextZoom, _settings.AppCulture);
-                    frmZoom.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
-                    if (frmZoom.ShowDialog(this) == DialogResult.OK)
-                    {
-                        foreach (IChildResults frm in MdiChildren)
-                        {
-
-                        }
-                        _settings.TextZoom = frmZoom.ZoomLevel;
-                    }
-                    break;
+                //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+                var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
+                if (rtbText is not null)
+                    rtbText.WordWrap = _settings.WordWrap;
             }
         }
     }

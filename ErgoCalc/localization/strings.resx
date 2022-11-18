@@ -323,6 +323,9 @@ the application?</value>
   <data name="strToolTipAddLine" xml:space="preserve">
     <value>Add line to the current plot</value>
   </data>
+  <data name="strToolTipBackColor" xml:space="preserve">
+    <value>Select text backcolor</value>
+  </data>
   <data name="strToolTipDuplicate" xml:space="preserve">
     <value>Duplicate the current model</value>
   </data>
@@ -352,5 +355,11 @@ the application?</value>
   </data>
   <data name="strToolTipUILanguage" xml:space="preserve">
     <value>User interface language</value>
+  </data>
+  <data name="strToolTipWordWrap" xml:space="preserve">
+    <value>Wrap words to the beginning of the next line</value>
+  </data>
+  <data name="strToolTipZoom" xml:space="preserve">
+    <value>Select zoom factor</value>
   </data>
 </root>

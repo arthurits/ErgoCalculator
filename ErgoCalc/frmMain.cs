@@ -23,6 +23,11 @@ public partial class FrmMain : Form
         // Set form icon
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
+        // Other settings
+        this.statusStripLabelWordWrap.Checked = _settings.WordWrap;
+        this.statusStripLabelBackColor.BackColor = Color.FromArgb(_settings.TextBackColor);
+        this.statusStripLabelZoom.Text = $"{_settings.TextZoom.ToString()}x";
+
         UpdateUI_Language();
     }
 
@@ -224,9 +229,12 @@ public partial class FrmMain : Form
         toolStripMain_SaveChart.ToolTipText = StringResources.ToolTipSaveChart;
         toolStripMain_Settings.ToolTipText = StringResources.ToolTipSettings;
 
-
         statusStripLabelCulture.Text = _settings.AppCulture.Name == String.Empty ? "Invariant" : _settings.AppCulture.Name;
         statusStripLabelCulture.ToolTipText = StringResources.ToolTipUILanguage + ":" + Environment.NewLine + _settings.AppCulture.NativeName;
+
+        statusStripLabelWordWrap.ToolTipText= StringResources.ToolTipWordWrap;
+        statusStripLabelBackColor.ToolTipText= StringResources.ToolTipBackColor;
+        statusStripLabelZoom.ToolTipText= StringResources.ToolTipZoom;
 
         this.ResumeLayout();
     }

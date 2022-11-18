@@ -12,8 +12,8 @@ namespace ErgoCalc;
 public partial class FrmResultsStrainIndex : Form, IChildResults
 {
     // Variable definition
-    private string _strPath;
-    private Job _job;
+    //private string _strPath;
+    private Job _job = new();
 
     public FrmResultsStrainIndex()
     {
@@ -21,8 +21,9 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 
         //rtbShowResult.Size = this.ClientSize;
 
-        _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
+        //_strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        //if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
         propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
         splitContainer1.Panel1Collapsed = false;

@@ -22,7 +22,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         InitializeComponent();
 
         // Simulate a click on radRSI
-        radioButton_CheckedChanged(radRSI, null);
+        radioButton_CheckedChanged(radRSI, EventArgs.Empty);
 
         listViewTasks.AddGroup();
     }
@@ -31,6 +31,8 @@ public partial class FrmDataStrainIndex : Form, IChildData
         :this()
     {
         _culture = culture;
+        UpdateUI_Language(culture);
+        RelocateControls();
     }
 
     // Overloaded constructor

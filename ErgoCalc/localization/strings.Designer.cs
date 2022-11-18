@@ -675,6 +675,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select text backcolor.
+        /// </summary>
+        internal static string strToolTipBackColor {
+            get {
+                return ResourceManager.GetString("strToolTipBackColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Duplicate the current model.
         /// </summary>
         internal static string strToolTipDuplicate {
@@ -761,6 +770,24 @@ namespace ErgoCalc.localization {
         internal static string strToolTipUILanguage {
             get {
                 return ResourceManager.GetString("strToolTipUILanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrap words to the beginning of the next line.
+        /// </summary>
+        internal static string strToolTipWordWrap {
+            get {
+                return ResourceManager.GetString("strToolTipWordWrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select zoom factor.
+        /// </summary>
+        internal static string strToolTipZoom {
+            get {
+                return ResourceManager.GetString("strToolTipZoom", resourceCulture);
             }
         }
     }

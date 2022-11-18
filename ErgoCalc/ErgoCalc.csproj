@@ -50,6 +50,7 @@
     <ApplicationIcon>images\logo.ico</ApplicationIcon>
     <ImplicitUsings>enable</ImplicitUsings>
     <Version></Version>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
