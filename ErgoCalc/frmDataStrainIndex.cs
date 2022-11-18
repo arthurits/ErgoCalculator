@@ -32,7 +32,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         _culture = culture;
         UpdateUI_Language(culture);
-        RelocateControls();
     }
 
     // Overloaded constructor
@@ -452,12 +451,12 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         StringResources.Culture = culture;
 
-        this.btnOK.Text = StringResources.BtnAccept;
+        this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
         // Relocate controls
-        //RelocateControls();
+        RelocateControls();
     }
 
     /// <summary>

@@ -30,7 +30,7 @@
         {
             this.updSubTasks = new System.Windows.Forms.NumericUpDown();
             this.lblSubTasks = new System.Windows.Forms.Label();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblConstanteLC = new System.Windows.Forms.Label();
             this.txtConstanteLC = new System.Windows.Forms.TextBox();
@@ -87,15 +87,15 @@
             // 
             // btnOK
             // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(464, 462);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(133, 34);
-            this.btnOK.TabIndex = 4;
-            this.btnOK.Text = "&Accept";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.Accept_Click);
+            this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnAccept.Location = new System.Drawing.Point(464, 462);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAccept.Name = "btnOK";
+            this.btnAccept.Size = new System.Drawing.Size(133, 34);
+            this.btnAccept.TabIndex = 4;
+            this.btnAccept.Text = "&Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.Accept_Click);
             // 
             // btnCancel
             // 
@@ -311,7 +311,7 @@
             // 
             // FrmDataNIOSH
             // 
-            this.AcceptButton = this.btnOK;
+            this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
@@ -323,7 +323,7 @@
             this.Controls.Add(this.txtConstanteLC);
             this.Controls.Add(this.lblConstanteLC);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnAccept);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -353,7 +353,7 @@
 
         private System.Windows.Forms.NumericUpDown updSubTasks;
         private System.Windows.Forms.Label lblSubTasks;
-        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblConstanteLC;
         private System.Windows.Forms.TextBox txtConstanteLC;

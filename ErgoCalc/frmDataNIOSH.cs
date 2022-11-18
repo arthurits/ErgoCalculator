@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.Lifting;
@@ -8,6 +9,7 @@ namespace ErgoCalc;
 
 public partial class FrmDataNIOSH : Form, IChildData
 {
+    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private IndexType _index;
     private Job _job;
 
@@ -24,6 +26,13 @@ public partial class FrmDataNIOSH : Form, IChildData
         rad_CheckedChanged(radLI, null);
 
         listViewTasks.AddGroup();
+    }
+
+    public FrmDataNIOSH(CultureInfo culture)
+        : this()
+    {
+        _culture = culture;
+        UpdateUI_Language(culture);
     }
 
     // Overloaded constructor
@@ -482,5 +491,26 @@ public partial class FrmDataNIOSH : Form, IChildData
         }
     }
 
-    
+    /// <summary>
+    /// Update the form's interface language
+    /// </summary>
+    /// <param name="culture">Culture used to display the UI</param>
+    private void UpdateUI_Language(System.Globalization.CultureInfo culture)
+    {
+        StringResources.Culture = culture;
+
+        this.btnAccept.Text = StringResources.BtnAccept;
+        this.btnCancel.Text = StringResources.BtnCancel;
+        this.btnExample.Text = StringResources.BtnExample;
+
+        // Relocate controls
+        RelocateControls();
+    }
+
+    /// <summary>
+    /// Relocate controls to compensate for the culture text length in labels
+    /// </summary>
+    private void RelocateControls()
+    {
+    }
 }

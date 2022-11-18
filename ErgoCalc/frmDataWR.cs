@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace ErgoCalc;
 public partial class FrmDataWR : Form, IChildData
 {
     // Propiedades de la clase
+    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     public Job _job;
     private readonly string strGridHeader = "Task ";
     private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDataWR));
@@ -21,6 +23,13 @@ public partial class FrmDataWR : Form, IChildData
     public FrmDataWR()
     {
         InitializeComponent();
+    }
+
+    public FrmDataWR(CultureInfo culture)
+        : this()
+    {
+        _culture = culture;
+        UpdateUI_Language(culture);
     }
 
     public FrmDataWR(Job job)
@@ -285,4 +294,26 @@ public partial class FrmDataWR : Form, IChildData
 
     #endregion Private routines            
 
+    /// <summary>
+    /// Update the form's interface language
+    /// </summary>
+    /// <param name="culture">Culture used to display the UI</param>
+    private void UpdateUI_Language(System.Globalization.CultureInfo culture)
+    {
+        StringResources.Culture = culture;
+
+        this.btnAccept.Text = StringResources.BtnAccept;
+        this.btnCancel.Text = StringResources.BtnCancel;
+        this.btnExample.Text = StringResources.BtnExample;
+
+        // Relocate controls
+        RelocateControls();
+    }
+
+    /// <summary>
+    /// Relocate controls to compensate for the culture text length in labels
+    /// </summary>
+    private void RelocateControls()
+    {
+    }
 }

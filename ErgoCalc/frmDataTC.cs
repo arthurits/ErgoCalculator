@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 using ErgoCalc.Models.ThermalComfort;
@@ -7,6 +8,7 @@ namespace ErgoCalc;
 
 public partial class FrmDataTC : Form, IChildData
 {
+    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private Job _job;
     private readonly string strGridHeader = "Case ";
     public object GetData => _job;
@@ -14,6 +16,13 @@ public partial class FrmDataTC : Form, IChildData
     public FrmDataTC()
     {
         InitializeComponent();
+    }
+
+    public FrmDataTC(CultureInfo culture)
+        : this()
+    {
+        _culture = culture;
+        UpdateUI_Language(culture);
     }
 
     public FrmDataTC(Job job)
@@ -170,5 +179,28 @@ public partial class FrmDataTC : Form, IChildData
     }
 
     #endregion Private routines
+
+    /// <summary>
+    /// Update the form's interface language
+    /// </summary>
+    /// <param name="culture">Culture used to display the UI</param>
+    private void UpdateUI_Language(System.Globalization.CultureInfo culture)
+    {
+        StringResources.Culture = culture;
+
+        this.btnOK.Text = StringResources.BtnAccept;
+        this.btnCancel.Text = StringResources.BtnCancel;
+        this.btnExample.Text = StringResources.BtnExample;
+
+        // Relocate controls
+        RelocateControls();
+    }
+
+    /// <summary>
+    /// Relocate controls to compensate for the culture text length in labels
+    /// </summary>
+    private void RelocateControls()
+    {
+    }
 
 }

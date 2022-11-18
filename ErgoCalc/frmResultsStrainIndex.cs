@@ -37,16 +37,19 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
     }
 
-    public FrmResultsStrainIndex(Job job)
-        :this()
-    {
-        _job = job;
-    }
+    //public FrmResultsStrainIndex(Job job)
+    //    :this()
+    //{
+    //    _job = job;
+    //}
 
-    public FrmResultsStrainIndex(object data)
+    public FrmResultsStrainIndex(object? data, bool wordWrap, int backColor, float zoomFactor)
         : this()
     {
-        if(data.GetType() == typeof(Job)) _job = (Job)data;
+        if(data?.GetType() == typeof(Job)) _job = (Job)data;
+        rtbShowResult.WordWrap = wordWrap;
+        rtbShowResult.BackColor=Color.FromArgb(backColor);
+        rtbShowResult.ZoomFactor = zoomFactor;
     }
 
     private void frmResultsStrainIndex_Shown(object sender, EventArgs e)

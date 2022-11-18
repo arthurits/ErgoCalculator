@@ -30,14 +30,14 @@ partial class FrmMain
 
         Form frmData = frmNew.Model switch
         {
-            ModelType.WorkRest => new FrmDataWR(),
-            ModelType.CumulativeLifting => new FrmDataCLM(),
-            ModelType.NioshLifting => new FrmDataNIOSH(),
+            ModelType.WorkRest => new FrmDataWR(_settings.AppCulture),
+            ModelType.CumulativeLifting => new FrmDataCLM(_settings.AppCulture),
+            ModelType.NioshLifting => new FrmDataNIOSH(_settings.AppCulture),
             ModelType.StrainIndex => new FrmDataStrainIndex(_settings.AppCulture),
             ModelType.OcraCheck => new FrmDataOCRAcheck(),
             ModelType.MetabolicRate => new FrmDataMet(),
-            ModelType.ThermalComfort => new FrmDataTC(),
-            ModelType.LibertyMutual => new FrmDataLiberty(),
+            ModelType.ThermalComfort => new FrmDataTC(_settings.AppCulture),
+            ModelType.LibertyMutual => new FrmDataLiberty(_settings.AppCulture),
             _ => new Form()
         };
 
@@ -53,7 +53,7 @@ partial class FrmMain
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData),
                     ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData),
-                    ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData),
+                    ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
                     ModelType.ThermalComfort => new FrmResultsTC(frm.GetData),
@@ -118,7 +118,7 @@ partial class FrmMain
             {
                 "Work-Rest model" => new FrmResultsWR(),
                 "NIOSH lifting equation" => new FrmResultNIOSH(),
-                "Strain index" => new FrmResultsStrainIndex(),
+                "Strain index" => new FrmResultsStrainIndex(default, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                 "Thermal comfort model" => new FrmResultsTC(),
                 "LM-MMH model" => new FrmResultsLiberty(),
                 "Comprehensive lifting model" => new FrmResultsCLM(),

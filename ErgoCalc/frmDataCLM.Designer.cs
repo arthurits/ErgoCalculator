@@ -31,7 +31,7 @@
             this.updTasks = new System.Windows.Forms.NumericUpDown();
             this.gridVariables = new System.Windows.Forms.DataGridView();
             this.lblTasks = new System.Windows.Forms.Label();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnExample = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).BeginInit();
@@ -81,15 +81,15 @@
             // 
             // btnOK
             // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(436, 438);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(133, 34);
-            this.btnOK.TabIndex = 3;
-            this.btnOK.Text = "&Accept";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.Accept_Click);
+            this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnAccept.Location = new System.Drawing.Point(436, 438);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAccept.Name = "btnOK";
+            this.btnAccept.Size = new System.Drawing.Size(133, 34);
+            this.btnAccept.TabIndex = 3;
+            this.btnAccept.Text = "&Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.Accept_Click);
             // 
             // btnCancel
             // 
@@ -115,14 +115,14 @@
             // 
             // frmDataCLM
             // 
-            this.AcceptButton = this.btnOK;
+            this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(743, 487);
             this.Controls.Add(this.btnExample);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.lblTasks);
             this.Controls.Add(this.gridVariables);
             this.Controls.Add(this.updTasks);
@@ -147,7 +147,7 @@
         private System.Windows.Forms.NumericUpDown updTasks;
         private System.Windows.Forms.DataGridView gridVariables;
         private System.Windows.Forms.Label lblTasks;
-        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnExample;
     }
