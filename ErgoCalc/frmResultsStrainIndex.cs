@@ -532,7 +532,10 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
         // Mostrar la ventana de resultados
-        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job) { MdiParent = this.MdiParent };
+        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job,rtbShowResult.WordWrap,rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
+        {
+            MdiParent = this.MdiParent
+        };
         //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
         frmResults.Show();
     }
