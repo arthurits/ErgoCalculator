@@ -178,6 +178,9 @@ to their default values?</value>
   <data name="strFormTitleUnion" xml:space="preserve">
     <value> - </value>
   </data>
+  <data name="strFormZoom" xml:space="preserve">
+    <value>Zoom level</value>
+  </data>
   <data name="strFrmSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
@@ -207,6 +210,9 @@ to their default values?</value>
   </data>
   <data name="strLblSelect" xml:space="preserve">
     <value>Please, select a model to start working with:</value>
+  </data>
+  <data name="strLblZoom" xml:space="preserve">
+    <value>Set zoom level</value>
   </data>
   <data name="strMenuMainFile" xml:space="preserve">
     <value>&amp;File</value>

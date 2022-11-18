@@ -242,6 +242,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Zoom level.
+        /// </summary>
+        internal static string strFormZoom {
+            get {
+                return ResourceManager.GetString("strFormZoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         internal static string strFrmSettings {
@@ -328,6 +337,15 @@ namespace ErgoCalc.localization {
         internal static string strLblSelect {
             get {
                 return ResourceManager.GetString("strLblSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set zoom level.
+        /// </summary>
+        internal static string strLblZoom {
+            get {
+                return ResourceManager.GetString("strLblZoom", resourceCulture);
             }
         }
         

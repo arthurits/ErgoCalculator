@@ -104,6 +104,10 @@ public static class StringResources
     public static string LblFontSize => StringRM.GetString("strLblFontSize", Culture) ?? "Font size: {0}";
     public static string LblFontColor => StringRM.GetString("strLblFontColor", Culture) ?? "Font color: {0}";
 
+    // Form Zoom
+    public static string FormZoom => StringRM.GetString("strFormZoom", Culture) ?? "Zoom level";
+    public static string LblZoom => StringRM.GetString("strLblZoom", Culture) ?? "Set zoom level";
+
     // Message box
     public static string MsgBoxExit => StringRM.GetString("strMsgBoxExit", Culture) ?? "Are you sure you want to exit" + Environment.NewLine + "the application?";
     public static string MsgBoxExitTitle => StringRM.GetString("strMsgBoxExitTitle", Culture) ?? "Exit?";

@@ -224,17 +224,37 @@ partial class FrmMain
             switch (label.Name)
             {
                 case "statusStripLabelWordWrap":
+                    foreach (Form frm in MdiChildren)
+                    {
+
+                    }
                     _settings.WordWrap = label.Checked;
                     break;
                 case "statusStripLabelBackColor":
                     ColorDialog colorDlg = new();
-                    if (colorDlg.ShowDialog() == DialogResult.OK)
+                    colorDlg.AllowFullOpen = true;
+                    colorDlg.FullOpen = true;
+                    colorDlg.AnyColor = true;
+                    if (colorDlg.ShowDialog(this) == DialogResult.OK)
                     {
+                        foreach (IChildResults frm in MdiChildren)
+                        {
+
+                        }
                         _settings.TextBackColor = colorDlg.Color.ToArgb();
                     }
                     break;
                 case "statusStripLabelZoom":
-                    
+                    FrmZoom frmZoom = new(_settings.TextZoom, _settings.AppCulture);
+                    frmZoom.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+                    if (frmZoom.ShowDialog(this) == DialogResult.OK)
+                    {
+                        foreach (IChildResults frm in MdiChildren)
+                        {
+
+                        }
+                        _settings.TextZoom = frmZoom.ZoomLevel;
+                    }
                     break;
             }
         }
