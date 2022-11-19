@@ -29,8 +29,6 @@ namespace ErgoCalc
         /// </summary>
         private void InitializeComponent()
         {
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.formsPlot1 = new ScottPlot.FormsPlot();
@@ -40,10 +38,6 @@ namespace ErgoCalc
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.rtbShowResult = new System.Windows.Forms.RichTextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -53,33 +47,6 @@ namespace ErgoCalc
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
-            this.splitContainer1.Panel1MinSize = 0;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(892, 440);
-            this.splitContainer1.SplitterDistance = 200;
-            this.splitContainer1.SplitterWidth = 5;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(200, 440);
-            this.propertyGrid1.TabIndex = 0;
             // 
             // splitContainer2
             // 
@@ -95,9 +62,9 @@ namespace ErgoCalc
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.rtbShowResult);
-            this.splitContainer2.Size = new System.Drawing.Size(687, 440);
-            this.splitContainer2.SplitterDistance = 199;
-            this.splitContainer2.TabIndex = 2;
+            this.splitContainer2.Size = new System.Drawing.Size(892, 440);
+            this.splitContainer2.SplitterDistance = 198;
+            this.splitContainer2.TabIndex = 3;
             // 
             // tableLayoutPanel1
             // 
@@ -119,7 +86,7 @@ namespace ErgoCalc
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(687, 199);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(892, 198);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // formsPlot1
@@ -131,7 +98,7 @@ namespace ErgoCalc
             this.formsPlot1.Location = new System.Drawing.Point(4, 3);
             this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.formsPlot1.Name = "formsPlot1";
-            this.formsPlot1.Size = new System.Drawing.Size(129, 193);
+            this.formsPlot1.Size = new System.Drawing.Size(197, 192);
             this.formsPlot1.TabIndex = 3;
             // 
             // formsPlot3
@@ -140,10 +107,10 @@ namespace ErgoCalc
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.formsPlot3.BackColor = System.Drawing.Color.Transparent;
-            this.formsPlot3.Location = new System.Drawing.Point(458, 3);
+            this.formsPlot3.Location = new System.Drawing.Point(594, 3);
             this.formsPlot3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.formsPlot3.Name = "formsPlot3";
-            this.formsPlot3.Size = new System.Drawing.Size(129, 193);
+            this.formsPlot3.Size = new System.Drawing.Size(197, 192);
             this.formsPlot3.TabIndex = 6;
             // 
             // formsPlot2
@@ -152,18 +119,18 @@ namespace ErgoCalc
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.formsPlot2.BackColor = System.Drawing.Color.Transparent;
-            this.formsPlot2.Location = new System.Drawing.Point(231, 3);
+            this.formsPlot2.Location = new System.Drawing.Point(299, 3);
             this.formsPlot2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.formsPlot2.Name = "formsPlot2";
-            this.formsPlot2.Size = new System.Drawing.Size(129, 193);
+            this.formsPlot2.Size = new System.Drawing.Size(197, 192);
             this.formsPlot2.TabIndex = 2;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(140, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(208, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(84, 193);
+            this.pictureBox1.Size = new System.Drawing.Size(84, 192);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox1.TabIndex = 7;
             this.pictureBox1.TabStop = false;
@@ -171,9 +138,9 @@ namespace ErgoCalc
             // pictureBox2
             // 
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox2.Location = new System.Drawing.Point(367, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(503, 3);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(84, 193);
+            this.pictureBox2.Size = new System.Drawing.Size(84, 192);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox2.TabIndex = 8;
             this.pictureBox2.TabStop = false;
@@ -181,9 +148,9 @@ namespace ErgoCalc
             // pictureBox3
             // 
             this.pictureBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox3.Location = new System.Drawing.Point(594, 3);
+            this.pictureBox3.Location = new System.Drawing.Point(798, 3);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(90, 193);
+            this.pictureBox3.Size = new System.Drawing.Size(91, 192);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox3.TabIndex = 9;
             this.pictureBox3.TabStop = false;
@@ -198,25 +165,21 @@ namespace ErgoCalc
             this.rtbShowResult.Name = "rtbShowResult";
             this.rtbShowResult.ReadOnly = true;
             this.rtbShowResult.ShowSelectionMargin = true;
-            this.rtbShowResult.Size = new System.Drawing.Size(687, 237);
+            this.rtbShowResult.Size = new System.Drawing.Size(892, 238);
             this.rtbShowResult.TabIndex = 2;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
             // 
-            // frmResultsLiberty
+            // FrmResultsLiberty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(892, 440);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.splitContainer2);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Name = "frmResultsLiberty";
+            this.Name = "FrmResultsLiberty";
             this.Text = "LM-MMH results";
             this.Shown += new System.EventHandler(this.frmResultsLiberty_Shown);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -231,16 +194,14 @@ namespace ErgoCalc
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.RichTextBox rtbShowResult;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private SplitContainer splitContainer2;
+        private TableLayoutPanel tableLayoutPanel1;
         private ScottPlot.FormsPlot formsPlot1;
-        private ScottPlot.FormsPlot formsPlot2;
         private ScottPlot.FormsPlot formsPlot3;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private ScottPlot.FormsPlot formsPlot2;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
+        private RichTextBox rtbShowResult;
     }
 }

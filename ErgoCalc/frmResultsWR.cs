@@ -29,12 +29,6 @@ public partial class FrmResultsWR : Form, IChildResults
             NúmeroCurva = plot.Plot.GetPlottables().Length - 1
         };
 
-        propertyGrid1.SelectedObject = _plotOptions;
-        splitContainer1.Panel1Collapsed = false;
-        splitContainer1.SplitterDistance = 0;
-        splitContainer1.SplitterWidth = 1;
-        splitContainer1.IsSplitterFixed = true;
-
         // ToolStrip
         var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
         if (File.Exists(path + @"\images\settings.ico")) this.toolStripWR_Settings.Image=new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
@@ -190,7 +184,7 @@ public partial class FrmResultsWR : Form, IChildResults
             //_datos.Add(frmDatosWR.getData());
             CalcularCurva();
             _plotOptions.NúmeroCurva = plot.Plot.GetPlottables().Length - 1;
-            propertyGrid1.Refresh();
+            //propertyGrid1.Refresh();
         }
         // Cerrar el formulario de entrada de datos
         frmDatosWR.Dispose();
@@ -204,7 +198,7 @@ public partial class FrmResultsWR : Form, IChildResults
             plot.Plot.Remove(plot.Plot.GetPlottables()[i - 1]);
             plot.Render();
             _plotOptions.NúmeroCurva = i - 2;
-            propertyGrid1.Refresh();
+            //propertyGrid1.Refresh();
         }
     }
 
@@ -436,34 +430,6 @@ public partial class FrmResultsWR : Form, IChildResults
     {
         get => toolStripWR;
         set => toolStripWR = value;
-    }
-
-    public void ShowHideSettings()
-    {
-        //algoToolStripMenuItem.PerformClick();
-        this.SuspendLayout();
-        //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-        //splitContainer1.SplitterWidth = splitContainer1.Panel1Collapsed ? 4 : 0;
-        //splitContainer1.Panel1Collapsed = false;
-
-        if (splitContainer1.SplitterDistance > 0)
-        {
-            Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
-            splitContainer1.SplitterWidth = 1;
-            splitContainer1.IsSplitterFixed = true;
-        }
-        else
-        {
-            Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 170, new Transitions.TransitionType_Linear(200));
-            splitContainer1.SplitterWidth = 4;
-            splitContainer1.IsSplitterFixed = false;
-        }
-        this.ResumeLayout();
-    }
-
-    public bool PanelCollapsed()
-    {
-        return splitContainer1.SplitterDistance == 0 ? true : false;
     }
 
     public void FormatText()

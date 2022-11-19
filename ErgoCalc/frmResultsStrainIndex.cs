@@ -25,11 +25,11 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         //if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
-        propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
-        splitContainer1.Panel1Collapsed = false;
-        splitContainer1.SplitterDistance = 0;
-        splitContainer1.SplitterWidth = 1;
-        splitContainer1.IsSplitterFixed = true;
+        //propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
+        //splitContainer1.Panel1Collapsed = false;
+        //splitContainer1.SplitterDistance = 0;
+        //splitContainer1.SplitterWidth = 1;
+        //splitContainer1.IsSplitterFixed = true;
 
         //ToolStrip botón = ((frmMain)MdiParent).Controls["toolStripMain"] as ToolStrip;
         //ToolStripButton bot = botón.Items["toolStripMain_Settings"] as ToolStripButton;
@@ -48,8 +48,8 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     {
         if(data?.GetType() == typeof(Job)) _job = (Job)data;
         rtbShowResult.WordWrap = wordWrap;
-        rtbShowResult.BackColor=Color.FromArgb(backColor);
-        rtbShowResult.ZoomFactor = zoomFactor;
+        rtbShowResult.BackColor = Color.FromArgb(backColor);
+        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultsStrainIndex_Shown(object sender, EventArgs e)
@@ -555,26 +555,27 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     {
         //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
         
-        this.SuspendLayout();
-        if (splitContainer1.SplitterDistance > 0)
-        {
-            Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
-            splitContainer1.SplitterWidth = 1;
-            splitContainer1.IsSplitterFixed = true;
-        }
-        else
-        {
-            Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
-            splitContainer1.SplitterWidth = 4;
-            splitContainer1.IsSplitterFixed = false;
-        }
-        this.ResumeLayout();
+        //this.SuspendLayout();
+        //if (splitContainer1.SplitterDistance > 0)
+        //{
+        //    Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
+        //    splitContainer1.SplitterWidth = 1;
+        //    splitContainer1.IsSplitterFixed = true;
+        //}
+        //else
+        //{
+        //    Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
+        //    splitContainer1.SplitterWidth = 4;
+        //    splitContainer1.IsSplitterFixed = false;
+        //}
+        //this.ResumeLayout();
         return;
     }
 
     public bool PanelCollapsed ()
     {
-        return splitContainer1.SplitterDistance == 0 ? true : false;
+        //return splitContainer1.SplitterDistance == 0 ? true : false;
+        return true;
     }
 
     public void FormatText()

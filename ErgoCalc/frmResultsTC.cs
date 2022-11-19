@@ -24,11 +24,7 @@ public partial class FrmResultsTC : Form, IChildResults
         InitializeComponent();
         InitializePlot();
 
-        propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
-        splitContainer1.Panel1Collapsed = false;
-        splitContainer1.SplitterDistance = 0;
-        splitContainer1.SplitterWidth = 1;
-        splitContainer1.IsSplitterFixed = true;
+        this.ActiveControl = this.rtbShowResult;
     }
 
     public FrmResultsTC(Job job)
@@ -340,11 +336,6 @@ public partial class FrmResultsTC : Form, IChildResults
         return result;
     }
 
-    public bool PanelCollapsed()
-    {
-        return splitContainer1.SplitterDistance == 0 ? true : false;
-    }
-
     public void Save(string path)
     {
         // Displays a SaveFileDialog so the user can save the Image  
@@ -398,27 +389,6 @@ public partial class FrmResultsTC : Form, IChildResults
             }
         }
 
-        return;
-    }
-
-    public void ShowHideSettings()
-    {
-        //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-
-        this.SuspendLayout();
-        if (splitContainer1.SplitterDistance > 0)
-        {
-            Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
-            splitContainer1.SplitterWidth = 1;
-            splitContainer1.IsSplitterFixed = true;
-        }
-        else
-        {
-            Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
-            splitContainer1.SplitterWidth = 4;
-            splitContainer1.IsSplitterFixed = false;
-        }
-        this.ResumeLayout();
         return;
     }
 

@@ -74,18 +74,6 @@ public partial class FrmResultsMet : Form, IChildResults
         return new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true };
     }
 
-    public void ShowHideSettings()
-    {
-        //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-        return;
-    }
-
-    public bool PanelCollapsed()
-    {
-        //return this.splitContainer1.Panel1Collapsed;
-        return true;
-    }
-
     public void FormatText()
     {
         

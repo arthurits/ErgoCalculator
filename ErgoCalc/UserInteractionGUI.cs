@@ -184,9 +184,6 @@ partial class FrmMain
         {
             UpdateUI_Language();
         }
-        
-        if (this.ActiveMdiChild != null)
-            ((IChildResults)this.ActiveMdiChild).ShowHideSettings();
     }
 
     private void Settings_EnabledChanged(object sender, EventArgs e)
@@ -207,7 +204,32 @@ partial class FrmMain
         StringResources.Culture=_settings.AppCulture;
     }
 
-    private void LabelColor_Click(object sender, EventArgs e)
+    private void LabelFont_Click(object sender, EventArgs e)
+    {
+        FontDialog fontDlg = new();
+
+        fontDlg.ShowApply = false;
+        fontDlg.ShowColor = false;
+        fontDlg.ShowEffects = true;
+        fontDlg.ShowHelp = false;
+        fontDlg.FontMustExist = true;
+
+        RichTextBox richText = ((RichTextBox)ActiveMdiChild.ActiveControl);
+
+        fontDlg.Font = new(richText.Font.Name, richText.Font.Size, richText.Font.Style);
+        //fontDlg.Color = Color.FromArgb(Settings.FontColor);
+
+        //fontDlg.Font = textBox1.Font;
+        //fontDlg.Color = textBox1.ForeColor;
+
+        if (fontDlg.ShowDialog() == DialogResult.OK)
+        {
+            richText.Font = fontDlg.Font;
+            this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, richText.Font.Name, richText.Font.Size);
+        }
+    }
+
+    private void LabelFontColor_Click(object sender, EventArgs e)
     {
         if (sender is null) return;
 
@@ -215,38 +237,19 @@ partial class FrmMain
         colorDlg.AllowFullOpen = true;
         colorDlg.FullOpen = true;
         colorDlg.AnyColor = true;
-        colorDlg.Color = Color.FromArgb(_settings.TextBackColor);
+        colorDlg.Color = ((RichTextBox)ActiveMdiChild.ActiveControl).ForeColor;
         if (colorDlg.ShowDialog(this) == DialogResult.OK)
         {
-            _settings.TextBackColor = colorDlg.Color.ToArgb();
-            foreach (Form frm in MdiChildren)
-            {
-                //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-                var rtbText = frm.Controls[0].Controls[1].Controls[0];
-                if (rtbText is not null)
-                    rtbText.BackColor = colorDlg.Color;
-            }
-            this.statusStripLabelBackColor.BackColor = colorDlg.Color;
-        }
-    }
-
-    private void LabelZoom_Click(object sender, EventArgs e)
-    {
-        if (sender is null) return;
-
-        FrmZoom frmZoom = new(_settings.TextZoom, _settings.AppCulture);
-        frmZoom.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
-        if (frmZoom.ShowDialog(this) == DialogResult.OK)
-        {
-            _settings.TextZoom = frmZoom.ZoomLevel;
-            foreach (Form frm in MdiChildren)
-            {
-                //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-                var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
-                if (rtbText is not null)
-                    rtbText.ZoomFactor = _settings.TextZoom;
-            }
-            this.statusStripLabelZoom.Text = $"{_settings.TextZoom}x";
+            //_settings.TextBackColor = colorDlg.Color.ToArgb();
+            //foreach (Form frm in MdiChildren)
+            //{
+            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+            //    var rtbText = frm.Controls[0].Controls[1].Controls[0];
+            //    if (rtbText is not null)
+            //        rtbText.BackColor = colorDlg.Color;
+            //}
+            ((RichTextBox)ActiveMdiChild.ActiveControl).ForeColor = colorDlg.Color;
+            this.statusStripLabelFontColor.BackColor = colorDlg.Color;
         }
     }
 
@@ -264,15 +267,63 @@ partial class FrmMain
                 label.ForeColor = Color.LightGray;
 
             // Update the settings
-            _settings.WordWrap = label.Checked;
-            foreach (Form frm in MdiChildren)
-            {
-                //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-                var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
-                if (rtbText is not null)
-                    rtbText.WordWrap = _settings.WordWrap;
-            }
+            //_settings.WordWrap = label.Checked;
+            //foreach (Form frm in MdiChildren)
+            //{
+            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+            //    var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
+            //    if (rtbText is not null)
+            //        rtbText.WordWrap = _settings.WordWrap;
+            //}
+            ((RichTextBox)ActiveMdiChild.ActiveControl).WordWrap = label.Checked;
         }
     }
+
+    private void LabelBackColor_Click(object sender, EventArgs e)
+    {
+        if (sender is null) return;
+
+        ColorDialog colorDlg = new();
+        colorDlg.AllowFullOpen = true;
+        colorDlg.FullOpen = true;
+        colorDlg.AnyColor = true;
+        colorDlg.Color = ((RichTextBox)ActiveMdiChild.ActiveControl).BackColor;
+        if (colorDlg.ShowDialog(this) == DialogResult.OK)
+        {
+            //_settings.TextBackColor = colorDlg.Color.ToArgb();
+            //foreach (Form frm in MdiChildren)
+            //{
+            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+            //    var rtbText = frm.Controls[0].Controls[1].Controls[0];
+            //    if (rtbText is not null)
+            //        rtbText.BackColor = colorDlg.Color;
+            //}
+            ((RichTextBox)ActiveMdiChild.ActiveControl).BackColor = colorDlg.Color;
+            this.statusStripLabelBackColor.BackColor = colorDlg.Color;
+        }
+    }
+
+    private void LabelZoom_Click(object sender, EventArgs e)
+    {
+        if (sender is null) return;
+
+        FrmZoom frmZoom = new(_settings.TextZoom, _settings.AppCulture);
+        frmZoom.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+        if (frmZoom.ShowDialog(this) == DialogResult.OK)
+        {
+            //_settings.TextZoom = frmZoom.ZoomLevel;
+            //foreach (Form frm in MdiChildren)
+            //{
+            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
+            //    var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
+            //    if (rtbText is not null)
+            //        rtbText.ZoomFactor = _settings.TextZoom;
+            //}
+            ((RichTextBox)ActiveMdiChild.ActiveControl).ZoomFactor = frmZoom.ZoomLevel / 100;
+            this.statusStripLabelZoom.Text = $"{(frmZoom.ZoomLevel / 100).ToString("0.##")}x";
+        }
+    }
+
+    
 
 }

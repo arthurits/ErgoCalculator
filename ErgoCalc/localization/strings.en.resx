@@ -135,6 +135,9 @@
   <data name="strChkDlgPath" xml:space="preserve">
     <value>Remember open/save dialog previous path</value>
   </data>
+  <data name="strChkWordWrap" xml:space="preserve">
+    <value>Word wrap</value>
+  </data>
   <data name="strDlgReset" xml:space="preserve">
     <value>Do you want to reset all fields
 to their default values?</value>
@@ -190,6 +193,9 @@ to their default values?</value>
   <data name="strGrpFont" xml:space="preserve">
     <value>Current font</value>
   </data>
+  <data name="strLblBackColor" xml:space="preserve">
+    <value>Back color: {0}</value>
+  </data>
   <data name="strLblDataFormat" xml:space="preserve">
     <value>Numeric data-formatting string</value>
   </data>
@@ -200,7 +206,7 @@ to their default values?</value>
     <value>Font color: {0}</value>
   </data>
   <data name="strLblFontName" xml:space="preserve">
-    <value>Font name: {0}</value>
+    <value>Font {0}, size {1}</value>
   </data>
   <data name="strLblFontSize" xml:space="preserve">
     <value>Font size: {0}</value>

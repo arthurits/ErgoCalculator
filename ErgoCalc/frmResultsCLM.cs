@@ -11,18 +11,10 @@ public partial class FrmResultsCLM : Form, IChildResults
 {
     // Variable definition
     private Job _job;
-    private readonly ResultsOptions _options;
 
     public FrmResultsCLM()
     {
         InitializeComponent();
-
-        // Initialize private variable
-        _options = new ResultsOptions(rtbShowResult);
-
-        propertyGrid1.SelectedObject = _options;
-        splitContainer1.Panel1Collapsed = true;
-        //rtbShowResult.Size = this.ClientSize;
     }
 
     public FrmResultsCLM(Job job)
@@ -272,17 +264,6 @@ public partial class FrmResultsCLM : Form, IChildResults
         set { }
     }
 
-    public void ShowHideSettings()
-    {
-        splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-        return;
-    }
-
-    public bool PanelCollapsed()
-    {
-        return this.splitContainer1.Panel1Collapsed;
-    }
-
     public void FormatText()
     {
         // Underline
@@ -306,6 +287,7 @@ public partial class FrmResultsCLM : Form, IChildResults
         rtbShowResult.SelectionStart = 0;
         rtbShowResult.SelectionLength = 0;
     }
+    
     #endregion IChildResults
 
 }

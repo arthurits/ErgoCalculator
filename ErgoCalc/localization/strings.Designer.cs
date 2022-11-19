@@ -115,6 +115,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Word wrap.
+        /// </summary>
+        internal static string strChkWordWrap {
+            get {
+                return ResourceManager.GetString("strChkWordWrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to reset all fields
         ///to their default values?.
         /// </summary>
@@ -278,6 +287,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back color: {0}.
+        /// </summary>
+        internal static string strLblBackColor {
+            get {
+                return ResourceManager.GetString("strLblBackColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numeric data-formatting string.
         /// </summary>
         internal static string strLblDataFormat {
@@ -305,7 +323,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Font name: {0}.
+        ///   Looks up a localized string similar to Font {0}, size {1}.
         /// </summary>
         internal static string strLblFontName {
             get {

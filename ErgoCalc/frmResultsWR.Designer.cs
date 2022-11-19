@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmResultsWR));
             this.mnuSub = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,19 +35,13 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.algoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.plot = new ScottPlot.FormsPlot();
             this.toolStripWR = new System.Windows.Forms.ToolStrip();
             this.toolStripWR_SaveChart = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_AddLine = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_RemoveLine = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_Settings = new System.Windows.Forms.ToolStripButton();
+            this.plot = new ScottPlot.FormsPlot();
             this.mnuSub.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.toolStripWR.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -107,44 +100,6 @@
             this.algoToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
             this.algoToolStripMenuItem.Text = "Algo";
             this.algoToolStripMenuItem.Click += new System.EventHandler(this.algoToolStripMenuItem_Click);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
-            this.splitContainer1.Panel1MinSize = 0;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.plot);
-            this.splitContainer1.Size = new System.Drawing.Size(673, 450);
-            this.splitContainer1.SplitterDistance = 198;
-            this.splitContainer1.SplitterWidth = 5;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(198, 450);
-            this.propertyGrid1.TabIndex = 0;
-            // 
-            // chart
-            // 
-            this.plot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.plot.Location = new System.Drawing.Point(0, 0);
-            this.plot.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.plot.Name = "chart";
-            this.plot.Size = new System.Drawing.Size(470, 450);
-            this.plot.TabIndex = 2;
             // 
             // toolStripWR
             // 
@@ -210,24 +165,29 @@
             this.toolStripWR_Settings.ToolTipText = "Toggle settings";
             this.toolStripWR_Settings.CheckedChanged += new System.EventHandler(this.toolStripMain_Settings_CheckedChanged);
             // 
-            // frmWRmodel
+            // plot
+            // 
+            this.plot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.plot.Location = new System.Drawing.Point(0, 24);
+            this.plot.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
+            this.plot.Name = "plot";
+            this.plot.Size = new System.Drawing.Size(673, 450);
+            this.plot.TabIndex = 4;
+            // 
+            // FrmResultsWR
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 474);
+            this.Controls.Add(this.plot);
             this.Controls.Add(this.toolStripWR);
-            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.mnuSub);
             this.MainMenuStrip = this.mnuSub;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "frmWRmodel";
+            this.Name = "FrmResultsWR";
             this.Text = "WR model";
             this.mnuSub.ResumeLayout(false);
             this.mnuSub.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.toolStripWR.ResumeLayout(false);
             this.toolStripWR.PerformLayout();
             this.ResumeLayout(false);
@@ -243,8 +203,6 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem algoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.ToolStrip toolStripWR;
         private System.Windows.Forms.ToolStripButton toolStripWR_Settings;
         private System.Windows.Forms.ToolStripButton toolStripWR_AddLine;

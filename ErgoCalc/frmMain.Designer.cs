@@ -40,6 +40,8 @@
             this.staMainFrm = new System.Windows.Forms.StatusStrip();
             this.statusStripLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelCulture = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripLabelFont = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripLabelFontColor = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelWordWrap = new System.Windows.Forms.ToolStripStatusLabelEx();
             this.statusStripLabelBackColor = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripLabelZoom = new System.Windows.Forms.ToolStripStatusLabel();
@@ -143,6 +145,8 @@
             this.staMainFrm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStripLabel,
             this.statusStripLabelCulture,
+            this.statusStripLabelFont,
+            this.statusStripLabelFontColor,
             this.statusStripLabelWordWrap,
             this.statusStripLabelBackColor,
             this.statusStripLabelZoom});
@@ -157,7 +161,7 @@
             // 
             this.statusStripLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusStripLabel.Name = "statusStripLabel";
-            this.statusStripLabel.Size = new System.Drawing.Size(752, 23);
+            this.statusStripLabel.Size = new System.Drawing.Size(694, 23);
             this.statusStripLabel.Spring = true;
             this.statusStripLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -171,12 +175,37 @@
             this.statusStripLabelCulture.ToolTipText = "UI culture";
             this.statusStripLabelCulture.Click += new System.EventHandler(this.Language_Click);
             // 
+            // statusStripLabelFont
+            // 
+            this.statusStripLabelFont.BackColor = System.Drawing.Color.Transparent;
+            this.statusStripLabelFont.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabelFont.Enabled = false;
+            this.statusStripLabelFont.Name = "statusStripLabelFont";
+            this.statusStripLabelFont.Size = new System.Drawing.Size(23, 23);
+            this.statusStripLabelFont.Text = "—";
+            this.statusStripLabelFont.ToolTipText = "Select font";
+            this.statusStripLabelFont.Click += new System.EventHandler(this.LabelFont_Click);
+            // 
+            // statusStripLabelFontColor
+            // 
+            this.statusStripLabelFontColor.AutoSize = false;
+            this.statusStripLabelFontColor.BackColor = System.Drawing.Color.Transparent;
+            this.statusStripLabelFontColor.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
+            | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
+            this.statusStripLabelFontColor.Enabled = false;
+            this.statusStripLabelFontColor.Name = "statusStripLabelFontColor";
+            this.statusStripLabelFontColor.Size = new System.Drawing.Size(28, 23);
+            this.statusStripLabelFontColor.ToolTipText = "Select font color";
+            this.statusStripLabelFontColor.Click += new System.EventHandler(this.LabelFontColor_Click);
+            // 
             // statusStripLabelWordWrap
             // 
             this.statusStripLabelWordWrap.AutoSize = false;
             this.statusStripLabelWordWrap.BackColor = System.Drawing.Color.Transparent;
             this.statusStripLabelWordWrap.Checked = false;
             this.statusStripLabelWordWrap.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripLabelWordWrap.Enabled = false;
             this.statusStripLabelWordWrap.ForeColor = System.Drawing.Color.LightGray;
             this.statusStripLabelWordWrap.ForeColorChecked = System.Drawing.Color.Black;
             this.statusStripLabelWordWrap.ForeColorUnchecked = System.Drawing.Color.LightGray;
@@ -193,20 +222,22 @@
             this.statusStripLabelBackColor.BorderSides = ((System.Windows.Forms.ToolStripStatusLabelBorderSides)((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left | System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) 
             | System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom)));
-            this.statusStripLabelBackColor.ForeColor = System.Drawing.Color.Black;
+            this.statusStripLabelBackColor.Enabled = false;
+            this.statusStripLabelBackColor.ForeColor = System.Drawing.SystemColors.ControlText;
             this.statusStripLabelBackColor.Name = "statusStripLabelBackColor";
             this.statusStripLabelBackColor.Size = new System.Drawing.Size(28, 23);
             this.statusStripLabelBackColor.ToolTipText = "Select text backcolor";
-            this.statusStripLabelBackColor.Click += new System.EventHandler(this.LabelColor_Click);
+            this.statusStripLabelBackColor.Click += new System.EventHandler(this.LabelBackColor_Click);
             // 
             // statusStripLabelZoom
             // 
             this.statusStripLabelZoom.AutoSize = false;
             this.statusStripLabelZoom.BackColor = System.Drawing.Color.Transparent;
             this.statusStripLabelZoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.statusStripLabelZoom.ForeColor = System.Drawing.Color.Black;
+            this.statusStripLabelZoom.Enabled = false;
+            this.statusStripLabelZoom.ForeColor = System.Drawing.SystemColors.ControlText;
             this.statusStripLabelZoom.Name = "statusStripLabelZoom";
-            this.statusStripLabelZoom.Size = new System.Drawing.Size(28, 23);
+            this.statusStripLabelZoom.Size = new System.Drawing.Size(35, 23);
             this.statusStripLabelZoom.Text = "Z";
             this.statusStripLabelZoom.ToolTipText = "Select zoom factor";
             this.statusStripLabelZoom.Click += new System.EventHandler(this.LabelZoom_Click);
@@ -445,5 +476,7 @@
         private System.Windows.Forms.ToolStripStatusLabelEx statusStripLabelWordWrap;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelBackColor;
         private System.Windows.Forms.ToolStripStatusLabel statusStripLabelZoom;
+        private ToolStripStatusLabel statusStripLabelFont;
+        private ToolStripStatusLabel statusStripLabelFontColor;
     }
 }

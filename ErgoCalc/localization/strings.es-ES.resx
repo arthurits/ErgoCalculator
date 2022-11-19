@@ -135,6 +135,9 @@
   <data name="strChkDlgPath" xml:space="preserve">
     <value>Recordar la ruta previa al abrir y guardar</value>
   </data>
+  <data name="strChkWordWrap" xml:space="preserve">
+    <value>Ajustar palabras</value>
+  </data>
   <data name="strDlgReset" xml:space="preserve">
     <value>¿Está seguro de que desea restablecer todos
 los campos a sus valores por defecto?</value>
@@ -190,6 +193,9 @@ los campos a sus valores por defecto?</value>
   <data name="strGrpFont" xml:space="preserve">
     <value>Fuente actual</value>
   </data>
+  <data name="strLblBackColor" xml:space="preserve">
+    <value>Color de fondo: {0}</value>
+  </data>
   <data name="strLblDataFormat" xml:space="preserve">
     <value>Cadena de formato numérico</value>
   </data>
@@ -200,7 +206,7 @@ los campos a sus valores por defecto?</value>
     <value>Color de la fuente: {0}</value>
   </data>
   <data name="strLblFontName" xml:space="preserve">
-    <value>Nombre de la fuente: {0}</value>
+    <value>Fuente {0}, tamaño {1}</value>
   </data>
   <data name="strLblFontSize" xml:space="preserve">
     <value>Tamaño de la fuente: {0}</value>

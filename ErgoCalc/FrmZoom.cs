@@ -5,7 +5,7 @@ namespace ErgoCalc;
 public partial class FrmZoom : Form
 {
     private CultureInfo _culture;
-    public float ZoomLevel { get; private set; } = 1f;
+    public int ZoomLevel { get; private set; } = 100;
 
     public FrmZoom()
     {
@@ -17,12 +17,12 @@ public partial class FrmZoom : Form
     /// </summary>
     /// <param name="zoomLevel">Defalut value to show</param>
     /// <param name="culture">Culture to set the control's text properties</param>
-    public FrmZoom(float zoomLevel, CultureInfo culture)
+    public FrmZoom(int zoomLevel, CultureInfo culture)
         :this()
     {
         _culture = culture;
         ZoomLevel = zoomLevel;
-        this.updZoom.Value = (decimal)ZoomLevel;
+        this.updZoomFactor.Value = (decimal)ZoomLevel;
         UpdateUI_Language(culture);
         RelocateControls();
     }
@@ -30,20 +30,20 @@ public partial class FrmZoom : Form
     private void Accept(object sender, EventArgs e)
     {
         this.DialogResult = DialogResult.None;
-        ZoomLevel = (float)this.updZoom.Value;
+        ZoomLevel = (int)this.updZoomFactor.Value;
         this.DialogResult = DialogResult.OK;
     }
 
     private void updZoom_ValueChanged(object sender, EventArgs e)
     {
-        int ratio = Convert.ToInt32(10 * updZoom.Value);
-        if (trackZoom.Value != ratio) trackZoom.Value = ratio;
+        int ratio = Convert.ToInt32(updZoomFactor.Value);
+        if (trackZoomFactor.Value != ratio) trackZoomFactor.Value = ratio;
     }
 
     private void trackZoom_ValueChanged(object sender, EventArgs e)
     {
-        decimal ratio = (decimal)trackZoom.Value / 10;
-        if (updZoom.Value != ratio) updZoom.Value = ratio;
+        decimal ratio = (decimal)trackZoomFactor.Value;
+        if (updZoomFactor.Value != ratio) updZoomFactor.Value = ratio;
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public partial class FrmZoom : Form
     {
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
-        this.lblZoom.Text = StringResources.LblZoom;
+        this.lblZoomFactor.Text = StringResources.LblZoomFactor;
     }
 
     /// <summary>
@@ -62,6 +62,6 @@ public partial class FrmZoom : Form
     /// </summary>
     private void RelocateControls()
     {
-        this.updZoom.Left = this.lblZoom.Left + this.lblZoom.Width + 3;
+        this.updZoomFactor.Left = this.lblZoomFactor.Left + this.lblZoomFactor.Width + 3;
     }
 }

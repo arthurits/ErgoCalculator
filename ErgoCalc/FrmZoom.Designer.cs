@@ -28,53 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.trackZoom = new System.Windows.Forms.TrackBar();
-            this.updZoom = new System.Windows.Forms.NumericUpDown();
-            this.lblZoom = new System.Windows.Forms.Label();
+            this.trackZoomFactor = new System.Windows.Forms.TrackBar();
+            this.updZoomFactor = new System.Windows.Forms.NumericUpDown();
+            this.lblZoomFactor = new System.Windows.Forms.Label();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.updZoom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackZoomFactor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updZoomFactor)).BeginInit();
             this.SuspendLayout();
             // 
-            // trackZoom
+            // trackZoomFactor
             // 
-            this.trackZoom.Location = new System.Drawing.Point(12, 61);
-            this.trackZoom.Maximum = 50;
-            this.trackZoom.Name = "trackZoom";
-            this.trackZoom.Size = new System.Drawing.Size(312, 45);
-            this.trackZoom.TabIndex = 1;
-            this.trackZoom.TickFrequency = 10;
-            this.trackZoom.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackZoom.ValueChanged += new System.EventHandler(this.trackZoom_ValueChanged);
+            this.trackZoomFactor.Location = new System.Drawing.Point(12, 61);
+            this.trackZoomFactor.Maximum = 500;
+            this.trackZoomFactor.Name = "trackZoomFactor";
+            this.trackZoomFactor.Size = new System.Drawing.Size(312, 45);
+            this.trackZoomFactor.TabIndex = 1;
+            this.trackZoomFactor.TickFrequency = 10;
+            this.trackZoomFactor.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.trackZoomFactor.ValueChanged += new System.EventHandler(this.trackZoom_ValueChanged);
             // 
-            // updZoom
+            // updZoomFactor
             // 
-            this.updZoom.DecimalPlaces = 1;
-            this.updZoom.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.updZoom.Location = new System.Drawing.Point(114, 18);
-            this.updZoom.Maximum = new decimal(new int[] {
-            5,
+            this.updZoomFactor.Location = new System.Drawing.Point(114, 18);
+            this.updZoomFactor.Maximum = new decimal(new int[] {
+            500,
             0,
             0,
             0});
-            this.updZoom.Name = "updZoom";
-            this.updZoom.Size = new System.Drawing.Size(50, 25);
-            this.updZoom.TabIndex = 0;
-            this.updZoom.ValueChanged += new System.EventHandler(this.updZoom_ValueChanged);
+            this.updZoomFactor.Name = "updZoomFactor";
+            this.updZoomFactor.Size = new System.Drawing.Size(50, 25);
+            this.updZoomFactor.TabIndex = 0;
+            this.updZoomFactor.ValueChanged += new System.EventHandler(this.updZoom_ValueChanged);
             // 
-            // lblZoom
+            // lblZoomFactor
             // 
-            this.lblZoom.AutoSize = true;
-            this.lblZoom.Location = new System.Drawing.Point(12, 20);
-            this.lblZoom.Name = "lblZoom";
-            this.lblZoom.Size = new System.Drawing.Size(97, 19);
-            this.lblZoom.TabIndex = 2;
-            this.lblZoom.Text = "Set zoom level";
+            this.lblZoomFactor.AutoSize = true;
+            this.lblZoomFactor.Location = new System.Drawing.Point(12, 20);
+            this.lblZoomFactor.Name = "lblZoomFactor";
+            this.lblZoomFactor.Size = new System.Drawing.Size(97, 19);
+            this.lblZoomFactor.TabIndex = 2;
+            this.lblZoomFactor.Text = "Set zoom level";
             // 
             // btnAccept
             // 
@@ -103,9 +97,9 @@
             this.ClientSize = new System.Drawing.Size(336, 170);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
-            this.Controls.Add(this.lblZoom);
-            this.Controls.Add(this.updZoom);
-            this.Controls.Add(this.trackZoom);
+            this.Controls.Add(this.lblZoomFactor);
+            this.Controls.Add(this.updZoomFactor);
+            this.Controls.Add(this.trackZoomFactor);
             this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -113,8 +107,8 @@
             this.Name = "FrmZoom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Zoom level";
-            ((System.ComponentModel.ISupportInitialize)(this.trackZoom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.updZoom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackZoomFactor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.updZoomFactor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,9 +116,9 @@
 
         #endregion
 
-        private TrackBar trackZoom;
-        private NumericUpDown updZoom;
-        private Label lblZoom;
+        private TrackBar trackZoomFactor;
+        private NumericUpDown updZoomFactor;
+        private Label lblZoomFactor;
         private Button btnAccept;
         private Button btnCancel;
     }

@@ -103,14 +103,16 @@ public static class StringResources
     public static string LblDlgFont => StringRM.GetString("strLblDlgFont", Culture) ?? "Change current font";
     public static string BtnDlgFont => StringRM.GetString("strBtnDlgFont", Culture) ?? "Select";
     public static string GrpFont => StringRM.GetString("strGrpFont", Culture) ?? "Current font";
-    public static string LblFontName => StringRM.GetString("strLblFontName", Culture) ?? "Font name: {0}";
+    public static string LblFontName => StringRM.GetString("strLblFontName", Culture) ?? "Font {0}, size {1}";
     public static string LblFontStyle => StringRM.GetString("strLblFontStyle", Culture) ?? "Font style: {0}";
-    public static string LblFontSize => StringRM.GetString("strLblFontSize", Culture) ?? "Font size: {0}";
+    //public static string LblFontSize => StringRM.GetString("strLblFontSize", Culture) ?? "Font size: {0}";
     public static string LblFontColor => StringRM.GetString("strLblFontColor", Culture) ?? "Font color: {0}";
+    public static string ChkWordWrap => StringRM.GetString("strChkWordWrap", Culture) ?? "Word wrap";
+    public static string LblBackColor => StringRM.GetString("strLblBackColor", Culture) ?? "Back color: {0}";
 
     // Form Zoom
     public static string FormZoom => StringRM.GetString("strFormZoom", Culture) ?? "Zoom level";
-    public static string LblZoom => StringRM.GetString("strLblZoom", Culture) ?? "Set zoom level";
+    public static string LblZoomFactor => StringRM.GetString("strLblZoom", Culture) ?? "Set zoom level";
 
     // Message box
     public static string MsgBoxExit => StringRM.GetString("strMsgBoxExit", Culture) ?? "Are you sure you want to exit" + Environment.NewLine + "the application?";

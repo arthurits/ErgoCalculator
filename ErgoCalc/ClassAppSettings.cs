@@ -112,5 +112,5 @@ public class AppSettings
     /// RichText zoom
     /// </summary>
     [JsonPropertyName("Text zoom")]
-    public float TextZoom { get; set; } = 1f;
+    public int TextZoom { get; set; } = 100;
 }

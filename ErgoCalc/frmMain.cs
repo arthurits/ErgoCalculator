@@ -112,34 +112,42 @@ public partial class FrmMain : Form
         //if (ActiveMdiChild is frmResultNIOSHmodel frmChildNIOSH) ToolStripManager.Merge(frmChildNIOSH.toolStripNIOSH, this.toolStripMain);
 
 
-        if (this.ActiveMdiChild is IChildResults)
+        if (this.MdiChildren.Length == 1 && (this.MdiChildren[0].Disposing || this.MdiChildren[0].IsDisposed))   // If we are down to the last child window
         {
-            if (this.MdiChildren.Length == 1)   // If we are down to the last child window
-            {
-                if (this.MdiChildren[0].Disposing || this.MdiChildren[0].IsDisposed)
-                {
-                    //toolStripMain.Items["toolStripMain_Settings"].Enabled = false;
-                    this.ToolBarEnable();
-                    //MessageBox.Show("Cerrando última ventana");
-                }
-                else
-                {
-                    this.ToolBarEnable(((IChildResults)this.ActiveMdiChild).GetToolbarEnabledState());
-                    this.toolStripMain_Settings.Checked = !((IChildResults)this.ActiveMdiChild).PanelCollapsed();
-                }
-
-            }
-            else
-            {
-                this.ToolBarEnable(((IChildResults)this.ActiveMdiChild).GetToolbarEnabledState());
-                this.toolStripMain_Settings.Checked = !((IChildResults)this.ActiveMdiChild).PanelCollapsed();
-            }
-
-        }
-        else // this should be impossible
-        {
+            //toolStripMain.Items["toolStripMain_Settings"].Enabled = false;
             this.ToolBarEnable();
+            //MessageBox.Show("Cerrando última ventana");
+            this.statusStripLabelFont.Enabled = false;
+            this.statusStripLabelFontColor.Enabled = false;
+            this.statusStripLabelWordWrap.Enabled = false;
+            this.statusStripLabelBackColor.Enabled = false;
+            this.statusStripLabelZoom.Enabled = false;
+
         }
+        else
+        {
+            this.ToolBarEnable(((IChildResults)this.ActiveMdiChild).GetToolbarEnabledState());
+            //this.toolStripMain_Settings.Checked = !((IChildResults)this.ActiveMdiChild).PanelCollapsed();
+
+            if (this.statusStripLabelFont.Enabled == false)
+            {
+                this.statusStripLabelFont.Enabled = true;
+                this.statusStripLabelFontColor.Enabled = true;
+                this.statusStripLabelWordWrap.Enabled = true;
+                this.statusStripLabelBackColor.Enabled = true;
+                this.statusStripLabelZoom.Enabled = true;
+            }
+
+            if (ActiveMdiChild is IChildResults)
+            {
+                this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, ((RichTextBox)ActiveMdiChild.ActiveControl).Font.Name, ((RichTextBox)ActiveMdiChild.ActiveControl).Font.Size);
+                this.statusStripLabelFontColor.BackColor = ((RichTextBox)ActiveMdiChild.ActiveControl).ForeColor;
+                this.statusStripLabelWordWrap.Checked = ((RichTextBox)ActiveMdiChild.ActiveControl).WordWrap;
+                this.statusStripLabelBackColor.BackColor = ((RichTextBox)ActiveMdiChild.ActiveControl).BackColor;
+                this.statusStripLabelZoom.Text = $"{100 * ((RichTextBox)ActiveMdiChild.ActiveControl).ZoomFactor}x";
+            }
+        }
+
         //https://stackoverflow.com/questions/10011600/how-to-recognize-the-active-child-form-and-fire-a-common-method-which-exist-in
 
     }

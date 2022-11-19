@@ -19,7 +19,12 @@ public partial class FrmSettings : Form
     {
         Settings = settings;
         _culture = settings.AppCulture;
+        lblFont.Text = $"{Settings.FontFamilyName}, size {Settings.FontSize}";
+        lblFontStyle.Text = $"{Settings.FontStyle}";
         pctFontColor.BackColor = Color.FromArgb(Settings.FontColor);
+        chkWordWrap.Checked = Settings.WordWrap;
+        pctBackColor.BackColor = Color.FromArgb(Settings.TextBackColor);
+        updZoomFactor.Value = (decimal)Settings.TextZoom;
         UpdateControls(settings);
     }
 
@@ -28,7 +33,7 @@ public partial class FrmSettings : Form
         FontDialog fontDlg = new();
 
         fontDlg.ShowApply = false;
-        fontDlg.ShowColor = true;
+        fontDlg.ShowColor = false;
         fontDlg.ShowEffects = true;
         fontDlg.ShowHelp = false;
         fontDlg.FontMustExist = true;
@@ -46,15 +51,15 @@ public partial class FrmSettings : Form
             Settings.FontSize = fontDlg.Font.Size;
             Settings.FontColor = fontDlg.Color.ToArgb();
 
-            lblFontName.Text = fontDlg.Font.Name;
+            lblFont.Text = fontDlg.Font.Name;
             lblFontStyle.Text = fontDlg.Font.Style.ToString();
             lblFontSize.Text = fontDlg.Font.Size.ToString();
             lblFontColor.Text = fontDlg.Color.ToString();
-            this.lblFontName.Text = String.Format(StringResources.LblFontName, Settings.FontFamilyName);
+            this.lblFont.Text = String.Format(StringResources.LblFontName, Settings.FontFamilyName, Settings.FontSize);
             this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings.FontStyle.ToString());
-            this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings.FontSize.ToString());
+            //this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings.FontSize.ToString());
             this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings.FontColor.ToString("X"));
-            pctFontColor.BackColor = fontDlg.Color;
+            //pctFontColor.BackColor = fontDlg.Color;
         }
     }
 
@@ -185,18 +190,21 @@ public partial class FrmSettings : Form
     {
         StringResources.Culture = culture;
 
-        this.Text = StringResources.FrmSettings; ;
+        this.Text = StringResources.FrmSettings;
 
         this.tabPlot.Text = StringResources.TabPlot;
         this.tabGUI.Text = StringResources.TabGUI;
 
         this.lblDlgFont.Text = StringResources.LblDlgFont;
         this.btnDlgFont.Text=StringResources.BtnDlgFont;
-        this.grpFont.Text= StringResources.GrpFont;
-        this.lblFontName.Text = String.Format(StringResources.LblFontName, Settings?.FontFamilyName);
+        //this.grpFont.Text= StringResources.GrpFont;
+        this.lblFont.Text = String.Format(StringResources.LblFontName, Settings?.FontFamilyName, Settings?.FontSize);
         this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings?.FontStyle.ToString());
-        this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings?.FontSize.ToString());
+        //this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings?.FontSize.ToString());
         this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings?.FontColor.ToString("X"));
+        this.chkWordWrap.Text = StringResources.ChkWordWrap;
+        this.lblBackColor.Text = String.Format(StringResources.LblBackColor, Settings?.TextBackColor.ToString("X"));
+        this.lblZoomFactor.Text = StringResources.LblZoomFactor;
 
         this.grpCulture.Text = StringResources.GrpCulture;
         this.radCurrentCulture.Text = StringResources.RadCurrentCulture + $" ({System.Globalization.CultureInfo.CurrentCulture.Name})";
@@ -218,11 +226,52 @@ public partial class FrmSettings : Form
     /// </summary>
     private void RelocateControls()
     {
-        this.btnDlgFont.Left = this.lblDlgFont.Left + this.lblDlgFont.Width + 5;
+        this.btnDlgFont.Left = this.lblFont.Left + this.lblFont.Width + 5;
         this.pctFontColor.Left = this.lblFontColor.Left + this.lblFontColor.Width + 5;
+        this.pctBackColor.Left = this.lblBackColor.Left + this.lblBackColor.Width + 5;
+        this.updZoomFactor.Left = this.lblZoomFactor.Left + this.lblZoomFactor.Width + 5;
 
         this.txtDataFormat.Left = this.lblDataFormat.Left + this.lblDataFormat.Width;
         this.lblDataFormat.Top = this.txtDataFormat.Top + (txtDataFormat.Height - lblDataFormat.Height) / 2;
     }
 
+    private void updZoomFactor_ValueChanged(object sender, EventArgs e)
+    {
+        int ratio = Convert.ToInt32(updZoomFactor.Value);
+        if (trackZoomFactor.Value != ratio) trackZoomFactor.Value = ratio;
+    }
+
+    private void trackZoomFactor_ValueChanged(object sender, EventArgs e)
+    {
+        decimal ratio = (decimal)trackZoomFactor.Value;
+        if (updZoomFactor.Value != ratio) updZoomFactor.Value = ratio;
+    }
+
+    private void pctFontColor_Click(object sender, EventArgs e)
+    {
+        ColorDialog colorDlg = new();
+        colorDlg.AllowFullOpen = true;
+        colorDlg.FullOpen = true;
+        colorDlg.AnyColor = true;
+        colorDlg.Color = Color.FromArgb(Settings.FontColor);
+        if (colorDlg.ShowDialog(this) == DialogResult.OK)
+        {
+            pctFontColor.BackColor = colorDlg.Color;
+            Settings.FontColor = colorDlg.Color.ToArgb();
+        }
+    }
+
+    private void pctBackColor_Click(object sender, EventArgs e)
+    {
+        ColorDialog colorDlg = new();
+        colorDlg.AllowFullOpen = true;
+        colorDlg.FullOpen = true;
+        colorDlg.AnyColor = true;
+        colorDlg.Color = Color.FromArgb(Settings.TextBackColor);
+        if (colorDlg.ShowDialog(this) == DialogResult.OK)
+        {
+            pctBackColor.BackColor = colorDlg.Color;
+            Settings.TextBackColor = colorDlg.Color.ToArgb();
+        }
+    }
 }

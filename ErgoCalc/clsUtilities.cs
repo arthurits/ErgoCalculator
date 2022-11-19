@@ -405,16 +405,16 @@ public interface IChildResults
     /// </summary>
     ToolStrip ChildToolStrip { get; set; }
 
-    /// <summary>
-    /// Sets the enabled/disabled state of the ToolStripButtons in the parent MDI form
-    /// </summary>
-    void ShowHideSettings();
+    ///// <summary>
+    ///// Sets the enabled/disabled state of the ToolStripButtons in the parent MDI form
+    ///// </summary>
+    //void ShowHideSettings();
 
-    /// <summary>
-    /// Gets the state of the splitContainer1.Panel1Collapsed
-    /// </summary>
-    /// <returns>True if the PropertyGrid is visible, false if it is collapsed</returns>
-    bool PanelCollapsed();
+    ///// <summary>
+    ///// Gets the state of the splitContainer1.Panel1Collapsed
+    ///// </summary>
+    ///// <returns>True if the PropertyGrid is visible, false if it is collapsed</returns>
+    //bool PanelCollapsed();
 
     /// <summary>
     /// Formats the text shown in the RichtTextBox

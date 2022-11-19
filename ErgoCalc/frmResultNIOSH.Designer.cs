@@ -29,62 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmResultNIOSH));
-            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.toolStripNIOSH = new System.Windows.Forms.ToolStrip();
             this.toolStripNIOSH_Save = new System.Windows.Forms.ToolStripButton();
             this.toolStripNIOSH_Settings = new System.Windows.Forms.ToolStripButton();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.rtbShowResult = new System.Windows.Forms.RichTextBox();
             this.toolStripNIOSH.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // rtbShowResult
-            // 
-            this.rtbShowResult.AcceptsTab = true;
-            this.rtbShowResult.BackColor = System.Drawing.SystemColors.Window;
-            this.rtbShowResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbShowResult.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbShowResult.Location = new System.Drawing.Point(0, 0);
-            this.rtbShowResult.Name = "rtbShowResult";
-            this.rtbShowResult.ReadOnly = true;
-            this.rtbShowResult.ShowSelectionMargin = true;
-            this.rtbShowResult.Size = new System.Drawing.Size(771, 468);
-            this.rtbShowResult.TabIndex = 0;
-            this.rtbShowResult.Text = "";
-            this.rtbShowResult.WordWrap = false;
-            this.rtbShowResult.DoubleClick += new System.EventHandler(this.rtbShowResult_DoubleClick);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 70);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
-            this.splitContainer1.Panel1MinSize = 0;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.rtbShowResult);
-            this.splitContainer1.Size = new System.Drawing.Size(975, 468);
-            this.splitContainer1.SplitterDistance = 200;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // propertyGrid1
-            // 
-            this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(200, 468);
-            this.propertyGrid1.TabIndex = 0;
             // 
             // toolStripNIOSH
             // 
@@ -119,21 +69,32 @@
             this.toolStripNIOSH_Settings.Text = "Settings";
             this.toolStripNIOSH_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
-            // frmResultNIOSHmodel
+            // rtbShowResult
+            // 
+            this.rtbShowResult.AcceptsTab = true;
+            this.rtbShowResult.BackColor = System.Drawing.SystemColors.Window;
+            this.rtbShowResult.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbShowResult.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.rtbShowResult.Location = new System.Drawing.Point(0, 0);
+            this.rtbShowResult.Name = "rtbShowResult";
+            this.rtbShowResult.ReadOnly = true;
+            this.rtbShowResult.ShowSelectionMargin = true;
+            this.rtbShowResult.Size = new System.Drawing.Size(975, 538);
+            this.rtbShowResult.TabIndex = 3;
+            this.rtbShowResult.Text = "";
+            this.rtbShowResult.WordWrap = false;
+            // 
+            // FrmResultNIOSH
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 538);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.rtbShowResult);
             this.Controls.Add(this.toolStripNIOSH);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name = "frmResultNIOSHmodel";
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Name = "FrmResultNIOSH";
             this.Text = "NIOSH model results";
             this.Shown += new System.EventHandler(this.frmResultNIOSHModel_Shown);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.toolStripNIOSH.ResumeLayout(false);
             this.toolStripNIOSH.PerformLayout();
             this.ResumeLayout(false);
@@ -142,12 +103,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox rtbShowResult;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.ToolStrip toolStripNIOSH;
         private System.Windows.Forms.ToolStripButton toolStripNIOSH_Save;
         private System.Windows.Forms.ToolStripButton toolStripNIOSH_Settings;
+        private RichTextBox rtbShowResult;
     }
 }
