@@ -129,7 +129,7 @@ public partial class FrmMain : Form
             this.ToolBarEnable(((IChildResults)this.ActiveMdiChild).GetToolbarEnabledState());
             //this.toolStripMain_Settings.Checked = !((IChildResults)this.ActiveMdiChild).PanelCollapsed();
 
-            if (this.statusStripLabelFont.Enabled == false)
+            if (this.statusStripLabelFont.Enabled == false && ActiveMdiChild.ActiveControl is RichTextBox)
             {
                 this.statusStripLabelFont.Enabled = true;
                 this.statusStripLabelFontColor.Enabled = true;
@@ -138,13 +138,14 @@ public partial class FrmMain : Form
                 this.statusStripLabelZoom.Enabled = true;
             }
 
-            if (ActiveMdiChild is IChildResults)
+            if (ActiveMdiChild is IChildResults && ActiveMdiChild.ActiveControl is RichTextBox richText)
             {
-                this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, ((RichTextBox)ActiveMdiChild.ActiveControl).Font.Name, ((RichTextBox)ActiveMdiChild.ActiveControl).Font.Size);
-                this.statusStripLabelFontColor.BackColor = ((RichTextBox)ActiveMdiChild.ActiveControl).ForeColor;
-                this.statusStripLabelWordWrap.Checked = ((RichTextBox)ActiveMdiChild.ActiveControl).WordWrap;
-                this.statusStripLabelBackColor.BackColor = ((RichTextBox)ActiveMdiChild.ActiveControl).BackColor;
-                this.statusStripLabelZoom.Text = $"{100 * ((RichTextBox)ActiveMdiChild.ActiveControl).ZoomFactor}x";
+                this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, richText.Font.Name, richText.Font.Size);
+                this.statusStripLabelFontColor.BackColor = richText.ForeColor;
+                this.statusStripLabelWordWrap.Checked = richText.WordWrap;
+                this.statusStripLabelBackColor.BackColor = richText.BackColor;
+                this.statusStripLabelZoom.Text = $"{100 * richText.ZoomFactor}x";
+
             }
         }
 
