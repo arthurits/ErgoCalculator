@@ -24,7 +24,7 @@ public partial class FrmMain : Form
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
         // Other settings
-        StatusStripFormat_SetValues(wordWrap: _settings.WordWrap, backColor: Color.FromArgb(_settings.TextBackColor), zoomFactor: _settings.TextZoom/100);
+        StatusStripFormat_SetValues(wordWrap: _settings.WordWrap, backColor: Color.FromArgb(_settings.TextBackColor), zoomFactor: _settings.TextZoom / 100);
 
         UpdateUI_Language();
     }
