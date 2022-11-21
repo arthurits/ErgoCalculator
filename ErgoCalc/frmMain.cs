@@ -24,9 +24,7 @@ public partial class FrmMain : Form
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
         // Other settings
-        this.statusStripLabelWordWrap.Checked = _settings.WordWrap;
-        this.statusStripLabelBackColor.BackColor = Color.FromArgb(_settings.TextBackColor);
-        this.statusStripLabelZoom.Text = $"{_settings.TextZoom.ToString()}x";
+        StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, _settings.WordWrap, Color.FromArgb(_settings.TextBackColor), _settings.TextZoom);
 
         UpdateUI_Language();
     }
@@ -89,63 +87,28 @@ public partial class FrmMain : Form
         ToolStripManager.RevertMerge(this.toolStripMain);
         if (ActiveMdiChild is FrmResultsWR form)
         {
-            // The frmChild.FormToolStrip is a property that exposes the
-            // toolstrip on your child form
-            // ToolStripManager.Merge(frmChild.toolStripWR, this.toolStripMain);
             ToolStripManager.Merge(form.ChildToolStrip, this.toolStripMain);
-            //this.Controls.Add(frmChild.toolStripWR);
-            //((frmWRmodel)ActiveMdiChild).toolStripWR.Visible = true;
-            //this.tspTop.Join(((frmWRmodel)ActiveMdiChild).toolStripWR, 1);
-
         }
-
-        /*if (ActiveMdiChild is frmWRmodel frmChild)
-        {
-            // The frmChild.FormToolStrip is a property that exposes the
-            // toolstrip on your child form
-            ToolStripManager.Merge(frmChild.toolStripWR, this.toolStripMain);
-            //this.Controls.Add(frmChild.toolStripWR);
-            //frmChild.toolStripWR.Visible = true;
-            //this.tspTop.Join(frmChild.toolStripWR, 1);
-
-        }*/
-        //if (ActiveMdiChild is frmResultNIOSHmodel frmChildNIOSH) ToolStripManager.Merge(frmChildNIOSH.toolStripNIOSH, this.toolStripMain);
-
 
         if (this.MdiChildren.Length == 1 && (this.MdiChildren[0].Disposing || this.MdiChildren[0].IsDisposed))   // If we are down to the last child window
         {
-            //toolStripMain.Items["toolStripMain_Settings"].Enabled = false;
             this.ToolBarEnable();
             //MessageBox.Show("Cerrando última ventana");
-            this.statusStripLabelFont.Enabled = false;
-            this.statusStripLabelFontColor.Enabled = false;
-            this.statusStripLabelWordWrap.Enabled = false;
-            this.statusStripLabelBackColor.Enabled = false;
-            this.statusStripLabelZoom.Enabled = false;
-
+            StatusStripFormat_SetEnabled(false);
         }
         else
         {
             this.ToolBarEnable(((IChildResults)this.ActiveMdiChild).GetToolbarEnabledState());
-            //this.toolStripMain_Settings.Checked = !((IChildResults)this.ActiveMdiChild).PanelCollapsed();
-
-            if (this.statusStripLabelFont.Enabled == false && ActiveMdiChild.ActiveControl is RichTextBox)
-            {
-                this.statusStripLabelFont.Enabled = true;
-                this.statusStripLabelFontColor.Enabled = true;
-                this.statusStripLabelWordWrap.Enabled = true;
-                this.statusStripLabelBackColor.Enabled = true;
-                this.statusStripLabelZoom.Enabled = true;
-            }
 
             if (ActiveMdiChild is IChildResults && ActiveMdiChild.ActiveControl is RichTextBox richText)
             {
-                this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, richText.Font.Name, richText.Font.Size);
-                this.statusStripLabelFontColor.BackColor = richText.ForeColor;
-                this.statusStripLabelWordWrap.Checked = richText.WordWrap;
-                this.statusStripLabelBackColor.BackColor = richText.BackColor;
-                this.statusStripLabelZoom.Text = $"{100 * richText.ZoomFactor}x";
-
+                StatusStripFormat_SetEnabled(true);
+                StatusStripFormat_SetValues(richText.Font.Name, richText.Font.Size, richText.ForeColor, richText.WordWrap, richText.BackColor, richText.ZoomFactor);
+            }
+            else
+            {
+                StatusStripFormat_SetEnabled(false);
+                StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, false, Color.Transparent, 100);
             }
         }
 
@@ -155,6 +118,31 @@ public partial class FrmMain : Form
 
     #endregion Form events
 
+    /// <summary>
+    /// Set the StatusStrip label's enabled status
+    /// </summary>
+    /// <param name="enabled">Enabled status boolean value</param>
+    private void StatusStripFormat_SetEnabled(bool enabled = true)
+    {
+        this.statusStripLabelFont.Enabled = enabled;
+        this.statusStripLabelFontColor.Enabled = enabled;
+        this.statusStripLabelWordWrap.Enabled = enabled;
+        this.statusStripLabelBackColor.Enabled = enabled;
+        this.statusStripLabelZoom.Enabled = enabled;
+    }
+
+    /// <summary>
+    /// Set the StatusStrip label's format values 
+    /// </summary>
+    private void StatusStripFormat_SetValues(string fontName, float fontSize, Color foreColor, bool wordWrap, Color backColor, float zoomFactor)
+    {
+        if (fontName != String.Empty)
+            this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, fontName, fontSize);
+        this.statusStripLabelFontColor.BackColor = foreColor;
+        this.statusStripLabelWordWrap.Checked = wordWrap;
+        this.statusStripLabelBackColor.BackColor = backColor;
+        this.statusStripLabelZoom.Text = $"{100 * zoomFactor}x";
+    }
 
     #region Private routines
 
