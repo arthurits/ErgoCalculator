@@ -24,7 +24,7 @@ public partial class FrmMain : Form
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
         // Other settings
-        StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, _settings.WordWrap, Color.FromArgb(_settings.TextBackColor), _settings.TextZoom);
+        StatusStripFormat_SetValues(wordWrap: _settings.WordWrap, backColor: Color.FromArgb(_settings.TextBackColor), zoomFactor: _settings.TextZoom);
 
         UpdateUI_Language();
     }
@@ -95,7 +95,7 @@ public partial class FrmMain : Form
             this.ToolBarEnable();
 
             StatusStripFormat_SetEnabled(false);
-            StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, false, Color.Transparent, 100);
+            StatusStripFormat_SetValues();
         }
         else
         {
@@ -109,7 +109,7 @@ public partial class FrmMain : Form
             else
             {
                 StatusStripFormat_SetEnabled(false);
-                StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, false, Color.Transparent, 100);
+                StatusStripFormat_SetValues();
             }
         }
 
@@ -133,13 +133,12 @@ public partial class FrmMain : Form
     /// <summary>
     /// Set the StatusStrip label's format values 
     /// </summary>
-    private void StatusStripFormat_SetValues(string fontName, float fontSize, Color foreColor, bool wordWrap, Color backColor, float zoomFactor)
+    private void StatusStripFormat_SetValues(string? fontName = null, float fontSize = 0, Color? foreColor = null, bool wordWrap = false, Color? backColor = null, float zoomFactor = 1)
     {
-        if (fontName != String.Empty)
-            this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, fontName, fontSize);
-        this.statusStripLabelFontColor.BackColor = foreColor;
+        this.statusStripLabelFont.Text = fontName is null ? "—" : String.Format(StringResources.LblFontName, fontName, fontSize);
+        this.statusStripLabelFontColor.BackColor = foreColor ?? Color.Transparent;
         this.statusStripLabelWordWrap.Checked = wordWrap;
-        this.statusStripLabelBackColor.BackColor = backColor;
+        this.statusStripLabelBackColor.BackColor = backColor ?? Color.Transparent;
         this.statusStripLabelZoom.Text = $"{100 * zoomFactor}x";
     }
 
