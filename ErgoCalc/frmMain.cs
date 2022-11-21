@@ -93,8 +93,9 @@ public partial class FrmMain : Form
         if (this.MdiChildren.Length == 1 && (this.MdiChildren[0].Disposing || this.MdiChildren[0].IsDisposed))   // If we are down to the last child window
         {
             this.ToolBarEnable();
-            //MessageBox.Show("Cerrando última ventana");
+
             StatusStripFormat_SetEnabled(false);
+            StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, false, Color.Transparent, 100);
         }
         else
         {
@@ -111,8 +112,6 @@ public partial class FrmMain : Form
                 StatusStripFormat_SetValues(String.Empty, 0, Color.Transparent, false, Color.Transparent, 100);
             }
         }
-
-        //https://stackoverflow.com/questions/10011600/how-to-recognize-the-active-child-form-and-fire-a-common-method-which-exist-in
 
     }
 
