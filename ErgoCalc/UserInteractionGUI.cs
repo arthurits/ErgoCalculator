@@ -324,6 +324,4 @@ partial class FrmMain
         }
     }
 
-    
-
 }
