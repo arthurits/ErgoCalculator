@@ -10,29 +10,27 @@ namespace ErgoCalc;
 public partial class FrmResultNIOSH : Form, IChildResults
 {
     // Variable definition
-    private Job _job;
+    private Job _job = new();
 
     public FrmResultNIOSH()
     {
-        // VS designer initialization
         InitializeComponent();
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(object data)
+    public FrmResultNIOSH(object? data, bool wordWrap, int backColor, float zoomFactor)
         : this()
     {
-        if (data.GetType() == typeof(Job))
+        if (data?.GetType() == typeof(Job))
             _job = (Job)data;
+        rtbShowResult.WordWrap = wordWrap;
+        rtbShowResult.BackColor = Color.FromArgb(backColor);
+        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
     {
         ShowResults();
-    }
-
-    private void rtbShowResult_DoubleClick(object sender, EventArgs e)
-    {
-        frmResultNIOSHModel_Shown(null, EventArgs.Empty);
     }
 
     #region Private routines
@@ -242,7 +240,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
             int Length = root.GetProperty("Tasks order").GetArrayLength();
             job.Order = new int[Length];
-            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString());
+            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString()) ?? Array.Empty<int>();
 
             job.Tasks = new TaskModel[job.NumberTasks];
             int i = 0;
@@ -262,7 +260,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 //    job.Tasks[i].OrderCLI[j] = Order[j].GetInt32();
 
                 //Length = Task.GetProperty("Sub-tasks order").GetArrayLength();
-                job.Tasks[i].OrderCLI = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString());
+                job.Tasks[i].OrderCLI = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString()) ?? Array.Empty<int>();
 
                 SubTasks = Task.GetProperty("Sub-tasks");
                 for (int j = 0; j < job.Tasks[i].NumberSubTasks; j++)
@@ -328,14 +326,12 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     public void Duplicate()
     {
-        string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
         // Mostrar la ventana de resultados
-        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job)
+        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
         {
             MdiParent = this.MdiParent
         };
-        if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+
         frmResults.Show();
     }
 

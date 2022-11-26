@@ -24,7 +24,8 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     public FrmResultsStrainIndex(object? data, bool wordWrap, int backColor, float zoomFactor)
         : this()
     {
-        if(data?.GetType() == typeof(Job)) _job = (Job)data;
+        if(data?.GetType() == typeof(Job))
+            _job = (Job)data;
         rtbShowResult.WordWrap = wordWrap;
         rtbShowResult.BackColor = Color.FromArgb(backColor);
         rtbShowResult.ZoomFactor = zoomFactor / 100;
@@ -359,7 +360,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 
             int Length = root.GetProperty("Tasks order").GetArrayLength();
             job.Order = new int[Length];
-            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString());
+            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString()) ?? Array.Empty<int>();
 
             job.Tasks = new TaskModel[job.NumberTasks];
             int i = 0;
@@ -371,7 +372,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
                 job.Tasks[i].NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
                 job.Tasks[i].SubTasks = new SubTask[job.Tasks[i].NumberSubTasks];
                 job.Tasks[i].Order = new int[job.Tasks[i].NumberSubTasks];
-                job.Tasks[i].Order = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString());
+                job.Tasks[i].Order = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString()) ?? Array.Empty<int>();
 
                 SubTasks = Task.GetProperty("Sub-tasks");
                 //Order = Task.GetProperty("Sub-tasks order");
@@ -489,7 +490,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        FrmDataStrainIndex frmDataStrain = new FrmDataStrainIndex(_job);
+        using FrmDataStrainIndex frmDataStrain = new(_job);
 
         if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
         {

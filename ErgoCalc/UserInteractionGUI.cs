@@ -51,13 +51,13 @@ partial class FrmMain
                 Form frmResults = frmNew.Model switch
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData),
-                    ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData),
-                    ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData),
+                    ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
+                    ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
-                    ModelType.ThermalComfort => new FrmResultsTC(frm.GetData),
-                    ModelType.LibertyMutual => new FrmResultsLiberty(frm.GetData),
+                    ModelType.ThermalComfort => new FrmResultsTC(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
+                    ModelType.LibertyMutual => new FrmResultsLiberty(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
@@ -117,11 +117,11 @@ partial class FrmMain
             Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(),
-                "NIOSH lifting equation" => new FrmResultNIOSH(),
+                "NIOSH lifting equation" => new FrmResultNIOSH(default, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                 "Strain index" => new FrmResultsStrainIndex(default, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
-                "Thermal comfort model" => new FrmResultsTC(),
-                "LM-MMH model" => new FrmResultsLiberty(),
-                "Comprehensive lifting model" => new FrmResultsCLM(),
+                "Thermal comfort model" => new FrmResultsTC(default, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
+                "LM-MMH model" => new FrmResultsLiberty(default, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
+                "Comprehensive lifting model" => new FrmResultsCLM(default, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
                 _ => default
             };
 
@@ -144,7 +144,6 @@ partial class FrmMain
 
                 if (((IChildResults)frm).OpenFile(document))
                 {
-                    frm.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
                     frm.Show();
                 }
                 else
@@ -214,18 +213,14 @@ partial class FrmMain
         fontDlg.ShowHelp = false;
         fontDlg.FontMustExist = true;
 
-        RichTextBox richText = ((RichTextBox)ActiveMdiChild.ActiveControl);
-
-        fontDlg.Font = new(richText.Font.Name, richText.Font.Size, richText.Font.Style);
-        //fontDlg.Color = Color.FromArgb(Settings.FontColor);
-
-        //fontDlg.Font = textBox1.Font;
-        //fontDlg.Color = textBox1.ForeColor;
-
-        if (fontDlg.ShowDialog() == DialogResult.OK)
+        if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
         {
-            richText.Font = fontDlg.Font;
-            this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, richText.Font.Name, richText.Font.Size);
+            fontDlg.Font = new(richText.Font.Name, richText.Font.Size, richText.Font.Style);
+            if (fontDlg.ShowDialog() == DialogResult.OK)
+            {
+                richText.Font = fontDlg.Font;
+                this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, richText.Font.Name, richText.Font.Size);
+            }
         }
     }
 
@@ -237,19 +232,15 @@ partial class FrmMain
         colorDlg.AllowFullOpen = true;
         colorDlg.FullOpen = true;
         colorDlg.AnyColor = true;
-        colorDlg.Color = ((RichTextBox)ActiveMdiChild.ActiveControl).ForeColor;
-        if (colorDlg.ShowDialog(this) == DialogResult.OK)
+
+        if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
         {
-            //_settings.TextBackColor = colorDlg.Color.ToArgb();
-            //foreach (Form frm in MdiChildren)
-            //{
-            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-            //    var rtbText = frm.Controls[0].Controls[1].Controls[0];
-            //    if (rtbText is not null)
-            //        rtbText.BackColor = colorDlg.Color;
-            //}
-            ((RichTextBox)ActiveMdiChild.ActiveControl).ForeColor = colorDlg.Color;
-            this.statusStripLabelFontColor.BackColor = colorDlg.Color;
+            colorDlg.Color = richText.ForeColor;
+            if (colorDlg.ShowDialog(this) == DialogResult.OK)
+            {
+                richText.ForeColor = colorDlg.Color;
+                this.statusStripLabelFontColor.BackColor = colorDlg.Color;
+            }
         }
     }
 
@@ -266,16 +257,8 @@ partial class FrmMain
             else
                 label.ForeColor = Color.LightGray;
 
-            // Update the settings
-            //_settings.WordWrap = label.Checked;
-            //foreach (Form frm in MdiChildren)
-            //{
-            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-            //    var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
-            //    if (rtbText is not null)
-            //        rtbText.WordWrap = _settings.WordWrap;
-            //}
-            ((RichTextBox)ActiveMdiChild.ActiveControl).WordWrap = label.Checked;
+            if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
+                richText.WordWrap = label.Checked;
         }
     }
 
@@ -287,19 +270,15 @@ partial class FrmMain
         colorDlg.AllowFullOpen = true;
         colorDlg.FullOpen = true;
         colorDlg.AnyColor = true;
-        colorDlg.Color = ((RichTextBox)ActiveMdiChild.ActiveControl).BackColor;
-        if (colorDlg.ShowDialog(this) == DialogResult.OK)
+
+        if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
         {
-            //_settings.TextBackColor = colorDlg.Color.ToArgb();
-            //foreach (Form frm in MdiChildren)
-            //{
-            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-            //    var rtbText = frm.Controls[0].Controls[1].Controls[0];
-            //    if (rtbText is not null)
-            //        rtbText.BackColor = colorDlg.Color;
-            //}
-            ((RichTextBox)ActiveMdiChild.ActiveControl).BackColor = colorDlg.Color;
-            this.statusStripLabelBackColor.BackColor = colorDlg.Color;
+            colorDlg.Color = richText.BackColor;
+            if (colorDlg.ShowDialog(this) == DialogResult.OK)
+            {
+                richText.BackColor = colorDlg.Color;
+                this.statusStripLabelBackColor.BackColor = colorDlg.Color;
+            }
         }
     }
 
@@ -311,16 +290,11 @@ partial class FrmMain
         frmZoom.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         if (frmZoom.ShowDialog(this) == DialogResult.OK)
         {
-            //_settings.TextZoom = frmZoom.ZoomLevel;
-            //foreach (Form frm in MdiChildren)
-            //{
-            //    //var rtbText = frm.Controls.Find("rtbShowResult", false).FirstOrDefault() as RichTextBox;
-            //    var rtbText = frm.Controls[0].Controls[1].Controls[0] as RichTextBox;
-            //    if (rtbText is not null)
-            //        rtbText.ZoomFactor = _settings.TextZoom;
-            //}
-            ((RichTextBox)ActiveMdiChild.ActiveControl).ZoomFactor = frmZoom.ZoomLevel / 100;
-            this.statusStripLabelZoom.Text = $"{(frmZoom.ZoomLevel / 100).ToString("0.##")}x";
+            if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
+            {
+                richText.ZoomFactor = frmZoom.ZoomLevel / 100;
+                this.statusStripLabelZoom.Text = $"{(frmZoom.ZoomLevel / 100).ToString("0.##")}x";
+            }
         }
     }
 

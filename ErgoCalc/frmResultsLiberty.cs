@@ -11,30 +11,28 @@ namespace ErgoCalc;
 
 public partial class FrmResultsLiberty : Form, IChildResults
 {
-    private Job _job;
+    private Job _job = new();
 
-    public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public ToolStrip ChildToolStrip { get => null; set { } }
 
     public FrmResultsLiberty()
     {
         InitializeComponent();
-        
         InitializePlot();
 
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         this.ActiveControl = this.rtbShowResult;
     }
 
 
-    public FrmResultsLiberty(object data)
+    public FrmResultsLiberty(object? data, bool wordWrap, int backColor, float zoomFactor)
         : this()
     {
-        if (data.GetType() == typeof(Job)) _job = (Job)data;
-    }
-
-    public FrmResultsLiberty(string fileName)
-        :this()
-    {
-
+        if (data?.GetType() == typeof(Job))
+            _job = (Job)data;
+        rtbShowResult.WordWrap = wordWrap;
+        rtbShowResult.BackColor = Color.FromArgb(backColor);
+        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultsLiberty_Shown(object sender, EventArgs e)
@@ -132,15 +130,15 @@ public partial class FrmResultsLiberty : Form, IChildResults
     /// <param name="std">Standard deviation</param>
     /// <param name="nPlot">Number of plot control: 1 for Initial force, 2 for sustained force, and 3 for weight</param>
     /// <param name="strLegend">Text to show in the legend</param>
-    private void CreatePlot(double mean, double std, int nPlot, string strLegend = null)
+    private void CreatePlot(double mean, double std, int nPlot, string strLegend)
     {
         Random rand = new Random(0);
         var pop = new ScottPlot.Statistics.Population(rand, pointCount: 1000, mean: mean, stdDev: std);
         double[] curveXs = ScottPlot.DataGen.Range(pop.minus3stDev, pop.plus3stDev, 0.1);
         double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 
-        ScottPlot.FormsPlot plot = null;
-        PictureBox pctLegend = null;
+        ScottPlot.FormsPlot plot = formsPlot1;
+        PictureBox pctLegend = pictureBox1;
         switch (nPlot)
         {
             case 1:
@@ -454,7 +452,11 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
-            _job = (Job)frm.GetData;
+            object data = frm.GetData;
+            if (data.GetType() == typeof(Job))
+                _job = (Job)data;
+            else
+                _job = new();
             ShowResults();
         }
     }
@@ -462,11 +464,11 @@ public partial class FrmResultsLiberty : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job);
+        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor);
         {
             MdiParent = this.MdiParent;
         };
-        frmResults.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+
         frmResults.Show();
     }
     #endregion IChildResults inferface

@@ -10,23 +10,22 @@ namespace ErgoCalc;
 public partial class FrmResultsCLM : Form, IChildResults
 {
     // Variable definition
-    private Job _job;
+    private Job _job =new();
 
     public FrmResultsCLM()
     {
         InitializeComponent();
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsCLM(Job job)
+    public FrmResultsCLM(object? data, bool wordWrap, int backColor, float zoomFactor)
         : this()
     {
-        _job = job;
-    }
-
-    public FrmResultsCLM(object data)
-        : this()
-    {
-        if (data.GetType() == typeof(Job)) _job = (Job)data;
+        if (data?.GetType() == typeof(Job))
+            _job = (Job)data;
+        rtbShowResult.WordWrap = wordWrap;
+        rtbShowResult.BackColor = Color.FromArgb(backColor);
+        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)
@@ -230,26 +229,29 @@ public partial class FrmResultsCLM : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        FrmDataCLM frmData = new FrmDataCLM(_job);
+        using FrmDataCLM frm = new(_job);
 
-        if (frmData.ShowDialog(this) == DialogResult.OK)
+        if (frm.ShowDialog(this) == DialogResult.OK)
         {
-            // Mostrar la ventana de resultados
-            _job = (Job)frmData.GetData;
-            this.rtbShowResult.Clear();
+            object data = frm.GetData;
+            if (data.GetType() == typeof(Job))
+                _job = (Job)data;
+            else
+                _job = new();
+
             ShowResults();
         }
-        // Cerrar el formulario de entrada de datos
-        frmData.Dispose();
+        return;
     }
 
     public void Duplicate()
     {
-        //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        // Show the results window
+        FrmResultsCLM frmResults = new FrmResultsCLM(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
+        {
+            MdiParent = this.MdiParent
+        };
 
-        // Mostrar la ventana de resultados
-        FrmResultsCLM frmResults = new FrmResultsCLM(_job) { MdiParent = this.MdiParent };
-        //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
         frmResults.Show();
     }
 

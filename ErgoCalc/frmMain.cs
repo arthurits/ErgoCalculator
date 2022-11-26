@@ -99,7 +99,9 @@ public partial class FrmMain : Form
         }
         else
         {
-            this.ToolBarEnable(((IChildResults)this.ActiveMdiChild).GetToolbarEnabledState());
+            var frm = this.ActiveMdiChild;
+            if (frm is not null)
+                this.ToolBarEnable(((IChildResults)frm).GetToolbarEnabledState());
 
             if (ActiveMdiChild is IChildResults && ActiveMdiChild.ActiveControl is RichTextBox richText)
             {

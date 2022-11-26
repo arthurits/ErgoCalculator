@@ -13,30 +13,25 @@ namespace ErgoCalc;
 
 public partial class FrmResultsTC : Form, IChildResults
 {
-    private Job _job;
-    private string _strPath;
+    private Job _job = new();
 
     public FrmResultsTC()
     {
-        _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
-
         InitializeComponent();
         InitializePlot();
 
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         this.ActiveControl = this.rtbShowResult;
     }
 
-    public FrmResultsTC(Job job)
-        : this()
-    {
-        _job = job;
-    }
-
-    public FrmResultsTC(object data)
+    public FrmResultsTC(object? data, bool wordWrap, int backColor, float zoomFactor)
         :this()
     {
-        if (data.GetType() == typeof(Job)) _job = (Job)data;
+        if (data?.GetType() == typeof(Job))
+            _job = (Job)data;
+        rtbShowResult.WordWrap = wordWrap;
+        rtbShowResult.BackColor = Color.FromArgb(backColor);
+        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultsTC_Shown(object sender, EventArgs e)
@@ -229,14 +224,12 @@ public partial class FrmResultsTC : Form, IChildResults
 
     public void Duplicate()
     {
-        string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
         // Mostrar la ventana de resultados
-        FrmResultsTC frmResults = new FrmResultsTC(_job);
+        FrmResultsTC frmResults = new FrmResultsTC(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor);
         {
             MdiParent = this.MdiParent;
         };
-        if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+
         frmResults.Show();
     }
 
@@ -246,7 +239,12 @@ public partial class FrmResultsTC : Form, IChildResults
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
-            _job = (Job)frm.GetData;
+            object data = frm.GetData;
+            if (data.GetType() == typeof(Job))
+                _job = (Job)data;
+            else
+                _job = new();
+
             ShowResults();
         }
     }

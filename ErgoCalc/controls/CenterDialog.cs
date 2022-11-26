@@ -15,11 +15,12 @@ namespace System.Windows.Forms
     public class CenterWinDialog : IDisposable
     {
         private int mTries = 0;
-        private Form mOwner;
+        private Form? mOwner;
         private System.Drawing.Rectangle clientRect;
 
-        public CenterWinDialog(Form owner)
+        public CenterWinDialog(Form? owner)
         {
+            if (owner is null) return;
             mOwner = owner;
             clientRect = Screen.FromControl(owner).WorkingArea;
 
@@ -34,7 +35,7 @@ namespace System.Windows.Forms
             EnumThreadWndProc callback = new EnumThreadWndProc(checkWindow);
             if (EnumThreadWindows(GetCurrentThreadId(), callback, IntPtr.Zero))
             {
-                if (++mTries < 10) mOwner.BeginInvoke(new MethodInvoker(findDialog));
+                if (++mTries < 10) mOwner?.BeginInvoke(new MethodInvoker(findDialog));
             }
         }
         private bool checkWindow(IntPtr hWnd, IntPtr lp)
