@@ -62,75 +62,51 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="controls\ListViewEx.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="controls\ListViewEx.cs" />
     <Compile Update="controls\ListViewEx.Designer.cs">
       <DependentUpon>ListViewEx.cs</DependentUpon>
     </Compile>
-    <Compile Update="controls\TablessTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="controls\TablessTabControl.cs" />
     <Compile Update="controls\TablessTabControl.Designer.cs">
       <DependentUpon>TablessTabControl.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsStrainIndex.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmResultsStrainIndex.cs" />
     <Compile Update="frmResultsStrainIndex.Designer.cs">
       <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataStrainIndex.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmDataStrainIndex.cs" />
     <Compile Update="frmDataStrainIndex.Designer.cs">
       <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataWR.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmDataWR.cs" />
     <Compile Update="frmDataWR.Designer.cs">
       <DependentUpon>frmDataWR.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataMet.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmDataMet.cs" />
     <Compile Update="frmDataMet.Designer.cs">
       <DependentUpon>frmDataMet.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmAbout.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmAbout.cs" />
     <Compile Update="frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsCLM.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmResultsCLM.cs" />
     <Compile Update="frmResultsCLM.Designer.cs">
       <DependentUpon>frmResultsCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataCLM.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmDataCLM.cs" />
     <Compile Update="frmDataCLM.Designer.cs">
       <DependentUpon>frmDataCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataNIOSH.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmDataNIOSH.cs" />
     <Compile Update="frmDataNIOSH.Designer.cs">
       <DependentUpon>frmDataNIOSH.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmMain.cs" />
     <Compile Update="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsMet.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmResultsMet.cs" />
     <Compile Update="frmResultsMet.Designer.cs">
       <DependentUpon>frmResultsMet.cs</DependentUpon>
     </Compile>
@@ -138,21 +114,15 @@
     <Compile Update="frmNew.Designer.cs">
       <DependentUpon>frmNew.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultNIOSH.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmResultNIOSH.cs" />
     <Compile Update="frmResultNIOSH.Designer.cs">
       <DependentUpon>frmResultNIOSH.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsWR.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="frmResultsWR.cs" />
     <Compile Update="frmResultsWR.Designer.cs">
       <DependentUpon>frmResultsWR.cs</DependentUpon>
     </Compile>
-    <Compile Update="controls\RadioButtonClick.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Update="controls\RadioButtonClick.cs" />
     <Compile Update="localization\strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

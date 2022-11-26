@@ -12,36 +12,14 @@ namespace ErgoCalc;
 public partial class FrmResultsStrainIndex : Form, IChildResults
 {
     // Variable definition
-    //private string _strPath;
     private Job _job = new();
 
     public FrmResultsStrainIndex()
     {
         InitializeComponent();
 
-        //rtbShowResult.Size = this.ClientSize;
-
-        //_strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        //if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
-
-        //propertyGrid1.SelectedObject = new ResultsOptions(rtbShowResult);
-        //splitContainer1.Panel1Collapsed = false;
-        //splitContainer1.SplitterDistance = 0;
-        //splitContainer1.SplitterWidth = 1;
-        //splitContainer1.IsSplitterFixed = true;
-
-        //ToolStrip botón = ((frmMain)MdiParent).Controls["toolStripMain"] as ToolStrip;
-        //ToolStripButton bot = botón.Items["toolStripMain_Settings"] as ToolStripButton;
-
-        //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
     }
-
-    //public FrmResultsStrainIndex(Job job)
-    //    :this()
-    //{
-    //    _job = job;
-    //}
 
     public FrmResultsStrainIndex(object? data, bool wordWrap, int backColor, float zoomFactor)
         : this()
@@ -529,14 +507,12 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 
     public void Duplicate()
     {
-        //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
         // Mostrar la ventana de resultados
-        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job,rtbShowResult.WordWrap,rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
+        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
         {
             MdiParent = this.MdiParent
         };
-        //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+        
         frmResults.Show();
     }
 
@@ -549,33 +525,6 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     {
         get => null;
         set { }
-    }
-
-    public void ShowHideSettings()
-    {
-        //splitContainer1.Panel1Collapsed = !splitContainer1.Panel1Collapsed;
-        
-        //this.SuspendLayout();
-        //if (splitContainer1.SplitterDistance > 0)
-        //{
-        //    Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 0, new Transitions.TransitionType_Linear(200));
-        //    splitContainer1.SplitterWidth = 1;
-        //    splitContainer1.IsSplitterFixed = true;
-        //}
-        //else
-        //{
-        //    Transitions.Transition.run(this.splitContainer1, "SplitterDistance", 200, new Transitions.TransitionType_Linear(200));
-        //    splitContainer1.SplitterWidth = 4;
-        //    splitContainer1.IsSplitterFixed = false;
-        //}
-        //this.ResumeLayout();
-        return;
-    }
-
-    public bool PanelCollapsed ()
-    {
-        //return splitContainer1.SplitterDistance == 0 ? true : false;
-        return true;
     }
 
     public void FormatText()
