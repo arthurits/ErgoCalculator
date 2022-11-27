@@ -117,13 +117,15 @@ public partial class FrmDataLiberty : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updTasks.Value);
+        ((IChildData)this).UpdateGridColumns(gridVariables, Convert.ToInt32(updTasks.Value));
 
-        // Add or remove columns
-        if (col > gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
-        else if (col < gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        //Int32 col = Convert.ToInt32(updTasks.Value);
+
+        //// Add or remove columns
+        //if (col > gridVariables.ColumnCount)
+        //    for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
+        //else if (col < gridVariables.ColumnCount)
+        //    for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
     }
 
     private void Variables_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -185,7 +187,7 @@ public partial class FrmDataLiberty : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    private void AddColumn(Int32 col)
+    void IChildData.AddColumn(int col)
     {
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
@@ -246,7 +248,7 @@ public partial class FrmDataLiberty : Form, IChildData
     /// </summary>
     private void AddColumn()
     {
-        AddColumn(gridVariables.Columns.Count);
+        ((IChildData)this).AddColumn(gridVariables.Columns.Count);
     }
 
     /// <summary>

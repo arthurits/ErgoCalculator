@@ -323,4 +323,40 @@ public interface IChildData
     public object GetData { get; }
     public void LoadExample();
     //object GetData();
+
+    public void UpdateGridColumns(object control, int value)
+    {
+        if (control is DataGridView gridVariables)
+        {
+            // Add or remove columns
+            if (value > gridVariables.ColumnCount)
+                for (int i = gridVariables.ColumnCount; i < value; i++) AddColumn(i);
+            else if (value < gridVariables.ColumnCount)
+                for (int i = gridVariables.ColumnCount - 1; i >= value; i--) gridVariables.Columns.RemoveAt(i);
+        }
+    }
+
+    protected internal virtual void AddColumn(Int32 col)
+    {
+        return;
+    }
+
+    public void UpdateListView(object control, int value)
+    {
+        //Int32 tasks = Convert.ToInt32(updTasks.Value);
+
+        if (control is ListViewEx listViewEx)
+        {
+            if (value > listViewEx.Groups.Count)
+            {
+                for (int i = listViewEx.Groups.Count; i < value; i++)
+                    listViewEx.AddGroup(i);
+            }
+            else if (value < listViewEx.Groups.Count)
+            {
+                for (int i = value; i < listViewEx.Groups.Count; i++)
+                    listViewEx.RemoveGroup(listViewEx.Groups.Count - 1);
+            }
+        }
+    }
 }

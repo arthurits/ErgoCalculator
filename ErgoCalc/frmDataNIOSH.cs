@@ -46,12 +46,13 @@ public partial class FrmDataNIOSH : Form, IChildData
     private void SubTasks_ValueChanged(object sender, EventArgs e)
     {
         int col = Convert.ToInt32(updSubTasks.Value);
-        
-        // Add or remove columns
-        if (col > gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
-        else if (col < gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        ((IChildData)this).UpdateGridColumns(gridVariables, col);
+
+        //// Add or remove columns
+        //if (col > gridVariables.ColumnCount)
+        //    for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
+        //else if (col < gridVariables.ColumnCount)
+        //    for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
 
         // Modify the chkComposite state
         grpIndex.Enabled = col > 0;
@@ -73,17 +74,19 @@ public partial class FrmDataNIOSH : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 tasks = Convert.ToInt32(updTasks.Value);
-        if (tasks > listViewTasks.Groups.Count)
-        {
-            for (int i = listViewTasks.Groups.Count; i < tasks; i++)
-                listViewTasks.AddGroup(i);
-        }
-        else if (tasks < listViewTasks.Groups.Count)
-        {
-            for (int i = tasks; i < listViewTasks.Groups.Count; i++)
-                listViewTasks.RemoveGroup(listViewTasks.Groups.Count - 1);
-        }
+        ((IChildData)this).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value));
+
+        //Int32 tasks = Convert.ToInt32(updTasks.Value);
+        //if (tasks > listViewTasks.Groups.Count)
+        //{
+        //    for (int i = listViewTasks.Groups.Count; i < tasks; i++)
+        //        listViewTasks.AddGroup(i);
+        //}
+        //else if (tasks < listViewTasks.Groups.Count)
+        //{
+        //    for (int i = tasks; i < listViewTasks.Groups.Count; i++)
+        //        listViewTasks.RemoveGroup(listViewTasks.Groups.Count - 1);
+        //}
         return;
     }
 
