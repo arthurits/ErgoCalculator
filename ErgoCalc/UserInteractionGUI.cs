@@ -200,18 +200,19 @@ partial class FrmMain
             UpdateUI_Language();
 
         // This is redundant because this asignment is done at the very beginning of UpdateUI_Language
-        StringResources.Culture=_settings.AppCulture;
+        StringResources.Culture = _settings.AppCulture;
     }
 
     private void LabelFont_Click(object sender, EventArgs e)
     {
-        FontDialog fontDlg = new();
-
-        fontDlg.ShowApply = false;
-        fontDlg.ShowColor = false;
-        fontDlg.ShowEffects = true;
-        fontDlg.ShowHelp = false;
-        fontDlg.FontMustExist = true;
+        FontDialog fontDlg = new()
+        {
+            ShowApply = false,
+            ShowColor = false,
+            ShowEffects = true,
+            ShowHelp = false,
+            FontMustExist = true
+        };
 
         if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
         {
@@ -228,10 +229,12 @@ partial class FrmMain
     {
         if (sender is null) return;
 
-        ColorDialog colorDlg = new();
-        colorDlg.AllowFullOpen = true;
-        colorDlg.FullOpen = true;
-        colorDlg.AnyColor = true;
+        ColorDialog colorDlg = new()
+        {
+            AllowFullOpen = true,
+            FullOpen = true,
+            AnyColor = true
+        };
 
         if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
         {
@@ -266,10 +269,12 @@ partial class FrmMain
     {
         if (sender is null) return;
 
-        ColorDialog colorDlg = new();
-        colorDlg.AllowFullOpen = true;
-        colorDlg.FullOpen = true;
-        colorDlg.AnyColor = true;
+        ColorDialog colorDlg = new()
+        {
+            AllowFullOpen = true,
+            FullOpen = true,
+            AnyColor = true
+        };
 
         if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
         {
