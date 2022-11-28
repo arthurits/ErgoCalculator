@@ -325,7 +325,7 @@ public interface IChildData
         }
     }
 
-    protected internal virtual void AddColumn(Int32 col)
+    public void AddColumn(Int32 col)
     {
         return;
     }
