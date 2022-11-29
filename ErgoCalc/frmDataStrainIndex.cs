@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+﻿using System.Globalization;
 
 using ErgoCalc.Models.StrainIndex;
 
@@ -49,8 +46,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
     {
         // Check of the raiser of the event is a checked Checkbox.
         // Of course we also need to to cast it first.
-        RadioButton rb = sender as RadioButton;
-        if (rb == null) return;
+        if (sender is not RadioButton rb) return;
         if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
 
         if (radRSI.Checked) _index = IndexType.RSI;
@@ -81,13 +77,8 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
     private void Subtasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updSubtasks.Value);
-
-        // Add or remove columns
-        if (col > gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
-        else if (col < gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        int col = Convert.ToInt32(updSubtasks.Value);
+        (this as IChildData).UpdateGridColumns(gridVariables, col);
 
         // Modify the chkComposite state
         groupIndex.Enabled = col > 0;
@@ -111,18 +102,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 tasks = Convert.ToInt32(updTasks.Value);
-        if (tasks > listViewTasks.Groups.Count)
-        {
-            for (int i = listViewTasks.Groups.Count; i < tasks; i++)
-                listViewTasks.AddGroup(i);
-        }
-        else if (tasks < listViewTasks.Groups.Count)
-        {
-            for (int i = tasks; i < listViewTasks.Groups.Count; i++)
-                listViewTasks.RemoveGroup(listViewTasks.Groups.Count - 1);
-        }
-        return;
+        (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value));
     }
 
     private void Accept_Click(object sender, EventArgs e)
@@ -200,20 +180,16 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    private void AddColumn(Int32 col)
+    public void AddColumn(int col)
     {
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
+        // Check if the column already exists
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
-        string strName = "Task ";
-        if (_index != IndexType.RSI) strName = "SubTask ";
-
         // Create the new column
-        //gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
-        gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
-        gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-        gridVariables.Columns[col].Width = 85;
+        string strName = _index == IndexType.RSI ? "Task " : "SubTask ";
+        (this as IChildData).AddColumnBasic(gridVariables, col, strName, 85);
 
         // Add the row headers after the first column is created
         if (col == 0)
@@ -227,7 +203,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void AddColumn()
     {
-        AddColumn(gridVariables.Columns.Count);
+        (this as IChildData).AddColumn(gridVariables.Columns.Count);
     }
 
     /// <summary>
@@ -235,13 +211,15 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        // Create the header rows
-        gridVariables.RowCount = 5;
-        gridVariables.Rows[0].HeaderCell.Value = "Intensity of exertion";
-        gridVariables.Rows[1].HeaderCell.Value = "Efforts per minute";
-        gridVariables.Rows[2].HeaderCell.Value = "Duration per exertion";
-        gridVariables.Rows[3].HeaderCell.Value = "Hand/wrist posture";
-        gridVariables.Rows[4].HeaderCell.Value = "Duration of task per day";
+        string[] rowText = new string[]
+        {
+            "Intensity of exertion",
+            "Efforts per minute",
+            "Duration per exertion",
+            "Hand/wrist posture",
+            "Duration of task per day"
+        };
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
     }
     
     /// <summary>
@@ -407,11 +385,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     }
 
     #endregion
-
-    public void LoadExample()
-    {
-
-    }
 
     private void tabDataStrain_Selected(object sender, TabControlEventArgs e)
     {

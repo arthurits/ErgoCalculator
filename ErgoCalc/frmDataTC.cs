@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
+﻿using System.Globalization;
 
 using ErgoCalc.Models.ThermalComfort;
 
@@ -67,13 +65,7 @@ public partial class FrmDataTC : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        int col = Convert.ToInt32(updTasks.Value);
-
-        // Add or remove columns
-        if (col > gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
-        else if (col < gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        (this as IChildData).UpdateGridColumns(gridVariables, Convert.ToInt32(updTasks.Value));
     }
     #endregion Form events
 
@@ -82,16 +74,15 @@ public partial class FrmDataTC : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    private void AddColumn(Int32 col)
+    void IChildData.AddColumn(Int32 col)
     {
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
+        // Check if the column already exists
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         // Create the new column
-        gridVariables.Columns.Add("Column" + (col).ToString(), strGridHeader + ((char)('A' + col)).ToString());
-        gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-        gridVariables.Columns[col].Width = 70;
+        (this as IChildData).AddColumnBasic(gridVariables, col, strGridHeader, 70);
 
         // Add the row headers after the first column is created
         if (col == 0)
@@ -108,7 +99,7 @@ public partial class FrmDataTC : Form, IChildData
     /// </summary>
     private void AddColumn()
     {
-        AddColumn(gridVariables.Columns.Count);
+        (this as IChildData).AddColumn(gridVariables.Columns.Count);
     }
 
     /// <summary>
@@ -116,20 +107,17 @@ public partial class FrmDataTC : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        // Create the header rows
-        gridVariables.RowCount = 7;
-        gridVariables.Rows[0].HeaderCell.Value = "Air temperature (°C)";
-        gridVariables.Rows[1].HeaderCell.Value = "Radiant temperature (°C)";
-        gridVariables.Rows[2].HeaderCell.Value = "Air velocity (m/s)";
-        gridVariables.Rows[3].HeaderCell.Value = "Relative humidity (%)";
-        gridVariables.Rows[4].HeaderCell.Value = "Clothing insulation (clo)";
-        gridVariables.Rows[5].HeaderCell.Value = "Metabolic rate (mets)";
-        gridVariables.Rows[6].HeaderCell.Value = "External work (mets)";
-    }
-
-    public void LoadExample()
-    {
-
+        string[] rowText = new string[]
+        {
+            "Air temperature (°C)",
+            "Radiant temperature (°C)",
+            "Air velocity (m/s)",
+            "Relative humidity (%)",
+            "Clothing insulation (clo)",
+            "Metabolic rate (mets)",
+            "External work (mets)"
+        };
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
     }
 
     private void DataExample()

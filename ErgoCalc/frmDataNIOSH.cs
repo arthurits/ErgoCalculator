@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Globalization;
-using System.Windows.Forms;
 
 using ErgoCalc.Models.Lifting;
 
@@ -45,14 +43,9 @@ public partial class FrmDataNIOSH : Form, IChildData
 
     private void SubTasks_ValueChanged(object sender, EventArgs e)
     {
+        // Update the number of columns in the grid
         int col = Convert.ToInt32(updSubTasks.Value);
-        ((IChildData)this).UpdateGridColumns(gridVariables, col);
-
-        //// Add or remove columns
-        //if (col > gridVariables.ColumnCount)
-        //    for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
-        //else if (col < gridVariables.ColumnCount)
-        //    for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
+        (this as IChildData).UpdateGridColumns(gridVariables, col);
 
         // Modify the chkComposite state
         grpIndex.Enabled = col > 0;
@@ -74,28 +67,14 @@ public partial class FrmDataNIOSH : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        ((IChildData)this).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value));
-
-        //Int32 tasks = Convert.ToInt32(updTasks.Value);
-        //if (tasks > listViewTasks.Groups.Count)
-        //{
-        //    for (int i = listViewTasks.Groups.Count; i < tasks; i++)
-        //        listViewTasks.AddGroup(i);
-        //}
-        //else if (tasks < listViewTasks.Groups.Count)
-        //{
-        //    for (int i = tasks; i < listViewTasks.Groups.Count; i++)
-        //        listViewTasks.RemoveGroup(listViewTasks.Groups.Count - 1);
-        //}
-        return;
+        (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value));
     }
 
     private void rad_CheckedChanged(object sender, EventArgs e)
     {
         // Check of the raiser of the event is a checked Checkbox.
         // Of course we also need to to cast it first.
-        RadioButton rb = sender as RadioButton;
-        if (rb == null) return;
+        if (sender is not RadioButton rb) return;
         if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
 
         _index = (IndexType)Convert.ToInt32(rb.Tag);
@@ -229,35 +208,22 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    private void AddColumn(int col)
+    void IChildData.AddColumn(int col)
     {
+        // By default, the DataGrid always contains a single column
+        //if (col == 0) return;
+        // Check if the column already exists
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
-        string strName = "Task ";
-        if (_index != IndexType.IndexLI) strName = "SubTask ";
-
         // Create the new column
-        gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
-        gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-        gridVariables.Columns[col].Width = 85;
+        string strName = _index == IndexType.IndexLI ? "Task " : "SubTask ";
+        (this as IChildData).AddColumnBasic(gridVariables, col, strName, 85);
 
         // Add the row headers after the first column is created
         if (col == 0)
         {
             AddRows();
-
-            // Create custom cells with combobox display
-            DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-            DataTable tableC = new DataTable();
-            tableC.Columns.Add("Display", typeof(String));
-            tableC.Columns.Add("Value", typeof(Int32));
-            tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
-            tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
-            tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
-            celdaC.DataSource = tableC;
-            celdaC.DisplayMember = "Display";
-            celdaC.ValueMember = "Value";
-            gridVariables.Rows[8].Cells[0] = celdaC;
+            FormatRows();
         }
 
         // Give format (ComboBox) to the added column cells
@@ -275,7 +241,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void AddColumn()
     {
-        AddColumn(gridVariables.Columns.Count);
+        (this as IChildData).AddColumn(gridVariables.Columns.Count);
     }
 
     /// <summary>
@@ -283,17 +249,38 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        // Create the header rows
-        gridVariables.RowCount = 9;
-        gridVariables.Rows[0].HeaderCell.Value = "Load constant (kg)";
-        gridVariables.Rows[1].HeaderCell.Value = "Weight lifted (kg)";
-        gridVariables.Rows[2].HeaderCell.Value = "Horizontal distance (cm)";
-        gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (cm)";
-        gridVariables.Rows[4].HeaderCell.Value = "Vertical travel distance (cm)";
-        gridVariables.Rows[5].HeaderCell.Value = "Lifting frequency (times/min)";
-        gridVariables.Rows[6].HeaderCell.Value = "Task duration (hours)";
-        gridVariables.Rows[7].HeaderCell.Value = "Twisting angle (°)";
-        gridVariables.Rows[8].HeaderCell.Value = "Coupling";
+        string[] rowText = new string[]
+        {
+            "Load constant (kg)",
+            "Weight lifted (kg)",
+            "Horizontal distance (cm)",
+            "Vertical distance (cm)",
+            "Vertical travel distance (cm)",
+            "Lifting frequency (times/min)",
+            "Task duration (hours)",
+            "Twisting angle (°)",
+            "Coupling"
+        };
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+    }
+
+    /// <summary>
+    /// Format the header row with custom cells
+    /// </summary>
+    private void FormatRows()
+    {
+        // Create custom cells with combobox display
+        DataGridViewComboBoxCell celdaC = new();
+        DataTable tableC = new();
+        tableC.Columns.Add("Display", typeof(String));
+        tableC.Columns.Add("Value", typeof(Int32));
+        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
+        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
+        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
+        celdaC.DataSource = tableC;
+        celdaC.DisplayMember = "Display";
+        celdaC.ValueMember = "Value";
+        gridVariables.Rows[8].Cells[0] = celdaC;
     }
 
     /// <summary>
@@ -465,14 +452,6 @@ public partial class FrmDataNIOSH : Form, IChildData
     }
 
     #endregion
-
-    /// <summary>
-    /// Loads an example into the interface
-    /// </summary>
-    public void LoadExample()
-    {
-
-    }
 
     private void tabData_Selected(object sender, TabControlEventArgs e)
     {

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Globalization;
-using System.Windows.Forms;
 
 using ErgoCalc.Models.CLM;
 
@@ -34,14 +32,9 @@ public partial class FrmDataCLM : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        Int32 col = Convert.ToInt32(updTasks.Value);
-
-        // Add or remove columns
-        if (col > gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount; i < col; i++) AddColumn(i);
-        else if (col < gridVariables.ColumnCount)
-            for (int i = gridVariables.ColumnCount - 1; i >= col; i--) gridVariables.Columns.RemoveAt(i);
-
+        // Update the number of columns in the grid
+        int col = Convert.ToInt32(updTasks.Value);
+        (this as IChildData).UpdateGridColumns(gridVariables, col);
 
         // Modify the chkComposite state
         if (col > 1)
@@ -106,14 +99,15 @@ public partial class FrmDataCLM : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    private void AddColumn(Int32 col)
+    void IChildData.AddColumn(Int32 col)
     {
+        // By default, the DataGrid always contains a single column
+        //if (col == 0) return;
+        // Check if the column already exists
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         // Create the new column
-        gridVariables.Columns.Add("Column" + (col).ToString(), "Task " + ((char)('A' + col)).ToString());
-        gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
-        gridVariables.Columns[col].Width = 85;
+        (this as IChildData).AddColumnBasic(gridVariables, col, "Task ", 85);
 
         // Give format to the cells
         if (col > 0)
@@ -122,7 +116,10 @@ public partial class FrmDataCLM : Form, IChildData
             gridVariables.Rows[8].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
         }
         else if (col == 0)
+        {
             AddRows();
+            FormatRows();
+        }
 
         return;
     }
@@ -132,7 +129,7 @@ public partial class FrmDataCLM : Form, IChildData
     /// </summary>
     private void AddColumn()
     {
-        AddColumn(gridVariables.Columns.Count);
+        (this as IChildData).AddColumn(gridVariables.Columns.Count);
     }
 
     /// <summary>
@@ -140,26 +137,34 @@ public partial class FrmDataCLM : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        // Create the header rows
-        gridVariables.RowCount = 12;
-        gridVariables.Rows[0].HeaderCell.Value = "Gender";
-        gridVariables.Rows[1].HeaderCell.Value = "Weight lifted (kg)";
-        gridVariables.Rows[2].HeaderCell.Value = "Horizontal distance (cm)";
-        gridVariables.Rows[3].HeaderCell.Value = "Vertical distance (cm)";
-        gridVariables.Rows[4].HeaderCell.Value = "Vertical travel distance (cm)";
-        gridVariables.Rows[5].HeaderCell.Value = "Lifting frequency (times/min)";
-        gridVariables.Rows[6].HeaderCell.Value = "Task duration (hours)";
-        gridVariables.Rows[7].HeaderCell.Value = "Twisting angle (º)";
-        gridVariables.Rows[8].HeaderCell.Value = "Coupling";
-        gridVariables.Rows[9].HeaderCell.Value = "WBGT temperature (ºC)";
-        gridVariables.Rows[10].HeaderCell.Value = "Age (years)";
-        gridVariables.Rows[11].HeaderCell.Value = "Body weight (kg)";
+        string[] rowText = new string[]
+        {
+            "Gender",
+            "Weight lifted (kg)",
+            "Horizontal distance (cm)",
+            "Vertical distance (cm)",
+            "Vertical travel distance (cm)",
+            "Lifting frequency (times/min)",
+            "Task duration (hours)",
+            "Twisting angle (°)",
+            "Coupling",
+            "WBGT temperature (°C)",
+            "Age (years)",
+            "Body weight (kg)"
+        };
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+    }
 
+    /// <summary>
+    /// Format the header row with custom cells
+    /// </summary>
+    private void FormatRows()
+    {
         // Create custom cells with combobox display
-        DataGridViewComboBoxCell celdaG = new DataGridViewComboBoxCell();
-        DataGridViewComboBoxCell celdaC = new DataGridViewComboBoxCell();
-        DataTable tableG = new DataTable();
-        DataTable tableC = new DataTable();
+        DataGridViewComboBoxCell celdaG = new();
+        DataGridViewComboBoxCell celdaC = new();
+        DataTable tableG = new();
+        DataTable tableC = new();
 
         tableG.Columns.Add("Display", typeof(string));
         tableG.Columns.Add("Value", typeof(int));
@@ -180,13 +185,6 @@ public partial class FrmDataCLM : Form, IChildData
 
         gridVariables.Rows[0].Cells[0] = celdaG;
         gridVariables.Rows[8].Cells[0] = celdaC;
-    }
-
-    /// <summary>
-    /// Loads an example into the interface
-    /// </summary>
-    public void LoadExample()
-    {
     }
 
     /// <summary>

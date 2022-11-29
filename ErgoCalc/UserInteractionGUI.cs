@@ -1,9 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-using System.Windows.Forms;
 
 namespace ErgoCalc;
 
@@ -41,11 +37,8 @@ partial class FrmMain
             _ => new Form()
         };
 
-        if (frmData is IChildData)
+        if (frmData is IChildData frm)
         {
-            IChildData frm = (IChildData)frmData;
-            frm.LoadExample();
-
             if (frmData.ShowDialog(this) == DialogResult.OK)
             {
                 Form frmResults = frmNew.Model switch
