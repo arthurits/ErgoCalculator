@@ -1,5 +1,11 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.3
+*  [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.60.
+* Target .NET 7.
+* Bug corrected when data was edited in composite indexes.
+* Upgraded text format options.
+
 ## ErgoCalculator 1.7.2
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.59.
 * Delete dependency on DLLs models. Each model is now implemented as a single class.
