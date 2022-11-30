@@ -425,30 +425,41 @@ public partial class FrmDataNIOSH : Form, IChildData
                 radLI.Checked = true;
                 break;
         }
+
+        // Set the NumericUpDown values, which in turn create the corresponding gridVariables columns and the listViewTasks groups
         updSubTasks.Value = _job.NumberSubTasks;
         updTasks.Value = _job.NumberTasks;
+
+        // Create empty ListViewTasks items, so we can later insert data into the desired position
+        for (int i = 0; i < _job.NumberSubTasks; i++)
+            listViewTasks.AddEmptyItem(0);
+
         int nCol = 0;
         for (var j = 0; j < _job.NumberTasks; j++)
         {
             for (var i = 0; i < _job.Tasks[j].SubTasks.Length; i++)
             {
+                nCol = _job.Tasks[j].SubTasks[i].ItemIndex;
+
                 // Populate the DataGridView with data
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 0].Value = _job.Tasks[j].SubTasks[i].Data.LC.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 1].Value = _job.Tasks[j].SubTasks[i].Data.Weight.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 2].Value = _job.Tasks[j].SubTasks[i].Data.h.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 3].Value = _job.Tasks[j].SubTasks[i].Data.v.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 4].Value = _job.Tasks[j].SubTasks[i].Data.d.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 5].Value = _job.Tasks[j].SubTasks[i].Data.f.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 6].Value = _job.Tasks[j].SubTasks[i].Data.td.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 7].Value = _job.Tasks[j].SubTasks[i].Data.a.ToString();
-                gridVariables[_job.Tasks[j].SubTasks[i].ItemIndex, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
+                gridVariables[nCol, 0].Value = _job.Tasks[j].SubTasks[i].Data.LC.ToString();
+                gridVariables[nCol, 1].Value = _job.Tasks[j].SubTasks[i].Data.Weight.ToString();
+                gridVariables[nCol, 2].Value = _job.Tasks[j].SubTasks[i].Data.h.ToString();
+                gridVariables[nCol, 3].Value = _job.Tasks[j].SubTasks[i].Data.v.ToString();
+                gridVariables[nCol, 4].Value = _job.Tasks[j].SubTasks[i].Data.d.ToString();
+                gridVariables[nCol, 5].Value = _job.Tasks[j].SubTasks[i].Data.f.ToString();
+                gridVariables[nCol, 6].Value = _job.Tasks[j].SubTasks[i].Data.td.ToString();
+                gridVariables[nCol, 7].Value = _job.Tasks[j].SubTasks[i].Data.a.ToString();
+                gridVariables[nCol, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
 
-                listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString(), listViewTasks.Groups[j]));
-
-                nCol++;
+                // We can now insert into the desired position
+                ListViewItem test = new("SubTask " + ((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString(), listViewTasks.Groups[j]);
+                listViewTasks.Items.Insert(_job.Tasks[j].SubTasks[i].ItemIndex, test);
             }
         }
-        
+
+        // Remove the empty items, which were added before to allow the specific insertion
+        listViewTasks.RemoveEmptyItems();
     }
 
     #endregion
@@ -457,7 +468,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     {
         if (e.TabPageIndex == 1) // tabTasks
         {
-            int nDummy = (listViewTasks.Items.Find("Dummy", false)).Length;
+            int nDummy = (listViewTasks.Items.Find(listViewTasks.DummyName, false)).Length;
             // Create the subtasks, as many as subtasks
             for (int i = listViewTasks.Items.Count - nDummy; i < updSubTasks.Value; i++)
             {

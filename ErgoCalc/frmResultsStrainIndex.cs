@@ -539,7 +539,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
         } 
 
         // Bold results
@@ -551,7 +551,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             //nEnd = rtbShowResult.Text.Length;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
         }
 
         // Set the cursor at the beginning of the text

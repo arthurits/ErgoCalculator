@@ -235,48 +235,56 @@ public partial class FrmDataStrainIndex : Form, IChildData
         //_job.JobTasks[1].numberSubTasks = 2;
         //_job.JobTasks[1].SubTasks = new ModelSubTask[_job.JobTasks[1].numberSubTasks];
 
+        _job.Tasks[0].SubTasks[0].ItemIndex = 0;
         _job.Tasks[0].SubTasks[0].Data.i = 0.2;
         _job.Tasks[0].SubTasks[0].Data.e = 5;
         _job.Tasks[0].SubTasks[0].Data.d = 3;
         _job.Tasks[0].SubTasks[0].Data.p = 5;
         _job.Tasks[0].SubTasks[0].Data.h = 4;
 
+        _job.Tasks[0].SubTasks[1].ItemIndex = 1;
         _job.Tasks[0].SubTasks[1].Data.i = 0.2;
         _job.Tasks[0].SubTasks[1].Data.e = 5;
         _job.Tasks[0].SubTasks[1].Data.d = 3;
         _job.Tasks[0].SubTasks[1].Data.p = -5;
         _job.Tasks[0].SubTasks[1].Data.h = 4;
 
+        _job.Tasks[0].SubTasks[2].ItemIndex = 2;
         _job.Tasks[0].SubTasks[2].Data.i = 0.4;
         _job.Tasks[0].SubTasks[2].Data.e = 6;
         _job.Tasks[0].SubTasks[2].Data.d = 3;
         _job.Tasks[0].SubTasks[2].Data.p = -10;
         _job.Tasks[0].SubTasks[2].Data.h = 3;
 
+        _job.Tasks[0].SubTasks[3].ItemIndex = 3;
         _job.Tasks[0].SubTasks[3].Data.i = 0.4;
         _job.Tasks[0].SubTasks[3].Data.e = 4;
         _job.Tasks[0].SubTasks[3].Data.d = 2;
         _job.Tasks[0].SubTasks[3].Data.p = 10;
         _job.Tasks[0].SubTasks[3].Data.h = 3;
 
+        _job.Tasks[0].SubTasks[4].ItemIndex = 4;
         _job.Tasks[0].SubTasks[4].Data.i = 0.4;
         _job.Tasks[0].SubTasks[4].Data.e = 4;
         _job.Tasks[0].SubTasks[4].Data.d = 2;
         _job.Tasks[0].SubTasks[4].Data.p = -10;
         _job.Tasks[0].SubTasks[4].Data.h = 3;
 
+        _job.Tasks[0].SubTasks[5].ItemIndex = 5;
         _job.Tasks[0].SubTasks[5].Data.i = 0.4;
         _job.Tasks[0].SubTasks[5].Data.e = 4;
         _job.Tasks[0].SubTasks[5].Data.d = 2;
         _job.Tasks[0].SubTasks[5].Data.p = 0;
         _job.Tasks[0].SubTasks[5].Data.h = 1;
 
+        _job.Tasks[0].SubTasks[6].ItemIndex = 6;
         _job.Tasks[0].SubTasks[6].Data.i = 0.15;
         _job.Tasks[0].SubTasks[6].Data.e = 2;
         _job.Tasks[0].SubTasks[6].Data.d = 10;
         _job.Tasks[0].SubTasks[6].Data.p = 5;
         _job.Tasks[0].SubTasks[6].Data.h = 8;
 
+        _job.Tasks[0].SubTasks[7].ItemIndex = 7;
         _job.Tasks[0].SubTasks[7].Data.i = 0.15;
         _job.Tasks[0].SubTasks[7].Data.e = 2;
         _job.Tasks[0].SubTasks[7].Data.d = 10;
@@ -302,6 +310,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         };
 
         _job.Tasks[0].SubTasks[0] = new();
+        _job.Tasks[0].SubTasks[0].ItemIndex = 0;
         _job.Tasks[0].SubTasks[0].Data.i = 0.7;
         _job.Tasks[0].SubTasks[0].Data.e = 1;
         _job.Tasks[0].SubTasks[0].Data.d = 1;
@@ -309,6 +318,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         _job.Tasks[0].SubTasks[0].Data.h = 4;
 
         _job.Tasks[0].SubTasks[1] = new();
+        _job.Tasks[0].SubTasks[1].ItemIndex = 1;
         _job.Tasks[0].SubTasks[1].Data.i = 0.4;
         _job.Tasks[0].SubTasks[1].Data.e = 2.6;
         _job.Tasks[0].SubTasks[1].Data.d = 1.2;
@@ -316,6 +326,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         _job.Tasks[0].SubTasks[1].Data.h = 4;
 
         _job.Tasks[0].SubTasks[2] = new();
+        _job.Tasks[0].SubTasks[2].ItemIndex = 2;
         _job.Tasks[0].SubTasks[2].Data.i = 0.2;
         _job.Tasks[0].SubTasks[2].Data.e = 5;
         _job.Tasks[0].SubTasks[2].Data.d = 3;
@@ -329,6 +340,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         };
 
         _job.Tasks[1].SubTasks[0] = new();
+        _job.Tasks[1].SubTasks[0].ItemIndex = 3;
         _job.Tasks[1].SubTasks[0].Data.i = 0.1;
         _job.Tasks[1].SubTasks[0].Data.e = 0.5;
         _job.Tasks[1].SubTasks[0].Data.d = 1;
@@ -336,6 +348,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         _job.Tasks[1].SubTasks[0].Data.h = 4;
 
         _job.Tasks[1].SubTasks[1] = new();
+        _job.Tasks[1].SubTasks[1].ItemIndex = 4;
         _job.Tasks[1].SubTasks[1].Data.i = 0.5;
         _job.Tasks[1].SubTasks[1].Data.e = 2;
         _job.Tasks[1].SubTasks[1].Data.d = 3;
@@ -361,13 +374,22 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 radCUSI.Checked = true;
                 break;
         }
+
+        // Set the NumericUpDown values, which in turn create the corresponding gridVariables columns and the listViewTasks groups
         updSubtasks.Value = _job.NumberSubTasks;
         updTasks.Value = _job.NumberTasks;
+        
+        // Create empty ListViewTasks items, so we can later insert data into the desired position
+        for (int i = 0; i < _job.NumberSubTasks; i++)
+            listViewTasks.AddEmptyItem(0);
+
         int nCol = 0;
         for (var j = 0; j < _job.NumberTasks; j++)
         {
             for (var i = 0; i < _job.Tasks[j].SubTasks.Length; i++)
             {
+                nCol = _job.Tasks[j].SubTasks[i].ItemIndex;
+
                 // Populate the DataGridView with data
                 gridVariables[nCol, 0].Value = _job.Tasks[j].SubTasks[i].Data.i.ToString();
                 gridVariables[nCol, 1].Value = _job.Tasks[j].SubTasks[i].Data.e.ToString();
@@ -376,12 +398,15 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 gridVariables[nCol, 4].Value = _job.Tasks[j].SubTasks[i].Data.h.ToString();
 
                 // Classify
-                listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + nCol)).ToString(), listViewTasks.Groups[j]));
-
-                nCol++;
+                //listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + nCol)).ToString(), listViewTasks.Groups[j]));
+                // We can now insert into the desired position
+                ListViewItem test = new("SubTask " + ((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString(), listViewTasks.Groups[j]);
+                listViewTasks.Items.Insert(_job.Tasks[j].SubTasks[i].ItemIndex, test);
             }
         }
-        
+
+        // Remove the empty items, which were added before to allow the specific insertion
+        listViewTasks.RemoveEmptyItems();
     }
 
     #endregion

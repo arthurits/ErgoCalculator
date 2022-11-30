@@ -22,7 +22,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
 
         typeof(Control).GetProperty("DoubleBuffered",
                          System.Reflection.BindingFlags.NonPublic |
-                         System.Reflection.BindingFlags.Instance)
+                         System.Reflection.BindingFlags.Instance)?
            .SetValue(this, true, null);
 
 
