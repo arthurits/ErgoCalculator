@@ -25,14 +25,11 @@ public partial class FrmResultsLiberty : Form, IChildResults
     }
 
 
-    public FrmResultsLiberty(object? data, bool wordWrap, int backColor, float zoomFactor)
+    public FrmResultsLiberty(object? data)
         : this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
-        rtbShowResult.WordWrap = wordWrap;
-        rtbShowResult.BackColor = Color.FromArgb(backColor);
-        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultsLiberty_Shown(object sender, EventArgs e)
@@ -405,7 +402,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public bool[] GetToolbarEnabledState()
     {
-        return new bool[] { true, true, true, false, true, true, false, true, true, false, false, true, true, true }; ;
+        return new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true }; ;
     }
 
     public void FormatText()
@@ -464,9 +461,9 @@ public partial class FrmResultsLiberty : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor);
+        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job)
         {
-            MdiParent = this.MdiParent;
+            MdiParent = this.MdiParent
         };
 
         frmResults.Show();

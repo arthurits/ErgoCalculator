@@ -24,14 +24,11 @@ public partial class FrmResultsTC : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    public FrmResultsTC(object? data, bool wordWrap, int backColor, float zoomFactor)
+    public FrmResultsTC(object? data)
         :this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
-        rtbShowResult.WordWrap = wordWrap;
-        rtbShowResult.BackColor = Color.FromArgb(backColor);
-        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultsTC_Shown(object sender, EventArgs e)
@@ -225,9 +222,9 @@ public partial class FrmResultsTC : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultsTC frmResults = new FrmResultsTC(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor);
+        FrmResultsTC frmResults = new FrmResultsTC(_job)
         {
-            MdiParent = this.MdiParent;
+            MdiParent = this.MdiParent
         };
 
         frmResults.Show();
@@ -282,7 +279,7 @@ public partial class FrmResultsTC : Form, IChildResults
 
     public bool[] GetToolbarEnabledState()
     {
-        return new bool[] { true, true, true, false, true, true, false, true, true, false, false, true, true, true };
+        return new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true };
     }
 
     public bool OpenFile(JsonDocument document)

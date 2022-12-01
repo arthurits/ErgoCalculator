@@ -19,14 +19,11 @@ public partial class FrmResultsCLM : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsCLM(object? data, bool wordWrap, int backColor, float zoomFactor)
+    public FrmResultsCLM(object? data)
         : this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
-        rtbShowResult.WordWrap = wordWrap;
-        rtbShowResult.BackColor = Color.FromArgb(backColor);
-        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)
@@ -248,7 +245,7 @@ public partial class FrmResultsCLM : Form, IChildResults
     public void Duplicate()
     {
         // Show the results window
-        FrmResultsCLM frmResults = new FrmResultsCLM(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
+        FrmResultsCLM frmResults = new FrmResultsCLM(_job)
         {
             MdiParent = this.MdiParent
         };

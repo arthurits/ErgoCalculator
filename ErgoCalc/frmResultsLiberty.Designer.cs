@@ -65,6 +65,7 @@ namespace ErgoCalc
             this.splitContainer2.Size = new System.Drawing.Size(892, 440);
             this.splitContainer2.SplitterDistance = 198;
             this.splitContainer2.TabIndex = 3;
+            this.splitContainer2.TabStop = false;
             // 
             // tableLayoutPanel1
             // 
@@ -100,6 +101,7 @@ namespace ErgoCalc
             this.formsPlot1.Name = "formsPlot1";
             this.formsPlot1.Size = new System.Drawing.Size(197, 192);
             this.formsPlot1.TabIndex = 3;
+            this.formsPlot1.TabStop = false;
             // 
             // formsPlot3
             // 
@@ -112,6 +114,7 @@ namespace ErgoCalc
             this.formsPlot3.Name = "formsPlot3";
             this.formsPlot3.Size = new System.Drawing.Size(197, 192);
             this.formsPlot3.TabIndex = 6;
+            this.formsPlot3.TabStop = false;
             // 
             // formsPlot2
             // 
@@ -124,6 +127,7 @@ namespace ErgoCalc
             this.formsPlot2.Name = "formsPlot2";
             this.formsPlot2.Size = new System.Drawing.Size(197, 192);
             this.formsPlot2.TabIndex = 2;
+            this.formsPlot2.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -166,7 +170,7 @@ namespace ErgoCalc
             this.rtbShowResult.ReadOnly = true;
             this.rtbShowResult.ShowSelectionMargin = true;
             this.rtbShowResult.Size = new System.Drawing.Size(892, 238);
-            this.rtbShowResult.TabIndex = 2;
+            this.rtbShowResult.TabIndex = 0;
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
             // 

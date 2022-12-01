@@ -19,14 +19,11 @@ public partial class FrmResultNIOSH : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(object? data, bool wordWrap, int backColor, float zoomFactor)
+    public FrmResultNIOSH(object? data)
         : this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
-        rtbShowResult.WordWrap = wordWrap;
-        rtbShowResult.BackColor = Color.FromArgb(backColor);
-        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
@@ -328,7 +325,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
+        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job)
         {
             MdiParent = this.MdiParent
         };

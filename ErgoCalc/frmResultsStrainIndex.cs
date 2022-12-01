@@ -21,14 +21,11 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsStrainIndex(object? data, bool wordWrap, int backColor, float zoomFactor)
+    public FrmResultsStrainIndex(object? data)
         : this()
     {
         if(data?.GetType() == typeof(Job))
             _job = (Job)data;
-        rtbShowResult.WordWrap = wordWrap;
-        rtbShowResult.BackColor = Color.FromArgb(backColor);
-        rtbShowResult.ZoomFactor = zoomFactor / 100;
     }
 
     private void frmResultsStrainIndex_Shown(object sender, EventArgs e)
@@ -509,7 +506,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job, rtbShowResult.WordWrap, rtbShowResult.BackColor.ToArgb(), rtbShowResult.ZoomFactor)
+        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job)
         {
             MdiParent = this.MdiParent
         };

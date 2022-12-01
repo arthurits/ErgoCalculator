@@ -103,7 +103,11 @@ public partial class FrmMain : Form
             if (frm is not null)
                 this.ToolBarEnable(((IChildResults)frm).GetToolbarEnabledState());
 
-            if (ActiveMdiChild is IChildResults && ActiveMdiChild.ActiveControl is RichTextBox richText)
+            var control = ActiveMdiChild?.ActiveControl;
+            if (control is SplitContainer)
+                control = (control as SplitContainer)?.ActiveControl;
+
+            if (ActiveMdiChild is IChildResults && control is RichTextBox richText)
             {
                 StatusStripFormat_SetEnabled(true);
                 StatusStripFormat_SetValues(richText.Font.Name, richText.Font.Size, richText.ForeColor, richText.WordWrap, richText.BackColor, richText.ZoomFactor);
