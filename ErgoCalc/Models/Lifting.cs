@@ -248,14 +248,14 @@ public class TaskModel
         // Initial data
         strResult.Append("Initial data" + "\t\t\t" + strLineD[0] + System.Environment.NewLine);
         strResult.Append("Weight lifted (kg):" + "\t\t\t" + strLineD[1] + System.Environment.NewLine);
-        strResult.Append("Horizontal distance (cm):" + "\t\t" + strLineD[2].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Horizontal distance (cm):" + "\t\t" + strLineD[2] + System.Environment.NewLine);
         strResult.Append("Vertical distance (cm):" + "\t\t\t" + strLineD[3] + System.Environment.NewLine);
-        strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + System.Environment.NewLine);
-        strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Vertical travel distance (cm):\t" + strLineD[4] + System.Environment.NewLine);
+        strResult.Append("Lifting frequency (times/min):\t" + strLineD[5] + System.Environment.NewLine);
         if (length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + System.Environment.NewLine);
-            strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + System.Environment.NewLine);
+            strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6] + System.Environment.NewLine);
+            strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7] + System.Environment.NewLine);
         }
         strResult.Append("Task duration (hours):" + "\t\t\t" + strLineD[8] + System.Environment.NewLine);
         strResult.Append("Twisting angle (°):" + "\t\t\t" + strLineD[9] + System.Environment.NewLine);
@@ -264,16 +264,16 @@ public class TaskModel
         // Multipliers
         strResult.Append("Multipliers" + "\t\t\t\t" + strLineR[0] + System.Environment.NewLine);
         strResult.Append("Lifting constant (LC):" + "\t\t\t" + strLineR[1] + System.Environment.NewLine);
-        strResult.Append("Horizontal multiplier (HM):" + "\t\t" + strLineR[2].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Horizontal multiplier (HM):" + "\t\t" + strLineR[2] + System.Environment.NewLine);
         strResult.Append("Vertical multiplier (VM):" + "\t\t" + strLineR[3] + System.Environment.NewLine);
         strResult.Append("Distance multiplier(DM):" + "\t\t" + strLineR[4] + System.Environment.NewLine);
-        strResult.Append("Frequency multiplier(FM):" + "\t\t" + strLineR[5].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Frequency multiplier(FM):" + "\t\t" + strLineR[5] + System.Environment.NewLine);
         if (length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append("Frequency A multiplier (FMa):\t\t" + strLineR[6].TrimStart('\t') + System.Environment.NewLine);
-            strResult.Append("Frequency B multiplier (FMb):\t\t" + strLineR[7].TrimStart('\t') + System.Environment.NewLine);
+            strResult.Append("Frequency A multiplier (FMa):\t\t" + strLineR[6] + System.Environment.NewLine);
+            strResult.Append("Frequency B multiplier (FMb):\t\t" + strLineR[7] + System.Environment.NewLine);
         }
-        strResult.Append("Twisting angle multiplier (AM):\t" + strLineR[8].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Twisting angle multiplier (AM):\t" + strLineR[8] + System.Environment.NewLine);
         strResult.Append("Coupling multiplier (CM):" + "\t\t" + strLineR[9] + System.Environment.NewLine + System.Environment.NewLine);
 
         if (length > 1)

@@ -67,31 +67,30 @@ public class TaskModel
         string[] strLineF = new string[10];
         string strEqT;
         string strEqR;
-        //string[] strTasks = new string[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O" };
 
-        strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-        strLineD[1] = string.Concat(System.Environment.NewLine, "Intensity of exertion");
-        strLineD[2] = string.Concat(System.Environment.NewLine, "Efforts per minute");
+        strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t\t\t");
+        strLineD[1] = string.Concat(System.Environment.NewLine, "Intensity of exertion", "\t\t");
+        strLineD[2] = string.Concat(System.Environment.NewLine, "Efforts per minute", "\t\t");
         if (IndexCOSI != -1)
         {
-            strLineD[3] = string.Concat(System.Environment.NewLine, "Efforts per minute A");
-            strLineD[4] = string.Concat(System.Environment.NewLine, "Efforts per minute B");
+            strLineD[3] = string.Concat(System.Environment.NewLine, "Efforts per minute A", "\t\t");
+            strLineD[4] = string.Concat(System.Environment.NewLine, "Efforts per minute B", "\t\t");
         }
-        strLineD[5] = string.Concat(System.Environment.NewLine, "Duration per exertion (s)");
-        strLineD[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture (-f +e)");
-        strLineD[7] = string.Concat(System.Environment.NewLine, strName, "duration per day (h)");
+        strLineD[5] = string.Concat(System.Environment.NewLine, "Duration per exertion (s)", "\t");
+        strLineD[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture (-f +e)", "\t");
+        strLineD[7] = string.Concat(System.Environment.NewLine, strName, "duration per day (h)", "\t");
 
-        strLineF[0] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Description", "\t");
-        strLineF[1] = string.Concat(System.Environment.NewLine, "Intensity multiplier");
-        strLineF[2] = string.Concat(System.Environment.NewLine, "Efforts multiplier", "\t");
+        strLineF[0] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Description", "\t\t\t");
+        strLineF[1] = string.Concat(System.Environment.NewLine, "Intensity multiplier", "\t\t");
+        strLineF[2] = string.Concat(System.Environment.NewLine, "Efforts multiplier", "\t\t");
         if (IndexCOSI != -1)
         {
-            strLineF[3] = string.Concat(System.Environment.NewLine, "Efforts A multiplier");
-            strLineF[4] = string.Concat(System.Environment.NewLine, "Efforts B multiplier");
+            strLineF[3] = string.Concat(System.Environment.NewLine, "Efforts A multiplier", "\t\t");
+            strLineF[4] = string.Concat(System.Environment.NewLine, "Efforts B multiplier", "\t\t");
         }
-        strLineF[5] = string.Concat(System.Environment.NewLine, "Duration multiplier");
-        strLineF[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture mult.");
-        strLineF[7] = string.Concat(System.Environment.NewLine, strName, "duration multiplier");
+        strLineF[5] = string.Concat(System.Environment.NewLine, "Duration multiplier", "\t\t");
+        strLineF[6] = string.Concat(System.Environment.NewLine, "Hand/wrist posture mult.", "\t");
+        strLineF[7] = string.Concat(System.Environment.NewLine, strName, "duration multiplier", "\t");
 
         if (IndexCOSI == -1)
         {
@@ -99,40 +98,41 @@ public class TaskModel
         }
         else
         {
-            strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Subtask RSI index:");
-            strLineF[9] = string.Concat(System.Environment.NewLine, "Subtasks order:", "\t");
+            strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Subtask RSI index:", "\t\t");
+            strLineF[9] = string.Concat(System.Environment.NewLine, "Subtasks order:", "\t\t\t");
         }
 
+        const int spaces = -12;
         for (i = 0; i < subLength; i++)
         {
             // "SubTask " + ((char)('A' + SubTasks[i].ItemIndex)).ToString()
             //strLineD[0] += "\t\t" + strName + strTasks[SubTasks[i].ItemIndex];
-            strLineD[0] += "\t\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
-            strLineD[1] += "\t\t" + SubTasks[i].Data.i.ToString();
-            strLineD[2] += "\t\t" + SubTasks[i].Data.e.ToString();
+            strLineD[0] += "\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
+            strLineD[1] += $"{SubTasks[i].Data.i.ToString(), spaces}";
+            strLineD[2] += $"{SubTasks[i].Data.e.ToString(), spaces}";
             if (IndexCOSI != -1)
             {
-                strLineD[3] += "\t\t" + SubTasks[i].Data.ea.ToString();
-                strLineD[4] += "\t\t" + SubTasks[i].Data.eb.ToString();
+                strLineD[3] += $"{SubTasks[i].Data.ea.ToString(), spaces}";
+                strLineD[4] += $"{SubTasks[i].Data.eb.ToString(), spaces}";
             }
-            strLineD[5] += "\t\t" + SubTasks[i].Data.d.ToString();
-            strLineD[6] += "\t" + SubTasks[i].Data.p.ToString() + "\t";
-            strLineD[7] += "\t" + SubTasks[i].Data.h.ToString() + "\t";
+            strLineD[5] += $"{SubTasks[i].Data.d.ToString(), spaces}";
+            strLineD[6] += $"{SubTasks[i].Data.p.ToString(), spaces}";
+            strLineD[7] += $"{SubTasks[i].Data.h.ToString(), spaces}";
 
-            strLineF[0] += "\t\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
-            strLineF[1] += "\t\t" + SubTasks[i].Factors.IM.ToString("0.####");
-            strLineF[2] += "\t\t" + SubTasks[i].Factors.EM.ToString("0.####");
+            strLineF[0] += "\t" + strName + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
+            strLineF[1] += $"{SubTasks[i].Factors.IM.ToString("0.####"), spaces}";
+            strLineF[2] += $"{SubTasks[i].Factors.EM.ToString("0.####"), spaces}";
             if (IndexCOSI != -1)
             {
-                strLineF[3] += "\t\t" + SubTasks[i].Factors.EMa.ToString();
-                strLineF[4] += "\t\t" + SubTasks[i].Factors.EMb.ToString();
+                strLineF[3] += $"{SubTasks[i].Factors.EMa.ToString(), spaces}";
+                strLineF[4] += $"{SubTasks[i].Factors.EMb.ToString(), spaces}";
             }
-            strLineF[5] += "\t\t" + SubTasks[i].Factors.DM.ToString("0.####");
-            strLineF[6] += "\t" + SubTasks[i].Factors.PM.ToString("0.####") + "\t";
-            strLineF[7] += "\t\t" + SubTasks[i].Factors.HM.ToString("0.####");
-            strLineF[8] += "\t\t" + SubTasks[i].IndexRSI.ToString("0.####");
+            strLineF[5] += $"{SubTasks[i].Factors.DM.ToString("0.####"), spaces}";
+            strLineF[6] += $"{SubTasks[i].Factors.PM.ToString("0.####"), spaces}";
+            strLineF[7] += $"{SubTasks[i].Factors.HM.ToString("0.####"), spaces}";
+            strLineF[8] += $"{SubTasks[i].IndexRSI.ToString("0.####"), spaces}";
             if (IndexCOSI != -1)
-                strLineF[9] += "\t\t" + (Order[i] + 1).ToString("0.####");
+                strLineF[9] += $"{(Order[i] + 1).ToString("0.####"), spaces}";
         }
 
         strLineD[6] = strLineD[6].TrimEnd();    // Also strLineD[6].TrimEnd(new char[] { '\t' })
@@ -228,32 +228,33 @@ public class Job
             string[] strLineD = new string[4];
             string[] strLineF = new string[6];
 
-            strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-            strLineD[1] = string.Concat(System.Environment.NewLine, "Duration per day (h)");
-            strLineD[2] = string.Concat(System.Environment.NewLine, "Duration per day A (h)");
-            strLineD[3] = string.Concat(System.Environment.NewLine, "Duration per day B (h)");
+            strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t\t");
+            strLineD[1] = string.Concat(System.Environment.NewLine, "Duration per day (h)", "\t");
+            strLineD[2] = string.Concat(System.Environment.NewLine, "Duration per day A (h)", "\t");
+            strLineD[3] = string.Concat(System.Environment.NewLine, "Duration per day B (h)", "\t");
 
-            strLineF[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-            strLineF[1] = string.Concat(System.Environment.NewLine, "Duration multiplier");
-            strLineF[2] = string.Concat(System.Environment.NewLine, "Duration A multiplier");
-            strLineF[3] = string.Concat(System.Environment.NewLine, "Duration B multiplier");
+            strLineF[0] = string.Concat(System.Environment.NewLine, "Description", "\t\t");
+            strLineF[1] = string.Concat(System.Environment.NewLine, "Duration multiplier", "\t");
+            strLineF[2] = string.Concat(System.Environment.NewLine, "Duration A multiplier", "\t");
+            strLineF[3] = string.Concat(System.Environment.NewLine, "Duration B multiplier", "\t");
 
-            strLineF[4] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Task COSI index");
-            strLineF[5] = string.Concat(System.Environment.NewLine, "Task order");
+            strLineF[4] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Task COSI index", "\t\t");
+            strLineF[5] = string.Concat(System.Environment.NewLine, "Task order", "\t\t\t");
 
+            const int spaces = -12;
             for (int i = 0; i < NumberTasks; i++)
             {
-                strLineD[0] += string.Concat("\t\t", "Task ", ((char)('A' + i)).ToString());
-                strLineD[1] += string.Concat("\t\t", Tasks[i].h.ToString("0.####"));
-                strLineD[2] += string.Concat("\t\t", Tasks[i].ha.ToString("0.####"));
-                strLineD[3] += string.Concat("\t\t", Tasks[i].hb.ToString("0.####"));
+                strLineD[0] += string.Concat("\t", "Task ", ((char)('A' + i)).ToString());
+                strLineD[1] += $"{Tasks[i].h.ToString("0.####"),spaces}";
+                strLineD[2] += $"{Tasks[i].ha.ToString("0.####"),spaces}";
+                strLineD[3] += $"{Tasks[i].hb.ToString("0.####"),spaces}";
 
-                strLineF[0] += string.Concat("\t\t", "Task ", ((char)('A' + i)).ToString());
-                strLineF[1] += string.Concat("\t\t", Tasks[i].HM.ToString("0.####"));
-                strLineF[2] += string.Concat("\t\t", Tasks[i].HMa.ToString("0.####"));
-                strLineF[3] += string.Concat("\t\t", Tasks[i].HMb.ToString("0.####"));
-                strLineF[4] += string.Concat("\t\t", Tasks[i].IndexCOSI.ToString("0.####"));
-                strLineF[5] += string.Concat("\t\t", (Order[i] + 1).ToString("0.####"));
+                strLineF[0] += string.Concat("\t", "Task ", ((char)('A' + i)).ToString());
+                strLineF[1] += $"{Tasks[i].HM.ToString("0.####"),spaces}";
+                strLineF[2] += $"{Tasks[i].HMa.ToString("0.####"),spaces}";
+                strLineF[3] += $"{Tasks[i].HMb.ToString("0.####"),spaces}";
+                strLineF[4] += $"{Tasks[i].IndexCOSI.ToString("0.####"),spaces}";
+                strLineF[5] += $"{(Order[i] + 1).ToString("0.####"),spaces}";
             }
 
             string strEqT = string.Concat(System.Environment.NewLine, System.Environment.NewLine);
@@ -288,7 +289,7 @@ public class Job
 
         return string.Concat(string.Concat(strTasks), strCUSI);
     }
-};
+}
 
 public static class StrainIndex
 {

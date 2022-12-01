@@ -153,146 +153,148 @@ public class Job
 
         strLineD[0] = string.Concat(System.Environment.NewLine, "Initial data", "\t\t");
         strLineD[1] = string.Concat(System.Environment.NewLine, "Manual handling type", "\t\t");
-        strLineD[2] = string.Concat(System.Environment.NewLine, "Horizontal reach H (m)");
-        strLineD[3] = string.Concat(System.Environment.NewLine, "Vertical range VRM (m)");
-        strLineD[4] = string.Concat(System.Environment.NewLine, "Horizontal distance DH (m)");
-        strLineD[5] = string.Concat(System.Environment.NewLine, "Vertical distance DV (m)");
-        strLineD[6] = string.Concat(System.Environment.NewLine, "Vertical height V (m)");
-        strLineD[7] = string.Concat(System.Environment.NewLine, "Frequency F (actions/min)");
-        strLineD[8] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t");
+        strLineD[2] = string.Concat(System.Environment.NewLine, "Horizontal reach H (m)", "\t\t");
+        strLineD[3] = string.Concat(System.Environment.NewLine, "Vertical range VRM (m)", "\t\t");
+        strLineD[4] = string.Concat(System.Environment.NewLine, "Horizontal distance DH (m)", "\t");
+        strLineD[5] = string.Concat(System.Environment.NewLine, "Vertical distance DV (m)", "\t");
+        strLineD[6] = string.Concat(System.Environment.NewLine, "Vertical height V (m)", "\t\t");
+        strLineD[7] = string.Concat(System.Environment.NewLine, "Frequency F (actions/min)", "\t");
+        strLineD[8] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t\t");
 
         strLineF[0] = string.Concat(System.Environment.NewLine, "Scale factors", "\t\t");
-        strLineF[1] = string.Concat(System.Environment.NewLine, "Reference load", "\t");
-        strLineF[2] = string.Concat(System.Environment.NewLine, "H factor", "\t\t");
-        strLineF[3] = string.Concat(System.Environment.NewLine, "VRM factor", "\t\t");
-        strLineF[4] = string.Concat(System.Environment.NewLine, "DH factor", "\t\t");
-        strLineF[5] = string.Concat(System.Environment.NewLine, "DV factor", "\t\t");
-        strLineF[6] = string.Concat(System.Environment.NewLine, "V factor", "\t\t");
-        strLineF[7] = string.Concat(System.Environment.NewLine, "F factor", "\t\t");
+        strLineF[1] = string.Concat(System.Environment.NewLine, "Reference load", "\t\t\t");
+        strLineF[2] = string.Concat(System.Environment.NewLine, "H factor", "\t\t\t\t");
+        strLineF[3] = string.Concat(System.Environment.NewLine, "VRM factor", "\t\t\t\t");
+        strLineF[4] = string.Concat(System.Environment.NewLine, "DH factor", "\t\t\t\t");
+        strLineF[5] = string.Concat(System.Environment.NewLine, "DV factor", "\t\t\t\t");
+        strLineF[6] = string.Concat(System.Environment.NewLine, "V factor", "\t\t\t\t");
+        strLineF[7] = string.Concat(System.Environment.NewLine, "F factor", "\t\t\t\t");
 
-        strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Reference load", "\t");
-        strLineF[9] = string.Concat(System.Environment.NewLine, "Sustained DH factor", "\t");
-        strLineF[10] = string.Concat(System.Environment.NewLine, "Sustained V factor", "\t");
-        strLineF[11] = string.Concat(System.Environment.NewLine, "Sustained F factor", "\t");
+        strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Reference load", "\t\t\t");
+        strLineF[9] = string.Concat(System.Environment.NewLine, "Sustained DH factor", "\t\t");
+        strLineF[10] = string.Concat(System.Environment.NewLine, "Sustained V factor", "\t\t");
+        strLineF[11] = string.Concat(System.Environment.NewLine, "Sustained F factor", "\t\t");
 
 
-        strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable limit", "\t");
-        strThresholds[1] = string.Concat(System.Environment.NewLine, "CV initial force", "\t");
-        strThresholds[2] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 50%");
-        strThresholds[3] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 75%");
-        strThresholds[4] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 90%");
-        strThresholds[5] = string.Concat(System.Environment.NewLine, "CV sustained force", "\t");
-        strThresholds[6] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 50%");
-        strThresholds[7] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 75%");
-        strThresholds[8] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 90%");
-        strThresholds[9] = string.Concat(System.Environment.NewLine, "CV weight", "\t\t");
-        strThresholds[10] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 50%");
-        strThresholds[11] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 75%");
-        strThresholds[12] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 90%");
+        strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable limit");
+        strThresholds[1] = string.Concat(System.Environment.NewLine, "CV initial force", "\t\t\t");
+        strThresholds[2] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 50%", "\t");
+        strThresholds[3] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 75%", "\t");
+        strThresholds[4] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 90%", "\t");
+        strThresholds[5] = string.Concat(System.Environment.NewLine, "CV sustained force", "\t\t");
+        strThresholds[6] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 50%", "\t");
+        strThresholds[7] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 75%", "\t");
+        strThresholds[8] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 90%", "\t");
+        strThresholds[9] = string.Concat(System.Environment.NewLine, "CV weight", "\t\t\t\t");
+        strThresholds[10] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 50%", "\t\t");
+        strThresholds[11] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 75%", "\t\t");
+        strThresholds[12] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 90%", "\t\t");
 
         int i = 0;
+        const int spaces = -12;
+        string blank = "------";
         foreach (var data in Tasks)
         {
-            strLineD[0] += string.Concat("\t\t", strGridHeader, ((char)('A' + i)).ToString());
-            strLineD[1] += string.Concat("\t", data.Data.Type.ToString());
-            strLineD[8] += string.Concat("\t\t", data.Data.Gender.ToString());
+            strLineD[0] += string.Concat("\t", strGridHeader, ((char)('A' + i)).ToString());
+            strLineD[1] += $"{data.Data.Type.ToString(), spaces}";
+            strLineD[8] += $"{data.Data.Gender.ToString(),spaces}";
 
-            strLineF[0] += string.Concat("\t\t", strGridHeader, ((char)('A' + i)).ToString());
+            strLineF[0] += string.Concat("\t", strGridHeader, ((char)('A' + i)).ToString());
 
-            strThresholds[0] += string.Concat(i == 0 ? "\t" : "\t\t", strGridHeader, ((char)('A' + i)).ToString());
+            strThresholds[0] += string.Concat("\t", strGridHeader, ((char)('A' + i)).ToString());
             if (data.Data.Type == TaskType.Pulling || data.Data.Type == TaskType.Pushing)
             {
-                strLineD[2] += string.Concat("\t\t", "------");
-                strLineD[3] += string.Concat("\t\t", "------");
+                strLineD[2] += $"{blank, spaces}";
+                strLineD[3] += $"{blank,spaces}";
                 // Convert.ToDouble(String.Format("{0:G3}", number)).ToString()
                 //strLineD[4] += string.Concat("\t\t", data.Data.DistHorz.ToString("0.####"));
-                strLineD[4] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Data.DistHorz)).ToString());
-                strLineD[5] += string.Concat("\t\t", "------");
-                strLineD[6] += string.Concat("\t\t", data.Data.VertHeight.ToString("0.####"));
-                strLineD[7] += string.Concat("\t\t", data.Data.Freq.ToString("0.####"));
+                strLineD[4] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Data.DistHorz)).ToString(),spaces}";
+                strLineD[5] += $"{blank,spaces}";
+                strLineD[6] += $"{data.Data.VertHeight.ToString("G5"), spaces}";
+                strLineD[7] += $"{data.Data.Freq.ToString("G5"), spaces}";
 
-                strLineF[1] += string.Concat("\t\t", data.Initial.RL.ToString("0.####"));
-                strLineF[2] += string.Concat("\t\t", "------");
-                strLineF[3] += string.Concat("\t\t", "------");
-                strLineF[4] += string.Concat("\t\t", data.Initial.DH.ToString("0.####"));
-                strLineF[5] += string.Concat("\t\t", "------");
-                strLineF[6] += string.Concat("\t\t", data.Initial.V.ToString("0.####"));
-                strLineF[7] += string.Concat("\t\t", data.Initial.F.ToString("0.####"));
+                strLineF[1] += $"{data.Initial.RL.ToString("0.####"), spaces}";
+                strLineF[2] += $"{blank,spaces}";
+                strLineF[3] += $"{blank,spaces}";
+                strLineF[4] += $"{data.Initial.DH.ToString("0.####"), spaces}";
+                strLineF[5] += $"{blank,spaces}";
+                strLineF[6] += $"{data.Initial.V.ToString("0.####"), spaces}";
+                strLineF[7] += $"{data.Initial.F.ToString("0.####"), spaces}";
 
-                strLineF[8] += string.Concat("\t\t", data.Sustained.RL.ToString("0.####"));
-                strLineF[9] += string.Concat("\t\t", data.Sustained.DH.ToString("0.####"));
-                strLineF[10] += string.Concat("\t\t", data.Sustained.V.ToString("0.####"));
-                strLineF[11] += string.Concat("\t\t", data.Sustained.F.ToString("0.####"));
+                strLineF[8] += $"{data.Sustained.RL.ToString("0.####"), spaces}";
+                strLineF[9] += $"{data.Sustained.DH.ToString("0.####"), spaces}";
+                strLineF[10] += $"{data.Sustained.V.ToString("0.####"), spaces}";
+                strLineF[11] += $"{data.Sustained.F.ToString("0.####"), spaces}";
 
-                strThresholds[1] += string.Concat("\t\t", data.Initial.CV.ToString("0.####"));
-                strThresholds[2] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString("0.####"));
-                strThresholds[3] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"));
-                strThresholds[4] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"));
-                strThresholds[5] += string.Concat("\t\t", data.Sustained.CV.ToString("0.####"));
-                strThresholds[6] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL)).ToString("0.####"));
-                strThresholds[7] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL75)).ToString("0.####"));
-                strThresholds[8] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL90)).ToString("0.####"));
-                strThresholds[9] += string.Concat("\t\t", "------");
-                strThresholds[10] += string.Concat("\t\t", "------");
-                strThresholds[11] += string.Concat("\t\t", "------");
-                strThresholds[12] += string.Concat("\t\t", "------");
+                strThresholds[1] += $"{data.Initial.CV.ToString("0.####"), spaces}";
+                strThresholds[2] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString("0.####"),spaces}";
+                strThresholds[3] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"), spaces}";
+                strThresholds[4] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"), spaces}";
+                strThresholds[5] += $"{data.Sustained.CV.ToString("0.####"), spaces}";
+                strThresholds[6] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL)).ToString("0.####"), spaces}";
+                strThresholds[7] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL75)).ToString("0.####"), spaces}";
+                strThresholds[8] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL90)).ToString("0.####"), spaces}";
+                strThresholds[9] += $"{blank,spaces}";
+                strThresholds[10] += $"{blank,spaces}";
+                strThresholds[11] += $"{blank,spaces}";
+                strThresholds[12] += $"{blank,spaces}";
             }
             else // Lift, lower, and carry
             {
                 if (data.Data.Type == TaskType.Carrying)
                 {
-                    strLineD[2] += string.Concat("\t\t", "------");
-                    strLineD[3] += string.Concat("\t\t", "------");
-                    strLineD[4] += string.Concat("\t\t", data.Data.DistHorz.ToString("0.####"));
-                    strLineD[5] += string.Concat("\t\t", "------");
-                    strLineD[6] += string.Concat("\t\t", data.Data.VertHeight.ToString("0.####"));
-                    strLineD[7] += string.Concat("\t\t", data.Data.Freq.ToString("0.####"));
+                    strLineD[2] += $"{blank,spaces}";
+                    strLineD[3] += $"{blank,spaces}";
+                    strLineD[4] += $"{data.Data.DistHorz.ToString("0.####"),spaces}";
+                    strLineD[5] += $"{blank,spaces}";
+                    strLineD[6] += $"{data.Data.VertHeight.ToString("0.####"),spaces}";
+                    strLineD[7] += $"{data.Data.Freq.ToString("0.####"),spaces}";
 
-                    strLineF[1] += string.Concat("\t\t", data.Initial.RL.ToString("0.####"));
-                    strLineF[2] += string.Concat("\t\t", "------");
-                    strLineF[3] += string.Concat("\t\t", "------");
-                    strLineF[4] += string.Concat("\t\t", data.Initial.DV.ToString("0.####"));
-                    strLineF[5] += string.Concat("\t\t", "------");
-                    strLineF[6] += string.Concat("\t\t", data.Initial.V.ToString("0.####"));
-                    strLineF[7] += string.Concat("\t\t", data.Initial.F.ToString("0.####"));
+                    strLineF[1] += $"{data.Initial.RL.ToString("0.####"),spaces}";
+                    strLineF[2] += $"{blank,spaces}";
+                    strLineF[3] += $"{blank,spaces}";
+                    strLineF[4] += $"{data.Initial.DV.ToString("0.####"),spaces}";
+                    strLineF[5] += $"{blank,spaces}";
+                    strLineF[6] += $"{data.Initial.V.ToString("0.####"), spaces}";
+                    strLineF[7] += $"{data.Initial.F.ToString("0.####"), spaces}";
                 }
                 else //lift and lower
                 {
                     //strLineD[2] += string.Concat("\t\t", data.Data.HorzReach.ToString("0.####"));
-                    strLineD[2] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Data.HorzReach)).ToString());
-                    strLineD[3] += string.Concat("\t\t", data.Data.VertRangeM.ToString("0.####"));
-                    strLineD[4] += string.Concat("\t\t", "------");
-                    strLineD[5] += string.Concat("\t\t", data.Data.DistVert.ToString("0.####"));
-                    strLineD[6] += string.Concat("\t\t", "------");
-                    strLineD[7] += string.Concat("\t\t", data.Data.Freq.ToString("0.####"));
+                    strLineD[2] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Data.HorzReach)).ToString(),spaces}";
+                    strLineD[3] += $"{data.Data.VertRangeM.ToString("0.####"),spaces}";
+                    strLineD[4] += $"{blank,spaces}";
+                    strLineD[5] += $"{data.Data.DistVert.ToString("0.####"),spaces}";
+                    strLineD[6] += $"{blank,spaces}";
+                    strLineD[7] += $"{data.Data.Freq.ToString("0.####"),spaces}";
 
-                    strLineF[1] += string.Concat("\t\t", data.Initial.RL.ToString("0.####"));
-                    strLineF[2] += string.Concat("\t\t", data.Initial.H.ToString("0.####"));
-                    strLineF[3] += string.Concat("\t\t", data.Initial.VRM.ToString("0.####"));
-                    strLineF[4] += string.Concat("\t\t", "------");
-                    strLineF[5] += string.Concat("\t\t", data.Initial.DV.ToString("0.####"));
-                    strLineF[6] += string.Concat("\t\t", "------");
-                    strLineF[7] += string.Concat("\t\t", data.Initial.F.ToString("0.####"));
+                    strLineF[1] += $"{data.Initial.RL.ToString("0.####"),spaces}";
+                    strLineF[2] += $"{data.Initial.H.ToString("0.####"),spaces}";
+                    strLineF[3] += $"{data.Initial.VRM.ToString("0.####"),spaces}";
+                    strLineF[4] += $"{blank,spaces}";
+                    strLineF[5] += $"{data.Initial.DV.ToString("0.####"),spaces}";
+                    strLineF[6] += $"{blank,spaces}";
+                    strLineF[7] += $"{data.Initial.F.ToString("0.####"),spaces}";
                 }
 
-                strLineF[8] += string.Concat("\t\t", "------");
-                strLineF[9] += string.Concat("\t\t", "------");
-                strLineF[10] += string.Concat("\t\t", "------");
-                strLineF[11] += string.Concat("\t\t", "------");
+                strLineF[8] += $"{blank,spaces}";
+                strLineF[9] += $"{blank,spaces}";
+                strLineF[10] += $"{blank,spaces}";
+                strLineF[11] += $"{blank,spaces}";
 
-                strThresholds[1] += string.Concat("\t\t", "------");
-                strThresholds[2] += string.Concat("\t\t", "------");
-                strThresholds[3] += string.Concat("\t\t", "------");
-                strThresholds[4] += string.Concat("\t\t", "------");
-                strThresholds[5] += string.Concat("\t\t", "------");
-                strThresholds[6] += string.Concat("\t\t", "------");
-                strThresholds[7] += string.Concat("\t\t", "------");
-                strThresholds[8] += string.Concat("\t\t", "------");
-                strThresholds[9] += string.Concat("\t\t", data.Initial.CV.ToString("0.####"));
+                strThresholds[1] += $"{blank,spaces}";
+                strThresholds[2] += $"{blank,spaces}";
+                strThresholds[3] += $"{blank,spaces}";
+                strThresholds[4] += $"{blank,spaces}";
+                strThresholds[5] += $"{blank,spaces}";
+                strThresholds[6] += $"{blank,spaces}";
+                strThresholds[7] += $"{blank,spaces}";
+                strThresholds[8] += $"{blank,spaces}";
+                strThresholds[9] += $"{data.Initial.CV.ToString("0.####"),spaces}";
                 //strThresholds[10] += string.Concat("\t\t", data.Initial.MAL.ToString("0.####"));
-                strThresholds[10] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString());
-                strThresholds[11] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"));
-                strThresholds[12] += string.Concat("\t\t", Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"));
+                strThresholds[10] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString(),spaces}";
+                strThresholds[11] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"),spaces}";
+                strThresholds[12] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"),spaces}";
             }
 
             i++;

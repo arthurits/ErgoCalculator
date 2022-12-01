@@ -88,7 +88,7 @@ public class AppSettings
     /// Font size, oem
     /// </summary>
     [JsonPropertyName("Font size")]
-    public float FontSize { get; set; } = 10;
+    public float FontSize { get; set; } = 11;
 
     /// <summary>
     /// Font fore color
