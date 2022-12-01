@@ -76,7 +76,7 @@ public class AppSettings
     /// Font family name
     /// </summary>
     [JsonPropertyName("Font family name")]
-    public string FontFamilyName { get; set; } = "Lucida Sans";
+    public string FontFamilyName { get; set; } = "Consolas";
 
     /// <summary>
     /// Font style
@@ -88,7 +88,7 @@ public class AppSettings
     /// Font size, oem
     /// </summary>
     [JsonPropertyName("Font size")]
-    public float FontSize { get; set; } = 9;
+    public float FontSize { get; set; } = 10;
 
     /// <summary>
     /// Font fore color
