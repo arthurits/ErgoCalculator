@@ -245,9 +245,9 @@ public class TaskModel
         strResult.Append(System.Environment.NewLine);
 
         // Initial data
-        strResult.Append("Initial data" + "\t\t" + strLineD[0] + "\n");
-        strResult.Append("Weight lifted (kg):\t" + strLineD[1] + "\n");
-        strResult.Append("Horizontal distance (cm):" + strLineD[2] + "\n");
+        strResult.Append("Initial data" + "\t" + strLineD[0] + "\n");
+        strResult.Append("Weight lifted (kg):" + strLineD[1] + "\n");
+        strResult.Append("Horizontal distance (cm):" + "\t" + strLineD[2].TrimStart('\t') + "\n");
         strResult.Append("Vertical distance (cm):" + strLineD[3] + "\n");
         strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + "\n");
         strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + "\n");
@@ -257,16 +257,16 @@ public class TaskModel
             strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + "\n");
         }
         strResult.Append("Task duration (hours):" + strLineD[8] + "\n");
-        strResult.Append("Twisting angle (°):\t" + strLineD[9] + "\n");
-        strResult.Append("Coupling:\t\t\t" + strLineD[10] + "\n\n");
+        strResult.Append("Twisting angle (°):" + strLineD[9] + "\n");
+        strResult.Append("Coupling:\t\t" + strLineD[10] + "\n\n");
 
         // Multipliers
-        strResult.Append("Multipliers" + "\t\t" + strLineR[0] + "\n");
+        strResult.Append("Multipliers" + "\t" + strLineR[0] + "\n");
         strResult.Append("Lifting constant (LC):" + strLineR[1] + "\n");
-        strResult.Append("Horizontal multiplier (HM):" + strLineR[2] + "\n");
+        strResult.Append("Horizontal multiplier (HM):" + "\t" + strLineR[2].TrimStart('\t') + "\n");
         strResult.Append("Vertical multiplier (VM):" + strLineR[3] + "\n");
         strResult.Append("Distance multiplier(DM):" + strLineR[4] + "\n");
-        strResult.Append("Frequency multiplier(FM):" + strLineR[5] + "\n");
+        strResult.Append("Frequency multiplier(FM):" + "\t" + strLineR[5].TrimStart('\t') + "\n");
         if (length > 1 && Model == IndexType.IndexCLI)
         {
             strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + "\n");
@@ -279,9 +279,9 @@ public class TaskModel
         {
             if (Model == IndexType.IndexCLI)
             {
-                strResult.Append("Lifting index (IF):\t" + strLineR[10] + "\n");
-                strResult.Append("Lifting index (LI):\t" + strLineR[11] + "\n");
-                strResult.Append("Subtask order:\t" + strLineR[12] + "\n\n");
+                strResult.Append("Lifting index (IF):" + strLineR[10] + "\n");
+                strResult.Append("Lifting index (LI):" + "\t" + strLineR[11] + "\n");
+                strResult.Append("Subtask order:" + "\t" + strLineR[12] + "\n\n");
             }
             else
             {

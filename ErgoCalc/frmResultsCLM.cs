@@ -15,6 +15,7 @@ public partial class FrmResultsCLM : Form, IChildResults
     public FrmResultsCLM()
     {
         InitializeComponent();
+        this.ActiveControl = this.rtbShowResult;
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 

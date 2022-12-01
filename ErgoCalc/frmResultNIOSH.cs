@@ -15,6 +15,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
     public FrmResultNIOSH()
     {
         InitializeComponent();
+        this.ActiveControl = this.rtbShowResult;
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 

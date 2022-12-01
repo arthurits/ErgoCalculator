@@ -41,7 +41,7 @@ partial class FrmMain
         {
             if (frmData.ShowDialog(this) == DialogResult.OK)
             {
-                Form frmResults = frmNew.Model switch
+                using Form frmResults = frmNew.Model switch
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
@@ -54,7 +54,15 @@ partial class FrmMain
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
-                frmResults.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+                FormatRichText(frmResults.ActiveControl as RichTextBox,
+                    _settings.FontFamilyName,
+                    _settings.FontSize,
+                    _settings.FontStyle,
+                    _settings.FontColor,
+                    _settings.TextBackColor,
+                    _settings.TextZoom,
+                    _settings.WordWrap);
+                //frmResults.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
                 frmResults.Show();
             }
             frmData.Dispose();
@@ -120,23 +128,31 @@ partial class FrmMain
 
             if (frm != default)
             {
-                frm.MdiParent = this;
-
-                var strTextTitle = strType switch
-                {
-                    "Work-Rest model" => StringResources.FormResultsWR,
-                    "NIOSH lifting equation" => StringResources.FormResultsNIOSH,
-                    "Strain index" => StringResources.FormResultsStrainIndex,
-                    "Thermal comfort model" => StringResources.FormResultsTC,
-                    "LM-MMH model" => StringResources.FormResultsLiberty,
-                    "Comprehensive lifting model" => StringResources.FormResultsCLM,
-                    _ => String.Empty
-                };
-
-                SetFormTitle(frm, strTextTitle, openDlg.FileName);
 
                 if (((IChildResults)frm).OpenFile(document))
                 {
+                    string strTextTitle = strType switch
+                    {
+                        "Work-Rest model" => StringResources.FormResultsWR,
+                        "NIOSH lifting equation" => StringResources.FormResultsNIOSH,
+                        "Strain index" => StringResources.FormResultsStrainIndex,
+                        "Thermal comfort model" => StringResources.FormResultsTC,
+                        "LM-MMH model" => StringResources.FormResultsLiberty,
+                        "Comprehensive lifting model" => StringResources.FormResultsCLM,
+                        _ => String.Empty
+                    };
+                    SetFormTitle(frm, strTextTitle, openDlg.FileName);
+
+                    FormatRichText(frm.ActiveControl as RichTextBox,
+                        _settings.FontFamilyName,
+                        _settings.FontSize,
+                        _settings.FontStyle,
+                        _settings.FontColor,
+                        _settings.TextBackColor,
+                        _settings.TextZoom,
+                        _settings.WordWrap);
+
+                    frm.MdiParent = this;
                     frm.Show();
                 }
                 else
@@ -212,7 +228,8 @@ partial class FrmMain
             fontDlg.Font = new(richText.Font.Name, richText.Font.Size, richText.Font.Style);
             if (fontDlg.ShowDialog() == DialogResult.OK)
             {
-                richText.Font = fontDlg.Font;
+                FormatRichText(richText: richText, fontName: fontDlg.Font.Name, fontSize: fontDlg.Font.Size, fontStyle: fontDlg.Font.Style);
+                //richText.Font = fontDlg.Font;
                 this.statusStripLabelFont.Text = String.Format(StringResources.LblFontName, richText.Font.Name, richText.Font.Size);
             }
         }
@@ -234,7 +251,8 @@ partial class FrmMain
             colorDlg.Color = richText.ForeColor;
             if (colorDlg.ShowDialog(this) == DialogResult.OK)
             {
-                richText.ForeColor = colorDlg.Color;
+                FormatRichText(richText: richText, foreColor: colorDlg.Color.ToArgb());
+                //richText.ForeColor = colorDlg.Color;
                 this.statusStripLabelFontColor.BackColor = colorDlg.Color;
             }
         }
@@ -254,7 +272,8 @@ partial class FrmMain
                 label.ForeColor = Color.LightGray;
 
             if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
-                richText.WordWrap = label.Checked;
+                FormatRichText(richText: richText, wordWrap: label.Checked);
+            //richText.WordWrap = label.Checked;
         }
     }
 
@@ -274,7 +293,8 @@ partial class FrmMain
             colorDlg.Color = richText.BackColor;
             if (colorDlg.ShowDialog(this) == DialogResult.OK)
             {
-                richText.BackColor = colorDlg.Color;
+                FormatRichText(richText: richText, backColor: colorDlg.Color.ToArgb());
+                //richText.BackColor = colorDlg.Color;
                 this.statusStripLabelBackColor.BackColor = colorDlg.Color;
             }
         }
@@ -290,10 +310,41 @@ partial class FrmMain
         {
             if (ActiveMdiChild?.ActiveControl is RichTextBox richText)
             {
-                richText.ZoomFactor = frmZoom.ZoomLevel / 100;
+                FormatRichText(richText: richText, zoomFactor: frmZoom.ZoomLevel);
+                //richText.ZoomFactor = frmZoom.ZoomLevel / 100;
                 this.statusStripLabelZoom.Text = $"{(frmZoom.ZoomLevel / 100).ToString("0.##")}x";
             }
         }
     }
 
+    /// <summary>
+    /// Gives formats to a <see cref="RichTextBox"/> control
+    /// </summary>
+    /// <param name="richText">The <see cref="RichTextBox"/> control </param>
+    /// <param name="fontName">Font family name</param>
+    /// <param name="fontSize">Font oem size</param>
+    /// <param name="fontStyle">Font style</param>
+    /// <param name="foreColor">A <see cref="color"/> that represents the control's foreground color</param>
+    /// <param name="backColor">A <see cref="color"/> that represents the control's background color</param>
+    /// <param name="zoomFactor">The factor by which the contents of the control is zoomed</param>
+    /// <param name="wordWrap"><see langword="True"/> if the multiline text box control wraps words; <see langword="false"/> if the text box control automatically scrolls horizontally when the user types past the right edge of the control</param>
+    private void FormatRichText(RichTextBox? richText = null, string? fontName = null, float? fontSize = null, FontStyle? fontStyle = null, int? foreColor = null, int? backColor = null, int? zoomFactor = null, bool? wordWrap = null)
+    {
+        if (richText is null) return;
+
+        if (fontName is not null && fontSize is not null && fontStyle is not null)
+            richText.Font = new((string)fontName, (float)fontSize, (FontStyle)fontStyle);
+
+        if (foreColor is not null)
+            richText.ForeColor = Color.FromArgb((int)foreColor);
+
+        if (backColor is not null)
+            richText.BackColor = Color.FromArgb((int)backColor);
+
+        if (zoomFactor is not null)
+            richText.ZoomFactor = ((int)zoomFactor) / 100;
+
+        if (wordWrap is not null)
+            richText.WordWrap = (bool)wordWrap;
+    }
 }

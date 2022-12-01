@@ -17,7 +17,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     public FrmResultsStrainIndex()
     {
         InitializeComponent();
-
+        this.ActiveControl = this.rtbShowResult;
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
