@@ -245,47 +245,47 @@ public class TaskModel
         strResult.Append(System.Environment.NewLine);
 
         // Initial data
-        strResult.Append("Initial data" + "\t" + strLineD[0] + "\n");
-        strResult.Append("Weight lifted (kg):" + strLineD[1] + "\n");
-        strResult.Append("Horizontal distance (cm):" + "\t" + strLineD[2].TrimStart('\t') + "\n");
-        strResult.Append("Vertical distance (cm):" + strLineD[3] + "\n");
-        strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + "\n");
-        strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + "\n");
+        strResult.Append("Initial data" + "\t" + strLineD[0] + System.Environment.NewLine);
+        strResult.Append("Weight lifted (kg):" + strLineD[1] + System.Environment.NewLine);
+        strResult.Append("Horizontal distance (cm):" + "\t" + strLineD[2].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Vertical distance (cm):" + strLineD[3] + System.Environment.NewLine);
+        strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + System.Environment.NewLine);
         if (length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + "\n");
-            strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + "\n");
+            strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + System.Environment.NewLine);
+            strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + System.Environment.NewLine);
         }
-        strResult.Append("Task duration (hours):" + strLineD[8] + "\n");
-        strResult.Append("Twisting angle (°):" + strLineD[9] + "\n");
-        strResult.Append("Coupling:\t\t" + strLineD[10] + "\n\n");
+        strResult.Append("Task duration (hours):" + strLineD[8] + System.Environment.NewLine);
+        strResult.Append("Twisting angle (°):" + strLineD[9] + System.Environment.NewLine);
+        strResult.Append("Coupling:\t\t" + strLineD[10] + System.Environment.NewLine + System.Environment.NewLine);
 
         // Multipliers
-        strResult.Append("Multipliers" + "\t" + strLineR[0] + "\n");
-        strResult.Append("Lifting constant (LC):" + strLineR[1] + "\n");
-        strResult.Append("Horizontal multiplier (HM):" + "\t" + strLineR[2].TrimStart('\t') + "\n");
-        strResult.Append("Vertical multiplier (VM):" + strLineR[3] + "\n");
-        strResult.Append("Distance multiplier(DM):" + strLineR[4] + "\n");
-        strResult.Append("Frequency multiplier(FM):" + "\t" + strLineR[5].TrimStart('\t') + "\n");
+        strResult.Append("Multipliers" + "\t" + strLineR[0] + System.Environment.NewLine);
+        strResult.Append("Lifting constant (LC):" + strLineR[1] + System.Environment.NewLine);
+        strResult.Append("Horizontal multiplier (HM):" + "\t" + strLineR[2].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Vertical multiplier (VM):" + strLineR[3] + System.Environment.NewLine);
+        strResult.Append("Distance multiplier(DM):" + strLineR[4] + System.Environment.NewLine);
+        strResult.Append("Frequency multiplier(FM):" + "\t" + strLineR[5].TrimStart('\t') + System.Environment.NewLine);
         if (length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + "\n");
-            strResult.Append("Frequency B multiplier (FMb):\t" + strLineR[7].TrimStart('\t') + "\n");
+            strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + System.Environment.NewLine);
+            strResult.Append("Frequency B multiplier (FMb):\t" + strLineR[7].TrimStart('\t') + System.Environment.NewLine);
         }
-        strResult.Append("Twisting angle multiplier (AM):\t" + strLineR[8].TrimStart('\t') + "\n");
-        strResult.Append("Coupling multiplier (CM):" + strLineR[9] + "\n\n");
+        strResult.Append("Twisting angle multiplier (AM):\t" + strLineR[8].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Coupling multiplier (CM):" + strLineR[9] + System.Environment.NewLine + System.Environment.NewLine);
 
         if (length > 1)
         {
             if (Model == IndexType.IndexCLI)
             {
-                strResult.Append("Lifting index (IF):" + strLineR[10] + "\n");
-                strResult.Append("Lifting index (LI):" + "\t" + strLineR[11] + "\n");
-                strResult.Append("Subtask order:" + "\t" + strLineR[12] + "\n\n");
+                strResult.Append("Lifting index (IF):" + strLineR[10] + System.Environment.NewLine);
+                strResult.Append("Lifting index (LI):" + "\t" + strLineR[11] + System.Environment.NewLine);
+                strResult.Append("Subtask order:" + "\t" + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
             }
             else
             {
-                strResult.Append("Lifting index:\t\t" + strLineR[11] + "\n\n");
+                strResult.Append("Lifting index:\t\t" + strLineR[11] + System.Environment.NewLine + System.Environment.NewLine);
             }
         }
 
@@ -305,14 +305,14 @@ public class TaskModel
                     strEquationN += " + " + SubTasks[OrderCLI[i]].IndexIF.ToString("0.####") + " * (1/" + SubTasks[OrderCLI[i]].Factors.FMa.ToString("0.####") + " - 1/" + SubTasks[OrderCLI[i]].Factors.FMb.ToString("0.####") + ")";
                 }
                 strEquationN += " = " + IndexCLI.ToString("0.####");
-                strResult.Append(strEquationT + "\n");
-                strResult.Append(strEquationN + "\n\n");
-                strResult.Append("The NIOSH lifting index is: " + IndexCLI.ToString("0.####") + "\n");
+                strResult.Append(strEquationT + System.Environment.NewLine);
+                strResult.Append(strEquationN + System.Environment.NewLine + System.Environment.NewLine);
+                strResult.Append("The NIOSH lifting index is: " + IndexCLI.ToString("0.####") + System.Environment.NewLine);
             }
             else
             {
                 strEquationT = "LI = Weight / (LC * HM * VM * DM * FM * AM * CM)";
-                strResult.Append(strEquationT + "\n");
+                strResult.Append(strEquationT + System.Environment.NewLine);
                 for (i = 0; i < length; i++)
                 {
                     strEquationN = "LI = " + SubTasks[i].Data.Weight.ToString("0.####") + " / (";
@@ -324,9 +324,9 @@ public class TaskModel
                     strEquationN += SubTasks[i].Factors.AM.ToString("0.####") + " * ";
                     strEquationN += SubTasks[i].Factors.CM.ToString("0.####") + ") = ";
                     strEquationN += SubTasks[i].IndexLI.ToString("0.####");
-                    strResult.Append(strEquationN + "\n");
+                    strResult.Append(strEquationN + System.Environment.NewLine);
                 }
-                strResult.Append("\n");
+                strResult.Append(System.Environment.NewLine);
             }
         }
         else
@@ -342,9 +342,9 @@ public class TaskModel
             strEquationN += SubTasks[0].Factors.CM.ToString("0.####") + ") = ";
             strEquationN += SubTasks[0].IndexLI.ToString("0.####");
 
-            strResult.Append(strEquationT + "\n");
-            strResult.Append(strEquationN + "\n\n");
-            strResult.Append("The NIOSH lifting index is: " + SubTasks[0].IndexLI.ToString("0.####") + "\n");
+            strResult.Append(strEquationT + System.Environment.NewLine);
+            strResult.Append(strEquationN + System.Environment.NewLine + System.Environment.NewLine);
+            strResult.Append("The NIOSH lifting index is: " + SubTasks[0].IndexLI.ToString("0.####") + System.Environment.NewLine);
         };
 
         return strResult.ToString();
