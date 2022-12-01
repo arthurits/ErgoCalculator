@@ -197,39 +197,40 @@ public class TaskModel
 
         //for (i = 0; i < length; i++) ordenacion[order[i]] = length - i;
 
+        const int spaces = -12;
         for (i = 0; i < length; i++)
         {
-            strLineD[0] += "\t\t" + "Task " + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
-            strLineD[1] += "\t\t" + SubTasks[i].Data.Weight.ToString();
-            strLineD[2] += "\t\t" + SubTasks[i].Data.h.ToString();
-            strLineD[3] += "\t\t" + SubTasks[i].Data.v.ToString();
-            strLineD[4] += "\t\t" + SubTasks[i].Data.d.ToString();
-            strLineD[5] += "\t\t" + SubTasks[i].Data.f.ToString();
-            strLineD[6] += "\t\t" + SubTasks[i].Data.fa.ToString();
-            strLineD[7] += "\t\t" + SubTasks[i].Data.fb.ToString();
-            strLineD[8] += "\t\t" + SubTasks[i].Data.td.ToString();
-            strLineD[9] += "\t\t" + SubTasks[i].Data.a.ToString();
-            strLineD[10] += "\t" + SubTasks[i].Data.c;
+            strLineD[0] += "\t" + $"Task {((char)('A' + SubTasks[i].ItemIndex)).ToString()}";
+            strLineD[1] +=  $"{SubTasks[i].Data.Weight.ToString(), spaces}";
+            strLineD[2] +=  $"{SubTasks[i].Data.h.ToString(), spaces}";
+            strLineD[3] += $"{SubTasks[i].Data.v.ToString(),spaces}";
+            strLineD[4] += $"{SubTasks[i].Data.d.ToString(),spaces}";
+            strLineD[5] += $"{SubTasks[i].Data.f.ToString(),spaces}";
+            strLineD[6] += $"{SubTasks[i].Data.fa.ToString(),spaces}";
+            strLineD[7] += $"{SubTasks[i].Data.fb.ToString(),spaces}";
+            strLineD[8] += $"{SubTasks[i].Data.td.ToString(),spaces}";
+            strLineD[9] += $"{SubTasks[i].Data.a.ToString(),spaces}";
+            strLineD[10] +=  $"{SubTasks[i].Data.c, spaces}";
 
-            strLineR[0] += "\t\t" + "Task " + ((char)('A' + SubTasks[i].ItemIndex)).ToString();
-            strLineR[1] += "\t\t" + SubTasks[i].Data.LC.ToString("0.####");
-            strLineR[2] += "\t\t" + SubTasks[i].Factors.HM.ToString("0.####");
-            strLineR[3] += "\t\t" + SubTasks[i].Factors.VM.ToString("0.####");
-            strLineR[4] += "\t\t" + SubTasks[i].Factors.DM.ToString("0.####");
-            strLineR[5] += "\t\t" + SubTasks[i].Factors.FM.ToString("0.####");
-            strLineR[6] += "\t\t" + SubTasks[i].Factors.FMa.ToString("0.####");
-            strLineR[7] += "\t\t" + SubTasks[i].Factors.FMb.ToString("0.####");
-            strLineR[8] += "\t\t" + SubTasks[i].Factors.AM.ToString("0.####");
-            strLineR[9] += "\t\t" + SubTasks[i].Factors.CM.ToString("0.####");
+            strLineR[0] += "\t" + $"Task {((char)('A' + SubTasks[i].ItemIndex)).ToString()}";
+            strLineR[1] += $"{SubTasks[i].Data.LC.ToString("0.####"),spaces}";
+            strLineR[2] += $"{SubTasks[i].Factors.HM.ToString("0.####"),spaces}";
+            strLineR[3] += $"{SubTasks[i].Factors.VM.ToString("0.####"),spaces}";
+            strLineR[4] += $"{SubTasks[i].Factors.DM.ToString("0.####"),spaces}";
+            strLineR[5] += $"{SubTasks[i].Factors.FM.ToString("0.####"),spaces}";
+            strLineR[6] += $"{SubTasks[i].Factors.FMa.ToString("0.####"),spaces}";
+            strLineR[7] += $"{SubTasks[i].Factors.FMb.ToString("0.####"),spaces}";
+            strLineR[8] += $"{SubTasks[i].Factors.AM.ToString("0.####"),spaces}";
+            strLineR[9] += $"{SubTasks[i].Factors.CM.ToString("0.####"),spaces}";
             
             if (Model == IndexType.IndexCLI)
             {
-                strLineR[10] += "\t\t" + SubTasks[i].IndexIF.ToString("0.####");
-                strLineR[11] += "\t";
-                strLineR[12] += "\t\t" + (OrderCLI[i] + 1).ToString();
+                strLineR[10] += $"{SubTasks[i].IndexIF.ToString("0.####"), spaces}";
+                //strLineR[11] += "\t";
+                strLineR[12] += $"{(OrderCLI[i] + 1).ToString(), spaces}";
             }
             
-            strLineR[11] += "\t" + SubTasks[i].IndexLI.ToString("0.####");
+            strLineR[11] += $"{SubTasks[i].IndexLI.ToString("0.####"), spaces}";
             
             //ordenacion[length - _order[i] - 1] = i;
             //ordenacion[_order[i]] = length - i - 1;
@@ -245,10 +246,10 @@ public class TaskModel
         strResult.Append(System.Environment.NewLine);
 
         // Initial data
-        strResult.Append("Initial data" + "\t" + strLineD[0] + System.Environment.NewLine);
-        strResult.Append("Weight lifted (kg):" + strLineD[1] + System.Environment.NewLine);
-        strResult.Append("Horizontal distance (cm):" + "\t" + strLineD[2].TrimStart('\t') + System.Environment.NewLine);
-        strResult.Append("Vertical distance (cm):" + strLineD[3] + System.Environment.NewLine);
+        strResult.Append("Initial data" + "\t\t\t" + strLineD[0] + System.Environment.NewLine);
+        strResult.Append("Weight lifted (kg):" + "\t\t\t" + strLineD[1] + System.Environment.NewLine);
+        strResult.Append("Horizontal distance (cm):" + "\t\t" + strLineD[2].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Vertical distance (cm):" + "\t\t\t" + strLineD[3] + System.Environment.NewLine);
         strResult.Append("Vertical travel distance (cm):\t" + strLineD[4].TrimStart('\t') + System.Environment.NewLine);
         strResult.Append("Lifting frequency (times/min):\t" + strLineD[5].TrimStart('\t') + System.Environment.NewLine);
         if (length > 1 && Model == IndexType.IndexCLI)
@@ -256,32 +257,32 @@ public class TaskModel
             strResult.Append("Lifting frequency A (times/min):\t" + strLineD[6].TrimStart('\t') + System.Environment.NewLine);
             strResult.Append("Lifting frequency B (times/min):\t" + strLineD[7].TrimStart('\t') + System.Environment.NewLine);
         }
-        strResult.Append("Task duration (hours):" + strLineD[8] + System.Environment.NewLine);
-        strResult.Append("Twisting angle (°):" + strLineD[9] + System.Environment.NewLine);
-        strResult.Append("Coupling:\t\t" + strLineD[10] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append("Task duration (hours):" + "\t\t\t" + strLineD[8] + System.Environment.NewLine);
+        strResult.Append("Twisting angle (°):" + "\t\t\t" + strLineD[9] + System.Environment.NewLine);
+        strResult.Append("Coupling:\t\t\t\t\t" + strLineD[10] + System.Environment.NewLine + System.Environment.NewLine);
 
         // Multipliers
-        strResult.Append("Multipliers" + "\t" + strLineR[0] + System.Environment.NewLine);
-        strResult.Append("Lifting constant (LC):" + strLineR[1] + System.Environment.NewLine);
-        strResult.Append("Horizontal multiplier (HM):" + "\t" + strLineR[2].TrimStart('\t') + System.Environment.NewLine);
-        strResult.Append("Vertical multiplier (VM):" + strLineR[3] + System.Environment.NewLine);
-        strResult.Append("Distance multiplier(DM):" + strLineR[4] + System.Environment.NewLine);
-        strResult.Append("Frequency multiplier(FM):" + "\t" + strLineR[5].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Multipliers" + "\t\t\t\t" + strLineR[0] + System.Environment.NewLine);
+        strResult.Append("Lifting constant (LC):" + "\t\t\t" + strLineR[1] + System.Environment.NewLine);
+        strResult.Append("Horizontal multiplier (HM):" + "\t\t" + strLineR[2].TrimStart('\t') + System.Environment.NewLine);
+        strResult.Append("Vertical multiplier (VM):" + "\t\t" + strLineR[3] + System.Environment.NewLine);
+        strResult.Append("Distance multiplier(DM):" + "\t\t" + strLineR[4] + System.Environment.NewLine);
+        strResult.Append("Frequency multiplier(FM):" + "\t\t" + strLineR[5].TrimStart('\t') + System.Environment.NewLine);
         if (length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append("Frequency A multiplier (FMa):\t" + strLineR[6].TrimStart('\t') + System.Environment.NewLine);
-            strResult.Append("Frequency B multiplier (FMb):\t" + strLineR[7].TrimStart('\t') + System.Environment.NewLine);
+            strResult.Append("Frequency A multiplier (FMa):\t\t" + strLineR[6].TrimStart('\t') + System.Environment.NewLine);
+            strResult.Append("Frequency B multiplier (FMb):\t\t" + strLineR[7].TrimStart('\t') + System.Environment.NewLine);
         }
         strResult.Append("Twisting angle multiplier (AM):\t" + strLineR[8].TrimStart('\t') + System.Environment.NewLine);
-        strResult.Append("Coupling multiplier (CM):" + strLineR[9] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append("Coupling multiplier (CM):" + "\t\t" + strLineR[9] + System.Environment.NewLine + System.Environment.NewLine);
 
         if (length > 1)
         {
             if (Model == IndexType.IndexCLI)
             {
-                strResult.Append("Lifting index (IF):" + strLineR[10] + System.Environment.NewLine);
-                strResult.Append("Lifting index (LI):" + "\t" + strLineR[11] + System.Environment.NewLine);
-                strResult.Append("Subtask order:" + "\t" + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
+                strResult.Append("Lifting index (IF):" + "\t\t\t" + strLineR[10] + System.Environment.NewLine);
+                strResult.Append("Lifting index (LI):" + "\t\t\t" + strLineR[11] + System.Environment.NewLine);
+                strResult.Append("Subtask order:" + "\t\t\t\t" + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
             }
             else
             {
