@@ -41,7 +41,7 @@ partial class FrmMain
         {
             if (frmData.ShowDialog(this) == DialogResult.OK)
             {
-                using Form frmResults = frmNew.Model switch
+                Form frmResults = frmNew.Model switch
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.WordWrap, _settings.TextBackColor, _settings.TextZoom),
