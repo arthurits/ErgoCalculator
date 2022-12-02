@@ -55,9 +55,16 @@ public partial class FrmResultNIOSH : Form, IChildResults
         }
 
         // Show results
+        //rtbShowResult.Clear();
+        //SetTabs();
         rtbShowResult.Text = _job.ToString();
         FormatText();
 
+    }
+
+    private void SetTabs()
+    {
+        rtbShowResult.SelectionTabs = new int[] { 300, 80, 80, 80, 80, 80, 80, 80 };
     }
 
     /// <summary>
