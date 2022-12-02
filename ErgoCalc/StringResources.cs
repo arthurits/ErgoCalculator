@@ -155,7 +155,29 @@ public static class StringResources
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier(VM):";
     public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted(kg):";
 
-
+    public static string[] NIOSH_RowHeaders() => new[] {
+        NIOSH_AM,
+        NIOSH_Angle,
+        NIOSH_CM,
+        NIOSH_Coupling,
+        NIOSH_DM,
+        NIOSH_Duration,
+        NIOSH_FM,
+        NIOSH_FMa,
+        NIOSH_FMb,
+        NIOSH_Frequency,
+        NIOSH_FrequencyA,
+        NIOSH_FrequencyB,
+        NIOSH_HM,
+        NIOSH_HorizontalD,
+        NIOSH_LC,
+        NIOSH_Multipliers,
+        NIOSH_Order,
+        NIOSH_VerticalD,
+        NIOSH_VerticalT,
+        NIOSH_VM,
+        NIOSH_Weight
+    };
 
 
 }
