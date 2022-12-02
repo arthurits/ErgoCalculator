@@ -148,8 +148,8 @@ public static class StringResources
     public static string NIOSH_LC => StringRM.GetString("strNIOSH_LC", Culture) ?? "Lifting constant(LC):";
     public static string NIOSH_LI => StringRM.GetString("strNIOSH_LI", Culture) ?? "Lifting index(LI):";
     public static string NIOSH_Multipliers => StringRM.GetString("strNIOSH_Multipliers", Culture) ?? "Multipliers";
-    public static string NIOSH_Order => StringRM.GetString("strNIOSH_Order", Culture) ?? "Subtask order: ";
-    public static string NIOSH_Results => StringRM.GetString("strNIOSH_Results", Culture) ?? "These are the results obtained from the NIOSH lifting model: ";
+    public static string NIOSH_Order => StringRM.GetString("strNIOSH_Order", Culture) ?? "Subtask order:";
+    public static string NIOSH_Results => StringRM.GetString("strNIOSH_Results", Culture) ?? "These are the results obtained from the NIOSH lifting model:";
     public static string NIOSH_VerticalD => StringRM.GetString("strNIOSH_VerticalD", Culture) ?? "Vertical distance(cm):";
     public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance(cm):";
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier(VM):";
@@ -160,6 +160,7 @@ public static class StringResources
         NIOSH_Angle,
         NIOSH_CM,
         NIOSH_Coupling,
+        NIOSH_Data,
         NIOSH_DM,
         NIOSH_Duration,
         NIOSH_FM,
@@ -170,7 +171,9 @@ public static class StringResources
         NIOSH_FrequencyB,
         NIOSH_HM,
         NIOSH_HorizontalD,
+        NIOSH_IF,
         NIOSH_LC,
+        NIOSH_LI,
         NIOSH_Multipliers,
         NIOSH_Order,
         NIOSH_VerticalD,
