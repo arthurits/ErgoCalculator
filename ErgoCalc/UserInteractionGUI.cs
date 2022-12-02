@@ -190,6 +190,12 @@ partial class FrmMain
         frm.ShowDialog(this);
         if (frm.DialogResult == DialogResult.OK)
         {
+            StatusStripFormat_SetValues(_settings.FontFamilyName,
+                _settings.FontSize,
+                Color.FromArgb(_settings.FontColor),
+                _settings.WordWrap,
+                Color.FromArgb(_settings.TextBackColor),
+                _settings.TextZoom);
             UpdateUI_Language();
         }
     }
@@ -306,7 +312,7 @@ partial class FrmMain
 
             if (colorDlg.ShowDialog(this) == DialogResult.OK)
             {
-                FormatRichText(ActiveMdiChild?.ActiveControl, backColor: colorDlg.Color.ToArgb());
+                FormatRichText(control: richText, backColor: colorDlg.Color.ToArgb());
                 this.statusStripLabelBackColor.BackColor = colorDlg.Color;
             }
         }
@@ -321,7 +327,7 @@ partial class FrmMain
         if (frmZoom.ShowDialog(this) == DialogResult.OK)
         {
             FormatRichText(ActiveMdiChild?.ActiveControl, zoomFactor: frmZoom.ZoomLevel);
-            this.statusStripLabelZoom.Text = $"{(frmZoom.ZoomLevel / 100).ToString("0.##")}x";
+            this.statusStripLabelZoom.Text = $"{frmZoom.ZoomLevel.ToString("0.##")}x";
         }
     }
 

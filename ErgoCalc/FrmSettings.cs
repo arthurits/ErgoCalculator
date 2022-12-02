@@ -6,7 +6,7 @@ namespace ErgoCalc;
 public partial class FrmSettings : Form
 {
     private CultureInfo _culture = CultureInfo.CurrentCulture;
-    private AppSettings? Settings;
+    private AppSettings Settings = new();
 
     public FrmSettings()
     {
@@ -68,7 +68,9 @@ public partial class FrmSettings : Form
         DialogResult = DialogResult.None;
 
         if (Settings is null) return;
-              
+
+        Settings.WordWrap = chkWordWrap.Checked;
+        Settings.TextZoom= (int)updZoomFactor.Value;
         Settings.RememberFileDialogPath = chkDlgPath.Checked;
         Settings.AppCulture = _culture;
 

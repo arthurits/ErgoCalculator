@@ -145,7 +145,7 @@ public partial class FrmMain : Form
         this.statusStripLabelFontColor.BackColor = foreColor ?? Color.Transparent;
         this.statusStripLabelWordWrap.Checked = wordWrap;
         this.statusStripLabelBackColor.BackColor = backColor ?? Color.Transparent;
-        this.statusStripLabelZoom.Text = $"{100 * zoomFactor}x";
+        this.statusStripLabelZoom.Text = $"{zoomFactor.ToString("0.##")}x";
     }
 
     #region Private routines
