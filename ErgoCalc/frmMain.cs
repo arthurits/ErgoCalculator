@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace ErgoCalc;
@@ -187,7 +188,22 @@ public partial class FrmMain : Form
                 strText = frm.Text[index..];
             }
         }
-        frm.Text = strTextTitle + strText;
+
+        // Check to see if there are other windows with the same title
+        int nCount = 0;
+        if (frm.MdiParent is Form frmParent)
+        {
+            foreach (Form form in frmParent.MdiChildren)
+            {
+                if (frm.GetType() == form.GetType() && frm != form)
+                    nCount++;
+            }
+        }
+
+        if (nCount > 0)
+            frm.Text = strTextTitle + $" ({nCount})"+ strText;
+        else
+            frm.Text = strTextTitle + strText;
     }
 
     private void UpdateUI_Language()

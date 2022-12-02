@@ -54,6 +54,7 @@ partial class FrmMain
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
+                SetFormTitle(frmResults, frmResults.Text);
                 FormatRichText(frmResults.ActiveControl,
                     _settings.FontFamilyName,
                     _settings.FontSize,
@@ -131,6 +132,8 @@ partial class FrmMain
 
                 if (((IChildResults)frm).OpenFile(document))
                 {
+                    frm.MdiParent = this;
+
                     string strTextTitle = strType switch
                     {
                         "Work-Rest model" => StringResources.FormResultsWR,
@@ -152,7 +155,6 @@ partial class FrmMain
                         _settings.TextZoom,
                         _settings.WordWrap);
 
-                    frm.MdiParent = this;
                     frm.Show();
                 }
                 else
@@ -366,4 +368,5 @@ partial class FrmMain
         if (wordWrap is not null)
             richText.WordWrap = (bool)wordWrap;
     }
+
 }
