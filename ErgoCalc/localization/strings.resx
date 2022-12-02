@@ -245,6 +245,87 @@ the application?</value>
   <data name="strMsgBoxExitTitle" xml:space="preserve">
     <value>Exit?</value>
   </data>
+  <data name="strNIOSH_AM" xml:space="preserve">
+    <value>Twisting angle multiplier (AM):</value>
+  </data>
+  <data name="strNIOSH_Angle" xml:space="preserve">
+    <value>Twisting angle (°):</value>
+  </data>
+  <data name="strNIOSH_CM" xml:space="preserve">
+    <value>Coupling multiplier (CM):</value>
+  </data>
+  <data name="strNIOSH_Coupling" xml:space="preserve">
+    <value>Coupling:</value>
+  </data>
+  <data name="strNIOSH_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="strNIOSH_DM" xml:space="preserve">
+    <value>Distance multiplier (DM):</value>
+  </data>
+  <data name="strNIOSH_Duration" xml:space="preserve">
+    <value>Task duration (hours):</value>
+  </data>
+  <data name="strNIOSH_Equation" xml:space="preserve">
+    <value>The NIOSH lifting index is computed as follows:</value>
+  </data>
+  <data name="strNIOSH_FM" xml:space="preserve">
+    <value>Frequency multiplier (FM):</value>
+  </data>
+  <data name="strNIOSH_FMa" xml:space="preserve">
+    <value>Frequency A multiplier (FMa):</value>
+  </data>
+  <data name="strNIOSH_FMb" xml:space="preserve">
+    <value>Frequency B multiplier (FMb):</value>
+  </data>
+  <data name="strNIOSH_Frequency" xml:space="preserve">
+    <value>Lifting frequency (times/min):</value>
+  </data>
+  <data name="strNIOSH_FrequencyA" xml:space="preserve">
+    <value>Lifting frequency A (times/min):</value>
+  </data>
+  <data name="strNIOSH_FrequencyB" xml:space="preserve">
+    <value>Lifting frequency B (times/min):</value>
+  </data>
+  <data name="strNIOSH_HM" xml:space="preserve">
+    <value>Horizontal multiplier (HM):</value>
+  </data>
+  <data name="strNIOSH_HorizontalD" xml:space="preserve">
+    <value>Horizontal distance (cm):</value>
+  </data>
+  <data name="strNIOSH_IF" xml:space="preserve">
+    <value>Lifting index (IF):</value>
+  </data>
+  <data name="strNIOSH_Index" xml:space="preserve">
+    <value>The NIOSH lifting index is:</value>
+  </data>
+  <data name="strNIOSH_LC" xml:space="preserve">
+    <value>Lifting constant (LC):</value>
+  </data>
+  <data name="strNIOSH_LI" xml:space="preserve">
+    <value>Lifting index (LI):</value>
+  </data>
+  <data name="strNIOSH_Multipliers" xml:space="preserve">
+    <value>Multipliers</value>
+  </data>
+  <data name="strNIOSH_Order" xml:space="preserve">
+    <value>Subtask order:</value>
+  </data>
+  <data name="strNIOSH_Results" xml:space="preserve">
+    <value>These are the results obtained from the NIOSH lifting model:</value>
+  </data>
+  <data name="strNIOSH_VerticalD" xml:space="preserve">
+    <value>Vertical distance (cm):</value>
+  </data>
+  <data name="strNIOSH_VerticalT" xml:space="preserve">
+    <value>Vertical travel distance (cm):</value>
+  </data>
+  <data name="strNIOSH_VM" xml:space="preserve">
+    <value>Vertical multiplier (VM):</value>
+  </data>
+  <data name="strNIOSH_Weight" xml:space="preserve">
+    <value>Weight lifted (kg):</value>
+  </data>
   <data name="strRadCurrentCulture" xml:space="preserve">
     <value>Current culture formatting</value>
   </data>

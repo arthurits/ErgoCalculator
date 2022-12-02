@@ -245,6 +245,87 @@ salir de la aplicación?</value>
   <data name="strMsgBoxExitTitle" xml:space="preserve">
     <value>¿Salir?</value>
   </data>
+  <data name="strNIOSH_AM" xml:space="preserve">
+    <value>Factor de asimetría (AM):</value>
+  </data>
+  <data name="strNIOSH_Angle" xml:space="preserve">
+    <value>Ángulo de giro (°):</value>
+  </data>
+  <data name="strNIOSH_CM" xml:space="preserve">
+    <value>Factor de agarre (CM):</value>
+  </data>
+  <data name="strNIOSH_Coupling" xml:space="preserve">
+    <value>Agarre:</value>
+  </data>
+  <data name="strNIOSH_Data" xml:space="preserve">
+    <value>Datos iniciales</value>
+  </data>
+  <data name="strNIOSH_DM" xml:space="preserve">
+    <value>Factor de desplazamiento vertical (DM):</value>
+  </data>
+  <data name="strNIOSH_Duration" xml:space="preserve">
+    <value>Duración de la tarea (Horas):</value>
+  </data>
+  <data name="strNIOSH_Equation" xml:space="preserve">
+    <value>El índice NIOSH de levantamiento se calcula mediante la siguiente expresión:</value>
+  </data>
+  <data name="strNIOSH_FM" xml:space="preserve">
+    <value>Factor de frecuencia (FM):</value>
+  </data>
+  <data name="strNIOSH_FMa" xml:space="preserve">
+    <value>Factor de frecuencia A (FMa):</value>
+  </data>
+  <data name="strNIOSH_FMb" xml:space="preserve">
+    <value>Factor de frecuencia B (FMb):</value>
+  </data>
+  <data name="strNIOSH_Frequency" xml:space="preserve">
+    <value>Frecuencia (times/min):</value>
+  </data>
+  <data name="strNIOSH_FrequencyA" xml:space="preserve">
+    <value>Frecuencia A (times/min):</value>
+  </data>
+  <data name="strNIOSH_FrequencyB" xml:space="preserve">
+    <value>Frecuencia B (times/min):</value>
+  </data>
+  <data name="strNIOSH_HM" xml:space="preserve">
+    <value>Factor horizontal (HM):</value>
+  </data>
+  <data name="strNIOSH_HorizontalD" xml:space="preserve">
+    <value>Distancia horizontal (cm):</value>
+  </data>
+  <data name="strNIOSH_IF" xml:space="preserve">
+    <value>Índice de levantamiento (IF):</value>
+  </data>
+  <data name="strNIOSH_Index" xml:space="preserve">
+    <value>El índice NIOSH de levantamiento es:</value>
+  </data>
+  <data name="strNIOSH_LC" xml:space="preserve">
+    <value>Constante de carga (LC):</value>
+  </data>
+  <data name="strNIOSH_LI" xml:space="preserve">
+    <value>Índice de levantamiento (LI):</value>
+  </data>
+  <data name="strNIOSH_Multipliers" xml:space="preserve">
+    <value>Factores</value>
+  </data>
+  <data name="strNIOSH_Order" xml:space="preserve">
+    <value>Orden de las subtareas:</value>
+  </data>
+  <data name="strNIOSH_Results" xml:space="preserve">
+    <value>These are the results obtained from the NIOSH lifting model:</value>
+  </data>
+  <data name="strNIOSH_VerticalD" xml:space="preserve">
+    <value>Distancia vertical (cm):</value>
+  </data>
+  <data name="strNIOSH_VerticalT" xml:space="preserve">
+    <value>Desplazmiento vertical (cm):</value>
+  </data>
+  <data name="strNIOSH_VM" xml:space="preserve">
+    <value>Factor de altura (VM):</value>
+  </data>
+  <data name="strNIOSH_Weight" xml:space="preserve">
+    <value>Peso manipulado (kg):</value>
+  </data>
   <data name="strRadCurrentCulture" xml:space="preserve">
     <value>Referencia cultural actual</value>
   </data>

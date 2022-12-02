@@ -1,4 +1,10 @@
-﻿using System;
+﻿using ErgoCalc.Models.LibertyMutual;
+using Microsoft.VisualBasic.Devices;
+using ScottPlot.Drawing.Colormaps;
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.Intrinsics.X86;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace ErgoCalc;
@@ -119,4 +125,37 @@ public static class StringResources
     // Message box
     public static string MsgBoxExit => StringRM.GetString("strMsgBoxExit", Culture) ?? "Are you sure you want to exit" + Environment.NewLine + "the application?";
     public static string MsgBoxExitTitle => StringRM.GetString("strMsgBoxExitTitle", Culture) ?? "Exit?";
+
+    // NIOSH lifting model
+    public static string NIOSH_AM => StringRM.GetString("strNIOSH_AM", Culture) ?? "Twisting angle multiplier(AM):";
+    public static string NIOSH_Angle => StringRM.GetString("strNIOSH_Angle", Culture) ?? "Twisting angle(°):";
+    public static string NIOSH_CM => StringRM.GetString("strNIOSH_CM", Culture) ?? "Coupling multiplier(CM):";
+    public static string NIOSH_Coupling => StringRM.GetString("strNIOSH_Coupling", Culture) ?? "Coupling: ";
+    public static string NIOSH_Data => StringRM.GetString("strNIOSH_Data", Culture) ?? "Initial data";
+    public static string NIOSH_DM => StringRM.GetString("strNIOSH_DM", Culture) ?? "Distance multiplier(DM):";
+    public static string NIOSH_Duration => StringRM.GetString("strNIOSH_Duration", Culture) ?? "Task duration(hours):";
+    public static string NIOSH_Equation => StringRM.GetString("strNIOSH_Equation", Culture) ?? "The NIOSH lifting index is computed as follows:";
+    public static string NIOSH_FM => StringRM.GetString("strNIOSH_FM", Culture) ?? "Frequency multiplier(FM):";
+    public static string NIOSH_FMa => StringRM.GetString("strNIOSH_FMa", Culture) ?? "Frequency A multiplier(FMa):";
+    public static string NIOSH_FMb => StringRM.GetString("strNIOSH_FMb", Culture) ?? "Frequency B multiplier(FMb):";
+    public static string NIOSH_Frequency => StringRM.GetString("strNIOSH_Frequency", Culture) ?? "Lifting frequency(times / min):";
+    public static string NIOSH_FrequencyA => StringRM.GetString("strNIOSH_FrequencyA", Culture) ?? "Lifting frequency A(times / min):";
+    public static string NIOSH_FrequencyB => StringRM.GetString("strNIOSH_FrequencyB", Culture) ?? "Lifting frequency B(times / min):";
+    public static string NIOSH_HM => StringRM.GetString("strNIOSH_HM", Culture) ?? "Horizontal multiplier(HM):";
+    public static string NIOSH_HorizontalD => StringRM.GetString("strNIOSH_HorizontalD", Culture) ?? "Horizontal distance(cm):";
+    public static string NIOSH_IF => StringRM.GetString("strNIOSH_IF", Culture) ?? "Lifting index(IF):";
+    public static string NIOSH_Index => StringRM.GetString("strNIOSH_Index", Culture) ?? "The NIOSH lifting index is:";
+    public static string NIOSH_LC => StringRM.GetString("strNIOSH_LC", Culture) ?? "Lifting constant(LC):";
+    public static string NIOSH_LI => StringRM.GetString("strNIOSH_LI", Culture) ?? "Lifting index(LI):";
+    public static string NIOSH_Multipliers => StringRM.GetString("strNIOSH_Multipliers", Culture) ?? "Multipliers";
+    public static string NIOSH_Order => StringRM.GetString("strNIOSH_Order", Culture) ?? "Subtask order: ";
+    public static string NIOSH_Results => StringRM.GetString("strNIOSH_Results", Culture) ?? "These are the results obtained from the NIOSH lifting model: ";
+    public static string NIOSH_VerticalD => StringRM.GetString("strNIOSH_VerticalD", Culture) ?? "Vertical distance(cm):";
+    public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance(cm):";
+    public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier(VM):";
+    public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted(kg):";
+
+
+
+
 }

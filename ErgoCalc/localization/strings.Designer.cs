@@ -441,6 +441,249 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Twisting angle multiplier (AM):.
+        /// </summary>
+        internal static string strNIOSH_AM {
+            get {
+                return ResourceManager.GetString("strNIOSH_AM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twisting angle (°):.
+        /// </summary>
+        internal static string strNIOSH_Angle {
+            get {
+                return ResourceManager.GetString("strNIOSH_Angle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coupling multiplier (CM):.
+        /// </summary>
+        internal static string strNIOSH_CM {
+            get {
+                return ResourceManager.GetString("strNIOSH_CM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coupling:.
+        /// </summary>
+        internal static string strNIOSH_Coupling {
+            get {
+                return ResourceManager.GetString("strNIOSH_Coupling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial data.
+        /// </summary>
+        internal static string strNIOSH_Data {
+            get {
+                return ResourceManager.GetString("strNIOSH_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distance multiplier (DM):.
+        /// </summary>
+        internal static string strNIOSH_DM {
+            get {
+                return ResourceManager.GetString("strNIOSH_DM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration (hours):.
+        /// </summary>
+        internal static string strNIOSH_Duration {
+            get {
+                return ResourceManager.GetString("strNIOSH_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NIOSH lifting index is computed as follows:.
+        /// </summary>
+        internal static string strNIOSH_Equation {
+            get {
+                return ResourceManager.GetString("strNIOSH_Equation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency multiplier (FM):.
+        /// </summary>
+        internal static string strNIOSH_FM {
+            get {
+                return ResourceManager.GetString("strNIOSH_FM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency A multiplier (FMa):.
+        /// </summary>
+        internal static string strNIOSH_FMa {
+            get {
+                return ResourceManager.GetString("strNIOSH_FMa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency B multiplier (FMb):.
+        /// </summary>
+        internal static string strNIOSH_FMb {
+            get {
+                return ResourceManager.GetString("strNIOSH_FMb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting frequency (times/min):.
+        /// </summary>
+        internal static string strNIOSH_Frequency {
+            get {
+                return ResourceManager.GetString("strNIOSH_Frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting frequency A (times/min):.
+        /// </summary>
+        internal static string strNIOSH_FrequencyA {
+            get {
+                return ResourceManager.GetString("strNIOSH_FrequencyA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting frequency B (times/min):.
+        /// </summary>
+        internal static string strNIOSH_FrequencyB {
+            get {
+                return ResourceManager.GetString("strNIOSH_FrequencyB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal multiplier (HM):.
+        /// </summary>
+        internal static string strNIOSH_HM {
+            get {
+                return ResourceManager.GetString("strNIOSH_HM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal distance (cm):.
+        /// </summary>
+        internal static string strNIOSH_HorizontalD {
+            get {
+                return ResourceManager.GetString("strNIOSH_HorizontalD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting index (IF):.
+        /// </summary>
+        internal static string strNIOSH_IF {
+            get {
+                return ResourceManager.GetString("strNIOSH_IF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The NIOSH lifting index is:.
+        /// </summary>
+        internal static string strNIOSH_Index {
+            get {
+                return ResourceManager.GetString("strNIOSH_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting constant (LC):.
+        /// </summary>
+        internal static string strNIOSH_LC {
+            get {
+                return ResourceManager.GetString("strNIOSH_LC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting index (LI):.
+        /// </summary>
+        internal static string strNIOSH_LI {
+            get {
+                return ResourceManager.GetString("strNIOSH_LI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multipliers.
+        /// </summary>
+        internal static string strNIOSH_Multipliers {
+            get {
+                return ResourceManager.GetString("strNIOSH_Multipliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtask order:.
+        /// </summary>
+        internal static string strNIOSH_Order {
+            get {
+                return ResourceManager.GetString("strNIOSH_Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the results obtained from the NIOSH lifting model:.
+        /// </summary>
+        internal static string strNIOSH_Results {
+            get {
+                return ResourceManager.GetString("strNIOSH_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical distance (cm):.
+        /// </summary>
+        internal static string strNIOSH_VerticalD {
+            get {
+                return ResourceManager.GetString("strNIOSH_VerticalD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical travel distance (cm):.
+        /// </summary>
+        internal static string strNIOSH_VerticalT {
+            get {
+                return ResourceManager.GetString("strNIOSH_VerticalT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical multiplier (VM):.
+        /// </summary>
+        internal static string strNIOSH_VM {
+            get {
+                return ResourceManager.GetString("strNIOSH_VM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weight lifted (kg):.
+        /// </summary>
+        internal static string strNIOSH_Weight {
+            get {
+                return ResourceManager.GetString("strNIOSH_Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current culture formatting.
         /// </summary>
         internal static string strRadCurrentCulture {
