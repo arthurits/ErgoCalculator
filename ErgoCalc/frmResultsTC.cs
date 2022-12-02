@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Windows.Forms;
+﻿using System.Text.Json;
 
 using ErgoCalc.Models.ThermalComfort;
 using PsychroLib;

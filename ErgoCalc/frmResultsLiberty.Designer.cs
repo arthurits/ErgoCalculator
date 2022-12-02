@@ -65,7 +65,6 @@ namespace ErgoCalc
             this.splitContainer2.Size = new System.Drawing.Size(892, 440);
             this.splitContainer2.SplitterDistance = 198;
             this.splitContainer2.TabIndex = 3;
-            this.splitContainer2.TabStop = false;
             // 
             // tableLayoutPanel1
             // 
