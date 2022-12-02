@@ -62,6 +62,26 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     }
 
+    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double factor = 1.2, int min = 10)
+    {
+        SizeF size;
+        int nWidth = 0;
+        int tabSpace;
+
+        using var g = rtbShowResult.CreateGraphics();
+        foreach (string strRow in strings)
+        {
+            size = g.MeasureString(strRow, rtbShowResult.Font);
+            if (size.Width > nWidth)
+                nWidth = (int)size.Width;
+        }
+
+        tabSpace = (int)(nWidth * (1 - factor));
+        tabSpace = tabSpace > min ? tabSpace : min;
+
+        return (nWidth, tabSpace);
+    }
+
     private (int maxWidth, int tabSpace) TabSpaceRowHeaders(double factor = 1.2, int min = 10)
     {
         SizeF size;
@@ -69,7 +89,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
         int tabSpace;
 
         using var g = rtbShowResult.CreateGraphics();
-        foreach(string strRow in StringResources.NIOSH_RowHeaders())
+        foreach(string strRow in StringResources.NIOSH_RowHeaders)
         {
             size = g.MeasureString(strRow, rtbShowResult.Font);
             if (size.Width > nWidth) 
@@ -96,8 +116,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     private void SetRichTextBoxTabs()
     {
-        (int rowMax, int rowTab) = TabSpaceRowHeaders();
-        (int colMax, int colTab) = TabSpaceColumns();
+        (int rowMax, int rowTab) = ComputeTabSpace(StringResources.NIOSH_RowHeaders);
+        (int colMax, int colTab) = ComputeTabSpace(StringResources.NIOSH_ColumnHeaders);
 
         int[] tabs = new int[_job.NumberSubTasks];
         for (int i = 0; i < tabs.Length; i++)

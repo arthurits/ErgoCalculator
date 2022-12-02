@@ -154,8 +154,7 @@ public static class StringResources
     public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance(cm):";
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier(VM):";
     public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted(kg):";
-
-    public static string[] NIOSH_RowHeaders() => new[] {
+    public static string[] NIOSH_RowHeaders => new[] {
         NIOSH_AM,
         NIOSH_Angle,
         NIOSH_CM,
@@ -181,6 +180,10 @@ public static class StringResources
         NIOSH_VM,
         NIOSH_Weight
     };
-
+    public static string[] NIOSH_ColumnHeaders => new[]
+    {
+        Task,
+        Subtask
+    };
 
 }
