@@ -341,6 +341,12 @@ salir de la aplicación?</value>
   <data name="strToolTipExit" xml:space="preserve">
     <value>Salir de la aplicación</value>
   </data>
+  <data name="strToolTipFont" xml:space="preserve">
+    <value>Seleccionar fuente</value>
+  </data>
+  <data name="strToolTipFontColor" xml:space="preserve">
+    <value>Seleccionar el color de la fuente</value>
+  </data>
   <data name="strToolTipNew" xml:space="preserve">
     <value>Crear un nuevo modelo ergonómico</value>
   </data>

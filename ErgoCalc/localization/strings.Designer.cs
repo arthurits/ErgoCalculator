@@ -729,6 +729,24 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select font.
+        /// </summary>
+        internal static string strToolTipFont {
+            get {
+                return ResourceManager.GetString("strToolTipFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select font color.
+        /// </summary>
+        internal static string strToolTipFontColor {
+            get {
+                return ResourceManager.GetString("strToolTipFontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start a new ergonomics model.
         /// </summary>
         internal static string strToolTipNew {

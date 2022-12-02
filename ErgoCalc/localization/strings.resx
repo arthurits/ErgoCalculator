@@ -341,6 +341,12 @@ the application?</value>
   <data name="strToolTipExit" xml:space="preserve">
     <value>Exit the application</value>
   </data>
+  <data name="strToolTipFont" xml:space="preserve">
+    <value>Select font</value>
+  </data>
+  <data name="strToolTipFontColor" xml:space="preserve">
+    <value>Select font color</value>
+  </data>
   <data name="strToolTipNew" xml:space="preserve">
     <value>Start a new ergonomics model</value>
   </data>

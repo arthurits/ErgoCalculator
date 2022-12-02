@@ -153,6 +153,7 @@
             this.staMainFrm.Location = new System.Drawing.Point(0, 590);
             this.staMainFrm.Name = "staMainFrm";
             this.staMainFrm.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.staMainFrm.ShowItemToolTips = true;
             this.staMainFrm.Size = new System.Drawing.Size(957, 28);
             this.staMainFrm.TabIndex = 1;
             this.staMainFrm.Text = "statusStrip1";

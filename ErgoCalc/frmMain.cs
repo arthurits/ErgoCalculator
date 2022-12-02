@@ -233,6 +233,8 @@ public partial class FrmMain : Form
         statusStripLabelCulture.Text = _settings.AppCulture.Name == String.Empty ? "Invariant" : _settings.AppCulture.Name;
         statusStripLabelCulture.ToolTipText = StringResources.ToolTipUILanguage + ":" + Environment.NewLine + _settings.AppCulture.NativeName;
 
+        statusStripLabelFont.ToolTipText = StringResources.ToolTipFont;
+        statusStripLabelFontColor.ToolTipText = StringResources.ToolTipFontColor;
         statusStripLabelWordWrap.ToolTipText= StringResources.ToolTipWordWrap;
         statusStripLabelBackColor.ToolTipText= StringResources.ToolTipBackColor;
         statusStripLabelZoom.ToolTipText= StringResources.ToolTipZoom;

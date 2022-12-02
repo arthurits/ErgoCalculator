@@ -62,6 +62,8 @@ public static class StringResources
     public static string ToolTipAddLine => StringRM.GetString("strToolTipAddLine", Culture) ?? "Add line to the current plot";
     public static string ToolTipRemoveLine => StringRM.GetString("strToolTipRemoveLine", Culture) ?? "Remove line from the current plot";
     public static string ToolTipUILanguage => StringRM.GetString("strToolTipUILanguage", Culture) ?? "User interface language";
+    public static string ToolTipFont => StringRM.GetString("strToolTipFont", Culture) ?? "Select font";
+    public static string ToolTipFontColor => StringRM.GetString("strToolTipFontColor", Culture) ?? "Select font color";
     public static string ToolTipWordWrap => StringRM.GetString("strToolTipWordWrap", Culture) ?? "Wrap words to the beginning of the next line";
     public static string ToolTipBackColor => StringRM.GetString("strToolTipBackColor", Culture) ?? "Select text backcolor";
     public static string ToolTipZoom => StringRM.GetString("strToolTipZoom", Culture) ?? "Select zoom factor";
