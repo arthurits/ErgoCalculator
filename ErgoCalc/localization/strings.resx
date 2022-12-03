@@ -269,6 +269,12 @@ the application?</value>
   <data name="strNIOSH_Equation" xml:space="preserve">
     <value>The NIOSH lifting index is computed as follows:</value>
   </data>
+  <data name="strNIOSH_EquationIndex" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="strNIOSH_EquationWeight" xml:space="preserve">
+    <value>Weight</value>
+  </data>
   <data name="strNIOSH_FM" xml:space="preserve">
     <value>Frequency multiplier (FM):</value>
   </data>

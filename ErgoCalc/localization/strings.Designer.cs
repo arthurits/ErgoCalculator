@@ -513,6 +513,24 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        internal static string strNIOSH_EquationIndex {
+            get {
+                return ResourceManager.GetString("strNIOSH_EquationIndex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weight.
+        /// </summary>
+        internal static string strNIOSH_EquationWeight {
+            get {
+                return ResourceManager.GetString("strNIOSH_EquationWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Frequency multiplier (FM):.
         /// </summary>
         internal static string strNIOSH_FM {

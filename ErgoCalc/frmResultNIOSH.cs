@@ -55,14 +55,13 @@ public partial class FrmResultNIOSH : Form, IChildResults
         }
 
         // Show results
-        //rtbShowResult.Clear();
-        //SetRichTextBoxTabs();
-        rtbShowResult.Text = _job.ToString();
+        rtbShowResult.Clear();
+        SetRichTextBoxTabs();
+        rtbShowResult.Text = _job.ToString(StringResources.NIOSH_ResultsHeaders);
         FormatText();
-
     }
 
-    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double factor = 1.2, int min = 10)
+    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double factor = 1.1, int min = 10)
     {
         SizeF size;
         int nWidth = 0;
@@ -76,56 +75,60 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 nWidth = (int)size.Width;
         }
 
-        tabSpace = (int)(nWidth * (1 - factor));
+        tabSpace = (int)(nWidth * (factor - 1));
         tabSpace = tabSpace > min ? tabSpace : min;
 
         return (nWidth, tabSpace);
     }
 
-    private (int maxWidth, int tabSpace) TabSpaceRowHeaders(double factor = 1.2, int min = 10)
-    {
-        SizeF size;
-        int nWidth = 0;
-        int tabSpace;
+    //private (int maxWidth, int tabSpace) TabSpaceRowHeaders(double factor = 1.2, int min = 10)
+    //{
+    //    SizeF size;
+    //    int nWidth = 0;
+    //    int tabSpace;
 
-        using var g = rtbShowResult.CreateGraphics();
-        foreach(string strRow in StringResources.NIOSH_RowHeaders)
-        {
-            size = g.MeasureString(strRow, rtbShowResult.Font);
-            if (size.Width > nWidth) 
-                nWidth = (int)size.Width;
-        }
+    //    using var g = rtbShowResult.CreateGraphics();
+    //    foreach(string strRow in StringResources.NIOSH_RowHeaders)
+    //    {
+    //        size = g.MeasureString(strRow, rtbShowResult.Font);
+    //        if (size.Width > nWidth) 
+    //            nWidth = (int)size.Width;
+    //    }
 
-        tabSpace = (int)(nWidth * (1 - factor));
-        tabSpace = tabSpace > min ? tabSpace : min;
+    //    tabSpace = (int)(nWidth * (1 - factor));
+    //    tabSpace = tabSpace > min ? tabSpace : min;
 
-        return (nWidth, tabSpace);
-    }
+    //    return (nWidth, tabSpace);
+    //}
 
-    private (int maxWidth, int tabSpace) TabSpaceColumns(double factor = 1.2, int min = 10)
-    {
-        using var g = rtbShowResult.CreateGraphics();
-        int nTask = (int)g.MeasureString(StringResources.Task, rtbShowResult.Font).Width;
-        int nSubTask = (int)g.MeasureString(StringResources.Subtask, rtbShowResult.Font).Width;
-        int max = Math.Max(nTask, nSubTask);
-        int tabSpace = (int)(max * (1 - factor));
-        tabSpace = tabSpace > min ? tabSpace : min;
+    //private (int maxWidth, int tabSpace) TabSpaceColumns(double factor = 1.2, int min = 10)
+    //{
+    //    using var g = rtbShowResult.CreateGraphics();
+    //    int nTask = (int)g.MeasureString(StringResources.Task, rtbShowResult.Font).Width;
+    //    int nSubTask = (int)g.MeasureString(StringResources.Subtask, rtbShowResult.Font).Width;
+    //    int max = Math.Max(nTask, nSubTask);
+    //    int tabSpace = (int)(max * (1 - factor));
+    //    tabSpace = tabSpace > min ? tabSpace : min;
 
-        return (max, tabSpace);
-    }
+    //    return (max, tabSpace);
+    //}
 
     private void SetRichTextBoxTabs()
     {
         (int rowMax, int rowTab) = ComputeTabSpace(StringResources.NIOSH_RowHeaders);
-        (int colMax, int colTab) = ComputeTabSpace(StringResources.NIOSH_ColumnHeaders);
+        var columnHeaders = StringResources.NIOSH_ColumnHeaders;
+        for (int i = 0; i < columnHeaders.Length; i++)
+            columnHeaders[i] += " A";
+        (int colMax, int colTab) = ComputeTabSpace(columnHeaders);
+        int tab = Math.Min(rowTab, colTab);
 
         int[] tabs = new int[_job.NumberSubTasks];
         for (int i = 0; i < tabs.Length; i++)
         {
             if (i == 0)
-                tabs[i] = rowMax + rowTab;
+                tabs[i] = rowMax + tab;
             else
-                tabs[i] = colMax + colTab;
+                tabs[i] = tabs[i - 1] + colMax + tab;
         }
         rtbShowResult.SelectionTabs = tabs;
 
@@ -423,13 +426,13 @@ public partial class FrmResultNIOSH : Form, IChildResults
         while (true)
         {
             // Underline
-            nStart = rtbShowResult.Find("Initial data", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.NIOSH_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
             rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
 
-            nStart = rtbShowResult.Find("Multipliers", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.NIOSH_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
@@ -439,17 +442,20 @@ public partial class FrmResultNIOSH : Form, IChildResults
         // Bold results
         nStart = 0;
 
-        nStart = rtbShowResult.Find("Lifting index:", nStart + 1, -1, RichTextBoxFinds.MatchCase);
-        if (nStart > -1)
-        {//nEnd = rtbShowResult.Text.Length;
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+        if (_job.Model == IndexType.IndexLI)
+        {
+            nStart = rtbShowResult.Find(StringResources.NIOSH_LI, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart > -1)
+            {//nEnd = rtbShowResult.Text.Length;
+                nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+                rtbShowResult.Select(nStart, nEnd - nStart);
+                rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+            }
         }
 
         while (true)
         {
-            nStart = rtbShowResult.Find("The NIOSH lifting index is:", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.NIOSH_Index, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             //nEnd = rtbShowResult.Text.Length;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);

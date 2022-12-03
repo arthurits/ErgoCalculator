@@ -264,10 +264,16 @@ salir de la aplicación?</value>
     <value>Factor de desplazamiento vertical (DM):</value>
   </data>
   <data name="strNIOSH_Duration" xml:space="preserve">
-    <value>Duración de la tarea (Horas):</value>
+    <value>Duración de la tarea (horas):</value>
   </data>
   <data name="strNIOSH_Equation" xml:space="preserve">
     <value>El índice NIOSH de levantamiento se calcula mediante la siguiente expresión:</value>
+  </data>
+  <data name="strNIOSH_EquationIndex" xml:space="preserve">
+    <value>Índice</value>
+  </data>
+  <data name="strNIOSH_EquationWeight" xml:space="preserve">
+    <value>Peso</value>
   </data>
   <data name="strNIOSH_FM" xml:space="preserve">
     <value>Factor de frecuencia (FM):</value>
@@ -279,13 +285,13 @@ salir de la aplicación?</value>
     <value>Factor de frecuencia B (FMb):</value>
   </data>
   <data name="strNIOSH_Frequency" xml:space="preserve">
-    <value>Frecuencia (times/min):</value>
+    <value>Frecuencia (acción/min):</value>
   </data>
   <data name="strNIOSH_FrequencyA" xml:space="preserve">
-    <value>Frecuencia A (times/min):</value>
+    <value>Frecuencia A (acción/min):</value>
   </data>
   <data name="strNIOSH_FrequencyB" xml:space="preserve">
-    <value>Frecuencia B (times/min):</value>
+    <value>Frecuencia B (acción/min):</value>
   </data>
   <data name="strNIOSH_HM" xml:space="preserve">
     <value>Factor horizontal (HM):</value>
@@ -312,13 +318,13 @@ salir de la aplicación?</value>
     <value>Orden de las subtareas:</value>
   </data>
   <data name="strNIOSH_Results" xml:space="preserve">
-    <value>These are the results obtained from the NIOSH lifting model:</value>
+    <value>Estos son los resultados obtenidos mediante el modelo del NIOSH:</value>
   </data>
   <data name="strNIOSH_VerticalD" xml:space="preserve">
     <value>Distancia vertical (cm):</value>
   </data>
   <data name="strNIOSH_VerticalT" xml:space="preserve">
-    <value>Desplazmiento vertical (cm):</value>
+    <value>Desplazamiento vertical (cm):</value>
   </data>
   <data name="strNIOSH_VM" xml:space="preserve">
     <value>Factor de altura (VM):</value>
