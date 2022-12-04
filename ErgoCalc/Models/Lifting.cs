@@ -634,6 +634,9 @@ public class Job
     }
 }
 
+/// <summary>
+/// NIOSH model numerical computation
+/// </summary>
 public static class NIOSHLifting
 {
 
