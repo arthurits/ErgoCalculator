@@ -113,4 +113,16 @@ public class AppSettings
     /// </summary>
     [JsonPropertyName("Text zoom")]
     public int TextZoom { get; set; } = 100;
+
+    /// <summary>
+    /// Factor of the maximum string length (in pixels) that will be used to compute the tab stop positions
+    /// </summary>
+    [JsonPropertyName("Tab factor")]
+    public double TabFactor { get; set; } = 0.1;
+
+    /// <summary>
+    /// Minimum tab tab stop position in pixels
+    /// </summary>
+    [JsonPropertyName("Tab minimum px")]
+    public int TabMinSpace { get; set; } = 10;
 }

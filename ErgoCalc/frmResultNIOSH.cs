@@ -429,10 +429,10 @@ public partial class FrmResultNIOSH : Form, IChildResults
     /// Computes the tabs for the RichTextBox control
     /// </summary>
     /// <param name="strings">Array of strings that will be measured. The greatest measure is used to compute the tab space</param>
-    /// <param name="factor">Factor (percentage) of the maximum measure to be used as tab space</param>
-    /// <param name="min">Minimum tab space in pixels. Default value is 10</param>
+    /// <param name="tabFactor">Factor (percentage) of the maximum measure to be used as tab space</param>
+    /// <param name="tabMinSpace">Minimum tab space in pixels. Default value is 10</param>
     /// <returns></returns>
-    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double factor = 1.1, int min = 10)
+    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double tabFactor = 0.1, int tabMinSpace = 10)
     {
         SizeF size;
         int nWidth = 0;
@@ -446,8 +446,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 nWidth = (int)size.Width;
         }
 
-        tabSpace = (int)(nWidth * (factor - 1));
-        tabSpace = tabSpace > min ? tabSpace : min;
+        tabSpace = (int)(nWidth * tabFactor);
+        tabSpace = tabSpace > tabMinSpace ? tabSpace : tabMinSpace;
 
         return (nWidth, tabSpace);
     }
