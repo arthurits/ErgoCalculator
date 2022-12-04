@@ -81,38 +81,6 @@ public partial class FrmResultNIOSH : Form, IChildResults
         return (nWidth, tabSpace);
     }
 
-    //private (int maxWidth, int tabSpace) TabSpaceRowHeaders(double factor = 1.2, int min = 10)
-    //{
-    //    SizeF size;
-    //    int nWidth = 0;
-    //    int tabSpace;
-
-    //    using var g = rtbShowResult.CreateGraphics();
-    //    foreach(string strRow in StringResources.NIOSH_RowHeaders)
-    //    {
-    //        size = g.MeasureString(strRow, rtbShowResult.Font);
-    //        if (size.Width > nWidth) 
-    //            nWidth = (int)size.Width;
-    //    }
-
-    //    tabSpace = (int)(nWidth * (1 - factor));
-    //    tabSpace = tabSpace > min ? tabSpace : min;
-
-    //    return (nWidth, tabSpace);
-    //}
-
-    //private (int maxWidth, int tabSpace) TabSpaceColumns(double factor = 1.2, int min = 10)
-    //{
-    //    using var g = rtbShowResult.CreateGraphics();
-    //    int nTask = (int)g.MeasureString(StringResources.Task, rtbShowResult.Font).Width;
-    //    int nSubTask = (int)g.MeasureString(StringResources.Subtask, rtbShowResult.Font).Width;
-    //    int max = Math.Max(nTask, nSubTask);
-    //    int tabSpace = (int)(max * (1 - factor));
-    //    tabSpace = tabSpace > min ? tabSpace : min;
-
-    //    return (max, tabSpace);
-    //}
-
     private void SetRichTextBoxTabs()
     {
         (int rowMax, int rowTab) = ComputeTabSpace(StringResources.NIOSH_RowHeaders);
