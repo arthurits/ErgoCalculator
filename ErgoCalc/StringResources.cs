@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Intrinsics.X86;
+using System.Windows.Forms;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace ErgoCalc;
@@ -220,5 +221,115 @@ public static class StringResources
         NIOSH_EquationIndex,
         NIOSH_EquationWeight,
         NIOSH_Index
+    };
+
+    // Strain index
+    public static string StrainIndex_COSI => StringRM.GetString("strStrainIndex_COSI", Culture) ?? "The COSI index is:";
+    public static string StrainIndex_COSIequation => StringRM.GetString("strStrainIndex_COSIequation", Culture) ?? "The COSI index is computed as follows:";
+    public static string StrainIndex_CUSI => StringRM.GetString("strStrainIndex_CUSI", Culture) ?? "The CUSI index is:";
+    public static string StrainIndex_CUSIequation => StringRM.GetString("strStrainIndex_CUSIequation", Culture) ?? "The CUSI index is computed as follows:";
+    public static string StrainIndex_Data => StringRM.GetString("strStrainIndex_Data", Culture) ?? "Initial data";
+    public static string StrainIndex_DM => StringRM.GetString("strStrainIndex_DM", Culture) ?? "Duration multiplier";
+    public static string StrainIndex_Duration => StringRM.GetString("strStrainIndex_Duration", Culture) ?? "Duration per exertion (s)";
+    public static string StrainIndex_Efforts => StringRM.GetString("strStrainIndex_Efforts", Culture) ?? "Efforts per minute";
+    public static string StrainIndex_EffortsA => StringRM.GetString("strStrainIndex_EffortsA", Culture) ?? "Efforts per minute A";
+    public static string StrainIndex_EffortsB => StringRM.GetString("strStrainIndex_EffortsB", Culture) ?? "Efforts per minute B";
+    public static string StrainIndex_EM => StringRM.GetString("strStrainIndex_EM", Culture) ?? "Efforts multiplier";
+    public static string StrainIndex_EMa => StringRM.GetString("strStrainIndex_EMa", Culture) ?? "Efforts A multiplier";
+    public static string StrainIndex_EMb => StringRM.GetString("strStrainIndex_EMb", Culture) ?? "Efforts B multiplier";
+    public static string StrainIndex_HM => StringRM.GetString("strStrainIndex_HM", Culture) ?? "Subtask duration multiplier";
+    public static string StrainIndex_HMaTask => StringRM.GetString("strStrainIndex_HMaTask", Culture) ?? "Task duration A multiplier";
+    public static string StrainIndex_HMbTask => StringRM.GetString("strStrainIndex_HMbTask", Culture) ?? "Task duration B multiplier";
+    public static string StrainIndex_HMTask => StringRM.GetString("strStrainIndex_HMTask", Culture) ?? "Task duration multiplier";
+    public static string StrainIndex_Hours => StringRM.GetString("strStrainIndex_Hours", Culture) ?? "Subtask duration per day (h)";
+    public static string StrainIndex_HoursTask => StringRM.GetString("strStrainIndex_HoursTask", Culture) ?? "Task duration per day(h)";
+    public static string StrainIndex_HoursTaskA => StringRM.GetString("strStrainIndex_HoursTaskA", Culture) ?? "Task duration per day A (h)";
+    public static string StrainIndex_HoursTaskB => StringRM.GetString("strStrainIndex_HoursTaskB", Culture) ?? "Task duration per day B (h)";
+    public static string StrainIndex_IM => StringRM.GetString("strStrainIndex_IM", Culture) ?? "Intensity multiplier";
+    public static string StrainIndex_Intensity => StringRM.GetString("strStrainIndex_Intensity", Culture) ?? "Intensity of exertion";
+    public static string StrainIndex_Multipliers => StringRM.GetString("strStrainIndex_Multipliers", Culture) ?? "Multipliers";
+    public static string StrainIndex_PM => StringRM.GetString("strStrainIndex_PM", Culture) ?? "Hand/wrist posture mult.";
+    public static string StrainIndex_Posture => StringRM.GetString("strStrainIndex_Posture", Culture) ?? "Hand/wrist posture (-f +e)";
+    public static string StrainIndex_Results => StringRM.GetString("strStrainIndex_Results", Culture) ?? "These are the results obtained from the Revised Strain Index model:";
+    public static string StrainIndex_RSI => StringRM.GetString("strStrainIndex_COSI", Culture) ?? "The RSI index is:";
+    public static string StrainIndex_RSIequation => StringRM.GetString("strStrainIndex_COSIequation", Culture) ?? "The RSI index is computed as follows:";
+    public static string StrainIndex_SubtasksOrder => StringRM.GetString("strStrainIndex_SubtasksOrder", Culture) ?? "Subtasks order:";
+    public static string StrainIndex_SubtasksRSI => StringRM.GetString("strStrainIndex_SubtasksRSI", Culture) ?? "Subtask RSI index:";
+    public static string StrainIndex_TasksCOSI => StringRM.GetString("strStrainIndex_TasksCOSI", Culture) ?? "Task COSI index:";
+    public static string StrainIndex_TasksOrder => StringRM.GetString("strStrainIndex_TasksOrder", Culture) ?? "Task order:";
+
+    public static string[] StrainIndex_RowHeaders => new[]
+    {
+        StrainIndex_Data,
+        StrainIndex_Intensity,
+        StrainIndex_Efforts,
+        StrainIndex_EffortsA,
+        StrainIndex_EffortsB,
+        StrainIndex_Duration,
+        StrainIndex_Posture,
+        StrainIndex_Hours,
+        StrainIndex_Multipliers,
+        StrainIndex_IM,
+        StrainIndex_EM,
+        StrainIndex_EMa,
+        StrainIndex_EMb,
+        StrainIndex_DM,
+        StrainIndex_PM,
+        StrainIndex_HM,
+        StrainIndex_SubtasksRSI,
+        StrainIndex_SubtasksOrder,
+        StrainIndex_HoursTask,
+        StrainIndex_HoursTaskA,
+        StrainIndex_HoursTaskB,
+        StrainIndex_HMTask,
+        StrainIndex_HMaTask,
+        StrainIndex_HMbTask,
+        StrainIndex_TasksCOSI,
+        StrainIndex_TasksOrder
+    };
+    public static string[] StrainIndex_ColumnHeaders => new[]
+    {
+        Task,
+        Subtask
+    };
+    public static string[] StrainIndex_ResultsHeaders => new[]
+    {
+        Task,                       // 0
+        Subtask,
+        StrainIndex_Results,
+        StrainIndex_Data,
+        StrainIndex_Intensity,
+        StrainIndex_Efforts,        // 5
+        StrainIndex_EffortsA,
+        StrainIndex_EffortsB,
+        StrainIndex_Duration,
+        StrainIndex_Posture,
+        StrainIndex_Hours,          // 10
+        StrainIndex_Multipliers,
+        StrainIndex_IM,
+        StrainIndex_EM,
+        StrainIndex_EMa,
+        StrainIndex_EMb,            // 15
+        StrainIndex_DM,
+        StrainIndex_PM,
+        StrainIndex_HM,
+        StrainIndex_SubtasksRSI,
+        StrainIndex_SubtasksOrder,  // 20
+        StrainIndex_COSIequation,
+        StrainIndex_COSI,
+        StrainIndex_RSIequation,
+        StrainIndex_RSI,
+        StrainIndex_Data,           // 25
+        StrainIndex_HoursTask,
+        StrainIndex_HoursTaskA,
+        StrainIndex_HoursTaskB,
+        StrainIndex_Multipliers,
+        StrainIndex_HMTask,         // 30
+        StrainIndex_HMaTask,
+        StrainIndex_HMbTask,
+        StrainIndex_TasksCOSI,
+        StrainIndex_TasksOrder,
+        StrainIndex_CUSIequation,   // 35
+        StrainIndex_CUSI
     };
 }
