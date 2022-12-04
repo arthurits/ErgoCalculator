@@ -1,10 +1,10 @@
 # ErgoCalculator Changelog
 
 ## ErgoCalculator 1.7.3
-*  [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.60.
 * Target .NET 7.
 * Bug corrected when data was edited in composite indexes.
 * Upgraded text format options.
+* Tab and multilanguage applied to NIOSH and StrainIndex models.
 
 ## ErgoCalculator 1.7.2
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.59.
