@@ -55,51 +55,9 @@ public partial class FrmResultNIOSH : Form, IChildResults
         }
 
         // Show results
-        rtbShowResult.Clear();
-        SetRichTextBoxTabs();
+        //rtbShowResult.Clear();
         rtbShowResult.Text = _job.ToString(StringResources.NIOSH_ResultsHeaders);
         FormatText();
-    }
-
-    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double factor = 1.1, int min = 10)
-    {
-        SizeF size;
-        int nWidth = 0;
-        int tabSpace;
-
-        using var g = rtbShowResult.CreateGraphics();
-        foreach (string strRow in strings)
-        {
-            size = g.MeasureString(strRow, rtbShowResult.Font);
-            if (size.Width > nWidth)
-                nWidth = (int)size.Width;
-        }
-
-        tabSpace = (int)(nWidth * (factor - 1));
-        tabSpace = tabSpace > min ? tabSpace : min;
-
-        return (nWidth, tabSpace);
-    }
-
-    private void SetRichTextBoxTabs()
-    {
-        (int rowMax, int rowTab) = ComputeTabSpace(StringResources.NIOSH_RowHeaders);
-        var columnHeaders = StringResources.NIOSH_ColumnHeaders;
-        for (int i = 0; i < columnHeaders.Length; i++)
-            columnHeaders[i] += " A";
-        (int colMax, int colTab) = ComputeTabSpace(columnHeaders);
-        int tab = Math.Min(rowTab, colTab);
-
-        int[] tabs = new int[_job.NumberSubTasks];
-        for (int i = 0; i < tabs.Length; i++)
-        {
-            if (i == 0)
-                tabs[i] = rowMax + tab;
-            else
-                tabs[i] = tabs[i - 1] + colMax + tab;
-        }
-        rtbShowResult.SelectionTabs = tabs;
-
     }
 
     /// <summary>
@@ -389,8 +347,13 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     public void FormatText()
     {
-        int nStart = 0, nEnd = 0;
+        // Set the control's tabs
+        rtbShowResult.SelectAll();
+        SetRichTextBoxTabs();
+        rtbShowResult.DeselectAll();
 
+        // Formats (font, size, and style) the text
+        int nStart = 0, nEnd = 0;
         while (true)
         {
             // Underline
@@ -432,13 +395,63 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
         }
 
-
         // Set the cursor at the beginning of the text
         rtbShowResult.SelectionStart = 0;
         rtbShowResult.SelectionLength = 0;
 
     }
 
+    /// <summary>
+    /// Sets the tabs in the RichTextBox control. It assumes the corresponding text is already selected.
+    /// </summary>
+    private void SetRichTextBoxTabs()
+    {
+        (int rowMax, int rowTab) = ComputeTabSpace(StringResources.NIOSH_RowHeaders);
+        var columnHeaders = StringResources.NIOSH_ColumnHeaders;
+        for (int i = 0; i < columnHeaders.Length; i++)
+            columnHeaders[i] += " A";
+        (int colMax, int colTab) = ComputeTabSpace(columnHeaders);
+        int tab = Math.Min(rowTab, colTab);
+
+        int[] tabs = new int[_job.NumberSubTasks];
+        for (int i = 0; i < tabs.Length; i++)
+        {
+            if (i == 0)
+                tabs[i] = rowMax + tab;
+            else
+                tabs[i] = tabs[i - 1] + colMax + tab;
+        }
+        rtbShowResult.SelectionTabs = tabs;
+
+    }
+
+    /// <summary>
+    /// Computes the tabs for the RichTextBox control
+    /// </summary>
+    /// <param name="strings">Array of strings that will be measured. The greatest measure is used to compute the tab space</param>
+    /// <param name="factor">Factor (percentage) of the maximum measure to be used as tab space</param>
+    /// <param name="min">Minimum tab space in pixels. Default value is 10</param>
+    /// <returns></returns>
+    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double factor = 1.1, int min = 10)
+    {
+        SizeF size;
+        int nWidth = 0;
+        int tabSpace;
+
+        using var g = rtbShowResult.CreateGraphics();
+        foreach (string strRow in strings)
+        {
+            size = g.MeasureString(strRow, rtbShowResult.Font);
+            if (size.Width > nWidth)
+                nWidth = (int)size.Width;
+        }
+
+        tabSpace = (int)(nWidth * (factor - 1));
+        tabSpace = tabSpace > min ? tabSpace : min;
+
+        return (nWidth, tabSpace);
+    }
+    
     #endregion IChild interface
 
 }
