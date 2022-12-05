@@ -801,6 +801,312 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The COSI index is:.
+        /// </summary>
+        internal static string strStrainIndex_COSI {
+            get {
+                return ResourceManager.GetString("strStrainIndex_COSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The COSI index is computed as follows:.
+        /// </summary>
+        internal static string strStrainIndex_COSIequation {
+            get {
+                return ResourceManager.GetString("strStrainIndex_COSIequation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The CUSI index is:.
+        /// </summary>
+        internal static string strStrainIndex_CUSI {
+            get {
+                return ResourceManager.GetString("strStrainIndex_CUSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The CUSI index is computed as follows:.
+        /// </summary>
+        internal static string strStrainIndex_CUSIequation {
+            get {
+                return ResourceManager.GetString("strStrainIndex_CUSIequation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial data.
+        /// </summary>
+        internal static string strStrainIndex_Data {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration multiplier.
+        /// </summary>
+        internal static string strStrainIndex_DM {
+            get {
+                return ResourceManager.GetString("strStrainIndex_DM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration per exertion (s).
+        /// </summary>
+        internal static string strStrainIndex_Duration {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efforts per minute.
+        /// </summary>
+        internal static string strStrainIndex_Efforts {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Efforts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efforts per minute A.
+        /// </summary>
+        internal static string strStrainIndex_EffortsA {
+            get {
+                return ResourceManager.GetString("strStrainIndex_EffortsA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efforts per minute B.
+        /// </summary>
+        internal static string strStrainIndex_EffortsB {
+            get {
+                return ResourceManager.GetString("strStrainIndex_EffortsB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efforts multiplier.
+        /// </summary>
+        internal static string strStrainIndex_EM {
+            get {
+                return ResourceManager.GetString("strStrainIndex_EM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efforts A multiplier.
+        /// </summary>
+        internal static string strStrainIndex_EMa {
+            get {
+                return ResourceManager.GetString("strStrainIndex_EMa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Efforts B multiplier.
+        /// </summary>
+        internal static string strStrainIndex_EMb {
+            get {
+                return ResourceManager.GetString("strStrainIndex_EMb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtask duration multiplier.
+        /// </summary>
+        internal static string strStrainIndex_HM {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration A multiplier.
+        /// </summary>
+        internal static string strStrainIndex_HMaTask {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HMaTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration B multiplier.
+        /// </summary>
+        internal static string strStrainIndex_HMbTask {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HMbTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration multiplier.
+        /// </summary>
+        internal static string strStrainIndex_HMTask {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HMTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtask duration per day (h).
+        /// </summary>
+        internal static string strStrainIndex_Hours {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration per day (h).
+        /// </summary>
+        internal static string strStrainIndex_HoursTask {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HoursTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration per day A (h).
+        /// </summary>
+        internal static string strStrainIndex_HoursTaskA {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HoursTaskA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration per day B (h).
+        /// </summary>
+        internal static string strStrainIndex_HoursTaskB {
+            get {
+                return ResourceManager.GetString("strStrainIndex_HoursTaskB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intensity multiplier.
+        /// </summary>
+        internal static string strStrainIndex_IM {
+            get {
+                return ResourceManager.GetString("strStrainIndex_IM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intensity of exertion.
+        /// </summary>
+        internal static string strStrainIndex_Intensity {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Intensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multipliers.
+        /// </summary>
+        internal static string strStrainIndex_Multipliers {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Multipliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hand/wrist posture mult..
+        /// </summary>
+        internal static string strStrainIndex_PM {
+            get {
+                return ResourceManager.GetString("strStrainIndex_PM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hand/wrist posture (-f +e).
+        /// </summary>
+        internal static string strStrainIndex_Posture {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Posture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the results obtained from the Revised Strain Index model:.
+        /// </summary>
+        internal static string strStrainIndex_Results {
+            get {
+                return ResourceManager.GetString("strStrainIndex_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The RSI index is:.
+        /// </summary>
+        internal static string strStrainIndex_RSI {
+            get {
+                return ResourceManager.GetString("strStrainIndex_RSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The RSI index is computed as follows:.
+        /// </summary>
+        internal static string strStrainIndex_RSIequation {
+            get {
+                return ResourceManager.GetString("strStrainIndex_RSIequation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtasks order:.
+        /// </summary>
+        internal static string strStrainIndex_SubtasksOrder {
+            get {
+                return ResourceManager.GetString("strStrainIndex_SubtasksOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subtask RSI index:.
+        /// </summary>
+        internal static string strStrainIndex_SubtasksRSI {
+            get {
+                return ResourceManager.GetString("strStrainIndex_SubtasksRSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task COSI index:.
+        /// </summary>
+        internal static string strStrainIndex_TasksCOSI {
+            get {
+                return ResourceManager.GetString("strStrainIndex_TasksCOSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task order:.
+        /// </summary>
+        internal static string strStrainIndex_TasksOrder {
+            get {
+                return ResourceManager.GetString("strStrainIndex_TasksOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task RSI index:.
+        /// </summary>
+        internal static string strStrainIndex_TasksRSI {
+            get {
+                return ResourceManager.GetString("strStrainIndex_TasksRSI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subtask.
         /// </summary>
         internal static string strSubTask {

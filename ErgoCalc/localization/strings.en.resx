@@ -368,14 +368,8 @@ the application?</value>
   <data name="strStrainIndex_COSI" xml:space="preserve">
     <value>The COSI index is:</value>
   </data>
-  <data name="strStrainIndex_COSI1" xml:space="preserve">
-    <value>The RSI index is:</value>
-  </data>
   <data name="strStrainIndex_COSIequation" xml:space="preserve">
     <value>The COSI index is computed as follows:</value>
-  </data>
-  <data name="strStrainIndex_COSIequation1" xml:space="preserve">
-    <value>The RSI index is computed as follows:</value>
   </data>
   <data name="strStrainIndex_CUSI" xml:space="preserve">
     <value>The CUSI index is:</value>
@@ -451,6 +445,12 @@ the application?</value>
   </data>
   <data name="strStrainIndex_Results" xml:space="preserve">
     <value>These are the results obtained from the Revised Strain Index model:</value>
+  </data>
+  <data name="strStrainIndex_RSI" xml:space="preserve">
+    <value>The RSI index is:</value>
+  </data>
+  <data name="strStrainIndex_RSIequation" xml:space="preserve">
+    <value>The RSI index is computed as follows:</value>
   </data>
   <data name="strStrainIndex_SubtasksOrder" xml:space="preserve">
     <value>Subtasks order:</value>

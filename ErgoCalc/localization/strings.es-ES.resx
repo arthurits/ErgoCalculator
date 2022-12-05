@@ -368,14 +368,8 @@ salir de la aplicación?</value>
   <data name="strStrainIndex_COSI" xml:space="preserve">
     <value>El índice COSI es:</value>
   </data>
-  <data name="strStrainIndex_COSI1" xml:space="preserve">
-    <value>El índice RSI es:</value>
-  </data>
   <data name="strStrainIndex_COSIequation" xml:space="preserve">
     <value>El índice COSI se calcula de la siguiente forma:</value>
-  </data>
-  <data name="strStrainIndex_COSIequation1" xml:space="preserve">
-    <value>El índice RSI se calcula de la siguiente forma:</value>
   </data>
   <data name="strStrainIndex_CUSI" xml:space="preserve">
     <value>El índice CUSI es:</value>
@@ -451,6 +445,12 @@ salir de la aplicación?</value>
   </data>
   <data name="strStrainIndex_Results" xml:space="preserve">
     <value>Estos son los resultados obtenidos mediante el modelo «Revised Strain Index»:</value>
+  </data>
+  <data name="strStrainIndex_RSI" xml:space="preserve">
+    <value>El índice RSI es:</value>
+  </data>
+  <data name="strStrainIndex_RSIequation" xml:space="preserve">
+    <value>El índice RSI se calcula de la siguiente forma:</value>
   </data>
   <data name="strStrainIndex_SubtasksOrder" xml:space="preserve">
     <value>Orden de las subtareas:</value>
