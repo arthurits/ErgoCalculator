@@ -365,6 +365,108 @@ the application?</value>
   <data name="strRadUserCulture" xml:space="preserve">
     <value>Select culture</value>
   </data>
+  <data name="strStrainIndex_COSI" xml:space="preserve">
+    <value>The COSI index is:</value>
+  </data>
+  <data name="strStrainIndex_COSI1" xml:space="preserve">
+    <value>The RSI index is:</value>
+  </data>
+  <data name="strStrainIndex_COSIequation" xml:space="preserve">
+    <value>The COSI index is computed as follows:</value>
+  </data>
+  <data name="strStrainIndex_COSIequation1" xml:space="preserve">
+    <value>The RSI index is computed as follows:</value>
+  </data>
+  <data name="strStrainIndex_CUSI" xml:space="preserve">
+    <value>The CUSI index is:</value>
+  </data>
+  <data name="strStrainIndex_CUSIequation" xml:space="preserve">
+    <value>The CUSI index is computed as follows:</value>
+  </data>
+  <data name="strStrainIndex_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="strStrainIndex_DM" xml:space="preserve">
+    <value>Duration multiplier</value>
+  </data>
+  <data name="strStrainIndex_Duration" xml:space="preserve">
+    <value>Duration per exertion (s)</value>
+  </data>
+  <data name="strStrainIndex_Efforts" xml:space="preserve">
+    <value>Efforts per minute</value>
+  </data>
+  <data name="strStrainIndex_EffortsA" xml:space="preserve">
+    <value>Efforts per minute A</value>
+  </data>
+  <data name="strStrainIndex_EffortsB" xml:space="preserve">
+    <value>Efforts per minute B</value>
+  </data>
+  <data name="strStrainIndex_EM" xml:space="preserve">
+    <value>Efforts multiplier</value>
+  </data>
+  <data name="strStrainIndex_EMa" xml:space="preserve">
+    <value>Efforts A multiplier</value>
+  </data>
+  <data name="strStrainIndex_EMb" xml:space="preserve">
+    <value>Efforts B multiplier</value>
+  </data>
+  <data name="strStrainIndex_HM" xml:space="preserve">
+    <value>Subtask duration multiplier</value>
+  </data>
+  <data name="strStrainIndex_HMaTask" xml:space="preserve">
+    <value>Task duration A multiplier</value>
+  </data>
+  <data name="strStrainIndex_HMbTask" xml:space="preserve">
+    <value>Task duration B multiplier</value>
+  </data>
+  <data name="strStrainIndex_HMTask" xml:space="preserve">
+    <value>Task duration multiplier</value>
+  </data>
+  <data name="strStrainIndex_Hours" xml:space="preserve">
+    <value>Subtask duration per day (h)</value>
+  </data>
+  <data name="strStrainIndex_HoursTask" xml:space="preserve">
+    <value>Task duration per day (h)</value>
+  </data>
+  <data name="strStrainIndex_HoursTaskA" xml:space="preserve">
+    <value>Task duration per day A (h)</value>
+  </data>
+  <data name="strStrainIndex_HoursTaskB" xml:space="preserve">
+    <value>Task duration per day B (h)</value>
+  </data>
+  <data name="strStrainIndex_IM" xml:space="preserve">
+    <value>Intensity multiplier</value>
+  </data>
+  <data name="strStrainIndex_Intensity" xml:space="preserve">
+    <value>Intensity of exertion</value>
+  </data>
+  <data name="strStrainIndex_Multipliers" xml:space="preserve">
+    <value>Multipliers</value>
+  </data>
+  <data name="strStrainIndex_PM" xml:space="preserve">
+    <value>Hand/wrist posture mult.</value>
+  </data>
+  <data name="strStrainIndex_Posture" xml:space="preserve">
+    <value>Hand/wrist posture (-f +e)</value>
+  </data>
+  <data name="strStrainIndex_Results" xml:space="preserve">
+    <value>These are the results obtained from the Revised Strain Index model:</value>
+  </data>
+  <data name="strStrainIndex_SubtasksOrder" xml:space="preserve">
+    <value>Subtasks order:</value>
+  </data>
+  <data name="strStrainIndex_SubtasksRSI" xml:space="preserve">
+    <value>Subtask RSI index:</value>
+  </data>
+  <data name="strStrainIndex_TasksCOSI" xml:space="preserve">
+    <value>Task COSI index:</value>
+  </data>
+  <data name="strStrainIndex_TasksOrder" xml:space="preserve">
+    <value>Task order:</value>
+  </data>
+  <data name="strStrainIndex_TasksRSI" xml:space="preserve">
+    <value>Task RSI index:</value>
+  </data>
   <data name="strSubTask" xml:space="preserve">
     <value>Subtask</value>
   </data>
