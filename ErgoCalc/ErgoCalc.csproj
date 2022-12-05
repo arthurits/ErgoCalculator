@@ -251,19 +251,19 @@
   <ItemGroup>
     <Content Include="..\Dll-CLM\x64\Release\clm.dll">
       <Link>dlls\clm.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Dll-Niosh\x64\Release\niosh.dll">
       <Link>dlls\niosh.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Dll-Strain\x64\Release\strain.dll">
       <Link>dlls\strain.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Dll-WRmodel\x64\Release\wrmodel.dll">
       <Link>dlls\wrmodel.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="ErgoCalcLauncher.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -358,17 +358,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Dll-Ocra\x64\Release\ocra.dll" Link="dlls\ocra.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Dll-ThermalC\x64\Release\comfort.dll" Link="dlls\comfort.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Dll-Liberty\x64\Release\liberty.dll" Link="dlls\liberty.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 </Project>
