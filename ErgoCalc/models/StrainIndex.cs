@@ -110,7 +110,10 @@ public class TaskModel
         }
         strResult.Append(strRows[8] + strLineD[5] + System.Environment.NewLine);
         strResult.Append(strRows[9] + strLineD[6] + System.Environment.NewLine);
-        strResult.Append(strRows[10] + strLineD[7] + System.Environment.NewLine);
+        if (IndexCOSI != -1)
+            strResult.Append(strRows[10] + strLineD[7] + System.Environment.NewLine);
+        else
+            strResult.Append(strRows[27] + strLineD[7] + System.Environment.NewLine);
         strResult.Append(System.Environment.NewLine);
 
         // Multipliers
@@ -124,21 +127,29 @@ public class TaskModel
         }
         strResult.Append(strRows[16] + strLineF[5] + System.Environment.NewLine);
         strResult.Append(strRows[17] + strLineF[6] + System.Environment.NewLine);
-        strResult.Append(strRows[18] + strLineF[7] + System.Environment.NewLine);
-        strResult.Append(System.Environment.NewLine);
-        strResult.Append(strRows[19] + strLineF[8] + System.Environment.NewLine);
         if (IndexCOSI != -1)
-            strResult.Append(strRows[20] + strLineF[9] + System.Environment.NewLine);
+        {
+            strResult.Append(strRows[18] + strLineF[7] + System.Environment.NewLine);
+            strResult.Append(System.Environment.NewLine);
+            strResult.Append(strRows[20] + strLineF[8] + System.Environment.NewLine);
+            strResult.Append(strRows[21] + strLineF[9] + System.Environment.NewLine);
+        }
+        else
+        {
+            strResult.Append(strRows[31] + strLineF[7] + System.Environment.NewLine);
+            strResult.Append(System.Environment.NewLine);
+            strResult.Append(strRows[19] + strLineF[8] + System.Environment.NewLine);
+        }
 
         // Equation
         if (IndexCOSI == -1)
         {
-            strEqT += $"{strRows[23]}{System.Environment.NewLine}{System.Environment.NewLine}";
+            strEqT += $"{strRows[24]}{System.Environment.NewLine}{System.Environment.NewLine}";
             strEqT += "RSI = IM * EM * DM * PM * HM";
 
             for (int i = 0; i < SubTasks.Length; i++)
             {
-                strEqR += $"RSI({((char)('A' + i)).ToString()}) = ";
+                strEqR += $"RSI({(char)('A' + i)}) = ";
                 strEqR += $"{SubTasks[i].Factors.IM.ToString("0.####")} * ";
                 strEqR += $"{SubTasks[i].Factors.EM.ToString("0.####")} * ";
                 strEqR += $"{SubTasks[i].Factors.DM.ToString("0.####")} * ";
@@ -147,10 +158,11 @@ public class TaskModel
                 strEqR += $"{SubTasks[i].IndexRSI.ToString("0.####")}";
             }
 
+            //strEqR += $"{System.Environment.NewLine}{System.Environment.NewLine}{strRows[25]} {IndexCOSI.ToString("0.####")}";
         }
         else
         {
-            strEqT += $"{strRows[21]}{System.Environment.NewLine}{System.Environment.NewLine}";
+            strEqT += $"{strRows[22]}{System.Environment.NewLine}{System.Environment.NewLine}";
             strEqT += $"RSI = IM * EM * DM * PM * HM{System.Environment.NewLine}";
             strEqT += $"COSI = RSI({((char)('A' + SubTasks[Order[0]].ItemIndex)).ToString()})";
             strEqR += $"COSI = {SubTasks[Order[0]].IndexRSI.ToString("0.####")}";
@@ -164,7 +176,7 @@ public class TaskModel
             }
             strEqR += $" = {IndexCOSI.ToString("0.####")}";
 
-            strEqR += $"{System.Environment.NewLine}{System.Environment.NewLine}{strRows[22]} {IndexCOSI.ToString("0.####")}";
+            strEqR += $"{System.Environment.NewLine}{System.Environment.NewLine}{strRows[23]} {IndexCOSI.ToString("0.####")}";
 
         }
 
@@ -200,6 +212,7 @@ public class TaskModel
             "Duration multiplier",
             "Hand/wrist posture mult.",
             "Subtask duration multiplier",
+            "Task RSI index:",
             "Subtask RSI index:",
             "Subtasks order:",
             "The COSI index is computed as follows:",
@@ -264,12 +277,12 @@ public class Job
 
             for (int i = 0; i < NumberTasks; i++)
             {
-                strLineD[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString()}";
+                strLineD[0] += $"\t{strRows[0]} {(char)('A' + i)}";
                 strLineD[1] += $"\t{Tasks[i].h.ToString("0.####")}";
                 strLineD[2] += $"\t{Tasks[i].ha.ToString("0.####")}";
                 strLineD[3] += $"\t{Tasks[i].hb.ToString("0.####")}";
 
-                strLineF[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString()}";
+                strLineF[0] += $"\t{strRows[0]} {(char)('A' + i)}";
                 strLineF[1] += $"\t{Tasks[i].HM.ToString("0.####")}";
                 strLineF[2] += $"\t{Tasks[i].HMa.ToString("0.####")}";
                 strLineF[3] += $"\t{Tasks[i].HMb.ToString("0.####")}";
@@ -280,7 +293,7 @@ public class Job
             string strEqT = string.Empty;
             string strEqR = string.Empty;
 
-            strEqT += string.Concat(strRows[35], System.Environment.NewLine, System.Environment.NewLine);
+            strEqT += string.Concat(strRows[36], System.Environment.NewLine, System.Environment.NewLine);
             strEqT += string.Concat("CUSI = ", "COSI(", ((char)('A' + Order[0])).ToString(), ")");
             strEqR += string.Concat("CUSI = ", Tasks[Order[0]].IndexCOSI.ToString("0.####"));
 
@@ -292,38 +305,38 @@ public class Job
                 strEqR += $" + {Tasks[Order[i]].IndexCOSI.ToString("0.####")} * ({Tasks[Order[i]].HMa.ToString("0.####")} - {Tasks[Order[i]].HMb.ToString("0.####")}) / {Tasks[Order[i]].HM.ToString("0.####")}";
             }
             strEqR += $" = {IndexCUSI.ToString("0.####")}";
-            strEqR += string.Concat(System.Environment.NewLine, System.Environment.NewLine, strRows[36], " ", IndexCUSI.ToString("0.####"));
+            strEqR += string.Concat(System.Environment.NewLine, System.Environment.NewLine, strRows[37], " ", IndexCUSI.ToString("0.####"));
 
-            strResult.Append(strRows[25]);
+            strResult.Append(strRows[26]);
             strResult.Append(strLineD[0]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[26]);
+            strResult.Append(strRows[27]);
             strResult.Append(strLineD[1]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[27]);
+            strResult.Append(strRows[28]);
             strResult.Append(strLineD[2]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[28]);
+            strResult.Append(strRows[29]);
             strResult.Append(strLineD[3]);
             strResult.Append(System.Environment.NewLine);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[29]);
+            strResult.Append(strRows[30]);
             strResult.Append(strLineF[0]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[30]);
+            strResult.Append(strRows[31]);
             strResult.Append(strLineF[1]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[31]);
+            strResult.Append(strRows[32]);
             strResult.Append(strLineF[2]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[32]);
+            strResult.Append(strRows[33]);
             strResult.Append(strLineF[3]);
             strResult.Append(System.Environment.NewLine);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[33]);
+            strResult.Append(strRows[34]);
             strResult.Append(strLineF[4]);
             strResult.Append(System.Environment.NewLine);
-            strResult.Append(strRows[34]);
+            strResult.Append(strRows[35]);
             strResult.Append(strLineF[5]);
             strResult.Append(System.Environment.NewLine);
             //strResult.Append(string.Concat(strLineD));
@@ -363,6 +376,7 @@ public class Job
             "Duration multiplier",
             "Hand/wrist posture mult.",
             "Subtask duration multiplier",
+            "Task RSI index:",
             "Subtask RSI index:",
             "Subtasks order:",
             "The COSI index is computed as follows:",

@@ -242,7 +242,7 @@ public static class StringResources
     public static string StrainIndex_HMbTask => StringRM.GetString("strStrainIndex_HMbTask", Culture) ?? "Task duration B multiplier";
     public static string StrainIndex_HMTask => StringRM.GetString("strStrainIndex_HMTask", Culture) ?? "Task duration multiplier";
     public static string StrainIndex_Hours => StringRM.GetString("strStrainIndex_Hours", Culture) ?? "Subtask duration per day (h)";
-    public static string StrainIndex_HoursTask => StringRM.GetString("strStrainIndex_HoursTask", Culture) ?? "Task duration per day(h)";
+    public static string StrainIndex_HoursTask => StringRM.GetString("strStrainIndex_HoursTask", Culture) ?? "Task duration per day (h)";
     public static string StrainIndex_HoursTaskA => StringRM.GetString("strStrainIndex_HoursTaskA", Culture) ?? "Task duration per day A (h)";
     public static string StrainIndex_HoursTaskB => StringRM.GetString("strStrainIndex_HoursTaskB", Culture) ?? "Task duration per day B (h)";
     public static string StrainIndex_IM => StringRM.GetString("strStrainIndex_IM", Culture) ?? "Intensity multiplier";
@@ -255,6 +255,7 @@ public static class StringResources
     public static string StrainIndex_RSIequation => StringRM.GetString("strStrainIndex_COSIequation", Culture) ?? "The RSI index is computed as follows:";
     public static string StrainIndex_SubtasksOrder => StringRM.GetString("strStrainIndex_SubtasksOrder", Culture) ?? "Subtasks order:";
     public static string StrainIndex_SubtasksRSI => StringRM.GetString("strStrainIndex_SubtasksRSI", Culture) ?? "Subtask RSI index:";
+    public static string StrainIndex_TasksRSI => StringRM.GetString("strStrainIndex_TasksRSI", Culture) ?? "Task RSI index:";
     public static string StrainIndex_TasksCOSI => StringRM.GetString("strStrainIndex_TasksCOSI", Culture) ?? "Task COSI index:";
     public static string StrainIndex_TasksOrder => StringRM.GetString("strStrainIndex_TasksOrder", Culture) ?? "Task order:";
 
@@ -276,6 +277,7 @@ public static class StringResources
         StrainIndex_DM,
         StrainIndex_PM,
         StrainIndex_HM,
+        StrainIndex_TasksRSI,
         StrainIndex_SubtasksRSI,
         StrainIndex_SubtasksOrder,
         StrainIndex_HoursTask,
@@ -313,23 +315,24 @@ public static class StringResources
         StrainIndex_DM,
         StrainIndex_PM,
         StrainIndex_HM,
-        StrainIndex_SubtasksRSI,
-        StrainIndex_SubtasksOrder,  // 20
+        StrainIndex_TasksRSI,
+        StrainIndex_SubtasksRSI,    // 20
+        StrainIndex_SubtasksOrder,
         StrainIndex_COSIequation,
         StrainIndex_COSI,
         StrainIndex_RSIequation,
-        StrainIndex_RSI,
-        StrainIndex_Data,           // 25
+        StrainIndex_RSI,            // 25
+        StrainIndex_Data,
         StrainIndex_HoursTask,
         StrainIndex_HoursTaskA,
         StrainIndex_HoursTaskB,
-        StrainIndex_Multipliers,
-        StrainIndex_HMTask,         // 30
+        StrainIndex_Multipliers,    // 30
+        StrainIndex_HMTask,
         StrainIndex_HMaTask,
         StrainIndex_HMbTask,
         StrainIndex_TasksCOSI,
-        StrainIndex_TasksOrder,
-        StrainIndex_CUSIequation,   // 35
+        StrainIndex_TasksOrder,     // 35
+        StrainIndex_CUSIequation,
         StrainIndex_CUSI
     };
 }
