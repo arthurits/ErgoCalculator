@@ -44,8 +44,6 @@
             this.lblFontColor = new System.Windows.Forms.Label();
             this.btnDlgFont = new System.Windows.Forms.Button();
             this.lblFontStyle = new System.Windows.Forms.Label();
-            this.lblDlgFont = new System.Windows.Forms.Label();
-            this.lblFontSize = new System.Windows.Forms.Label();
             this.tabGUI = new System.Windows.Forms.TabPage();
             this.txtDataFormat = new System.Windows.Forms.TextBox();
             this.lblDataFormat = new System.Windows.Forms.Label();
@@ -111,8 +109,6 @@
             this.tabPlot.Controls.Add(this.lblFontColor);
             this.tabPlot.Controls.Add(this.btnDlgFont);
             this.tabPlot.Controls.Add(this.lblFontStyle);
-            this.tabPlot.Controls.Add(this.lblDlgFont);
-            this.tabPlot.Controls.Add(this.lblFontSize);
             this.tabPlot.Location = new System.Drawing.Point(4, 26);
             this.tabPlot.Name = "tabPlot";
             this.tabPlot.Padding = new System.Windows.Forms.Padding(3);
@@ -240,24 +236,6 @@
             this.lblFontStyle.Size = new System.Drawing.Size(38, 19);
             this.lblFontStyle.TabIndex = 3;
             this.lblFontStyle.Text = "Style";
-            // 
-            // lblDlgFont
-            // 
-            this.lblDlgFont.AutoSize = true;
-            this.lblDlgFont.Location = new System.Drawing.Point(368, 31);
-            this.lblDlgFont.Name = "lblDlgFont";
-            this.lblDlgFont.Size = new System.Drawing.Size(73, 19);
-            this.lblDlgFont.TabIndex = 0;
-            this.lblDlgFont.Text = "Select font";
-            // 
-            // lblFontSize
-            // 
-            this.lblFontSize.AutoSize = true;
-            this.lblFontSize.Location = new System.Drawing.Point(403, 3);
-            this.lblFontSize.Name = "lblFontSize";
-            this.lblFontSize.Size = new System.Drawing.Size(32, 19);
-            this.lblFontSize.TabIndex = 4;
-            this.lblFontSize.Text = "Size";
             // 
             // tabGUI
             // 
@@ -421,12 +399,10 @@
         private ComboBox cboAllCultures;
         private RadioButton radUserCulture;
         private Button btnDlgFont;
-        private Label lblDlgFont;
         private Label lblFont;
         private PictureBox pctFontColor;
         private Label lblFontColor;
         private Label lblFontStyle;
-        private Label lblFontSize;
         private PictureBox pctBackColor;
         private Label lblBackColor;
         private CheckBox chkWordWrap;

@@ -41,25 +41,17 @@ public partial class FrmSettings : Form
         fontDlg.Font = new(Settings.FontFamilyName, Settings.FontSize, Settings.FontStyle);
         fontDlg.Color = Color.FromArgb(Settings.FontColor);
 
-        //fontDlg.Font = textBox1.Font;
-        //fontDlg.Color = textBox1.ForeColor;
-
         if (fontDlg.ShowDialog() != DialogResult.Cancel)
         {
             Settings.FontFamilyName= fontDlg.Font.Name;
             Settings.FontStyle = fontDlg.Font.Style;
             Settings.FontSize = fontDlg.Font.Size;
-            Settings.FontColor = fontDlg.Color.ToArgb();
 
-            lblFont.Text = fontDlg.Font.Name;
-            lblFontStyle.Text = fontDlg.Font.Style.ToString();
-            lblFontSize.Text = fontDlg.Font.Size.ToString();
-            lblFontColor.Text = fontDlg.Color.ToString();
             this.lblFont.Text = String.Format(StringResources.LblFontName, Settings.FontFamilyName, Settings.FontSize);
             this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings.FontStyle.ToString());
-            //this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings.FontSize.ToString());
-            this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings.FontColor.ToString("X"));
-            //pctFontColor.BackColor = fontDlg.Color;
+
+            // Reposition the button
+            this.btnDlgFont.Left = this.lblFont.Left + this.lblFont.Width + 5;
         }
     }
 
@@ -197,12 +189,9 @@ public partial class FrmSettings : Form
         this.tabPlot.Text = StringResources.TabPlot;
         this.tabGUI.Text = StringResources.TabGUI;
 
-        this.lblDlgFont.Text = StringResources.LblDlgFont;
         this.btnDlgFont.Text=StringResources.BtnDlgFont;
-        //this.grpFont.Text= StringResources.GrpFont;
         this.lblFont.Text = String.Format(StringResources.LblFontName, Settings?.FontFamilyName, Settings?.FontSize);
         this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings?.FontStyle.ToString());
-        //this.lblFontSize.Text = String.Format(StringResources.LblFontSize, Settings?.FontSize.ToString());
         this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings?.FontColor.ToString("X"));
         this.chkWordWrap.Text = StringResources.ChkWordWrap;
         this.lblBackColor.Text = String.Format(StringResources.LblBackColor, Settings?.TextBackColor.ToString("X"));
