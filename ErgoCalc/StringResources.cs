@@ -251,8 +251,8 @@ public static class StringResources
     public static string StrainIndex_PM => StringRM.GetString("strStrainIndex_PM", Culture) ?? "Hand/wrist posture mult.";
     public static string StrainIndex_Posture => StringRM.GetString("strStrainIndex_Posture", Culture) ?? "Hand/wrist posture (-f +e)";
     public static string StrainIndex_Results => StringRM.GetString("strStrainIndex_Results", Culture) ?? "These are the results obtained from the Revised Strain Index model:";
-    public static string StrainIndex_RSI => StringRM.GetString("strStrainIndex_COSI", Culture) ?? "The RSI index is:";
-    public static string StrainIndex_RSIequation => StringRM.GetString("strStrainIndex_COSIequation", Culture) ?? "The RSI index is computed as follows:";
+    public static string StrainIndex_RSI => StringRM.GetString("strStrainIndex_RSI", Culture) ?? "The RSI index is:";
+    public static string StrainIndex_RSIequation => StringRM.GetString("strStrainIndex_RSIequation", Culture) ?? "The RSI index is computed as follows:";
     public static string StrainIndex_SubtasksOrder => StringRM.GetString("strStrainIndex_SubtasksOrder", Culture) ?? "Subtasks order:";
     public static string StrainIndex_SubtasksRSI => StringRM.GetString("strStrainIndex_SubtasksRSI", Culture) ?? "Subtask RSI index:";
     public static string StrainIndex_TasksRSI => StringRM.GetString("strStrainIndex_TasksRSI", Culture) ?? "Task RSI index:";
