@@ -353,7 +353,7 @@ public class TaskModel
     //    return strResult.ToString();
     //}
 
-    public string ToString(string[] strRows)
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(2200);
         string[] strLineD = new String[11];
@@ -361,39 +361,42 @@ public class TaskModel
         string strEquationT;
         string strEquationN;
 
+        if (culture is null)
+            culture = System.Globalization.CultureInfo.CurrentCulture;
+
         for (int i = 0; i < SubTasks.Length; i++)
         {
-            strLineD[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString()}";
-            strLineD[1] += $"\t{SubTasks[i].Data.Weight.ToString()}";
-            strLineD[2] += $"\t{SubTasks[i].Data.h.ToString()}";
-            strLineD[3] += $"\t{SubTasks[i].Data.v.ToString()}";
-            strLineD[4] += $"\t{SubTasks[i].Data.d.ToString()}";
-            strLineD[5] += $"\t{SubTasks[i].Data.f.ToString()}";
-            strLineD[6] += $"\t{SubTasks[i].Data.fa.ToString()}";
-            strLineD[7] += $"\t{SubTasks[i].Data.fb.ToString()}";
-            strLineD[8] += $"\t{SubTasks[i].Data.td.ToString()}";
-            strLineD[9] += $"\t{SubTasks[i].Data.a.ToString()}";
+            strLineD[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
+            strLineD[1] += $"\t{SubTasks[i].Data.Weight.ToString(culture)}";
+            strLineD[2] += $"\t{SubTasks[i].Data.h.ToString(culture)}";
+            strLineD[3] += $"\t{SubTasks[i].Data.v.ToString(culture)}";
+            strLineD[4] += $"\t{SubTasks[i].Data.d.ToString(culture)}";
+            strLineD[5] += $"\t{SubTasks[i].Data.f.ToString(culture)}";
+            strLineD[6] += $"\t{SubTasks[i].Data.fa.ToString(culture)}";
+            strLineD[7] += $"\t{SubTasks[i].Data.fb.ToString(culture)}";
+            strLineD[8] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
+            strLineD[9] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
             strLineD[10] += $"\t{SubTasks[i].Data.c}";
 
-            strLineR[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString()}";
-            strLineR[1] += $"\t{SubTasks[i].Data.LC.ToString("0.####")}";
-            strLineR[2] += $"\t{SubTasks[i].Factors.HM.ToString("0.####")}";
-            strLineR[3] += $"\t{SubTasks[i].Factors.VM.ToString("0.####")}";
-            strLineR[4] += $"\t{SubTasks[i].Factors.DM.ToString("0.####")}";
-            strLineR[5] += $"\t{SubTasks[i].Factors.FM.ToString("0.####")}";
-            strLineR[6] += $"\t{SubTasks[i].Factors.FMa.ToString("0.####")}";
-            strLineR[7] += $"\t{SubTasks[i].Factors.FMb.ToString("0.####")}";
-            strLineR[8] += $"\t{SubTasks[i].Factors.AM.ToString("0.####")}";
-            strLineR[9] += $"\t{SubTasks[i].Factors.CM.ToString("0.####")}";
+            strLineR[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
+            strLineR[1] += $"\t{SubTasks[i].Data.LC.ToString("0.####", culture)}";
+            strLineR[2] += $"\t{SubTasks[i].Factors.HM.ToString("0.####", culture)}";
+            strLineR[3] += $"\t{SubTasks[i].Factors.VM.ToString("0.####", culture)}";
+            strLineR[4] += $"\t{SubTasks[i].Factors.DM.ToString("0.####", culture)}";
+            strLineR[5] += $"\t{SubTasks[i].Factors.FM.ToString("0.####", culture)}";
+            strLineR[6] += $"\t{SubTasks[i].Factors.FMa.ToString("0.####", culture)}";
+            strLineR[7] += $"\t{SubTasks[i].Factors.FMb.ToString("0.####", culture)}";
+            strLineR[8] += $"\t{SubTasks[i].Factors.AM.ToString("0.####", culture)}";
+            strLineR[9] += $"\t{SubTasks[i].Factors.CM.ToString("0.####", culture)}";
 
             if (Model == IndexType.IndexCLI)
             {
-                strLineR[10] += $"\t{SubTasks[i].IndexIF.ToString("0.####")}";
+                strLineR[10] += $"\t{SubTasks[i].IndexIF.ToString("0.####", culture)}";
                 //strLineR[11] += "\t";
-                strLineR[12] += $"\t{(OrderCLI[i] + 1).ToString()}";
+                strLineR[12] += $"\t{(OrderCLI[i] + 1).ToString(culture)}";
             }
 
-            strLineR[11] += $"\t{SubTasks[i].IndexLI.ToString("0.####")}";
+            strLineR[11] += $"\t{SubTasks[i].IndexLI.ToString("0.####", culture)}";
         }
 
         strResult.Append(strRows[2] + System.Environment.NewLine + System.Environment.NewLine);
@@ -449,19 +452,19 @@ public class TaskModel
         {
             if (Model == IndexType.IndexCLI)
             {
-                var strName = ((char)('A' + SubTasks[OrderCLI[0]].ItemIndex)).ToString();
+                var strName = ((char)('A' + SubTasks[OrderCLI[0]].ItemIndex)).ToString(culture);
                 strEquationT = $"CLI = {strRows[28]}({strName})";
-                strEquationN = $"CLI = {SubTasks[OrderCLI[0]].IndexLI.ToString("0.####")}";
+                strEquationN = $"CLI = {SubTasks[OrderCLI[0]].IndexLI.ToString("0.####", culture)}";
                 for (int i = 1; i < SubTasks.Length; i++)
                 {
-                    strName = ((char)('A' + SubTasks[OrderCLI[i]].ItemIndex)).ToString();
+                    strName = ((char)('A' + SubTasks[OrderCLI[i]].ItemIndex)).ToString(culture);
                     strEquationT += $" + {strRows[28]}IF({ strName}) * (1/FMa({strName}) - 1/FMb({strName}))";
-                    strEquationN += $" + {SubTasks[OrderCLI[i]].IndexIF.ToString("0.####")} * (1/{SubTasks[OrderCLI[i]].Factors.FMa.ToString("0.####")} - 1/{SubTasks[OrderCLI[i]].Factors.FMb.ToString("0.####")})";
+                    strEquationN += $" + {SubTasks[OrderCLI[i]].IndexIF.ToString("0.####", culture)} * (1/{SubTasks[OrderCLI[i]].Factors.FMa.ToString("0.####", culture)} - 1/{SubTasks[OrderCLI[i]].Factors.FMb.ToString("0.####", culture)})";
                 }
-                strEquationN += $" = {IndexCLI.ToString("0.####")}";
+                strEquationN += $" = {IndexCLI.ToString("0.####", culture)}";
                 strResult.Append(strEquationT + System.Environment.NewLine);
                 strResult.Append(strEquationN + System.Environment.NewLine + System.Environment.NewLine);
-                strResult.Append(strRows[30] + " " + IndexCLI.ToString("0.####") + System.Environment.NewLine);
+                strResult.Append(strRows[30] + " " + IndexCLI.ToString("0.####", culture) + System.Environment.NewLine);
             }
             else
             {
@@ -469,15 +472,15 @@ public class TaskModel
                 strResult.Append(strEquationT + System.Environment.NewLine);
                 for (int i = 0; i < SubTasks.Length; i++)
                 {
-                    strEquationN = $"LI = {SubTasks[i].Data.Weight.ToString("0.####")} / (";
-                    strEquationN += $"{SubTasks[i].Data.LC.ToString("0.####")} * ";
-                    strEquationN += $"{SubTasks[i].Factors.HM.ToString("0.####")} * ";
-                    strEquationN += $"{SubTasks[i].Factors.VM.ToString("0.####")} * ";
-                    strEquationN += $"{SubTasks[i].Factors.DM.ToString("0.####")} * ";
-                    strEquationN += $"{SubTasks[i].Factors.FM.ToString("0.####")} * ";
-                    strEquationN += $"{SubTasks[i].Factors.AM.ToString("0.####")} * ";
-                    strEquationN += $"{SubTasks[i].Factors.CM.ToString("0.####")}) = ";
-                    strEquationN += $"{SubTasks[i].IndexLI.ToString("0.####")}";
+                    strEquationN = $"LI = {SubTasks[i].Data.Weight.ToString("0.####", culture)} / (";
+                    strEquationN += $"{SubTasks[i].Data.LC.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.HM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.VM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.DM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.FM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.AM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.CM.ToString("0.####", culture)}) = ";
+                    strEquationN += $"{SubTasks[i].IndexLI.ToString("0.####", culture)}";
                     strResult.Append(strEquationN + System.Environment.NewLine);
                 }
                 strResult.Append(System.Environment.NewLine);
@@ -486,19 +489,19 @@ public class TaskModel
         else
         {
             strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM)";
-            strEquationN = $"LI = {SubTasks[0].Data.Weight.ToString("0.####")} / (";
-            strEquationN += $"{SubTasks[0].Data.LC.ToString("0.####")} * ";
-            strEquationN += $"{SubTasks[0].Factors.HM.ToString("0.####")} * ";
-            strEquationN += $"{SubTasks[0].Factors.VM.ToString("0.####")} * ";
-            strEquationN += $"{SubTasks[0].Factors.DM.ToString("0.####")} * ";
-            strEquationN += $"{SubTasks[0].Factors.FM.ToString("0.####")} * ";
-            strEquationN += $"{SubTasks[0].Factors.AM.ToString("0.####")} * ";
-            strEquationN += $"{SubTasks[0].Factors.CM.ToString("0.####")}) = ";
-            strEquationN += $"{SubTasks[0].IndexLI.ToString("0.####")}";
+            strEquationN = $"LI = {SubTasks[0].Data.Weight.ToString("0.####", culture)} / (";
+            strEquationN += $"{SubTasks[0].Data.LC.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.HM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.VM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.DM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.FM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.AM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.CM.ToString("0.####", culture)}) = ";
+            strEquationN += $"{SubTasks[0].IndexLI.ToString("0.####", culture)}";
 
             strResult.Append(strEquationT + System.Environment.NewLine);
             strResult.Append(strEquationN + System.Environment.NewLine + System.Environment.NewLine);
-            strResult.Append(strRows[30] + " " + SubTasks[0].IndexLI.ToString("0.####") + System.Environment.NewLine);
+            strResult.Append(strRows[30] + " " + SubTasks[0].IndexLI.ToString("0.####", culture) + System.Environment.NewLine);
         };
 
         return strResult.ToString();
@@ -583,12 +586,12 @@ public class Job
     {
     }
 
-    public string ToString(string[] strRows)
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         string str = string.Empty;
 
         foreach (TaskModel task in Tasks)
-            str += task.ToString(strRows) + Environment.NewLine + Environment.NewLine;
+            str += task.ToString(strRows, culture) + Environment.NewLine + Environment.NewLine;
 
         return str;
     }

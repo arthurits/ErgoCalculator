@@ -59,7 +59,7 @@ public class TaskModel
     /// </summary>
     public int NumberSubTasks { get; set; } = 0;  // Number of subtasks in the task
 
-    public string ToString(string[] strRows)
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(2200);
         string[] strLineD = new string[8];
@@ -67,34 +67,37 @@ public class TaskModel
         string strEqT = string.Empty;
         string strEqR = string.Empty;
 
+        if (culture is null)
+            culture = System.Globalization.CultureInfo.CurrentCulture;
+
         for (int i = 0; i < SubTasks.Length; i++)
         {
-            strLineD[0] += $"\t{strRows[IndexCOSI == -1 ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString()}";
-            strLineD[1] += $"\t{SubTasks[i].Data.i.ToString()}";
-            strLineD[2] += $"\t{SubTasks[i].Data.e.ToString()}";
+            strLineD[0] += $"\t{strRows[IndexCOSI == -1 ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
+            strLineD[1] += $"\t{SubTasks[i].Data.i.ToString(culture)}";
+            strLineD[2] += $"\t{SubTasks[i].Data.e.ToString(culture)}";
             if (IndexCOSI != -1)
             {
-                strLineD[3] += $"\t{SubTasks[i].Data.ea.ToString()}";
-                strLineD[4] += $"\t{SubTasks[i].Data.eb.ToString()}";
+                strLineD[3] += $"\t{SubTasks[i].Data.ea.ToString(culture)}";
+                strLineD[4] += $"\t{SubTasks[i].Data.eb.ToString(culture)}";
             }
-            strLineD[5] += $"\t{SubTasks[i].Data.d.ToString()}";
-            strLineD[6] += $"\t{SubTasks[i].Data.p.ToString()}";
-            strLineD[7] += $"\t{SubTasks[i].Data.h.ToString()}";
+            strLineD[5] += $"\t{SubTasks[i].Data.d.ToString(culture)}";
+            strLineD[6] += $"\t{SubTasks[i].Data.p.ToString(culture)}";
+            strLineD[7] += $"\t{SubTasks[i].Data.h.ToString(culture)}";
 
-            strLineF[0] += $"\t{strRows[IndexCOSI == -1 ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString()}";
-            strLineF[1] += $"\t{SubTasks[i].Factors.IM.ToString("0.####")}";
-            strLineF[2] += $"\t{SubTasks[i].Factors.EM.ToString("0.####")}";
+            strLineF[0] += $"\t{strRows[IndexCOSI == -1 ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
+            strLineF[1] += $"\t{SubTasks[i].Factors.IM.ToString("0.####", culture)}";
+            strLineF[2] += $"\t{SubTasks[i].Factors.EM.ToString("0.####", culture)}";
             if (IndexCOSI != -1)
             {
-                strLineF[3] += $"\t{SubTasks[i].Factors.EMa.ToString()}";
-                strLineF[4] += $"\t{SubTasks[i].Factors.EMb.ToString()}";
+                strLineF[3] += $"\t{SubTasks[i].Factors.EMa.ToString(culture)}";
+                strLineF[4] += $"\t{SubTasks[i].Factors.EMb.ToString(culture)}";
             }
-            strLineF[5] += $"\t{SubTasks[i].Factors.DM.ToString("0.####")}";
-            strLineF[6] += $"\t{SubTasks[i].Factors.PM.ToString("0.####")}";
-            strLineF[7] += $"\t{SubTasks[i].Factors.HM.ToString("0.####")}";
-            strLineF[8] += $"\t{SubTasks[i].IndexRSI.ToString("0.####")}";
+            strLineF[5] += $"\t{SubTasks[i].Factors.DM.ToString("0.####", culture)}";
+            strLineF[6] += $"\t{SubTasks[i].Factors.PM.ToString("0.####", culture)}";
+            strLineF[7] += $"\t{SubTasks[i].Factors.HM.ToString("0.####", culture)}";
+            strLineF[8] += $"\t{SubTasks[i].IndexRSI.ToString("0.####", culture)}";
             if (IndexCOSI != -1)
-                strLineF[9] += $"\t{(Order[i] + 1).ToString("0.####")}";
+                strLineF[9] += $"\t{(Order[i] + 1).ToString("0.####", culture)}";
         }
 
         strResult.Append(strRows[2] + System.Environment.NewLine + System.Environment.NewLine);
@@ -149,13 +152,13 @@ public class TaskModel
 
             for (int i = 0; i < SubTasks.Length; i++)
             {
-                strEqR += $"RSI({(char)('A' + i)}) = ";
-                strEqR += $"{SubTasks[i].Factors.IM.ToString("0.####")} * ";
-                strEqR += $"{SubTasks[i].Factors.EM.ToString("0.####")} * ";
-                strEqR += $"{SubTasks[i].Factors.DM.ToString("0.####")} * ";
-                strEqR += $"{SubTasks[i].Factors.PM.ToString("0.####")} * ";
-                strEqR += $"{SubTasks[i].Factors.HM.ToString("0.####")} = ";
-                strEqR += $"{SubTasks[i].IndexRSI.ToString("0.####")}";
+                strEqR += $"RSI({((char)('A' + i)).ToString(culture)}) = ";
+                strEqR += $"{SubTasks[i].Factors.IM.ToString("0.####", culture)} * ";
+                strEqR += $"{SubTasks[i].Factors.EM.ToString("0.####", culture)} * ";
+                strEqR += $"{SubTasks[i].Factors.DM.ToString("0.####", culture)} * ";
+                strEqR += $"{SubTasks[i].Factors.PM.ToString("0.####", culture)} * ";
+                strEqR += $"{SubTasks[i].Factors.HM.ToString("0.####", culture)} = ";
+                strEqR += $"{SubTasks[i].IndexRSI.ToString("0.####", culture)}";
             }
 
             //strEqR += $"{System.Environment.NewLine}{System.Environment.NewLine}{strRows[25]} {IndexCOSI.ToString("0.####")}";
@@ -164,19 +167,19 @@ public class TaskModel
         {
             strEqT += $"{strRows[22]}{System.Environment.NewLine}{System.Environment.NewLine}";
             strEqT += $"RSI = IM * EM * DM * PM * HM{System.Environment.NewLine}";
-            strEqT += $"COSI = RSI({((char)('A' + SubTasks[Order[0]].ItemIndex)).ToString()})";
-            strEqR += $"COSI = {SubTasks[Order[0]].IndexRSI.ToString("0.####")}";
+            strEqT += $"COSI = RSI({((char)('A' + SubTasks[Order[0]].ItemIndex)).ToString(culture)})";
+            strEqR += $"COSI = {SubTasks[Order[0]].IndexRSI.ToString("0.####", culture)}";
 
             string strLetter;
             for (int i = 1; i < SubTasks.Length; i++)
             {
-                strLetter = ((char)('A' + SubTasks[Order[i]].ItemIndex)).ToString();
+                strLetter = ((char)('A' + SubTasks[Order[i]].ItemIndex)).ToString(culture);
                 strEqT += $" + RSI({strLetter}) * (EMa({strLetter}) - EMb({strLetter})) / (EM({strLetter}))";
-                strEqR += $" + {SubTasks[Order[i]].IndexRSI.ToString("0.####")} * ({SubTasks[Order[i]].Factors.EMa.ToString("0.####")} - {SubTasks[Order[i]].Factors.EMb.ToString("0.####")}) / {SubTasks[Order[i]].Factors.EM.ToString("0.####")}";
+                strEqR += $" + {SubTasks[Order[i]].IndexRSI.ToString("0.####", culture)} * ({SubTasks[Order[i]].Factors.EMa.ToString("0.####", culture)} - {SubTasks[Order[i]].Factors.EMb.ToString("0.####", culture)}) / {SubTasks[Order[i]].Factors.EM.ToString("0.####", culture)}";
             }
-            strEqR += $" = {IndexCOSI.ToString("0.####")}";
+            strEqR += $" = {IndexCOSI.ToString("0.####", culture)}";
 
-            strEqR += $"{System.Environment.NewLine}{System.Environment.NewLine}{strRows[23]} {IndexCOSI.ToString("0.####")}";
+            strEqR += $"{System.Environment.NewLine}{System.Environment.NewLine}{strRows[23]} {IndexCOSI.ToString("0.####", culture)}";
 
         }
 
@@ -259,13 +262,15 @@ public class Job
     
     public IndexType Model { get; set; } = IndexType.RSI;
 
-    public string ToString(string[] strRows)
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(5000);
+        if (culture is null)
+            culture = System.Globalization.CultureInfo.CurrentCulture;
 
         foreach (TaskModel task in Tasks)
         {
-            strResult.Append(task.ToString(strRows));
+            strResult.Append(task.ToString(strRows, culture));
             strResult.Append(System.Environment.NewLine);
             strResult.Append(System.Environment.NewLine);
         }
@@ -277,35 +282,35 @@ public class Job
 
             for (int i = 0; i < NumberTasks; i++)
             {
-                strLineD[0] += $"\t{strRows[0]} {(char)('A' + i)}";
-                strLineD[1] += $"\t{Tasks[i].h.ToString("0.####")}";
-                strLineD[2] += $"\t{Tasks[i].ha.ToString("0.####")}";
-                strLineD[3] += $"\t{Tasks[i].hb.ToString("0.####")}";
+                strLineD[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+                strLineD[1] += $"\t{Tasks[i].h.ToString("0.####", culture)}";
+                strLineD[2] += $"\t{Tasks[i].ha.ToString("0.####", culture)}";
+                strLineD[3] += $"\t{Tasks[i].hb.ToString("0.####", culture)}";
 
-                strLineF[0] += $"\t{strRows[0]} {(char)('A' + i)}";
-                strLineF[1] += $"\t{Tasks[i].HM.ToString("0.####")}";
-                strLineF[2] += $"\t{Tasks[i].HMa.ToString("0.####")}";
-                strLineF[3] += $"\t{Tasks[i].HMb.ToString("0.####")}";
-                strLineF[4] += $"\t{Tasks[i].IndexCOSI.ToString("0.####")}";
-                strLineF[5] += $"\t{(Order[i] + 1).ToString("0.####")}";
+                strLineF[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+                strLineF[1] += $"\t{Tasks[i].HM.ToString("0.####", culture)}";
+                strLineF[2] += $"\t{Tasks[i].HMa.ToString("0.####", culture)}";
+                strLineF[3] += $"\t{Tasks[i].HMb.ToString("0.####", culture)}";
+                strLineF[4] += $"\t{Tasks[i].IndexCOSI.ToString("0.####", culture)}";
+                strLineF[5] += $"\t{(Order[i] + 1).ToString("0.####", culture)}";
             }
 
             string strEqT = string.Empty;
             string strEqR = string.Empty;
 
             strEqT += string.Concat(strRows[36], System.Environment.NewLine, System.Environment.NewLine);
-            strEqT += string.Concat("CUSI = ", "COSI(", ((char)('A' + Order[0])).ToString(), ")");
-            strEqR += string.Concat("CUSI = ", Tasks[Order[0]].IndexCOSI.ToString("0.####"));
+            strEqT += string.Concat("CUSI = ", "COSI(", ((char)('A' + Order[0])).ToString(culture), ")");
+            strEqR += string.Concat("CUSI = ", Tasks[Order[0]].IndexCOSI.ToString("0.####", culture));
 
             string strLetter;
             for (int i = 1; i < NumberTasks; i++)
             {
-                strLetter = ((char)('A' + Order[i])).ToString();
+                strLetter = ((char)('A' + Order[i])).ToString(culture);
                 strEqT += $" + COSI({strLetter}) * (HMa({strLetter}) - HMb({strLetter})) / (HM({strLetter}))";
-                strEqR += $" + {Tasks[Order[i]].IndexCOSI.ToString("0.####")} * ({Tasks[Order[i]].HMa.ToString("0.####")} - {Tasks[Order[i]].HMb.ToString("0.####")}) / {Tasks[Order[i]].HM.ToString("0.####")}";
+                strEqR += $" + {Tasks[Order[i]].IndexCOSI.ToString("0.####", culture)} * ({Tasks[Order[i]].HMa.ToString("0.####", culture)} - {Tasks[Order[i]].HMb.ToString("0.####", culture)}) / {Tasks[Order[i]].HM.ToString("0.####", culture)}";
             }
-            strEqR += $" = {IndexCUSI.ToString("0.####")}";
-            strEqR += string.Concat(System.Environment.NewLine, System.Environment.NewLine, strRows[37], " ", IndexCUSI.ToString("0.####"));
+            strEqR += $" = {IndexCUSI.ToString("0.####", culture)}";
+            strEqR += string.Concat(System.Environment.NewLine, System.Environment.NewLine, strRows[37], " ", IndexCUSI.ToString("0.####", culture));
 
             strResult.Append(strRows[26]);
             strResult.Append(strLineD[0]);

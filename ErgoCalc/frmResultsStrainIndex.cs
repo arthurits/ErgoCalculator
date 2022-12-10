@@ -1,9 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-
-using System.Text.Json;
+﻿using System.Text.Json;
 
 using ErgoCalc.Models.StrainIndex;
 
@@ -13,6 +8,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultsStrainIndex()
     {
@@ -21,11 +17,19 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsStrainIndex(object? data)
+    public FrmResultsStrainIndex(System.Globalization.CultureInfo culture)
+        :this()
+    {
+        _culture = culture;
+    }
+
+    public FrmResultsStrainIndex(object? data, System.Globalization.CultureInfo culture)
         : this()
     {
         if(data?.GetType() == typeof(Job))
             _job = (Job)data;
+        
+        _culture = culture;
     }
 
     private void frmResultsStrainIndex_Shown(object sender, EventArgs e)
@@ -40,8 +44,6 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     /// </summary>
     private void ShowResults()
     {
-        //splitContainer1.Panel1Collapsed = ((ToolStrip)((frmMain)MdiParent).Controls["toolStripMain"]).Items["toolStripMain_Settings"].Enabled == true ? false : true;
-        // Variable definition
         Boolean error = false;
 
         // Make computations
@@ -63,7 +65,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         // Call the routine that shows the results
         if (error == false)
         {
-            rtbShowResult.Text = _job.ToString(StringResources.StrainIndex_ResultsHeaders);
+            rtbShowResult.Text = _job.ToString(StringResources.StrainIndex_ResultsHeaders, _culture);
             CreatePlots();
             FormatText();
         }
@@ -506,7 +508,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job)
+        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job, _culture)
         {
             MdiParent = this.MdiParent
         };

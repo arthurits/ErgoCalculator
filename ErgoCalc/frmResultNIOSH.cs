@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Text.Json;
-using System.Windows.Forms;
+﻿using System.Text.Json;
 
 using ErgoCalc.Models.Lifting;
 
@@ -11,6 +7,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultNIOSH()
     {
@@ -19,11 +16,19 @@ public partial class FrmResultNIOSH : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(object? data)
+    public FrmResultNIOSH(System.Globalization.CultureInfo culture)
+        : this()
+    {
+        _culture = culture;
+    }
+
+    public FrmResultNIOSH(object? data, System.Globalization.CultureInfo culture)
         : this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
+
+        _culture = culture;
     }
 
     private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
@@ -56,7 +61,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
         // Show results
         //rtbShowResult.Clear();
-        rtbShowResult.Text = _job.ToString(StringResources.NIOSH_ResultsHeaders);
+        rtbShowResult.Text = _job.ToString(StringResources.NIOSH_ResultsHeaders, _culture);
         FormatText();
     }
 
@@ -325,7 +330,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job)
+        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job, _culture)
         {
             MdiParent = this.MdiParent
         };
