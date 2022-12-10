@@ -1,5 +1,11 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.4
+* Multilanguage support added to Liberty Mutual model.
+* Culture formatting to output results.
+* Improved duplicate function.
+* Bug corrected in zoom factor.
+
 ## ErgoCalculator 1.7.3
 * Target .NET 7.
 * Bug corrected when data was edited in composite indexes.
@@ -13,12 +19,12 @@
 * JSON format is used instead of XML to store and retrieve application settings.
 
 ## ErgoCalculator 1.7.1
-* Update ScottPlot to version 4.1.58
+* Update [ScottPlott](https://github.com/ScottPlot/ScottPlot) to version 4.1.58
 * Reading the user-input data in the NIOSH model produced undesired effects in some particular cases.
 
 ## ErgoCalculator 1.7
 * .NET updated to version 6
-* ScottPlot control updated to version 4.1.51
+* [ScottPlott](https://github.com/ScottPlot/ScottPlot) control updated to version 4.1.51
 * Updated splash screen
 
 ## ErgoCalculator 1.6
