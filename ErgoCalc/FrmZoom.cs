@@ -52,6 +52,7 @@ public partial class FrmZoom : Form
     /// <param name="culture">Culture used to display the UI</param>
     private void UpdateUI_Language(System.Globalization.CultureInfo culture)
     {
+        this.Text = StringResources.FormZoom;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.lblZoomFactor.Text = StringResources.LblZoomFactor;

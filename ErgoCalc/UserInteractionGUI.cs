@@ -329,7 +329,8 @@ partial class FrmMain
         if (frmZoom.ShowDialog(this) == DialogResult.OK)
         {
             FormatRichText(ActiveMdiChild?.ActiveControl, zoomFactor: frmZoom.ZoomLevel);
-            this.statusStripLabelZoom.Text = $"{frmZoom.ZoomLevel.ToString("0.##")}x";
+            _settings.TextZoom = frmZoom.ZoomLevel;
+            this.statusStripLabelZoom.Text = ($"{((float)_settings.TextZoom) / 100:0.##}x").ToString(_settings.AppCulture);
         }
     }
 
