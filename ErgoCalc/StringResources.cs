@@ -335,4 +335,124 @@ public static class StringResources
         StrainIndex_CUSIequation,
         StrainIndex_CUSI
     };
+
+    // Liberty Mutual
+    public static string LibertyMutual_Data => StringRM.GetString("strLibertyMutual_Data", Culture) ?? "Initial data";
+    public static string LibertyMutual_DH => StringRM.GetString("strLibertyMutual_DH", Culture) ?? "Horizontal distance (DH)";
+    public static string LibertyMutual_DV => StringRM.GetString("strLibertyMutual_DV", Culture) ?? "Vertical distance (DV)";
+    public static string LibertyMutual_F => StringRM.GetString("strLibertyMutual_F", Culture) ?? "Frequency factor (F)";
+    public static string LibertyMutual_Frequency => StringRM.GetString("strLibertyMutual_Frequency", Culture) ?? "Frequency (actions/min)";
+    public static string LibertyMutual_H => StringRM.GetString("strLibertyMutual_H", Culture) ?? "Horizontal reach (H)";
+    public static string LibertyMutual_HandlingType => StringRM.GetString("strLibertyMutual_HandlingType", Culture) ?? "Manual handling type";
+    public static string LibertyMutual_HorizontalDistance => StringRM.GetString("strLibertyMutual_HorizontalDistance", Culture) ?? "Horizontal distance DH (m)";
+    public static string LibertyMutual_HorizontalReach => StringRM.GetString("strLibertyMutual_HorizontalReach", Culture) ?? "Horizontal reach H (m)";
+    public static string LibertyMutual_InitialCV => StringRM.GetString("strLibertyMutual_InitialCV", Culture) ?? "CV initial force";
+    public static string LibertyMutual_InitialMAL50 => StringRM.GetString("strLibertyMutual_InitialMAL50", Culture) ?? "MAL initial (kgf) for 50%";
+    public static string LibertyMutual_InitialMAL75 => StringRM.GetString("strLibertyMutual_InitialMAL75", Culture) ?? "MAL initial (kgf) for 75%";
+    public static string LibertyMutual_InitialMAL90 => StringRM.GetString("strLibertyMutual_InitialMAL90", Culture) ?? "MAL initial (kgf) for 90%";
+    public static string LibertyMutual_LC => StringRM.GetString("strLibertyMutual_LC", Culture) ?? "Reference load (LC)";
+    public static string LibertyMutual_MAL => StringRM.GetString("strLibertyMutual_MAL", Culture) ?? "Maximum acceptable limit";
+    public static string LibertyMutual_Multipliers => StringRM.GetString("strLibertyMutual_Multipliers", Culture) ?? "Scale factors";
+    public static string LibertyMutual_Results => StringRM.GetString("strLibertyMutual_Results", Culture) ?? "These are the results from the Liberty Mutual manual materials handling equations";
+    public static string LibertyMutual_Sex => StringRM.GetString("strLibertyMutual_Sex", Culture) ?? "Sex";
+    public static string LibertyMutual_SustainedCV => StringRM.GetString("strLibertyMutual_SustainedCV", Culture) ?? "CV sustained force";
+    public static string LibertyMutual_SustainedDH => StringRM.GetString("strLibertyMutual_SustainedDH", Culture) ?? "Sustained DH factor";
+    public static string LibertyMutual_SustainedF => StringRM.GetString("strLibertyMutual_SustainedF", Culture) ?? "Sustained F factor";
+    public static string LibertyMutual_SustainedLC => StringRM.GetString("strLibertyMutual_SustainedLC", Culture) ?? "Sustained LC factor";
+    public static string LibertyMutual_SustainedMAL50 => StringRM.GetString("strLibertyMutual_SustainedMAL50", Culture) ?? "MAL sustained (kgf) for 50%";
+    public static string LibertyMutual_SustainedMAL75 => StringRM.GetString("strLibertyMutual_SustainedMAL75", Culture) ?? "MAL sustained (kgf) for 75%";
+    public static string LibertyMutual_SustainedMAL90 => StringRM.GetString("strLibertyMutual_SustainedMAL90", Culture) ?? "MAL sustained (kgf) for 90%";
+    public static string LibertyMutual_SustainedV => StringRM.GetString("strLibertyMutual_SustainedV", Culture) ?? "Sustained V factor";
+    public static string LibertyMutual_V => StringRM.GetString("strLibertyMutual_V", Culture) ?? "Vertical height (V)";
+    public static string LibertyMutual_VerticalDistance => StringRM.GetString("strLibertyMutual_VerticalDistance", Culture) ?? "Vertical distance DV (m)";
+    public static string LibertyMutual_VerticalHeight => StringRM.GetString("strLibertyMutual_VerticalHeight", Culture) ?? "Vertical height V (m)";
+    public static string LibertyMutual_VerticalRange => StringRM.GetString("strLibertyMutual_VerticalRange", Culture) ?? "Vertical range VRM (m)";
+    public static string LibertyMutual_VRM => StringRM.GetString("strLibertyMutual_VRM", Culture) ?? "Vertical range (VRM)";
+    public static string LibertyMutual_WeightCV => StringRM.GetString("strLibertyMutual_WeightCV", Culture) ?? "CV weight";
+    public static string LibertyMutual_WeightMAL50 => StringRM.GetString("strLibertyMutual_WeightMAL50", Culture) ?? "MAL weight (kg) for 50%";
+    public static string LibertyMutual_WeightMAL75 => StringRM.GetString("strLibertyMutual_WeightMAL75", Culture) ?? "MAL weight (kg) for 75%";
+    public static string LibertyMutual_WeightMAL90 => StringRM.GetString("strLibertyMutual_WeightMAL90", Culture) ?? "MAL weight (kg) for 90%";
+    public static string LibertyMutual_Empty => StringRM.GetString("strLibertyMutual_Empty", Culture) ?? "------";
+
+    public static string[] LibertyMutual_RowHeaders => new[]
+    {
+        LibertyMutual_Data,
+        LibertyMutual_HandlingType,
+        LibertyMutual_HorizontalReach,
+        LibertyMutual_VerticalRange,
+        LibertyMutual_HorizontalDistance,
+        LibertyMutual_VerticalDistance,
+        LibertyMutual_VerticalHeight,
+        LibertyMutual_Frequency,
+        LibertyMutual_Sex,
+        LibertyMutual_Multipliers,
+        LibertyMutual_LC,
+        LibertyMutual_H,
+        LibertyMutual_VRM,
+        LibertyMutual_DH,
+        LibertyMutual_DV,
+        LibertyMutual_V,
+        LibertyMutual_F,
+        LibertyMutual_SustainedLC,
+        LibertyMutual_SustainedDH,
+        LibertyMutual_SustainedV,
+        LibertyMutual_SustainedF,
+        LibertyMutual_MAL,
+        LibertyMutual_InitialCV,
+        LibertyMutual_InitialMAL50,
+        LibertyMutual_InitialMAL75,
+        LibertyMutual_InitialMAL90,
+        LibertyMutual_SustainedCV,
+        LibertyMutual_SustainedMAL50,
+        LibertyMutual_SustainedMAL75,
+        LibertyMutual_SustainedMAL90,
+        LibertyMutual_WeightCV,
+        LibertyMutual_WeightMAL50,
+        LibertyMutual_WeightMAL75,
+        LibertyMutual_WeightMAL90
+    };
+    public static string[] LibertyMutual_ColumnHeaders => new[]
+    {
+        Task
+    };
+    public static string[] LibertyMutual_ResultsHeaders => new[]
+    {
+        Task,                               // 0
+        LibertyMutual_Results,
+        LibertyMutual_Data,
+        LibertyMutual_HandlingType,
+        LibertyMutual_HorizontalReach,
+        LibertyMutual_VerticalRange,        // 5
+        LibertyMutual_HorizontalDistance,
+        LibertyMutual_VerticalDistance,
+        LibertyMutual_VerticalHeight,
+        LibertyMutual_Frequency,
+        LibertyMutual_Sex,                  // 10
+        LibertyMutual_Multipliers,
+        LibertyMutual_LC,
+        LibertyMutual_H,
+        LibertyMutual_VRM,
+        LibertyMutual_DH,                   // 15
+        LibertyMutual_DV,
+        LibertyMutual_V,
+        LibertyMutual_F,
+        LibertyMutual_SustainedLC,
+        LibertyMutual_SustainedDH,          // 20
+        LibertyMutual_SustainedV,
+        LibertyMutual_SustainedF,
+        LibertyMutual_MAL,
+        LibertyMutual_InitialCV,
+        LibertyMutual_InitialMAL50,         // 25
+        LibertyMutual_InitialMAL75,
+        LibertyMutual_InitialMAL90,
+        LibertyMutual_SustainedCV,
+        LibertyMutual_SustainedMAL50,
+        LibertyMutual_SustainedMAL75,       // 30
+        LibertyMutual_SustainedMAL90,
+        LibertyMutual_WeightCV,
+        LibertyMutual_WeightMAL50,
+        LibertyMutual_WeightMAL75,
+        LibertyMutual_WeightMAL90,          // 35
+        LibertyMutual_Empty
+    };
 }

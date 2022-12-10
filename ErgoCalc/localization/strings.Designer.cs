@@ -368,6 +368,330 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initial data.
+        /// </summary>
+        internal static string strLibertyMutual_Data {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal distance (DH).
+        /// </summary>
+        internal static string strLibertyMutual_DH {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_DH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical distance (DV).
+        /// </summary>
+        internal static string strLibertyMutual_DV {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_DV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ------.
+        /// </summary>
+        internal static string strLibertyMutual_Empty {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency factor (F).
+        /// </summary>
+        internal static string strLibertyMutual_F {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_F", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency (actions/min).
+        /// </summary>
+        internal static string strLibertyMutual_Frequency {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_Frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal reach (H).
+        /// </summary>
+        internal static string strLibertyMutual_H {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_H", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual handling type.
+        /// </summary>
+        internal static string strLibertyMutual_HandlingType {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_HandlingType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal distance DH (m).
+        /// </summary>
+        internal static string strLibertyMutual_HorizontalDistance {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_HorizontalDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal reach H (m).
+        /// </summary>
+        internal static string strLibertyMutual_HorizontalReach {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_HorizontalReach", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CV initial force.
+        /// </summary>
+        internal static string strLibertyMutual_InitialCV {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_InitialCV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL initial (kgf) for 50%.
+        /// </summary>
+        internal static string strLibertyMutual_InitialMAL50 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_InitialMAL50", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL initial (kgf) for 75%.
+        /// </summary>
+        internal static string strLibertyMutual_InitialMAL75 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_InitialMAL75", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL initial (kgf) for 90%.
+        /// </summary>
+        internal static string strLibertyMutual_InitialMAL90 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_InitialMAL90", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reference load (LC).
+        /// </summary>
+        internal static string strLibertyMutual_LC {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_LC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum acceptable limit.
+        /// </summary>
+        internal static string strLibertyMutual_MAL {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_MAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scale factors.
+        /// </summary>
+        internal static string strLibertyMutual_Multipliers {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_Multipliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the results from the Liberty Mutual manual materials handling equations:.
+        /// </summary>
+        internal static string strLibertyMutual_Results {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sex.
+        /// </summary>
+        internal static string strLibertyMutual_Sex {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_Sex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CV sustained force.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedCV {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedCV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sustained DH factor.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedDH {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedDH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sustained F factor.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedF {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sustained LC factor.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedLC {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedLC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL sustained (kgf) for 50%.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedMAL50 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedMAL50", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL sustained (kgf) for 75%.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedMAL75 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedMAL75", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL sustained (kgf) for 90%.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedMAL90 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedMAL90", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sustained V factor.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedV {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical height (V).
+        /// </summary>
+        internal static string strLibertyMutual_V {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_V", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical distance DV (m).
+        /// </summary>
+        internal static string strLibertyMutual_VerticalDistance {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_VerticalDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical height V (m).
+        /// </summary>
+        internal static string strLibertyMutual_VerticalHeight {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_VerticalHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical range VRM (m).
+        /// </summary>
+        internal static string strLibertyMutual_VerticalRange {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_VerticalRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical range (VRM).
+        /// </summary>
+        internal static string strLibertyMutual_VRM {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_VRM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CV weight.
+        /// </summary>
+        internal static string strLibertyMutual_WeightCV {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_WeightCV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL weight (kg) for 50%.
+        /// </summary>
+        internal static string strLibertyMutual_WeightMAL50 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_WeightMAL50", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL weight (kg) for 75%.
+        /// </summary>
+        internal static string strLibertyMutual_WeightMAL75 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_WeightMAL75", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAL weight (kg) for 90%.
+        /// </summary>
+        internal static string strLibertyMutual_WeightMAL90 {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_WeightMAL90", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;File.
         /// </summary>
         internal static string strMenuMainFile {

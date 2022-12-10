@@ -220,6 +220,114 @@ los campos a sus valores por defecto?</value>
   <data name="strLblZoom" xml:space="preserve">
     <value>Establecer zoom</value>
   </data>
+  <data name="strLibertyMutual_Data" xml:space="preserve">
+    <value>Datos iniciales</value>
+  </data>
+  <data name="strLibertyMutual_DH" xml:space="preserve">
+    <value>Factor de distancia horizontal (DH)</value>
+  </data>
+  <data name="strLibertyMutual_DV" xml:space="preserve">
+    <value>Factor de distancia vertical (DV)</value>
+  </data>
+  <data name="strLibertyMutual_Empty" xml:space="preserve">
+    <value>------</value>
+  </data>
+  <data name="strLibertyMutual_F" xml:space="preserve">
+    <value>Factor de frecuencia (F)</value>
+  </data>
+  <data name="strLibertyMutual_Frequency" xml:space="preserve">
+    <value>Frecuencia (acciones/min)</value>
+  </data>
+  <data name="strLibertyMutual_H" xml:space="preserve">
+    <value>Factor de alcance horizontal (H)</value>
+  </data>
+  <data name="strLibertyMutual_HandlingType" xml:space="preserve">
+    <value>Tipo de manipulación</value>
+  </data>
+  <data name="strLibertyMutual_HorizontalDistance" xml:space="preserve">
+    <value>Distancia horizontal DH (m)</value>
+  </data>
+  <data name="strLibertyMutual_HorizontalReach" xml:space="preserve">
+    <value>Alcance horizontal H (m)</value>
+  </data>
+  <data name="strLibertyMutual_InitialCV" xml:space="preserve">
+    <value>CV de la fuerza inicial</value>
+  </data>
+  <data name="strLibertyMutual_InitialMAL50" xml:space="preserve">
+    <value>MAL inicial (kgf) para el 50%</value>
+  </data>
+  <data name="strLibertyMutual_InitialMAL75" xml:space="preserve">
+    <value>MAL inicial (kgf) para el 75%</value>
+  </data>
+  <data name="strLibertyMutual_InitialMAL90" xml:space="preserve">
+    <value>MAL inicial (kgf) para el 90%</value>
+  </data>
+  <data name="strLibertyMutual_LC" xml:space="preserve">
+    <value>Constante de carga (LC)</value>
+  </data>
+  <data name="strLibertyMutual_MAL" xml:space="preserve">
+    <value>Límite máximo aceptable (MAL)</value>
+  </data>
+  <data name="strLibertyMutual_Multipliers" xml:space="preserve">
+    <value>Factores multiplicadores</value>
+  </data>
+  <data name="strLibertyMutual_Results" xml:space="preserve">
+    <value>Estos son los resultados ontenidos aplicando las ecuaciones de manipulación de cargas de «Liberty Mutual»:</value>
+  </data>
+  <data name="strLibertyMutual_Sex" xml:space="preserve">
+    <value>Sexo</value>
+  </data>
+  <data name="strLibertyMutual_SustainedCV" xml:space="preserve">
+    <value>CV de la fuerza sostenida</value>
+  </data>
+  <data name="strLibertyMutual_SustainedDH" xml:space="preserve">
+    <value>Factor DH mantenido</value>
+  </data>
+  <data name="strLibertyMutual_SustainedF" xml:space="preserve">
+    <value>Factor F mantenido</value>
+  </data>
+  <data name="strLibertyMutual_SustainedLC" xml:space="preserve">
+    <value>Factor LC mantenido</value>
+  </data>
+  <data name="strLibertyMutual_SustainedMAL50" xml:space="preserve">
+    <value>MAL mantenido (kgf) para el 50%</value>
+  </data>
+  <data name="strLibertyMutual_SustainedMAL75" xml:space="preserve">
+    <value>MAL mantenido (kgf) para el 75%</value>
+  </data>
+  <data name="strLibertyMutual_SustainedMAL90" xml:space="preserve">
+    <value>MAL mantenido (kgf) para el 90%</value>
+  </data>
+  <data name="strLibertyMutual_SustainedV" xml:space="preserve">
+    <value>Factor V mantenido</value>
+  </data>
+  <data name="strLibertyMutual_V" xml:space="preserve">
+    <value>Factor de altura vertical (V)</value>
+  </data>
+  <data name="strLibertyMutual_VerticalDistance" xml:space="preserve">
+    <value>Distancia vertical DV (m)</value>
+  </data>
+  <data name="strLibertyMutual_VerticalHeight" xml:space="preserve">
+    <value>Altura vertical V (m)</value>
+  </data>
+  <data name="strLibertyMutual_VerticalRange" xml:space="preserve">
+    <value>Rango vertical VRM (m)</value>
+  </data>
+  <data name="strLibertyMutual_VRM" xml:space="preserve">
+    <value>Factor de rango vertical (VRM)</value>
+  </data>
+  <data name="strLibertyMutual_WeightCV" xml:space="preserve">
+    <value>CV del peso</value>
+  </data>
+  <data name="strLibertyMutual_WeightMAL50" xml:space="preserve">
+    <value>MAL del peso (kg) para el 50%</value>
+  </data>
+  <data name="strLibertyMutual_WeightMAL75" xml:space="preserve">
+    <value>MAL del peso (kg) para el 75%</value>
+  </data>
+  <data name="strLibertyMutual_WeightMAL90" xml:space="preserve">
+    <value>MAL del peso (kg) para el 90%</value>
+  </data>
   <data name="strMenuMainFile" xml:space="preserve">
     <value>&amp;Archivo</value>
   </data>
@@ -285,13 +393,13 @@ salir de la aplicación?</value>
     <value>Factor de frecuencia B (FMb):</value>
   </data>
   <data name="strNIOSH_Frequency" xml:space="preserve">
-    <value>Frecuencia (acción/min):</value>
+    <value>Frecuencia (acciones/min):</value>
   </data>
   <data name="strNIOSH_FrequencyA" xml:space="preserve">
-    <value>Frecuencia A (acción/min):</value>
+    <value>Frecuencia A (acciones/min):</value>
   </data>
   <data name="strNIOSH_FrequencyB" xml:space="preserve">
-    <value>Frecuencia B (acción/min):</value>
+    <value>Frecuencia B (acciones/min):</value>
   </data>
   <data name="strNIOSH_HM" xml:space="preserve">
     <value>Factor horizontal (HM):</value>

@@ -220,6 +220,114 @@ to their default values?</value>
   <data name="strLblZoom" xml:space="preserve">
     <value>Set zoom level</value>
   </data>
+  <data name="strLibertyMutual_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="strLibertyMutual_DH" xml:space="preserve">
+    <value>Horizontal distance (DH)</value>
+  </data>
+  <data name="strLibertyMutual_DV" xml:space="preserve">
+    <value>Vertical distance (DV)</value>
+  </data>
+  <data name="strLibertyMutual_Empty" xml:space="preserve">
+    <value>------</value>
+  </data>
+  <data name="strLibertyMutual_F" xml:space="preserve">
+    <value>Frequency factor (F)</value>
+  </data>
+  <data name="strLibertyMutual_Frequency" xml:space="preserve">
+    <value>Frequency (actions/min)</value>
+  </data>
+  <data name="strLibertyMutual_H" xml:space="preserve">
+    <value>Horizontal reach (H)</value>
+  </data>
+  <data name="strLibertyMutual_HandlingType" xml:space="preserve">
+    <value>Manual handling type</value>
+  </data>
+  <data name="strLibertyMutual_HorizontalDistance" xml:space="preserve">
+    <value>Horizontal distance DH (m)</value>
+  </data>
+  <data name="strLibertyMutual_HorizontalReach" xml:space="preserve">
+    <value>Horizontal reach H (m)</value>
+  </data>
+  <data name="strLibertyMutual_InitialCV" xml:space="preserve">
+    <value>CV initial force</value>
+  </data>
+  <data name="strLibertyMutual_InitialMAL50" xml:space="preserve">
+    <value>MAL initial (kgf) for 50%</value>
+  </data>
+  <data name="strLibertyMutual_InitialMAL75" xml:space="preserve">
+    <value>MAL initial (kgf) for 75%</value>
+  </data>
+  <data name="strLibertyMutual_InitialMAL90" xml:space="preserve">
+    <value>MAL initial (kgf) for 90%</value>
+  </data>
+  <data name="strLibertyMutual_LC" xml:space="preserve">
+    <value>Reference load (LC)</value>
+  </data>
+  <data name="strLibertyMutual_MAL" xml:space="preserve">
+    <value>Maximum acceptable limit</value>
+  </data>
+  <data name="strLibertyMutual_Multipliers" xml:space="preserve">
+    <value>Scale factors</value>
+  </data>
+  <data name="strLibertyMutual_Results" xml:space="preserve">
+    <value>These are the results from the Liberty Mutual manual materials handling equations:</value>
+  </data>
+  <data name="strLibertyMutual_Sex" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="strLibertyMutual_SustainedCV" xml:space="preserve">
+    <value>CV sustained force</value>
+  </data>
+  <data name="strLibertyMutual_SustainedDH" xml:space="preserve">
+    <value>Sustained DH factor</value>
+  </data>
+  <data name="strLibertyMutual_SustainedF" xml:space="preserve">
+    <value>Sustained F factor</value>
+  </data>
+  <data name="strLibertyMutual_SustainedLC" xml:space="preserve">
+    <value>Sustained LC factor</value>
+  </data>
+  <data name="strLibertyMutual_SustainedMAL50" xml:space="preserve">
+    <value>MAL sustained (kgf) for 50%</value>
+  </data>
+  <data name="strLibertyMutual_SustainedMAL75" xml:space="preserve">
+    <value>MAL sustained (kgf) for 75%</value>
+  </data>
+  <data name="strLibertyMutual_SustainedMAL90" xml:space="preserve">
+    <value>MAL sustained (kgf) for 90%</value>
+  </data>
+  <data name="strLibertyMutual_SustainedV" xml:space="preserve">
+    <value>Sustained V factor</value>
+  </data>
+  <data name="strLibertyMutual_V" xml:space="preserve">
+    <value>Vertical height (V)</value>
+  </data>
+  <data name="strLibertyMutual_VerticalDistance" xml:space="preserve">
+    <value>Vertical distance DV (m)</value>
+  </data>
+  <data name="strLibertyMutual_VerticalHeight" xml:space="preserve">
+    <value>Vertical height V (m)</value>
+  </data>
+  <data name="strLibertyMutual_VerticalRange" xml:space="preserve">
+    <value>Vertical range VRM (m)</value>
+  </data>
+  <data name="strLibertyMutual_VRM" xml:space="preserve">
+    <value>Vertical range (VRM)</value>
+  </data>
+  <data name="strLibertyMutual_WeightCV" xml:space="preserve">
+    <value>CV weight</value>
+  </data>
+  <data name="strLibertyMutual_WeightMAL50" xml:space="preserve">
+    <value>MAL weight (kg) for 50%</value>
+  </data>
+  <data name="strLibertyMutual_WeightMAL75" xml:space="preserve">
+    <value>MAL weight (kg) for 75%</value>
+  </data>
+  <data name="strLibertyMutual_WeightMAL90" xml:space="preserve">
+    <value>MAL weight (kg) for 90%</value>
+  </data>
   <data name="strMenuMainFile" xml:space="preserve">
     <value>&amp;File</value>
   </data>
