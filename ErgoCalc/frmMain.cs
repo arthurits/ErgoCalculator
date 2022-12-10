@@ -201,9 +201,9 @@ public partial class FrmMain : Form
         }
 
         if (nCount > 0)
-            frm.Text = strTextTitle + $" ({nCount})"+ strText;
+            frm.Text = $"{strTextTitle} ({nCount}){strText}";
         else
-            frm.Text = strTextTitle + strText;
+            frm.Text = $"{strTextTitle}{strText}";
     }
 
     private void UpdateUI_Language()

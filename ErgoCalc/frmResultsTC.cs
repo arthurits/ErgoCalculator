@@ -25,6 +25,11 @@ public partial class FrmResultsTC : Form, IChildResults
             _job = (Job)data;
     }
 
+    private void FrmResultsTC_Activated(object sender, EventArgs e)
+    {
+        this.ActiveControl = this.rtbShowResult;
+    }
+
     private void frmResultsTC_Shown(object sender, EventArgs e)
     {
         ShowResults();
@@ -220,6 +225,15 @@ public partial class FrmResultsTC : Form, IChildResults
         {
             MdiParent = this.MdiParent
         };
+
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsTC, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
 
         frmResults.Show();
     }

@@ -7,6 +7,7 @@ namespace ErgoCalc;
 public partial class FrmResultsLiberty : Form, IChildResults
 {
     private Job _job = new();
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public ToolStrip ChildToolStrip { get => null; set { } }
 
@@ -19,12 +20,24 @@ public partial class FrmResultsLiberty : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
+    public FrmResultsLiberty(System.Globalization.CultureInfo culture)
+        : this()
+    {
+        _culture = culture;
+    }
 
-    public FrmResultsLiberty(object? data)
+    public FrmResultsLiberty(object? data, System.Globalization.CultureInfo culture)
         : this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
+
+        _culture = culture;
+    }
+
+    private void FrmResultsLiberty_Activated(object sender, EventArgs e)
+    {
+        this.ActiveControl = this.rtbShowResult;
     }
 
     private void frmResultsLiberty_Shown(object sender, EventArgs e)
@@ -70,7 +83,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
         // Call the routine that shows the results
         if (result == true)
         {
-            rtbShowResult.Text = _job.ToString();
+            rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, _culture);
             FormatText();
             ClearPlots();
             CreatePlots();
@@ -402,19 +415,25 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public void FormatText()
     {
+        // Set the control's tabs
+        rtbShowResult.SelectAll();
+        SetRichTextBoxTabs();
+        rtbShowResult.DeselectAll();
+
+        // Formats (font, size, and style) the text
         int nStart = 0, nEnd = 0;
 
         while (true)
         {
             // Underline
-            nStart = rtbShowResult.Find("Initial data", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.LibertyMutual_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
             rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
 
             // Underline
-            nStart = rtbShowResult.Find("Scale factors", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.LibertyMutual_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
@@ -425,12 +444,23 @@ public partial class FrmResultsLiberty : Form, IChildResults
         nStart = 0;
         while (true)
         {
-            nStart = rtbShowResult.Find("Maximum acceptable limit", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.LibertyMutual_MAL, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             //nEnd = rtbShowResult.Text.Length;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
             rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size, FontStyle.Underline | FontStyle.Bold);
+        }
+
+        // Subindex in kgf
+        nStart = 0;
+        while (true)
+        {
+            nStart = rtbShowResult.Find("(kgf)", nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            rtbShowResult.Select(nStart + 3, 1);
+            rtbShowResult.SelectionCharOffset = -(int)(rtbShowResult.Font.Size / 2);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, (float)(rtbShowResult.Font.Size * 0.8));
         }
 
         // Set the cursor at the beginning of the text
@@ -456,13 +486,73 @@ public partial class FrmResultsLiberty : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job)
+        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job, _culture)
         {
-            MdiParent = this.MdiParent
+            MdiParent = this.MdiParent,
         };
+        
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsLiberty, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor= this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
 
         frmResults.Show();
     }
     #endregion IChildResults inferface
+
+    /// <summary>
+    /// Sets the tabs in the RichTextBox control. It assumes the corresponding text is already selected.
+    /// </summary>
+    private void SetRichTextBoxTabs()
+    {
+        (int rowMax, int rowTab) = ComputeTabSpace(StringResources.LibertyMutual_RowHeaders);
+        var columnHeaders = StringResources.LibertyMutual_ColumnHeaders;
+        for (int i = 0; i < columnHeaders.Length; i++)
+            columnHeaders[i] += " A";
+        (int colMax, int colTab) = ComputeTabSpace(columnHeaders);
+        int tab = Math.Min(rowTab, colTab);
+
+        int[] tabs = new int[_job.NumberTasks];
+        for (int i = 0; i < tabs.Length; i++)
+        {
+            if (i == 0)
+                tabs[i] = rowMax + tab;
+            else
+                tabs[i] = tabs[i - 1] + colMax + tab;
+        }
+        rtbShowResult.SelectionTabs = tabs;
+
+    }
+
+    /// <summary>
+    /// Computes the tabs for the RichTextBox control
+    /// </summary>
+    /// <param name="strings">Array of strings that will be measured. The greatest measure is used to compute the tab space</param>
+    /// <param name="tabFactor">Factor (percentage) of the maximum measure to be used as tab space</param>
+    /// <param name="tabMinSpace">Minimum tab space in pixels. Default value is 10</param>
+    /// <returns></returns>
+    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double tabFactor = 0.1, int tabMinSpace = 10)
+    {
+        SizeF size;
+        int nWidth = 0;
+        int tabSpace;
+
+        using var g = rtbShowResult.CreateGraphics();
+        foreach (string strRow in strings)
+        {
+            size = g.MeasureString(strRow, rtbShowResult.Font);
+            if (size.Width > nWidth)
+                nWidth = (int)size.Width;
+        }
+
+        tabSpace = (int)(nWidth * tabFactor);
+        tabSpace = tabSpace > tabMinSpace ? tabSpace : tabMinSpace;
+
+        return (nWidth, tabSpace);
+    }
 
 }

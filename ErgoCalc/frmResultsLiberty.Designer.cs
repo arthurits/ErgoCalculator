@@ -99,7 +99,7 @@ namespace ErgoCalc
             this.formsPlot1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.formsPlot1.Name = "formsPlot1";
             this.formsPlot1.Size = new System.Drawing.Size(197, 192);
-            this.formsPlot1.TabIndex = 3;
+            this.formsPlot1.TabIndex = 0;
             this.formsPlot1.TabStop = false;
             // 
             // formsPlot3
@@ -182,6 +182,7 @@ namespace ErgoCalc
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "FrmResultsLiberty";
             this.Text = "LM-MMH results";
+            this.Activated += new System.EventHandler(this.FrmResultsLiberty_Activated);
             this.Shown += new System.EventHandler(this.frmResultsLiberty_Shown);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);

@@ -50,7 +50,7 @@ partial class FrmMain
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
                     ModelType.ThermalComfort => new FrmResultsTC(frm.GetData),
-                    ModelType.LibertyMutual => new FrmResultsLiberty(frm.GetData),
+                    ModelType.LibertyMutual => new FrmResultsLiberty(frm.GetData, _settings.AppCulture),
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
@@ -122,7 +122,7 @@ partial class FrmMain
                 "NIOSH lifting equation" => new FrmResultNIOSH(_settings.AppCulture),
                 "Strain index" => new FrmResultsStrainIndex(_settings.AppCulture),
                 "Thermal comfort model" => new FrmResultsTC(),
-                "LM-MMH model" => new FrmResultsLiberty(),
+                "LM-MMH model" => new FrmResultsLiberty(_settings.AppCulture),
                 "Comprehensive lifting model" => new FrmResultsCLM(),
                 _ => default
             };

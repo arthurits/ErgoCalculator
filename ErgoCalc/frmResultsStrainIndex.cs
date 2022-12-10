@@ -512,7 +512,16 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         {
             MdiParent = this.MdiParent
         };
-        
+
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsStrainIndex, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
+
         frmResults.Show();
     }
 

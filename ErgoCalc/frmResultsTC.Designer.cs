@@ -146,6 +146,7 @@ namespace ErgoCalc
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "FrmResultsTC";
             this.Text = "Thermal comfort results";
+            this.Activated += new System.EventHandler(this.FrmResultsTC_Activated);
             this.Shown += new System.EventHandler(this.frmResultsTC_Shown);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);

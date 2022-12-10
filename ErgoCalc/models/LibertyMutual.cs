@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace ErgoCalc.Models.LibertyMutual;
 
@@ -140,176 +141,216 @@ public class Job
     public ModelLiberty[] Tasks { get; set; } = Array.Empty<ModelLiberty>();
     public int NumberTasks { get; set; } = 0;
 
-    public override string ToString()
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         // https://stackoverflow.com/questions/26235759/how-to-format-a-double-with-fixed-number-of-significant-digits-regardless-of-th
         // https://stackoverflow.com/questions/33401356/formatting-text-with-padding-does-not-line-up-in-c-sharp
-        string strResult;
-
-        string strGridHeader = "Task ";
-        string[] strLineD = new string[9];
-        string[] strLineF = new string[12];
+        StringBuilder strResult = new(2200);
+        string[] strLineD = new String[9];
+        string[] strLineF = new String[12];
         string[] strThresholds = new string[13];
 
-        strLineD[0] = string.Concat(System.Environment.NewLine, "Initial data", "\t\t");
-        strLineD[1] = string.Concat(System.Environment.NewLine, "Manual handling type", "\t\t");
-        strLineD[2] = string.Concat(System.Environment.NewLine, "Horizontal reach H (m)", "\t\t");
-        strLineD[3] = string.Concat(System.Environment.NewLine, "Vertical range VRM (m)", "\t\t");
-        strLineD[4] = string.Concat(System.Environment.NewLine, "Horizontal distance DH (m)", "\t");
-        strLineD[5] = string.Concat(System.Environment.NewLine, "Vertical distance DV (m)", "\t");
-        strLineD[6] = string.Concat(System.Environment.NewLine, "Vertical height V (m)", "\t\t");
-        strLineD[7] = string.Concat(System.Environment.NewLine, "Frequency F (actions/min)", "\t");
-        strLineD[8] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t\t");
-
-        strLineF[0] = string.Concat(System.Environment.NewLine, "Scale factors", "\t\t");
-        strLineF[1] = string.Concat(System.Environment.NewLine, "Reference load", "\t\t\t");
-        strLineF[2] = string.Concat(System.Environment.NewLine, "H factor", "\t\t\t\t");
-        strLineF[3] = string.Concat(System.Environment.NewLine, "VRM factor", "\t\t\t\t");
-        strLineF[4] = string.Concat(System.Environment.NewLine, "DH factor", "\t\t\t\t");
-        strLineF[5] = string.Concat(System.Environment.NewLine, "DV factor", "\t\t\t\t");
-        strLineF[6] = string.Concat(System.Environment.NewLine, "V factor", "\t\t\t\t");
-        strLineF[7] = string.Concat(System.Environment.NewLine, "F factor", "\t\t\t\t");
-
-        strLineF[8] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Reference load", "\t\t\t");
-        strLineF[9] = string.Concat(System.Environment.NewLine, "Sustained DH factor", "\t\t");
-        strLineF[10] = string.Concat(System.Environment.NewLine, "Sustained V factor", "\t\t");
-        strLineF[11] = string.Concat(System.Environment.NewLine, "Sustained F factor", "\t\t");
-
-
-        strThresholds[0] = string.Concat(System.Environment.NewLine, "Maximum acceptable limit");
-        strThresholds[1] = string.Concat(System.Environment.NewLine, "CV initial force", "\t\t\t");
-        strThresholds[2] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 50%", "\t");
-        strThresholds[3] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 75%", "\t");
-        strThresholds[4] = string.Concat(System.Environment.NewLine, "MAL initial (kgf) for 90%", "\t");
-        strThresholds[5] = string.Concat(System.Environment.NewLine, "CV sustained force", "\t\t");
-        strThresholds[6] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 50%", "\t");
-        strThresholds[7] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 75%", "\t");
-        strThresholds[8] = string.Concat(System.Environment.NewLine, "MAL sustained (kgf) for 90%", "\t");
-        strThresholds[9] = string.Concat(System.Environment.NewLine, "CV weight", "\t\t\t\t");
-        strThresholds[10] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 50%", "\t\t");
-        strThresholds[11] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 75%", "\t\t");
-        strThresholds[12] = string.Concat(System.Environment.NewLine, "MAL weight (kg) for 90%", "\t\t");
+        if (culture is null)
+            culture = System.Globalization.CultureInfo.CurrentCulture;
 
         int i = 0;
-        const int spaces = -12;
-        string blank = "------";
         foreach (var data in Tasks)
         {
-            strLineD[0] += string.Concat("\t", strGridHeader, ((char)('A' + i)).ToString());
-            strLineD[1] += $"{data.Data.Type.ToString(), spaces}";
-            strLineD[8] += $"{data.Data.Gender.ToString(),spaces}";
+            strLineD[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+            strLineD[1] += $"\t{data.Data.Type.ToString()}";
+            strLineD[8] += $"\t{data.Data.Gender.ToString()}";
 
-            strLineF[0] += string.Concat("\t", strGridHeader, ((char)('A' + i)).ToString());
+            strLineF[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
 
-            strThresholds[0] += string.Concat("\t", strGridHeader, ((char)('A' + i)).ToString());
+            strThresholds[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
             if (data.Data.Type == TaskType.Pulling || data.Data.Type == TaskType.Pushing)
             {
-                strLineD[2] += $"{blank, spaces}";
-                strLineD[3] += $"{blank,spaces}";
+                strLineD[2] += $"\t{strRows[36]}";
+                strLineD[3] += $"\t{strRows[36]}";
                 // Convert.ToDouble(String.Format("{0:G3}", number)).ToString()
                 //strLineD[4] += string.Concat("\t\t", data.Data.DistHorz.ToString("0.####"));
-                strLineD[4] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Data.DistHorz)).ToString(),spaces}";
-                strLineD[5] += $"{blank,spaces}";
-                strLineD[6] += $"{data.Data.VertHeight.ToString("G5"), spaces}";
-                strLineD[7] += $"{data.Data.Freq.ToString("G5"), spaces}";
+                strLineD[4] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Data.DistHorz)).ToString(culture)}";
+                strLineD[5] += $"\t{strRows[36]}";
+                strLineD[6] += $"\t{data.Data.VertHeight.ToString("G5", culture)}";
+                strLineD[7] += $"\t{data.Data.Freq.ToString("G5", culture)}";
 
-                strLineF[1] += $"{data.Initial.RL.ToString("0.####"), spaces}";
-                strLineF[2] += $"{blank,spaces}";
-                strLineF[3] += $"{blank,spaces}";
-                strLineF[4] += $"{data.Initial.DH.ToString("0.####"), spaces}";
-                strLineF[5] += $"{blank,spaces}";
-                strLineF[6] += $"{data.Initial.V.ToString("0.####"), spaces}";
-                strLineF[7] += $"{data.Initial.F.ToString("0.####"), spaces}";
+                strLineF[1] += $"\t{data.Initial.RL.ToString("0.####", culture)}";
+                strLineF[2] += $"\t{strRows[36]}";
+                strLineF[3] += $"\t{strRows[36]}";
+                strLineF[4] += $"\t{data.Initial.DH.ToString("0.####", culture)}";
+                strLineF[5] += $"\t{strRows[36]}";
+                strLineF[6] += $"\t{data.Initial.V.ToString("0.####", culture)}";
+                strLineF[7] += $"\t{data.Initial.F.ToString("0.####", culture)}";
 
-                strLineF[8] += $"{data.Sustained.RL.ToString("0.####"), spaces}";
-                strLineF[9] += $"{data.Sustained.DH.ToString("0.####"), spaces}";
-                strLineF[10] += $"{data.Sustained.V.ToString("0.####"), spaces}";
-                strLineF[11] += $"{data.Sustained.F.ToString("0.####"), spaces}";
+                strLineF[8] += $"\t{data.Sustained.RL.ToString("0.####", culture)}";
+                strLineF[9] += $"\t{data.Sustained.DH.ToString("0.####", culture)}";
+                strLineF[10] += $"\t{data.Sustained.V.ToString("0.####", culture)}";
+                strLineF[11] += $"\t{data.Sustained.F.ToString("0.####", culture)}";
 
-                strThresholds[1] += $"{data.Initial.CV.ToString("0.####"), spaces}";
-                strThresholds[2] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString("0.####"),spaces}";
-                strThresholds[3] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"), spaces}";
-                strThresholds[4] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"), spaces}";
-                strThresholds[5] += $"{data.Sustained.CV.ToString("0.####"), spaces}";
-                strThresholds[6] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL)).ToString("0.####"), spaces}";
-                strThresholds[7] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL75)).ToString("0.####"), spaces}";
-                strThresholds[8] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL90)).ToString("0.####"), spaces}";
-                strThresholds[9] += $"{blank,spaces}";
-                strThresholds[10] += $"{blank,spaces}";
-                strThresholds[11] += $"{blank,spaces}";
-                strThresholds[12] += $"{blank,spaces}";
+                strThresholds[1] += $"\t{data.Initial.CV.ToString("0.####", culture)}";
+                strThresholds[2] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString("0.####", culture)}";
+                strThresholds[3] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####", culture)}";
+                strThresholds[4] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####", culture)}";
+                strThresholds[5] += $"\t{data.Sustained.CV.ToString("0.####")}";
+                strThresholds[6] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL)).ToString("0.####", culture)}";
+                strThresholds[7] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL75)).ToString("0.####", culture)}";
+                strThresholds[8] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL90)).ToString("0.####", culture)}";
+                strThresholds[9] += $"\t{strRows[36]}";
+                strThresholds[10] += $"\t{strRows[36]}";
+                strThresholds[11] += $"\t{strRows[36]}";
+                strThresholds[12] += $"\t{strRows[36]}";
             }
             else // Lift, lower, and carry
             {
                 if (data.Data.Type == TaskType.Carrying)
                 {
-                    strLineD[2] += $"{blank,spaces}";
-                    strLineD[3] += $"{blank,spaces}";
-                    strLineD[4] += $"{data.Data.DistHorz.ToString("0.####"),spaces}";
-                    strLineD[5] += $"{blank,spaces}";
-                    strLineD[6] += $"{data.Data.VertHeight.ToString("0.####"),spaces}";
-                    strLineD[7] += $"{data.Data.Freq.ToString("0.####"),spaces}";
+                    strLineD[2] += $"\t{strRows[36]}";
+                    strLineD[3] += $"\t{strRows[36]}";
+                    strLineD[4] += $"\t{data.Data.DistHorz.ToString("0.####", culture)}";
+                    strLineD[5] += $"\t{strRows[36]}";
+                    strLineD[6] += $"\t{data.Data.VertHeight.ToString("0.####", culture)}";
+                    strLineD[7] += $"\t{data.Data.Freq.ToString("0.####", culture)}";
 
-                    strLineF[1] += $"{data.Initial.RL.ToString("0.####"),spaces}";
-                    strLineF[2] += $"{blank,spaces}";
-                    strLineF[3] += $"{blank,spaces}";
-                    strLineF[4] += $"{data.Initial.DV.ToString("0.####"),spaces}";
-                    strLineF[5] += $"{blank,spaces}";
-                    strLineF[6] += $"{data.Initial.V.ToString("0.####"), spaces}";
-                    strLineF[7] += $"{data.Initial.F.ToString("0.####"), spaces}";
+                    strLineF[1] += $"\t{data.Initial.RL.ToString("0.####", culture)}";
+                    strLineF[2] += $"\t{strRows[36]}";
+                    strLineF[3] += $"\t{strRows[36]}";
+                    strLineF[4] += $"\t{data.Initial.DV.ToString("0.####", culture)}";
+                    strLineF[5] += $"\t{strRows[36]}";
+                    strLineF[6] += $"\t{data.Initial.V.ToString("0.####", culture)}";
+                    strLineF[7] += $"\t{data.Initial.F.ToString("0.####", culture)}";
                 }
                 else //lift and lower
                 {
                     //strLineD[2] += string.Concat("\t\t", data.Data.HorzReach.ToString("0.####"));
-                    strLineD[2] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Data.HorzReach)).ToString(),spaces}";
-                    strLineD[3] += $"{data.Data.VertRangeM.ToString("0.####"),spaces}";
-                    strLineD[4] += $"{blank,spaces}";
-                    strLineD[5] += $"{data.Data.DistVert.ToString("0.####"),spaces}";
-                    strLineD[6] += $"{blank,spaces}";
-                    strLineD[7] += $"{data.Data.Freq.ToString("0.####"),spaces}";
+                    strLineD[2] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Data.HorzReach)).ToString(culture)}";
+                    strLineD[3] += $"\t{data.Data.VertRangeM.ToString("0.####", culture)}";
+                    strLineD[4] += $"\t{strRows[36]}";
+                    strLineD[5] += $"\t{data.Data.DistVert.ToString("0.####", culture)}";
+                    strLineD[6] += $"\t{strRows[36]}";
+                    strLineD[7] += $"\t{data.Data.Freq.ToString("0.####", culture)}";
 
-                    strLineF[1] += $"{data.Initial.RL.ToString("0.####"),spaces}";
-                    strLineF[2] += $"{data.Initial.H.ToString("0.####"),spaces}";
-                    strLineF[3] += $"{data.Initial.VRM.ToString("0.####"),spaces}";
-                    strLineF[4] += $"{blank,spaces}";
-                    strLineF[5] += $"{data.Initial.DV.ToString("0.####"),spaces}";
-                    strLineF[6] += $"{blank,spaces}";
-                    strLineF[7] += $"{data.Initial.F.ToString("0.####"),spaces}";
+                    strLineF[1] += $"\t{data.Initial.RL.ToString("0.####", culture)}";
+                    strLineF[2] += $"\t{data.Initial.H.ToString("0.####", culture)}";
+                    strLineF[3] += $"\t{data.Initial.VRM.ToString("0.####", culture)}";
+                    strLineF[4] += $"\t{strRows[36]}";
+                    strLineF[5] += $"\t{data.Initial.DV.ToString("0.####", culture)}";
+                    strLineF[6] += $"\t{strRows[36]}";
+                    strLineF[7] += $"\t{data.Initial.F.ToString("0.####", culture)}";
                 }
 
-                strLineF[8] += $"{blank,spaces}";
-                strLineF[9] += $"{blank,spaces}";
-                strLineF[10] += $"{blank,spaces}";
-                strLineF[11] += $"{blank,spaces}";
+                strLineF[8] += $"\t{strRows[36]}";
+                strLineF[9] += $"\t{strRows[36]}";
+                strLineF[10] += $"\t{strRows[36]}";
+                strLineF[11] += $"\t{strRows[36]}";
 
-                strThresholds[1] += $"{blank,spaces}";
-                strThresholds[2] += $"{blank,spaces}";
-                strThresholds[3] += $"{blank,spaces}";
-                strThresholds[4] += $"{blank,spaces}";
-                strThresholds[5] += $"{blank,spaces}";
-                strThresholds[6] += $"{blank,spaces}";
-                strThresholds[7] += $"{blank,spaces}";
-                strThresholds[8] += $"{blank,spaces}";
-                strThresholds[9] += $"{data.Initial.CV.ToString("0.####"),spaces}";
+                strThresholds[1] += $"\t{strRows[36]}";
+                strThresholds[2] += $"\t{strRows[36]}";
+                strThresholds[3] += $"\t{strRows[36]}";
+                strThresholds[4] += $"\t{strRows[36]}";
+                strThresholds[5] += $"\t{strRows[36]}";
+                strThresholds[6] += $"\t{strRows[36]}";
+                strThresholds[7] += $"\t{strRows[36]}";
+                strThresholds[8] += $"\t{strRows[36]}";
+                strThresholds[9] += $"\t{data.Initial.CV.ToString("0.####", culture)}";
                 //strThresholds[10] += string.Concat("\t\t", data.Initial.MAL.ToString("0.####"));
-                strThresholds[10] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString(),spaces}";
-                strThresholds[11] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####"),spaces}";
-                strThresholds[12] += $"{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####"),spaces}";
+                strThresholds[10] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString(culture)}";
+                strThresholds[11] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####", culture)}";
+                strThresholds[12] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####", culture)}";
             }
-
             i++;
         }
 
-        strResult = string.Concat("These are the results from the Liberty Mutual manual materials handling equations",
-                System.Environment.NewLine,
-                string.Concat(strLineD),
-                System.Environment.NewLine,
-                string.Concat(strLineF),
-                System.Environment.NewLine,
-                string.Concat(strThresholds),
-                System.Environment.NewLine);
+        strResult.Append(strRows[1]);
+        strResult.Append(System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
 
-        return strResult;
+        // Initial data
+        strResult.Append(strRows[2] + strLineD[0] + System.Environment.NewLine);
+        strResult.Append(strRows[3] + strLineD[1] + System.Environment.NewLine);
+        strResult.Append(strRows[4] + strLineD[2] + System.Environment.NewLine);
+        strResult.Append(strRows[5] + strLineD[3] + System.Environment.NewLine);
+        strResult.Append(strRows[6] + strLineD[4] + System.Environment.NewLine);
+        strResult.Append(strRows[7] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[8] + strLineD[6] + System.Environment.NewLine);
+        strResult.Append(strRows[9] + strLineD[7] + System.Environment.NewLine);
+        strResult.Append(strRows[10] + strLineD[8] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        strResult.Append(strRows[11] + strLineF[0] + System.Environment.NewLine);
+        strResult.Append(strRows[12] + strLineF[1] + System.Environment.NewLine);
+        strResult.Append(strRows[13] + strLineF[2] + System.Environment.NewLine);
+        strResult.Append(strRows[14] + strLineF[3] + System.Environment.NewLine);
+        strResult.Append(strRows[15] + strLineF[4] + System.Environment.NewLine);
+        strResult.Append(strRows[16] + strLineF[5] + System.Environment.NewLine);
+        strResult.Append(strRows[17] + strLineF[6] + System.Environment.NewLine);
+        strResult.Append(strRows[18] + strLineF[7] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+        strResult.Append(strRows[19] + strLineF[8] + System.Environment.NewLine);
+        strResult.Append(strRows[20] + strLineF[9] + System.Environment.NewLine);
+        strResult.Append(strRows[21] + strLineF[10] + System.Environment.NewLine);
+        strResult.Append(strRows[22] + strLineF[11] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        strResult.Append(strRows[23] + strThresholds[0] + System.Environment.NewLine);
+        strResult.Append(strRows[24] + strThresholds[1] + System.Environment.NewLine);
+        strResult.Append(strRows[25] + strThresholds[2] + System.Environment.NewLine);
+        strResult.Append(strRows[26] + strThresholds[3] + System.Environment.NewLine);
+        strResult.Append(strRows[27] + strThresholds[4] + System.Environment.NewLine);
+        strResult.Append(strRows[28] + strThresholds[5] + System.Environment.NewLine);
+        strResult.Append(strRows[29] + strThresholds[6] + System.Environment.NewLine);
+        strResult.Append(strRows[30] + strThresholds[7] + System.Environment.NewLine);
+        strResult.Append(strRows[31] + strThresholds[8] + System.Environment.NewLine);
+        strResult.Append(strRows[32] + strThresholds[9] + System.Environment.NewLine);
+        strResult.Append(strRows[33] + strThresholds[10] + System.Environment.NewLine);
+        strResult.Append(strRows[34] + strThresholds[11] + System.Environment.NewLine);
+        strResult.Append(strRows[35] + strThresholds[12] + System.Environment.NewLine);
+
+        return strResult.ToString();
+    }
+
+    public override string ToString()
+    {
+        string[] strRows = new[]
+        {
+            "Task",
+            "These are the results from the Liberty Mutual manual materials handling equations",
+            "Initial data",
+            "Manual handling type",
+            "Horizontal reach H (m)",
+            "Vertical range VRM (m)",
+            "Horizontal distance DH (m)",
+            "Vertical distance DV (m)",
+            "Vertical height V (m)",
+            "Frequency (actions/min)",
+            "Sex",
+            "Scale factors",
+            "Reference load (LC)",
+            "Horizontal reach (H)",
+            "Vertical range (VRM)",
+            "Horizontal distance (DH)",
+            "Vertical distance (DV)",
+            "Vertical height (V)",
+            "Frequency factor (F)",
+            "Sustained LC factor",
+            "Sustained DH factor",
+            "Sustained V factor",
+            "Sustained F factor",
+            "Maximum acceptable limit",
+            "CV initial force",
+            "MAL initial (kgf) for 50%",
+            "MAL initial (kgf) for 75%",
+            "MAL initial (kgf) for 90%",
+            "CV sustained force",
+            "MAL sustained (kgf) for 50%",
+            "MAL sustained (kgf) for 75%",
+            "MAL sustained (kgf) for 90%",
+            "CV weight",
+            "MAL weight (kg) for 50%",
+            "MAL weight (kg) for 75%",
+            "MAL weight (kg) for 90%",
+            "------"
+        };
+        return ToString(strRows);
     }
 }
 

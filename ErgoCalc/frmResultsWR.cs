@@ -21,7 +21,7 @@ public partial class FrmResultsWR : Form, IChildResults
         InitializeComponent();
         InitializeChart();
 
-        //_datos = new List<DataWR>();
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
 
         this.mnuSub.Visible = false;
         _plotOptions = new ChartOptions(plot, 1)
@@ -409,14 +409,15 @@ public partial class FrmResultsWR : Form, IChildResults
 
     public void Duplicate()
     {
-        string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-
-        // Mostrar la ventana de resultados
+        // Show results window
         FrmResultsWR frmResults = new FrmResultsWR(_job)
         {
             MdiParent = this.MdiParent
         };
-        if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsWR, this.Text[index..]);
+
         frmResults.Show();
     }
 

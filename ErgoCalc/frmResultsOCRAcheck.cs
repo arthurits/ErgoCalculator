@@ -104,7 +104,20 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
     public void Duplicate()
     {
         // Create a new instance of this form with the same data
-        FrmResultsOCRAcheck frmResults = new FrmResultsOCRAcheck() { MdiParent = this.MdiParent };
+        FrmResultsOCRAcheck frmResults = new FrmResultsOCRAcheck()
+        {
+            MdiParent = this.MdiParent
+        };
+
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsOCRAchecklist, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
+
         frmResults.Show();
     }
 

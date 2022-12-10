@@ -86,7 +86,7 @@ public partial class FrmResultsMet : Form, IChildResults
 
         if (frmData.ShowDialog(this) == DialogResult.OK)
         {
-            // Mostrar la ventana de resultados
+            // Show results window
             _job = (Job)frmData.GetData;
             this.rtbShowResult.Clear();
             ShowResults();
@@ -97,11 +97,21 @@ public partial class FrmResultsMet : Form, IChildResults
 
     public void Duplicate()
     {
-        //string _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        // Show results window
+        FrmResultsMet frmResults = new FrmResultsMet(_job)
+        {
+            MdiParent = this.MdiParent
+        };
 
-        // Mostrar la ventana de resultados
-        FrmResultsMet frmResults = new FrmResultsMet(_job) { MdiParent = this.MdiParent };
-        //if (File.Exists(_strPath + @"\images\logo.ico")) frmResults.Icon = new Icon(_strPath + @"\images\logo.ico");
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsMetabolic, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
+
         frmResults.Show();
     }
     #endregion
