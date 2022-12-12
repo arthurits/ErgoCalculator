@@ -32,6 +32,7 @@ public static class StringResources
 
     public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
     public static string Subtask => StringRM.GetString("strSubTask", Culture) ?? "Subtask";
+    public static string Gender => StringRM.GetString("strGender", Culture) ?? "Male, Female";
 
     public static string FormTitleUnion => StringRM.GetString("strFormTitleUnion", Culture) ?? " - ";
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";
@@ -373,6 +374,9 @@ public static class StringResources
     public static string LibertyMutual_WeightMAL75 => StringRM.GetString("strLibertyMutual_WeightMAL75", Culture) ?? "MAL weight (kg) for 75%";
     public static string LibertyMutual_WeightMAL90 => StringRM.GetString("strLibertyMutual_WeightMAL90", Culture) ?? "MAL weight (kg) for 90%";
     public static string LibertyMutual_Empty => StringRM.GetString("strLibertyMutual_Empty", Culture) ?? "------";
+    public static string LibertyMutual_TaskType => StringRM.GetString("strLibertyMutual_TaskType", Culture) ?? "Carrying, Lifting, Lowering, Pulling, Pushing";
+    //public static string LibertyMutual_Gender => StringRM.GetString("strLibertyMutual_Gender", Culture) ?? "Male, Female";
+    public static string LibertyMutual_Gender => Gender;
 
     public static string[] LibertyMutual_RowHeaders => new[]
     {
