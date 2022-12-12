@@ -187,6 +187,9 @@ los campos a sus valores por defecto?</value>
   <data name="strFrmSettings" xml:space="preserve">
     <value>Opciones</value>
   </data>
+  <data name="strGender" xml:space="preserve">
+    <value>Masculino, Femenino</value>
+  </data>
   <data name="strGrpCulture" xml:space="preserve">
     <value>Opciones de idioma y culturales</value>
   </data>
@@ -300,6 +303,9 @@ los campos a sus valores por defecto?</value>
   </data>
   <data name="strLibertyMutual_SustainedV" xml:space="preserve">
     <value>Factor V mantenido</value>
+  </data>
+  <data name="strLibertyMutual_TaskType" xml:space="preserve">
+    <value>Transporte, Alzar, Bajar, Tracción, Empuje</value>
   </data>
   <data name="strLibertyMutual_V" xml:space="preserve">
     <value>Factor de altura vertical (V)</value>
@@ -439,6 +445,12 @@ salir de la aplicación?</value>
   </data>
   <data name="strNIOSH_Weight" xml:space="preserve">
     <value>Peso manipulado (kg):</value>
+  </data>
+  <data name="strNumberSubtasks" xml:space="preserve">
+    <value>Número de subtareas</value>
+  </data>
+  <data name="strNumberTasks" xml:space="preserve">
+    <value>Número de tareas</value>
   </data>
   <data name="strRadCurrentCulture" xml:space="preserve">
     <value>Referencia cultural actual</value>

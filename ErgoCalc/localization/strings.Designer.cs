@@ -269,6 +269,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Male, Female.
+        /// </summary>
+        internal static string strGender {
+            get {
+                return ResourceManager.GetString("strGender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language and culture options.
         /// </summary>
         internal static string strGrpCulture {
@@ -607,6 +616,15 @@ namespace ErgoCalc.localization {
         internal static string strLibertyMutual_SustainedV {
             get {
                 return ResourceManager.GetString("strLibertyMutual_SustainedV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carrying, Lifting, Lowering, Pulling, Pushing.
+        /// </summary>
+        internal static string strLibertyMutual_TaskType {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_TaskType", resourceCulture);
             }
         }
         
@@ -1022,6 +1040,24 @@ namespace ErgoCalc.localization {
         internal static string strNIOSH_Weight {
             get {
                 return ResourceManager.GetString("strNIOSH_Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of subtasks.
+        /// </summary>
+        internal static string strNumberSubtasks {
+            get {
+                return ResourceManager.GetString("strNumberSubtasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of tasks.
+        /// </summary>
+        internal static string strNumberTasks {
+            get {
+                return ResourceManager.GetString("strNumberTasks", resourceCulture);
             }
         }
         

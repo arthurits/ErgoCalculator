@@ -187,6 +187,9 @@ to their default values?</value>
   <data name="strFrmSettings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="strGender" xml:space="preserve">
+    <value>Male, Female</value>
+  </data>
   <data name="strGrpCulture" xml:space="preserve">
     <value>Language and culture options</value>
   </data>
@@ -300,6 +303,9 @@ to their default values?</value>
   </data>
   <data name="strLibertyMutual_SustainedV" xml:space="preserve">
     <value>Sustained V factor</value>
+  </data>
+  <data name="strLibertyMutual_TaskType" xml:space="preserve">
+    <value>Carrying, Lifting, Lowering, Pulling, Pushing</value>
   </data>
   <data name="strLibertyMutual_V" xml:space="preserve">
     <value>Vertical height (V)</value>
@@ -439,6 +445,12 @@ the application?</value>
   </data>
   <data name="strNIOSH_Weight" xml:space="preserve">
     <value>Weight lifted (kg):</value>
+  </data>
+  <data name="strNumberSubtasks" xml:space="preserve">
+    <value>Number of subtasks</value>
+  </data>
+  <data name="strNumberTasks" xml:space="preserve">
+    <value>Number of tasks</value>
   </data>
   <data name="strRadCurrentCulture" xml:space="preserve">
     <value>Current culture formatting</value>

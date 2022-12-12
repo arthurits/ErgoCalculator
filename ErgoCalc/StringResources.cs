@@ -22,6 +22,8 @@ public static class StringResources
 
     public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
     public static string Subtask => StringRM.GetString("strSubTask", Culture) ?? "Subtask";
+    public static string NumberOfTasks => StringRM.GetString("strNumberTasks", Culture) ?? "Number of tasks";
+    public static string NumberOfSubtasks => StringRM.GetString("strNumberSubtasks", Culture) ?? "Number of subtasks";
     public static string Gender => StringRM.GetString("strGender", Culture) ?? "Male, Female";
 
     public static string FormTitleUnion => StringRM.GetString("strFormTitleUnion", Culture) ?? " - ";
