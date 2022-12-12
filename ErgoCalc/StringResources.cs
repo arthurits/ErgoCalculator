@@ -1,14 +1,4 @@
-﻿using ErgoCalc.Models.LibertyMutual;
-using Microsoft.VisualBasic.Devices;
-using ScottPlot.Drawing.Colormaps;
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.Intrinsics.X86;
-using System.Windows.Forms;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-
-namespace ErgoCalc;
+﻿namespace ErgoCalc;
 
 public static class StringResources
 {
