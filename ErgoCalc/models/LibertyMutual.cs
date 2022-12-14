@@ -157,8 +157,10 @@ public class Job
         foreach (var data in Tasks)
         {
             strLineD[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
-            strLineD[1] += $"\t{data.Data.Type.ToString()}";
-            strLineD[8] += $"\t{data.Data.Gender.ToString()}";
+            //strLineD[1] += $"\t{data.Data.Type.ToString()}";
+            //strLineD[8] += $"\t{data.Data.Gender.ToString()}";
+            strLineD[1] += $"\t{strRows[38].Split(", ")[(int)data.Data.Type]}";
+            strLineD[8] += $"\t{strRows[37].Split(", ")[(int)data.Data.Gender]}";
 
             strLineF[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
 
@@ -348,7 +350,9 @@ public class Job
             "MAL weight (kg) for 50%",
             "MAL weight (kg) for 75%",
             "MAL weight (kg) for 90%",
-            "------"
+            "------",
+            "Male, Female",
+            "Carrying, Lifting, Lowering, Pulling, Pushing"
         };
         return ToString(strRows);
     }
