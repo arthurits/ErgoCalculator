@@ -150,6 +150,7 @@ public static class StringResources
     public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance (cm):";
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier (VM):";
     public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted (kg):";
+    public static string NIOSH_CouplingTypes => StringRM.GetString("strNIOSH_CouplingTypes", Culture) ?? "No handles, Poor, Good";
     public static string[] NIOSH_RowHeaders => new[] {
         NIOSH_Data,
         NIOSH_Weight,
@@ -213,7 +214,8 @@ public static class StringResources
         NIOSH_Equation,
         NIOSH_EquationIndex,
         NIOSH_EquationWeight,
-        NIOSH_Index
+        NIOSH_Index,
+        NIOSH_CouplingTypes
     };
 
     // Strain index
@@ -449,6 +451,8 @@ public static class StringResources
         LibertyMutual_WeightMAL50,
         LibertyMutual_WeightMAL75,
         LibertyMutual_WeightMAL90,          // 35
-        LibertyMutual_Empty
+        LibertyMutual_Empty,
+        LibertyMutual_Gender,
+        LibertyMutual_TaskType
     };
 }
