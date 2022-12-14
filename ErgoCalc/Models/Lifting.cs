@@ -208,7 +208,7 @@ public class TaskModel
             strLineD[7] += $"\t{SubTasks[i].Data.fb.ToString(culture)}";
             strLineD[8] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
             strLineD[9] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
-            strLineD[10] += $"\t{SubTasks[i].Data.c}";
+            strLineD[10] += $"\t{strRows[31].Split(", ")[(int)SubTasks[i].Data.c]}";
 
             strLineR[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
             strLineR[1] += $"\t{SubTasks[i].Data.LC.ToString("0.####", culture)}";
@@ -373,7 +373,8 @@ public class TaskModel
             "The NIOSH lifting index is computed as follows:",
             "Index",
             "Weight",
-            "The NIOSH lifting index is:"
+            "The NIOSH lifting index is:",
+            "No handles, Poor, Good"
         };
         return ToString(strRows);
     }
@@ -462,7 +463,8 @@ public class Job
             "The NIOSH lifting index is computed as follows:",
             "Index",
             "Weight",
-            "The NIOSH lifting index is:"
+            "The NIOSH lifting index is:",
+            "No handles, Poor, Good"
         };
 
         return ToString(strRows);
