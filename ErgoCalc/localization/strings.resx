@@ -371,6 +371,9 @@ the application?</value>
   <data name="strNIOSH_Coupling" xml:space="preserve">
     <value>Coupling:</value>
   </data>
+  <data name="strNIOSH_CouplingTypes" xml:space="preserve">
+    <value />
+  </data>
   <data name="strNIOSH_Data" xml:space="preserve">
     <value>Initial data</value>
   </data>

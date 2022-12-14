@@ -819,6 +819,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string strNIOSH_CouplingTypes {
+            get {
+                return ResourceManager.GetString("strNIOSH_CouplingTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initial data.
         /// </summary>
         internal static string strNIOSH_Data {

@@ -371,6 +371,9 @@ salir de la aplicación?</value>
   <data name="strNIOSH_Coupling" xml:space="preserve">
     <value>Agarre:</value>
   </data>
+  <data name="strNIOSH_CouplingTypes" xml:space="preserve">
+    <value>Malo, Regular, Bueno</value>
+  </data>
   <data name="strNIOSH_Data" xml:space="preserve">
     <value>Datos iniciales</value>
   </data>
