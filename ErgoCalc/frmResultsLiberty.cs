@@ -510,10 +510,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     private void SetRichTextBoxTabs()
     {
         (int rowMax, int rowTab) = ComputeTabSpace(StringResources.LibertyMutual_RowHeaders);
-        var columnHeaders = StringResources.LibertyMutual_ColumnHeaders;
-        for (int i = 0; i < columnHeaders.Length; i++)
-            columnHeaders[i] += " A";
-        (int colMax, int colTab) = ComputeTabSpace(columnHeaders);
+        (int colMax, int colTab) = ComputeTabSpace(StringResources.LibertyMutual_ColumnHeaders);
         int tab = Math.Min(rowTab, colTab);
 
         int[] tabs = new int[_job.NumberTasks];

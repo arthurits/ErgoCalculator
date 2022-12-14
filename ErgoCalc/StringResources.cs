@@ -179,8 +179,11 @@ public static class StringResources
     };
     public static string[] NIOSH_ColumnHeaders => new[]
     {
-        Task,
-        Subtask
+        $"{Task} A",
+        $"{Subtask} A",
+        NIOSH_CouplingTypes.Split(", ")[0],
+        NIOSH_CouplingTypes.Split(", ")[1],
+        NIOSH_CouplingTypes.Split(", ")[2]
     };
     public static string[] NIOSH_ResultsHeaders => new[]
     {
@@ -253,7 +256,6 @@ public static class StringResources
     public static string StrainIndex_TasksRSI => StringRM.GetString("strStrainIndex_TasksRSI", Culture) ?? "Task RSI index:";
     public static string StrainIndex_TasksCOSI => StringRM.GetString("strStrainIndex_TasksCOSI", Culture) ?? "Task COSI index:";
     public static string StrainIndex_TasksOrder => StringRM.GetString("strStrainIndex_TasksOrder", Culture) ?? "Task order:";
-
     public static string[] StrainIndex_RowHeaders => new[]
     {
         StrainIndex_Data,
@@ -286,8 +288,8 @@ public static class StringResources
     };
     public static string[] StrainIndex_ColumnHeaders => new[]
     {
-        Task,
-        Subtask
+        $"{Task} A",
+        $"{Subtask} A",
     };
     public static string[] StrainIndex_ResultsHeaders => new[]
     {
@@ -371,7 +373,6 @@ public static class StringResources
     public static string LibertyMutual_TaskType => StringRM.GetString("strLibertyMutual_TaskType", Culture) ?? "Carrying, Lifting, Lowering, Pulling, Pushing";
     //public static string LibertyMutual_Gender => StringRM.GetString("strLibertyMutual_Gender", Culture) ?? "Male, Female";
     public static string LibertyMutual_Gender => Gender;
-
     public static string[] LibertyMutual_RowHeaders => new[]
     {
         LibertyMutual_Data,
@@ -411,7 +412,14 @@ public static class StringResources
     };
     public static string[] LibertyMutual_ColumnHeaders => new[]
     {
-        Task
+        $"{Task} A",
+        LibertyMutual_TaskType.Split(", ")[0],
+        LibertyMutual_TaskType.Split(", ")[1],
+        LibertyMutual_TaskType.Split(", ")[2],
+        LibertyMutual_TaskType.Split(", ")[3],
+        LibertyMutual_TaskType.Split(", ")[4],
+        LibertyMutual_Gender.Split(", ")[0],
+        LibertyMutual_Gender.Split(", ")[1]
     };
     public static string[] LibertyMutual_ResultsHeaders => new[]
     {
