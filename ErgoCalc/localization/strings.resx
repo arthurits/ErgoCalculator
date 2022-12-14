@@ -372,7 +372,7 @@ the application?</value>
     <value>Coupling:</value>
   </data>
   <data name="strNIOSH_CouplingTypes" xml:space="preserve">
-    <value />
+    <value>No handles, Poor, Good</value>
   </data>
   <data name="strNIOSH_Data" xml:space="preserve">
     <value>Initial data</value>

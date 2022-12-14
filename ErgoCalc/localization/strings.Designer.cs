@@ -819,7 +819,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to No handles, Poor, Good.
         /// </summary>
         internal static string strNIOSH_CouplingTypes {
             get {
