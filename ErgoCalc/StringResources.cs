@@ -510,22 +510,22 @@ public static class StringResources
     };
     public static string[] ThermalComfort_ResultsHeaders => new[]
     {
-        Case,
+        Case,                           // 0
         ThermalComfort_Results,
         ThermalComfort_Data,
         ThermalComfort_AirTemp,
         ThermalComfort_RadiantTemp,
-        ThermalComfort_AirVel,
+        ThermalComfort_AirVel,          // 5
         ThermalComfort_RelHumidity,
         ThermalComfort_Clothing,
         ThermalComfort_MetabolicRate,
         ThermalComfort_ExternalWork,
-        ThermalComfort_Multipliers,
+        ThermalComfort_Multipliers,     // 10
         ThermalComfort_LossSkin,
         ThermalComfort_LossSweating,
         ThermalComfort_LossRespiration,
         ThermalComfort_LossDry,
-        ThermalComfort_LossRadiation,
+        ThermalComfort_LossRadiation,   // 15
         ThermalComfort_LossConvection,
         ThermalComfort_PMVindex,
         ThermalComfort_PPDindex
