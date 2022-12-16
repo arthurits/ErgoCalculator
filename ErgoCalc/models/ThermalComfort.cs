@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace ErgoCalc.Models.ThermalComfort;
 
@@ -111,63 +112,157 @@ public class Job
 
     public int NumberTasks { get; set; } = 0;
 
-    public override string ToString()
+    //public override string ToString()
+    //{
+    //    string[] strLineD = new string[8];
+    //    string[] strLineF = new string[9];
+
+    //    strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
+    //    strLineD[1] = string.Concat(System.Environment.NewLine, "Air temperature (°C)");
+    //    strLineD[2] = string.Concat(System.Environment.NewLine, "Radiant temperature (°C)");
+    //    strLineD[3] = string.Concat(System.Environment.NewLine, "Air velocity (m/s)");
+    //    strLineD[4] = string.Concat(System.Environment.NewLine, "Relative humidity (%)");
+    //    strLineD[5] = string.Concat(System.Environment.NewLine, "Clothing (clo)", "\t");
+    //    strLineD[6] = string.Concat(System.Environment.NewLine, "Metabolic rate (met)");
+    //    strLineD[7] = string.Concat(System.Environment.NewLine, "External work (met)");
+
+    //    strLineF[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
+    //    strLineF[1] = string.Concat(System.Environment.NewLine, "Heat loss diff. through skin");
+    //    strLineF[2] = string.Concat(System.Environment.NewLine, "Heat loss by sweating", "\t");
+    //    strLineF[3] = string.Concat(System.Environment.NewLine, "Latent respiration heat loss");
+    //    strLineF[4] = string.Concat(System.Environment.NewLine, "Dry respiration heat loss", "\t");
+    //    strLineF[5] = string.Concat(System.Environment.NewLine, "Heat loss by radiation", "\t");
+    //    strLineF[6] = string.Concat(System.Environment.NewLine, "Heat loss by convection");
+
+    //    strLineF[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The PMV index");
+    //    strLineF[8] = string.Concat(System.Environment.NewLine, "The PPD index", "\t");
+
+    //    int i = 0;
+    //    foreach (TaskModel task in Tasks)
+    //    {
+    //        strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
+    //        strLineD[1] += string.Concat("\t\t", task.Data.TempAir.ToString("0.####"));
+    //        strLineD[2] += string.Concat("\t\t", task.Data.TempRad.ToString("0.####"));
+    //        strLineD[3] += string.Concat("\t\t", task.Data.Velocity.ToString("0.####"));
+    //        strLineD[4] += string.Concat("\t\t", task.Data.RelHumidity.ToString("0.####"));
+    //        strLineD[5] += string.Concat("\t\t", task.Data.Clothing.ToString("0.####"));
+    //        strLineD[6] += string.Concat("\t\t", task.Data.MetRate.ToString("0.####"));
+    //        strLineD[7] += string.Concat("\t\t", task.Data.ExternalWork.ToString("0.####"));
+
+    //        strLineF[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
+    //        strLineF[1] += string.Concat("\t", task.Variables.HL_Skin.ToString("0.####"));
+    //        strLineF[2] += string.Concat("\t", task.Variables.HL_Sweating.ToString("0.####"));
+    //        strLineF[3] += string.Concat("\t", task.Variables.HL_Latent.ToString("0.####"));
+    //        strLineF[4] += string.Concat("\t", task.Variables.HL_Dry.ToString("0.####"));
+    //        strLineF[5] += string.Concat("\t", task.Variables.HL_Radiation.ToString("0.####"));
+    //        strLineF[6] += string.Concat("\t", task.Variables.HL_Convection.ToString("0.####"));
+
+    //        strLineF[7] += string.Concat("\t\t", task.Variables.PMV.ToString("0.####"));
+    //        strLineF[8] += string.Concat("\t\t", task.Variables.PPD.ToString("0.####"));
+
+    //        i++;
+    //    }
+
+    //    return string.Concat("These are the results for the PMV and the PPD indexes according to ISO 7730:",
+    //            System.Environment.NewLine,
+    //            string.Concat(strLineD),
+    //            System.Environment.NewLine,
+    //            string.Concat(strLineF),
+    //            System.Environment.NewLine);
+    //}
+
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
+        StringBuilder strResult = new(2200);
         string[] strLineD = new string[8];
         string[] strLineF = new string[9];
 
-        strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-        strLineD[1] = string.Concat(System.Environment.NewLine, "Air temperature (°C)");
-        strLineD[2] = string.Concat(System.Environment.NewLine, "Radiant temperature (°C)");
-        strLineD[3] = string.Concat(System.Environment.NewLine, "Air velocity (m/s)");
-        strLineD[4] = string.Concat(System.Environment.NewLine, "Relative humidity (%)");
-        strLineD[5] = string.Concat(System.Environment.NewLine, "Clothing (clo)", "\t");
-        strLineD[6] = string.Concat(System.Environment.NewLine, "Metabolic rate (met)");
-        strLineD[7] = string.Concat(System.Environment.NewLine, "External work (met)");
-
-        strLineF[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-        strLineF[1] = string.Concat(System.Environment.NewLine, "Heat loss diff. through skin");
-        strLineF[2] = string.Concat(System.Environment.NewLine, "Heat loss by sweating", "\t");
-        strLineF[3] = string.Concat(System.Environment.NewLine, "Latent respiration heat loss");
-        strLineF[4] = string.Concat(System.Environment.NewLine, "Dry respiration heat loss", "\t");
-        strLineF[5] = string.Concat(System.Environment.NewLine, "Heat loss by radiation", "\t");
-        strLineF[6] = string.Concat(System.Environment.NewLine, "Heat loss by convection");
-
-        strLineF[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The PMV index");
-        strLineF[8] = string.Concat(System.Environment.NewLine, "The PPD index", "\t");
+        if (culture is null)
+            culture = System.Globalization.CultureInfo.CurrentCulture;
 
         int i = 0;
         foreach (TaskModel task in Tasks)
         {
-            strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-            strLineD[1] += string.Concat("\t\t", task.Data.TempAir.ToString("0.####"));
-            strLineD[2] += string.Concat("\t\t", task.Data.TempRad.ToString("0.####"));
-            strLineD[3] += string.Concat("\t\t", task.Data.Velocity.ToString("0.####"));
-            strLineD[4] += string.Concat("\t\t", task.Data.RelHumidity.ToString("0.####"));
-            strLineD[5] += string.Concat("\t\t", task.Data.Clothing.ToString("0.####"));
-            strLineD[6] += string.Concat("\t\t", task.Data.MetRate.ToString("0.####"));
-            strLineD[7] += string.Concat("\t\t", task.Data.ExternalWork.ToString("0.####"));
+            strLineD[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+            strLineD[1] += $"\t{task.Data.TempAir.ToString("0.####", culture)}";
+            strLineD[2] += $"\t{task.Data.TempRad.ToString("0.####", culture)}";
+            strLineD[3] += $"\t{task.Data.Velocity.ToString("0.####", culture)}";
+            strLineD[4] += $"\t{task.Data.RelHumidity.ToString("0.####", culture)}";
+            strLineD[5] += $"\t{task.Data.Clothing.ToString("0.####", culture)}";
+            strLineD[6] += $"\t{task.Data.MetRate.ToString("0.####", culture)}";
+            strLineD[7] += $"\t{task.Data.ExternalWork.ToString("0.####", culture)}";
 
-            strLineF[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-            strLineF[1] += string.Concat("\t", task.Variables.HL_Skin.ToString("0.####"));
-            strLineF[2] += string.Concat("\t", task.Variables.HL_Sweating.ToString("0.####"));
-            strLineF[3] += string.Concat("\t", task.Variables.HL_Latent.ToString("0.####"));
-            strLineF[4] += string.Concat("\t", task.Variables.HL_Dry.ToString("0.####"));
-            strLineF[5] += string.Concat("\t", task.Variables.HL_Radiation.ToString("0.####"));
-            strLineF[6] += string.Concat("\t", task.Variables.HL_Convection.ToString("0.####"));
+            strLineF[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+            strLineF[1] += $"\t{task.Variables.HL_Skin.ToString("0.####", culture)}";
+            strLineF[2] += $"\t{task.Variables.HL_Sweating.ToString("0.####", culture)}";
+            strLineF[3] += $"\t{task.Variables.HL_Latent.ToString("0.####", culture)}";
+            strLineF[4] += $"\t{task.Variables.HL_Dry.ToString("0.####", culture)}";
+            strLineF[5] += $"\t{task.Variables.HL_Radiation.ToString("0.####", culture)}";
+            strLineF[6] += $"\t{task.Variables.HL_Convection.ToString("0.####", culture)}";
 
-            strLineF[7] += string.Concat("\t\t", task.Variables.PMV.ToString("0.####"));
-            strLineF[8] += string.Concat("\t\t", task.Variables.PPD.ToString("0.####"));
+            strLineF[7] += $"\t{task.Variables.PMV.ToString("0.####", culture)}";
+            strLineF[8] += $"\t{task.Variables.PPD.ToString("0.####", culture)}";
 
             i++;
         }
 
-        return string.Concat("These are the results for the PMV and the PPD indexes according to ISO 7730:",
-                System.Environment.NewLine,
-                string.Concat(strLineD),
-                System.Environment.NewLine,
-                string.Concat(strLineF),
-                System.Environment.NewLine);
+        strResult.Append(strRows[1]);
+        strResult.Append(System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        // Initial data
+        strResult.Append(strRows[2] + strLineD[0] + System.Environment.NewLine);
+        strResult.Append(strRows[3] + strLineD[1] + System.Environment.NewLine);
+        strResult.Append(strRows[4] + strLineD[2] + System.Environment.NewLine);
+        strResult.Append(strRows[5] + strLineD[3] + System.Environment.NewLine);
+        strResult.Append(strRows[6] + strLineD[4] + System.Environment.NewLine);
+        strResult.Append(strRows[7] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[8] + strLineD[6] + System.Environment.NewLine);
+        strResult.Append(strRows[9] + strLineD[7] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        // Scale factors
+        strResult.Append(strRows[10] + strLineF[0] + System.Environment.NewLine);
+        strResult.Append(strRows[11] + strLineF[1] + System.Environment.NewLine);
+        strResult.Append(strRows[12] + strLineF[2] + System.Environment.NewLine);
+        strResult.Append(strRows[13] + strLineF[3] + System.Environment.NewLine);
+        strResult.Append(strRows[14] + strLineF[4] + System.Environment.NewLine);
+        strResult.Append(strRows[15] + strLineF[5] + System.Environment.NewLine);
+        strResult.Append(strRows[16] + strLineF[6] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        // Results: PMV and PPD indexes
+        strResult.Append(strRows[17] + strLineF[7] + System.Environment.NewLine);
+        strResult.Append(strRows[18] + strLineF[8] + System.Environment.NewLine);
+
+        return strResult.ToString();
+    }
+
+    public override string ToString()
+    {
+        string[] strRows = new[]
+        {
+            "Case",
+            "These are the results for the PMV and the PPD indexes according to ISO 7730:",
+            "Initial data",
+            "Air temperature (°C)",
+            "Radiant temperature (°C)",
+            "Air velocity (m/s)",
+            "Relative humidity (%)",
+            "Clothing (clo)",
+            "Metabolic rate (met)",
+            "External work (met)",
+            "Heat loss factors",
+            "Heat loss diff. through skin",
+            "Heat loss by sweating",
+            "Latent respiration heat loss",
+            "Dry respiration heat loss",
+            "Heat loss by radiation",
+            "Heat loss by convection",
+            "The PMV index is:",
+            "The PPD index is:"
+        };
+        return ToString(strRows);
     }
 }
 
