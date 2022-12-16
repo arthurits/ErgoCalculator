@@ -20,6 +20,7 @@ public static class StringResources
     public static string BtnReset => StringRM.GetString("strBtnReset", Culture) ?? "&Reset";
 
 
+    public static string Case => StringRM.GetString("strCase", Culture) ?? "Case";
     public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
     public static string Subtask => StringRM.GetString("strSubTask", Culture) ?? "Subtask";
     public static string NumberOfTasks => StringRM.GetString("strNumberTasks", Culture) ?? "Number of tasks";
@@ -462,5 +463,71 @@ public static class StringResources
         LibertyMutual_Empty,
         LibertyMutual_Gender,
         LibertyMutual_TaskType
+    };
+
+    // Thermal comfort
+    public static string ThermalComfort_AirTemp => StringRM.GetString("strThermalComfort_AirTemp", Culture) ?? "Air temperature (°C)";
+    public static string ThermalComfort_AirVel => StringRM.GetString("strThermalComfort_AirVel", Culture) ?? "Air velocity (m/s)";
+    public static string ThermalComfort_Clothing => StringRM.GetString("strThermalComfort_Clothing", Culture) ?? "Clothing (clo)";
+    public static string ThermalComfort_Data => StringRM.GetString("strThermalComfort_Data", Culture) ?? "Initial data";
+    public static string ThermalComfort_ExternalWork => StringRM.GetString("strThermalComfort_ExternalWork", Culture) ?? "External work (met)";
+    public static string ThermalComfort_LossConvection => StringRM.GetString("strThermalComfort_LossConvection", Culture) ?? "Heat loss by convection";
+    public static string ThermalComfort_LossDry => StringRM.GetString("strThermalComfort_LossDry", Culture) ?? "Dry respiration heat loss";
+    public static string ThermalComfort_LossRadiation => StringRM.GetString("strThermalComfort_LossRadiation", Culture) ?? "Heat loss by radiation";
+    public static string ThermalComfort_LossRespiration => StringRM.GetString("strThermalComfort_LossRespiration", Culture) ?? "Latent respiration heat loss";
+    public static string ThermalComfort_LossSkin => StringRM.GetString("strThermalComfort_LossSkin", Culture) ?? "Heat loss diff. through skin";
+    public static string ThermalComfort_LossSweating => StringRM.GetString("strThermalComfort_LossSweating", Culture) ?? "Heat loss by sweating";
+    public static string ThermalComfort_MetabolicRate => StringRM.GetString("strThermalComfort_MetabolicRate", Culture) ?? "Metabolic rate (met)";
+    public static string ThermalComfort_Multipliers => StringRM.GetString("strThermalComfort_Multipliers", Culture) ?? "Heat loss factors";
+    public static string ThermalComfort_PMVindex => StringRM.GetString("strThermalComfort_PMVindex", Culture) ?? "The PMV index is:";
+    public static string ThermalComfort_PPDindex => StringRM.GetString("strThermalComfort_PPDindex", Culture) ?? "The PPD index is:";
+    public static string ThermalComfort_RadiantTemp => StringRM.GetString("strThermalComfort_RadiantTemp", Culture) ?? "Radiant temperature (°C)";
+    public static string ThermalComfort_RelHumidity => StringRM.GetString("strThermalComfort_RelHumidity", Culture) ?? "Relative humidity (%)";
+    public static string ThermalComfort_Results => StringRM.GetString("strThermalComfort_Results", Culture) ?? "These are the results for the PMV and the PPD indexes according to ISO 7730:";
+    public static string[] ThermalComfort_RowHeaders => new[]
+    {
+        ThermalComfort_Data,
+        ThermalComfort_AirTemp,
+        ThermalComfort_RadiantTemp,
+        ThermalComfort_AirVel,
+        ThermalComfort_RelHumidity,
+        ThermalComfort_Clothing,
+        ThermalComfort_MetabolicRate,
+        ThermalComfort_ExternalWork,
+        ThermalComfort_Multipliers,
+        ThermalComfort_LossSkin,
+        ThermalComfort_LossSweating,
+        ThermalComfort_LossRespiration,
+        ThermalComfort_LossDry,
+        ThermalComfort_LossRadiation,
+        ThermalComfort_LossConvection,
+        ThermalComfort_PMVindex,
+        ThermalComfort_PPDindex
+    };
+    public static string[] ThermalComfort_ColumnHeaders => new[]
+    {
+        $"{Case} A"
+    };
+    public static string[] ThermalComfort_ResultsHeaders => new[]
+    {
+        Case,
+        ThermalComfort_Results,
+        ThermalComfort_Data,
+        ThermalComfort_AirTemp,
+        ThermalComfort_RadiantTemp,
+        ThermalComfort_AirVel,
+        ThermalComfort_RelHumidity,
+        ThermalComfort_Clothing,
+        ThermalComfort_MetabolicRate,
+        ThermalComfort_ExternalWork,
+        ThermalComfort_Multipliers,
+        ThermalComfort_LossSkin,
+        ThermalComfort_LossSweating,
+        ThermalComfort_LossRespiration,
+        ThermalComfort_LossDry,
+        ThermalComfort_LossRadiation,
+        ThermalComfort_LossConvection,
+        ThermalComfort_PMVindex,
+        ThermalComfort_PPDindex
     };
 }
