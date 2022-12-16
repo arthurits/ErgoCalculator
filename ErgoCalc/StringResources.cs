@@ -188,37 +188,37 @@ public static class StringResources
     };
     public static string[] NIOSH_ResultsHeaders => new[]
     {
-        Task,
+        Task,                   // 0
         Subtask,
         NIOSH_Results,
         NIOSH_Data,
         NIOSH_Weight,
-        NIOSH_HorizontalD,
+        NIOSH_HorizontalD,      // 5
         NIOSH_VerticalD,
         NIOSH_VerticalT,
         NIOSH_Frequency,
         NIOSH_FrequencyA,
-        NIOSH_FrequencyB,
+        NIOSH_FrequencyB,       // 10
         NIOSH_Duration,
         NIOSH_Angle,
         NIOSH_Coupling,
         NIOSH_Multipliers,
-        NIOSH_LC,
+        NIOSH_LC,               // 15
         NIOSH_HM,
         NIOSH_VM,
         NIOSH_DM,
         NIOSH_FM,
-        NIOSH_FMa,
+        NIOSH_FMa,              // 20
         NIOSH_FMb,
         NIOSH_AM,
         NIOSH_CM,
         NIOSH_IF,
-        NIOSH_LI,
+        NIOSH_LI,               // 25
         NIOSH_SubtasksOrder,
         NIOSH_Equation,
         NIOSH_EquationIndex,
         NIOSH_EquationWeight,
-        NIOSH_Index,
+        NIOSH_Index,            // 30
         NIOSH_CouplingTypes
     };
 
