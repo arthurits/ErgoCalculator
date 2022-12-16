@@ -132,6 +132,9 @@
   <data name="strBtnReset" xml:space="preserve">
     <value>&amp;Restablecer</value>
   </data>
+  <data name="strCase" xml:space="preserve">
+    <value>Caso</value>
+  </data>
   <data name="strChkDlgPath" xml:space="preserve">
     <value>Recordar la ruta previa al abrir y guardar</value>
   </data>
@@ -639,7 +642,7 @@ salir de la aplicación?</value>
     <value>Tasa metabólica (met)</value>
   </data>
   <data name="strThermalComfort_Multipliers" xml:space="preserve">
-    <value>Heat loss factors</value>
+    <value>Factores de pérdida de calor</value>
   </data>
   <data name="strThermalComfort_PMVindex" xml:space="preserve">
     <value>El índice PMV es:</value>

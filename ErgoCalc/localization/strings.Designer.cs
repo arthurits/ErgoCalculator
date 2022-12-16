@@ -106,6 +106,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Case.
+        /// </summary>
+        internal static string strCase {
+            get {
+                return ResourceManager.GetString("strCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remember open/save dialog previous path.
         /// </summary>
         internal static string strChkDlgPath {

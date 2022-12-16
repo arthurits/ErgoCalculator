@@ -132,6 +132,9 @@
   <data name="strBtnReset" xml:space="preserve">
     <value>&amp;Reset</value>
   </data>
+  <data name="strCase" xml:space="preserve">
+    <value>Case</value>
+  </data>
   <data name="strChkDlgPath" xml:space="preserve">
     <value>Remember open/save dialog previous path</value>
   </data>
