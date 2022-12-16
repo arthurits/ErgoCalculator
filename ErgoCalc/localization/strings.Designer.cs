@@ -1512,6 +1512,168 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Air temperature (°C).
+        /// </summary>
+        internal static string strThermalComfort_AirTemp {
+            get {
+                return ResourceManager.GetString("strThermalComfort_AirTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Air velocity (m/s).
+        /// </summary>
+        internal static string strThermalComfort_AirVel {
+            get {
+                return ResourceManager.GetString("strThermalComfort_AirVel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clothing (clo).
+        /// </summary>
+        internal static string strThermalComfort_Clothing {
+            get {
+                return ResourceManager.GetString("strThermalComfort_Clothing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial data.
+        /// </summary>
+        internal static string strThermalComfort_Data {
+            get {
+                return ResourceManager.GetString("strThermalComfort_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External work (met).
+        /// </summary>
+        internal static string strThermalComfort_ExternalWork {
+            get {
+                return ResourceManager.GetString("strThermalComfort_ExternalWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heat loss by convection.
+        /// </summary>
+        internal static string strThermalComfort_LossConvection {
+            get {
+                return ResourceManager.GetString("strThermalComfort_LossConvection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dry respiration heat loss.
+        /// </summary>
+        internal static string strThermalComfort_LossDry {
+            get {
+                return ResourceManager.GetString("strThermalComfort_LossDry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heat loss by radiation.
+        /// </summary>
+        internal static string strThermalComfort_LossRadiation {
+            get {
+                return ResourceManager.GetString("strThermalComfort_LossRadiation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latent respiration heat loss.
+        /// </summary>
+        internal static string strThermalComfort_LossRespiration {
+            get {
+                return ResourceManager.GetString("strThermalComfort_LossRespiration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heat loss diff. through skin.
+        /// </summary>
+        internal static string strThermalComfort_LossSkin {
+            get {
+                return ResourceManager.GetString("strThermalComfort_LossSkin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heat loss by sweating.
+        /// </summary>
+        internal static string strThermalComfort_LossSweating {
+            get {
+                return ResourceManager.GetString("strThermalComfort_LossSweating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metabolic rate (met).
+        /// </summary>
+        internal static string strThermalComfort_MetabolicRate {
+            get {
+                return ResourceManager.GetString("strThermalComfort_MetabolicRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heat loss factors.
+        /// </summary>
+        internal static string strThermalComfort_Multipliers {
+            get {
+                return ResourceManager.GetString("strThermalComfort_Multipliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The PMV index is:.
+        /// </summary>
+        internal static string strThermalComfort_PMVindex {
+            get {
+                return ResourceManager.GetString("strThermalComfort_PMVindex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The PPD index is:.
+        /// </summary>
+        internal static string strThermalComfort_PPDindex {
+            get {
+                return ResourceManager.GetString("strThermalComfort_PPDindex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Radiant temperature (°C).
+        /// </summary>
+        internal static string strThermalComfort_RadiantTemp {
+            get {
+                return ResourceManager.GetString("strThermalComfort_RadiantTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relative humidity (%).
+        /// </summary>
+        internal static string strThermalComfort_RelHumidity {
+            get {
+                return ResourceManager.GetString("strThermalComfort_RelHumidity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the results for the PMV and the PPD indexes according to ISO 7730:.
+        /// </summary>
+        internal static string strThermalComfort_Results {
+            get {
+                return ResourceManager.GetString("strThermalComfort_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to About.
         /// </summary>
         internal static string strToolStripAbout {

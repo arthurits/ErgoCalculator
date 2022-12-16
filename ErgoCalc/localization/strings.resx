@@ -602,6 +602,60 @@ the application?</value>
   <data name="strTask" xml:space="preserve">
     <value>Task</value>
   </data>
+  <data name="strThermalComfort_AirTemp" xml:space="preserve">
+    <value>Air temperature (°C)</value>
+  </data>
+  <data name="strThermalComfort_AirVel" xml:space="preserve">
+    <value>Air velocity (m/s)</value>
+  </data>
+  <data name="strThermalComfort_Clothing" xml:space="preserve">
+    <value>Clothing (clo)</value>
+  </data>
+  <data name="strThermalComfort_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="strThermalComfort_ExternalWork" xml:space="preserve">
+    <value>External work (met)</value>
+  </data>
+  <data name="strThermalComfort_LossConvection" xml:space="preserve">
+    <value>Heat loss by convection</value>
+  </data>
+  <data name="strThermalComfort_LossDry" xml:space="preserve">
+    <value>Dry respiration heat loss</value>
+  </data>
+  <data name="strThermalComfort_LossRadiation" xml:space="preserve">
+    <value>Heat loss by radiation</value>
+  </data>
+  <data name="strThermalComfort_LossRespiration" xml:space="preserve">
+    <value>Latent respiration heat loss</value>
+  </data>
+  <data name="strThermalComfort_LossSkin" xml:space="preserve">
+    <value>Heat loss diff. through skin</value>
+  </data>
+  <data name="strThermalComfort_LossSweating" xml:space="preserve">
+    <value>Heat loss by sweating</value>
+  </data>
+  <data name="strThermalComfort_MetabolicRate" xml:space="preserve">
+    <value>Metabolic rate (met)</value>
+  </data>
+  <data name="strThermalComfort_Multipliers" xml:space="preserve">
+    <value>Heat loss factors</value>
+  </data>
+  <data name="strThermalComfort_PMVindex" xml:space="preserve">
+    <value>The PMV index is:</value>
+  </data>
+  <data name="strThermalComfort_PPDindex" xml:space="preserve">
+    <value>The PPD index is:</value>
+  </data>
+  <data name="strThermalComfort_RadiantTemp" xml:space="preserve">
+    <value>Radiant temperature (°C)</value>
+  </data>
+  <data name="strThermalComfort_RelHumidity" xml:space="preserve">
+    <value>Relative humidity (%)</value>
+  </data>
+  <data name="strThermalComfort_Results" xml:space="preserve">
+    <value>These are the results for the PMV and the PPD indexes according to ISO 7730:</value>
+  </data>
   <data name="strToolStripAbout" xml:space="preserve">
     <value>About</value>
   </data>
