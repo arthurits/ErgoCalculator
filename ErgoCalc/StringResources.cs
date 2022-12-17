@@ -559,7 +559,7 @@ public static class StringResources
     public static string CLM_YM => StringRM.GetString("strCLM_YM", Culture) ?? "Age multiplier (YM)";
     public static string CLM_BM => StringRM.GetString("strCLM_BM", Culture) ?? "Body weight multiplier (BM)";
     public static string CLM_BaseWeight => StringRM.GetString("strCLM_BaseWeight", Culture) ?? "Base weight";
-    public static string CLM_PopPercentage => StringRM.GetString("strCLM_PopPer", Culture) ?? "Population percentage";
+    public static string CLM_PopPercentage => StringRM.GetString("strCLM_PopPercentage", Culture) ?? "Population percentage";
     public static string CLM_LSIindex => StringRM.GetString("strCLM_LSIindex", Culture) ?? "The LSI index is";
     public static string CLM_CouplingType => StringRM.GetString("strCLM_CouplingType", Culture) ?? "No handles, Poor, Good";
     public static string CLM_GenderType => Gender;
