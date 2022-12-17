@@ -10,7 +10,8 @@ namespace ErgoCalc;
 public partial class FrmResultsCLM : Form, IChildResults
 {
     // Variable definition
-    private Job _job =new();
+    private Job _job = new();
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultsCLM()
     {
@@ -19,11 +20,19 @@ public partial class FrmResultsCLM : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsCLM(object? data)
+    public FrmResultsCLM(System.Globalization.CultureInfo culture)
+        : this()
+    {
+        _culture = culture;
+    }
+
+    public FrmResultsCLM(object? data, System.Globalization.CultureInfo culture)
         : this()
     {
         if (data?.GetType() == typeof(Job))
             _job = (Job)data;
+
+        _culture = culture;
     }
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)
@@ -43,7 +52,7 @@ public partial class FrmResultsCLM : Form, IChildResults
         if (Compute) ComprehensiveLifting.CalculateLSI(_job.Tasks);
         if (error == false)
         {
-            rtbShowResult.Text = _job.ToString();
+            rtbShowResult.Text = _job.ToString(StringResources.CLM_ResultsHeaders, _culture);
             FormatText();
         }
     }
@@ -245,7 +254,7 @@ public partial class FrmResultsCLM : Form, IChildResults
     public void Duplicate()
     {
         // Show the results window
-        FrmResultsCLM frmResults = new FrmResultsCLM(_job)
+        FrmResultsCLM frmResults = new FrmResultsCLM(_job, _culture)
         {
             MdiParent = this.MdiParent
         };
@@ -275,28 +284,111 @@ public partial class FrmResultsCLM : Form, IChildResults
 
     public void FormatText()
     {
-        // Underline
-        string line = rtbShowResult.Lines[2];
-        rtbShowResult.Select(rtbShowResult.Find("Description", 0, RichTextBoxFinds.MatchCase), line.Length);
-        //rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(2), line.Length);
-        rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+        // Set the control's tabs
+        rtbShowResult.SelectAll();
+        SetRichTextBoxTabs();
+        rtbShowResult.DeselectAll();
 
-        line = rtbShowResult.Lines[16];
-        rtbShowResult.Select(rtbShowResult.Find("Description", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
-        //rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(16), line.Length);
-        rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+        // Formats (font, size, and style) the text
+        int nStart = 0, nEnd = 0;
+        while (true)
+        {
+            // Underline
+            nStart = rtbShowResult.Find(StringResources.CLM_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
+
+            nStart = rtbShowResult.Find(StringResources.CLM_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
+        }
 
         // Bold results
-        line = rtbShowResult.Lines[31];
-        rtbShowResult.Select(rtbShowResult.Find("The LSI", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
-        //rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(31), line.Length);
-        rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size, FontStyle.Bold);
+        nStart = 0;
+        while (true)
+        {
+            nStart = rtbShowResult.Find(StringResources.CLM_LSIindex, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            //nEnd = rtbShowResult.Text.Length;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+
+        }
 
         // Set the cursor at the beginning of the text
         rtbShowResult.SelectionStart = 0;
         rtbShowResult.SelectionLength = 0;
+
+        //// Underline
+        //string line = rtbShowResult.Lines[2];
+        //rtbShowResult.Select(rtbShowResult.Find("Description", 0, RichTextBoxFinds.MatchCase), line.Length);
+        ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(2), line.Length);
+        //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+
+        //line = rtbShowResult.Lines[16];
+        //rtbShowResult.Select(rtbShowResult.Find("Description", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
+        ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(16), line.Length);
+        //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+
+        //// Bold results
+        //line = rtbShowResult.Lines[31];
+        //rtbShowResult.Select(rtbShowResult.Find("The LSI", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
+        ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(31), line.Length);
+        //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size, FontStyle.Bold);
     }
-    
+
     #endregion IChildResults
 
+    /// <summary>
+    /// Sets the tabs in the RichTextBox control. It assumes the corresponding text is already selected.
+    /// </summary>
+    private void SetRichTextBoxTabs()
+    {
+        (int rowMax, int rowTab) = ComputeTabSpace(StringResources.CLM_RowHeaders);
+        (int colMax, int colTab) = ComputeTabSpace(StringResources.CLM_ColumnHeaders);
+        int tab = Math.Min(rowTab, colTab);
+
+        int[] tabs = new int[_job.NumberTasks];
+        for (int i = 0; i < tabs.Length; i++)
+        {
+            if (i == 0)
+                tabs[i] = rowMax + tab;
+            else
+                tabs[i] = tabs[i - 1] + colMax + tab;
+        }
+        rtbShowResult.SelectionTabs = tabs;
+
+    }
+
+    /// <summary>
+    /// Computes the tabs for the RichTextBox control
+    /// </summary>
+    /// <param name="strings">Array of strings that will be measured. The greatest measure is used to compute the tab space</param>
+    /// <param name="tabFactor">Factor (percentage) of the maximum measure to be used as tab space</param>
+    /// <param name="tabMinSpace">Minimum tab space in pixels. Default value is 10</param>
+    /// <returns></returns>
+    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double tabFactor = 0.1, int tabMinSpace = 10)
+    {
+        SizeF size;
+        int nWidth = 0;
+        int tabSpace;
+
+        using var g = rtbShowResult.CreateGraphics();
+        foreach (string strRow in strings)
+        {
+            size = g.MeasureString(strRow, rtbShowResult.Font);
+            if (size.Width > nWidth)
+                nWidth = (int)size.Width;
+        }
+
+        tabSpace = (int)(nWidth * tabFactor);
+        tabSpace = tabSpace > tabMinSpace ? tabSpace : tabMinSpace;
+
+        return (nWidth, tabSpace);
+    }
 }

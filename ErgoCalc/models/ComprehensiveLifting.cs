@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace ErgoCalc.Models.CLM;
 
@@ -65,87 +66,210 @@ public class Job
 
     public int NumberTasks { get; set; } = 0;
     
-    public override string ToString()
+    //public override string ToString()
+    //{
+    //    string strTasks = string.Empty;
+
+    //    //foreach (Task task in Tasks)
+    //    //    strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
+
+    //    string[] strLineD = new string[13];
+    //    string[] strLineR = new string[14];
+
+    //    // Data array
+    //    strLineD[0] = string.Concat("Description", "\t\t\t");
+    //    strLineD[1] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t");
+    //    strLineD[2] = string.Concat(System.Environment.NewLine, "Weight lifted (kg)", "\t");
+    //    strLineD[3] = string.Concat(System.Environment.NewLine, "Horizontal distance (cm)", "\t");
+    //    strLineD[4] = string.Concat(System.Environment.NewLine, "Vertical distance (cm)", "\t");
+    //    strLineD[5] = string.Concat(System.Environment.NewLine, "Vertical travel distance (cm)");
+    //    strLineD[6] = string.Concat(System.Environment.NewLine, "Lifting frequency (times/min)");
+    //    strLineD[7] = string.Concat(System.Environment.NewLine, "Task duration (hours)", "\t");
+    //    strLineD[8] = string.Concat(System.Environment.NewLine, "Twisting angle (°)", "\t");
+    //    strLineD[9] = string.Concat(System.Environment.NewLine, "Coupling", "\t\t");
+    //    strLineD[10] = string.Concat(System.Environment.NewLine, "WBGT temperature (°C)", "\t");
+    //    strLineD[11] = string.Concat(System.Environment.NewLine, "Age (years)", "\t\t");
+    //    strLineD[12] = string.Concat(System.Environment.NewLine, "Body weight (kg)", "\t");
+
+    //    // Results array
+    //    strLineR[0] = string.Concat("Description", "\t\t\t");
+    //    strLineR[1] = string.Concat(System.Environment.NewLine, "Horizontal multiplier", "\t");
+    //    strLineR[2] = string.Concat(System.Environment.NewLine, "Vertical multiplier", "\t");
+    //    strLineR[3] = string.Concat(System.Environment.NewLine, "Distance multiplier", "\t");
+    //    strLineR[4] = string.Concat(System.Environment.NewLine, "Frequency multiplier", "\t");
+    //    strLineR[5] = string.Concat(System.Environment.NewLine, "Task duration multiplier", "\t");
+    //    strLineR[6] = string.Concat(System.Environment.NewLine, "Twisting multiplier", "\t");
+    //    strLineR[7] = string.Concat(System.Environment.NewLine, "Coupling multiplier", "\t");
+    //    strLineR[8] = string.Concat(System.Environment.NewLine, "WBGT multiplier", "\t");
+    //    strLineR[9] = string.Concat(System.Environment.NewLine, "Age multiplier:\t\t");
+    //    strLineR[10] = string.Concat(System.Environment.NewLine, "Body weight multiplier", "\t");
+    //    strLineR[11] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Base weight", "\t\t");
+    //    strLineR[12] = string.Concat(System.Environment.NewLine, "Population percentage", "\t");
+    //    strLineR[13] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The LSI index is", "\t");
+        
+    //    for (int i = 0; i < Tasks.Length; i++)
+    //    {
+    //        strLineD[0] += "\t" + "Task " + ((char)('A' + i)).ToString();
+    //        strLineD[1] += "\t\t" + Tasks[i].Data.Gender.ToString();
+    //        strLineD[2] += "\t\t" + Tasks[i].Data.Weight.ToString();
+    //        strLineD[3] += "\t\t" + Tasks[i].Data.h.ToString();
+    //        strLineD[4] += "\t\t" + Tasks[i].Data.v.ToString();
+    //        strLineD[5] += "\t\t" + Tasks[i].Data.d.ToString();
+    //        strLineD[6] += "\t\t" + Tasks[i].Data.f.ToString();
+    //        strLineD[7] += "\t\t" + Tasks[i].Data.td.ToString();
+    //        strLineD[8] += "\t\t" + Tasks[i].Data.t.ToString();
+    //        strLineD[9] += "\t\t" + Tasks[i].Data.c.ToString();
+    //        strLineD[10] += "\t\t" + Tasks[i].Data.hs.ToString();
+    //        strLineD[11] += "\t\t" + Tasks[i].Data.ag.ToString();
+    //        strLineD[12] += "\t\t" + Tasks[i].Data.bw.ToString();
+
+    //        strLineR[0] += "\t" + "Task " + ((char)('A' + i)).ToString();
+    //        strLineR[1] += "\t\t" + Tasks[i].Factors.fH.ToString("0.####");
+    //        strLineR[2] += "\t\t" + Tasks[i].Factors.fV.ToString("0.####");
+    //        strLineR[3] += "\t\t" + Tasks[i].Factors.fD.ToString("0.####");
+    //        strLineR[4] += "\t\t" + Tasks[i].Factors.fF.ToString("0.####");
+    //        strLineR[5] += "\t\t" + Tasks[i].Factors.fTD.ToString("0.####");
+    //        strLineR[6] += "\t\t" + Tasks[i].Factors.fT.ToString("0.####");
+    //        strLineR[7] += "\t\t" + Tasks[i].Factors.fC.ToString("0.####");
+    //        strLineR[8] += "\t\t" + Tasks[i].Factors.fHS.ToString("0.####");
+    //        strLineR[9] += "\t\t" + Tasks[i].Factors.fAG.ToString("0.####");
+    //        strLineR[10] += "\t\t" + Tasks[i].Factors.fBW.ToString("0.####");
+    //        strLineR[11] += "\t\t" + Tasks[i].BaseWeight.ToString("0.####");
+    //        strLineR[12] += "\t\t" + Tasks[i].Percentage.ToString("0.####");
+    //        strLineR[13] += "\t\t" + Tasks[i].IndexLSI.ToString("0.####");
+    //    }
+
+    //    return string.Concat("The LSI index from the following data:",
+    //                        System.Environment.NewLine,
+    //                        System.Environment.NewLine,
+    //                        string.Concat(strLineD),
+    //                        System.Environment.NewLine,
+    //                        System.Environment.NewLine,
+    //                        string.Concat(strLineR),
+    //                        System.Environment.NewLine);
+    //}
+
+    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
-        string strTasks = string.Empty;
-
-        //foreach (Task task in Tasks)
-        //    strTasks += task.ToString() + Environment.NewLine + Environment.NewLine;
-
+        StringBuilder strResult = new(2200);
         string[] strLineD = new string[13];
         string[] strLineR = new string[14];
 
-        // Data array
-        strLineD[0] = string.Concat("Description", "\t\t\t");
-        strLineD[1] = string.Concat(System.Environment.NewLine, "Gender", "\t\t\t");
-        strLineD[2] = string.Concat(System.Environment.NewLine, "Weight lifted (kg)", "\t");
-        strLineD[3] = string.Concat(System.Environment.NewLine, "Horizontal distance (cm)", "\t");
-        strLineD[4] = string.Concat(System.Environment.NewLine, "Vertical distance (cm)", "\t");
-        strLineD[5] = string.Concat(System.Environment.NewLine, "Vertical travel distance (cm)");
-        strLineD[6] = string.Concat(System.Environment.NewLine, "Lifting frequency (times/min)");
-        strLineD[7] = string.Concat(System.Environment.NewLine, "Task duration (hours)", "\t");
-        strLineD[8] = string.Concat(System.Environment.NewLine, "Twisting angle (°)", "\t");
-        strLineD[9] = string.Concat(System.Environment.NewLine, "Coupling", "\t\t");
-        strLineD[10] = string.Concat(System.Environment.NewLine, "WBGT temperature (°C)", "\t");
-        strLineD[11] = string.Concat(System.Environment.NewLine, "Age (years)", "\t\t");
-        strLineD[12] = string.Concat(System.Environment.NewLine, "Body weight (kg)", "\t");
-
-        // Results array
-        strLineR[0] = string.Concat("Description", "\t\t\t");
-        strLineR[1] = string.Concat(System.Environment.NewLine, "Horizontal multiplier", "\t");
-        strLineR[2] = string.Concat(System.Environment.NewLine, "Vertical multiplier", "\t");
-        strLineR[3] = string.Concat(System.Environment.NewLine, "Distance multiplier", "\t");
-        strLineR[4] = string.Concat(System.Environment.NewLine, "Frequency multiplier", "\t");
-        strLineR[5] = string.Concat(System.Environment.NewLine, "Task duration multiplier", "\t");
-        strLineR[6] = string.Concat(System.Environment.NewLine, "Twisting multiplier", "\t");
-        strLineR[7] = string.Concat(System.Environment.NewLine, "Coupling multiplier", "\t");
-        strLineR[8] = string.Concat(System.Environment.NewLine, "WBGT multiplier", "\t");
-        strLineR[9] = string.Concat(System.Environment.NewLine, "Age multiplier:\t\t");
-        strLineR[10] = string.Concat(System.Environment.NewLine, "Body weight multiplier", "\t");
-        strLineR[11] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "Base weight", "\t\t");
-        strLineR[12] = string.Concat(System.Environment.NewLine, "Population percentage", "\t");
-        strLineR[13] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The LSI index is", "\t");
+        if (culture is null)
+            culture = System.Globalization.CultureInfo.CurrentCulture;
         
-        for (int i = 0; i < Tasks.Length; i++)
+        int i = 0;
+        foreach (TaskModel task in Tasks)
         {
-            strLineD[0] += "\t" + "Task " + ((char)('A' + i)).ToString();
-            strLineD[1] += "\t\t" + Tasks[i].Data.Gender.ToString();
-            strLineD[2] += "\t\t" + Tasks[i].Data.Weight.ToString();
-            strLineD[3] += "\t\t" + Tasks[i].Data.h.ToString();
-            strLineD[4] += "\t\t" + Tasks[i].Data.v.ToString();
-            strLineD[5] += "\t\t" + Tasks[i].Data.d.ToString();
-            strLineD[6] += "\t\t" + Tasks[i].Data.f.ToString();
-            strLineD[7] += "\t\t" + Tasks[i].Data.td.ToString();
-            strLineD[8] += "\t\t" + Tasks[i].Data.t.ToString();
-            strLineD[9] += "\t\t" + Tasks[i].Data.c.ToString();
-            strLineD[10] += "\t\t" + Tasks[i].Data.hs.ToString();
-            strLineD[11] += "\t\t" + Tasks[i].Data.ag.ToString();
-            strLineD[12] += "\t\t" + Tasks[i].Data.bw.ToString();
+            strLineD[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+            strLineD[1] += $"\t{strRows[30].Split(", ")[(int)task.Data.Gender]}";
+            strLineD[2] += $"\t{task.Data.Weight.ToString(culture)}";
+            strLineD[3] += $"\t{task.Data.h.ToString(culture)}";
+            strLineD[4] += $"\t{task.Data.v.ToString(culture)}";
+            strLineD[5] += $"\t{task.Data.d.ToString(culture)}";
+            strLineD[6] += $"\t{task.Data.f.ToString(culture)}";
+            strLineD[7] += $"\t{task.Data.td.ToString(culture)}";
+            strLineD[8] += $"\t{task.Data.t.ToString(culture)}";
+            strLineD[9] += $"\t{strRows[29].Split(", ")[(int)task.Data.c]}";
+            strLineD[10] += $"\t{task.Data.hs.ToString(culture)}";
+            strLineD[11] += $"\t{task.Data.ag.ToString(culture)}";
+            strLineD[12] += $"\t{task.Data.bw.ToString(culture)}";
 
-            strLineR[0] += "\t" + "Task " + ((char)('A' + i)).ToString();
-            strLineR[1] += "\t\t" + Tasks[i].Factors.fH.ToString("0.####");
-            strLineR[2] += "\t\t" + Tasks[i].Factors.fV.ToString("0.####");
-            strLineR[3] += "\t\t" + Tasks[i].Factors.fD.ToString("0.####");
-            strLineR[4] += "\t\t" + Tasks[i].Factors.fF.ToString("0.####");
-            strLineR[5] += "\t\t" + Tasks[i].Factors.fTD.ToString("0.####");
-            strLineR[6] += "\t\t" + Tasks[i].Factors.fT.ToString("0.####");
-            strLineR[7] += "\t\t" + Tasks[i].Factors.fC.ToString("0.####");
-            strLineR[8] += "\t\t" + Tasks[i].Factors.fHS.ToString("0.####");
-            strLineR[9] += "\t\t" + Tasks[i].Factors.fAG.ToString("0.####");
-            strLineR[10] += "\t\t" + Tasks[i].Factors.fBW.ToString("0.####");
-            strLineR[11] += "\t\t" + Tasks[i].BaseWeight.ToString("0.####");
-            strLineR[12] += "\t\t" + Tasks[i].Percentage.ToString("0.####");
-            strLineR[13] += "\t\t" + Tasks[i].IndexLSI.ToString("0.####");
+            strLineR[0] += $"\t{strRows[0]} {((char)('A' + i)).ToString(culture)}";
+            strLineR[1] += $"\t{task.Factors.fH.ToString("0.####", culture)}";
+            strLineR[2] += $"\t{task.Factors.fV.ToString("0.####", culture)}";
+            strLineR[3] += $"\t{task.Factors.fD.ToString("0.####", culture)}";
+            strLineR[4] += $"\t{task.Factors.fF.ToString("0.####", culture)}";
+            strLineR[5] += $"\t{task.Factors.fTD.ToString("0.####", culture)}";
+            strLineR[6] += $"\t{task.Factors.fT.ToString("0.####", culture)}";
+            strLineR[7] += $"\t{task.Factors.fC.ToString("0.####", culture)}";
+            strLineR[8] += $"\t{task.Factors.fHS.ToString("0.####", culture)}";
+            strLineR[9] += $"\t{task.Factors.fAG.ToString("0.####", culture)}";
+            strLineR[10] += $"\t{task.Factors.fBW.ToString("0.####", culture)}";
+            strLineR[11] += $"\t{task.BaseWeight.ToString("0.####", culture)}";
+            strLineR[12] += $"\t{task.Percentage.ToString("0.####", culture)}";
+            strLineR[13] += $"\t{task.IndexLSI.ToString("0.####", culture)}";
+
+            i++;
         }
 
-        return string.Concat("The LSI index from the following data:",
-                            System.Environment.NewLine,
-                            System.Environment.NewLine,
-                            string.Concat(strLineD),
-                            System.Environment.NewLine,
-                            System.Environment.NewLine,
-                            string.Concat(strLineR),
-                            System.Environment.NewLine);
+        strResult.Append(strRows[1]);
+        strResult.Append(System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        // Initial data
+        strResult.Append(strRows[2] + strLineD[0] + System.Environment.NewLine);
+        strResult.Append(strRows[3] + strLineD[1] + System.Environment.NewLine);
+        strResult.Append(strRows[4] + strLineD[2] + System.Environment.NewLine);
+        strResult.Append(strRows[5] + strLineD[3] + System.Environment.NewLine);
+        strResult.Append(strRows[6] + strLineD[4] + System.Environment.NewLine);
+        strResult.Append(strRows[7] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[8] + strLineD[6] + System.Environment.NewLine);
+        strResult.Append(strRows[9] + strLineD[7] + System.Environment.NewLine);
+        strResult.Append(strRows[10] + strLineD[8] + System.Environment.NewLine);
+        strResult.Append(strRows[11] + strLineD[9] + System.Environment.NewLine);
+        strResult.Append(strRows[12] + strLineD[10] + System.Environment.NewLine);
+        strResult.Append(strRows[13] + strLineD[11] + System.Environment.NewLine);
+        strResult.Append(strRows[14] + strLineD[12] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+
+        // Multipliers
+        strResult.Append(strRows[15] + strLineR[0] + System.Environment.NewLine);
+        strResult.Append(strRows[16] + strLineR[1] + System.Environment.NewLine);
+        strResult.Append(strRows[17] + strLineR[2] + System.Environment.NewLine);
+        strResult.Append(strRows[18] + strLineR[3] + System.Environment.NewLine);
+        strResult.Append(strRows[19] + strLineR[4] + System.Environment.NewLine);
+        strResult.Append(strRows[20] + strLineR[5] + System.Environment.NewLine);
+        strResult.Append(strRows[21] + strLineR[6] + System.Environment.NewLine);
+        strResult.Append(strRows[22] + strLineR[7] + System.Environment.NewLine);
+        strResult.Append(strRows[23] + strLineR[8] + System.Environment.NewLine);
+        strResult.Append(strRows[24] + strLineR[9] + System.Environment.NewLine);
+        strResult.Append(strRows[25] + strLineR[10] + System.Environment.NewLine);
+        strResult.Append(strRows[26] + strLineR[11] + System.Environment.NewLine);
+        strResult.Append(strRows[27] + strLineR[12] + System.Environment.NewLine);
+        strResult.Append(System.Environment.NewLine);
+        strResult.Append(strRows[28] + strLineR[13] + System.Environment.NewLine);
+
+        return strResult.ToString();
+    }
+
+    public override string ToString()
+    {
+        string[] strRows = new[]
+        {
+            "Task",
+            "These are the results from the Comprehensive Lifting Model",
+            "Initial data",
+            "Gender",
+            "Weight lifted (kg)",
+            "Horizontal distance (cm)",
+            "Vertical height (cm)",
+            "Vertical distance (cm)",
+            "Lifting frequency (actions/min)",
+            "Task duration (h)",
+            "Twisting angle (°)",
+            "Coupling",
+            "WBGT temperature (°C)",
+            "Age (years)",
+            "Body weight (kg)",
+            "Multipliers",
+            "Horizontal multiplier (HM)",
+            "Vertical height multiplier (VHM)",
+            "Vertical distance multiplier (VDM)",
+            "Frequency multiplier (FM)",
+            "Task duration multiplier (HM)",
+            "Twisting angle multiplier (AM)",
+            "Coupling multiplier (CM)",
+            "WBGT temperature multiplier (TM)",
+            "Age multiplier (YM)",
+            "Body weight multiplier (BM)",
+            "Base weight",
+            "Population percentage",
+            "The LSI index is",
+            "No handles, Poor, Good",
+            "Male, Female"
+        };
+        return ToString(strRows);
     }
 }
 

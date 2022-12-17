@@ -44,7 +44,7 @@ partial class FrmMain
                 Form frmResults = frmNew.Model switch
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData),
-                    ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData),
+                    ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.AppCulture),
                     ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData, _settings.AppCulture),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.AppCulture),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
@@ -123,7 +123,7 @@ partial class FrmMain
                 "Strain index" => new FrmResultsStrainIndex(_settings.AppCulture),
                 "Thermal comfort model" => new FrmResultsTC(_settings.AppCulture),
                 "LM-MMH model" => new FrmResultsLiberty(_settings.AppCulture),
-                "Comprehensive lifting model" => new FrmResultsCLM(),
+                "Comprehensive lifting model" => new FrmResultsCLM(_settings.AppCulture),
                 _ => default
             };
 
