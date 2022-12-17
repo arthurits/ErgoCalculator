@@ -323,23 +323,6 @@ public partial class FrmResultsCLM : Form, IChildResults
         // Set the cursor at the beginning of the text
         rtbShowResult.SelectionStart = 0;
         rtbShowResult.SelectionLength = 0;
-
-        //// Underline
-        //string line = rtbShowResult.Lines[2];
-        //rtbShowResult.Select(rtbShowResult.Find("Description", 0, RichTextBoxFinds.MatchCase), line.Length);
-        ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(2), line.Length);
-        //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
-
-        //line = rtbShowResult.Lines[16];
-        //rtbShowResult.Select(rtbShowResult.Find("Description", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
-        ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(16), line.Length);
-        //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
-
-        //// Bold results
-        //line = rtbShowResult.Lines[31];
-        //rtbShowResult.Select(rtbShowResult.Find("The LSI", rtbShowResult.SelectionStart + 1, RichTextBoxFinds.MatchCase), line.Length);
-        ////rtbShowResult.Select(rtbShowResult.GetFirstCharIndexFromLine(31), line.Length);
-        //rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size, FontStyle.Bold);
     }
 
     #endregion IChildResults
