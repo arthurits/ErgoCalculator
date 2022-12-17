@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Text.Json;
-using System.Windows.Forms;
+﻿using System.Text.Json;
 
 using ErgoCalc.Models.CLM;
 
