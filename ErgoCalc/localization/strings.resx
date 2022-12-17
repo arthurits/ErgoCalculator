@@ -151,7 +151,7 @@
     <value>Twisting angle (°)</value>
   </data>
   <data name="strCLM_BaseWeight" xml:space="preserve">
-    <value>Base weight</value>
+    <value>Base weight (kg)</value>
   </data>
   <data name="strCLM_BM" xml:space="preserve">
     <value>Body weight multiplier (BM)</value>

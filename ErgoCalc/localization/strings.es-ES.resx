@@ -142,7 +142,7 @@
     <value>Ajustar palabras</value>
   </data>
   <data name="strCLM_Age" xml:space="preserve">
-    <value>Edad (years)</value>
+    <value>Edad (años)</value>
   </data>
   <data name="strCLM_AM" xml:space="preserve">
     <value>Factor de asimetría (AM)</value>

@@ -160,7 +160,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Base weight.
+        ///   Looks up a localized string similar to Base weight (kg).
         /// </summary>
         internal static string strCLM_BaseWeight {
             get {
