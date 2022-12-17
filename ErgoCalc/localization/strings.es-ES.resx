@@ -141,6 +141,93 @@
   <data name="strChkWordWrap" xml:space="preserve">
     <value>Ajustar palabras</value>
   </data>
+  <data name="strCLM_Age" xml:space="preserve">
+    <value>Edad (years)</value>
+  </data>
+  <data name="strCLM_AM" xml:space="preserve">
+    <value>Factor de asimetría (AM)</value>
+  </data>
+  <data name="strCLM_Angle" xml:space="preserve">
+    <value>Ángulo de giro (°)</value>
+  </data>
+  <data name="strCLM_BaseWeight" xml:space="preserve">
+    <value>Peso de referencia (kg)</value>
+  </data>
+  <data name="strCLM_BM" xml:space="preserve">
+    <value>Factor de peso corporal (BM)</value>
+  </data>
+  <data name="strCLM_BodyWeight" xml:space="preserve">
+    <value>Peso corporal (kg)</value>
+  </data>
+  <data name="strCLM_CM" xml:space="preserve">
+    <value>Factor de agarre (CM)</value>
+  </data>
+  <data name="strCLM_Coupling" xml:space="preserve">
+    <value>Agarre</value>
+  </data>
+  <data name="strCLM_CouplingType" xml:space="preserve">
+    <value>Malo, Regular, Bueno</value>
+  </data>
+  <data name="strCLM_Data" xml:space="preserve">
+    <value>Datos iniciales</value>
+  </data>
+  <data name="strCLM_DM" xml:space="preserve">
+    <value>Factor de duración de la tarea (HM)</value>
+  </data>
+  <data name="strCLM_FM" xml:space="preserve">
+    <value>Factor de frecuencia (FM)</value>
+  </data>
+  <data name="strCLM_Frequency" xml:space="preserve">
+    <value>Frecuencia (acciones/min)</value>
+  </data>
+  <data name="strCLM_Gender" xml:space="preserve">
+    <value>Sexo</value>
+  </data>
+  <data name="strCLM_HM" xml:space="preserve">
+    <value>Factor horizontal (HM)</value>
+  </data>
+  <data name="strCLM_HorizontalD" xml:space="preserve">
+    <value>Distancia horizontal (cm)</value>
+  </data>
+  <data name="strCLM_HoursTask" xml:space="preserve">
+    <value>Duración de la tarea (h)</value>
+  </data>
+  <data name="strCLM_LSIindex" xml:space="preserve">
+    <value>El índice LSI es:</value>
+  </data>
+  <data name="strCLM_Multipliers" xml:space="preserve">
+    <value>Factores multiplicadores</value>
+  </data>
+  <data name="strCLM_PopPercentage" xml:space="preserve">
+    <value>Porcentaje de población</value>
+  </data>
+  <data name="strCLM_Results" xml:space="preserve">
+    <value>Estos son los resultados obtenidos mediante el modelo «Comprehensive Lifting Model»:</value>
+  </data>
+  <data name="strCLM_Temperature" xml:space="preserve">
+    <value>Temperatura WBGT (°C)</value>
+  </data>
+  <data name="strCLM_TM" xml:space="preserve">
+    <value>Factor de temperatura WBGT (TM)</value>
+  </data>
+  <data name="strCLM_VDM" xml:space="preserve">
+    <value>Factor de desplazamiento vertical (VDM)</value>
+  </data>
+  <data name="strCLM_VerticalD" xml:space="preserve">
+    <value>Desplazamiento vertical (cm)</value>
+  </data>
+  <data name="strCLM_VerticalH" xml:space="preserve">
+    <value>Distancia vertical (cm)</value>
+  </data>
+  <data name="strCLM_VM" xml:space="preserve">
+    <value>Factor de altura (VHM)</value>
+  </data>
+  <data name="strCLM_Weight" xml:space="preserve">
+    <value>Peso levantado (kg)</value>
+  </data>
+  <data name="strCLM_YM" xml:space="preserve">
+    <value>Factor de edad (YM)</value>
+  </data>
   <data name="strDlgReset" xml:space="preserve">
     <value>¿Está seguro de que desea restablecer todos
 los campos a sus valores por defecto?</value>
@@ -374,7 +461,7 @@ salir de la aplicación?</value>
   <data name="strNIOSH_Coupling" xml:space="preserve">
     <value>Agarre:</value>
   </data>
-  <data name="strNIOSH_CouplingTypes" xml:space="preserve">
+  <data name="strNIOSH_CouplingType" xml:space="preserve">
     <value>Malo, Regular, Bueno</value>
   </data>
   <data name="strNIOSH_Data" xml:space="preserve">

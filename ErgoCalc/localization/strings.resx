@@ -141,6 +141,93 @@
   <data name="strChkWordWrap" xml:space="preserve">
     <value>Word wrap</value>
   </data>
+  <data name="strCLM_Age" xml:space="preserve">
+    <value>Age (years)</value>
+  </data>
+  <data name="strCLM_AM" xml:space="preserve">
+    <value>Twisting angle multiplier (AM)</value>
+  </data>
+  <data name="strCLM_Angle" xml:space="preserve">
+    <value>Twisting angle (°)</value>
+  </data>
+  <data name="strCLM_BaseWeight" xml:space="preserve">
+    <value>Base weight</value>
+  </data>
+  <data name="strCLM_BM" xml:space="preserve">
+    <value>Body weight multiplier (BM)</value>
+  </data>
+  <data name="strCLM_BodyWeight" xml:space="preserve">
+    <value>Body weight (kg)</value>
+  </data>
+  <data name="strCLM_CM" xml:space="preserve">
+    <value>Coupling multiplier (CM)</value>
+  </data>
+  <data name="strCLM_Coupling" xml:space="preserve">
+    <value>Coupling</value>
+  </data>
+  <data name="strCLM_CouplingType" xml:space="preserve">
+    <value>No handles, Poor, Good</value>
+  </data>
+  <data name="strCLM_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="strCLM_DM" xml:space="preserve">
+    <value>Task duration multiplier (HM)</value>
+  </data>
+  <data name="strCLM_FM" xml:space="preserve">
+    <value>Frequency multiplier (FM)</value>
+  </data>
+  <data name="strCLM_Frequency" xml:space="preserve">
+    <value>Lifting frequency (actions/min)</value>
+  </data>
+  <data name="strCLM_Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="strCLM_HM" xml:space="preserve">
+    <value>Horizontal multiplier (HM)</value>
+  </data>
+  <data name="strCLM_HorizontalD" xml:space="preserve">
+    <value>Horizontal distance (cm)</value>
+  </data>
+  <data name="strCLM_HoursTask" xml:space="preserve">
+    <value>Task duration (h)</value>
+  </data>
+  <data name="strCLM_LSIindex" xml:space="preserve">
+    <value>The LSI index is:</value>
+  </data>
+  <data name="strCLM_Multipliers" xml:space="preserve">
+    <value>Multipliers</value>
+  </data>
+  <data name="strCLM_PopPercentage" xml:space="preserve">
+    <value>Population percentage</value>
+  </data>
+  <data name="strCLM_Results" xml:space="preserve">
+    <value>These are the results from the Comprehensive Lifting Model:</value>
+  </data>
+  <data name="strCLM_Temperature" xml:space="preserve">
+    <value>WBGT temperature (°C)</value>
+  </data>
+  <data name="strCLM_TM" xml:space="preserve">
+    <value>WBGT temperature multiplier (TM)</value>
+  </data>
+  <data name="strCLM_VDM" xml:space="preserve">
+    <value>Vertical distance multiplier (VDM)</value>
+  </data>
+  <data name="strCLM_VerticalD" xml:space="preserve">
+    <value>Vertical distance (cm)</value>
+  </data>
+  <data name="strCLM_VerticalH" xml:space="preserve">
+    <value>Vertical height (cm)</value>
+  </data>
+  <data name="strCLM_VM" xml:space="preserve">
+    <value>Vertical height multiplier (VHM)</value>
+  </data>
+  <data name="strCLM_Weight" xml:space="preserve">
+    <value>Weight lifted (kg)</value>
+  </data>
+  <data name="strCLM_YM" xml:space="preserve">
+    <value>Age multiplier (YM)</value>
+  </data>
   <data name="strDlgReset" xml:space="preserve">
     <value>Do you want to reset all fields
 to their default values?</value>
@@ -374,7 +461,7 @@ the application?</value>
   <data name="strNIOSH_Coupling" xml:space="preserve">
     <value>Coupling:</value>
   </data>
-  <data name="strNIOSH_CouplingTypes" xml:space="preserve">
+  <data name="strNIOSH_CouplingType" xml:space="preserve">
     <value>No handles, Poor, Good</value>
   </data>
   <data name="strNIOSH_Data" xml:space="preserve">

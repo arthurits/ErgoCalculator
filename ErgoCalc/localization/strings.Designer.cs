@@ -133,6 +133,267 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age (years).
+        /// </summary>
+        internal static string strCLM_Age {
+            get {
+                return ResourceManager.GetString("strCLM_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twisting angle multiplier (AM).
+        /// </summary>
+        internal static string strCLM_AM {
+            get {
+                return ResourceManager.GetString("strCLM_AM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Twisting angle (°).
+        /// </summary>
+        internal static string strCLM_Angle {
+            get {
+                return ResourceManager.GetString("strCLM_Angle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base weight.
+        /// </summary>
+        internal static string strCLM_BaseWeight {
+            get {
+                return ResourceManager.GetString("strCLM_BaseWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body weight multiplier (BM).
+        /// </summary>
+        internal static string strCLM_BM {
+            get {
+                return ResourceManager.GetString("strCLM_BM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Body weight (kg).
+        /// </summary>
+        internal static string strCLM_BodyWeight {
+            get {
+                return ResourceManager.GetString("strCLM_BodyWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coupling multiplier (CM).
+        /// </summary>
+        internal static string strCLM_CM {
+            get {
+                return ResourceManager.GetString("strCLM_CM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Coupling.
+        /// </summary>
+        internal static string strCLM_Coupling {
+            get {
+                return ResourceManager.GetString("strCLM_Coupling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No handles, Poor, Good.
+        /// </summary>
+        internal static string strCLM_CouplingType {
+            get {
+                return ResourceManager.GetString("strCLM_CouplingType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial data.
+        /// </summary>
+        internal static string strCLM_Data {
+            get {
+                return ResourceManager.GetString("strCLM_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration multiplier (HM).
+        /// </summary>
+        internal static string strCLM_DM {
+            get {
+                return ResourceManager.GetString("strCLM_DM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frequency multiplier (FM).
+        /// </summary>
+        internal static string strCLM_FM {
+            get {
+                return ResourceManager.GetString("strCLM_FM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lifting frequency (actions/min).
+        /// </summary>
+        internal static string strCLM_Frequency {
+            get {
+                return ResourceManager.GetString("strCLM_Frequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gender.
+        /// </summary>
+        internal static string strCLM_Gender {
+            get {
+                return ResourceManager.GetString("strCLM_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal multiplier (HM).
+        /// </summary>
+        internal static string strCLM_HM {
+            get {
+                return ResourceManager.GetString("strCLM_HM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal distance (cm).
+        /// </summary>
+        internal static string strCLM_HorizontalD {
+            get {
+                return ResourceManager.GetString("strCLM_HorizontalD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task duration (h).
+        /// </summary>
+        internal static string strCLM_HoursTask {
+            get {
+                return ResourceManager.GetString("strCLM_HoursTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The LSI index is:.
+        /// </summary>
+        internal static string strCLM_LSIindex {
+            get {
+                return ResourceManager.GetString("strCLM_LSIindex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multipliers.
+        /// </summary>
+        internal static string strCLM_Multipliers {
+            get {
+                return ResourceManager.GetString("strCLM_Multipliers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Population percentage.
+        /// </summary>
+        internal static string strCLM_PopPercentage {
+            get {
+                return ResourceManager.GetString("strCLM_PopPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the results from the Comprehensive Lifting Model:.
+        /// </summary>
+        internal static string strCLM_Results {
+            get {
+                return ResourceManager.GetString("strCLM_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WBGT temperature (°C).
+        /// </summary>
+        internal static string strCLM_Temperature {
+            get {
+                return ResourceManager.GetString("strCLM_Temperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WBGT temperature multiplier (TM).
+        /// </summary>
+        internal static string strCLM_TM {
+            get {
+                return ResourceManager.GetString("strCLM_TM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical distance multiplier (VDM).
+        /// </summary>
+        internal static string strCLM_VDM {
+            get {
+                return ResourceManager.GetString("strCLM_VDM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical distance (cm).
+        /// </summary>
+        internal static string strCLM_VerticalD {
+            get {
+                return ResourceManager.GetString("strCLM_VerticalD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical height (cm).
+        /// </summary>
+        internal static string strCLM_VerticalH {
+            get {
+                return ResourceManager.GetString("strCLM_VerticalH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertical height multiplier (VHM).
+        /// </summary>
+        internal static string strCLM_VM {
+            get {
+                return ResourceManager.GetString("strCLM_VM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weight lifted (kg).
+        /// </summary>
+        internal static string strCLM_Weight {
+            get {
+                return ResourceManager.GetString("strCLM_Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Age multiplier (YM).
+        /// </summary>
+        internal static string strCLM_YM {
+            get {
+                return ResourceManager.GetString("strCLM_YM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to reset all fields
         ///to their default values?.
         /// </summary>
@@ -830,9 +1091,9 @@ namespace ErgoCalc.localization {
         /// <summary>
         ///   Looks up a localized string similar to No handles, Poor, Good.
         /// </summary>
-        internal static string strNIOSH_CouplingTypes {
+        internal static string strNIOSH_CouplingType {
             get {
-                return ResourceManager.GetString("strNIOSH_CouplingTypes", resourceCulture);
+                return ResourceManager.GetString("strNIOSH_CouplingType", resourceCulture);
             }
         }
         
