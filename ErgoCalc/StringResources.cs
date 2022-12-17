@@ -151,7 +151,7 @@ public static class StringResources
     public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance (cm):";
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier (VM):";
     public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted (kg):";
-    public static string NIOSH_CouplingTypes => StringRM.GetString("strNIOSH_CouplingTypes", Culture) ?? "No handles, Poor, Good";
+    public static string NIOSH_CouplingType => StringRM.GetString("strNIOSH_CouplingTypes", Culture) ?? "No handles, Poor, Good";
     public static string[] NIOSH_RowHeaders => new[] {
         NIOSH_Data,
         NIOSH_Weight,
@@ -182,9 +182,9 @@ public static class StringResources
     {
         $"{Task} A",
         $"{Subtask} A",
-        NIOSH_CouplingTypes.Split(", ")[0],
-        NIOSH_CouplingTypes.Split(", ")[1],
-        NIOSH_CouplingTypes.Split(", ")[2]
+        NIOSH_CouplingType.Split(", ")[0],
+        NIOSH_CouplingType.Split(", ")[1],
+        NIOSH_CouplingType.Split(", ")[2]
     };
     public static string[] NIOSH_ResultsHeaders => new[]
     {
@@ -219,7 +219,7 @@ public static class StringResources
         NIOSH_EquationIndex,
         NIOSH_EquationWeight,
         NIOSH_Index,            // 30
-        NIOSH_CouplingTypes
+        NIOSH_CouplingType
     };
 
     // Strain index
@@ -352,7 +352,7 @@ public static class StringResources
     public static string LibertyMutual_MAL => StringRM.GetString("strLibertyMutual_MAL", Culture) ?? "Maximum acceptable limit";
     public static string LibertyMutual_Multipliers => StringRM.GetString("strLibertyMutual_Multipliers", Culture) ?? "Scale factors";
     public static string LibertyMutual_Results => StringRM.GetString("strLibertyMutual_Results", Culture) ?? "These are the results from the Liberty Mutual manual materials handling equations";
-    public static string LibertyMutual_Sex => StringRM.GetString("strLibertyMutual_Sex", Culture) ?? "Sex";
+    public static string LibertyMutual_Gender => StringRM.GetString("strLibertyMutual_Sex", Culture) ?? "Gender";
     public static string LibertyMutual_SustainedCV => StringRM.GetString("strLibertyMutual_SustainedCV", Culture) ?? "CV sustained force";
     public static string LibertyMutual_SustainedDH => StringRM.GetString("strLibertyMutual_SustainedDH", Culture) ?? "Sustained DH factor";
     public static string LibertyMutual_SustainedF => StringRM.GetString("strLibertyMutual_SustainedF", Culture) ?? "Sustained F factor";
@@ -373,7 +373,7 @@ public static class StringResources
     public static string LibertyMutual_Empty => StringRM.GetString("strLibertyMutual_Empty", Culture) ?? "------";
     public static string LibertyMutual_TaskType => StringRM.GetString("strLibertyMutual_TaskType", Culture) ?? "Carrying, Lifting, Lowering, Pulling, Pushing";
     //public static string LibertyMutual_Gender => StringRM.GetString("strLibertyMutual_Gender", Culture) ?? "Male, Female";
-    public static string LibertyMutual_Gender => Gender;
+    public static string LibertyMutual_GenderType => Gender;
     public static string[] LibertyMutual_RowHeaders => new[]
     {
         LibertyMutual_Data,
@@ -384,7 +384,7 @@ public static class StringResources
         LibertyMutual_VerticalDistance,
         LibertyMutual_VerticalHeight,
         LibertyMutual_Frequency,
-        LibertyMutual_Sex,
+        LibertyMutual_Gender,
         LibertyMutual_Multipliers,
         LibertyMutual_LC,
         LibertyMutual_H,
@@ -419,8 +419,8 @@ public static class StringResources
         LibertyMutual_TaskType.Split(", ")[2],
         LibertyMutual_TaskType.Split(", ")[3],
         LibertyMutual_TaskType.Split(", ")[4],
-        LibertyMutual_Gender.Split(", ")[0],
-        LibertyMutual_Gender.Split(", ")[1]
+        LibertyMutual_GenderType.Split(", ")[0],
+        LibertyMutual_GenderType.Split(", ")[1]
     };
     public static string[] LibertyMutual_ResultsHeaders => new[]
     {
@@ -434,7 +434,7 @@ public static class StringResources
         LibertyMutual_VerticalDistance,
         LibertyMutual_VerticalHeight,
         LibertyMutual_Frequency,
-        LibertyMutual_Sex,                  // 10
+        LibertyMutual_Gender,                  // 10
         LibertyMutual_Multipliers,
         LibertyMutual_LC,
         LibertyMutual_H,
@@ -461,7 +461,7 @@ public static class StringResources
         LibertyMutual_WeightMAL75,
         LibertyMutual_WeightMAL90,          // 35
         LibertyMutual_Empty,
-        LibertyMutual_Gender,
+        LibertyMutual_GenderType,
         LibertyMutual_TaskType
     };
 
@@ -529,5 +529,110 @@ public static class StringResources
         ThermalComfort_LossConvection,
         ThermalComfort_PMVindex,
         ThermalComfort_PPDindex
+    };
+
+
+    // Comprehensive lifting index
+    public static string CLM_Results => StringRM.GetString("strCLM_Results", Culture) ?? "These are the results from the Comprehensive Lifting Model";
+    public static string CLM_Data => StringRM.GetString("strCLM_Data", Culture) ?? "Initial data";
+    public static string CLM_Gender => StringRM.GetString("strCLM_Gender", Culture) ?? "Gender";
+    public static string CLM_Weight => StringRM.GetString("strCLM_Weight", Culture) ?? "Weight lifted (kg)";
+    public static string CLM_HorizontalD => StringRM.GetString("strCLM_HorizontalD", Culture) ?? "Horizontal distance (cm)";
+    public static string CLM_VerticalH => StringRM.GetString("strCLM_VerticalH", Culture) ?? "Vertical height (cm)";
+    public static string CLM_VerticalD => StringRM.GetString("strCLM_VerticalD", Culture) ?? "Vertical distance (cm)";
+    public static string CLM_Frequency => StringRM.GetString("strCLM_Frequency", Culture) ?? "Lifting frequency (actions/min)";
+    public static string CLM_HoursTask => StringRM.GetString("strCLM_HoursTask", Culture) ?? "Task duration (h)";
+    public static string CLM_Angle => StringRM.GetString("strCLM_Angle", Culture) ?? "Twisting angle (°)";
+    public static string CLM_Coupling => StringRM.GetString("strCLM_Coupling", Culture) ?? "Coupling";
+    public static string CLM_Temperature => StringRM.GetString("strCLM_Temperature", Culture) ?? "WBGT temperature (°C)";
+    public static string CLM_Age => StringRM.GetString("strCLM_Age", Culture) ?? "Age (years)";
+    public static string CLM_BodyWeight => StringRM.GetString("strCLM_BodyWeight", Culture) ?? "Body weight (kg)";
+    public static string CLM_Multipliers => StringRM.GetString("strCLM_Multipliers", Culture) ?? "Multipliers";
+    public static string CLM_HM => StringRM.GetString("strCLM_HM", Culture) ?? "Horizontal multiplier (HM)";
+    public static string CLM_VHM => StringRM.GetString("strCLM_VM", Culture) ?? "Vertical height multiplier (VHM)";
+    public static string CLM_VDM => StringRM.GetString("strCLM_VDM", Culture) ?? "Vertical distance multiplier (VDM)";
+    public static string CLM_FM => StringRM.GetString("strCLM_FM", Culture) ?? "Frequency multiplier (FM)";
+    public static string CLM_DM => StringRM.GetString("strCLM_DM", Culture) ?? "Task duration multiplier (HM)";
+    public static string CLM_AM => StringRM.GetString("strCLM_AM", Culture) ?? "Twisting angle multiplier (AM)";
+    public static string CLM_CM => StringRM.GetString("strCLM_CM", Culture) ?? "Coupling multiplier (CM)";
+    public static string CLM_TM => StringRM.GetString("strCLM_TM", Culture) ?? "WBGT temperature multiplier (TM)";
+    public static string CLM_YM => StringRM.GetString("strCLM_YM", Culture) ?? "Age multiplier (YM)";
+    public static string CLM_BM => StringRM.GetString("strCLM_BM", Culture) ?? "Body weight multiplier (BM)";
+    public static string CLM_BaseWeight => StringRM.GetString("strCLM_BaseWeight", Culture) ?? "Base weight";
+    public static string CLM_PopPercentage => StringRM.GetString("strCLM_PopPer", Culture) ?? "Population percentage";
+    public static string CLM_LSIindex => StringRM.GetString("strCLM_LSIindex", Culture) ?? "The LSI index is";
+    public static string CLM_CouplingType => StringRM.GetString("strCLM_CouplingType", Culture) ?? "No handles, Poor, Good";
+    public static string CLM_GenderType => Gender;
+    public static string[] CLM_RowHeaders => new[]
+    {
+        CLM_Data,
+        CLM_Gender,
+        CLM_Weight,
+        CLM_HorizontalD,
+        CLM_VerticalH,
+        CLM_VerticalD,
+        CLM_Frequency,
+        CLM_HoursTask,
+        CLM_Angle,
+        CLM_Coupling,
+        CLM_Temperature,
+        CLM_Age,
+        CLM_BodyWeight,
+        CLM_Multipliers,
+        CLM_HM,
+        CLM_VHM,
+        CLM_VDM,
+        CLM_FM,
+        CLM_DM,
+        CLM_AM,
+        CLM_CM,
+        CLM_TM,
+        CLM_YM,
+        CLM_BM,
+        CLM_BaseWeight,
+        CLM_PopPercentage
+    };
+    public static string[] CLM_ColumnHeaders => new[]
+    {
+        $"{Case} A",
+        CLM_CouplingType.Split(", ")[0],
+        CLM_CouplingType.Split(", ")[1],
+        CLM_CouplingType.Split(", ")[2],
+        CLM_GenderType.Split(", ")[0],
+        CLM_GenderType.Split(", ")[1]
+    };
+    public static string[] CLM_ResultsHeaders => new[]
+    {
+        Task,               // 0
+        CLM_Results,
+        CLM_Data,
+        CLM_Gender,
+        CLM_Weight,
+        CLM_HorizontalD,    // 5
+        CLM_VerticalH,
+        CLM_VerticalD,
+        CLM_Frequency,
+        CLM_HoursTask,
+        CLM_Angle,          // 10
+        CLM_Coupling,
+        CLM_Temperature,
+        CLM_Age,
+        CLM_BodyWeight,
+        CLM_Multipliers,    // 15
+        CLM_HM,
+        CLM_VHM,
+        CLM_VDM,
+        CLM_FM,
+        CLM_DM,             // 20
+        CLM_AM,
+        CLM_CM,
+        CLM_TM,
+        CLM_YM,
+        CLM_BM,             // 25
+        CLM_BaseWeight,
+        CLM_PopPercentage,
+        CLM_LSIindex,
+        CLM_CouplingType,
+        CLM_GenderType      // 30
     };
 }
