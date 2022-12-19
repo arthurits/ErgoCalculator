@@ -34,6 +34,5 @@ This download is a portable software. Please follow this instructions:
 ## External dependencies
 This project uses controls and routines from the following Gits:
 * [ScottPlot](https://github.com/ScottPlot/ScottPlot)
-* [Dotnet transitions](https://github.com/UweKeim/dot-net-transitions)
 * [CBE Thermal Comfort Tool](https://github.com/CenterForTheBuiltEnvironment/comfort_tool), routines ported from [comfortmodels.js](https://github.com/CenterForTheBuiltEnvironment/comfort_tool/blob/master/static/js/comfortmodels.js)
 * [PsychroLib (version 2.5.0)](https://github.com/psychrometrics/psychrolib), [C# port](https://github.com/psychrometrics/psychrolib/blob/master/src/c_sharp/PsychroLib/psychrolib.cs)
