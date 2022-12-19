@@ -286,6 +286,9 @@ to their default values?</value>
   <data name="strGrpFont" xml:space="preserve">
     <value>Current font</value>
   </data>
+  <data name="strIndexType" xml:space="preserve">
+    <value>Index type</value>
+  </data>
   <data name="strLblBackColor" xml:space="preserve">
     <value>Back color: {0}</value>
   </data>

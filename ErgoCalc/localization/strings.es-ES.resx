@@ -286,6 +286,9 @@ los campos a sus valores por defecto?</value>
   <data name="strGrpFont" xml:space="preserve">
     <value>Fuente actual</value>
   </data>
+  <data name="strIndexType" xml:space="preserve">
+    <value>Tipo de índice</value>
+  </data>
   <data name="strLblBackColor" xml:space="preserve">
     <value>Color de fondo: {0}</value>
   </data>

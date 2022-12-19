@@ -26,6 +26,7 @@ public static class StringResources
     public static string NumberOfTasks => StringRM.GetString("strNumberTasks", Culture) ?? "Number of tasks";
     public static string NumberOfSubtasks => StringRM.GetString("strNumberSubtasks", Culture) ?? "Number of subtasks";
     public static string Gender => StringRM.GetString("strGender", Culture) ?? "Male, Female";
+    public static string IndexType => StringRM.GetString("strIndexType", Culture) ?? "Index type";
 
     public static string FormTitleUnion => StringRM.GetString("strFormTitleUnion", Culture) ?? " - ";
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";
@@ -332,6 +333,14 @@ public static class StringResources
         StrainIndex_TasksOrder,     // 35
         StrainIndex_CUSIequation,
         StrainIndex_CUSI
+    };
+    public static string[] StrainIndex_DataInputHeaders => new[]
+    {
+        StrainIndex_Intensity,
+        StrainIndex_Efforts,
+        StrainIndex_Duration,
+        StrainIndex_Posture,
+        StrainIndex_HoursTask
     };
 
     // Liberty Mutual

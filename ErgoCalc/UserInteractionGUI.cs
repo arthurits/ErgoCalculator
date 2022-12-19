@@ -26,14 +26,14 @@ partial class FrmMain
 
         Form frmData = frmNew.Model switch
         {
-            ModelType.WorkRest => new FrmDataWR(_settings.AppCulture),
-            ModelType.CumulativeLifting => new FrmDataCLM(_settings.AppCulture),
-            ModelType.NioshLifting => new FrmDataNIOSH(_settings.AppCulture),
-            ModelType.StrainIndex => new FrmDataStrainIndex(_settings.AppCulture),
+            ModelType.WorkRest => new FrmDataWR(culture: _settings.AppCulture),
+            ModelType.CumulativeLifting => new FrmDataCLM(culture: _settings.AppCulture),
+            ModelType.NioshLifting => new FrmDataNIOSH(culture: _settings.AppCulture),
+            ModelType.StrainIndex => new FrmDataStrainIndex(culture: _settings.AppCulture),
             ModelType.OcraCheck => new FrmDataOCRAcheck(),
             ModelType.MetabolicRate => new FrmDataMet(),
-            ModelType.ThermalComfort => new FrmDataTC(_settings.AppCulture),
-            ModelType.LibertyMutual => new FrmDataLiberty(_settings.AppCulture),
+            ModelType.ThermalComfort => new FrmDataTC(culture: _settings.AppCulture),
+            ModelType.LibertyMutual => new FrmDataLiberty(culture: _settings.AppCulture),
             _ => new Form()
         };
 

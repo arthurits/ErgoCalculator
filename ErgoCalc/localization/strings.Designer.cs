@@ -566,6 +566,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Index type.
+        /// </summary>
+        internal static string strIndexType {
+            get {
+                return ResourceManager.GetString("strIndexType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back color: {0}.
         /// </summary>
         internal static string strLblBackColor {

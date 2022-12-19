@@ -8,7 +8,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private Job _job;
-    private IndexType _index;
+    private IndexType _index = IndexType.RSI;
 
     public object GetData => _job;
 
@@ -24,22 +24,22 @@ public partial class FrmDataStrainIndex : Form, IChildData
         listViewTasks.AddGroup();
     }
 
-    public FrmDataStrainIndex(CultureInfo culture)
-        :this()
-    {
-        _culture = culture;
-        UpdateUI_Language(culture);
-    }
-
-    // Overloaded constructor
-    public FrmDataStrainIndex(Job job)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataStrainIndex(Job? job = null, CultureInfo? culture = null)
         : this() // Call the base constructor
     {
-        _job = job;
-        DataToGrid();
+        if (job is not null)
+        {
+            _job = job;
+            DataToGrid();
+        }
 
-        //_culture = culture;
-        //UpdateUI_Language(_culture);
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
     }
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -57,22 +57,26 @@ public partial class FrmDataStrainIndex : Form, IChildData
         {
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
-                col.HeaderText = "Task " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
-                lblSubtasks.Text = "Number of tasks";
+                col.HeaderText = $"{StringResources.Task} {col.HeaderText[^1]}";
+                //col.HeaderText = $"Task {col.HeaderText.Substring(col.HeaderText.Length - 1, 1)}";
+                lblSubtasks.Text = StringResources.NumberOfTasks;
             }
-            tabDataStrain.TabPages[0].Text = "Tasks";
+            tabDataStrain.TabPages[0].Text = StringResources.Task;
             tabDataStrain.TabPages[1].Parent = tabDummy;
         }
         else
         {
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
-                col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
-                lblSubtasks.Text = "Number of subtasks";
+                col.HeaderText = $"{StringResources.Subtask} {col.HeaderText[^1]}";
+                //col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
+                lblSubtasks.Text = StringResources.NumberOfSubtasks;
             }
-            tabDataStrain.TabPages[0].Text = "SubTasks";
+            tabDataStrain.TabPages[0].Text = StringResources.Subtask;
             if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabDataStrain;
         }
+
+        RelocateControls();
     }
 
     private void Subtasks_ValueChanged(object sender, EventArgs e)
@@ -188,7 +192,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         // Create the new column
-        string strName = _index == IndexType.RSI ? "Task " : "SubTask ";
+        string strName = $"{(_index == IndexType.RSI ? StringResources.Task : StringResources.Subtask)} ";
         (this as IChildData).AddColumnBasic(gridVariables, col, strName, 85);
 
         // Add the row headers after the first column is created
@@ -211,15 +215,17 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        string[] rowText = new string[]
-        {
-            "Intensity of exertion",
-            "Efforts per minute",
-            "Duration per exertion",
-            "Hand/wrist posture",
-            "Duration of task per day"
-        };
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+        //string[] rowText = new string[]
+        //{
+        //    "Intensity of exertion",
+        //    "Efforts per minute",
+        //    "Duration per exertion",
+        //    "Hand/wrist posture",
+        //    "Duration of task per day"
+        //};
+        //(this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.StrainIndex_DataInputHeaders);
     }
     
     /// <summary>
@@ -453,6 +459,10 @@ public partial class FrmDataStrainIndex : Form, IChildData
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
+        this.groupIndex.Text = StringResources.IndexType;
+        this.lblSubtasks.Text = _index == IndexType.RSI ? StringResources.NumberOfTasks : StringResources.NumberOfSubtasks;
+        this.lblTasks.Text = StringResources.NumberOfTasks;
+
         // Relocate controls
         RelocateControls();
     }
@@ -462,5 +472,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
+        this.updSubtasks.Left = this.lblSubtasks.Left + this.lblSubtasks.Width + 5;
+        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
     }
 }
