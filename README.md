@@ -3,7 +3,7 @@ Software implementing ergonomics algorithms (revised strain index, NIOSH lifting
 
 <img alt="Software logo" src="ErgoCalc/images/splash.png?raw=true" height="240">
 
-Copyright © 2022 by Arthurits Ltd. No commercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
+Copyright © 2009-2023 by Arthurits Ltd. No commercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
 Download latest release: [![GitHub release (latest by date)](https://img.shields.io/github/v/release/arthurits/ErgoCalculator)](https://github.com/arthurits/ErgoCalculator/releases)
 
 Sponsor this project!
