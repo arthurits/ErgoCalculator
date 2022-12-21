@@ -268,7 +268,12 @@ public partial class FrmResultsTC : Form, IChildResults
     {
         // Set the control's tabs
         rtbShowResult.SelectAll();
-        SetRichTextBoxTabs();
+        using var g = rtbShowResult.CreateGraphics();
+        rtbShowResult.SelectionTabs = (this as IChildResults).ComputeTabs(g,
+                                                                        rtbShowResult.Font,
+                                                                        _job.NumberTasks,
+                                                                        StringResources.ThermalComfort_RowHeaders,
+                                                                        StringResources.ThermalComfort_ColumnHeaders);
         rtbShowResult.DeselectAll();
 
         // Format (font, size, and style) the text
@@ -424,53 +429,5 @@ public partial class FrmResultsTC : Form, IChildResults
     }
 
     #endregion IChildResults interface
-
-    /// <summary>
-    /// Sets the tabs in the RichTextBox control. It assumes the corresponding text is already selected.
-    /// </summary>
-    private void SetRichTextBoxTabs()
-    {
-        (int rowMax, int rowTab) = ComputeTabSpace(StringResources.NIOSH_RowHeaders);
-        (int colMax, int colTab) = ComputeTabSpace(StringResources.NIOSH_ColumnHeaders);
-        int tab = Math.Min(rowTab, colTab);
-
-        int[] tabs = new int[_job.NumberTasks];
-        for (int i = 0; i < tabs.Length; i++)
-        {
-            if (i == 0)
-                tabs[i] = rowMax + tab;
-            else
-                tabs[i] = tabs[i - 1] + colMax + tab;
-        }
-        rtbShowResult.SelectionTabs = tabs;
-
-    }
-
-    /// <summary>
-    /// Computes the tabs for the RichTextBox control
-    /// </summary>
-    /// <param name="strings">Array of strings that will be measured. The greatest measure is used to compute the tab space</param>
-    /// <param name="tabFactor">Factor (percentage) of the maximum measure to be used as tab space</param>
-    /// <param name="tabMinSpace">Minimum tab space in pixels. Default value is 10</param>
-    /// <returns></returns>
-    private (int maxWidth, int tabSpace) ComputeTabSpace(string[] strings, double tabFactor = 0.1, int tabMinSpace = 10)
-    {
-        SizeF size;
-        int nWidth = 0;
-        int tabSpace;
-
-        using var g = rtbShowResult.CreateGraphics();
-        foreach (string strRow in strings)
-        {
-            size = g.MeasureString(strRow, rtbShowResult.Font);
-            if (size.Width > nWidth)
-                nWidth = (int)size.Width;
-        }
-
-        tabSpace = (int)(nWidth * tabFactor);
-        tabSpace = tabSpace > tabMinSpace ? tabSpace : tabMinSpace;
-
-        return (nWidth, tabSpace);
-    }
 
 }

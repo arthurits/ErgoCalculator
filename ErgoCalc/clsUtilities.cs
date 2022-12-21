@@ -302,6 +302,63 @@ public interface IChildResults
     /// Duplicates the current child window
     /// </summary>
     void Duplicate();
+
+    /// <summary>
+    /// Computes the tabs positions in pixels.
+    /// </summary>
+    /// <param name="g">Graphics object</param>
+    /// <param name="font">Font used to write the text and to compute the text space</param>
+    /// <param name="numberTabs">Number of tabs to be computed</param>
+    /// <param name="rowHeaders">The first-column texts used to computed the first tab position</param>
+    /// <param name="columnHeaders">All the other column header texts used to compute the rest of tabs</param>
+    /// <param name="tabFactor">Factor (percentage) of the maximum measure to be used as tab space</param>
+    /// <param name="tabMinSpace">Minimum tab space in pixels. Default value is 10</param>
+    /// <returns>Array of tab positions in pixels</returns>
+    public int[] ComputeTabs(Graphics g, Font font, int numberTabs, string[] rowHeaders, string[] columnHeaders, double tabFactor = 0.1, int tabMinSpace = 10)
+    {
+        (int rowMax, int rowTab) = ComputeTabSpace(g, font, rowHeaders, tabFactor, tabMinSpace);
+        (int colMax, int colTab) = ComputeTabSpace(g, font, columnHeaders, tabFactor, tabMinSpace);
+        int tab = Math.Min(rowTab, colTab);
+
+        int[] tabs = new int[numberTabs];
+        for (int i = 0; i < numberTabs; i++)
+        {
+            if (i == 0)
+                tabs[i] = rowMax + tab;
+            else
+                tabs[i] = tabs[i - 1] + colMax + tab;
+        }
+
+        return tabs;
+    }
+
+    /// <summary>
+    /// Computes the tabs using a particular <see cref="Graphics"/> object and <see cref="Font"/>
+    /// </summary>
+    /// <param name="strings">Array of strings that will be measured. The greatest measure is used to compute the tab space</param>
+    /// <param name="tabFactor">Factor (percentage) of the maximum measure to be used as tab space</param>
+    /// <param name="tabMinSpace">Minimum tab space in pixels. Default value is 10</param>
+    /// <returns>The maximum width of the string array in pixels and the corresponding tab space to be added to the width</returns>
+    public (int maxWidth, int tabSpace) ComputeTabSpace(Graphics g, Font font, string[] strings, double tabFactor = 0.1, int tabMinSpace = 10)
+    {
+        SizeF size;
+        int nWidth = 0;
+        int tabSpace;
+
+        //using var g = rtbShowResult.CreateGraphics();
+        foreach (string strRow in strings)
+        {
+            size = g.MeasureString(strRow, font);
+            if (size.Width > nWidth)
+                nWidth = (int)size.Width;
+        }
+
+        tabSpace = (int)(nWidth * tabFactor);
+        tabSpace = tabSpace > tabMinSpace ? tabSpace : tabMinSpace;
+
+        return (nWidth, tabSpace);
+    }
+
 }
 
 /// <summary>
@@ -414,4 +471,5 @@ public interface IChildData
             }
         }
     }
+
 }
