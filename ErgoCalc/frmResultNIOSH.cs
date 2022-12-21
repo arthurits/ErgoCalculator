@@ -312,7 +312,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new FrmDataNIOSH(_job);
+        using var frm = new FrmDataNIOSH(_job, _culture);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {

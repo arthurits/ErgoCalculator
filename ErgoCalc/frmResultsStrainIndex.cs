@@ -489,7 +489,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        using FrmDataStrainIndex frmDataStrain = new(_job);
+        using FrmDataStrainIndex frmDataStrain = new(_job, _culture);
 
         if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
         {

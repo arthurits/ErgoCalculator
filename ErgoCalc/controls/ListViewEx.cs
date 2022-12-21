@@ -106,18 +106,18 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     /// <summary>
     /// Append a group to the list view with a generic header name
     /// </summary>
-    public void AddGroup()
+    public void AddGroup(string str = "Task")
     {
-        AddGroup(this.Groups.Count);
+        AddGroup(this.Groups.Count, str);
     }
 
     /// <summary>
     /// Append a group to the list view with a specific header name
     /// </summary>
     /// <param name="index">Group number</param>
-    public void AddGroup(int index)
+    public void AddGroup(int index, string str = "Task")
     {
-        var strHeader = "Task " + ((char)('A' + index)).ToString();
+        var strHeader = $"{str} {((char)('A' + index)).ToString()}";
         var _index = this.Groups.Add(new ListViewGroup(strHeader, strHeader));
         //var _index = this.Groups.Add(new ListViewGroup(strHeader) { Name = strHeader });
         AddEmptyItem(_index);

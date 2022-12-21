@@ -222,6 +222,18 @@ public static class StringResources
         NIOSH_Index,            // 30
         NIOSH_CouplingType
     };
+    public static string[] NIOSH_DataInputHeaders => new[]
+    {
+        NIOSH_LC,
+        NIOSH_Weight,
+        NIOSH_HorizontalD,
+        NIOSH_VerticalD,
+        NIOSH_VerticalT,
+        NIOSH_Frequency,
+        NIOSH_Duration,
+        NIOSH_Angle,
+        NIOSH_Coupling
+    };
 
     // Strain index
     public static string StrainIndex_COSI => StringRM.GetString("strStrainIndex_COSI", Culture) ?? "The COSI index is:";

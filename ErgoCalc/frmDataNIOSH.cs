@@ -23,22 +23,27 @@ public partial class FrmDataNIOSH : Form, IChildData
         // Simulate a click on radRSI
         rad_CheckedChanged(radLI, null);
 
-        listViewTasks.AddGroup();
+        listViewTasks.AddGroup(StringResources.Task);
     }
 
-    public FrmDataNIOSH(CultureInfo culture)
-        : this()
-    {
-        _culture = culture;
-        UpdateUI_Language(culture);
-    }
-
-    // Overloaded constructor
-    public FrmDataNIOSH(Job data)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataNIOSH(Job? job = null, CultureInfo? culture = null)
         : this() // Call the base constructor
     {
-        _job = data;
-        DataToGrid();
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
+
+        // Then show the data
+        if (job is not null)
+        {
+            _job = job;
+            DataToGrid();
+        }
     }
 
     private void SubTasks_ValueChanged(object sender, EventArgs e)
@@ -67,7 +72,7 @@ public partial class FrmDataNIOSH : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value));
+        (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value), StringResources.Task);
     }
 
     private void rad_CheckedChanged(object sender, EventArgs e)
@@ -84,10 +89,10 @@ public partial class FrmDataNIOSH : Form, IChildData
         {
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
-                col.HeaderText = "Task " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
-                lblSubTasks.Text = "Number of tasks";
+                col.HeaderText = $"{StringResources.Task} {col.HeaderText[^1]}";
+                lblSubTasks.Text = StringResources.NumberOfTasks;
             }
-            tabData.TabPages[0].Text = "Tasks";
+            tabData.TabPages[0].Text = StringResources.Task;
             tabData.TabPages[1].Parent = tabDummy;
             //if (updTasks.Value > 1) updTasks.Value = 1;
         }
@@ -95,10 +100,10 @@ public partial class FrmDataNIOSH : Form, IChildData
         {
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
-                col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
-                lblSubTasks.Text = "Number of subtasks";
+                col.HeaderText = $"{StringResources.Subtask} {col.HeaderText[^1]}";
+                lblSubTasks.Text = StringResources.NumberOfSubtasks;
             }
-            tabData.TabPages[0].Text = "SubTasks";
+            tabData.TabPages[0].Text = StringResources.Subtask;
             if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabData;
             //if (updTasks.Value < 2) updTasks.Value++;
         }
@@ -213,10 +218,10 @@ public partial class FrmDataNIOSH : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
 
         // Create the new column
-        string strName = _index == IndexType.IndexLI ? "Task " : "SubTask ";
+        string strName = $"{(_index == IndexType.IndexLI ? StringResources.Task : StringResources.Subtask)} ";
         (this as IChildData).AddColumnBasic(gridVariables, col, strName, 85);
 
         // Add the row headers after the first column is created
@@ -249,19 +254,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        string[] rowText = new string[]
-        {
-            "Load constant (kg)",
-            "Weight lifted (kg)",
-            "Horizontal distance (cm)",
-            "Vertical distance (cm)",
-            "Vertical travel distance (cm)",
-            "Lifting frequency (times/min)",
-            "Task duration (hours)",
-            "Twisting angle (°)",
-            "Coupling"
-        };
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.NIOSH_DataInputHeaders);
     }
 
     /// <summary>
@@ -269,14 +262,16 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void FormatRows()
     {
+        // Get the couplig type texts
+        string[] strCouplig = StringResources.NIOSH_CouplingType.Split(", ");
         // Create custom cells with combobox display
         DataGridViewComboBoxCell celdaC = new();
         DataTable tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
-        tableC.Rows.Add(Coupling.Good, (int)Coupling.Good);
-        tableC.Rows.Add(Coupling.Poor, (int)Coupling.Poor);
-        tableC.Rows.Add(Coupling.NoHandle, (int)Coupling.NoHandle);
+        tableC.Rows.Add(strCouplig[(int)Coupling.Good], (int)Coupling.Good);
+        tableC.Rows.Add(strCouplig[(int)Coupling.Poor], (int)Coupling.Poor);
+        tableC.Rows.Add(strCouplig[(int)Coupling.NoHandle], (int)Coupling.NoHandle);
         celdaC.DataSource = tableC;
         celdaC.DisplayMember = "Display";
         celdaC.ValueMember = "Value";
@@ -453,7 +448,7 @@ public partial class FrmDataNIOSH : Form, IChildData
                 gridVariables[nCol, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
 
                 // We can now insert into the desired position
-                ListViewItem test = new("SubTask " + ((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString(), listViewTasks.Groups[j]);
+                ListViewItem test = new($"{StringResources.Subtask} {((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString()}", listViewTasks.Groups[j]);
                 listViewTasks.Items.Insert(_job.Tasks[j].SubTasks[i].ItemIndex, test);
             }
         }
@@ -473,7 +468,7 @@ public partial class FrmDataNIOSH : Form, IChildData
             for (int i = listViewTasks.Items.Count - nDummy; i < updSubTasks.Value; i++)
             {
                 if (listViewTasks.Groups.Count != 0)
-                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]) { Name = "SubTask " + ((char)('A' + i)).ToString() });
+                    listViewTasks.Items.Add(new ListViewItem($"{StringResources.Subtask} {((char)('A' + i)).ToString(_culture)}", listViewTasks.Groups[0]));
             }
             for (int i = listViewTasks.Items.Count - nDummy; i > updSubTasks.Value; i--)
             {
@@ -496,6 +491,13 @@ public partial class FrmDataNIOSH : Form, IChildData
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
+        this.grpIndex.Text = StringResources.IndexType;
+        this.lblSubTasks.Text = _index == IndexType.IndexLI ? StringResources.NumberOfTasks : StringResources.NumberOfSubtasks;
+        this.lblTasks.Text = StringResources.NumberOfTasks;
+
+        if (this.tabDummy.TabPages.Count > 0)
+            this.tabDummy.TabPages[0].Text = StringResources.Task;
+
         // Relocate controls
         RelocateControls();
     }
@@ -505,5 +507,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
+        this.updSubTasks.Left = this.lblSubTasks.Left + this.lblSubTasks.Width + 5;
+        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
     }
 }

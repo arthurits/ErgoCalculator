@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Drawing;
+using System.Security.Policy;
 
 namespace ErgoCalc;
 
@@ -418,13 +420,14 @@ public interface IChildData
 
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
-        if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
 
         // Create the new column
         //gridVariables.Columns.Add("Column" + (col + 1).ToString(), "Task " + strTasks[col]);
-        gridVariables.Columns.Add("Column" + (col).ToString(), strName + ((char)('A' + col)).ToString());
+        gridVariables.Columns.Add($"Column {(col).ToString()}", $"{strName} {((char)('A' + col)).ToString()}");
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = width;
+        gridVariables.Columns[col].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
         return;
     }
 
@@ -446,6 +449,9 @@ public interface IChildData
         {
             gridVariables.Rows[i].HeaderCell.Value = strHeaders[i];
         }
+
+        // Adjust the column width
+        gridVariables.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
     }
 
     /// <summary>
@@ -453,7 +459,8 @@ public interface IChildData
     /// </summary>
     /// <param name="control">Reference to a <see cref="ListView"/> control.</param>
     /// <param name="value">Number of groups in the <see cref="ListView"/> control.</param>
-    public void UpdateListView(object control, int value)
+    /// <param name="strGroup">Group name to be shown on the ListView</param>
+    public void UpdateListView(object control, int value, string strGroup = "Task")
     {
         //Int32 tasks = Convert.ToInt32(updTasks.Value);
 
@@ -462,7 +469,7 @@ public interface IChildData
             if (value > listViewEx.Groups.Count)
             {
                 for (int i = listViewEx.Groups.Count; i < value; i++)
-                    listViewEx.AddGroup(i);
+                    listViewEx.AddGroup(i, strGroup);
             }
             else if (value < listViewEx.Groups.Count)
             {

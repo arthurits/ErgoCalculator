@@ -21,7 +21,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         // Simulate a click on radRSI
         radioButton_CheckedChanged(radRSI, EventArgs.Empty);
 
-        listViewTasks.AddGroup();
+        listViewTasks.AddGroup(StringResources.Task);
     }
 
     /// <summary>
@@ -32,14 +32,16 @@ public partial class FrmDataStrainIndex : Form, IChildData
     public FrmDataStrainIndex(Job? job = null, CultureInfo? culture = null)
         : this() // Call the base constructor
     {
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
+
+        // Then show the data
         if (job is not null)
         {
             _job = job;
             DataToGrid();
         }
-
-        _culture = culture ?? CultureInfo.CurrentCulture;
-        UpdateUI_Language(_culture);
     }
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
@@ -58,7 +60,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
                 col.HeaderText = $"{StringResources.Task} {col.HeaderText[^1]}";
-                //col.HeaderText = $"Task {col.HeaderText.Substring(col.HeaderText.Length - 1, 1)}";
                 lblSubtasks.Text = StringResources.NumberOfTasks;
             }
             tabDataStrain.TabPages[0].Text = StringResources.Task;
@@ -69,7 +70,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
             foreach (DataGridViewColumn col in gridVariables.Columns)
             {
                 col.HeaderText = $"{StringResources.Subtask} {col.HeaderText[^1]}";
-                //col.HeaderText = "SubTask " + col.HeaderText.Substring(col.HeaderText.Length - 1, 1);
                 lblSubtasks.Text = StringResources.NumberOfSubtasks;
             }
             tabDataStrain.TabPages[0].Text = StringResources.Subtask;
@@ -106,7 +106,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
     {
-        (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value));
+        (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value), StringResources.Task);
     }
 
     private void Accept_Click(object sender, EventArgs e)
@@ -189,7 +189,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
 
         // Create the new column
         string strName = $"{(_index == IndexType.RSI ? StringResources.Task : StringResources.Subtask)} ";
@@ -406,7 +406,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 // Classify
                 //listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + nCol)).ToString(), listViewTasks.Groups[j]));
                 // We can now insert into the desired position
-                ListViewItem test = new("SubTask " + ((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString(), listViewTasks.Groups[j]);
+                ListViewItem test = new($"{StringResources.Subtask} {((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString()}", listViewTasks.Groups[j]);
                 listViewTasks.Items.Insert(_job.Tasks[j].SubTasks[i].ItemIndex, test);
             }
         }
@@ -426,7 +426,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
             for (int i = listViewTasks.Items.Count - nDummy; i < updSubtasks.Value; i++)
             {
                 if (listViewTasks.Groups.Count != 0)
-                    listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + i)).ToString(), listViewTasks.Groups[0]));
+                    listViewTasks.Items.Add(new ListViewItem($"{StringResources.Subtask} {((char)('A' + i)).ToString(_culture)}", listViewTasks.Groups[0]));
             }
             for (int i = listViewTasks.Items.Count - nDummy; i > updSubtasks.Value; i--)
             {
@@ -462,6 +462,9 @@ public partial class FrmDataStrainIndex : Form, IChildData
         this.groupIndex.Text = StringResources.IndexType;
         this.lblSubtasks.Text = _index == IndexType.RSI ? StringResources.NumberOfTasks : StringResources.NumberOfSubtasks;
         this.lblTasks.Text = StringResources.NumberOfTasks;
+
+        if (this.tabDummy.TabPages.Count > 0)
+            this.tabDummy.TabPages[0].Text = StringResources.Task;
 
         // Relocate controls
         RelocateControls();
