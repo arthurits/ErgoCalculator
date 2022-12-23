@@ -367,6 +367,15 @@ to their default values?</value>
   <data name="strLibertyMutual_Multipliers" xml:space="preserve">
     <value>Scale factors</value>
   </data>
+  <data name="strLibertyMutual_PlotInitialF" xml:space="preserve">
+    <value>Initial force / kg-f</value>
+  </data>
+  <data name="strLibertyMutual_PlotSustainedF" xml:space="preserve">
+    <value>Sustained force / kg-f</value>
+  </data>
+  <data name="strLibertyMutual_PlotWeight" xml:space="preserve">
+    <value>Weight / kg</value>
+  </data>
   <data name="strLibertyMutual_Results" xml:space="preserve">
     <value>These are the results from the Liberty Mutual manual materials handling equations:</value>
   </data>

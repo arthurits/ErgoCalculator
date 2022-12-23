@@ -367,6 +367,15 @@ los campos a sus valores por defecto?</value>
   <data name="strLibertyMutual_Multipliers" xml:space="preserve">
     <value>Factores multiplicadores</value>
   </data>
+  <data name="strLibertyMutual_PlotInitialF" xml:space="preserve">
+    <value>Fuerza inicial / kg-f</value>
+  </data>
+  <data name="strLibertyMutual_PlotSustainedF" xml:space="preserve">
+    <value>Fuerza sostenida / kg-f</value>
+  </data>
+  <data name="strLibertyMutual_PlotWeight" xml:space="preserve">
+    <value>Peso / kg</value>
+  </data>
   <data name="strLibertyMutual_Results" xml:space="preserve">
     <value>Estos son los resultados ontenidos aplicando las ecuaciones de manipulación de cargas de «Liberty Mutual»:</value>
   </data>

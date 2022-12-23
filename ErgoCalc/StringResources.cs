@@ -393,8 +393,10 @@ public static class StringResources
     public static string LibertyMutual_WeightMAL90 => StringRM.GetString("strLibertyMutual_WeightMAL90", Culture) ?? "MAL weight (kg) for 90%";
     public static string LibertyMutual_Empty => StringRM.GetString("strLibertyMutual_Empty", Culture) ?? "------";
     public static string LibertyMutual_TaskType => StringRM.GetString("strLibertyMutual_TaskType", Culture) ?? "Carrying, Lifting, Lowering, Pulling, Pushing";
-    //public static string LibertyMutual_Gender => StringRM.GetString("strLibertyMutual_Gender", Culture) ?? "Male, Female";
     public static string LibertyMutual_GenderType => Gender;
+    public static string LibertyMutual_PlotInitialF => StringRM.GetString("strLibertyMutual_PlotInitialF", Culture) ?? "Initial force / kg-f";
+    public static string LibertyMutual_PlotSustainedF => StringRM.GetString("strLibertyMutual_PlotSustainedF", Culture) ?? "Sustained force / kg-f";
+    public static string LibertyMutual_PlotWeight => StringRM.GetString("strLibertyMutual_PlotWeight", Culture) ?? "Weight / kg";
     public static string[] LibertyMutual_RowHeaders => new[]
     {
         LibertyMutual_Data,

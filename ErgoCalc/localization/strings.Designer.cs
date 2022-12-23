@@ -809,6 +809,33 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initial force / kg-f.
+        /// </summary>
+        internal static string strLibertyMutual_PlotInitialF {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_PlotInitialF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sustained force / kg-f.
+        /// </summary>
+        internal static string strLibertyMutual_PlotSustainedF {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_PlotSustainedF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weight / kg.
+        /// </summary>
+        internal static string strLibertyMutual_PlotWeight {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_PlotWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to These are the results from the Liberty Mutual manual materials handling equations:.
         /// </summary>
         internal static string strLibertyMutual_Results {
