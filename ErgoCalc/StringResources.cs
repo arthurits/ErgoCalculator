@@ -485,6 +485,17 @@ public static class StringResources
         LibertyMutual_GenderType,
         LibertyMutual_TaskType
     };
+    public static string[] LibertyMutual_DataInputHeaders => new[]
+    {
+        LibertyMutual_HandlingType,
+        LibertyMutual_HorizontalReach,
+        LibertyMutual_VerticalRange,
+        LibertyMutual_HorizontalDistance,
+        LibertyMutual_VerticalDistance,
+        LibertyMutual_VerticalHeight,
+        LibertyMutual_Frequency,
+        LibertyMutual_Gender
+    };
 
     // Thermal comfort
     public static string ThermalComfort_AirTemp => StringRM.GetString("strThermalComfort_AirTemp", Culture) ?? "Air temperature (°C)";

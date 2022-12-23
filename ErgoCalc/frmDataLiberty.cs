@@ -21,18 +21,24 @@ public partial class FrmDataLiberty : Form, IChildData
         gridVariables.CurrentCellDirtyStateChanged += Variables_CurrentCellDirtyStateChanged;
     }
 
-    public FrmDataLiberty(CultureInfo culture)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataLiberty(Job? job = null, CultureInfo? culture = null)
         : this()
     {
-        _culture = culture;
-        UpdateUI_Language(culture);
-    }
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
 
-    public FrmDataLiberty(Job job)
-        : this()
-    {
-        _job = job;
-        DataToGrid();
+        // Then show the data
+        if (job is not null)
+        {
+            _job = job;
+            DataToGrid();
+        }
     }
 
     #region Form events
@@ -118,7 +124,7 @@ public partial class FrmDataLiberty : Form, IChildData
         (this as IChildData).UpdateGridColumns(gridVariables, Convert.ToInt32(updTasks.Value));
     }
 
-    private void Variables_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+    private void Variables_CurrentCellDirtyStateChanged(object? sender, EventArgs? e)
     {
         var CurrentCell = gridVariables.CurrentCell;
         if (CurrentCell is not DataGridViewComboBoxCell) return;
@@ -177,15 +183,15 @@ public partial class FrmDataLiberty : Form, IChildData
     /// Adds a column to the DataGrid View and formates it
     /// </summary>
     /// <param name="col">Column number (zero based)</param>
-    void IChildData.AddColumn(int col)
+    public void AddColumn(int col)
     {
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
 
         // Create the new column
-        (this as IChildData).AddColumnBasic(gridVariables, col, strGridHeader, 90);
+        (this as IChildData).AddColumnBasic(gridVariables, col, StringResources.Task, 90);
 
         // Add the row headers after the first column is created
         if (col == 0)
@@ -217,18 +223,7 @@ public partial class FrmDataLiberty : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        string[] rowText = new string[]
-        {
-            "Type",
-            "Horizontal reach H (m)",
-            "Vertical range middle VRM (m)",
-            "Horizontal distance DH (m)",
-            "Vertical distance DV (m)",
-            "Vertical height V (m)",
-            "Frequency F (actions/min)",
-            "Gender"
-        };
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.LibertyMutual_DataInputHeaders);
     }
 
     /// <summary>
@@ -236,16 +231,20 @@ public partial class FrmDataLiberty : Form, IChildData
     /// </summary>
     private void FormatRows()
     {
+        // Get the couplig type texts
+        string[] strGender = StringResources.LibertyMutual_GenderType.Split(", ");
+        string[] strType = StringResources.LibertyMutual_TaskType.Split(", ");
+
         // Create custom cells with combobox display
         DataGridViewComboBoxCell cellType = new();
         DataTable tabType = new();
         tabType.Columns.Add("Type", typeof(String));
         tabType.Columns.Add("TypeValue", typeof(Int32));
-        tabType.Rows.Add("Carrying", 0);
-        tabType.Rows.Add("Lifting", 1);
-        tabType.Rows.Add("Lowering", 2);
-        tabType.Rows.Add("Pulling", 3);
-        tabType.Rows.Add("Pushing", 4);
+        tabType.Rows.Add(strType[(int)TaskType.Carrying], (int)TaskType.Carrying);
+        tabType.Rows.Add(strType[(int)TaskType.Lifting], (int)TaskType.Lifting);
+        tabType.Rows.Add(strType[(int)TaskType.Lowering], (int)TaskType.Lowering);
+        tabType.Rows.Add(strType[(int)TaskType.Pulling], (int)TaskType.Pulling);
+        tabType.Rows.Add(strType[(int)TaskType.Pushing], (int)TaskType.Pushing);
         cellType.DataSource = tabType;
         cellType.DisplayMember = "Type";
         cellType.ValueMember = "TypeValue";
@@ -255,8 +254,8 @@ public partial class FrmDataLiberty : Form, IChildData
         DataTable tabGender = new();
         tabGender.Columns.Add("Gender", typeof(String));
         tabGender.Columns.Add("GenderValue", typeof(Int32));
-        tabGender.Rows.Add("Male", 0);
-        tabGender.Rows.Add("Female", 1);
+        tabGender.Rows.Add(strGender[(int)Gender.Male], (int)Gender.Male);
+        tabGender.Rows.Add(strGender[(int)Gender.Female], (int)Gender.Female);
         cellGender.DataSource = tabGender;
         cellGender.DisplayMember = "Gender";
         cellGender.ValueMember = "GenderValue";
@@ -339,6 +338,8 @@ public partial class FrmDataLiberty : Form, IChildData
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
+        this.lblSubtasks.Text = StringResources.NumberOfTasks;
+
         // Relocate controls
         RelocateControls();
     }
@@ -348,5 +349,6 @@ public partial class FrmDataLiberty : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
+        this.updTasks.Left = this.lblSubtasks.Left + this.lblSubtasks.Width + 5;
     }
 }
