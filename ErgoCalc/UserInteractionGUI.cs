@@ -119,11 +119,11 @@ partial class FrmMain
             Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(),
-                "NIOSH lifting equation" => new FrmResultNIOSH(_settings.AppCulture),
-                "Strain index" => new FrmResultsStrainIndex(_settings.AppCulture),
-                "Thermal comfort model" => new FrmResultsTC(_settings.AppCulture),
-                "LM-MMH model" => new FrmResultsLiberty(_settings.AppCulture),
-                "Comprehensive lifting model" => new FrmResultsCLM(_settings.AppCulture),
+                "NIOSH lifting equation" => new FrmResultNIOSH(culture: _settings.AppCulture),
+                "Strain index" => new FrmResultsStrainIndex(culture: _settings.AppCulture),
+                "Thermal comfort model" => new FrmResultsTC(culture: _settings.AppCulture),
+                "LM-MMH model" => new FrmResultsLiberty(culture: _settings.AppCulture),
+                "Comprehensive lifting model" => new FrmResultsCLM(culture: _settings.AppCulture),
                 _ => default
             };
 

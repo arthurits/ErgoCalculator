@@ -20,19 +20,13 @@ public partial class FrmResultsLiberty : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    public FrmResultsLiberty(System.Globalization.CultureInfo culture)
+    public FrmResultsLiberty(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
-        _culture = culture;
-    }
-
-    public FrmResultsLiberty(object? data, System.Globalization.CultureInfo culture)
-        : this()
-    {
-        if (data?.GetType() == typeof(Job))
+        if (data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
 
-        _culture = culture;
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
     private void FrmResultsLiberty_Activated(object sender, EventArgs e)
@@ -48,19 +42,19 @@ public partial class FrmResultsLiberty : Form, IChildResults
     #region Private routines
     private void InitializePlot()
     {
-        formsPlot1.Plot.XLabel("Initial force / kg-f");
+        formsPlot1.Plot.XLabel(StringResources.LibertyMutual_PlotInitialF);
         //formsPlot1.plt.YLabel("Frequency?");
         //formsPlot1.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
         formsPlot1.Plot.Palette = ScottPlot.Palette.Nord;
         //formsPlot1.plt.TightenLayout(padding: 0);
 
-        formsPlot2.Plot.XLabel("Sustained force / kg-f");
+        formsPlot2.Plot.XLabel(StringResources.LibertyMutual_PlotSustainedF);
         //formsPlot2.plt.YLabel("Frequency?");
         //formsPlot2.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
         formsPlot2.Plot.Palette = ScottPlot.Palette.Nord;
         //formsPlot2.plt.TightenLayout(padding: 0, render: true);
 
-        formsPlot3.Plot.XLabel("Weight / kg");
+        formsPlot3.Plot.XLabel(StringResources.LibertyMutual_PlotWeight);
         //formsPlot3.plt.YLabel("Frequency?");
         //formsPlot3.plt.Legend(backColor: Color.Transparent, frameColor: Color.Transparent, location: legendLocation.upperRight, shadowDirection: shadowDirection.none);
         formsPlot3.Plot.Palette = ScottPlot.Palette.Nord;
@@ -109,7 +103,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
         int i = 0;
         foreach (ModelLiberty task in _job.Tasks)
         {
-            strLegend = "Task " + ((char)('A' + i)).ToString();
+            strLegend = $"{StringResources.Task} {((char)('A' + i)).ToString(_culture)}";
             switch (task.Data.Type)
             {
                 case TaskType.Pulling:

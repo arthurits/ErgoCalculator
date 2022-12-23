@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Globalization;
 
 using ErgoCalc.Models.LibertyMutual;
 
@@ -7,9 +6,8 @@ namespace ErgoCalc;
 
 public partial class FrmDataLiberty : Form, IChildData
 {
-    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
     private Job _job;
-    private readonly string strGridHeader = "Task ";
 
     public object GetData => _job;
 
@@ -26,11 +24,11 @@ public partial class FrmDataLiberty : Form, IChildData
     /// </summary>
     /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
     /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
-    public FrmDataLiberty(Job? job = null, CultureInfo? culture = null)
+    public FrmDataLiberty(Job? job = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
         // Update the UI language first
-        _culture = culture ?? CultureInfo.CurrentCulture;
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
         UpdateUI_Language(_culture);
 
         // Then show the data
