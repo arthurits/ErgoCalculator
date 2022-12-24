@@ -16,18 +16,23 @@ public partial class FrmDataCLM : Form, IChildData
         InitializeComponent();       
     }
 
-    public FrmDataCLM(CultureInfo culture)
-        : this()
-    {
-        _culture = culture;
-        UpdateUI_Language(culture);
-    }
-
-    public FrmDataCLM(Job job)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataCLM(Job? job = null, CultureInfo? culture = null)
         : this() // Call the base constructor
     {
-        _job = job;
-        DataToGrid();
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
+        // Then show the data
+        if (job is not null)
+        {
+            _job = job;
+            DataToGrid();
+        }
     }
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
@@ -265,6 +270,8 @@ public partial class FrmDataCLM : Form, IChildData
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
+        this.lblTasks.Text = StringResources.NumberOfCases;
+
         // Relocate controls
         RelocateControls();
     }
@@ -274,5 +281,6 @@ public partial class FrmDataCLM : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
+        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
     }
 }

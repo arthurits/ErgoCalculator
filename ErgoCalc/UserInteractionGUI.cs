@@ -43,12 +43,12 @@ partial class FrmMain
             {
                 Form frmResults = frmNew.Model switch
                 {
-                    ModelType.WorkRest => new FrmResultsWR(frm.GetData),
+                    ModelType.WorkRest => new FrmResultsWR(frm.GetData, _settings.AppCulture),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.AppCulture),
                     ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData, _settings.AppCulture),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.AppCulture),
-                    ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData),
-                    ModelType.MetabolicRate => new FrmResultsMet(frm.GetData),
+                    ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData, _settings.AppCulture),
+                    ModelType.MetabolicRate => new FrmResultsMet(frm.GetData, _settings.AppCulture),
                     ModelType.ThermalComfort => new FrmResultsTC(frm.GetData, _settings.AppCulture),
                     ModelType.LibertyMutual => new FrmResultsLiberty(frm.GetData, _settings.AppCulture),
                     _ => new Form()

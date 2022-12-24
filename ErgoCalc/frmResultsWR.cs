@@ -1,9 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-using System.Windows.Forms;
 
 using ErgoCalc.Models.WR;
 
@@ -12,8 +8,8 @@ namespace ErgoCalc;
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
 public partial class FrmResultsWR : Form, IChildResults
 {
-    //private List<DataWR> _datos;
     private Job _job;
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
     private readonly ChartOptions _plotOptions;
 
     public FrmResultsWR()
@@ -30,29 +26,31 @@ public partial class FrmResultsWR : Form, IChildResults
         };
 
         // ToolStrip
-        var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        if (File.Exists(path + @"\images\settings.ico")) this.toolStripWR_Settings.Image=new Icon(path + @"\images\settings.ico", 48, 48).ToBitmap();
+        this.toolStripWR_Settings.Image = new System.Drawing.Icon(GraphicsResources.IconSettings, 48, 48).ToBitmap();
+        this.toolStripWR_AddLine.Image = new System.Drawing.Icon(GraphicsResources.IconChartAdd, 48, 48).ToBitmap();
+        this.toolStripWR_RemoveLine.Image = new System.Drawing.Icon(GraphicsResources.IconChartDelete, 48, 48).ToBitmap();
+        this.toolStripWR_SaveChart.Image = new System.Drawing.Icon(GraphicsResources.IconChartSave, 48, 48).ToBitmap();
+
         this.toolStripWR_Settings.CheckOnClick = true;
-        if (File.Exists(path + @"\images\chart-add.ico")) this.toolStripWR_AddLine.Image = new Icon(path + @"\images\chart-add.ico", 48, 48).ToBitmap();
-        if (File.Exists(path + @"\images\chart-delete.ico")) this.toolStripWR_RemoveLine.Image = new Icon(path + @"\images\chart-delete.ico", 48, 48).ToBitmap();
-        if (File.Exists(path + @"\images\chart-save.ico")) this.toolStripWR_SaveChart.Image = new Icon(path + @"\images\chart-save.ico", 48, 48).ToBitmap();
 
         // https://lvcharts.net/App/examples/v1/wf/Series
         //chartA.Series[0].Values.Add(new ObservablePoint(0, 100));
         //chartA.Series[0].Values.Add(new ObservablePoint(1, 90));
         //chartA.Series[0].Values.Add(new ObservablePoint(2, 80));
-        
+
     }
 
-    public FrmResultsWR(object data)
+    public FrmResultsWR(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
-        if (data.GetType() == typeof(Job))
+        if (data is not null && data.GetType() == typeof(Job))
         {
             _job = (Job)data;
             CalcularCurva();
             _plotOptions.NúmeroCurva = plot.Plot.GetPlottables().Length - 1;
         }
+
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
     /// <summary>
@@ -177,7 +175,7 @@ public partial class FrmResultsWR : Form, IChildResults
     private void toolStripWR_AddLine_Click(object sender, EventArgs e)
     {
         // Llamar al formulario para introducir los datos
-        FrmDataWR frmDatosWR = new FrmDataWR(_job);
+        FrmDataWR frmDatosWR = new FrmDataWR(_job, _culture);
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
             _job = (Job)frmDatosWR.GetData;
@@ -394,7 +392,7 @@ public partial class FrmResultsWR : Form, IChildResults
     public void EditData()
     {
         // Show the form with the data in order to edit it
-        FrmDataWR frmDatosWR = new FrmDataWR(_job);
+        FrmDataWR frmDatosWR = new FrmDataWR(_job, _culture);
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
             // Get the edited input data
@@ -410,7 +408,7 @@ public partial class FrmResultsWR : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsWR frmResults = new FrmResultsWR(_job)
+        FrmResultsWR frmResults = new FrmResultsWR(_job, _culture)
         {
             MdiParent = this.MdiParent
         };

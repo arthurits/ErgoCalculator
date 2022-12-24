@@ -10,6 +10,7 @@ public partial class FrmResultsMet : Form, IChildResults
 {
     // Variable definition
     private Job _job;
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -20,18 +21,13 @@ public partial class FrmResultsMet : Form, IChildResults
         InitializeComponent();
     }
 
-    // Overloaded constructor
-    public FrmResultsMet(Job job)
+    public FrmResultsMet(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this() // Call the base constructor
     {
-        _job = job;
-    }
-
-    public FrmResultsMet(object data)
-        : this() // Call the base constructor
-    {
-        if (data.GetType() == typeof(Job))
+        if (data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
+
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
     
     private void frmMetResult_Shown(object sender, EventArgs e)
@@ -98,7 +94,7 @@ public partial class FrmResultsMet : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsMet frmResults = new FrmResultsMet(_job)
+        FrmResultsMet frmResults = new FrmResultsMet(_job, _culture)
         {
             MdiParent = this.MdiParent
         };

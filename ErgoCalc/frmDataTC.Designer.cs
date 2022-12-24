@@ -32,7 +32,7 @@ namespace ErgoCalc
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.lblSubtasks = new System.Windows.Forms.Label();
+            this.lblTasks = new System.Windows.Forms.Label();
             this.updTasks = new System.Windows.Forms.NumericUpDown();
             this.gridVariables = new System.Windows.Forms.DataGridView();
             this.btnExample = new System.Windows.Forms.Button();
@@ -69,16 +69,16 @@ namespace ErgoCalc
             this.columnHeader1.Text = "Task A";
             this.columnHeader1.Width = 189;
             // 
-            // lblSubtasks
+            // lblTasks
             // 
-            this.lblSubtasks.AutoSize = true;
-            this.lblSubtasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblSubtasks.Location = new System.Drawing.Point(13, 252);
-            this.lblSubtasks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSubtasks.Name = "lblSubtasks";
-            this.lblSubtasks.Size = new System.Drawing.Size(115, 17);
-            this.lblSubtasks.TabIndex = 11;
-            this.lblSubtasks.Text = "Number of cases";
+            this.lblTasks.AutoSize = true;
+            this.lblTasks.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTasks.Location = new System.Drawing.Point(13, 252);
+            this.lblTasks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTasks.Name = "lblTasks";
+            this.lblTasks.Size = new System.Drawing.Size(115, 17);
+            this.lblTasks.TabIndex = 11;
+            this.lblTasks.Text = "Number of cases";
             // 
             // updTasks
             // 
@@ -130,7 +130,7 @@ namespace ErgoCalc
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(774, 355);
             this.Controls.Add(this.btnExample);
-            this.Controls.Add(this.lblSubtasks);
+            this.Controls.Add(this.lblTasks);
             this.Controls.Add(this.updTasks);
             this.Controls.Add(this.gridVariables);
             this.Controls.Add(this.btnCancel);
@@ -157,7 +157,7 @@ namespace ErgoCalc
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Label lblSubtasks;
+        private System.Windows.Forms.Label lblTasks;
         private System.Windows.Forms.NumericUpDown updTasks;
         private System.Windows.Forms.DataGridView gridVariables;
         private System.Windows.Forms.Button btnExample;

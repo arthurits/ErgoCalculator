@@ -16,18 +16,24 @@ public partial class FrmDataTC : Form, IChildData
         InitializeComponent();
     }
 
-    public FrmDataTC(CultureInfo culture)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataTC(Job? job = null, CultureInfo? culture = null)
         : this()
     {
-        _culture = culture;
-        UpdateUI_Language(culture);
-    }
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
 
-    public FrmDataTC(Job job)
-        : this()
-    {
-        _job = job;
-        DataToGrid();
+        // Then show the data
+        if (job is not null)
+        {
+            _job = job;
+            DataToGrid();
+        }
     }
 
     #region Form events
@@ -180,6 +186,8 @@ public partial class FrmDataTC : Form, IChildData
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
+        this.lblTasks.Text = StringResources.NumberOfTasks;
+
         // Relocate controls
         RelocateControls();
     }
@@ -189,6 +197,7 @@ public partial class FrmDataTC : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
+        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
     }
 
 }

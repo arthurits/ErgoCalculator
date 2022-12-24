@@ -17,19 +17,13 @@ public partial class FrmResultsCLM : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsCLM(System.Globalization.CultureInfo culture)
+    public FrmResultsCLM(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
-        _culture = culture;
-    }
-
-    public FrmResultsCLM(object? data, System.Globalization.CultureInfo culture)
-        : this()
-    {
-        if (data?.GetType() == typeof(Job))
+        if (data is not null && data?.GetType() == typeof(Job))
             _job = (Job)data;
 
-        _culture = culture;
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)
@@ -233,7 +227,7 @@ public partial class FrmResultsCLM : Form, IChildResults
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        using FrmDataCLM frm = new(_job);
+        using FrmDataCLM frm = new(_job, _culture);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {

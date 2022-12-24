@@ -29,7 +29,7 @@ namespace ErgoCalc
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnOK = new System.Windows.Forms.Button();
+            this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.tabDataStrain = new System.Windows.Forms.TabControl();
             this.tabSubtasks = new System.Windows.Forms.TabPage();
@@ -55,16 +55,16 @@ namespace ErgoCalc
             ((System.ComponentModel.ISupportInitialize)(this.updTasks)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnOK
+            // btnAccept
             // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnOK.Location = new System.Drawing.Point(468, 464);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(133, 34);
-            this.btnOK.TabIndex = 4;
-            this.btnOK.Text = "&Accept";
-            this.btnOK.UseVisualStyleBackColor = true;
+            this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnAccept.Location = new System.Drawing.Point(468, 464);
+            this.btnAccept.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(133, 34);
+            this.btnAccept.TabIndex = 4;
+            this.btnAccept.Text = "&Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
             // 
             // btnCancel
             // 
@@ -208,18 +208,18 @@ namespace ErgoCalc
             this.tabTasks.Controls.Add(this.listViewTasks);
             this.tabTasks.Controls.Add(this.lblTasks);
             this.tabTasks.Controls.Add(this.updTasks);
-            this.tabTasks.Location = new System.Drawing.Point(4, 25);
+            this.tabTasks.Location = new System.Drawing.Point(4, 24);
             this.tabTasks.Name = "tabTasks";
             this.tabTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTasks.Size = new System.Drawing.Size(737, 425);
+            this.tabTasks.Size = new System.Drawing.Size(737, 426);
             this.tabTasks.TabIndex = 1;
             this.tabTasks.Text = "Tasks";
             // 
             // listViewTasks
             // 
             this.listViewTasks.AllowDrop = true;
+            this.listViewTasks.DummyName = "Dummy";
             this.listViewTasks.FullRowSelect = true;
-            this.listViewTasks.HideSelection = false;
             this.listViewTasks.Location = new System.Drawing.Point(6, 42);
             this.listViewTasks.Name = "listViewTasks";
             this.listViewTasks.Size = new System.Drawing.Size(725, 377);
@@ -267,9 +267,9 @@ namespace ErgoCalc
             this.tabDummy.TabIndex = 8;
             this.tabDummy.Visible = false;
             // 
-            // frmDataOCRAcheck
+            // FrmDataOCRAcheck
             // 
-            this.AcceptButton = this.btnOK;
+            this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
@@ -277,13 +277,13 @@ namespace ErgoCalc
             this.Controls.Add(this.tabDataStrain);
             this.Controls.Add(this.tabDummy);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnAccept);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmDataOCRAcheck";
+            this.Name = "FrmDataOCRAcheck";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -304,7 +304,7 @@ namespace ErgoCalc
 
         #endregion
 
-        private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TabControl tabDataStrain;
         //private System.Windows.Forms.TablessTabControl tabDataStrain;

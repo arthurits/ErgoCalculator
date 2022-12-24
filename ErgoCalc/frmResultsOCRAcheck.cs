@@ -1,28 +1,25 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Text.Json;
-using System.Windows.Forms;
+﻿using System.Text.Json;
 
 namespace ErgoCalc;
 
 public partial class FrmResultsOCRAcheck : Form, IChildResults
 {
-    private string _strPath;
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
+
     public FrmResultsOCRAcheck()
     {
         InitializeComponent();
 
-        _strPath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-        if (File.Exists(_strPath + @"\images\logo.ico")) this.Icon = new Icon(_strPath + @"\images\logo.ico");
-
-        // Initialize private variables
-        //_classDLL = new cModelStrain();
+        this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsOCRAcheck(object data)
+    public FrmResultsOCRAcheck(object? data = null, System.Globalization.CultureInfo? culture = null)
         :this()
     {
+        //if (data is not null && data.GetType() == typeof(Job))
+        //    _job = (Job)data;
+
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
     #region Events

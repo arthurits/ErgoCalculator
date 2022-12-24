@@ -1,6 +1,5 @@
-﻿using System;
-using System.Data;
-using System.Windows.Forms;
+﻿using System.Data;
+using System.Globalization;
 
 using ErgoCalc.Models.MetabolicRate;
 
@@ -8,6 +7,7 @@ namespace ErgoCalc;
 
 public partial class FrmDataMet : Form, IChildData
 {
+    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private Job _job;
     public object GetData => _job;
 
@@ -62,11 +62,24 @@ public partial class FrmDataMet : Form, IChildData
 
     }
 
-    public FrmDataMet(Job job)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataMet(Job? job = null, CultureInfo? culture = null)
         :this()
     {
-        _job = job;
-        //DataToGrid();
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
+
+        // Then show the data
+        if (job is not null)
+        {
+            _job = job;
+            //DataToGrid();
+        }
     }
 
     private void cboOcupaciones_SelectedValueChanged(object sender, EventArgs e)
@@ -318,4 +331,30 @@ public partial class FrmDataMet : Form, IChildData
     }
 
     #endregion
+
+    /// <summary>
+    /// Update the form's interface language
+    /// </summary>
+    /// <param name="culture">Culture used to display the UI</param>
+    private void UpdateUI_Language(System.Globalization.CultureInfo culture)
+    {
+        StringResources.Culture = culture;
+
+        this.btnAccept.Text = StringResources.BtnAccept;
+        this.btnCancel.Text = StringResources.BtnCancel;
+        //this.btnExample.Text = StringResources.BtnExample;
+
+        this.lblTasks.Text = StringResources.NumberOfTasks;
+
+        // Relocate controls
+        RelocateControls();
+    }
+
+    /// <summary>
+    /// Relocate controls to compensate for the culture text length in labels
+    /// </summary>
+    private void RelocateControls()
+    {
+        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
+    }
 }

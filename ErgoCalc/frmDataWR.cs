@@ -10,7 +10,6 @@ public partial class FrmDataWR : Form, IChildData
     // Propiedades de la clase
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     public Job _job;
-    private readonly string strGridHeader = "Task ";
     private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDataWR));
 
     public object GetData => _job;
@@ -20,18 +19,24 @@ public partial class FrmDataWR : Form, IChildData
         InitializeComponent();
     }
 
-    public FrmDataWR(CultureInfo culture)
+    /// <summary>
+    /// Overloaded constructor
+    /// </summary>
+    /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
+    /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
+    public FrmDataWR(Job? job = null, CultureInfo? culture = null)
         : this()
     {
-        _culture = culture;
-        UpdateUI_Language(culture);
-    }
+        // Update the UI language first
+        _culture = culture ?? CultureInfo.CurrentCulture;
+        UpdateUI_Language(_culture);
 
-    public FrmDataWR(Job job)
-        : this()
-    {
-        _job= job;
-        DataToGrid();
+        // Then show the data
+        if (job is not null)
+        {
+            _job = job;
+            DataToGrid();
+        }
     }
 
     #region Form control's events
@@ -140,10 +145,10 @@ public partial class FrmDataWR : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
+        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
 
         // Create the new column
-        (this as IChildData).AddColumnBasic(gridVariables, col, strGridHeader, 70);
+        (this as IChildData).AddColumnBasic(gridVariables, col, StringResources.Task, 70);
 
         // Add the row headers after the first column is created        
         if (col == 0)
@@ -304,6 +309,8 @@ public partial class FrmDataWR : Form, IChildData
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
 
+        this.lblTasks.Text = StringResources.NumberOfTasks;
+
         // Relocate controls
         RelocateControls();
     }
@@ -313,5 +320,6 @@ public partial class FrmDataWR : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
+        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
     }
 }

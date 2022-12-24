@@ -20,19 +20,13 @@ public partial class FrmResultsTC : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    public FrmResultsTC(System.Globalization.CultureInfo culture)
-        : this()
-    {
-        _culture = culture;
-    }
-
-    public FrmResultsTC(object? data, System.Globalization.CultureInfo culture)
+    public FrmResultsTC(object? data = null, System.Globalization.CultureInfo? culture = null)
         :this()
     {
-        if (data?.GetType() == typeof(Job))
+        if (data is not null && data?.GetType() == typeof(Job))
             _job = (Job)data;
 
-        _culture = culture;
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
     private void FrmResultsTC_Activated(object sender, EventArgs e)
@@ -250,7 +244,7 @@ public partial class FrmResultsTC : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new FrmDataTC(_job);
+        using var frm = new FrmDataTC(_job, _culture);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
