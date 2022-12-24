@@ -62,7 +62,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 col.HeaderText = $"{StringResources.Task} {col.HeaderText[^1]}";
                 lblSubtasks.Text = StringResources.NumberOfTasks;
             }
-            tabDataStrain.TabPages[0].Text = StringResources.Task;
+            //tabDataStrain.TabPages[0].Text = StringResources.Task;
             tabDataStrain.TabPages[1].Parent = tabDummy;
         }
         else
@@ -72,9 +72,12 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 col.HeaderText = $"{StringResources.Subtask} {col.HeaderText[^1]}";
                 lblSubtasks.Text = StringResources.NumberOfSubtasks;
             }
-            tabDataStrain.TabPages[0].Text = StringResources.Subtask;
+            //tabDataStrain.TabPages[0].Text = StringResources.Subtask;
             if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabDataStrain;
         }
+
+        // Set tabpages text
+        SetTabPagesText();
 
         RelocateControls();
     }
@@ -101,7 +104,46 @@ public partial class FrmDataStrainIndex : Form, IChildData
         // Set the maximum tasks
         if (col > 1) this.updTasks.Maximum = col - 1;
 
+        // Set tabpages text
+        SetTabPagesText();
+
         return;
+    }
+
+    /// <summary>
+    /// Sets the <see cref="TabControl"/> pages text
+    /// </summary>
+    private void SetTabPagesText()
+    {
+        int col = Convert.ToInt32(updSubtasks.Value);
+
+        // Set the tabpages texts
+        if (col > 1)
+        {
+            if (_index == IndexType.RSI)
+            {
+                tabDataStrain.TabPages[0].Text = StringResources.Tasks;
+                tabDummy.TabPages[0].Text = StringResources.Tasks;
+            }
+            else
+            {
+                tabDataStrain.TabPages[0].Text = StringResources.Subtasks;
+                tabDataStrain.TabPages[1].Text = StringResources.Tasks;
+            }
+        }
+        else
+        {
+            if (_index == IndexType.RSI)
+            {
+                tabDataStrain.TabPages[0].Text = StringResources.Task;
+                tabDummy.TabPages[0].Text = StringResources.Task;
+            }
+            else
+            {
+                tabDataStrain.TabPages[0].Text = StringResources.Subtask;
+                tabDataStrain.TabPages[1].Text = StringResources.Task;
+            }
+        }
     }
 
     private void Tasks_ValueChanged(object sender, EventArgs e)

@@ -67,7 +67,43 @@ public partial class FrmDataNIOSH : Form, IChildData
         // Set the maximum tasks
         if (col > 1) this.updTasks.Maximum = col - 1;
 
+        // Set tabpages text
+        SetTabPagesText();
+
         return;
+    }
+
+    private void SetTabPagesText()
+    {
+        int col = Convert.ToInt32(updSubTasks.Value);
+
+        // Set the tabpages texts
+        if (col > 1)
+        {
+            if (_index == IndexType.IndexLI)
+            {
+                tabData.TabPages[0].Text = StringResources.Tasks;
+                tabDummy.TabPages[0].Text = StringResources.Tasks;
+            }
+            else
+            {
+                tabData.TabPages[0].Text = StringResources.Subtasks;
+                tabData.TabPages[1].Text = StringResources.Tasks;
+            }
+        }
+        else
+        {
+            if (_index == IndexType.IndexLI)
+            {
+                tabData.TabPages[0].Text = StringResources.Task;
+                tabDummy.TabPages[0].Text = StringResources.Task;
+            }
+            else
+            {
+                tabData.TabPages[0].Text = StringResources.Subtask;
+                tabData.TabPages[1].Text = StringResources.Task;
+            }
+        }
     }
 
     private void Tasks_ValueChanged(object sender, EventArgs e)
@@ -92,7 +128,7 @@ public partial class FrmDataNIOSH : Form, IChildData
                 col.HeaderText = $"{StringResources.Task} {col.HeaderText[^1]}";
                 lblSubTasks.Text = StringResources.NumberOfTasks;
             }
-            tabData.TabPages[0].Text = StringResources.Task;
+            //tabData.TabPages[0].Text = StringResources.Task;
             tabData.TabPages[1].Parent = tabDummy;
             //if (updTasks.Value > 1) updTasks.Value = 1;
         }
@@ -103,11 +139,15 @@ public partial class FrmDataNIOSH : Form, IChildData
                 col.HeaderText = $"{StringResources.Subtask} {col.HeaderText[^1]}";
                 lblSubTasks.Text = StringResources.NumberOfSubtasks;
             }
-            tabData.TabPages[0].Text = StringResources.Subtask;
+            //tabData.TabPages[0].Text = StringResources.Subtask;
             if (tabDummy.TabPages.Count > 0) tabDummy.TabPages[0].Parent = tabData;
             //if (updTasks.Value < 2) updTasks.Value++;
         }
 
+        // Set tabpages text
+        SetTabPagesText();
+
+        RelocateControls();
     }
 
     private void Accept_Click(object sender, EventArgs e)
