@@ -1359,6 +1359,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of cases.
+        /// </summary>
+        internal static string strNumberCases {
+            get {
+                return ResourceManager.GetString("strNumberCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of subtasks.
         /// </summary>
         internal static string strNumberSubtasks {

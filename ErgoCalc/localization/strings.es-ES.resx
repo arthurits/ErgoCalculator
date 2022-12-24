@@ -551,6 +551,9 @@ salir de la aplicación?</value>
   <data name="strNIOSH_Weight" xml:space="preserve">
     <value>Peso manipulado (kg):</value>
   </data>
+  <data name="strNumberCases" xml:space="preserve">
+    <value>Número de casos</value>
+  </data>
   <data name="strNumberSubtasks" xml:space="preserve">
     <value>Número de subtareas</value>
   </data>

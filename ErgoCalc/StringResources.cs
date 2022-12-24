@@ -21,6 +21,7 @@ public static class StringResources
 
 
     public static string Case => StringRM.GetString("strCase", Culture) ?? "Case";
+    public static string NumberOfCase => StringRM.GetString("strNumberCases", Culture) ?? "Number of cases";
     public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
     public static string Tasks => StringRM.GetString("strTasks", Culture) ?? "Tasks";
     public static string Subtask => StringRM.GetString("strSubTask", Culture) ?? "Subtask";

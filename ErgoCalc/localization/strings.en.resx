@@ -551,6 +551,9 @@ the application?</value>
   <data name="strNIOSH_Weight" xml:space="preserve">
     <value>Weight lifted (kg):</value>
   </data>
+  <data name="strNumberCases" xml:space="preserve">
+    <value>Number of cases</value>
+  </data>
   <data name="strNumberSubtasks" xml:space="preserve">
     <value>Number of subtasks</value>
   </data>
