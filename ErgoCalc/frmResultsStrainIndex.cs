@@ -17,12 +17,6 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsStrainIndex(System.Globalization.CultureInfo culture)
-        :this()
-    {
-        _culture = culture;
-    }
-
     public FrmResultsStrainIndex(object? data, System.Globalization.CultureInfo culture)
         : this()
     {

@@ -16,12 +16,6 @@ public partial class FrmResultNIOSH : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(System.Globalization.CultureInfo culture)
-        : this()
-    {
-        _culture = culture;
-    }
-
     public FrmResultNIOSH(object? data, System.Globalization.CultureInfo culture)
         : this()
     {
