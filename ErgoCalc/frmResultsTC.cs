@@ -83,8 +83,8 @@ public partial class FrmResultsTC : Form, IChildResults
             formsPlot1.Plot.AddScatter(abscissa, line, markerShape: ScottPlot.MarkerShape.none, color: Color.LightGray);
         }
 
-        formsPlot1.Plot.XLabel("Air temperature (°C)");
-        formsPlot1.Plot.YLabel("g water / kg dry air");
+        formsPlot1.Plot.XLabel(StringResources.ThermalComfort_PlotAbscissa);
+        formsPlot1.Plot.YLabel(StringResources.ThermalComfort_PlotOrdinate);
     }
 
     private void CreatePlots()
@@ -101,7 +101,7 @@ public partial class FrmResultsTC : Form, IChildResults
         foreach (TaskModel task in _job.Tasks)
         {
             var result = 1000 * CPsy.GetHumRatioFromRelHum(task.Data.TempAir, task.Data.RelHumidity / 100, 101325);
-            formsPlot1.Plot.AddPoint(task.Data.TempAir, result, label: "Case " + ((char)('A' + i)).ToString(), size: 7);
+            formsPlot1.Plot.AddPoint(task.Data.TempAir, result, label: $"{StringResources.Case} {((char)('A' + i)).ToString(_culture)}", size: 7);
             i++;
         }
         var legendA = formsPlot1.Plot.RenderLegend();
@@ -130,7 +130,7 @@ public partial class FrmResultsTC : Form, IChildResults
         i = 0;
         foreach(TaskModel task in _job.Tasks)
         {
-            xsLabels[i] = "Case " + ((char)('A' + i)).ToString();
+            xsLabels[i] = $"{StringResources.Case} {((char)('A' + i)).ToString(_culture)}";
             xsStacked[i] = i;
             HL_1[i] = task.Variables.HL_Skin;
             HL_2[i] = HL_1[i] + task.Variables.HL_Sweating;
@@ -144,13 +144,14 @@ public partial class FrmResultsTC : Form, IChildResults
         // Plot the bar charts in reverse order (highest first)
         //formsPlot2.plt.Legend(backColor: Color.White, shadowDirection: shadowDirection.none, location: legendLocation.lowerRight, fixedLineWidth: true);
         formsPlot2.Plot.Palette = ScottPlot.Palette.Nord;
-        
-        formsPlot2.Plot.AddBar(HL_6, xsStacked).Label = "Convection";
-        formsPlot2.Plot.AddBar(HL_5, xsStacked).Label = "Radiation";
-        formsPlot2.Plot.AddBar(HL_4, xsStacked).Label = "Dry";
-        formsPlot2.Plot.AddBar(HL_3, xsStacked).Label = "Latent";
-        formsPlot2.Plot.AddBar(HL_2, xsStacked).Label = "Sweating";
-        formsPlot2.Plot.AddBar(HL_1, xsStacked).Label = "Skin";
+
+        string[] strLegend = StringResources.ThermalComfort_PlotLegend.Split(", ");
+        formsPlot2.Plot.AddBar(HL_6, xsStacked).Label = strLegend[0];
+        formsPlot2.Plot.AddBar(HL_5, xsStacked).Label = strLegend[1];
+        formsPlot2.Plot.AddBar(HL_4, xsStacked).Label = strLegend[2];
+        formsPlot2.Plot.AddBar(HL_3, xsStacked).Label = strLegend[3];
+        formsPlot2.Plot.AddBar(HL_2, xsStacked).Label = strLegend[4];
+        formsPlot2.Plot.AddBar(HL_1, xsStacked).Label = strLegend[5];
         formsPlot2.Plot.XTicks(xsStacked, xsLabels);
 
         var legendB = formsPlot2.Plot.RenderLegend();
