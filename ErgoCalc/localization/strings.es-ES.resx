@@ -752,6 +752,15 @@ salir de la aplicación?</value>
   <data name="strThermalComfort_Multipliers" xml:space="preserve">
     <value>Factores de pérdida de calor</value>
   </data>
+  <data name="strThermalComfort_PlotAbscissa" xml:space="preserve">
+    <value>Temperatura del aire (°C)</value>
+  </data>
+  <data name="strThermalComfort_PlotLegend" xml:space="preserve">
+    <value>Convección, Radiación, Resp. seca, Resp. latente, Sudoración, Piel</value>
+  </data>
+  <data name="strThermalComfort_PlotOrdinate" xml:space="preserve">
+    <value>g agua / kg aire seco</value>
+  </data>
   <data name="strThermalComfort_PMVindex" xml:space="preserve">
     <value>El índice PMV es:</value>
   </data>

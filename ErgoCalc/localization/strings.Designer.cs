@@ -1962,6 +1962,33 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Air temperature (°C).
+        /// </summary>
+        internal static string strThermalComfort_PlotAbscissa {
+            get {
+                return ResourceManager.GetString("strThermalComfort_PlotAbscissa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convection, Radiation, Dry resp., Latent resp., Sweating, Skin.
+        /// </summary>
+        internal static string strThermalComfort_PlotLegend {
+            get {
+                return ResourceManager.GetString("strThermalComfort_PlotLegend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to g water / kg dry air.
+        /// </summary>
+        internal static string strThermalComfort_PlotOrdinate {
+            get {
+                return ResourceManager.GetString("strThermalComfort_PlotOrdinate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The PMV index is:.
         /// </summary>
         internal static string strThermalComfort_PMVindex {

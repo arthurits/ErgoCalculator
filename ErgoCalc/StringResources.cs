@@ -521,6 +521,9 @@ public static class StringResources
     public static string ThermalComfort_RadiantTemp => StringRM.GetString("strThermalComfort_RadiantTemp", Culture) ?? "Radiant temperature (°C)";
     public static string ThermalComfort_RelHumidity => StringRM.GetString("strThermalComfort_RelHumidity", Culture) ?? "Relative humidity (%)";
     public static string ThermalComfort_Results => StringRM.GetString("strThermalComfort_Results", Culture) ?? "These are the results for the PMV and the PPD indexes according to ISO 7730:";
+    public static string ThermalComfort_PlotAbscissa => StringRM.GetString("strThermalComfort_PlotAbscissa", Culture) ?? "Air temperature (°C)";
+    public static string ThermalComfort_PlotOrdinate => StringRM.GetString("strThermalComfort_PlotOrdinate", Culture) ?? "g water / kg dry air";
+    public static string ThermalComfort_PlotLegend => StringRM.GetString("strThermalComfort_PlotLegend", Culture) ?? "Convection, Radiation, Dry resp., Latent resp., Sweating, Skin";
     public static string[] ThermalComfort_RowHeaders => new[]
     {
         ThermalComfort_Data,

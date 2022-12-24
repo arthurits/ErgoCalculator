@@ -752,6 +752,15 @@ the application?</value>
   <data name="strThermalComfort_Multipliers" xml:space="preserve">
     <value>Heat loss factors</value>
   </data>
+  <data name="strThermalComfort_PlotAbscissa" xml:space="preserve">
+    <value>Air temperature (°C)</value>
+  </data>
+  <data name="strThermalComfort_PlotLegend" xml:space="preserve">
+    <value>Convection, Radiation, Dry resp., Latent resp., Sweating, Skin</value>
+  </data>
+  <data name="strThermalComfort_PlotOrdinate" xml:space="preserve">
+    <value>g water / kg dry air</value>
+  </data>
   <data name="strThermalComfort_PMVindex" xml:space="preserve">
     <value>The PMV index is:</value>
   </data>
