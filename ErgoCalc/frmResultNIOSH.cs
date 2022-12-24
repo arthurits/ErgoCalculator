@@ -16,13 +16,13 @@ public partial class FrmResultNIOSH : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(object? data, System.Globalization.CultureInfo culture)
+    public FrmResultNIOSH(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
-        if (data?.GetType() == typeof(Job))
+        if (data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
 
-        _culture = culture;
+        _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
     private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
