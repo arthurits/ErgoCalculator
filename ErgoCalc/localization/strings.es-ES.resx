@@ -695,6 +695,9 @@ salir de la aplicación?</value>
   <data name="strSubTask" xml:space="preserve">
     <value>Subtarea</value>
   </data>
+  <data name="strSubTasks" xml:space="preserve">
+    <value>Subtareas</value>
+  </data>
   <data name="strTabGUI" xml:space="preserve">
     <value>Interfaz de usuario</value>
   </data>
@@ -703,6 +706,9 @@ salir de la aplicación?</value>
   </data>
   <data name="strTask" xml:space="preserve">
     <value>Tarea</value>
+  </data>
+  <data name="strTasks" xml:space="preserve">
+    <value>Tareas</value>
   </data>
   <data name="strThermalComfort_AirTemp" xml:space="preserve">
     <value>Temperatura del aire (°C)</value>

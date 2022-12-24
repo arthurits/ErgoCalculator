@@ -1791,6 +1791,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subtasks.
+        /// </summary>
+        internal static string strSubTasks {
+            get {
+                return ResourceManager.GetString("strSubTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User interface.
         /// </summary>
         internal static string strTabGUI {
@@ -1814,6 +1823,15 @@ namespace ErgoCalc.localization {
         internal static string strTask {
             get {
                 return ResourceManager.GetString("strTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        internal static string strTasks {
+            get {
+                return ResourceManager.GetString("strTasks", resourceCulture);
             }
         }
         

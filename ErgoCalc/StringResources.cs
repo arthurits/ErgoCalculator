@@ -22,7 +22,9 @@ public static class StringResources
 
     public static string Case => StringRM.GetString("strCase", Culture) ?? "Case";
     public static string Task => StringRM.GetString("strTask", Culture) ?? "Task";
+    public static string Tasks => StringRM.GetString("strTasks", Culture) ?? "Tasks";
     public static string Subtask => StringRM.GetString("strSubTask", Culture) ?? "Subtask";
+    public static string Subtasks => StringRM.GetString("strSubTasks", Culture) ?? "Subtasks";
     public static string NumberOfTasks => StringRM.GetString("strNumberTasks", Culture) ?? "Number of tasks";
     public static string NumberOfSubtasks => StringRM.GetString("strNumberSubtasks", Culture) ?? "Number of subtasks";
     public static string Gender => StringRM.GetString("strGender", Culture) ?? "Male, Female";

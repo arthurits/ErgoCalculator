@@ -695,6 +695,9 @@ the application?</value>
   <data name="strSubTask" xml:space="preserve">
     <value>Subtask</value>
   </data>
+  <data name="strSubTasks" xml:space="preserve">
+    <value>Subtasks</value>
+  </data>
   <data name="strTabGUI" xml:space="preserve">
     <value>User interface</value>
   </data>
@@ -703,6 +706,9 @@ the application?</value>
   </data>
   <data name="strTask" xml:space="preserve">
     <value>Task</value>
+  </data>
+  <data name="strTasks" xml:space="preserve">
+    <value>Tasks</value>
   </data>
   <data name="strThermalComfort_AirTemp" xml:space="preserve">
     <value>Air temperature (°C)</value>
