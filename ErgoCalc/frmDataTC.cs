@@ -42,9 +42,10 @@ public partial class FrmDataTC : Form, IChildData
         this.DialogResult = DialogResult.None;
 
         _job = new();
-        
+
         // Save the values entered
-        _job.Tasks = new TaskModel[Convert.ToInt32(updTasks.Value)];
+        _job.NumberTasks = Convert.ToInt32(updTasks.Value);
+        _job.Tasks = new TaskModel[_job.NumberTasks];
         for (int i = 0; i < _job.Tasks.Length; i++)
         {
             _job.Tasks[i] = new TaskModel();
