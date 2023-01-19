@@ -2356,5 +2356,68 @@ namespace ErgoCalc.localization {
                 return ResourceManager.GetString("strToolTipZoom", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum holding time (min).
+        /// </summary>
+        internal static string WR_MHT {
+            get {
+                return ResourceManager.GetString("WR_MHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum voluntary contraction (%).
+        /// </summary>
+        internal static string WR_MVC {
+            get {
+                return ResourceManager.GetString("WR_MVC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of cycles.
+        /// </summary>
+        internal static string WR_NumberCycles {
+            get {
+                return ResourceManager.GetString("WR_NumberCycles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rest times (min).
+        /// </summary>
+        internal static string WR_RestTimes {
+            get {
+                return ResourceManager.GetString("WR_RestTimes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string WR_SeriesName {
+            get {
+                return ResourceManager.GetString("WR_SeriesName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numeric step.
+        /// </summary>
+        internal static string WR_Step {
+            get {
+                return ResourceManager.GetString("WR_Step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working times (min).
+        /// </summary>
+        internal static string WR_WorkingTimes {
+            get {
+                return ResourceManager.GetString("WR_WorkingTimes", resourceCulture);
+            }
+        }
     }
 }

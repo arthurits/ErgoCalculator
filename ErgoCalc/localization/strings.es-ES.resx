@@ -884,4 +884,25 @@ salir de la aplicación?</value>
   <data name="strFormDataOCRAcheck" xml:space="preserve">
     <value>Parámetros del modelo OCRA checklist</value>
   </data>
+  <data name="WR_SeriesName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="WR_MVC" xml:space="preserve">
+    <value>Contracción máxima voluntaria (%)</value>
+  </data>
+  <data name="WR_MHT" xml:space="preserve">
+    <value>Tiempo máximo de postura (min)</value>
+  </data>
+  <data name="WR_WorkingTimes" xml:space="preserve">
+    <value>Tiempos de trabajo (min)</value>
+  </data>
+  <data name="WR_RestTimes" xml:space="preserve">
+    <value>Tiempos de descanso (min)</value>
+  </data>
+  <data name="WR_NumberCycles" xml:space="preserve">
+    <value>Número de ciclos</value>
+  </data>
+  <data name="WR_Step" xml:space="preserve">
+    <value>Paso numérico de la curva</value>
+  </data>
 </root>

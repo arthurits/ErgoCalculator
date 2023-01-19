@@ -686,5 +686,24 @@ public static class StringResources
     };
 
     // Work-rest static postures
-    
+
+    public static string WR_SeriesName => StringRM.GetString("WR_SeriesName", Culture) ?? "Name";
+    public static string WR_MVC => StringRM.GetString("WR_MVC", Culture) ?? "Max. voluntary contraction (%)";
+    public static string WR_MHT => StringRM.GetString("WR_MHT", Culture) ?? "Maximum holding time (min)";
+    public static string WR_WorkingTimes => StringRM.GetString("WR_WorkingTimes", Culture) ?? "Working times (min)";
+    public static string WR_RestTimes => StringRM.GetString("WR_RestTimes", Culture) ?? "Rest times (min)";
+    public static string WR_NumberCycles => StringRM.GetString("WR_NumberCycles", Culture) ?? "Number of cycles";
+    public static string WR_Step => StringRM.GetString("WR_Step", Culture) ?? "Numeric step";
+
+    public static string[] WR_DataInputHeaders => new[]
+    {
+        WR_SeriesName,
+        WR_MVC,
+        WR_MHT,
+        WR_WorkingTimes,
+        WR_RestTimes,
+        WR_NumberCycles,
+        WR_Step
+    };
+
 }

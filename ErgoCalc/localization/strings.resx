@@ -884,4 +884,25 @@ the application?</value>
   <data name="strFormDataOCRAcheck" xml:space="preserve">
     <value>OCRA checklist model parameters</value>
   </data>
+  <data name="WR_SeriesName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="WR_MVC" xml:space="preserve">
+    <value>Maximum voluntary contraction (%)</value>
+  </data>
+  <data name="WR_MHT" xml:space="preserve">
+    <value>Maximum holding time (min)</value>
+  </data>
+  <data name="WR_WorkingTimes" xml:space="preserve">
+    <value>Working times (min)</value>
+  </data>
+  <data name="WR_RestTimes" xml:space="preserve">
+    <value>Rest times (min)</value>
+  </data>
+  <data name="WR_NumberCycles" xml:space="preserve">
+    <value>Number of cycles</value>
+  </data>
+  <data name="WR_Step" xml:space="preserve">
+    <value>Numeric step</value>
+  </data>
 </root>

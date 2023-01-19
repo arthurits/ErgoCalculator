@@ -176,17 +176,7 @@ public partial class FrmDataWR : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        string[] rowText = new string[]
-        {
-            "Name",
-            "Max. voluntary contraction (%)",
-            "Maximum holding time (min)",
-            "Working times (min)",
-            "Rest times (min)",
-            "Number of cycles",
-            "Numeric step"
-        };
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.WR_DataInputHeaders);
     }
 
     /// <summary>
