@@ -427,7 +427,7 @@ public interface IChildData
         gridVariables.Columns.Add($"Column {(col).ToString()}", $"{strName} {((char)('A' + col)).ToString()}");
         gridVariables.Columns[col].SortMode = DataGridViewColumnSortMode.NotSortable;
         gridVariables.Columns[col].Width = width;
-        gridVariables.Columns[col].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+        gridVariables.Columns[col].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
         return;
     }
 
