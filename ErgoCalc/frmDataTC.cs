@@ -8,7 +8,6 @@ public partial class FrmDataTC : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private Job _job;
-    private readonly string strGridHeader = "Case ";
     public object GetData => _job;
 
     public FrmDataTC()
@@ -88,7 +87,7 @@ public partial class FrmDataTC : Form, IChildData
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         // Create the new column
-        (this as IChildData).AddColumnBasic(gridVariables, col, strGridHeader, 70);
+        (this as IChildData).AddColumnBasic(gridVariables, col, StringResources.Case, 70);
 
         // Add the row headers after the first column is created
         if (col == 0)
@@ -113,17 +112,7 @@ public partial class FrmDataTC : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        string[] rowText = new string[]
-        {
-            "Air temperature (°C)",
-            "Radiant temperature (°C)",
-            "Air velocity (m/s)",
-            "Relative humidity (%)",
-            "Clothing insulation (clo)",
-            "Metabolic rate (mets)",
-            "External work (mets)"
-        };
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.ThermalComfort_DataInputHeaders);
     }
 
     private void DataExample()

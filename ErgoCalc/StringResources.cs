@@ -579,7 +579,16 @@ public static class StringResources
         ThermalComfort_PMVindex,
         ThermalComfort_PPDindex
     };
-
+    public static string[] ThermalComfort_DataInputHeaders => new[]
+    {
+        ThermalComfort_AirTemp,
+        ThermalComfort_RadiantTemp,
+        ThermalComfort_AirVel,
+        ThermalComfort_RelHumidity,
+        ThermalComfort_Clothing,
+        ThermalComfort_MetabolicRate,
+        ThermalComfort_ExternalWork
+    };
 
     // Comprehensive lifting index
     public static string CLM_Age => StringRM.GetString("strCLM_Age", Culture) ?? "Age (years)";
@@ -612,6 +621,7 @@ public static class StringResources
     public static string CLM_YM => StringRM.GetString("strCLM_YM", Culture) ?? "Age multiplier (YM)";
     public static string CLM_CouplingType => StringRM.GetString("strCLM_CouplingType", Culture) ?? "No handles, Poor, Good";
     public static string CLM_GenderType => Gender;
+
     public static string[] CLM_RowHeaders => new[]
     {
         CLM_Data,
