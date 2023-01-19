@@ -112,66 +112,7 @@ public class Job
 
     public int NumberTasks { get; set; } = 0;
 
-    //public override string ToString()
-    //{
-    //    string[] strLineD = new string[8];
-    //    string[] strLineF = new string[9];
-
-    //    strLineD[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-    //    strLineD[1] = string.Concat(System.Environment.NewLine, "Air temperature (°C)");
-    //    strLineD[2] = string.Concat(System.Environment.NewLine, "Radiant temperature (°C)");
-    //    strLineD[3] = string.Concat(System.Environment.NewLine, "Air velocity (m/s)");
-    //    strLineD[4] = string.Concat(System.Environment.NewLine, "Relative humidity (%)");
-    //    strLineD[5] = string.Concat(System.Environment.NewLine, "Clothing (clo)", "\t");
-    //    strLineD[6] = string.Concat(System.Environment.NewLine, "Metabolic rate (met)");
-    //    strLineD[7] = string.Concat(System.Environment.NewLine, "External work (met)");
-
-    //    strLineF[0] = string.Concat(System.Environment.NewLine, "Description", "\t");
-    //    strLineF[1] = string.Concat(System.Environment.NewLine, "Heat loss diff. through skin");
-    //    strLineF[2] = string.Concat(System.Environment.NewLine, "Heat loss by sweating", "\t");
-    //    strLineF[3] = string.Concat(System.Environment.NewLine, "Latent respiration heat loss");
-    //    strLineF[4] = string.Concat(System.Environment.NewLine, "Dry respiration heat loss", "\t");
-    //    strLineF[5] = string.Concat(System.Environment.NewLine, "Heat loss by radiation", "\t");
-    //    strLineF[6] = string.Concat(System.Environment.NewLine, "Heat loss by convection");
-
-    //    strLineF[7] = string.Concat(System.Environment.NewLine, System.Environment.NewLine, "The PMV index");
-    //    strLineF[8] = string.Concat(System.Environment.NewLine, "The PPD index", "\t");
-
-    //    int i = 0;
-    //    foreach (TaskModel task in Tasks)
-    //    {
-    //        strLineD[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-    //        strLineD[1] += string.Concat("\t\t", task.Data.TempAir.ToString("0.####"));
-    //        strLineD[2] += string.Concat("\t\t", task.Data.TempRad.ToString("0.####"));
-    //        strLineD[3] += string.Concat("\t\t", task.Data.Velocity.ToString("0.####"));
-    //        strLineD[4] += string.Concat("\t\t", task.Data.RelHumidity.ToString("0.####"));
-    //        strLineD[5] += string.Concat("\t\t", task.Data.Clothing.ToString("0.####"));
-    //        strLineD[6] += string.Concat("\t\t", task.Data.MetRate.ToString("0.####"));
-    //        strLineD[7] += string.Concat("\t\t", task.Data.ExternalWork.ToString("0.####"));
-
-    //        strLineF[0] += string.Concat("\t\t", "Case ", ((char)('A' + i)).ToString());
-    //        strLineF[1] += string.Concat("\t", task.Variables.HL_Skin.ToString("0.####"));
-    //        strLineF[2] += string.Concat("\t", task.Variables.HL_Sweating.ToString("0.####"));
-    //        strLineF[3] += string.Concat("\t", task.Variables.HL_Latent.ToString("0.####"));
-    //        strLineF[4] += string.Concat("\t", task.Variables.HL_Dry.ToString("0.####"));
-    //        strLineF[5] += string.Concat("\t", task.Variables.HL_Radiation.ToString("0.####"));
-    //        strLineF[6] += string.Concat("\t", task.Variables.HL_Convection.ToString("0.####"));
-
-    //        strLineF[7] += string.Concat("\t\t", task.Variables.PMV.ToString("0.####"));
-    //        strLineF[8] += string.Concat("\t\t", task.Variables.PPD.ToString("0.####"));
-
-    //        i++;
-    //    }
-
-    //    return string.Concat("These are the results for the PMV and the PPD indexes according to ISO 7730:",
-    //            System.Environment.NewLine,
-    //            string.Concat(strLineD),
-    //            System.Environment.NewLine,
-    //            string.Concat(strLineF),
-    //            System.Environment.NewLine);
-    //}
-
-    public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
+     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(2200);
         string[] strLineD = new string[8];
