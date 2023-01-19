@@ -621,7 +621,6 @@ public static class StringResources
     public static string CLM_YM => StringRM.GetString("strCLM_YM", Culture) ?? "Age multiplier (YM)";
     public static string CLM_CouplingType => StringRM.GetString("strCLM_CouplingType", Culture) ?? "No handles, Poor, Good";
     public static string CLM_GenderType => Gender;
-
     public static string[] CLM_RowHeaders => new[]
     {
         CLM_Data,
@@ -694,9 +693,24 @@ public static class StringResources
         CLM_CouplingType,
         CLM_GenderType      // 30
     };
+    public static string[] CLM_DataInputHeaders => new[]
+    {
+        CLM_Gender,
+            CLM_Weight,
+            CLM_HorizontalD,
+            CLM_VerticalH,
+            CLM_VerticalD,
+            CLM_Frequency,
+            CLM_HoursTask,
+            CLM_Angle,
+            CLM_Coupling,
+            CLM_Temperature,
+            CLM_Age,
+            CLM_BodyWeight
+    };
+
 
     // Work-rest static postures
-
     public static string WR_SeriesName => StringRM.GetString("WR_SeriesName", Culture) ?? "Name";
     public static string WR_MVC => StringRM.GetString("WR_MVC", Culture) ?? "Max. voluntary contraction (%)";
     public static string WR_MHT => StringRM.GetString("WR_MHT", Culture) ?? "Maximum holding time (min)";
@@ -705,6 +719,10 @@ public static class StringResources
     public static string WR_NumberCycles => StringRM.GetString("WR_NumberCycles", Culture) ?? "Number of cycles";
     public static string WR_Step => StringRM.GetString("WR_Step", Culture) ?? "Numeric step";
 
+    public static string[] WR_ColumnHeaders => new[]
+    {
+        $"{Case} A"
+    };
     public static string[] WR_DataInputHeaders => new[]
     {
         WR_SeriesName,

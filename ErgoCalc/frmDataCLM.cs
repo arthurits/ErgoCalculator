@@ -112,7 +112,7 @@ public partial class FrmDataCLM : Form, IChildData
         if (gridVariables.Columns.Contains("Column" + (col).ToString())) return;
 
         // Create the new column
-        (this as IChildData).AddColumnBasic(gridVariables, col, "Task ", 85);
+        (this as IChildData).AddColumnBasic(gridVariables, col, StringResources.Task, 85);
 
         // Give format to the cells
         if (col > 0)
@@ -142,22 +142,7 @@ public partial class FrmDataCLM : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        string[] rowText = new string[]
-        {
-            "Gender",
-            "Weight lifted (kg)",
-            "Horizontal distance (cm)",
-            "Vertical distance (cm)",
-            "Vertical travel distance (cm)",
-            "Lifting frequency (times/min)",
-            "Task duration (hours)",
-            "Twisting angle (°)",
-            "Coupling",
-            "WBGT temperature (°C)",
-            "Age (years)",
-            "Body weight (kg)"
-        };
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.CLM_DataInputHeaders);
     }
 
     /// <summary>
