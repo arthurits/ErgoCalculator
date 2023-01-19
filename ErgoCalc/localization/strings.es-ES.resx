@@ -265,9 +265,6 @@ los campos a sus valores por defecto?</value>
   <data name="strFormResultsWR" xml:space="preserve">
     <value>Resultados del modelo WR</value>
   </data>
-  <data name="strFormRresultsOCRAcheck" xml:space="preserve">
-    <value>Resultados del modelo OCRA checklist</value>
-  </data>
   <data name="strFormTitleUnion" xml:space="preserve">
     <value> - </value>
   </data>
@@ -311,7 +308,7 @@ los campos a sus valores por defecto?</value>
     <value>Estilo de la fuente: {0}</value>
   </data>
   <data name="strLblSelect" xml:space="preserve">
-    <value>Por favor, selecciona un modelo de evaluación</value>
+    <value>Por favor, selecciona un modelo de evaluación:</value>
   </data>
   <data name="strLblZoom" xml:space="preserve">
     <value>Establecer zoom</value>
@@ -859,5 +856,8 @@ salir de la aplicación?</value>
   </data>
   <data name="strToolTipZoom" xml:space="preserve">
     <value>Seleccionar el nivel de zoom</value>
+  </data>
+  <data name="strFormResultsOCRAcheck" xml:space="preserve">
+    <value>Resultados del modelo OCRA checklist</value>
   </data>
 </root>
