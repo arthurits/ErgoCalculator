@@ -303,15 +303,15 @@ public partial class FrmDataNIOSH : Form, IChildData
     private void FormatRows()
     {
         // Get the couplig type texts
-        string[] strCouplig = StringResources.NIOSH_CouplingType.Split(", ");
+        string[] strCoupling = StringResources.NIOSH_CouplingType.Split(", ");
         // Create custom cells with combobox display
         DataGridViewComboBoxCell celdaC = new();
         DataTable tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
-        tableC.Rows.Add(strCouplig[(int)Coupling.Good], (int)Coupling.Good);
-        tableC.Rows.Add(strCouplig[(int)Coupling.Poor], (int)Coupling.Poor);
-        tableC.Rows.Add(strCouplig[(int)Coupling.NoHandle], (int)Coupling.NoHandle);
+        tableC.Rows.Add(strCoupling[(int)Coupling.Good], (int)Coupling.Good);
+        tableC.Rows.Add(strCoupling[(int)Coupling.Poor], (int)Coupling.Poor);
+        tableC.Rows.Add(strCoupling[(int)Coupling.NoHandle], (int)Coupling.NoHandle);
         celdaC.DataSource = tableC;
         celdaC.DisplayMember = "Display";
         celdaC.ValueMember = "Value";
