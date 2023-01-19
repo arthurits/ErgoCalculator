@@ -35,6 +35,15 @@ public static class StringResources
     public static string FormMainTitle => StringRM.GetString("strFormMainTitle", Culture) ?? "ErgoCalc";
     public static string FormLanguageTitle => StringRM.GetString("strFormLanguageTitle", Culture) ?? "Select culture";
     public static string FormNewTitle => StringRM.GetString("strFormNewTitle", Culture) ?? "New model";
+
+    public static string FormDataNIOSH => StringRM.GetString("strFormDataNIOSH", Culture) ?? "NIOSH model parameters";
+    public static string FormDataCLM => StringRM.GetString("strFormDataCLM", Culture) ?? "CLM model parameters";
+    public static string FormDataLiberty => StringRM.GetString("strFormDataLiberty", Culture) ?? "LM-MMH model parameters";
+    public static string FormDataStrainIndex => StringRM.GetString("strFormDataStrainIndex", Culture) ?? "Strain Index model parameters";
+    public static string FormDataTC => StringRM.GetString("strFormDataTC", Culture) ?? "Thermal comfort model parameters";
+    public static string FormDataWR => StringRM.GetString("strFormDataWR", Culture) ?? "WR model parameters";
+    public static string FormDataMetabolic => StringRM.GetString("strFormDataMetabolic", Culture) ?? "Metabolic rate model parameters";
+    public static string FormDataOCRAchecklist => StringRM.GetString("strFormDataOCRAcheck", Culture) ?? "OCRA checklist model parameters";
     public static string FormResultsNIOSH => StringRM.GetString("strFormResultsNIOSH", Culture) ?? "NIOSH model results";
     public static string FormResultsCLM => StringRM.GetString("strFormResultsCLM", Culture) ?? "CLM model results";
     public static string FormResultsLiberty => StringRM.GetString("strFormResultsLiberty", Culture) ?? "LM-MMH results";
@@ -675,4 +684,7 @@ public static class StringResources
         CLM_CouplingType,
         CLM_GenderType      // 30
     };
+
+    // Work-rest static postures
+    
 }

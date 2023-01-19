@@ -332,6 +332,7 @@ public partial class FrmDataLiberty : Form, IChildData
     {
         StringResources.Culture = culture;
 
+        this.Text = StringResources.FormDataLiberty;
         this.btnOK.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;

@@ -57,6 +57,7 @@ public partial class FrmDataOCRAcheck : Form, IChildData
     {
         StringResources.Culture = culture;
 
+        this.Text = StringResources.FormDataOCRAchecklist;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
 

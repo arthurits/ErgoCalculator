@@ -860,4 +860,28 @@ salir de la aplicación?</value>
   <data name="strFormResultsOCRAcheck" xml:space="preserve">
     <value>Resultados del modelo OCRA checklist</value>
   </data>
+  <data name="strFormDataWR" xml:space="preserve">
+    <value>Parámetros del modelo WR</value>
+  </data>
+  <data name="strFormDataNIOSH" xml:space="preserve">
+    <value>Parámetros del modelo NIOSH</value>
+  </data>
+  <data name="strFormDataCLM" xml:space="preserve">
+    <value>Parámetros del modelo CLM</value>
+  </data>
+  <data name="strFormDataLiberty" xml:space="preserve">
+    <value>Parámetros del modelo LM-MMH</value>
+  </data>
+  <data name="strFormDataStrainIndex" xml:space="preserve">
+    <value>Parámetros del modelo Strain Index</value>
+  </data>
+  <data name="strFormDataTC" xml:space="preserve">
+    <value>Parámetros de confort térmico</value>
+  </data>
+  <data name="strFormDataMetabolic" xml:space="preserve">
+    <value>Parámetros de consumo metabólico</value>
+  </data>
+  <data name="strFormDataOCRAcheck" xml:space="preserve">
+    <value>Parámetros del modelo OCRA checklist</value>
+  </data>
 </root>

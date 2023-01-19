@@ -339,7 +339,7 @@ public partial class FrmDataMet : Form, IChildData
     private void UpdateUI_Language(System.Globalization.CultureInfo culture)
     {
         StringResources.Culture = culture;
-
+        this.Text = StringResources.FormDataMetabolic;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         //this.btnExample.Text = StringResources.BtnExample;

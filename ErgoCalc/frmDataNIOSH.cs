@@ -527,6 +527,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     {
         StringResources.Culture = culture;
 
+        this.Text = StringResources.FormDataNIOSH;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;

@@ -860,4 +860,28 @@ the application?</value>
   <data name="strToolTipZoom" xml:space="preserve">
     <value>Select zoom factor</value>
   </data>
+  <data name="strFormDataWR" xml:space="preserve">
+    <value>WR model parameters</value>
+  </data>
+  <data name="strFormDataNIOSH" xml:space="preserve">
+    <value>NIOSH model parameters</value>
+  </data>
+  <data name="strFormDataCLM" xml:space="preserve">
+    <value>CLM model parameters</value>
+  </data>
+  <data name="strFormDataLiberty" xml:space="preserve">
+    <value>LM-MMH model parameters</value>
+  </data>
+  <data name="strFormDataStrainIndex" xml:space="preserve">
+    <value>Strain Index model parameters</value>
+  </data>
+  <data name="strFormDataTC" xml:space="preserve">
+    <value>Thermal comfort parameters</value>
+  </data>
+  <data name="strFormDataMetabolic" xml:space="preserve">
+    <value>Metabolic rate model parameters</value>
+  </data>
+  <data name="strFormDataOCRAcheck" xml:space="preserve">
+    <value>OCRA checklist model parameters</value>
+  </data>
 </root>

@@ -266,6 +266,7 @@ public partial class FrmDataCLM : Form, IChildData
     {
         StringResources.Culture = culture;
 
+        this.Text = StringResources.FormDataCLM;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;
