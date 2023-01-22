@@ -85,11 +85,6 @@ public class Data
 /// </summary>
 public class Multipliers
 {
-    ///// <summary>
-    ///// Load constant in kg
-    ///// </summary>
-    //public double LC { get; set; } = 0;
-
     /// <summary>
     /// Horizontal distance multiplier
     /// </summary>

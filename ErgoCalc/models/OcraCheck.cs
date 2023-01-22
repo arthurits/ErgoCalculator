@@ -55,6 +55,8 @@ public class Data
     /// </summary>
     public double DurationNonRepetitive { get; set; } = 240;
 
+    public int Cycles { get; set; } = 1;
+
     /// <summary>
     /// Recovery
     /// </summary>
@@ -97,11 +99,17 @@ public class Multipliers
 
 public class SubTask
 {
-
+    public Data Data { get; set; } = new();
+    public Multipliers Factors { get; set; } = new();
 }
 
 public class TaskModel
 {
+    /// <summary>
+    /// Set of subtasks in the task
+    /// </summary>
+    public SubTask[] SubTasks { get; set; } = Array.Empty<SubTask>();
+
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         return string.Empty;
@@ -152,14 +160,26 @@ public static class OcraCheck
     /// Compute the OCRA check index
     /// </summary>
     /// <param name="subT">Array of independent subtasks whose Ocra check index is computed</param>
-	public static void OcraCheckIndex(Task[] tasks)
+	public static void OcraCheckIndex(Job job)
     {
-        foreach(Task task in tasks)
+        foreach(TaskModel task in job.Tasks)
         {
-
+            foreach (SubTask subtask in task.SubTasks)
+            {
+                subtask.Factors.TNTR = subtask.Data.DurationShift - (subtask.Data.DurationNonRepetitive - subtask.Data.DurationLunch - subtask.Data.DurationBreaks);
+                subtask.Factors.NetRepetitiveWork = 60 * subtask.Factors.TNTR / subtask.Data.Cycles;
+                subtask.Factors.FactorR = FactorR(subtask.Data.Recovery);
+                subtask.Factors.FactorF = FactorF(subtask.Data.FrequencyATD, subtask.Data.FrequencyATE);
+            }
         }
     }
 
+
+    /// <summary>
+    /// Compute recovery factor
+    /// </summary>
+    /// <param name="breaks"></param>
+    /// <returns></returns>
     private static double FactorR(TaskBreaks breaks)
     {
         double factor = 0;
@@ -180,6 +200,12 @@ public static class OcraCheck
         return factor;
     }
 
+    /// <summary>
+    /// Compute frequency factor
+    /// </summary>
+    /// <param name="atd"></param>
+    /// <param name="ate"></param>
+    /// <returns></returns>
     private static double FactorF(TaskATD atd, TaskATE ate)
     {
         double factorATD = 0;
@@ -208,6 +234,22 @@ public static class OcraCheck
         return Math.Max(factorATD, factorATE);
     }
 
+    /// <summary>
+    /// Compute force factor
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    private static double FactorFFZ (double value)
+    {
+        return 0;
+    }
+
+    /// <summary>
+    /// Compute duration factor
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="multiTask"></param>
+    /// <returns></returns>
     private static double FactorD(double value, bool multiTask = false)
     {
         double factor = 0;
