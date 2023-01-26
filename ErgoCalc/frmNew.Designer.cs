@@ -140,7 +140,6 @@
             // radModelOCRA
             // 
             this.radModelOCRA.AutoSize = true;
-            this.radModelOCRA.Enabled = false;
             this.radModelOCRA.Location = new System.Drawing.Point(53, 242);
             this.radModelOCRA.Name = "radModelOCRA";
             this.radModelOCRA.Size = new System.Drawing.Size(123, 21);

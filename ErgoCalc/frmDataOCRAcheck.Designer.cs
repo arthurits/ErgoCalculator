@@ -172,19 +172,10 @@ namespace ErgoCalc
             0,
             0,
             0});
-            this.updSubtasks.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.updSubtasks.Name = "updSubtasks";
             this.updSubtasks.Size = new System.Drawing.Size(63, 23);
             this.updSubtasks.TabIndex = 7;
-            this.updSubtasks.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.updSubtasks.ValueChanged += new System.EventHandler(this.Subtasks_ValueChanged);
             // 
             // gridVariables
             // 

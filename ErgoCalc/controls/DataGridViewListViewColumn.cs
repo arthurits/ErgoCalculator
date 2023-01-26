@@ -29,20 +29,20 @@ public class ListViewColumn : DataGridViewColumn
 
 public class ListViewCell : DataGridViewTextBoxCell
 {
-    private ListViewEditingControl
-            m_control;
+    public ListViewEditingControl m_control = new();
 
     public ListViewCell()
         : base()
     {
         // Use the short date format.
         //this.Style.Format = "d";
+        m_control.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
     }
 
     public override object Clone()
     {
         ListViewCell cell = base.Clone() as ListViewCell;
-        if (cell != null)
+        if (cell is not  null)
             cell.m_control = this.m_control;
         return cell;
     }
@@ -126,7 +126,7 @@ public class ListViewCell : DataGridViewTextBoxCell
     }
 }
 
-class ListViewEditingControl : ListView, IDataGridViewEditingControl
+public class ListViewEditingControl : ListView, IDataGridViewEditingControl
 {
     DataGridView dataGridView;
     private bool valueChanged = false;
