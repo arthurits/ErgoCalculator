@@ -1,4 +1,6 @@
-﻿namespace ErgoCalc.controls;
+﻿using System.Windows.Forms;
+
+namespace ErgoCalc.controls;
 
 
 // https://learn.microsoft.com/en-us/dotnet/desktop/winforms/controls/how-to-host-controls-in-windows-forms-datagridview-cells?view=netframeworkdesktop-4.8&redirectedfrom=MSDN
@@ -86,13 +88,11 @@ public class ListViewCell : DataGridViewTextBoxCell
 
     public override void PositionEditingControl(bool setLocation, bool setSize, Rectangle cellBounds, Rectangle cellClip, DataGridViewCellStyle cellStyle, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded, bool isFirstDisplayedColumn, bool isFirstDisplayedRow)
     {
-        Rectangle
-            ctlSize = new Rectangle(new Point(cellBounds.Location.X + 20, cellBounds.Location.Y + 20), new Size(cellBounds.Width + 100, 100));
+        Rectangle ctlSize = new Rectangle(new Point(cellBounds.Location.X + 10, cellBounds.Location.Y + 10), new Size(cellBounds.Width + 300, 150));
         base.PositionEditingControl(setLocation, setSize, ctlSize, ctlSize, cellStyle, singleVerticalBorderAdded, singleHorizontalBorderAdded, isFirstDisplayedColumn, isFirstDisplayedRow);
         if (m_control != null)
         {
-            Point
-                pos = new Point(cellBounds.Location.X + 20, cellBounds.Location.Y + 20);
+            Point pos = new Point(cellBounds.Location.X + 10, cellBounds.Location.Y + 10);
             pos.Offset(DataGridView.Location);
             m_control.Location = pos;
         }
@@ -127,11 +127,13 @@ public class ListViewCell : DataGridViewTextBoxCell
     }
 }
 
-public class ListViewEditingControl : ListView, IDataGridViewEditingControl
+public class ListViewEditingControl : ListViewCustom, IDataGridViewEditingControl
 {
     DataGridView dataGridView;
     private bool valueChanged = false;
-    int rowIndex;
+    int index;                           // Index of chosen element in listview
+    public int rowIndex { get; private set; }   // Row in datagridview
+    private bool ended = false;                  // Tells if edit has been ended
 
     public ListViewEditingControl()
     {
@@ -283,6 +285,83 @@ public class ListViewEditingControl : ListView, IDataGridViewEditingControl
         }
     }
 
+    protected virtual void NotifyDataGridViewOfValueChange()
+    {
+        this.valueChanged = true;
+        if (this.dataGridView != null)
+        {
+            this.dataGridView.NotifyCurrentCellDirty(true);
+        }
+    }
+
+    protected override bool ProcessDialogKey(Keys keyData)
+    {
+        if (keyData == Keys.Enter)
+        {
+            // Notify the DataGridView that the contents of the cell 
+            // have changed.
+            valueChanged = true;
+            if (this.SelectedItems.Count == 1)
+                index = this.SelectedItems[0].Index;
+            if (dataGridView.IsCurrentCellInEditMode)
+            {
+                ended = true;
+                dataGridView.EndEdit();
+            }
+        }
+        return base.ProcessDialogKey(keyData);
+    }
+
+    protected override void OnDoubleClick(EventArgs e)
+    {
+        base.OnDoubleClick(e);
+
+        // Notify the DataGridView that the contents of the cell 
+        // have changed.
+        valueChanged = true;
+        if (this.SelectedItems.Count == 1)
+            index = this.SelectedItems[0].Index;
+        base.OnDoubleClick(e);
+
+        if (dataGridView.IsCurrentCellInEditMode)
+        {
+            ended = true;
+            dataGridView.EndEdit();
+        }
+    }
+
+    protected override void OnCreateControl()
+    {
+        base.OnCreateControl();
+        // Need to add controll to parent ui to get it floating outside of gridview
+        
+        FrmDataOCRAcheck topLevel = this.TopLevelControl as FrmDataOCRAcheck;
+        
+        if (topLevel != null && this.Parent != topLevel)
+        {
+            topLevel.Controls.Add(this);
+            dataGridView.Controls.Remove(this);
+            this.BringToFront();
+        }
+    }
+
+    protected override void OnLeave(EventArgs e)
+    {
+        // Notify the DataGridView that the contents of the cell
+        // have changed.
+        base.OnLeave(e);
+        if (dataGridView.IsCurrentCellInEditMode && !ended)
+            dataGridView.EndEdit(); // Ending edit twice will make the program crash.
+
+        // Remove control from parent ui after edit is done.
+        FrmDataOCRAcheck parent = this.Parent as FrmDataOCRAcheck;
+        if (parent != null)
+        {
+            parent.Controls.Remove(this);
+            dataGridView.ClearSelection();
+        }
+    }
+
     protected override void OnSelectedIndexChanged(EventArgs eventargs)
     {
         // Notify the DataGridView that the contents of the cell
@@ -290,5 +369,182 @@ public class ListViewEditingControl : ListView, IDataGridViewEditingControl
         valueChanged = true;
         this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
         base.OnSelectedIndexChanged(eventargs);
+    }
+}
+
+public class ListViewCustom : ListView
+{
+    private ListViewItem m_item;
+    List<String> sourceList = new List<String>();
+    private int m_selectedSubItem = 0;
+    private string m_subItemText = "";
+    public String m_sValue { get; set; }
+    private int m_iX = 0, m_iY = 0;
+    private System.Windows.Forms.ColumnHeader columnHeader1;
+
+    //---------------------------------------------------------------------------------------
+
+    public ListViewCustom()
+    {
+        // Create three items and three sets of subitems for each item.
+        ListViewItem item1 = new ListViewItem("item1", 0);
+        // Place a check mark next to the item.
+        item1.Checked = true;
+        item1.SubItems.Add("1");
+        item1.SubItems.Add("2");
+        item1.SubItems.Add("3");
+        ListViewItem item2 = new ListViewItem("item2", 1);
+        item2.SubItems.Add("4");
+        item2.SubItems.Add("5");
+        item2.SubItems.Add("6");
+        ListViewItem item3 = new ListViewItem("item3", 0);
+        // Place a check mark next to the item.
+        item3.Checked = true;
+        item3.SubItems.Add("7");
+        item3.SubItems.Add("8");
+        item3.SubItems.Add("9");
+        // Create columns for the items and subitems. 
+        // Width of -2 indicates auto-size.
+        this.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
+        this.Columns.Add("Column 2", -2, HorizontalAlignment.Left);
+        this.Columns.Add("Column 3", -2, HorizontalAlignment.Left);
+        this.Columns.Add("Column 4", -2, HorizontalAlignment.Center);
+        //Add the items to the ListView.
+        this.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
+
+
+        this.Name = "listViewWithComboBox1";
+        this.Size = new System.Drawing.Size(0, 0);
+        this.TabIndex = 0;
+        this.View = System.Windows.Forms.View.Details;
+        this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ListViewMouseDown);
+        this.DoubleClick += new System.EventHandler(this.ListViewDoubleClick);
+        this.GridLines = true;
+        this.HeaderStyle = ColumnHeaderStyle.None;
+        this.MultiSelect = false;
+
+        // 
+        // columnHeader1
+        // 
+        this.columnHeader1 = new ColumnHeader();
+        this.Columns.AddRange(new ColumnHeader[] { this.columnHeader1 });
+        this.columnHeader1.Text = "Widths";
+        this.columnHeader1.Width = 100;
+    }
+
+    public void ListViewDoubleClick(object sender, System.EventArgs e)
+    {
+        // Check whether the subitem was clicked
+        int start = m_iX;
+        int position = 0;
+        int end = this.Columns[0].Width;
+        for (int i = 0; i < this.Columns.Count; i++)
+        {
+            if (start > position && start < end)
+            {
+                m_selectedSubItem = i;
+                break;
+            }
+
+            position = end;
+            end += this.Columns[i].Width;
+        }
+
+        m_subItemText = m_item.SubItems[m_selectedSubItem].Text;
+
+    }
+
+    public void ListViewMouseDown(object sender, MouseEventArgs e)
+    {
+        m_item = this.GetItemAt(e.X, e.Y);
+        m_iX = e.X;
+        m_iY = e.Y;
+    }
+
+}
+
+
+// https://learn.microsoft.com/en-us/troubleshoot/developer/visualstudio/csharp/language-compilers/use-combobox-edit-listview
+
+public class ListViewComboBox : ListView
+{
+    private ComboBox cbListViewCombo = new();
+
+    protected override void OnMouseUp(MouseEventArgs e)
+    {
+        // Get the item on the row that is clicked.
+        ListViewItem lvItem = this.GetItemAt(e.X, e.Y);
+
+        // Make sure that an item is clicked.
+        if (lvItem != null)
+        {
+            // Get the bounds of the item that is clicked.
+            Rectangle ClickedItem = lvItem.Bounds;
+
+            // Verify that the column is completely scrolled off to the left.
+            if ((ClickedItem.Left + this.Columns[0].Width) < 0)
+            {
+                // If the cell is out of view to the left, do nothing.
+                return;
+            }
+
+            // Verify that the column is partially scrolled off to the left.
+            else if (ClickedItem.Left < 0)
+            {
+                // Determine if column extends beyond right side of ListView.
+                if ((ClickedItem.Left + this.Columns[0].Width) > this.Width)
+                {
+                    // Set width of column to match width of ListView.
+                    ClickedItem.Width = this.Width;
+                    ClickedItem.X = 0;
+                }
+                else
+                {
+                    // Right side of cell is in view.
+                    ClickedItem.Width = this.Columns[0].Width + ClickedItem.Left;
+                    ClickedItem.X = 2;
+                }
+            }
+            else if (this.Columns[0].Width > this.Width)
+            {
+                ClickedItem.Width = this.Width;
+            }
+            else
+            {
+                ClickedItem.Width = this.Columns[0].Width;
+                ClickedItem.X = 2;
+            }
+
+            // Adjust the top to account for the location of the ListView.
+            ClickedItem.Y += this.Top;
+            ClickedItem.X += this.Left;
+
+            // Assign calculated bounds to the ComboBox.
+            this.cbListViewCombo.Bounds = ClickedItem;
+
+            // Set default text for ComboBox to match the item that is clicked.
+            this.cbListViewCombo.Text = lvItem.Text;
+
+            // Display the ComboBox, and make sure that it is on top with focus.
+            this.cbListViewCombo.Visible = true;
+            this.cbListViewCombo.BringToFront();
+            this.cbListViewCombo.Focus();
+        }
+    }
+
+    private const int WM_HSCROLL = 0x114;
+    private const int WM_VSCROLL = 0x115;
+
+    protected override void WndProc(ref Message msg)
+    {
+        // Look for the WM_VSCROLL or the WM_HSCROLL messages.
+        if ((msg.Msg == WM_VSCROLL) || (msg.Msg == WM_HSCROLL))
+        {
+            // Move focus to the ListView to cause ComboBox to lose focus.
+            this.Focus();
+        }
+
+        // Pass message to default handler.
+        base.WndProc(ref msg);
     }
 }

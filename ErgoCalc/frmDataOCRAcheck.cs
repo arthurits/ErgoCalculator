@@ -143,6 +143,9 @@ public partial class FrmDataOCRAcheck : Form, IChildData
         cellList.m_control.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
         gridVariables.Rows[0].Cells[0] = cellList;
 
+        //CustomViewCell cell = new();
+        //gridVariables.Rows[0].Cells[0] = cell;
+
         //// Create custom cells with combobox display
         DataGridViewComboBoxCell cellType = new();
         //DataTable tabType = new();
