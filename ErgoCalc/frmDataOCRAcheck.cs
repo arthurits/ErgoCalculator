@@ -141,7 +141,9 @@ public partial class FrmDataOCRAcheck : Form, IChildData
         cellList.m_control.Items.Add("Testing 1");
         cellList.m_control.Items.Add("Testing 2");
         cellList.m_control.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
-        gridVariables.Rows[0].Cells[0] = cellList;
+        //gridVariables.Rows[0].Cells[0] = cellList;
+
+        gridVariables.Rows[0].Cells[0] = new DataGridViewChildCell();
 
         //CustomViewCell cell = new();
         //gridVariables.Rows[0].Cells[0] = cell;

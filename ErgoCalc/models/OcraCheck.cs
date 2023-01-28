@@ -33,6 +33,21 @@ public enum TaskATE
     Long = 1
 }
 
+public enum BorgCR10
+{
+    Nothing0 = 0,
+    Weak1 = 1,
+    Light2 = 2,
+    Moderate3 = 3,
+    Strong4 = 4,
+    StrongHeavy5 = 5,
+    VeryStrong6 = 6,
+    VeryStrong7 = 7,
+    VeryStrong8 = 8,
+    ExtremelyStrong9 = 9,
+    ExtremelyStrongMaximal10 = 10
+}
+
 public class Data
 {
     /// <summary>
