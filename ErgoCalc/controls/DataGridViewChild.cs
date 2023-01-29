@@ -32,13 +32,18 @@ public class CalendarColumn : DataGridViewColumn
 
 public class DataGridViewChildCell : DataGridViewTextBoxCell
 {
-    public DataGridViewEditingControl m_control = new();
+    public DataGridViewEditingControl editControl;
 
     public DataGridViewChildCell()
         : base()
     {
-        // Use the short date format.
-        //this.Style.Format = "d";
+        editControl = new();
+    }
+
+    public DataGridViewChildCell(List<string[]> str)
+        : base()
+    {
+        editControl = new(str);
     }
 
     public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
@@ -64,10 +69,10 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
         if (dataGridView == null || dataGridView.EditingControl == null)
             throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
 
-        ListViewEditingControl? ctl = DataGridView?.EditingControl as ListViewEditingControl;
+        DataGridViewEditingControl? ctl = DataGridView?.EditingControl as DataGridViewEditingControl;
         if (ctl is not null)
         {
-            this.Value = ctl.SelectedItems[0].SubItems[0].ToString();
+            this.Value = ctl.ToString();
             ctl.EditingControlFormattedValue = String.Empty;
         }
 
@@ -78,11 +83,11 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
     {
         Rectangle ctlSize = new Rectangle(new Point(cellBounds.Location.X + 10, cellBounds.Location.Y + 10), new Size(cellBounds.Width + 300, 150));
         base.PositionEditingControl(setLocation, setSize, ctlSize, ctlSize, cellStyle, singleVerticalBorderAdded, singleHorizontalBorderAdded, isFirstDisplayedColumn, isFirstDisplayedRow);
-        if (m_control != null)
+        if (editControl != null)
         {
             Point pos = new Point(cellBounds.Location.X + 10, cellBounds.Location.Y + 10);
             pos.Offset(DataGridView.Location);
-            m_control.Location = pos;
+            editControl.Location = pos;
         }
     }
     public override Type EditType
@@ -117,47 +122,78 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
 public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingControl
 {
     DataGridView dataGridView;
+    
+    DataGridViewComboBoxColumn comboBorg;
+    DataGridViewComboBoxCell comboModerate;
+    DataGridViewComboBoxCell comboIntense;
+    DataGridViewComboBoxCell comboMax;
+
     private bool valueChanged = false;
     int rowIndex;
 
     public DataGridViewEditingControl()
     {
         this.RowsAdded += new DataGridViewRowsAddedEventHandler(OnRowsAdded);
-
         this.Columns.Add("Actions", "Technical actions");
+    }
 
-        //string[] row = new string[] { "1", "Product 1", "1000" };
-        //this.Rows.Add(row);
-        //row = new string[] { "2", "Product 2", "2000" };
-        //this.Rows.Add(row);
-        //row = new string[] { "3", "Product 3", "3000" };
-        //this.Rows.Add(row);
-        //row = new string[] { "4", "Product 4", "4000" };
-        //this.Rows.Add(row);
+    public DataGridViewEditingControl(List<string[]> str)
+        : base()
+    {
+        DataTable tableBorg = new();
+        tableBorg.Columns.Add("Type", typeof(String));
+        tableBorg.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < str[0].Length; i++)
+            tableBorg.Rows.Add(str[0][i], i);
 
-        DataTable tabBorg = new();
-        tabBorg.Columns.Add("Type", typeof(String));
-        tabBorg.Columns.Add("TypeValue", typeof(Int32));
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.Nothing0, (int)ErgoCalc.Models.OCRA.BorgCR10.Nothing0);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.Weak1, (int)ErgoCalc.Models.OCRA.BorgCR10.Weak1);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.Light2, (int)ErgoCalc.Models.OCRA.BorgCR10.Light2);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.Moderate3, (int)ErgoCalc.Models.OCRA.BorgCR10.Moderate3);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.Strong4, (int)ErgoCalc.Models.OCRA.BorgCR10.Strong4);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.StrongHeavy5, (int)ErgoCalc.Models.OCRA.BorgCR10.StrongHeavy5);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.VeryStrong6, (int)ErgoCalc.Models.OCRA.BorgCR10.VeryStrong6);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.VeryStrong7, (int)ErgoCalc.Models.OCRA.BorgCR10.VeryStrong7);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.VeryStrong8, (int)ErgoCalc.Models.OCRA.BorgCR10.VeryStrong8);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.ExtremelyStrong9, (int)ErgoCalc.Models.OCRA.BorgCR10.ExtremelyStrong9);
-        tabBorg.Rows.Add(ErgoCalc.Models.OCRA.BorgCR10.ExtremelyStrongMaximal10, (int)ErgoCalc.Models.OCRA.BorgCR10.ExtremelyStrongMaximal10);
+        DataTable tableModerate = new();
+        tableModerate.Columns.Add("Type", typeof(String));
+        tableModerate.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < str[1].Length; i++)
+            tableModerate.Rows.Add(str[1][i], i);
 
-        DataGridViewComboBoxColumn comboBorg = new DataGridViewComboBoxColumn();
+        DataTable tableIntense = new();
+        tableIntense.Columns.Add("Type", typeof(String));
+        tableIntense.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < str[2].Length; i++)
+            tableIntense.Rows.Add(str[2][i], i);
+        
+        DataTable tableMax = new();
+        tableMax.Columns.Add("Type", typeof(String));
+        tableMax.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < str[3].Length; i++)
+            tableMax.Rows.Add(str[3][i], i);
+
+        comboBorg = new DataGridViewComboBoxColumn();
         comboBorg.HeaderText = "Borg CR-10";
-        comboBorg.DataSource = tabBorg;
+        comboBorg.DataSource = tableBorg;
         comboBorg.DisplayMember = "Type";
         comboBorg.ValueMember = "TypeValue";
         comboBorg.Name = "BorgScale";
         this.Columns.Add(comboBorg);
 
+        this.Columns.Add("Force", "Force");
+
+        comboModerate = new DataGridViewComboBoxCell();
+        //comboModerate.HeaderText = "Force";
+        comboModerate.DataSource = tableModerate;
+        comboModerate.DisplayMember = "Type";
+        comboModerate.ValueMember = "TypeValue";
+        //comboModerate.Name = "ForceModerate";
+
+        comboIntense = new DataGridViewComboBoxCell();
+        //comboIntense.HeaderText = "Force";
+        comboIntense.DataSource = tableIntense;
+        comboIntense.DisplayMember = "Type";
+        comboIntense.ValueMember = "TypeValue";
+        //comboIntense.Name = "ForceIntense";
+
+        comboMax = new DataGridViewComboBoxCell();
+        //comboMax.HeaderText = "Force";
+        comboMax.DataSource = tableMax;
+        comboMax.DisplayMember = "Type";
+        comboMax.ValueMember = "TypeValue";
+        //comboMax.Name = "ForceMax";
     }
 
     // Implements the IDataGridViewEditingControl.EditingControlFormattedValue
@@ -209,10 +245,11 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
 
         for (int i = 0; i < this.Rows.Count; i++)
         {
-            str += this[1, i].Value;
+            for (int j = 0; j < this.Rows.Count; j++)
+                str += this[j, i].Value;
         }
 
-        return string.Empty;
+        return str;
     }
 
     private void OnRowsAdded(object? sender, System.Windows.Forms.DataGridViewRowsAddedEventArgs e)
@@ -226,6 +263,55 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
     /// <param name="value">Formatted string with values</param>
     public void ToGrid(string value)
     {
+
+    }
+
+    private void Variables_CurrentCellDirtyStateChanged(object? sender, EventArgs? e)
+    {
+        var CurrentCell = this.CurrentCell;
+        if (CurrentCell is not DataGridViewComboBoxCell) return;
+        if (((DataGridViewComboBoxCell)CurrentCell).DisplayMember != "Type") return;
+
+        // Important to avoid running a 2nd time
+        // https://stackoverflow.com/questions/5652957/what-event-catches-a-change-of-value-in-a-combobox-in-a-datagridviewcell
+        if (!this.IsCurrentCellDirty) return;
+
+
+        // This fires the cell value changed (CellValueChanged) handler below
+        // By committing the current cell edition, this function will change
+        // the current cell dirty state (ie IsCurrentCellDirty),
+        // so it will indeed trigger again this event. Hence the 3rd IF of this routine
+        // https://stackoverflow.com/questions/9608343/datagridview-combobox-column-change-cell-value-after-selection-from-dropdown-is/22327701
+        this.CommitEdit(DataGridViewDataErrorContexts.Commit);
+
+        this.EndEdit();
+
+        DataGridViewColumn col = this.Columns[this.CurrentCell.ColumnIndex];
+
+        switch (CurrentCell.Value)
+        {
+            case 0:     // Carrying
+            case 1:
+            case 2:
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1].Value = "——";
+                break;
+            case 3:     // Pulling
+            case 4:     // Pushing
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = comboModerate;
+                break;
+            case 5:
+            case 6:
+            case 7:
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = comboIntense;
+                break;
+            case 8:
+            case 9:
+            case 10:
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = comboMax;
+                break;
+            default:
+                break;
+        }
 
     }
 

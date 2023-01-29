@@ -131,48 +131,16 @@ public partial class FrmDataOCRAcheck : Form, IChildData
     /// </summary>
     private void FormatRows()
     {
-        // Get the couplig type texts
-        string[] strGender = StringResources.LibertyMutual_GenderType.Split(", ");
-        string[] strType = StringResources.LibertyMutual_TaskType.Split(", ");
 
-        ListViewCell cellList = new();
-        cellList.m_control.View = View.Details;
-        cellList.m_control.CheckBoxes = true;
-        cellList.m_control.Items.Add("Testing 1");
-        cellList.m_control.Items.Add("Testing 2");
-        cellList.m_control.Columns.Add("Item Column", -2, HorizontalAlignment.Left);
-        //gridVariables.Rows[0].Cells[0] = cellList;
+        List<string[]> list = new();
 
-        gridVariables.Rows[0].Cells[0] = new DataGridViewChildCell();
+        list.Add(new[] {"Nothing0", "Weak1", "Light2", "Moderate3", "Strong4", "StrongHeavy5", "VeryStrong6", "VeryStrong7", "VeryStrong8", "ExtremelyStrong9", "ExtremelyStrongMaximal10"});
+        list.Add(new[] { "1/3", "50%", "> 50%", "Almost all the time" });
+        list.Add(new[] { "2 sec each 10 min", "1%", "5%", "> 10%" });
+        list.Add(new[] { "2 sec each 10 min", "1%", "5%", "> 10%" });
 
-        //CustomViewCell cell = new();
-        //gridVariables.Rows[0].Cells[0] = cell;
+        gridVariables.Rows[0].Cells[0] = new DataGridViewChildCell(list);
 
-        //// Create custom cells with combobox display
-        DataGridViewComboBoxCell cellType = new();
-        //DataTable tabType = new();
-        //tabType.Columns.Add("Type", typeof(String));
-        //tabType.Columns.Add("TypeValue", typeof(Int32));
-        //tabType.Rows.Add(strType[(int)TaskType.Carrying], (int)TaskType.Carrying);
-        //tabType.Rows.Add(strType[(int)TaskType.Lifting], (int)TaskType.Lifting);
-        //tabType.Rows.Add(strType[(int)TaskType.Lowering], (int)TaskType.Lowering);
-        //tabType.Rows.Add(strType[(int)TaskType.Pulling], (int)TaskType.Pulling);
-        //tabType.Rows.Add(strType[(int)TaskType.Pushing], (int)TaskType.Pushing);
-        //cellType.DataSource = tabType;
-        //cellType.DisplayMember = "Type";
-        //cellType.ValueMember = "TypeValue";
-        //gridVariables.Rows[0].Cells[0] = cellType;
-
-        //DataGridViewComboBoxCell cellGender = new();
-        //DataTable tabGender = new();
-        //tabGender.Columns.Add("Gender", typeof(String));
-        //tabGender.Columns.Add("GenderValue", typeof(Int32));
-        //tabGender.Rows.Add(strGender[(int)Gender.Male], (int)Gender.Male);
-        //tabGender.Rows.Add(strGender[(int)Gender.Female], (int)Gender.Female);
-        //cellGender.DataSource = tabGender;
-        //cellGender.DisplayMember = "Gender";
-        //cellGender.ValueMember = "GenderValue";
-        //gridVariables.Rows[7].Cells[0] = cellGender;
     }
 
     public void LoadExample()
