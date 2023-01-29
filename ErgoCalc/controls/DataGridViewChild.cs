@@ -46,6 +46,14 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
         editControl = new(str);
     }
 
+    public override object Clone()
+    {
+        DataGridViewChildCell cell = base.Clone() as DataGridViewChildCell;
+        if (cell != null)
+            cell.editControl = this.editControl;
+        return cell;
+    }
+
     public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
     {
         // Set the value of the editing control to the current cell value.
@@ -90,6 +98,13 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
             editControl.Location = pos;
         }
     }
+
+    protected override void OnClick(DataGridViewCellEventArgs e)
+    {
+        this.DataGridView?.BeginEdit(false);
+        base.OnClick(e);
+    }
+
     public override Type EditType
     {
         get
