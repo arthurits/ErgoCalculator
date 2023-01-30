@@ -734,4 +734,9 @@ public static class StringResources
         WR_Step
     };
 
+
+    // OCRA check
+    public static string OCRA_ShiftDuration => StringRM.GetString("OCRA_ShiftDuration", Culture) ?? "Shift duration";
+    public static string OCRA_OfficialPauses => StringRM.GetString("OCRA_OfficialPauses", Culture) ?? "Official pauses";
+    public static string OCRA_LunchBreak => StringRM.GetString("OCRA_LunchBreak", Culture) ?? "Lunch break";
 }
