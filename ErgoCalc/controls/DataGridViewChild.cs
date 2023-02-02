@@ -46,12 +46,13 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
         editControl = new(str);
     }
 
-    public override object Clone()
+    public override object? Clone()
     {
-        DataGridViewChildCell cell = base.Clone() as DataGridViewChildCell;
-        if (cell != null)
+        DataGridViewChildCell cell = (DataGridViewChildCell)base.Clone();
+        if (cell is not null)
             cell.editControl = this.editControl;
-        return cell;
+        
+        return cell ?? default;
     }
 
     public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
@@ -59,6 +60,8 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
         // Set the value of the editing control to the current cell value.
         base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
         DataGridViewEditingControl? ctl = DataGridView?.EditingControl as DataGridViewEditingControl;
+        ctl.ComboTexts = editControl.ComboTexts;
+
         // Use the default row value when Value property is null.
         if (this.Value is null)
         {
@@ -89,20 +92,20 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
 
     public override void PositionEditingControl(bool setLocation, bool setSize, Rectangle cellBounds, Rectangle cellClip, DataGridViewCellStyle cellStyle, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded, bool isFirstDisplayedColumn, bool isFirstDisplayedRow)
     {
-        Rectangle ctlSize = new Rectangle(new Point(cellBounds.Location.X + 10, cellBounds.Location.Y + 10), new Size(cellBounds.Width + 300, 150));
+        Rectangle ctlSize = new Rectangle(new Point(cellBounds.Location.X + cellBounds.Width / 2, cellBounds.Location.Y + cellBounds.Height / 2), new Size(cellBounds.Width + 350, 150));
         base.PositionEditingControl(setLocation, setSize, ctlSize, ctlSize, cellStyle, singleVerticalBorderAdded, singleHorizontalBorderAdded, isFirstDisplayedColumn, isFirstDisplayedRow);
-        if (editControl != null)
+        if (editControl is not null)
         {
-            Point pos = new Point(cellBounds.Location.X + 10, cellBounds.Location.Y + 10);
+            Point pos = new Point(cellBounds.Location.X + cellBounds.Width / 2, cellBounds.Location.Y + cellBounds.Height / 2);
             pos.Offset(DataGridView.Location);
             editControl.Location = pos;
         }
     }
 
-    protected override void OnClick(DataGridViewCellEventArgs e)
+    protected override void OnMouseClick(DataGridViewCellMouseEventArgs e)
     {
         this.DataGridView?.BeginEdit(false);
-        base.OnClick(e);
+        base.OnMouseClick(e);
     }
 
     public override Type EditType
@@ -136,79 +139,32 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
 
 public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingControl
 {
-    DataGridView dataGridView;
-    
-    DataGridViewComboBoxColumn comboBorg;
-    DataGridViewComboBoxCell comboModerate;
-    DataGridViewComboBoxCell comboIntense;
-    DataGridViewComboBoxCell comboMax;
-
+    private DataGridView dataGridView;
     private bool valueChanged = false;
-    int rowIndex;
+    private int rowIndex;
+
+    private DataGridViewComboBoxColumn comboBorg;
+    private DataGridViewComboBoxCell comboModerate;
+    private DataGridViewComboBoxCell comboIntense;
+    private DataGridViewComboBoxCell comboMax;
+
+    public List<string[]>? ComboTexts { get; set; } = null;
 
     public DataGridViewEditingControl()
     {
         this.RowsAdded += new DataGridViewRowsAddedEventHandler(OnRowsAdded);
+        this.CurrentCellDirtyStateChanged += new EventHandler(Variables_CurrentCellDirtyStateChanged);
+
         this.Columns.Add("Actions", "Technical actions");
+        this.Columns[0].ReadOnly = true;
+        this.Columns[0].Width = 75;
+        this.ColumnHeadersHeight= 45;
     }
 
     public DataGridViewEditingControl(List<string[]> str)
         : base()
     {
-        DataTable tableBorg = new();
-        tableBorg.Columns.Add("Type", typeof(String));
-        tableBorg.Columns.Add("TypeValue", typeof(Int32));
-        for (int i = 0; i < str[0].Length; i++)
-            tableBorg.Rows.Add(str[0][i], i);
-
-        DataTable tableModerate = new();
-        tableModerate.Columns.Add("Type", typeof(String));
-        tableModerate.Columns.Add("TypeValue", typeof(Int32));
-        for (int i = 0; i < str[1].Length; i++)
-            tableModerate.Rows.Add(str[1][i], i);
-
-        DataTable tableIntense = new();
-        tableIntense.Columns.Add("Type", typeof(String));
-        tableIntense.Columns.Add("TypeValue", typeof(Int32));
-        for (int i = 0; i < str[2].Length; i++)
-            tableIntense.Rows.Add(str[2][i], i);
-        
-        DataTable tableMax = new();
-        tableMax.Columns.Add("Type", typeof(String));
-        tableMax.Columns.Add("TypeValue", typeof(Int32));
-        for (int i = 0; i < str[3].Length; i++)
-            tableMax.Rows.Add(str[3][i], i);
-
-        comboBorg = new DataGridViewComboBoxColumn();
-        comboBorg.HeaderText = "Borg CR-10";
-        comboBorg.DataSource = tableBorg;
-        comboBorg.DisplayMember = "Type";
-        comboBorg.ValueMember = "TypeValue";
-        comboBorg.Name = "BorgScale";
-        this.Columns.Add(comboBorg);
-
-        this.Columns.Add("Force", "Force");
-
-        comboModerate = new DataGridViewComboBoxCell();
-        //comboModerate.HeaderText = "Force";
-        comboModerate.DataSource = tableModerate;
-        comboModerate.DisplayMember = "Type";
-        comboModerate.ValueMember = "TypeValue";
-        //comboModerate.Name = "ForceModerate";
-
-        comboIntense = new DataGridViewComboBoxCell();
-        //comboIntense.HeaderText = "Force";
-        comboIntense.DataSource = tableIntense;
-        comboIntense.DisplayMember = "Type";
-        comboIntense.ValueMember = "TypeValue";
-        //comboIntense.Name = "ForceIntense";
-
-        comboMax = new DataGridViewComboBoxCell();
-        //comboMax.HeaderText = "Force";
-        comboMax.DataSource = tableMax;
-        comboMax.DisplayMember = "Type";
-        comboMax.ValueMember = "TypeValue";
-        //comboMax.Name = "ForceMax";
+        ComboTexts = str;
     }
 
     // Implements the IDataGridViewEditingControl.EditingControlFormattedValue
@@ -240,6 +196,16 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
         }
     }
 
+    /// <summary>
+    /// Implements the IDataGridViewEditingControl.PrepareEditingControlForEdit method.
+    /// </summary>
+    /// <param name="selectAll"></param>
+    public void PrepareEditingControlForEdit(bool selectAll)
+    {
+        // Add columns
+        AddComboColumns();
+    }
+
     public string Value
     {
         get
@@ -256,15 +222,30 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
 
     public override string ToString()
     {
-        string str = string.Empty;
+        string strResult = string.Empty;
 
         for (int i = 0; i < this.Rows.Count; i++)
         {
-            for (int j = 0; j < this.Rows.Count; j++)
-                str += this[j, i].Value;
+            string str = $"{i + 1}";
+            bool isNull = false;
+
+            for (int j = 1; j < this.Columns.Count; j++)
+            {
+                var value = this[j, i].Value;
+                if (value is null)
+                {
+                    isNull = true;
+                    break;
+                }
+                else
+                    str += $" {value}";
+            }
+
+            if (!isNull)
+                strResult += $"{(strResult.Length > 0 ? ";" : string.Empty)} {str}";
         }
 
-        return str;
+        return strResult;
     }
 
     private void OnRowsAdded(object? sender, System.Windows.Forms.DataGridViewRowsAddedEventArgs e)
@@ -281,9 +262,73 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
 
     }
 
+    private void AddComboColumns()
+    {
+        if (this.ColumnCount >= 3) return;
+        if (ComboTexts is null) return;
+
+        DataTable tableBorg = new();
+        tableBorg.Columns.Add("Type", typeof(String));
+        tableBorg.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < ComboTexts[0].Length; i++)
+            tableBorg.Rows.Add(ComboTexts[0][i], i);
+
+        DataTable tableModerate = new();
+        tableModerate.Columns.Add("Type", typeof(String));
+        tableModerate.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < ComboTexts[1].Length; i++)
+            tableModerate.Rows.Add(ComboTexts[1][i], i);
+
+        DataTable tableIntense = new();
+        tableIntense.Columns.Add("Type", typeof(String));
+        tableIntense.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < ComboTexts[2].Length; i++)
+            tableIntense.Rows.Add(ComboTexts[2][i], i);
+
+        DataTable tableMax = new();
+        tableMax.Columns.Add("Type", typeof(String));
+        tableMax.Columns.Add("TypeValue", typeof(Int32));
+        for (int i = 0; i < ComboTexts[3].Length; i++)
+            tableMax.Rows.Add(ComboTexts[3][i], i);
+
+        comboBorg = new DataGridViewComboBoxColumn();
+        comboBorg.HeaderText = "Borg CR-10";
+        comboBorg.DataSource = tableBorg;
+        comboBorg.DisplayMember = "Type";
+        comboBorg.ValueMember = "TypeValue";
+        comboBorg.Name = "BorgScale";
+        
+        this.Columns.Add(comboBorg);
+        this.Columns[1].Width = 135;
+        this.Columns.Add("Force", "Force");
+        this.Columns[2].Width = 140;
+
+        comboModerate = new DataGridViewComboBoxCell();
+        //comboModerate.HeaderText = "Force";
+        comboModerate.DataSource = tableModerate;
+        comboModerate.DisplayMember = "Type";
+        comboModerate.ValueMember = "TypeValue";
+        //comboModerate.Name = "ForceModerate";
+
+        comboIntense = new DataGridViewComboBoxCell();
+        //comboIntense.HeaderText = "Force";
+        comboIntense.DataSource = tableIntense;
+        comboIntense.DisplayMember = "Type";
+        comboIntense.ValueMember = "TypeValue";
+        //comboIntense.Name = "ForceIntense";
+
+        comboMax = new DataGridViewComboBoxCell();
+        //comboMax.HeaderText = "Force";
+        comboMax.DataSource = tableMax;
+        comboMax.DisplayMember = "Type";
+        comboMax.ValueMember = "TypeValue";
+        //comboMax.Name = "ForceMax";
+    }
+
     private void Variables_CurrentCellDirtyStateChanged(object? sender, EventArgs? e)
     {
-        var CurrentCell = this.CurrentCell;
+        DataGridViewCell CurrentCell = this.CurrentCell;
+        if (CurrentCell.ColumnIndex != 1) return;
         if (CurrentCell is not DataGridViewComboBoxCell) return;
         if (((DataGridViewComboBoxCell)CurrentCell).DisplayMember != "Type") return;
 
@@ -300,8 +345,6 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
         this.CommitEdit(DataGridViewDataErrorContexts.Commit);
 
         this.EndEdit();
-
-        DataGridViewColumn col = this.Columns[this.CurrentCell.ColumnIndex];
 
         switch (CurrentCell.Value)
         {
@@ -382,13 +425,6 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
             default:
                 return !dataGridViewWantsInputKey;
         }
-    }
-
-    // Implements the IDataGridViewEditingControl.PrepareEditingControlForEdit
-    // method.
-    public void PrepareEditingControlForEdit(bool selectAll)
-    {
-        // No preparation needs to be done.
     }
 
     // Implements the IDataGridViewEditingControl

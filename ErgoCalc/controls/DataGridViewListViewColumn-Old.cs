@@ -50,12 +50,10 @@ public class ListViewCell : DataGridViewTextBoxCell
         return cell;
     }
 
-    public override void InitializeEditingControl(int rowIndex, object
-        initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
+    public override void InitializeEditingControl(int rowIndex, object initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
     {
         // Set the value of the editing control to the current cell value.
-        base.InitializeEditingControl(rowIndex, initialFormattedValue,
-            dataGridViewCellStyle);
+        base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
         ListViewEditingControl ctl = DataGridView.EditingControl as ListViewEditingControl;
 
         // Use the default row value when Value property is null.
