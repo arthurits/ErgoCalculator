@@ -355,17 +355,17 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
                 break;
             case 3:     // Pulling
             case 4:     // Pushing
-                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = comboModerate;
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell)comboModerate.Clone();
                 break;
             case 5:
             case 6:
             case 7:
-                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = comboIntense;
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell)comboIntense.Clone();
                 break;
             case 8:
             case 9:
             case 10:
-                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = comboMax;
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell)comboMax.Clone();
                 break;
             default:
                 break;

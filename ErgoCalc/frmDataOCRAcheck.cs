@@ -103,8 +103,8 @@ public partial class FrmDataOCRAcheck : Form, IChildData
         // Give format (ComboBox) to the added column cells
         if (col > 0)
         {
-            gridVariables.Rows[0].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[0].Cells[col - 1].Clone();
-            gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
+            gridVariables.Rows[0].Cells[col] = (DataGridViewChildCell)gridVariables.Rows[0].Cells[col - 1].Clone();
+            //gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
         }
 
         return;

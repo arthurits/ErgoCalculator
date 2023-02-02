@@ -190,7 +190,7 @@ namespace ErgoCalc
             this.gridVariables.RowHeadersWidth = 220;
             this.gridVariables.RowTemplate.Height = 25;
             this.gridVariables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.gridVariables.Size = new System.Drawing.Size(745, 293);
+            this.gridVariables.Size = new System.Drawing.Size(733, 293);
             this.gridVariables.TabIndex = 1;
             // 
             // tabTasks
