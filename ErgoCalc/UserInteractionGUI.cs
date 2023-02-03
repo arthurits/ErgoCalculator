@@ -30,8 +30,8 @@ partial class FrmMain
             ModelType.CumulativeLifting => new FrmDataCLM(culture: _settings.AppCulture),
             ModelType.NioshLifting => new FrmDataNIOSH(culture: _settings.AppCulture),
             ModelType.StrainIndex => new FrmDataStrainIndex(culture: _settings.AppCulture),
-            ModelType.OcraCheck => new FrmDataOCRAcheck(),
-            ModelType.MetabolicRate => new FrmDataMet(),
+            ModelType.OcraCheck => new FrmDataOCRAcheck(culture: _settings.AppCulture),
+            ModelType.MetabolicRate => new FrmDataMet(culture: _settings.AppCulture),
             ModelType.ThermalComfort => new FrmDataTC(culture: _settings.AppCulture),
             ModelType.LibertyMutual => new FrmDataLiberty(culture: _settings.AppCulture),
             _ => new Form()

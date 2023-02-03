@@ -161,7 +161,7 @@ public partial class FrmDataOCRAcheck : Form, IChildData
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
 
-        this.lblTasks.Text = StringResources.NumberOfTasks;
+        this.lblSubtasks.Text = StringResources.NumberOfTasks;
 
         if (this.tabDummy.TabPages.Count > 0)
             this.tabDummy.TabPages[0].Text = StringResources.Task;
@@ -175,7 +175,7 @@ public partial class FrmDataOCRAcheck : Form, IChildData
     /// </summary>
     private void RelocateControls()
     {
-        this.updTasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
+        this.updSubtasks.Left = this.lblTasks.Left + this.lblTasks.Width + 5;
     }
 
     

@@ -739,4 +739,7 @@ public static class StringResources
     public static string OCRA_ShiftDuration => StringRM.GetString("OCRA_ShiftDuration", Culture) ?? "Shift duration";
     public static string OCRA_OfficialPauses => StringRM.GetString("OCRA_OfficialPauses", Culture) ?? "Official pauses";
     public static string OCRA_LunchBreak => StringRM.GetString("OCRA_LunchBreak", Culture) ?? "Lunch break";
+    public static string OCRA_BorgCR10 => StringRM.GetString("OCRA_Algo", Culture) ?? "Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10";
+    public static string OCRA_ForceLight => StringRM.GetString("OCRA_Algo", Culture) ?? "1/3, 50%, > 50%, Almost all the time";
+    public static string OCRA_ForceMax => StringRM.GetString("OCRA_Algo", Culture) ?? "2 sec each 10 min, 1%, 5%, > 10%";
 }
