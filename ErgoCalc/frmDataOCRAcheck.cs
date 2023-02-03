@@ -95,17 +95,9 @@ public partial class FrmDataOCRAcheck : Form, IChildData
 
         // Add the row headers after the first column is created
         if (col == 0)
-        {
             AddRows();
-            FormatRows();
-        }
 
-        // Give format (ComboBox) to the added column cells
-        if (col > 0)
-        {
-            gridVariables.Rows[0].Cells[col] = (DataGridViewChildCell)gridVariables.Rows[0].Cells[col - 1].Clone();
-            //gridVariables.Rows[7].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[7].Cells[col - 1].Clone();
-        }
+        FormatRows(col);
 
         return;
     }
@@ -129,18 +121,17 @@ public partial class FrmDataOCRAcheck : Form, IChildData
     /// <summary>
     /// Format the header row with custom cells
     /// </summary>
-    private void FormatRows()
+    /// <param name="column">Column to be formatted</param>
+    private void FormatRows(int column = 0)
     {
-
         List<string[]> list = new();
 
-        list.Add(new[] {"Nothing0", "Weak1", "Light2", "Moderate3", "Strong4", "StrongHeavy5", "VeryStrong6", "VeryStrong7", "VeryStrong8", "ExtremelyStrong9", "ExtremelyStrongMaximal10"});
+        list.Add(new[] { "Nothing0", "Weak1", "Light2", "Moderate3", "Strong4", "StrongHeavy5", "VeryStrong6", "VeryStrong7", "VeryStrong8", "ExtremelyStrong9", "ExtremelyStrongMaximal10" });
         list.Add(new[] { "1/3", "50%", "> 50%", "Almost all the time" });
         list.Add(new[] { "2 sec each 10 min", "1%", "5%", "> 10%" });
         list.Add(new[] { "2 sec each 10 min", "1%", "5%", "> 10%" });
 
-        gridVariables.Rows[0].Cells[0] = new DataGridViewChildCell(list);
-
+        gridVariables.Rows[0].Cells[column] = new DataGridViewChildCell(list);
     }
 
     public void LoadExample()

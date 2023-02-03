@@ -61,7 +61,7 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
         base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
         DataGridViewEditingControl? ctl = DataGridView?.EditingControl as DataGridViewEditingControl;
         ctl.ComboTexts = editControl.ComboTexts;
-
+        
         // Use the default row value when Value property is null.
         if (this.Value is null)
         {
@@ -162,7 +162,7 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
     }
 
     public DataGridViewEditingControl(List<string[]> str)
-        : base()
+        : this()
     {
         ComboTexts = str;
     }
@@ -242,7 +242,7 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
             }
 
             if (!isNull)
-                strResult += $"{(strResult.Length > 0 ? ";" : string.Empty)} {str}";
+                strResult += $"{(strResult.Length > 0 ? ";" : string.Empty)}{str}";
         }
 
         return strResult;
@@ -259,7 +259,18 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
     /// <param name="value">Formatted string with values</param>
     public void ToGrid(string value)
     {
+        if (value.Length == 0) return;
+        string[] values = value.Split(';');
+        if (values.Length == 0) return;
 
+        for (int i = 0; i< values.Length; i++)
+        {
+            string[] str = values[i].Split(" ");
+            if (str.Length != 3) break;
+            this.Rows[i].Cells[0].Value = $"# {str[0]}";
+            this.Rows[i].Cells[1].Value = int.Parse(str[1]);
+            this.Rows[i].Cells[2].Value = int.Parse(str[2]);
+        }
     }
 
     private void AddComboColumns()
