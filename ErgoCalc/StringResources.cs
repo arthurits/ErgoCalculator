@@ -736,10 +736,19 @@ public static class StringResources
 
 
     // OCRA check
-    public static string OCRA_ShiftDuration => StringRM.GetString("OCRA_ShiftDuration", Culture) ?? "Shift duration";
-    public static string OCRA_OfficialPauses => StringRM.GetString("OCRA_OfficialPauses", Culture) ?? "Official pauses";
-    public static string OCRA_LunchBreak => StringRM.GetString("OCRA_LunchBreak", Culture) ?? "Lunch break";
+    public static string OCRA_ShiftDuration => StringRM.GetString("OCRA_ShiftDuration", Culture) ?? "Shift duration (min)";
+    public static string OCRA_OfficialPauses => StringRM.GetString("OCRA_OfficialPauses", Culture) ?? "Official pauses (min)";
+    public static string OCRA_LunchBreak => StringRM.GetString("OCRA_LunchBreak", Culture) ?? "Lunch break (min)";
+    public static string OCRA_NonRepetitive => StringRM.GetString("OCRA_NonRepetitive", Culture) ?? "No repetitive work (min)";
+    public static string OCRA_NumberCycles => StringRM.GetString("OCRA_NumberCycles", Culture) ?? "Number of cycles";
+    public static string OCRA_TNTR => StringRM.GetString("OCRA_TNTR", Culture) ?? "Net cycle time (sec)";
+    public static string OCRA_TNC => StringRM.GetString("OCRA_TNC", Culture) ?? "Repetitive net cycle time (sec)";
+
+    public static string OCRA_TaskBreaks => StringRM.GetString("OCRA_TaskBreaks", Culture) ?? "8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift";
+    public static string OCRA_TaskATD => StringRM.GetString("OCRA_TaskATD", Culture) ?? "20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min";
+    public static string OCRA_TaskATE => StringRM.GetString("OCRA_TaskATE", Culture) ?? " 5 sec for 2/3 cycle, 5 sec for 3/3 cycle";
+
     public static string OCRA_BorgCR10 => StringRM.GetString("OCRA_Algo", Culture) ?? "Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10";
-    public static string OCRA_ForceLight => StringRM.GetString("OCRA_Algo", Culture) ?? "1/3, 50%, > 50%, Almost all the time";
-    public static string OCRA_ForceMax => StringRM.GetString("OCRA_Algo", Culture) ?? "2 sec each 10 min, 1%, 5%, > 10%";
+    public static string OCRA_ForceLight => StringRM.GetString("OCRA_Algo", Culture) ?? "1/3 of the time, 50%, > 50%, Almost all the time";
+    public static string OCRA_ForceMax => StringRM.GetString("OCRA_Algo", Culture) ?? "2 sec every 10 min, 1% of the time, 5% of the time, > 10% of the time";
 }
