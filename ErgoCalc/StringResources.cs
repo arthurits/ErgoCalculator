@@ -736,6 +736,8 @@ public static class StringResources
 
 
     // OCRA check
+    // https://kuliahdianmardi.files.wordpress.com/2016/04/ocra-1.pdf
+    // https://www.ergonautas.upv.es/metodos/ocra/ocra-ayuda.php
     public static string OCRA_ShiftDuration => StringRM.GetString("OCRA_ShiftDuration", Culture) ?? "Shift duration (min)";
     public static string OCRA_OfficialPauses => StringRM.GetString("OCRA_OfficialPauses", Culture) ?? "Official pauses (min)";
     public static string OCRA_LunchBreak => StringRM.GetString("OCRA_LunchBreak", Culture) ?? "Lunch break (min)";
@@ -748,7 +750,7 @@ public static class StringResources
     public static string OCRA_TaskATD => StringRM.GetString("OCRA_TaskATD", Culture) ?? "20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min";
     public static string OCRA_TaskATE => StringRM.GetString("OCRA_TaskATE", Culture) ?? " 5 sec for 2/3 cycle, 5 sec for 3/3 cycle";
 
-    public static string OCRA_BorgCR10 => StringRM.GetString("OCRA_Algo", Culture) ?? "Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10";
-    public static string OCRA_ForceLight => StringRM.GetString("OCRA_Algo", Culture) ?? "1/3 of the time, 50%, > 50%, Almost all the time";
-    public static string OCRA_ForceMax => StringRM.GetString("OCRA_Algo", Culture) ?? "2 sec every 10 min, 1% of the time, 5% of the time, > 10% of the time";
+    public static string OCRA_BorgCR10 => StringRM.GetString("OCRA_BorgCR10", Culture) ?? "Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10";
+    public static string OCRA_ForceLight => StringRM.GetString("OCRA_ForceLight", Culture) ?? "1/3 of the time, 50%, > 50%, Almost all the time";
+    public static string OCRA_ForceMax => StringRM.GetString("OCRA_ForceMax", Culture) ?? "2 sec every 10 min, 1% of the time, 5% of the time, > 10% of the time";
 }
