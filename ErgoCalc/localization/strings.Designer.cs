@@ -61,6 +61,123 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10.
+        /// </summary>
+        internal static string OCRA_BorgCR10 {
+            get {
+                return ResourceManager.GetString("OCRA_BorgCR10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1/3 of the time, 50% of the time, &gt; 50% of the time, Almost all the time.
+        /// </summary>
+        internal static string OCRA_ForceLight {
+            get {
+                return ResourceManager.GetString("OCRA_ForceLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 seg every 10 min, 1% of the time, 5% of the time, &gt; 10% of the time.
+        /// </summary>
+        internal static string OCRA_ForceMax {
+            get {
+                return ResourceManager.GetString("OCRA_ForceMax", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lunch break (min).
+        /// </summary>
+        internal static string OCRA_LunchBreak {
+            get {
+                return ResourceManager.GetString("OCRA_LunchBreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No repetitive work (min).
+        /// </summary>
+        internal static string OCRA_NonRepetitive {
+            get {
+                return ResourceManager.GetString("OCRA_NonRepetitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of cycles.
+        /// </summary>
+        internal static string OCRA_NumberCycles {
+            get {
+                return ResourceManager.GetString("OCRA_NumberCycles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Official pauses (min).
+        /// </summary>
+        internal static string OCRA_OfficialPauses {
+            get {
+                return ResourceManager.GetString("OCRA_OfficialPauses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift duration (min).
+        /// </summary>
+        internal static string OCRA_ShiftDuration {
+            get {
+                return ResourceManager.GetString("OCRA_ShiftDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min.
+        /// </summary>
+        internal static string OCRA_TaskATD {
+            get {
+                return ResourceManager.GetString("OCRA_TaskATD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 sec for 2/3 cycle, 5 sec for 3/3 cycle.
+        /// </summary>
+        internal static string OCRA_TaskATE {
+            get {
+                return ResourceManager.GetString("OCRA_TaskATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift.
+        /// </summary>
+        internal static string OCRA_TaskBreaks {
+            get {
+                return ResourceManager.GetString("OCRA_TaskBreaks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Net cycle time (sec).
+        /// </summary>
+        internal static string OCRA_TNC {
+            get {
+                return ResourceManager.GetString("OCRA_TNC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Repetitive net cycle time (sec).
+        /// </summary>
+        internal static string OCRA_TNTR {
+            get {
+                return ResourceManager.GetString("OCRA_TNTR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Accept.
         /// </summary>
         internal static string strBtnAccept {

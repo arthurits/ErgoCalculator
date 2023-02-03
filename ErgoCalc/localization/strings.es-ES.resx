@@ -905,4 +905,43 @@ salir de la aplicación?</value>
   <data name="WR_Step" xml:space="preserve">
     <value>Paso numérico de la curva</value>
   </data>
+  <data name="OCRA_ShiftDuration" xml:space="preserve">
+    <value>Duración del turno (min)</value>
+  </data>
+  <data name="OCRA_OfficialPauses" xml:space="preserve">
+    <value>Pausas oficiales (min)</value>
+  </data>
+  <data name="OCRA_LunchBreak" xml:space="preserve">
+    <value>Pausa almuerzo (min)</value>
+  </data>
+  <data name="OCRA_NonRepetitive" xml:space="preserve">
+    <value>Trabajo no repetitivo (min)</value>
+  </data>
+  <data name="OCRA_NumberCycles" xml:space="preserve">
+    <value>Número de ciclos</value>
+  </data>
+  <data name="OCRA_TNTR" xml:space="preserve">
+    <value>Tiempo neto del ciclo de trabajo (seg)</value>
+  </data>
+  <data name="OCRA_TNC" xml:space="preserve">
+    <value>Tiempo neto de trabajo repetitivo (seg)</value>
+  </data>
+  <data name="OCRA_TaskBreaks" xml:space="preserve">
+    <value>8 min por hora o 1:5, 4x 8 min por 7-8 h turno, 3x 8 min por 7-8 h turno, 2x 8 min por 7-8 h turno, 1x 8 min por 7-8 h turno, Menos de 5 min por 7-8 h turno</value>
+  </data>
+  <data name="OCRA_TaskATD" xml:space="preserve">
+    <value>20 acciones/min, 30 acciones/min, 40 acciones/min, 40 acciones/min pausas irregulares, 50 acciones/min, 60 acciones/min, 70 acciones/min</value>
+  </data>
+  <data name="OCRA_TaskATE" xml:space="preserve">
+    <value>5 seg durante 2/3 ciclo, 5 seg durante 3/3 ciclo</value>
+  </data>
+  <data name="OCRA_BorgCR10" xml:space="preserve">
+    <value>Nulo 0, Muy débil 1, Débil 2, Moderado 3, Fuerte 4, Fuerte-pesado 5, Muy fuerte 6, Muy fuerte 7, Muy fuerte 8, Extremadamente fuerte 9, Máximo 10</value>
+  </data>
+  <data name="OCRA_ForceLight" xml:space="preserve">
+    <value>1/3 del tiempo, 50% del tiempo, &gt; 50% del tiempo, Casi todo el time</value>
+  </data>
+  <data name="OCRA_ForceMax" xml:space="preserve">
+    <value>2 seg cada 10 min, 1% del tiempo, 5% del tiempo, &gt; 10% del tiempo</value>
+  </data>
 </root>

@@ -905,4 +905,43 @@ the application?</value>
   <data name="WR_Step" xml:space="preserve">
     <value>Numeric step</value>
   </data>
+  <data name="OCRA_ShiftDuration" xml:space="preserve">
+    <value>Shift duration (min)</value>
+  </data>
+  <data name="OCRA_OfficialPauses" xml:space="preserve">
+    <value>Official pauses (min)</value>
+  </data>
+  <data name="OCRA_LunchBreak" xml:space="preserve">
+    <value>Lunch break (min)</value>
+  </data>
+  <data name="OCRA_NonRepetitive" xml:space="preserve">
+    <value>No repetitive work (min)</value>
+  </data>
+  <data name="OCRA_NumberCycles" xml:space="preserve">
+    <value>Number of cycles</value>
+  </data>
+  <data name="OCRA_TNTR" xml:space="preserve">
+    <value>Repetitive net cycle time (sec)</value>
+  </data>
+  <data name="OCRA_TNC" xml:space="preserve">
+    <value>Net cycle time (sec)</value>
+  </data>
+  <data name="OCRA_TaskBreaks" xml:space="preserve">
+    <value>8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift</value>
+  </data>
+  <data name="OCRA_TaskATD" xml:space="preserve">
+    <value>20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min</value>
+  </data>
+  <data name="OCRA_TaskATE" xml:space="preserve">
+    <value>5 sec for 2/3 cycle, 5 sec for 3/3 cycle</value>
+  </data>
+  <data name="OCRA_BorgCR10" xml:space="preserve">
+    <value>Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10</value>
+  </data>
+  <data name="OCRA_ForceLight" xml:space="preserve">
+    <value>1/3 of the time, 50% of the time, &gt; 50% of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_ForceMax" xml:space="preserve">
+    <value>2 sec every 10 min, 1% of the time, 5% of the time, &gt; 10% of the time</value>
+  </data>
 </root>
