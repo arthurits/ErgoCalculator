@@ -61,11 +61,65 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Arm posture.
+        /// </summary>
+        internal static string OCRA_Arm {
+            get {
+                return ResourceManager.GetString("OCRA_Arm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slightly uplifted for 1/2 of the time, shoulder height for 10% of the time, shoulder height for 1/3 of the time, shoulder height for 1/2 of the time, Almost all the time.
+        /// </summary>
+        internal static string OCRA_Arm_Types {
+            get {
+                return ResourceManager.GetString("OCRA_Arm_Types", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10.
         /// </summary>
         internal static string OCRA_BorgCR10 {
             get {
                 return ResourceManager.GetString("OCRA_BorgCR10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial data.
+        /// </summary>
+        internal static string OCRA_Data {
+            get {
+                return ResourceManager.GetString("OCRA_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elbow posture.
+        /// </summary>
+        internal static string OCRA_Elbow {
+            get {
+                return ResourceManager.GetString("OCRA_Elbow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wide or sudden movs for 1/3 of the time, Wide or sudden movs for 1/2 of the time, Allmost all the time.
+        /// </summary>
+        internal static string OCRA_Elbow_Types {
+            get {
+                return ResourceManager.GetString("OCRA_Elbow_Types", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force type and frequency.
+        /// </summary>
+        internal static string OCRA_Force {
+            get {
+                return ResourceManager.GetString("OCRA_Force", resourceCulture);
             }
         }
         
@@ -79,6 +133,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Force score.
+        /// </summary>
+        internal static string OCRA_ForceM {
+            get {
+                return ResourceManager.GetString("OCRA_ForceM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 2 seg every 10 min, 1% of the time, 5% of the time, &gt; 10% of the time.
         /// </summary>
         internal static string OCRA_ForceMax {
@@ -88,11 +151,56 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Frequency score.
+        /// </summary>
+        internal static string OCRA_FrequencyM {
+            get {
+                return ResourceManager.GetString("OCRA_FrequencyM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grip posture.
+        /// </summary>
+        internal static string OCRA_Grip {
+            get {
+                return ResourceManager.GetString("OCRA_Grip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Grip for 1/3 of the time, Grip for 1/2 of the time, Almost all the time.
+        /// </summary>
+        internal static string OCRA_Grip_Types {
+            get {
+                return ResourceManager.GetString("OCRA_Grip_Types", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The OCRA checklist index is:.
+        /// </summary>
+        internal static string OCRA_Index {
+            get {
+                return ResourceManager.GetString("OCRA_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lunch break (min).
         /// </summary>
         internal static string OCRA_LunchBreak {
             get {
                 return ResourceManager.GetString("OCRA_LunchBreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multipliers.
+        /// </summary>
+        internal static string OCRA_Multipliers {
+            get {
+                return ResourceManager.GetString("OCRA_Multipliers", resourceCulture);
             }
         }
         
@@ -124,6 +232,33 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Posture score.
+        /// </summary>
+        internal static string OCRA_PostureM {
+            get {
+                return ResourceManager.GetString("OCRA_PostureM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recovery score.
+        /// </summary>
+        internal static string OCRA_RecoveryM {
+            get {
+                return ResourceManager.GetString("OCRA_RecoveryM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the results from the OCRA checklist model:.
+        /// </summary>
+        internal static string OCRA_Results {
+            get {
+                return ResourceManager.GetString("OCRA_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shift duration (min).
         /// </summary>
         internal static string OCRA_ShiftDuration {
@@ -133,7 +268,25 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min.
+        ///   Looks up a localized string similar to Lack of variation or stereotypy.
+        /// </summary>
+        internal static string OCRA_Stereotypy {
+            get {
+                return ResourceManager.GetString("OCRA_Stereotypy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Same movs for 2/3 of the time, Almost all the time.
+        /// </summary>
+        internal static string OCRA_Stereotypy_Types {
+            get {
+                return ResourceManager.GetString("OCRA_Stereotypy_Types", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arm dynamic actions.
         /// </summary>
         internal static string OCRA_TaskATD {
             get {
@@ -142,7 +295,16 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 5 sec for 2/3 cycle, 5 sec for 3/3 cycle.
+        ///   Looks up a localized string similar to 20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min.
+        /// </summary>
+        internal static string OCRA_TaskATD_Types {
+            get {
+                return ResourceManager.GetString("OCRA_TaskATD_Types", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arm static actions.
         /// </summary>
         internal static string OCRA_TaskATE {
             get {
@@ -151,11 +313,29 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift.
+        ///   Looks up a localized string similar to 5 sec for 2/3 cycle, 5 sec for 3/3 cycle.
+        /// </summary>
+        internal static string OCRA_TaskATE_Types {
+            get {
+                return ResourceManager.GetString("OCRA_TaskATE_Types", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Work interruptions.
         /// </summary>
         internal static string OCRA_TaskBreaks {
             get {
                 return ResourceManager.GetString("OCRA_TaskBreaks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift.
+        /// </summary>
+        internal static string OCRA_TaskBreaks_Types {
+            get {
+                return ResourceManager.GetString("OCRA_TaskBreaks_Types", resourceCulture);
             }
         }
         
@@ -174,6 +354,24 @@ namespace ErgoCalc.localization {
         internal static string OCRA_TNTR {
             get {
                 return ResourceManager.GetString("OCRA_TNTR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrist posture.
+        /// </summary>
+        internal static string OCRA_Wrist {
+            get {
+                return ResourceManager.GetString("OCRA_Wrist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extreme for 1/3 of the time, Extreme for 1/2 of the time, Almost all the time.
+        /// </summary>
+        internal static string OCRA_Wrist_Types {
+            get {
+                return ResourceManager.GetString("OCRA_Wrist_Types", resourceCulture);
             }
         }
         

@@ -926,13 +926,13 @@ the application?</value>
   <data name="OCRA_TNC" xml:space="preserve">
     <value>Net cycle time (sec)</value>
   </data>
-  <data name="OCRA_TaskBreaks" xml:space="preserve">
+  <data name="OCRA_TaskBreaks_Types" xml:space="preserve">
     <value>8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift</value>
   </data>
-  <data name="OCRA_TaskATD" xml:space="preserve">
+  <data name="OCRA_TaskATD_Types" xml:space="preserve">
     <value>20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min</value>
   </data>
-  <data name="OCRA_TaskATE" xml:space="preserve">
+  <data name="OCRA_TaskATE_Types" xml:space="preserve">
     <value>5 sec for 2/3 cycle, 5 sec for 3/3 cycle</value>
   </data>
   <data name="OCRA_BorgCR10" xml:space="preserve">
@@ -943,5 +943,71 @@ the application?</value>
   </data>
   <data name="OCRA_ForceMax" xml:space="preserve">
     <value>2 seg every 10 min, 1% of the time, 5% of the time, &gt; 10% of the time</value>
+  </data>
+  <data name="OCRA_TaskBreaks" xml:space="preserve">
+    <value>Work interruptions</value>
+  </data>
+  <data name="OCRA_RecoveryM" xml:space="preserve">
+    <value>Recovery score</value>
+  </data>
+  <data name="OCRA_FrequencyM" xml:space="preserve">
+    <value>Frequency score</value>
+  </data>
+  <data name="OCRA_TaskATD" xml:space="preserve">
+    <value>Arm dynamic actions</value>
+  </data>
+  <data name="OCRA_TaskATE" xml:space="preserve">
+    <value>Arm static actions</value>
+  </data>
+  <data name="OCRA_Force" xml:space="preserve">
+    <value>Force type and frequency</value>
+  </data>
+  <data name="OCRA_ForceM" xml:space="preserve">
+    <value>Force score</value>
+  </data>
+  <data name="OCRA_PostureM" xml:space="preserve">
+    <value>Posture score</value>
+  </data>
+  <data name="OCRA_Arm" xml:space="preserve">
+    <value>Arm posture</value>
+  </data>
+  <data name="OCRA_Arm_Types" xml:space="preserve">
+    <value>Slightly uplifted for 1/2 of the time, shoulder height for 10% of the time, shoulder height for 1/3 of the time, shoulder height for 1/2 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_Elbow" xml:space="preserve">
+    <value>Elbow posture</value>
+  </data>
+  <data name="OCRA_Elbow_Types" xml:space="preserve">
+    <value>Wide or sudden movs for 1/3 of the time, Wide or sudden movs for 1/2 of the time, Allmost all the time</value>
+  </data>
+  <data name="OCRA_Wrist" xml:space="preserve">
+    <value>Wrist posture</value>
+  </data>
+  <data name="OCRA_Wrist_Types" xml:space="preserve">
+    <value>Extreme for 1/3 of the time, Extreme for 1/2 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_Grip" xml:space="preserve">
+    <value>Grip posture</value>
+  </data>
+  <data name="OCRA_Grip_Types" xml:space="preserve">
+    <value>Grip for 1/3 of the time, Grip for 1/2 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_Stereotypy" xml:space="preserve">
+    <value>Lack of variation or stereotypy</value>
+  </data>
+  <data name="OCRA_Stereotypy_Types" xml:space="preserve">
+    <value>Same movs for 2/3 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_Results" xml:space="preserve">
+    <value>These are the results from the OCRA checklist model:</value>
+  </data>
+  <data name="OCRA_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="OCRA_Multipliers" xml:space="preserve">
+    <value>Multipliers</value>
+  </data>
+  <data name="OCRA_Index" xml:space="preserve">
+    <value>The OCRA checklist index is:</value>
   </data>
 </root>

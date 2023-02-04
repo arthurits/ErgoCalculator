@@ -749,7 +749,7 @@ public static class StringResources
     public static string OCRA_TaskBreaks => StringRM.GetString("OCRA_TaskBreaks", Culture) ?? "Work interruptions";
     public static string OCRA_RecoveryM => StringRM.GetString("OCRA_TaskBreaksM", Culture) ?? "Recovery score";
     public static string OCRA_TaskBreaks_Types => StringRM.GetString("OCRA_TaskBreaks_Types", Culture) ?? "8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift";
-    public static string OCRA_FrequencyM => StringRM.GetString("OCRA_TaskATD", Culture) ?? "Frequency score";
+    public static string OCRA_FrequencyM => StringRM.GetString("OCRA_FrequencyM", Culture) ?? "Frequency score";
     public static string OCRA_TaskATD => StringRM.GetString("OCRA_TaskATD", Culture) ?? "Arm dynamic actions";
     public static string OCRA_TaskATD_Types => StringRM.GetString("OCRA_TaskATD_Types", Culture) ?? "20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min";
     public static string OCRA_TaskATE => StringRM.GetString("OCRA_TaskATE", Culture) ?? "Arm static actions";
