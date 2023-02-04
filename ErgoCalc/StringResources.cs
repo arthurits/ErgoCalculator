@@ -649,7 +649,7 @@ public static class StringResources
         CLM_BM,
         CLM_BaseWeight,
         CLM_PopPercentage
-    };
+    };  // This is used for tabs calculation
     public static string[] CLM_ColumnHeaders => new[]
     {
         $"{Case} A",
@@ -696,17 +696,17 @@ public static class StringResources
     public static string[] CLM_DataInputHeaders => new[]
     {
         CLM_Gender,
-            CLM_Weight,
-            CLM_HorizontalD,
-            CLM_VerticalH,
-            CLM_VerticalD,
-            CLM_Frequency,
-            CLM_HoursTask,
-            CLM_Angle,
-            CLM_Coupling,
-            CLM_Temperature,
-            CLM_Age,
-            CLM_BodyWeight
+        CLM_Weight,
+        CLM_HorizontalD,
+        CLM_VerticalH,
+        CLM_VerticalD,
+        CLM_Frequency,
+        CLM_HoursTask,
+        CLM_Angle,
+        CLM_Coupling,
+        CLM_Temperature,
+        CLM_Age,
+        CLM_BodyWeight
     };
 
 
@@ -746,11 +746,85 @@ public static class StringResources
     public static string OCRA_TNTR => StringRM.GetString("OCRA_TNTR", Culture) ?? "Net cycle time (sec)";
     public static string OCRA_TNC => StringRM.GetString("OCRA_TNC", Culture) ?? "Repetitive net cycle time (sec)";
 
-    public static string OCRA_TaskBreaks => StringRM.GetString("OCRA_TaskBreaks", Culture) ?? "8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift";
-    public static string OCRA_TaskATD => StringRM.GetString("OCRA_TaskATD", Culture) ?? "20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min";
-    public static string OCRA_TaskATE => StringRM.GetString("OCRA_TaskATE", Culture) ?? "5 sec for 2/3 cycle, 5 sec for 3/3 cycle";
+    public static string OCRA_TaskBreaks => StringRM.GetString("OCRA_TaskBreaks", Culture) ?? "Work interruptions";
+    public static string OCRA_RecoveryM => StringRM.GetString("OCRA_TaskBreaksM", Culture) ?? "Recovery score";
+    public static string OCRA_TaskBreaks_Types => StringRM.GetString("OCRA_TaskBreaks_Types", Culture) ?? "8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift";
+    public static string OCRA_FrequencyM => StringRM.GetString("OCRA_TaskATD", Culture) ?? "Frequency score";
+    public static string OCRA_TaskATD => StringRM.GetString("OCRA_TaskATD", Culture) ?? "Arm dynamic actions";
+    public static string OCRA_TaskATD_Types => StringRM.GetString("OCRA_TaskATD_Types", Culture) ?? "20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min";
+    public static string OCRA_TaskATE => StringRM.GetString("OCRA_TaskATE", Culture) ?? "Arm static actions";
+    public static string OCRA_TaskATE_Types => StringRM.GetString("OCRA_TaskATE_Types", Culture) ?? "5 sec for 2/3 cycle, 5 sec for 3/3 cycle";
 
+    public static string OCRA_Force => StringRM.GetString("OCRA_Force", Culture) ?? "Force type and frequency";
+    public static string OCRA_ForceM => StringRM.GetString("OCRA_ForceM", Culture) ?? "Force score";
     public static string OCRA_BorgCR10 => StringRM.GetString("OCRA_BorgCR10", Culture) ?? "Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10";
     public static string OCRA_ForceLight => StringRM.GetString("OCRA_ForceLight", Culture) ?? "1/3 of the time, 50%, > 50%, Almost all the time";
     public static string OCRA_ForceMax => StringRM.GetString("OCRA_ForceMax", Culture) ?? "2 sec every 10 min, 1% of the time, 5% of the time, > 10% of the time";
+
+    public static string OCRA_PostureM => StringRM.GetString("OCRA_PostureM", Culture) ?? "Posture score";
+    public static string OCRA_Arm => StringRM.GetString("OCRA_Arm", Culture) ?? "Arm posture";
+    public static string OCRA_Arm_Types => StringRM.GetString("OCRA_Arm_Types", Culture) ?? "Slightly uplifted for 1/2 of the time, shoulder height for 10% of the time, shoulder height for 1/3 of the time, shoulder height for 1/2 of the time, Almost all the time";
+    public static string OCRA_Elbow => StringRM.GetString("OCRA_Elbow", Culture) ?? "Elbow posture";
+    public static string OCRA_Elbow_Types => StringRM.GetString("OCRA_Elbow_Types", Culture) ?? "Wide or sudden movs for 1/3 of the time, Wide or sudden movs for 1/2 of the time, Allmost all the time";
+    public static string OCRA_Wrist => StringRM.GetString("OCRA_Wrist", Culture) ?? "Wrist posture";
+    public static string OCRA_Wrist_Types => StringRM.GetString("OCRA_Wrist_Types", Culture) ?? "Extreme for 1/3 of the time, Extreme for 1/2 of the time, Almost all the time";
+    public static string OCRA_Grip => StringRM.GetString("OCRA_Grip", Culture) ?? "Grip posture";
+    public static string OCRA_Grip_Types => StringRM.GetString("OCRA_Grip_Types", Culture) ?? "Grip for 1/3 of the time, Grip for 1/2 of the time, Almost all the time";
+    public static string OCRA_Stereotypy => StringRM.GetString("OCRA_Stereotypy", Culture) ?? "Lack of variation or stereotypy";
+    public static string OCRA_Stereotypy_Types => StringRM.GetString("OCRA_Stereotypy_Types", Culture) ?? "Same movs for 2/3 of the time, Almost all the time";
+
+    public static string OCRA_Results => StringRM.GetString("OCRA_Results", Culture) ?? "These are the results from the OCRA checklist model:";
+    public static string OCRA_Data => StringRM.GetString("OCRA_Data", Culture) ?? "Initial data";
+    public static string OCRA_Multipliers => StringRM.GetString("OCRA_Multipliers", Culture) ?? "Multipliers";
+    public static string OCRA_Index => StringRM.GetString("OCRA_Index", Culture) ?? "The OCRA checklist index is:";
+    public static string[] OCRA_ResultsHeaders => new[]
+    {
+        Task,                       // 0
+        OCRA_Results,
+        OCRA_Data,
+        OCRA_ShiftDuration,
+        OCRA_NonRepetitive,
+        OCRA_OfficialPauses,        // 5
+        OCRA_LunchBreak,
+        OCRA_NumberCycles,
+        OCRA_TaskBreaks,
+        OCRA_TaskATD,
+        OCRA_TaskATE,               // 10
+        OCRA_Force,
+        OCRA_Arm,
+        OCRA_Elbow,
+        OCRA_Wrist,
+        OCRA_Grip,
+        OCRA_Stereotypy,
+
+        OCRA_Multipliers,
+        OCRA_TNTR,
+        OCRA_TNC,
+        OCRA_RecoveryM,
+        OCRA_FrequencyM,
+        OCRA_ForceM,
+        OCRA_PostureM,
+        OCRA_Index
+    }
+    public static string[] OCRA_ColumnHeaders => new[]
+    {
+        $"{Task} A"
+    };
+    public static string[] OCRA_DataInputHeaders => new[]
+    {
+        OCRA_ShiftDuration,
+        OCRA_NonRepetitive,
+        OCRA_OfficialPauses,
+        OCRA_LunchBreak,
+        OCRA_NumberCycles,
+        OCRA_TaskBreaks,
+        OCRA_TaskATD,
+        OCRA_TaskATE,
+        OCRA_Force,
+        OCRA_Arm,
+        OCRA_Elbow,
+        OCRA_Wrist,
+        OCRA_Grip,
+        OCRA_Stereotypy,
+    };
 }
