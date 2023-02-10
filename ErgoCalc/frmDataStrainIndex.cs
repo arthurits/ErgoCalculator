@@ -257,16 +257,6 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        //string[] rowText = new string[]
-        //{
-        //    "Intensity of exertion",
-        //    "Efforts per minute",
-        //    "Duration per exertion",
-        //    "Hand/wrist posture",
-        //    "Duration of task per day"
-        //};
-        //(this as IChildData).AddGridRowHeaders(this.gridVariables, rowText);
-
         (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.StrainIndex_DataInputHeaders);
     }
     
