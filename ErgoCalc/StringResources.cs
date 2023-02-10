@@ -805,7 +805,7 @@ public static class StringResources
         OCRA_ForceM,
         OCRA_PostureM,
         OCRA_Index
-    }
+    };
     public static string[] OCRA_ColumnHeaders => new[]
     {
         $"{Task} A"

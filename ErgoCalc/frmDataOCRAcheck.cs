@@ -115,7 +115,7 @@ public partial class FrmDataOCRAcheck : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.StrainIndex_DataInputHeaders);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.OCRA_DataInputHeaders);
     }
 
     /// <summary>
