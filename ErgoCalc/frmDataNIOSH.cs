@@ -161,7 +161,8 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         listViewTasks.RemoveEmptyGroups();
         listViewTasks.RemoveEmptyItems();
-        updTasks.Value = listViewTasks.Groups.Count;
+        if (listViewTasks.Groups.Count > 0)
+            updTasks.Value = listViewTasks.Groups.Count;
 
         // New test
         int ItemIndex;
