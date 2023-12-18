@@ -157,9 +157,8 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     public void RemoveEmptyItems()
     {
         for (int i = 0; i < this.Groups.Count; i++)
-        {
             RemoveEmptyItems(i);
-        }
+
         // this.Items.RemoveByKey(DummyName);
     }
     /// <summary>
@@ -185,9 +184,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
         for (int i = 0; i < this.Groups.Count; i++)
         {
             if (this.Groups[i].Header == header)
-            {
                 RemoveEmptyItems(i);
-            }
         }
     }
 
