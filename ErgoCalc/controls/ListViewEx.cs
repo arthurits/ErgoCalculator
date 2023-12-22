@@ -87,8 +87,11 @@ public partial class ListViewEx : System.Windows.Forms.ListView
             {
                 if (this.Groups[heldDownItem.Group.Header].Items.Count == 1)
                 {
-                    var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty) { Name = DummyName };
-                    emptyItem.Group = heldDownItem.Group;
+                    var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty)
+                    {
+                        Name = DummyName,
+                        Group = heldDownItem.Group
+                    };
                     //emptyItem.Tag = heldDownItem.Group.Name;
                     this.Items.Add(emptyItem);
                 }
@@ -117,7 +120,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     /// <param name="index">Group number</param>
     public void AddGroup(int index, string str = "Task")
     {
-        var strHeader = $"{str} {((char)('A' + index)).ToString()}";
+        var strHeader = $"{str} {(char)('A' + index)}";
         var _index = this.Groups.Add(new ListViewGroup(strHeader, strHeader));
         //var _index = this.Groups.Add(new ListViewGroup(strHeader) { Name = strHeader });
         AddEmptyItem(_index);

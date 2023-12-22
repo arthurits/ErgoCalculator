@@ -147,7 +147,7 @@
             this.tabData.SelectedIndex = 0;
             this.tabData.Size = new System.Drawing.Size(745, 357);
             this.tabData.TabIndex = 8;
-            this.tabData.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabData_Selected);
+            this.tabData.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabData_Selected);
             // 
             // tabSubtasks
             // 
@@ -252,7 +252,7 @@
             this.radVLI.Tag = "3";
             this.radVLI.Text = "VLI";
             this.radVLI.UseVisualStyleBackColor = true;
-            this.radVLI.CheckedChanged += new System.EventHandler(this.rad_CheckedChanged);
+            this.radVLI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // radSLI
             // 
@@ -267,7 +267,7 @@
             this.radSLI.Tag = "2";
             this.radSLI.Text = "SLI";
             this.radSLI.UseVisualStyleBackColor = true;
-            this.radSLI.CheckedChanged += new System.EventHandler(this.rad_CheckedChanged);
+            this.radSLI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // radCLI
             // 
@@ -282,7 +282,7 @@
             this.radCLI.Tag = "1";
             this.radCLI.Text = "CLI";
             this.radCLI.UseVisualStyleBackColor = true;
-            this.radCLI.CheckedChanged += new System.EventHandler(this.rad_CheckedChanged);
+            this.radCLI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // radLI
             // 
@@ -297,7 +297,7 @@
             this.radLI.Tag = "0";
             this.radLI.Text = "LI";
             this.radLI.UseVisualStyleBackColor = true;
-            this.radLI.CheckedChanged += new System.EventHandler(this.rad_CheckedChanged);
+            this.radLI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // btnExample
             // 
