@@ -9,7 +9,7 @@ public partial class FrmDataNIOSH : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private IndexType _index;
-    private Job _job;
+    private Job _job = new();
 
     public object GetData => _job;
 
@@ -21,7 +21,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         txtConstanteLC.Text = "25";
 
         // Simulate a click on radRSI
-        rad_CheckedChanged(radLI, null);
+        Rad_CheckedChanged(radLI, EventArgs.Empty);
 
         listViewTasks.AddGroup(StringResources.Task);
     }
@@ -111,9 +111,9 @@ public partial class FrmDataNIOSH : Form, IChildData
         (this as IChildData).UpdateListView(listViewTasks, Convert.ToInt32(updTasks.Value), StringResources.Task);
     }
 
-    private void rad_CheckedChanged(object sender, EventArgs e)
+    private void Rad_CheckedChanged(object sender, EventArgs e)
     {
-        // Check of the raiser of the event is a checked Checkbox.
+        // Check of the raiser of the event is a selected RadioButton.
         // Of course we also need to to cast it first.
         if (sender is not RadioButton rb) return;
         if (rb.Checked == false) return;    // We only process the check event and disregard the uncheck
@@ -161,14 +161,12 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         listViewTasks.RemoveEmptyGroups();
         listViewTasks.RemoveEmptyItems();
-        if (listViewTasks.Groups.Count > 0)
-            updTasks.Value = listViewTasks.Groups.Count;
 
         // New test
         int ItemIndex;
         _job = new();
         _job.NumberSubTasks = gridVariables.ColumnCount;
-        _job.NumberTasks = _index == IndexType.IndexLI ? 1 : Convert.ToInt32(updTasks.Value);
+        _job.NumberTasks = _index == IndexType.IndexLI ? 1 : listViewTasks.Groups.Count;
         _job.Tasks = new TaskModel[_job.NumberTasks];
         _job.Order = new int[_job.NumberTasks];
         
@@ -259,7 +257,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
+        if (gridVariables.Columns.Contains($"Column {col}")) return;
 
         // Create the new column
         string strName = $"{(_index == IndexType.IndexLI ? StringResources.Task : StringResources.Subtask)} ";
@@ -470,7 +468,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         for (int i = 0; i < _job.NumberSubTasks; i++)
             listViewTasks.AddEmptyItem(0);
 
-        int nCol = 0;
+        int nCol;
         for (var j = 0; j < _job.NumberTasks; j++)
         {
             for (var i = 0; i < _job.Tasks[j].SubTasks.Length; i++)
@@ -489,7 +487,7 @@ public partial class FrmDataNIOSH : Form, IChildData
                 gridVariables[nCol, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
 
                 // We can now insert into the desired position
-                ListViewItem test = new($"{StringResources.Subtask} {((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString()}", listViewTasks.Groups[j]);
+                ListViewItem test = new($"{StringResources.Subtask} {(char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)}", listViewTasks.Groups[j]);
                 listViewTasks.Items.Insert(_job.Tasks[j].SubTasks[i].ItemIndex, test);
             }
         }
@@ -500,7 +498,7 @@ public partial class FrmDataNIOSH : Form, IChildData
 
     #endregion
 
-    private void tabData_Selected(object sender, TabControlEventArgs e)
+    private void TabData_Selected(object sender, TabControlEventArgs e)
     {
         if (e.TabPageIndex == 1) // tabTasks
         {
