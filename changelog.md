@@ -3,7 +3,7 @@
 ## ErgoCalculator 1.7.5
 * Target .NET 8.
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.69.
-* Correct exception when entering data for only one task in NIOSH model.
+* Correct exception when entering data for just one task in NIOSH model.
 
 ## ErgoCalculator 1.7.4
 * Multilanguage support added to Liberty Mutual model.
