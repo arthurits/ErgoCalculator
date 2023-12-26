@@ -1,9 +1,9 @@
 # <img src="ErgoCalc/images/logo@256.png?raw=true" height="28" width="28"> ErgoCalc
-Software implementing ergonomics algorithms (revised strain index, NIOSH lifting index, Liberty Mutual equations, metabolic rate, etc.). Written in .NET 7 (C# WinForms).
+Software implementing ergonomics algorithms (revised strain index, NIOSH lifting index, Liberty Mutual equations, metabolic rate, etc.). Written in .NET 8 (C# WinForms).
 
 <img alt="Software logo" src="ErgoCalc/images/splash.png?raw=true" height="240">
 
-Copyright © 2009-2023 by Arthurits Ltd. No commercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
+Copyright © 2009-2024 by Arthurits Ltd. No commercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
 Download latest release: [![GitHub release (latest by date)](https://img.shields.io/github/v/release/arthurits/ErgoCalculator)](https://github.com/arthurits/ErgoCalculator/releases)
 
 Sponsor this project!
