@@ -231,6 +231,11 @@ public class TaskModel
 
         if (culture is null)
             culture = System.Globalization.CultureInfo.CurrentCulture;
+        
+        // This is needed to show the descending order for each subtask
+        int[] taskOrder = new int[SubTasks.Length];
+        for (int i = 0; i < taskOrder.Length; i++)
+            taskOrder[OrderCLI[i]] = i + 1;
 
         for (int i = 0; i < SubTasks.Length; i++)
         {
@@ -267,8 +272,8 @@ public class TaskModel
             if (Model == IndexType.IndexCLI)
             {
                 strLineR[13] += $"\t{SubTasks[i].IndexIF.ToString("0.####", culture)}";
-                //strLineR[11] += "\t";
-                strLineR[15] += $"\t{(OrderCLI[i] + 1).ToString(culture)}";
+                //strLineR[15] += $"\t{(OrderCLI[i]).ToString(culture)}";
+                strLineR[15] += $"\t{(taskOrder[i]).ToString(culture)}";
             }
 
             strLineR[14] += $"\t{SubTasks[i].IndexLI.ToString("0.####", culture)}";
