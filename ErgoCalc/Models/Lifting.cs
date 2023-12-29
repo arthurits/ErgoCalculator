@@ -215,11 +215,6 @@ public class TaskModel
     /// Number of sub-tasks in the task
     /// </summary>
     public int NumberSubTasks { get; set; } = 0;
-    
-
-    public TaskModel()
-    {
-    }
 
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
@@ -393,46 +388,6 @@ public class TaskModel
 
         return strResult.ToString();
     }
-
-    public override string ToString()
-    {
-        string[] strRows =
-        [
-            "Task",
-            "Subtask",
-            "These are the results obtained from the NIOSH lifting model:",
-            "Initial data",
-            "Weight lifted (kg):",
-            "Horizontal distance (cm):",
-            "Vertical distance (cm):",
-            "Vertical travel distance (cm):",
-            "Lifting frequency (times/min):",
-            "Lifting frequency A (times/min):",
-            "Lifting frequency B (times/min):",
-            "Task duration(hours):",
-            "Twisting angle (°):",
-            "Coupling:",
-            "Multipliers",
-            "Lifting constant (LC):",
-            "Horizontal multiplier (HM):",
-            "Vertical multiplier (VM):",
-            "Distance multiplier (DM):",
-            "Frequency multiplier (FM):",
-            "Frequency A multiplier (FMa):",
-            "Frequency B multiplier (FMb):",
-            "Twisting angle multiplier (AM):",
-            "Coupling multiplier (CM):",
-            "Lifting index (IF):",
-            "Lifting index (LI):",
-            "Subtask order:",
-            "The NIOSH lifting index is computed as follows:",
-            "Index",
-            "Weight",
-            "The NIOSH lifting index is:",
-            "No handles, Poor, Good"
-        ];
-        return ToString(strRows);
-    }
 }
 
 /// <summary>
@@ -470,10 +425,6 @@ public class Job
     /// </summary>
     public int NumberSubTasks { get; set; } = 0;
 
-    public Job()
-    {
-    }
-
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         string str = string.Empty;
@@ -482,47 +433,6 @@ public class Job
             str += task.ToString(strRows, culture) + Environment.NewLine + Environment.NewLine;
 
         return str;
-    }
-
-    public override string ToString()
-    {
-        string[] strRows =
-        [
-            "Task",
-            "Subtask",
-            "These are the results obtained from the NIOSH lifting model:",
-            "Initial data",
-            "Weight lifted (kg):",
-            "Horizontal distance (cm):",
-            "Vertical distance (cm):",
-            "Vertical travel distance (cm):",
-            "Lifting frequency (times/min):",
-            "Lifting frequency A (times/min):",
-            "Lifting frequency B (times/min):",
-            "Task duration(hours):",
-            "Twisting angle (°):",
-            "Coupling:",
-            "Multipliers",
-            "Lifting constant (LC):",
-            "Horizontal multiplier (HM):",
-            "Vertical multiplier (VM):",
-            "Distance multiplier (DM):",
-            "Frequency multiplier (FM):",
-            "Frequency A multiplier (FMa):",
-            "Frequency B multiplier (FMb):",
-            "Twisting angle multiplier (AM):",
-            "Coupling multiplier (CM):",
-            "Lifting index (IF):",
-            "Lifting index (LI):",
-            "Subtask order:",
-            "The NIOSH lifting index is computed as follows:",
-            "Index",
-            "Weight",
-            "The NIOSH lifting index is:",
-            "No handles, Poor, Good"
-        ];
-
-        return ToString(strRows);
     }
 }
 
