@@ -334,8 +334,8 @@ public partial class FrmDataNIOSH : Form, IChildData
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
         tableC.Rows.Add(strCoupling[(int)Coupling.Good], (int)Coupling.Good);
+        tableC.Rows.Add(strCoupling[(int)Coupling.Fair], (int)Coupling.Fair);
         tableC.Rows.Add(strCoupling[(int)Coupling.Poor], (int)Coupling.Poor);
-        tableC.Rows.Add(strCoupling[(int)Coupling.NoHandle], (int)Coupling.NoHandle);
         DataGridViewComboBoxCell celdaC = new()
         {
             DataSource = tableC,
@@ -400,7 +400,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[0].Data.a = 0;
         _job.Tasks[0].SubTasks[0].Data.f = 3;
         _job.Tasks[0].SubTasks[0].Data.td = 2;
-        _job.Tasks[0].SubTasks[0].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[0].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[1] = new();
         _job.Tasks[0].SubTasks[1].ItemIndex = 1;
@@ -413,7 +413,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[1].Data.a = 0;
         _job.Tasks[0].SubTasks[1].Data.f = 3;
         _job.Tasks[0].SubTasks[1].Data.td = 2;
-        _job.Tasks[0].SubTasks[1].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[1].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[2] = new();
         _job.Tasks[0].SubTasks[2].ItemIndex = 2;
@@ -426,7 +426,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[2].Data.a = 90;
         _job.Tasks[0].SubTasks[2].Data.f = 3;
         _job.Tasks[0].SubTasks[2].Data.td = 2;
-        _job.Tasks[0].SubTasks[2].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[2].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[3] = new();
         _job.Tasks[0].SubTasks[3].ItemIndex = 3;
@@ -439,7 +439,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[3].Data.a = 90;
         _job.Tasks[0].SubTasks[3].Data.f = 3;
         _job.Tasks[0].SubTasks[3].Data.td = 2;
-        _job.Tasks[0].SubTasks[3].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[3].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[4] = new();
         _job.Tasks[0].SubTasks[4].ItemIndex = 4;
@@ -452,7 +452,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[4].Data.a = 0;
         _job.Tasks[0].SubTasks[4].Data.f = 1;
         _job.Tasks[0].SubTasks[4].Data.td = 1;
-        _job.Tasks[0].SubTasks[4].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[4].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[5] = new();
         _job.Tasks[0].SubTasks[5].ItemIndex = 5;
@@ -465,7 +465,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[5].Data.a = 0;
         _job.Tasks[0].SubTasks[5].Data.f = 1;
         _job.Tasks[0].SubTasks[5].Data.td = 1;
-        _job.Tasks[0].SubTasks[5].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[5].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[6] = new();
         _job.Tasks[0].SubTasks[6].ItemIndex = 6;
@@ -478,7 +478,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[6].Data.a = 0;
         _job.Tasks[0].SubTasks[6].Data.f = 1;
         _job.Tasks[0].SubTasks[6].Data.td = 1;
-        _job.Tasks[0].SubTasks[6].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[6].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[7] = new();
         _job.Tasks[0].SubTasks[7].ItemIndex = 7;
@@ -491,7 +491,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[7].Data.a = 0;
         _job.Tasks[0].SubTasks[7].Data.f = 2;
         _job.Tasks[0].SubTasks[7].Data.td = 1;
-        _job.Tasks[0].SubTasks[7].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[7].Data.c = Coupling.Poor;
     }
 
     /// <summary>

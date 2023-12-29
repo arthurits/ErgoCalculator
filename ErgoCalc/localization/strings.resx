@@ -474,7 +474,7 @@ the application?</value>
     <value>Coupling:</value>
   </data>
   <data name="strNIOSH_CouplingType" xml:space="preserve">
-    <value>No handles, Poor, Good</value>
+    <value>Poor, Fair, Good</value>
   </data>
   <data name="strNIOSH_Data" xml:space="preserve">
     <value>Initial data</value>
