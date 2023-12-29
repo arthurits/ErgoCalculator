@@ -1,5 +1,6 @@
 ﻿using ErgoCalc.Models.StrainIndex;
 using System;
+using System.Security.Permissions;
 using System.Text;
 
 namespace ErgoCalc.Models.Lifting;
@@ -14,9 +15,15 @@ public enum IndexType
 
 public enum Coupling
 {
-    NoHandle = 0,
-    Poor = 1,
+    Poor = 0,
+    Fair = 1,
     Good = 2
+}
+
+public enum Gender
+{
+    Male = 0,
+    Female = 1
 }
 
 /// <summary>
@@ -24,10 +31,9 @@ public enum Coupling
 /// </summary>
 public class Data
 {
-    /// <summary>
-    /// Load constant in kg
-    /// </summary>
-    public double LC { get; set; } = 0;
+    public Gender gender { get; set; } = Gender.Male;
+
+    public double age { get; set; } = 20;
 
     /// <summary>
     /// Weight in kg
@@ -78,6 +84,21 @@ public class Data
     /// Coupling type
     /// </summary>
     public Coupling c { get; set; } = 0;
+
+    /// <summary>
+    /// Is the lift being performed with only one hand?
+    /// </summary>
+    public bool o { get; set; } = false;
+
+    /// <summary>
+    /// Are two  or more persons performing the same lift?
+    /// </summary>
+    public bool p { get; set; } = false;
+    
+    /// <summary>
+    /// Is manual handling performed for more than 8 hours per shift?
+    /// </summary>
+    public bool e { get; set; } = false;
 }
 
 /// <summary>
@@ -85,6 +106,11 @@ public class Data
 /// </summary>
 public class Multipliers
 {
+    /// <summary>
+    /// Reference mass in kilograms
+    /// </summary>
+    public double MassRef { get; set; } = 25.0;
+
     /// <summary>
     /// Horizontal distance multiplier
     /// </summary>
@@ -124,6 +150,21 @@ public class Multipliers
     /// Coupling multiplier
     /// </summary>
     public double CM { get; set; } = 0;
+
+    /// <summary>
+    /// One-handed operation additional multiplier
+    /// </summary>
+    public double OM { get; set; } = 0;
+
+    /// <summary>
+    /// Two or more person additional multiplier
+    /// </summary>
+    public double PM { get; set; } = 0;
+
+    /// <summary>
+    /// Extended time additional multiplier
+    /// </summary>
+    public double EM { get; set; } = 0;
 }
 
 /// <summary>
@@ -183,8 +224,8 @@ public class TaskModel
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(2200);
-        string[] strLineD = new String[11];
-        string[] strLineR = new String[13];
+        string[] strLineD = new String[15];
+        string[] strLineR = new String[16];
         string strEquationT;
         string strEquationN;
 
@@ -194,19 +235,23 @@ public class TaskModel
         for (int i = 0; i < SubTasks.Length; i++)
         {
             strLineD[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
-            strLineD[1] += $"\t{SubTasks[i].Data.Weight.ToString(culture)}";
-            strLineD[2] += $"\t{SubTasks[i].Data.h.ToString(culture)}";
-            strLineD[3] += $"\t{SubTasks[i].Data.v.ToString(culture)}";
-            strLineD[4] += $"\t{SubTasks[i].Data.d.ToString(culture)}";
-            strLineD[5] += $"\t{SubTasks[i].Data.f.ToString(culture)}";
-            strLineD[6] += $"\t{SubTasks[i].Data.fa.ToString(culture)}";
-            strLineD[7] += $"\t{SubTasks[i].Data.fb.ToString(culture)}";
-            strLineD[8] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
-            strLineD[9] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
-            strLineD[10] += $"\t{strRows[31].Split(", ")[(int)SubTasks[i].Data.c]}";
+            strLineD[1] += $"\t{strRows[38].Split(", ")[(int)SubTasks[i].Data.gender]}";
+            strLineD[2] += $"\t{SubTasks[i].Data.age.ToString(culture)}";
+            strLineD[3] += $"\t{SubTasks[i].Data.Weight.ToString(culture)}";
+            strLineD[4] += $"\t{SubTasks[i].Data.h.ToString(culture)}";
+            strLineD[5] += $"\t{SubTasks[i].Data.v.ToString(culture)}";
+            strLineD[6] += $"\t{SubTasks[i].Data.d.ToString(culture)}";
+            strLineD[7] += $"\t{SubTasks[i].Data.f.ToString(culture)}";
+            strLineD[8] += $"\t{SubTasks[i].Data.fa.ToString(culture)}";
+            strLineD[9] += $"\t{SubTasks[i].Data.fb.ToString(culture)}";
+            strLineD[10] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
+            strLineD[11] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
+            strLineD[12] += $"\t{strRows[31].Split(", ")[(int)SubTasks[i].Data.c]}";
+            strLineD[13] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.o ? 1 : 0]}";
+            strLineD[14] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.p ? 1 : 0]}";
 
             strLineR[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
-            strLineR[1] += $"\t{SubTasks[i].Data.LC.ToString("0.####", culture)}";
+            strLineR[1] += $"\t{SubTasks[i].Factors.MassRef.ToString("0.####", culture)}";
             strLineR[2] += $"\t{SubTasks[i].Factors.HM.ToString("0.####", culture)}";
             strLineR[3] += $"\t{SubTasks[i].Factors.VM.ToString("0.####", culture)}";
             strLineR[4] += $"\t{SubTasks[i].Factors.DM.ToString("0.####", culture)}";
@@ -215,34 +260,41 @@ public class TaskModel
             strLineR[7] += $"\t{SubTasks[i].Factors.FMb.ToString("0.####", culture)}";
             strLineR[8] += $"\t{SubTasks[i].Factors.AM.ToString("0.####", culture)}";
             strLineR[9] += $"\t{SubTasks[i].Factors.CM.ToString("0.####", culture)}";
+            strLineR[10] += $"\t{SubTasks[i].Factors.OM.ToString("0.####", culture)}";
+            strLineR[11] += $"\t{SubTasks[i].Factors.PM.ToString("0.####", culture)}";
+            strLineR[12] += $"\t{SubTasks[i].Factors.EM.ToString("0.####", culture)}";
 
             if (Model == IndexType.IndexCLI)
             {
-                strLineR[10] += $"\t{SubTasks[i].IndexIF.ToString("0.####", culture)}";
+                strLineR[13] += $"\t{SubTasks[i].IndexIF.ToString("0.####", culture)}";
                 //strLineR[11] += "\t";
-                strLineR[12] += $"\t{(OrderCLI[i] + 1).ToString(culture)}";
+                strLineR[15] += $"\t{(OrderCLI[i] + 1).ToString(culture)}";
             }
 
-            strLineR[11] += $"\t{SubTasks[i].IndexLI.ToString("0.####", culture)}";
+            strLineR[14] += $"\t{SubTasks[i].IndexLI.ToString("0.####", culture)}";
         }
 
         strResult.Append(strRows[2] + System.Environment.NewLine + System.Environment.NewLine);
 
         // Initial data
         strResult.Append(strRows[3] + strLineD[0] + System.Environment.NewLine);
-        strResult.Append(strRows[4] + strLineD[1] + System.Environment.NewLine);
-        strResult.Append(strRows[5] + strLineD[2] + System.Environment.NewLine);
-        strResult.Append(strRows[6] + strLineD[3] + System.Environment.NewLine);
-        strResult.Append(strRows[7] + strLineD[4] + System.Environment.NewLine);
-        strResult.Append(strRows[8] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[39] + strLineD[1] + System.Environment.NewLine);
+        strResult.Append(strRows[40] + strLineD[2] + System.Environment.NewLine);
+        strResult.Append(strRows[4] + strLineD[3] + System.Environment.NewLine);
+        strResult.Append(strRows[5] + strLineD[4] + System.Environment.NewLine);
+        strResult.Append(strRows[6] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[7] + strLineD[6] + System.Environment.NewLine);
+        strResult.Append(strRows[8] + strLineD[7] + System.Environment.NewLine);
         if (SubTasks.Length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append(strRows[9] + strLineD[6] + System.Environment.NewLine);
-            strResult.Append(strRows[10] + strLineD[7] + System.Environment.NewLine);
+            strResult.Append(strRows[9] + strLineD[8] + System.Environment.NewLine);
+            strResult.Append(strRows[10] + strLineD[9] + System.Environment.NewLine);
         }
-        strResult.Append(strRows[11] + strLineD[8] + System.Environment.NewLine);
-        strResult.Append(strRows[12] + strLineD[9] + System.Environment.NewLine);
-        strResult.Append(strRows[13] + strLineD[10] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append(strRows[11] + strLineD[10] + System.Environment.NewLine);
+        strResult.Append(strRows[12] + strLineD[11] + System.Environment.NewLine);
+        strResult.Append(strRows[13] + strLineD[12] + System.Environment.NewLine);
+        strResult.Append(strRows[32] + strLineD[13] + System.Environment.NewLine);
+        strResult.Append(strRows[33] + strLineD[14] + System.Environment.NewLine + System.Environment.NewLine);
 
         // Multipliers
         strResult.Append(strRows[14] + strLineR[0] + System.Environment.NewLine);
@@ -257,19 +309,22 @@ public class TaskModel
             strResult.Append(strRows[21] + strLineR[7] + System.Environment.NewLine);
         }
         strResult.Append(strRows[22] + strLineR[8] + System.Environment.NewLine);
-        strResult.Append(strRows[23] + strLineR[9] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append(strRows[23] + strLineR[9] + System.Environment.NewLine);
+        strResult.Append(strRows[34] + strLineR[10] + System.Environment.NewLine);
+        strResult.Append(strRows[35] + strLineR[11] + System.Environment.NewLine);
+        strResult.Append(strRows[36] + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
 
         if (SubTasks.Length > 1)
         {
             if (Model == IndexType.IndexCLI)
             {
-                strResult.Append(strRows[24] + strLineR[10] + System.Environment.NewLine);
-                strResult.Append(strRows[25] + strLineR[11] + System.Environment.NewLine);
-                strResult.Append(strRows[26] + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
+                strResult.Append(strRows[24] + strLineR[13] + System.Environment.NewLine);
+                strResult.Append(strRows[25] + strLineR[14] + System.Environment.NewLine);
+                strResult.Append(strRows[26] + strLineR[15] + System.Environment.NewLine + System.Environment.NewLine);
             }
             else
             {
-                strResult.Append(strRows[25] + strLineR[11] + System.Environment.NewLine + System.Environment.NewLine);
+                strResult.Append(strRows[25] + strLineR[14] + System.Environment.NewLine + System.Environment.NewLine);
             }
         }
 
@@ -300,7 +355,7 @@ public class TaskModel
                 for (int i = 0; i < SubTasks.Length; i++)
                 {
                     strEquationN = $"LI = {SubTasks[i].Data.Weight.ToString("0.####", culture)} / (";
-                    strEquationN += $"{SubTasks[i].Data.LC.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.MassRef.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.HM.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.VM.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.DM.ToString("0.####", culture)} * ";
@@ -317,7 +372,7 @@ public class TaskModel
         {
             strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM)";
             strEquationN = $"LI = {SubTasks[0].Data.Weight.ToString("0.####", culture)} / (";
-            strEquationN += $"{SubTasks[0].Data.LC.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.MassRef.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.HM.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.VM.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.DM.ToString("0.####", culture)} * ";
@@ -336,8 +391,8 @@ public class TaskModel
 
     public override string ToString()
     {
-        string[] strRows = new[]
-        {
+        string[] strRows =
+        [
             "Task",
             "Subtask",
             "These are the results obtained from the NIOSH lifting model:",
@@ -370,7 +425,7 @@ public class TaskModel
             "Weight",
             "The NIOSH lifting index is:",
             "No handles, Poor, Good"
-        };
+        ];
         return ToString(strRows);
     }
 }
@@ -426,8 +481,8 @@ public class Job
 
     public override string ToString()
     {
-        string[] strRows = new[]
-        {
+        string[] strRows =
+        [
             "Task",
             "Subtask",
             "These are the results obtained from the NIOSH lifting model:",
@@ -460,7 +515,7 @@ public class Job
             "Weight",
             "The NIOSH lifting index is:",
             "No handles, Poor, Good"
-        };
+        ];
 
         return ToString(strRows);
     }
@@ -479,14 +534,18 @@ public static class NIOSHLifting
         for (int i = 0; i < subT.Length; i++)
         {
             //if (subT[i].Factors.LC == 0) subT[i].Factors.LC = 23.0;
+            subT[i].Factors.MassRef = FactorMR(subT[i].Data.gender, subT[i].Data.age);
             subT[i].Factors.HM = FactorHM(subT[i].Data.h);
             subT[i].Factors.VM = FactorVM(subT[i].Data.v);
             subT[i].Factors.DM = FactorDM(subT[i].Data.d);
             subT[i].Factors.AM = FactorAM(subT[i].Data.a);
             subT[i].Factors.FM = FactorFM(subT[i].Data.f, subT[i].Data.v, subT[i].Data.td);
             subT[i].Factors.CM = FactorCM(subT[i].Data.c, subT[i].Data.v);
+            subT[i].Factors.OM = FactorOM(subT[i].Data.o);
+            subT[i].Factors.PM = FactorPM(subT[i].Data.p);
+            subT[i].Factors.EM = FactorEM(subT[i].Data.td);
 
-            subT[i].IndexLI = MultiplyFactors(subT[i].Data.LC, subT[i].Data.Weight, subT[i].Factors);
+            subT[i].IndexLI = MultiplyFactors(subT[i].Data.Weight, subT[i].Factors);
             subT[i].IndexIF = subT[i].IndexLI * subT[i].Factors.FM;
 
             //pIndex[i] = subT[i].LI;
@@ -532,18 +591,21 @@ public static class NIOSHLifting
         return result;
     }
     
-    private static double MultiplyFactors(double loadConstant, double weight, Multipliers factors)
+    private static double MultiplyFactors(double weight, Multipliers factors)
     {
         double product = 0.0;
         double result = 0.0;
 
-        product = loadConstant *
+        product = factors.MassRef *
             factors.HM *
             factors.VM *
             factors.DM *
             factors.AM *
             factors.FM *
-            factors.CM;
+            factors.CM *
+            factors.OM *
+            factors.PM *
+            factors.EM;
 
         if (product == 0)    // División entre 0
             result = 0;
@@ -554,9 +616,25 @@ public static class NIOSHLifting
     }
 
     /// <summary>
+    /// Computes the mass reference as a function of gender and age
+    /// </summary>
+    /// <param name="gender">Gender</param>
+    /// <param name="age">Age (years)</param>
+    /// <returns>Mass reference in kilograms</returns>
+    private static double FactorMR(Gender gender, double age)
+    {
+        double multiplier = gender is Gender.Male ? 25 : 20;
+
+        if (age < 20 || age > 45)
+            multiplier = gender is Gender.Male ? 20 : 15;
+
+        return multiplier;
+    }
+
+    /// <summary>
     /// Computes the Horizontal Multiplier
     /// </summary>
-    /// <param name="value">H value in meters</param>
+    /// <param name="value">H value in centimeters</param>
     /// <returns>H multiplier</returns>
     private static double FactorHM(double value)
     {
@@ -577,7 +655,7 @@ public static class NIOSHLifting
     /// <summary>
     /// Computes the Vertical Multiplier
     /// </summary>
-    /// <param name="value">V value in meters</param>
+    /// <param name="value">V value in centimeters</param>
     /// <returns>V multiplier</returns>
     private static double FactorVM(double value)
     {
@@ -596,7 +674,7 @@ public static class NIOSHLifting
     /// <summary>
     /// Computes the Distance Multiplier
     /// </summary>
-    /// <param name="value">Distance in meters</param>
+    /// <param name="value">Distance in centimeters</param>
     /// <returns>D multiplier</returns>
     private static double FactorDM(double value)
     {
@@ -615,10 +693,10 @@ public static class NIOSHLifting
     }
 
     /// <summary>
-    /// 
+    /// Computes the assymetry multiplier relative to the twisting of the back with respect to the feet position
     /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
+    /// <param name="value">Angular displacement from the mid-sagittal plane</param>
+    /// <returns>The assymetry multiplier value</returns>
     private static double FactorAM(double value)
     {
         double multiplier = 0.0;
@@ -634,12 +712,12 @@ public static class NIOSHLifting
     }
 
     /// <summary>
-    /// 
+    /// Computes the frequency multiplier as a function of the number of lifts, the duration, and the vertical position
     /// </summary>
-    /// <param name="frequency"></param>
-    /// <param name="v"></param>
-    /// <param name="td"></param>
-    /// <returns></returns>
+    /// <param name="frequency">Frecuency of lifting (number of lifts per minute)</param>
+    /// <param name="v">Vertical position in centimeters</param>
+    /// <param name="td">Task duration in hours</param>
+    /// <returns>The frequency multiplier value</returns>
     private static double FactorFM(double frequency, double v, double td)
     {
         // Definición de variables
@@ -647,39 +725,23 @@ public static class NIOSHLifting
         int nColumna = 0;
         //int nLongitud = 18; // freq.Length
         double multiplier = 0.0;
-        double[] freq = new double[] { 0.2, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
-        double[][] fm = new double[][]
-        {
-            new double[] { 1, 0.97, 0.94, 0.91, 0.88, 0.84, 0.8, 0.75, 0.7, 0.6, 0.52, 0.45, 0.41, 0.37, 0, 0, 0, 0 },
-            new double[] { 1, 0.97, 0.94, 0.91, 0.88, 0.84, 0.8, 0.75, 0.7, 0.6, 0.52, 0.45, 0.41, 0.37, 0.34, 0.31, 0.28, 0 },
-            new double[] { 0.95, 0.92, 0.88, 0.84, 0.79, 0.72, 0.6, 0.5, 0.42, 0.35, 0.3, 0.26, 0, 0, 0, 0, 0, 0 },
-            new double[] { 0.95, 0.92, 0.88, 0.84, 0.79, 0.72, 0.6, 0.5, 0.42, 0.35, 0.3, 0.26, 0.23, 0.21, 0, 0, 0, 0 },
-            new double[] { 0.85, 0.81, 0.75, 0.65, 0.55, 0.45, 0.35, 0.27, 0.22, 0.18, 0, 0, 0, 0, 0, 0, 0, 0 },
-            new double[] { 0.85, 0.81, 0.75, 0.65, 0.55, 0.45, 0.35, 0.27, 0.22, 0.18, 0.15, 0.13, 0, 0, 0, 0, 0, 0 }
-        };
+        double[] freq = [0.2, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+        double[][] fm =
+        [
+            [1, 0.97, 0.94, 0.91, 0.88, 0.84, 0.8, 0.75, 0.7, 0.6, 0.52, 0.45, 0.41, 0.37, 0, 0, 0, 0],
+            [1, 0.97, 0.94, 0.91, 0.88, 0.84, 0.8, 0.75, 0.7, 0.6, 0.52, 0.45, 0.41, 0.37, 0.34, 0.31, 0.28, 0],
+            [0.95, 0.92, 0.88, 0.84, 0.79, 0.72, 0.6, 0.5, 0.42, 0.35, 0.3, 0.26, 0, 0, 0, 0, 0, 0],
+            [0.95, 0.92, 0.88, 0.84, 0.79, 0.72, 0.6, 0.5, 0.42, 0.35, 0.3, 0.26, 0.23, 0.21, 0, 0, 0, 0],
+            [0.85, 0.81, 0.75, 0.65, 0.55, 0.45, 0.35, 0.27, 0.22, 0.18, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0.85, 0.81, 0.75, 0.65, 0.55, 0.45, 0.35, 0.27, 0.22, 0.18, 0.15, 0.13, 0, 0, 0, 0, 0, 0]
+        ];
 
         if (td <= 1.0)
-        {
-            if (v < 75)
-                nColumna = 0;
-            else
-                nColumna = 1;
-        }
+            nColumna = v < 75 ? 0 : 1;
         else if (td <= 2.0)
-        {
-            if (v < 75)
-                nColumna = 2;
-            else
-                nColumna = 3;
-        }
-
-        else if (td <= 8.0)
-        {
-            if (v < 75)
-                nColumna = 4;
-            else
-                nColumna = 5;
-        }
+            nColumna = v < 75 ? 2 : 3;
+        else if (td <= 12.0)    // We use 12 hours instead of 8 because the extended-time multiplier accepts values up to 12 hours
+            nColumna = v < 75 ? 4 : 5;
 
         // Devuelve un valor entre -1 (fuera de rango) y nLongitud
         nIndice = Locate(freq, frequency);
@@ -704,11 +766,11 @@ public static class NIOSHLifting
     }
 
     /// <summary>
-    /// 
+    /// Computes the coupling relative to the quality of the load grip
     /// </summary>
-    /// <param name="agarre"></param>
-    /// <param name="v"></param>
-    /// <returns></returns>
+    /// <param name="agarre">Quality of the gripping</param>
+    /// <param name="v">Vertical distance</param>
+    /// <returns>The coupling multiplier value</returns>
     private static double FactorCM(Coupling agarre, double v)
     {
         // Definición de variables
@@ -717,10 +779,10 @@ public static class NIOSHLifting
         // Compute the multiplier value
         switch (agarre)
         {
-            case Coupling.NoHandle:
+            case Coupling.Poor:
                 result = 0.90;
                 break;
-            case Coupling.Poor:
+            case Coupling.Fair:
                 if (v < 75)
                     result = 0.95;
                 else
@@ -733,6 +795,45 @@ public static class NIOSHLifting
                 result = 0.0;
                 break;
         }
+
+        // Return the multiplier value
+        return result;
+    }
+
+    /// <summary>
+    /// Computes the factor relative to the one-handed operation
+    /// </summary>
+    /// <param name="oneHand"><see langword="True"/> if the handling is done with only one hand</param>
+    /// <returns>One-handed multiplier value</returns>
+    private static double FactorOM (bool oneHand) => oneHand ? 0.6 : 1.0;
+
+    /// <summary>
+    /// Computes the multiplier relative to the multiple person handling
+    /// </summary>
+    /// <param name="twoPerson"><see langword="True"/> if the handling is done by more than one person</param>
+    /// <returns>The two-person mutiplier value</returns>
+    private static double FactorPM (bool twoPerson) => twoPerson ? 0.85 : 1.0;
+
+    /// <summary>
+    /// Computes the multiplier relative the extended time handling (more than 8 hours per shift)
+    /// </summary>
+    /// <param name="time">Duration (hours) of the handling in the shift</param>
+    /// <returns>The extended time multiplier value</returns>
+    private static double FactorEM (double time)
+    {
+        // Variable definition
+        double result = 0.0;
+
+        if (time <= 8.0)
+            result = 1;
+        else if (time <= 9.0)
+            result = 0.97;
+        else if (time <= 10.0)
+            result = 0.93;
+        else if (time <= 11.0)
+            result = 0.89;
+        else if (time <= 12)
+            result = 0.85;
 
         // Return the multiplier value
         return result;
