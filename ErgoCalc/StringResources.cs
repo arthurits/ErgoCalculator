@@ -155,7 +155,7 @@ public static class StringResources
     public static string NIOSH_HorizontalD => StringRM.GetString("strNIOSH_HorizontalD", Culture) ?? "Horizontal distance (cm):";
     public static string NIOSH_IF => StringRM.GetString("strNIOSH_IF", Culture) ?? "Lifting index (IF):";
     public static string NIOSH_Index => StringRM.GetString("strNIOSH_Index", Culture) ?? "The NIOSH lifting index is:";
-    public static string NIOSH_LC => StringRM.GetString("strNIOSH_LC", Culture) ?? "Lifting constant (LC):";
+    public static string NIOSH_MassRef => StringRM.GetString("strNIOSH_MassRef", Culture) ?? "Mass reference (kg):";
     public static string NIOSH_LI => StringRM.GetString("strNIOSH_LI", Culture) ?? "Lifting index (LI):";
     public static string NIOSH_Multipliers => StringRM.GetString("strNIOSH_Multipliers", Culture) ?? "Multipliers";
     public static string NIOSH_SubtasksOrder => StringRM.GetString("strNIOSH_Order", Culture) ?? "Subtask order:";
@@ -164,9 +164,20 @@ public static class StringResources
     public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance (cm):";
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier (VM):";
     public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted (kg):";
-    public static string NIOSH_CouplingType => StringRM.GetString("strNIOSH_CouplingType", Culture) ?? "No handles, Poor, Good";
+    public static string NIOSH_CouplingType => StringRM.GetString("strNIOSH_CouplingType", Culture) ?? "Poor, Fair, Good";
+    public static string NIOSH_OneHanded => StringRM.GetString("strNIOSH_OneHanded", Culture) ?? "One-handed?";
+    public static string NIOSH_OneHandedValue => StringRM.GetString("strNIOSH_OneHandedValue", Culture) ?? "false, true";
+    public static string NIOSH_OM => StringRM.GetString("strNIOSH_OM", Culture) ?? "One-handed multiplier (OM):";
+    public static string NIOSH_TwoPerson => StringRM.GetString("strNIOSH_TwoPerson", Culture) ?? "Two person?";
+    public static string NIOSH_PM => StringRM.GetString("strNIOSH_PM", Culture) ?? "Two person multiplier (PM):";
+    public static string NIOSH_EM => StringRM.GetString("strNIOSH_EM", Culture) ?? "Extended time multiplier (EM):";
+    public static string NIOSH_GenderType => Gender;
+    public static string NIOSH_Gender => StringRM.GetString("strNIOSH_Gender", Culture) ?? "Gender:";
+    public static string NIOSH_Age => StringRM.GetString("strNIOSH_Age", Culture) ?? "Age:";
     public static string[] NIOSH_RowHeaders => new[] {
         NIOSH_Data,
+        NIOSH_Gender,
+        NIOSH_Age,
         NIOSH_Weight,
         NIOSH_HorizontalD,
         NIOSH_VerticalD,
@@ -177,8 +188,10 @@ public static class StringResources
         NIOSH_Duration,
         NIOSH_Angle,
         NIOSH_Coupling,
+        NIOSH_OneHanded,
+        NIOSH_TwoPerson,
         NIOSH_Multipliers,
-        NIOSH_LC,
+        NIOSH_MassRef,
         NIOSH_HM,
         NIOSH_VM,
         NIOSH_DM,
@@ -187,6 +200,9 @@ public static class StringResources
         NIOSH_FMb,
         NIOSH_AM,
         NIOSH_CM,
+        NIOSH_OM,
+        NIOSH_PM,
+        NIOSH_EM,
         NIOSH_IF,
         NIOSH_LI,
         NIOSH_SubtasksOrder
@@ -197,7 +213,11 @@ public static class StringResources
         $"{Subtask} A",
         NIOSH_CouplingType.Split(", ")[0],
         NIOSH_CouplingType.Split(", ")[1],
-        NIOSH_CouplingType.Split(", ")[2]
+        NIOSH_CouplingType.Split(", ")[2],
+        NIOSH_OneHandedValue.Split(", ")[0],
+        NIOSH_OneHandedValue.Split(", ")[1],
+        NIOSH_GenderType.Split(", ")[0],
+        NIOSH_GenderType.Split(", ")[1]
     };
     public static string[] NIOSH_ResultsHeaders => new[]
     {
@@ -216,7 +236,7 @@ public static class StringResources
         NIOSH_Angle,
         NIOSH_Coupling,
         NIOSH_Multipliers,
-        NIOSH_LC,               // 15
+        NIOSH_MassRef,          // 15
         NIOSH_HM,
         NIOSH_VM,
         NIOSH_DM,
@@ -232,11 +252,21 @@ public static class StringResources
         NIOSH_EquationIndex,
         NIOSH_EquationWeight,
         NIOSH_Index,            // 30
-        NIOSH_CouplingType
+        NIOSH_CouplingType,
+        NIOSH_OneHanded,
+        NIOSH_TwoPerson,
+        NIOSH_OM,
+        NIOSH_PM,               // 35
+        NIOSH_EM,
+        NIOSH_OneHandedValue,
+        NIOSH_GenderType,
+        NIOSH_Gender,
+        NIOSH_Age               // 40
     };
     public static string[] NIOSH_DataInputHeaders => new[]
     {
-        NIOSH_LC,
+        NIOSH_Gender,
+        NIOSH_Age,
         NIOSH_Weight,
         NIOSH_HorizontalD,
         NIOSH_VerticalD,
@@ -244,7 +274,9 @@ public static class StringResources
         NIOSH_Frequency,
         NIOSH_Duration,
         NIOSH_Angle,
-        NIOSH_Coupling
+        NIOSH_Coupling,
+        NIOSH_OneHanded,
+        NIOSH_TwoPerson
     };
 
     // Strain index

@@ -1476,6 +1476,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age (years):.
+        /// </summary>
+        internal static string strNIOSH_Age {
+            get {
+                return ResourceManager.GetString("strNIOSH_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Twisting angle multiplier (AM):.
         /// </summary>
         internal static string strNIOSH_AM {
@@ -1512,7 +1521,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No handles, Poor, Good.
+        ///   Looks up a localized string similar to Poor, Fair, Good.
         /// </summary>
         internal static string strNIOSH_CouplingType {
             get {
@@ -1544,6 +1553,15 @@ namespace ErgoCalc.localization {
         internal static string strNIOSH_Duration {
             get {
                 return ResourceManager.GetString("strNIOSH_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extended time multiplier (EM):.
+        /// </summary>
+        internal static string strNIOSH_EM {
+            get {
+                return ResourceManager.GetString("strNIOSH_EM", resourceCulture);
             }
         }
         
@@ -1629,6 +1647,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gender:.
+        /// </summary>
+        internal static string strNIOSH_Gender {
+            get {
+                return ResourceManager.GetString("strNIOSH_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horizontal multiplier (HM):.
         /// </summary>
         internal static string strNIOSH_HM {
@@ -1665,20 +1692,20 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lifting constant (LC):.
-        /// </summary>
-        internal static string strNIOSH_LC {
-            get {
-                return ResourceManager.GetString("strNIOSH_LC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lifting index (LI):.
         /// </summary>
         internal static string strNIOSH_LI {
             get {
                 return ResourceManager.GetString("strNIOSH_LI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mass reference (kg):.
+        /// </summary>
+        internal static string strNIOSH_MassRef {
+            get {
+                return ResourceManager.GetString("strNIOSH_MassRef", resourceCulture);
             }
         }
         
@@ -1692,6 +1719,33 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One-handed multiplier (OM):.
+        /// </summary>
+        internal static string strNIOSH_OM {
+            get {
+                return ResourceManager.GetString("strNIOSH_OM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-handed?.
+        /// </summary>
+        internal static string strNIOSH_OneHanded {
+            get {
+                return ResourceManager.GetString("strNIOSH_OneHanded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to False, True.
+        /// </summary>
+        internal static string strNIOSH_OneHandedValue {
+            get {
+                return ResourceManager.GetString("strNIOSH_OneHandedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subtask order:.
         /// </summary>
         internal static string strNIOSH_Order {
@@ -1701,11 +1755,29 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Two person multiplier (PM):.
+        /// </summary>
+        internal static string strNIOSH_PM {
+            get {
+                return ResourceManager.GetString("strNIOSH_PM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to These are the results obtained from the NIOSH lifting model:.
         /// </summary>
         internal static string strNIOSH_Results {
             get {
                 return ResourceManager.GetString("strNIOSH_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two or more persons?.
+        /// </summary>
+        internal static string strNIOSH_TwoPerson {
+            get {
+                return ResourceManager.GetString("strNIOSH_TwoPerson", resourceCulture);
             }
         }
         

@@ -211,16 +211,19 @@ public partial class FrmDataNIOSH : Form, IChildData
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, -180, -180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 8, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
 
-                _job.Tasks[i].SubTasks[j].Data.LC = Convert.ToDouble(gridVariables[ItemIndex, 0].Value);
-                _job.Tasks[i].SubTasks[j].Data.Weight = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
-                _job.Tasks[i].SubTasks[j].Data.h = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
-                _job.Tasks[i].SubTasks[j].Data.v = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
-                _job.Tasks[i].SubTasks[j].Data.d = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
-                _job.Tasks[i].SubTasks[j].Data.f = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
-                _job.Tasks[i].SubTasks[j].Data.td = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
-                _job.Tasks[i].SubTasks[j].Data.a = Convert.ToDouble(gridVariables[ItemIndex, 7].Value);
-                _job.Tasks[i].SubTasks[j].Data.c = (Coupling)gridVariables[ItemIndex, 8].Value;
-
+                _job.Tasks[i].SubTasks[j].Data.gender = (Gender)gridVariables[ItemIndex, 0].Value;
+                _job.Tasks[i].SubTasks[j].Data.age = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
+                _job.Tasks[i].SubTasks[j].Data.Weight = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
+                _job.Tasks[i].SubTasks[j].Data.h = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
+                _job.Tasks[i].SubTasks[j].Data.v = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
+                _job.Tasks[i].SubTasks[j].Data.d = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
+                _job.Tasks[i].SubTasks[j].Data.f = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
+                _job.Tasks[i].SubTasks[j].Data.td = Convert.ToDouble(gridVariables[ItemIndex, 7].Value);
+                _job.Tasks[i].SubTasks[j].Data.a = Convert.ToDouble(gridVariables[ItemIndex, 8].Value);
+                _job.Tasks[i].SubTasks[j].Data.c = (Coupling)gridVariables[ItemIndex, 9].Value;
+                _job.Tasks[i].SubTasks[j].Data.o = Convert.ToBoolean(gridVariables[ItemIndex, 10].Value);
+                _job.Tasks[i].SubTasks[j].Data.p = Convert.ToBoolean(gridVariables[ItemIndex, 11].Value);
+                
                 //_job.Tasks[i].SubTasks[j].Data.LC = LC;
 
                 //_nioshLifting.jobTasks[i].h += _nioshLifting.jobTasks[i].subTasks[j].data.h;  // Calculate mean
@@ -272,10 +275,16 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         // Give format (ComboBox) to the added column cells
         if (col > 0)
-            gridVariables.Rows[8].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
+        {
+            gridVariables.Rows[0].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[0].Cells[col - 1].Clone();
+            gridVariables.Rows[9].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[9].Cells[col - 1].Clone();
+            gridVariables.Rows[10].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[10].Cells[col - 1].Clone();
+            gridVariables.Rows[11].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[11].Cells[col - 1].Clone();
+        }
 
         // Default numeric values after the row headers have been created
-        gridVariables[col, 0].Value = 25;
+        gridVariables[col, 10].Value = 0;
+        gridVariables[col, 11].Value = 0;
 
         return;
     }
@@ -302,19 +311,61 @@ public partial class FrmDataNIOSH : Form, IChildData
     private void FormatRows()
     {
         // Get the couplig type texts
-        string[] strCoupling = StringResources.NIOSH_CouplingType.Split(", ");
-        // Create custom cells with combobox display
-        DataGridViewComboBoxCell celdaC = new();
+        string[] strGender = StringResources.NIOSH_GenderType.Split(", ");
         DataTable tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
+        tableC.Rows.Add(strGender[(int)Gender.Male], (int)Gender.Male);
+        tableC.Rows.Add(strGender[(int)Gender.Female], (int)Gender.Female);
+        DataGridViewComboBoxCell cellGender = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
+        gridVariables.Rows[0].Cells[0] = cellGender;
+
+
+        // Get the couplig type texts
+        string[] strCoupling = StringResources.NIOSH_CouplingType.Split(", ");
+        
+        // Create custom cells with combobox display
+        tableC = new();
+        tableC.Columns.Add("Display", typeof(String));
+        tableC.Columns.Add("Value", typeof(Int32));
         tableC.Rows.Add(strCoupling[(int)Coupling.Good], (int)Coupling.Good);
+        tableC.Rows.Add(strCoupling[(int)Coupling.Fair], (int)Coupling.Fair);
         tableC.Rows.Add(strCoupling[(int)Coupling.Poor], (int)Coupling.Poor);
-        tableC.Rows.Add(strCoupling[(int)Coupling.NoHandle], (int)Coupling.NoHandle);
-        celdaC.DataSource = tableC;
-        celdaC.DisplayMember = "Display";
-        celdaC.ValueMember = "Value";
-        gridVariables.Rows[8].Cells[0] = celdaC;
+        DataGridViewComboBoxCell celdaC = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
+        gridVariables.Rows[9].Cells[0] = celdaC;
+
+        // Get the additional multiplier texts
+        string[] strTrueFalse = StringResources.NIOSH_OneHandedValue.Split(", ");
+        tableC = new();
+        tableC.Columns.Add("Display", typeof(String));
+        tableC.Columns.Add("Value", typeof(Int32));
+        tableC.Rows.Add(strTrueFalse[0], 0);
+        tableC.Rows.Add(strTrueFalse[1], 1);
+        DataGridViewComboBoxCell cellAdditional1 = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
+        gridVariables.Rows[10].Cells[0] = cellAdditional1;
+
+        DataGridViewComboBoxCell cellAdditional2 = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
+        gridVariables.Rows[11].Cells[0] = cellAdditional2;
     }
 
     /// <summary>
@@ -339,7 +390,8 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         _job.Tasks[0].SubTasks[0] = new();
         _job.Tasks[0].SubTasks[0].ItemIndex = 0;
-        _job.Tasks[0].SubTasks[0].Data.LC = 25;
+        _job.Tasks[0].SubTasks[0].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[0].Data.age = 25;
         _job.Tasks[0].SubTasks[0].Data.Weight = 3.0;
         _job.Tasks[0].SubTasks[0].Data.Weight = 3.0;
         _job.Tasks[0].SubTasks[0].Data.h = 24;
@@ -348,11 +400,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[0].Data.a = 0;
         _job.Tasks[0].SubTasks[0].Data.f = 3;
         _job.Tasks[0].SubTasks[0].Data.td = 2;
-        _job.Tasks[0].SubTasks[0].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[0].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[1] = new();
         _job.Tasks[0].SubTasks[1].ItemIndex = 1;
-        _job.Tasks[0].SubTasks[1].Data.LC = 25;
+        _job.Tasks[0].SubTasks[1].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[1].Data.age = 25;
         _job.Tasks[0].SubTasks[1].Data.Weight = 3.0;
         _job.Tasks[0].SubTasks[1].Data.h = 24;
         _job.Tasks[0].SubTasks[1].Data.v = 81;
@@ -360,11 +413,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[1].Data.a = 0;
         _job.Tasks[0].SubTasks[1].Data.f = 3;
         _job.Tasks[0].SubTasks[1].Data.td = 2;
-        _job.Tasks[0].SubTasks[1].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[1].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[2] = new();
         _job.Tasks[0].SubTasks[2].ItemIndex = 2;
-        _job.Tasks[0].SubTasks[2].Data.LC = 25;
+        _job.Tasks[0].SubTasks[2].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[2].Data.age = 25;
         _job.Tasks[0].SubTasks[2].Data.Weight = 3.0;
         _job.Tasks[0].SubTasks[2].Data.h = 24;
         _job.Tasks[0].SubTasks[2].Data.v = 123.5;
@@ -372,11 +426,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[2].Data.a = 90;
         _job.Tasks[0].SubTasks[2].Data.f = 3;
         _job.Tasks[0].SubTasks[2].Data.td = 2;
-        _job.Tasks[0].SubTasks[2].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[2].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[3] = new();
         _job.Tasks[0].SubTasks[3].ItemIndex = 3;
-        _job.Tasks[0].SubTasks[3].Data.LC = 25;
+        _job.Tasks[0].SubTasks[3].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[3].Data.age = 25;
         _job.Tasks[0].SubTasks[3].Data.Weight = 3.0;
         _job.Tasks[0].SubTasks[3].Data.h = 24;
         _job.Tasks[0].SubTasks[3].Data.v = 166;
@@ -384,11 +439,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[3].Data.a = 90;
         _job.Tasks[0].SubTasks[3].Data.f = 3;
         _job.Tasks[0].SubTasks[3].Data.td = 2;
-        _job.Tasks[0].SubTasks[3].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[3].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[4] = new();
         _job.Tasks[0].SubTasks[4].ItemIndex = 4;
-        _job.Tasks[0].SubTasks[4].Data.LC = 25;
+        _job.Tasks[0].SubTasks[4].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[4].Data.age = 25;
         _job.Tasks[0].SubTasks[4].Data.Weight = 7.0;
         _job.Tasks[0].SubTasks[4].Data.h = 24;
         _job.Tasks[0].SubTasks[4].Data.v = 33;
@@ -396,11 +452,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[4].Data.a = 0;
         _job.Tasks[0].SubTasks[4].Data.f = 1;
         _job.Tasks[0].SubTasks[4].Data.td = 1;
-        _job.Tasks[0].SubTasks[4].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[4].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[5] = new();
         _job.Tasks[0].SubTasks[5].ItemIndex = 5;
-        _job.Tasks[0].SubTasks[5].Data.LC = 25;
+        _job.Tasks[0].SubTasks[5].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[5].Data.age = 25;
         _job.Tasks[0].SubTasks[5].Data.Weight = 7.0;
         _job.Tasks[0].SubTasks[5].Data.h = 24;
         _job.Tasks[0].SubTasks[5].Data.v = 75.5;
@@ -408,11 +465,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[5].Data.a = 0;
         _job.Tasks[0].SubTasks[5].Data.f = 1;
         _job.Tasks[0].SubTasks[5].Data.td = 1;
-        _job.Tasks[0].SubTasks[5].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[5].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[6] = new();
         _job.Tasks[0].SubTasks[6].ItemIndex = 6;
-        _job.Tasks[0].SubTasks[6].Data.LC = 25;
+        _job.Tasks[0].SubTasks[6].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[6].Data.age = 25;
         _job.Tasks[0].SubTasks[6].Data.Weight = 7.0;
         _job.Tasks[0].SubTasks[6].Data.h = 24;
         _job.Tasks[0].SubTasks[6].Data.v = 118;
@@ -420,11 +478,12 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[6].Data.a = 0;
         _job.Tasks[0].SubTasks[6].Data.f = 1;
         _job.Tasks[0].SubTasks[6].Data.td = 1;
-        _job.Tasks[0].SubTasks[6].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[6].Data.c = Coupling.Poor;
 
         _job.Tasks[0].SubTasks[7] = new();
         _job.Tasks[0].SubTasks[7].ItemIndex = 7;
-        _job.Tasks[0].SubTasks[7].Data.LC = 25;
+        _job.Tasks[0].SubTasks[7].Data.gender = Gender.Male;
+        _job.Tasks[0].SubTasks[7].Data.age = 25;
         _job.Tasks[0].SubTasks[7].Data.Weight = 7.0;
         _job.Tasks[0].SubTasks[7].Data.h = 24;
         _job.Tasks[0].SubTasks[7].Data.v = 160.5;
@@ -432,7 +491,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         _job.Tasks[0].SubTasks[7].Data.a = 0;
         _job.Tasks[0].SubTasks[7].Data.f = 2;
         _job.Tasks[0].SubTasks[7].Data.td = 1;
-        _job.Tasks[0].SubTasks[7].Data.c = Coupling.NoHandle;
+        _job.Tasks[0].SubTasks[7].Data.c = Coupling.Poor;
     }
 
     /// <summary>
@@ -476,15 +535,18 @@ public partial class FrmDataNIOSH : Form, IChildData
                 nCol = _job.Tasks[j].SubTasks[i].ItemIndex;
 
                 // Populate the DataGridView with data
-                gridVariables[nCol, 0].Value = _job.Tasks[j].SubTasks[i].Data.LC.ToString();
-                gridVariables[nCol, 1].Value = _job.Tasks[j].SubTasks[i].Data.Weight.ToString();
-                gridVariables[nCol, 2].Value = _job.Tasks[j].SubTasks[i].Data.h.ToString();
-                gridVariables[nCol, 3].Value = _job.Tasks[j].SubTasks[i].Data.v.ToString();
-                gridVariables[nCol, 4].Value = _job.Tasks[j].SubTasks[i].Data.d.ToString();
-                gridVariables[nCol, 5].Value = _job.Tasks[j].SubTasks[i].Data.f.ToString();
-                gridVariables[nCol, 6].Value = _job.Tasks[j].SubTasks[i].Data.td.ToString();
-                gridVariables[nCol, 7].Value = _job.Tasks[j].SubTasks[i].Data.a.ToString();
-                gridVariables[nCol, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
+                gridVariables[nCol, 0].Value = (int)_job.Tasks[j].SubTasks[i].Data.gender;
+                gridVariables[nCol, 1].Value = _job.Tasks[j].SubTasks[i].Data.age.ToString();
+                gridVariables[nCol, 2].Value = _job.Tasks[j].SubTasks[i].Data.Weight.ToString();
+                gridVariables[nCol, 3].Value = _job.Tasks[j].SubTasks[i].Data.h.ToString();
+                gridVariables[nCol, 4].Value = _job.Tasks[j].SubTasks[i].Data.v.ToString();
+                gridVariables[nCol, 5].Value = _job.Tasks[j].SubTasks[i].Data.d.ToString();
+                gridVariables[nCol, 6].Value = _job.Tasks[j].SubTasks[i].Data.f.ToString();
+                gridVariables[nCol, 7].Value = _job.Tasks[j].SubTasks[i].Data.td.ToString();
+                gridVariables[nCol, 8].Value = _job.Tasks[j].SubTasks[i].Data.a.ToString();
+                gridVariables[nCol, 9].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
+                gridVariables[nCol, 10].Value = _job.Tasks[j].SubTasks[i].Data.o ? 1 : 0;
+                gridVariables[nCol, 11].Value = _job.Tasks[j].SubTasks[i].Data.p ? 1 : 0;
 
                 // We can now insert into the desired position
                 ListViewItem test = new($"{StringResources.Subtask} {(char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)}", listViewTasks.Groups[j]);
