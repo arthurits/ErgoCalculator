@@ -165,6 +165,12 @@ public static class StringResources
     public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier (VM):";
     public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted (kg):";
     public static string NIOSH_CouplingType => StringRM.GetString("strNIOSH_CouplingType", Culture) ?? "No handles, Poor, Good";
+    public static string NIOSH_OneHanded => StringRM.GetString("strNIOSH_OneHanded", Culture) ?? "One-handed?";
+    public static string NIOSH_OneHandedValue => StringRM.GetString("strNIOSH_OneHandedValue", Culture) ?? "false, true";
+    public static string NIOSH_OM => StringRM.GetString("strNIOSH_OM", Culture) ?? "One-handed multiplier (OM):";
+    public static string NIOSH_TwoPerson => StringRM.GetString("strNIOSH_TwoPerson", Culture) ?? "Two person?";
+    public static string NIOSH_PM => StringRM.GetString("strNIOSH_PM", Culture) ?? "Two person multiplier (PM):";
+    public static string NIOSH_EM => StringRM.GetString("strNIOSH_EM", Culture) ?? "Extended time multiplier (EM):";
     public static string[] NIOSH_RowHeaders => new[] {
         NIOSH_Data,
         NIOSH_Weight,
@@ -197,7 +203,9 @@ public static class StringResources
         $"{Subtask} A",
         NIOSH_CouplingType.Split(", ")[0],
         NIOSH_CouplingType.Split(", ")[1],
-        NIOSH_CouplingType.Split(", ")[2]
+        NIOSH_CouplingType.Split(", ")[2],
+        NIOSH_OneHandedValue.Split(", ")[0],
+        NIOSH_OneHandedValue.Split(", ")[1],
     };
     public static string[] NIOSH_ResultsHeaders => new[]
     {
@@ -232,7 +240,13 @@ public static class StringResources
         NIOSH_EquationIndex,
         NIOSH_EquationWeight,
         NIOSH_Index,            // 30
-        NIOSH_CouplingType
+        NIOSH_CouplingType,
+        NIOSH_OneHanded,
+        NIOSH_TwoPerson,
+        NIOSH_OM,
+        NIOSH_PM,               // 35
+        NIOSH_EM,
+        NIOSH_OneHandedValue
     };
     public static string[] NIOSH_DataInputHeaders => new[]
     {
@@ -244,7 +258,9 @@ public static class StringResources
         NIOSH_Frequency,
         NIOSH_Duration,
         NIOSH_Angle,
-        NIOSH_Coupling
+        NIOSH_Coupling,
+        NIOSH_OneHanded,
+        NIOSH_TwoPerson
     };
 
     // Strain index

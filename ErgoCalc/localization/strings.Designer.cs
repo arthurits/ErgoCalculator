@@ -1548,6 +1548,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Extended time multiplier (EM):.
+        /// </summary>
+        internal static string strNIOSH_EM {
+            get {
+                return ResourceManager.GetString("strNIOSH_EM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The NIOSH lifting index is computed as follows:.
         /// </summary>
         internal static string strNIOSH_Equation {
@@ -1692,6 +1701,33 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to One-handed multiplier (OM):.
+        /// </summary>
+        internal static string strNIOSH_OM {
+            get {
+                return ResourceManager.GetString("strNIOSH_OM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One-handed?.
+        /// </summary>
+        internal static string strNIOSH_OneHanded {
+            get {
+                return ResourceManager.GetString("strNIOSH_OneHanded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to false, true.
+        /// </summary>
+        internal static string strNIOSH_OneHandedValue {
+            get {
+                return ResourceManager.GetString("strNIOSH_OneHandedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subtask order:.
         /// </summary>
         internal static string strNIOSH_Order {
@@ -1701,11 +1737,29 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Two person multiplier (PM):.
+        /// </summary>
+        internal static string strNIOSH_PM {
+            get {
+                return ResourceManager.GetString("strNIOSH_PM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to These are the results obtained from the NIOSH lifting model:.
         /// </summary>
         internal static string strNIOSH_Results {
             get {
                 return ResourceManager.GetString("strNIOSH_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two or more persons?.
+        /// </summary>
+        internal static string strNIOSH_TwoPerson {
+            get {
+                return ResourceManager.GetString("strNIOSH_TwoPerson", resourceCulture);
             }
         }
         

@@ -117,6 +117,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 writer.WriteNumber("Frequency (b)", _job.Tasks[i].SubTasks[j].Data.fb);
                 writer.WriteNumber("Subtask duration", _job.Tasks[i].SubTasks[j].Data.td);
                 writer.WriteNumber("Coupling", (int)_job.Tasks[i].SubTasks[j].Data.c);
+                writer.WriteBoolean("One-handed", _job.Tasks[i].SubTasks[j].Data.o);
+                writer.WriteBoolean("Two person", _job.Tasks[i].SubTasks[j].Data.p);
 
                 writer.WriteNumber("H multiplier", _job.Tasks[i].SubTasks[j].Factors.HM);
                 writer.WriteNumber("V multiplier", _job.Tasks[i].SubTasks[j].Factors.VM);
@@ -126,6 +128,9 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 writer.WriteNumber("Fa multiplier", _job.Tasks[i].SubTasks[j].Factors.FMa);
                 writer.WriteNumber("Fb multiplier", _job.Tasks[i].SubTasks[j].Factors.FMb);
                 writer.WriteNumber("C multiplier", _job.Tasks[i].SubTasks[j].Factors.CM);
+                writer.WriteNumber("O multiplier", _job.Tasks[i].SubTasks[j].Factors.OM);
+                writer.WriteNumber("P multiplier", _job.Tasks[i].SubTasks[j].Factors.PM);
+                writer.WriteNumber("E multiplier", _job.Tasks[i].SubTasks[j].Factors.EM);
 
                 writer.WriteNumber("LI index", _job.Tasks[i].SubTasks[j].IndexLI);
                 writer.WriteNumber("IF index", _job.Tasks[i].SubTasks[j].IndexIF);
@@ -274,7 +279,9 @@ public partial class FrmResultNIOSH : Form, IChildResults
                     job.Tasks[i].SubTasks[j].Data.fb = SubTasks[j].GetProperty("Frequency (b)").GetDouble();
                     job.Tasks[i].SubTasks[j].Data.td = SubTasks[j].GetProperty("Subtask duration").GetDouble();
                     job.Tasks[i].SubTasks[j].Data.c = (Coupling)SubTasks[j].GetProperty("Coupling").GetInt32();
-                    
+                    job.Tasks[i].SubTasks[j].Data.o = SubTasks[j].GetProperty("One-handed").GetBoolean();
+                    job.Tasks[i].SubTasks[j].Data.o = SubTasks[j].GetProperty("Two person").GetBoolean();
+
                     job.Tasks[i].SubTasks[j].Factors.HM = SubTasks[j].GetProperty("H multiplier").GetDouble();
                     job.Tasks[i].SubTasks[j].Factors.VM = SubTasks[j].GetProperty("V multiplier").GetDouble();
                     job.Tasks[i].SubTasks[j].Factors.DM = SubTasks[j].GetProperty("D multiplier").GetDouble();
@@ -283,6 +290,9 @@ public partial class FrmResultNIOSH : Form, IChildResults
                     job.Tasks[i].SubTasks[j].Factors.FMa = SubTasks[j].GetProperty("Fa multiplier").GetDouble();
                     job.Tasks[i].SubTasks[j].Factors.FMb = SubTasks[j].GetProperty("Fb multiplier").GetDouble();
                     job.Tasks[i].SubTasks[j].Factors.CM = SubTasks[j].GetProperty("C multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.OM = SubTasks[j].GetProperty("O multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.PM = SubTasks[j].GetProperty("P multiplier").GetDouble();
+                    job.Tasks[i].SubTasks[j].Factors.EM = SubTasks[j].GetProperty("E multiplier").GetDouble();
 
                     job.Tasks[i].SubTasks[j].IndexLI = SubTasks[j].GetProperty("LI index").GetDouble();
                     job.Tasks[i].SubTasks[j].IndexIF = SubTasks[j].GetProperty("IF index").GetDouble();

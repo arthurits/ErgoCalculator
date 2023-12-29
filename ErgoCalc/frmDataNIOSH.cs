@@ -272,7 +272,11 @@ public partial class FrmDataNIOSH : Form, IChildData
 
         // Give format (ComboBox) to the added column cells
         if (col > 0)
+        {
             gridVariables.Rows[8].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
+            gridVariables.Rows[9].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
+            gridVariables.Rows[10].Cells[col] = (DataGridViewComboBoxCell)gridVariables.Rows[8].Cells[col - 1].Clone();
+        }
 
         // Default numeric values after the row headers have been created
         gridVariables[col, 0].Value = 25;
@@ -303,18 +307,44 @@ public partial class FrmDataNIOSH : Form, IChildData
     {
         // Get the couplig type texts
         string[] strCoupling = StringResources.NIOSH_CouplingType.Split(", ");
+        
         // Create custom cells with combobox display
-        DataGridViewComboBoxCell celdaC = new();
         DataTable tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
         tableC.Rows.Add(strCoupling[(int)Coupling.Good], (int)Coupling.Good);
         tableC.Rows.Add(strCoupling[(int)Coupling.Poor], (int)Coupling.Poor);
         tableC.Rows.Add(strCoupling[(int)Coupling.NoHandle], (int)Coupling.NoHandle);
-        celdaC.DataSource = tableC;
-        celdaC.DisplayMember = "Display";
-        celdaC.ValueMember = "Value";
+        DataGridViewComboBoxCell celdaC = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
         gridVariables.Rows[8].Cells[0] = celdaC;
+
+        // Get the additional multiplier texts
+        string[] strTrueFalse = StringResources.NIOSH_OneHandedValue.Split(", ");
+        tableC = new();
+        tableC.Columns.Add("Display", typeof(String));
+        tableC.Columns.Add("Value", typeof(Int32));
+        tableC.Rows.Add(strTrueFalse[0], 0);
+        tableC.Rows.Add(strTrueFalse[1], 1);
+        DataGridViewComboBoxCell cellAdditional1 = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
+        gridVariables.Rows[9].Cells[0] = cellAdditional1;
+
+        DataGridViewComboBoxCell cellAdditional2 = new()
+        {
+            DataSource = tableC,
+            DisplayMember = "Display",
+            ValueMember = "Value"
+        };
+        gridVariables.Rows[10].Cells[0] = cellAdditional2;
     }
 
     /// <summary>
@@ -485,6 +515,8 @@ public partial class FrmDataNIOSH : Form, IChildData
                 gridVariables[nCol, 6].Value = _job.Tasks[j].SubTasks[i].Data.td.ToString();
                 gridVariables[nCol, 7].Value = _job.Tasks[j].SubTasks[i].Data.a.ToString();
                 gridVariables[nCol, 8].Value = (int)_job.Tasks[j].SubTasks[i].Data.c;
+                gridVariables[nCol, 9].Value = _job.Tasks[j].SubTasks[i].Data.o ? 1 : 0;
+                gridVariables[nCol, 10].Value = _job.Tasks[j].SubTasks[i].Data.p ? 1 : 0;
 
                 // We can now insert into the desired position
                 ListViewItem test = new($"{StringResources.Subtask} {(char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)}", listViewTasks.Groups[j]);

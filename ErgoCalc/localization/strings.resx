@@ -1010,4 +1010,22 @@ the application?</value>
   <data name="OCRA_Index" xml:space="preserve">
     <value>The OCRA checklist index is:</value>
   </data>
+  <data name="strNIOSH_OneHanded" xml:space="preserve">
+    <value>One-handed?</value>
+  </data>
+  <data name="strNIOSH_OneHandedValue" xml:space="preserve">
+    <value>false, true</value>
+  </data>
+  <data name="strNIOSH_OM" xml:space="preserve">
+    <value>One-handed multiplier (OM):</value>
+  </data>
+  <data name="strNIOSH_TwoPerson" xml:space="preserve">
+    <value>Two or more persons?</value>
+  </data>
+  <data name="strNIOSH_PM" xml:space="preserve">
+    <value>Two person multiplier (PM):</value>
+  </data>
+  <data name="strNIOSH_EM" xml:space="preserve">
+    <value>Extended time multiplier (EM):</value>
+  </data>
 </root>

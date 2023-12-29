@@ -1,5 +1,6 @@
 ﻿using ErgoCalc.Models.StrainIndex;
 using System;
+using System.Security.Permissions;
 using System.Text;
 
 namespace ErgoCalc.Models.Lifting;
@@ -78,6 +79,21 @@ public class Data
     /// Coupling type
     /// </summary>
     public Coupling c { get; set; } = 0;
+
+    /// <summary>
+    /// Is the lift being performed with only one hand?
+    /// </summary>
+    public bool o { get; set; } = false;
+
+    /// <summary>
+    /// Are two  or more persons performing the same lift?
+    /// </summary>
+    public bool p { get; set; } = false;
+    
+    /// <summary>
+    /// Is manual handling performed for more than 8 hours per shift?
+    /// </summary>
+    public bool e { get; set; } = false;
 }
 
 /// <summary>
@@ -124,6 +140,21 @@ public class Multipliers
     /// Coupling multiplier
     /// </summary>
     public double CM { get; set; } = 0;
+
+    /// <summary>
+    /// One-handed operation additional multiplier
+    /// </summary>
+    public double OM { get; set; } = 0;
+
+    /// <summary>
+    /// Two or more person additional multiplier
+    /// </summary>
+    public double PM { get; set; } = 0;
+
+    /// <summary>
+    /// Extended time additional multiplier
+    /// </summary>
+    public double EM { get; set; } = 0;
 }
 
 /// <summary>
@@ -183,8 +214,8 @@ public class TaskModel
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(2200);
-        string[] strLineD = new String[11];
-        string[] strLineR = new String[13];
+        string[] strLineD = new String[13];
+        string[] strLineR = new String[16];
         string strEquationT;
         string strEquationN;
 
@@ -204,6 +235,8 @@ public class TaskModel
             strLineD[8] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
             strLineD[9] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
             strLineD[10] += $"\t{strRows[31].Split(", ")[(int)SubTasks[i].Data.c]}";
+            strLineD[11] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.o ? 1 : 0]}";
+            strLineD[12] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.p ? 1 : 0]}";
 
             strLineR[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
             strLineR[1] += $"\t{SubTasks[i].Data.LC.ToString("0.####", culture)}";
@@ -215,15 +248,18 @@ public class TaskModel
             strLineR[7] += $"\t{SubTasks[i].Factors.FMb.ToString("0.####", culture)}";
             strLineR[8] += $"\t{SubTasks[i].Factors.AM.ToString("0.####", culture)}";
             strLineR[9] += $"\t{SubTasks[i].Factors.CM.ToString("0.####", culture)}";
+            strLineR[10] += $"\t{SubTasks[i].Factors.OM.ToString("0.####", culture)}";
+            strLineR[11] += $"\t{SubTasks[i].Factors.PM.ToString("0.####", culture)}";
+            strLineR[12] += $"\t{SubTasks[i].Factors.EM.ToString("0.####", culture)}";
 
             if (Model == IndexType.IndexCLI)
             {
-                strLineR[10] += $"\t{SubTasks[i].IndexIF.ToString("0.####", culture)}";
+                strLineR[13] += $"\t{SubTasks[i].IndexIF.ToString("0.####", culture)}";
                 //strLineR[11] += "\t";
-                strLineR[12] += $"\t{(OrderCLI[i] + 1).ToString(culture)}";
+                strLineR[15] += $"\t{(OrderCLI[i] + 1).ToString(culture)}";
             }
 
-            strLineR[11] += $"\t{SubTasks[i].IndexLI.ToString("0.####", culture)}";
+            strLineR[14] += $"\t{SubTasks[i].IndexLI.ToString("0.####", culture)}";
         }
 
         strResult.Append(strRows[2] + System.Environment.NewLine + System.Environment.NewLine);
@@ -242,7 +278,9 @@ public class TaskModel
         }
         strResult.Append(strRows[11] + strLineD[8] + System.Environment.NewLine);
         strResult.Append(strRows[12] + strLineD[9] + System.Environment.NewLine);
-        strResult.Append(strRows[13] + strLineD[10] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append(strRows[13] + strLineD[10] + System.Environment.NewLine);
+        strResult.Append(strRows[32] + strLineD[11] + System.Environment.NewLine);
+        strResult.Append(strRows[33] + strLineD[12] + System.Environment.NewLine + System.Environment.NewLine);
 
         // Multipliers
         strResult.Append(strRows[14] + strLineR[0] + System.Environment.NewLine);
@@ -257,19 +295,22 @@ public class TaskModel
             strResult.Append(strRows[21] + strLineR[7] + System.Environment.NewLine);
         }
         strResult.Append(strRows[22] + strLineR[8] + System.Environment.NewLine);
-        strResult.Append(strRows[23] + strLineR[9] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append(strRows[23] + strLineR[9] + System.Environment.NewLine);
+        strResult.Append(strRows[34] + strLineR[10] + System.Environment.NewLine);
+        strResult.Append(strRows[35] + strLineR[11] + System.Environment.NewLine);
+        strResult.Append(strRows[36] + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
 
         if (SubTasks.Length > 1)
         {
             if (Model == IndexType.IndexCLI)
             {
-                strResult.Append(strRows[24] + strLineR[10] + System.Environment.NewLine);
-                strResult.Append(strRows[25] + strLineR[11] + System.Environment.NewLine);
-                strResult.Append(strRows[26] + strLineR[12] + System.Environment.NewLine + System.Environment.NewLine);
+                strResult.Append(strRows[24] + strLineR[13] + System.Environment.NewLine);
+                strResult.Append(strRows[25] + strLineR[14] + System.Environment.NewLine);
+                strResult.Append(strRows[26] + strLineR[15] + System.Environment.NewLine + System.Environment.NewLine);
             }
             else
             {
-                strResult.Append(strRows[25] + strLineR[11] + System.Environment.NewLine + System.Environment.NewLine);
+                strResult.Append(strRows[25] + strLineR[14] + System.Environment.NewLine + System.Environment.NewLine);
             }
         }
 
@@ -336,8 +377,8 @@ public class TaskModel
 
     public override string ToString()
     {
-        string[] strRows = new[]
-        {
+        string[] strRows =
+        [
             "Task",
             "Subtask",
             "These are the results obtained from the NIOSH lifting model:",
@@ -370,7 +411,7 @@ public class TaskModel
             "Weight",
             "The NIOSH lifting index is:",
             "No handles, Poor, Good"
-        };
+        ];
         return ToString(strRows);
     }
 }
@@ -426,8 +467,8 @@ public class Job
 
     public override string ToString()
     {
-        string[] strRows = new[]
-        {
+        string[] strRows =
+        [
             "Task",
             "Subtask",
             "These are the results obtained from the NIOSH lifting model:",
@@ -460,7 +501,7 @@ public class Job
             "Weight",
             "The NIOSH lifting index is:",
             "No handles, Poor, Good"
-        };
+        ];
 
         return ToString(strRows);
     }
@@ -485,6 +526,9 @@ public static class NIOSHLifting
             subT[i].Factors.AM = FactorAM(subT[i].Data.a);
             subT[i].Factors.FM = FactorFM(subT[i].Data.f, subT[i].Data.v, subT[i].Data.td);
             subT[i].Factors.CM = FactorCM(subT[i].Data.c, subT[i].Data.v);
+            subT[i].Factors.OM = FactorOM(subT[i].Data.o);
+            subT[i].Factors.PM = FactorPM(subT[i].Data.p);
+            subT[i].Factors.EM = FactorEM(subT[i].Data.td);
 
             subT[i].IndexLI = MultiplyFactors(subT[i].Data.LC, subT[i].Data.Weight, subT[i].Factors);
             subT[i].IndexIF = subT[i].IndexLI * subT[i].Factors.FM;
@@ -543,7 +587,10 @@ public static class NIOSHLifting
             factors.DM *
             factors.AM *
             factors.FM *
-            factors.CM;
+            factors.CM *
+            factors.OM *
+            factors.PM *
+            factors.EM;
 
         if (product == 0)    // División entre 0
             result = 0;
@@ -733,6 +780,30 @@ public static class NIOSHLifting
                 result = 0.0;
                 break;
         }
+
+        // Return the multiplier value
+        return result;
+    }
+
+    private static double FactorOM (bool oneHand) => oneHand ? 0.6 : 1.0;
+
+    private static double FactorPM (bool twoPerson) => twoPerson ? 0.85 : 1.0;
+
+    private static double FactorEM (double time)
+    {
+        // Variable definition
+        double result = 0.0;
+
+        if (time <= 8.0)
+            result = 1;
+        else if (time <= 9.0)
+            result = 0.97;
+        else if (time <= 10.0)
+            result = 0.93;
+        else if (time <= 11.0)
+            result = 0.89;
+        else if (time <= 12)
+            result = 0.85;
 
         // Return the multiplier value
         return result;
