@@ -1476,6 +1476,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Age (years):.
+        /// </summary>
+        internal static string strNIOSH_Age {
+            get {
+                return ResourceManager.GetString("strNIOSH_Age", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Twisting angle multiplier (AM):.
         /// </summary>
         internal static string strNIOSH_AM {
@@ -1638,6 +1647,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gender:.
+        /// </summary>
+        internal static string strNIOSH_Gender {
+            get {
+                return ResourceManager.GetString("strNIOSH_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horizontal multiplier (HM):.
         /// </summary>
         internal static string strNIOSH_HM {
@@ -1674,20 +1692,20 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lifting constant (LC):.
-        /// </summary>
-        internal static string strNIOSH_LC {
-            get {
-                return ResourceManager.GetString("strNIOSH_LC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Lifting index (LI):.
         /// </summary>
         internal static string strNIOSH_LI {
             get {
                 return ResourceManager.GetString("strNIOSH_LI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mass reference (kg):.
+        /// </summary>
+        internal static string strNIOSH_MassRef {
+            get {
+                return ResourceManager.GetString("strNIOSH_MassRef", resourceCulture);
             }
         }
         
@@ -1719,7 +1737,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to false, true.
+        ///   Looks up a localized string similar to False, True.
         /// </summary>
         internal static string strNIOSH_OneHandedValue {
             get {

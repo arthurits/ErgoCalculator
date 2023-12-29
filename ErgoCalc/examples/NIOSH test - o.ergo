@@ -22,8 +22,7 @@
       ],
       "Sub-tasks": [
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 3,
           "Horizontal distance": 24,
           "Vertical distance": 38.5,
@@ -54,8 +53,7 @@
           "Order": 4
         },
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 7,
           "Horizontal distance": 24,
           "Vertical distance": 33,
@@ -86,8 +84,7 @@
           "Order": 1
         },
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 7,
           "Horizontal distance": 24,
           "Vertical distance": 75.5,
@@ -118,8 +115,7 @@
           "Order": 3
         },
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 7,
           "Horizontal distance": 24,
           "Vertical distance": 118,
@@ -150,8 +146,7 @@
           "Order": 2
         },
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 7,
           "Horizontal distance": 24,
           "Vertical distance": 160.5,
@@ -194,8 +189,7 @@
       ],
       "Sub-tasks": [
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 3,
           "Horizontal distance": 24,
           "Vertical distance": 81,
@@ -226,8 +220,7 @@
           "Order": 2
         },
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 3,
           "Horizontal distance": 24,
           "Vertical distance": 123.5,
@@ -258,8 +251,7 @@
           "Order": 1
         },
         {
-          "Gender": 0,
-          "Age": 25,
+          "Load constant": 25,
           "Weight": 3,
           "Horizontal distance": 24,
           "Vertical distance": 166,

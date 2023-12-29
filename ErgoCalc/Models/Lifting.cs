@@ -20,15 +20,20 @@ public enum Coupling
     Good = 2
 }
 
+public enum Gender
+{
+    Male = 0,
+    Female = 1
+}
+
 /// <summary>
 /// Data for each subtask
 /// </summary>
 public class Data
 {
-    /// <summary>
-    /// Load constant in kg
-    /// </summary>
-    public double LC { get; set; } = 0;
+    public Gender gender { get; set; } = Gender.Male;
+
+    public double age { get; set; } = 20;
 
     /// <summary>
     /// Weight in kg
@@ -101,6 +106,11 @@ public class Data
 /// </summary>
 public class Multipliers
 {
+    /// <summary>
+    /// Reference mass in kilograms
+    /// </summary>
+    public double MassRef { get; set; } = 25.0;
+
     /// <summary>
     /// Horizontal distance multiplier
     /// </summary>
@@ -214,7 +224,7 @@ public class TaskModel
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
     {
         StringBuilder strResult = new(2200);
-        string[] strLineD = new String[13];
+        string[] strLineD = new String[15];
         string[] strLineR = new String[16];
         string strEquationT;
         string strEquationN;
@@ -225,21 +235,23 @@ public class TaskModel
         for (int i = 0; i < SubTasks.Length; i++)
         {
             strLineD[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
-            strLineD[1] += $"\t{SubTasks[i].Data.Weight.ToString(culture)}";
-            strLineD[2] += $"\t{SubTasks[i].Data.h.ToString(culture)}";
-            strLineD[3] += $"\t{SubTasks[i].Data.v.ToString(culture)}";
-            strLineD[4] += $"\t{SubTasks[i].Data.d.ToString(culture)}";
-            strLineD[5] += $"\t{SubTasks[i].Data.f.ToString(culture)}";
-            strLineD[6] += $"\t{SubTasks[i].Data.fa.ToString(culture)}";
-            strLineD[7] += $"\t{SubTasks[i].Data.fb.ToString(culture)}";
-            strLineD[8] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
-            strLineD[9] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
-            strLineD[10] += $"\t{strRows[31].Split(", ")[(int)SubTasks[i].Data.c]}";
-            strLineD[11] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.o ? 1 : 0]}";
-            strLineD[12] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.p ? 1 : 0]}";
+            strLineD[1] += $"\t{strRows[38].Split(", ")[(int)SubTasks[i].Data.gender]}";
+            strLineD[2] += $"\t{SubTasks[i].Data.age.ToString(culture)}";
+            strLineD[3] += $"\t{SubTasks[i].Data.Weight.ToString(culture)}";
+            strLineD[4] += $"\t{SubTasks[i].Data.h.ToString(culture)}";
+            strLineD[5] += $"\t{SubTasks[i].Data.v.ToString(culture)}";
+            strLineD[6] += $"\t{SubTasks[i].Data.d.ToString(culture)}";
+            strLineD[7] += $"\t{SubTasks[i].Data.f.ToString(culture)}";
+            strLineD[8] += $"\t{SubTasks[i].Data.fa.ToString(culture)}";
+            strLineD[9] += $"\t{SubTasks[i].Data.fb.ToString(culture)}";
+            strLineD[10] += $"\t{SubTasks[i].Data.td.ToString(culture)}";
+            strLineD[11] += $"\t{SubTasks[i].Data.a.ToString(culture)}";
+            strLineD[12] += $"\t{strRows[31].Split(", ")[(int)SubTasks[i].Data.c]}";
+            strLineD[13] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.o ? 1 : 0]}";
+            strLineD[14] += $"\t{strRows[37].Split(", ")[SubTasks[i].Data.p ? 1 : 0]}";
 
             strLineR[0] += $"\t{strRows[Model == IndexType.IndexLI ? 0 : 1]} {((char)('A' + SubTasks[i].ItemIndex)).ToString(culture)}";
-            strLineR[1] += $"\t{SubTasks[i].Data.LC.ToString("0.####", culture)}";
+            strLineR[1] += $"\t{SubTasks[i].Factors.MassRef.ToString("0.####", culture)}";
             strLineR[2] += $"\t{SubTasks[i].Factors.HM.ToString("0.####", culture)}";
             strLineR[3] += $"\t{SubTasks[i].Factors.VM.ToString("0.####", culture)}";
             strLineR[4] += $"\t{SubTasks[i].Factors.DM.ToString("0.####", culture)}";
@@ -266,21 +278,23 @@ public class TaskModel
 
         // Initial data
         strResult.Append(strRows[3] + strLineD[0] + System.Environment.NewLine);
-        strResult.Append(strRows[4] + strLineD[1] + System.Environment.NewLine);
-        strResult.Append(strRows[5] + strLineD[2] + System.Environment.NewLine);
-        strResult.Append(strRows[6] + strLineD[3] + System.Environment.NewLine);
-        strResult.Append(strRows[7] + strLineD[4] + System.Environment.NewLine);
-        strResult.Append(strRows[8] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[39] + strLineD[1] + System.Environment.NewLine);
+        strResult.Append(strRows[40] + strLineD[2] + System.Environment.NewLine);
+        strResult.Append(strRows[4] + strLineD[3] + System.Environment.NewLine);
+        strResult.Append(strRows[5] + strLineD[4] + System.Environment.NewLine);
+        strResult.Append(strRows[6] + strLineD[5] + System.Environment.NewLine);
+        strResult.Append(strRows[7] + strLineD[6] + System.Environment.NewLine);
+        strResult.Append(strRows[8] + strLineD[7] + System.Environment.NewLine);
         if (SubTasks.Length > 1 && Model == IndexType.IndexCLI)
         {
-            strResult.Append(strRows[9] + strLineD[6] + System.Environment.NewLine);
-            strResult.Append(strRows[10] + strLineD[7] + System.Environment.NewLine);
+            strResult.Append(strRows[9] + strLineD[8] + System.Environment.NewLine);
+            strResult.Append(strRows[10] + strLineD[9] + System.Environment.NewLine);
         }
-        strResult.Append(strRows[11] + strLineD[8] + System.Environment.NewLine);
-        strResult.Append(strRows[12] + strLineD[9] + System.Environment.NewLine);
-        strResult.Append(strRows[13] + strLineD[10] + System.Environment.NewLine);
-        strResult.Append(strRows[32] + strLineD[11] + System.Environment.NewLine);
-        strResult.Append(strRows[33] + strLineD[12] + System.Environment.NewLine + System.Environment.NewLine);
+        strResult.Append(strRows[11] + strLineD[10] + System.Environment.NewLine);
+        strResult.Append(strRows[12] + strLineD[11] + System.Environment.NewLine);
+        strResult.Append(strRows[13] + strLineD[12] + System.Environment.NewLine);
+        strResult.Append(strRows[32] + strLineD[13] + System.Environment.NewLine);
+        strResult.Append(strRows[33] + strLineD[14] + System.Environment.NewLine + System.Environment.NewLine);
 
         // Multipliers
         strResult.Append(strRows[14] + strLineR[0] + System.Environment.NewLine);
@@ -341,7 +355,7 @@ public class TaskModel
                 for (int i = 0; i < SubTasks.Length; i++)
                 {
                     strEquationN = $"LI = {SubTasks[i].Data.Weight.ToString("0.####", culture)} / (";
-                    strEquationN += $"{SubTasks[i].Data.LC.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.MassRef.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.HM.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.VM.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.DM.ToString("0.####", culture)} * ";
@@ -358,7 +372,7 @@ public class TaskModel
         {
             strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM)";
             strEquationN = $"LI = {SubTasks[0].Data.Weight.ToString("0.####", culture)} / (";
-            strEquationN += $"{SubTasks[0].Data.LC.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.MassRef.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.HM.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.VM.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.DM.ToString("0.####", culture)} * ";
@@ -520,6 +534,7 @@ public static class NIOSHLifting
         for (int i = 0; i < subT.Length; i++)
         {
             //if (subT[i].Factors.LC == 0) subT[i].Factors.LC = 23.0;
+            subT[i].Factors.MassRef = FactorMR(subT[i].Data.gender, subT[i].Data.age);
             subT[i].Factors.HM = FactorHM(subT[i].Data.h);
             subT[i].Factors.VM = FactorVM(subT[i].Data.v);
             subT[i].Factors.DM = FactorDM(subT[i].Data.d);
@@ -530,7 +545,7 @@ public static class NIOSHLifting
             subT[i].Factors.PM = FactorPM(subT[i].Data.p);
             subT[i].Factors.EM = FactorEM(subT[i].Data.td);
 
-            subT[i].IndexLI = MultiplyFactors(subT[i].Data.LC, subT[i].Data.Weight, subT[i].Factors);
+            subT[i].IndexLI = MultiplyFactors(subT[i].Data.Weight, subT[i].Factors);
             subT[i].IndexIF = subT[i].IndexLI * subT[i].Factors.FM;
 
             //pIndex[i] = subT[i].LI;
@@ -576,12 +591,12 @@ public static class NIOSHLifting
         return result;
     }
     
-    private static double MultiplyFactors(double loadConstant, double weight, Multipliers factors)
+    private static double MultiplyFactors(double weight, Multipliers factors)
     {
         double product = 0.0;
         double result = 0.0;
 
-        product = loadConstant *
+        product = factors.MassRef *
             factors.HM *
             factors.VM *
             factors.DM *
@@ -598,6 +613,16 @@ public static class NIOSHLifting
             result = weight / product;
 
         return result;
+    }
+
+    private static double FactorMR(Gender sex, double age)
+    {
+        double multiplier = sex is Gender.Male ? 25 : 20;
+
+        if (age < 20 || age > 45)
+            multiplier = sex is Gender.Male ? 20 : 15;
+
+        return multiplier;
     }
 
     /// <summary>

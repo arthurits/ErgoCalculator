@@ -106,7 +106,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
             for (int j = 0; j < _job.Tasks[i].NumberSubTasks; j++)
             {
                 writer.WriteStartObject();
-                writer.WriteNumber("Load constant", _job.Tasks[i].SubTasks[j].Data.LC);
+                writer.WriteNumber("Gender", (int)_job.Tasks[i].SubTasks[j].Data.gender);
+                writer.WriteNumber("Age", _job.Tasks[i].SubTasks[j].Data.age);
                 writer.WriteNumber("Weight", _job.Tasks[i].SubTasks[j].Data.Weight);
                 writer.WriteNumber("Horizontal distance", _job.Tasks[i].SubTasks[j].Data.h);
                 writer.WriteNumber("Vertical distance", _job.Tasks[i].SubTasks[j].Data.v);
@@ -268,7 +269,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 for (int j = 0; j < job.Tasks[i].NumberSubTasks; j++)
                 {
                     job.Tasks[i].SubTasks[j] = new();
-                    job.Tasks[i].SubTasks[j].Data.LC = SubTasks[j].GetProperty("Load constant").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.gender = (Gender)SubTasks[j].GetProperty("Gender").GetDouble();
+                    job.Tasks[i].SubTasks[j].Data.age = SubTasks[j].GetProperty("Age").GetDouble();
                     job.Tasks[i].SubTasks[j].Data.Weight = SubTasks[j].GetProperty("Weight").GetDouble();
                     job.Tasks[i].SubTasks[j].Data.h = SubTasks[j].GetProperty("Horizontal distance").GetDouble();
                     job.Tasks[i].SubTasks[j].Data.v = SubTasks[j].GetProperty("Vertical distance").GetDouble();

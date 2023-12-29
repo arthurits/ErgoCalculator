@@ -521,8 +521,8 @@ salir de la aplicación?</value>
   <data name="strNIOSH_Index" xml:space="preserve">
     <value>El índice NIOSH de levantamiento es:</value>
   </data>
-  <data name="strNIOSH_LC" xml:space="preserve">
-    <value>Constante de carga (LC):</value>
+  <data name="strNIOSH_MassRef" xml:space="preserve">
+    <value>Masa de referencia (kg):</value>
   </data>
   <data name="strNIOSH_LI" xml:space="preserve">
     <value>Índice de levantamiento (LI):</value>
@@ -1014,7 +1014,7 @@ salir de la aplicación?</value>
     <value>¿Manipulación con una mano?</value>
   </data>
   <data name="strNIOSH_OneHandedValue" xml:space="preserve">
-    <value>no, sí</value>
+    <value>No, Sí</value>
   </data>
   <data name="strNIOSH_OM" xml:space="preserve">
     <value>Factor de mano (OM):</value>
@@ -1026,6 +1026,12 @@ salir de la aplicación?</value>
     <value>Factor de persona (PM):</value>
   </data>
   <data name="strNIOSH_EM" xml:space="preserve">
-    <value>Factor de 8 horas (EM):</value>
+    <value>Factor de tiempo (EM):</value>
+  </data>
+  <data name="strNIOSH_Gender" xml:space="preserve">
+    <value>Sexo:</value>
+  </data>
+  <data name="strNIOSH_Age" xml:space="preserve">
+    <value>Edad (años):</value>
   </data>
 </root>
