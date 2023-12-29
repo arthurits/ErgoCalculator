@@ -516,7 +516,7 @@ salir de la aplicación?</value>
     <value>Distancia horizontal (cm):</value>
   </data>
   <data name="strNIOSH_IF" xml:space="preserve">
-    <value>Índice de levantamiento (IF):</value>
+    <value>Índice independiente frecuencia (FILI):</value>
   </data>
   <data name="strNIOSH_Index" xml:space="preserve">
     <value>El índice NIOSH de levantamiento es:</value>

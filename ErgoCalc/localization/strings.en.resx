@@ -519,7 +519,7 @@ the application?</value>
     <value>Horizontal distance (cm):</value>
   </data>
   <data name="strNIOSH_IF" xml:space="preserve">
-    <value>Lifting index (IF):</value>
+    <value>Freq-indep lifting index (FILI):</value>
   </data>
   <data name="strNIOSH_Index" xml:space="preserve">
     <value>The NIOSH lifting index is:</value>

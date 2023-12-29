@@ -1674,7 +1674,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lifting index (IF):.
+        ///   Looks up a localized string similar to Freq-indep lifting index (FILI):.
         /// </summary>
         internal static string strNIOSH_IF {
             get {

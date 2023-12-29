@@ -153,7 +153,7 @@ public static class StringResources
     public static string NIOSH_FrequencyB => StringRM.GetString("strNIOSH_FrequencyB", Culture) ?? "Lifting frequency B (times / min):";
     public static string NIOSH_HM => StringRM.GetString("strNIOSH_HM", Culture) ?? "Horizontal multiplier (HM):";
     public static string NIOSH_HorizontalD => StringRM.GetString("strNIOSH_HorizontalD", Culture) ?? "Horizontal distance (cm):";
-    public static string NIOSH_IF => StringRM.GetString("strNIOSH_IF", Culture) ?? "Lifting index (IF):";
+    public static string NIOSH_IF => StringRM.GetString("strNIOSH_IF", Culture) ?? "Freq-indep lifting index (FILI):";
     public static string NIOSH_Index => StringRM.GetString("strNIOSH_Index", Culture) ?? "The NIOSH lifting index is:";
     public static string NIOSH_MassRef => StringRM.GetString("strNIOSH_MassRef", Culture) ?? "Mass reference (kg):";
     public static string NIOSH_LI => StringRM.GetString("strNIOSH_LI", Culture) ?? "Lifting index (LI):";
