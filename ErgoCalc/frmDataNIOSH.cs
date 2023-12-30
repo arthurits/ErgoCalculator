@@ -191,17 +191,6 @@ public partial class FrmDataNIOSH : Form, IChildData
             {
                 _job.Tasks[i].SubTasks[j] = new();
                 ItemIndex = _job.Model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
-                //if (_nioshLifting.model == IndexType.IndexLI)
-                //    ItemIndex = j;
-                //else
-                //{
-                //    ItemIndex = 0 - 'A';
-                //    for (int k = listViewTasks.Groups[i].Items[j].Text.IndexOf(" "); k < listViewTasks.Groups[i].Items[j].Text.Length-1; k++)
-                //    {
-                //        ItemIndex += listViewTasks.Groups[i].Items[j].Text[k + 1];
-                //    }
-                //}
-
                 _job.Tasks[i].SubTasks[j].ItemIndex = ItemIndex;
                 _job.Tasks[i].SubTasks[j].Task = i;
 
