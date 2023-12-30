@@ -206,10 +206,15 @@ public partial class FrmDataNIOSH : Form, IChildData
                 _job.Tasks[i].SubTasks[j].Task = i;
 
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
-                //if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
-                //if (!Validation.IsValidRange(gridVariables[ItemIndex, 2].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 2]; gridVariables.BeginEdit(true); return; }
-                //if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, -180, -180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
-                //if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 8, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, 90, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 2].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 2]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, 0, 150, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 250, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 5].Value, 0, 175, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 5]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 6].Value, 0, 60, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 6]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 7].Value, 0, 12, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 7]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[ItemIndex, 8].Value, -180, 180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 8]; gridVariables.BeginEdit(true); return; }
 
                 _job.Tasks[i].SubTasks[j].Data.gender = (Gender)gridVariables[ItemIndex, 0].Value;
                 _job.Tasks[i].SubTasks[j].Data.age = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
