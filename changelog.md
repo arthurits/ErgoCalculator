@@ -1,5 +1,10 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.6
+* [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.70.
+* Drop NIOSH lifting model.
+* Fully implement ISO 11228-1:2021 model with additional multipliers and reference mass recommendations.
+
 ## ErgoCalculator 1.7.5
 * Target .NET 8.
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.69.

@@ -1,5 +1,5 @@
 # <img src="ErgoCalc/images/logo@256.png?raw=true" height="28" width="28"> ErgoCalc
-Software implementing ergonomics algorithms (revised strain index, NIOSH lifting index, Liberty Mutual equations, metabolic rate, etc.). Written in .NET 8 (C# WinForms).
+Software implementing ergonomics algorithms (revised strain index, lifting and lowering, Liberty Mutual equations, strain index, metabolic rate, etc.). Written in .NET 8 (C# WinForms).
 
 <img alt="Software logo" src="ErgoCalc/images/splash.png?raw=true" height="240">
 
@@ -20,7 +20,7 @@ This download is a portable software. Please follow this instructions:
 * Work-rest model developed by J. Dul, M. Douwes, M., and P Smitt in 1991 and suggested in [ISO 11226:2000 — Evaluation of static working postures](https://www.iso.org/standard/25573.html)
 ![WR model](/Media/WRmodel.png?raw=true "WR model")
 * [Comprehensive lifting model (CLM)](https://doi.org/10.1080/001401397187748) by Jorge Hidalgo, Ashraf Genaidy, Waldemar Karwowski, Doran Christensen, Ronald Huston, and Jefferey Stambough
-* NIOSH lifting equation, inluding LI, CLI, SLI (not yet implemented), and VLI (not yet implemented) indices as suggested in [ISO 11228-1:2003 Ergonomics — Manual handling — Part 1: Lifting and carrying](https://www.iso.org/standard/26520.html)
+* Lifting and lowering, inluding LI, CLI, SLI (not yet implemented), and VLI (not yet implemented) indices as suggested in [ISO 11228-1:2021 Ergonomics — Manual handling — Part 1: Lifting and carrying](https://www.iso.org/standard/26520.html)
 ![NIOSH model](/Media/Niosh.png?raw=true "RSI model")
 * Revised strain index, including [RSI](https://doi.org/10.1080/00140139.2016.1237678), [COSI](https://doi.org/10.1080/00140139.2016.1246675), and [CUSI](https://doi.org/10.1080/00140139.2016.1246675) indices
 ![RSI model](/Media/RevisedStrainIndex.png?raw=true "RSI model")
