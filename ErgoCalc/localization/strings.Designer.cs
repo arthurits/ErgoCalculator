@@ -755,7 +755,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NIOSH model parameters.
+        ///   Looks up a localized string similar to Lifting and lowering model parameters.
         /// </summary>
         internal static string strFormDataNIOSH {
             get {
@@ -854,7 +854,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NIOSH model results.
+        ///   Looks up a localized string similar to Lifting model results.
         /// </summary>
         internal static string strFormResultsNIOSH {
             get {
@@ -1566,7 +1566,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The NIOSH lifting index is computed as follows:.
+        ///   Looks up a localized string similar to The lifting index (LI) is computed as follows:.
         /// </summary>
         internal static string strNIOSH_Equation {
             get {
@@ -1683,7 +1683,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The NIOSH lifting index is:.
+        ///   Looks up a localized string similar to The lifting index is:.
         /// </summary>
         internal static string strNIOSH_Index {
             get {
@@ -1764,7 +1764,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to These are the results obtained from the NIOSH lifting model:.
+        ///   Looks up a localized string similar to These are the results obtained from the ISO 11228-1:2021 norm model:.
         /// </summary>
         internal static string strNIOSH_Results {
             get {
@@ -1890,7 +1890,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NIOSH lifting equation (LI, CLI, SLI, VLI).
+        ///   Looks up a localized string similar to Lifting and lowering model (LI, CLI, SLI, VLI).
         /// </summary>
         internal static string strRadModelNIOSH {
             get {

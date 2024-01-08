@@ -254,7 +254,7 @@ to their default values?</value>
     <value>Metabolic rate results</value>
   </data>
   <data name="strFormResultsNIOSH" xml:space="preserve">
-    <value>NIOSH model results</value>
+    <value>Lifting model results</value>
   </data>
   <data name="strFormResultsOCRAcheck" xml:space="preserve">
     <value>OCRA checklist model results</value>
@@ -486,7 +486,7 @@ the application?</value>
     <value>Task duration (hours):</value>
   </data>
   <data name="strNIOSH_Equation" xml:space="preserve">
-    <value>The NIOSH lifting index is computed as follows:</value>
+    <value>The lifting index (LI) is computed as follows:</value>
   </data>
   <data name="strNIOSH_EquationIndex" xml:space="preserve">
     <value>Index</value>
@@ -522,7 +522,7 @@ the application?</value>
     <value>Freq-indep lifting index (FILI):</value>
   </data>
   <data name="strNIOSH_Index" xml:space="preserve">
-    <value>The NIOSH lifting index is:</value>
+    <value>The lifting index is:</value>
   </data>
   <data name="strNIOSH_MassRef" xml:space="preserve">
     <value>Mass reference (kg):</value>
@@ -537,7 +537,7 @@ the application?</value>
     <value>Subtask order:</value>
   </data>
   <data name="strNIOSH_Results" xml:space="preserve">
-    <value>These are the results obtained from the NIOSH lifting model:</value>
+    <value>These are the results obtained from the ISO 11228-1:2021 norm model:</value>
   </data>
   <data name="strNIOSH_VerticalD" xml:space="preserve">
     <value>Vertical distance (cm):</value>
@@ -576,7 +576,7 @@ the application?</value>
     <value>Metabolic rate</value>
   </data>
   <data name="strRadModelNIOSH" xml:space="preserve">
-    <value>NIOSH lifting equation (LI, CLI, SLI, VLI)</value>
+    <value>Lifting and lowering model (LI, CLI, SLI, VLI)</value>
   </data>
   <data name="strRadModelOCRA" xml:space="preserve">
     <value>OCRA checklist</value>
@@ -864,7 +864,7 @@ the application?</value>
     <value>WR model parameters</value>
   </data>
   <data name="strFormDataNIOSH" xml:space="preserve">
-    <value>NIOSH model parameters</value>
+    <value>Lifting and lowering model parameters</value>
   </data>
   <data name="strFormDataCLM" xml:space="preserve">
     <value>CLM model parameters</value>
