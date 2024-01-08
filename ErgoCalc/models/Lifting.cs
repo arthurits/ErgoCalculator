@@ -350,7 +350,7 @@ public class TaskModel
             }
             else
             {
-                strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM)";
+                strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM * OM * PM * EM)";
                 strResult.Append(strEquationT + System.Environment.NewLine);
                 for (int i = 0; i < SubTasks.Length; i++)
                 {
@@ -361,7 +361,10 @@ public class TaskModel
                     strEquationN += $"{SubTasks[i].Factors.DM.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.FM.ToString("0.####", culture)} * ";
                     strEquationN += $"{SubTasks[i].Factors.AM.ToString("0.####", culture)} * ";
-                    strEquationN += $"{SubTasks[i].Factors.CM.ToString("0.####", culture)}) = ";
+                    strEquationN += $"{SubTasks[i].Factors.CM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.OM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.PM.ToString("0.####", culture)} * ";
+                    strEquationN += $"{SubTasks[i].Factors.EM.ToString("0.####", culture)}) = ";
                     strEquationN += $"{SubTasks[i].IndexLI.ToString("0.####", culture)}";
                     strResult.Append(strEquationN + System.Environment.NewLine);
                 }
@@ -370,7 +373,7 @@ public class TaskModel
         }
         else
         {
-            strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM)";
+            strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM * OM * PM * EM)";
             strEquationN = $"LI = {SubTasks[0].Data.Weight.ToString("0.####", culture)} / (";
             strEquationN += $"{SubTasks[0].Factors.MassRef.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.HM.ToString("0.####", culture)} * ";
@@ -378,7 +381,10 @@ public class TaskModel
             strEquationN += $"{SubTasks[0].Factors.DM.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.FM.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.AM.ToString("0.####", culture)} * ";
-            strEquationN += $"{SubTasks[0].Factors.CM.ToString("0.####", culture)}) = ";
+            strEquationN += $"{SubTasks[0].Factors.CM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.OM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.PM.ToString("0.####", culture)} * ";
+            strEquationN += $"{SubTasks[0].Factors.EM.ToString("0.####", culture)}) = ";
             strEquationN += $"{SubTasks[0].IndexLI.ToString("0.####", culture)}";
 
             strResult.Append(strEquationT + System.Environment.NewLine);

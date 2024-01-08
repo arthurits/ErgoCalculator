@@ -254,7 +254,7 @@ los campos a sus valores por defecto?</value>
     <value>Resultados de consumo metabólico</value>
   </data>
   <data name="strFormResultsNIOSH" xml:space="preserve">
-    <value>Resultados del modelo NIOSH</value>
+    <value>Resultados del levantamiento manual de cargas</value>
   </data>
   <data name="strFormResultsStrainIndex" xml:space="preserve">
     <value>Resultados del modelo Strain Index</value>
@@ -483,7 +483,7 @@ salir de la aplicación?</value>
     <value>Duración de la tarea (horas):</value>
   </data>
   <data name="strNIOSH_Equation" xml:space="preserve">
-    <value>El índice NIOSH de levantamiento se calcula mediante la siguiente expresión:</value>
+    <value>El índice de levantamiento (LI) se calcula mediante la siguiente expresión:</value>
   </data>
   <data name="strNIOSH_EquationIndex" xml:space="preserve">
     <value>Índice</value>
@@ -519,7 +519,7 @@ salir de la aplicación?</value>
     <value>Índice independiente frecuencia (FILI):</value>
   </data>
   <data name="strNIOSH_Index" xml:space="preserve">
-    <value>El índice NIOSH de levantamiento es:</value>
+    <value>El índice de levantamiento es:</value>
   </data>
   <data name="strNIOSH_MassRef" xml:space="preserve">
     <value>Masa de referencia (kg):</value>
@@ -534,7 +534,7 @@ salir de la aplicación?</value>
     <value>Orden de las subtareas:</value>
   </data>
   <data name="strNIOSH_Results" xml:space="preserve">
-    <value>Estos son los resultados obtenidos mediante el modelo del NIOSH:</value>
+    <value>Estos son los resultados obtenidos mediante el modelo de la norma ISO 11228-1:2021:</value>
   </data>
   <data name="strNIOSH_VerticalD" xml:space="preserve">
     <value>Distancia vertical (cm):</value>
@@ -573,7 +573,7 @@ salir de la aplicación?</value>
     <value>Consumo metabólico</value>
   </data>
   <data name="strRadModelNIOSH" xml:space="preserve">
-    <value>Ecuación del NIOSH (LI, CLI, SLI, VLI)</value>
+    <value>Levantamiento de cargas (LI, CLI, SLI, VLI)</value>
   </data>
   <data name="strRadModelOCRA" xml:space="preserve">
     <value>OCRA checklist</value>
@@ -864,7 +864,7 @@ salir de la aplicación?</value>
     <value>Parámetros del modelo WR</value>
   </data>
   <data name="strFormDataNIOSH" xml:space="preserve">
-    <value>Parámetros del modelo NIOSH</value>
+    <value>Parámetros de la manipulación manual de cargas</value>
   </data>
   <data name="strFormDataCLM" xml:space="preserve">
     <value>Parámetros del modelo CLM</value>
