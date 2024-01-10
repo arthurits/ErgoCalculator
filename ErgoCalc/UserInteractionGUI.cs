@@ -7,7 +7,7 @@ public enum ModelType
 {
     WorkRest,
     CumulativeLifting,
-    NioshLifting,
+    LiftingLowering,
     StrainIndex,
     OcraCheck,
     MetabolicRate,
@@ -28,7 +28,7 @@ partial class FrmMain
         {
             ModelType.WorkRest => new FrmDataWR(culture: _settings.AppCulture),
             ModelType.CumulativeLifting => new FrmDataCLM(culture: _settings.AppCulture),
-            ModelType.NioshLifting => new FrmDataNIOSH(culture: _settings.AppCulture),
+            ModelType.LiftingLowering => new FrmDataNIOSH(culture: _settings.AppCulture),
             ModelType.StrainIndex => new FrmDataStrainIndex(culture: _settings.AppCulture),
             ModelType.OcraCheck => new FrmDataOCRAcheck(culture: _settings.AppCulture),
             ModelType.MetabolicRate => new FrmDataMet(culture: _settings.AppCulture),
@@ -45,7 +45,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData, _settings.AppCulture),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.AppCulture),
-                    ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData, _settings.AppCulture),
+                    ModelType.LiftingLowering => new FrmResultNIOSH(frm.GetData, _settings.AppCulture),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.AppCulture),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData, _settings.AppCulture),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData, _settings.AppCulture),
@@ -58,7 +58,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => StringResources.FormResultsWR,
                     ModelType.CumulativeLifting => StringResources.FormResultsCLM,
-                    ModelType.NioshLifting => StringResources.FormResultsNIOSH,
+                    ModelType.LiftingLowering => StringResources.FormResultsNIOSH,
                     ModelType.StrainIndex => StringResources.FormResultsStrainIndex,
                     ModelType.OcraCheck => StringResources.FormResultsOCRAchecklist,
                     ModelType.MetabolicRate => StringResources.FormResultsMetabolic,

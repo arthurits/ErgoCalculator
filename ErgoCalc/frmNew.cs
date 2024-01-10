@@ -28,7 +28,7 @@ public partial class FrmNew : Form
                         Model = ModelType.CumulativeLifting;
                         break;
                     case "radModelNIOSH":
-                        Model = ModelType.NioshLifting;
+                        Model = ModelType.LiftingLowering;
                         break;
                     case "radModelStrain":
                         Model = ModelType.StrainIndex;
