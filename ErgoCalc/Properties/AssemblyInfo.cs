@@ -37,3 +37,6 @@ using System.Runtime.InteropServices;
 
 // Needed to avoid warnings for ScottPlot 4.0.48
 //[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows7.0")]
+
+// Needed do avoid CA1416 warnings
+[assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("windows")]
