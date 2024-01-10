@@ -309,7 +309,7 @@
             this.btnExample.UseVisualStyleBackColor = true;
             this.btnExample.Click += new System.EventHandler(this.Example_Click);
             // 
-            // FrmDataNIOSH
+            // FrmDataLifting
             // 
             this.AcceptButton = this.btnAccept;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -329,11 +329,11 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FrmDataNIOSH";
+            this.Name = "FrmDataLifting";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "NIOSH model data";
+            this.Text = "Lifting and lowering model parameters";
             ((System.ComponentModel.ISupportInitialize)(this.updSubTasks)).EndInit();
             this.tabData.ResumeLayout(false);
             this.tabSubtasks.ResumeLayout(false);

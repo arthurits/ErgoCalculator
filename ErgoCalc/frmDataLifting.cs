@@ -494,7 +494,6 @@ public partial class frmDataLifting : Form, IChildData
     /// <summary>
     /// Shows the data into the grid control
     /// </summary>
-    /// <param name="data">Array of Model NIOSH data</param>
     private void DataToGrid()
     {
         switch ((int)_job.Model)

@@ -42,14 +42,14 @@ public partial class frmResultsLifting : Form, IChildResults
         {
             foreach (TaskModel task in _job.Tasks)
             {
-                NIOSHLifting.ComputeLI(task.SubTasks);
+                Lifting.ComputeLI(task.SubTasks);
             }
         }
         else if (_job.Model == IndexType.IndexCLI)
         {
             foreach (TaskModel task in _job.Tasks)
             {
-                NIOSHLifting.ComputeCLI(task);
+                Lifting.ComputeCLI(task);
             }
         }
 

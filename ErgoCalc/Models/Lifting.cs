@@ -325,7 +325,7 @@ public class TaskModel
             }
         }
 
-        // Print NIOSH final equation
+        // Print equation substituting variables with numerical data
         strResult.Append(strRows[27] + Environment.NewLine + Environment.NewLine);
         if (SubTasks.Length > 1)
         {
@@ -440,9 +440,9 @@ public class Job
 }
 
 /// <summary>
-/// NIOSH model numerical computation
+/// Lifting model numerical computation
 /// </summary>
-public static class NIOSHLifting
+public static class Lifting
 {
 
     public static void ComputeLI(SubTask[] subT)

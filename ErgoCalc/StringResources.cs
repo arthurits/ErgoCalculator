@@ -162,12 +162,12 @@ public static class StringResources
     public static string Lifting_HM => StringRM.GetString("strLifting_HM", Culture) ?? "Horizontal multiplier (HM):";
     public static string Lifting_HorizontalD => StringRM.GetString("strLifting_HorizontalD", Culture) ?? "Horizontal distance (cm):";
     public static string Lifting_IF => StringRM.GetString("strLifting_IF", Culture) ?? "Freq-indep lifting index (FILI):";
-    public static string Lifting_Index => StringRM.GetString("strLifting_Index", Culture) ?? "The NIOSH lifting index is:";
+    public static string Lifting_Index => StringRM.GetString("strLifting_Index", Culture) ?? "The lifting index is:";
     public static string Lifting_MassRef => StringRM.GetString("strLifting_MassRef", Culture) ?? "Mass reference (kg):";
     public static string Lifting_LI => StringRM.GetString("strLifting_LI", Culture) ?? "Lifting index (LI):";
     public static string Lifting_Multipliers => StringRM.GetString("strLifting_Multipliers", Culture) ?? "Multipliers";
     public static string Lifting_SubtasksOrder => StringRM.GetString("strLifting_Order", Culture) ?? "Subtask order:";
-    public static string Lifting_Results => StringRM.GetString("strLifting_Results", Culture) ?? "These are the results obtained from the NIOSH lifting model:";
+    public static string Lifting_Results => StringRM.GetString("strLifting_Results", Culture) ?? "These are the results obtained from the ISO 11228-1:2021 norm model:";
     public static string Lifting_VerticalD => StringRM.GetString("strLifting_VerticalD", Culture) ?? "Vertical distance (cm):";
     public static string Lifting_VerticalT => StringRM.GetString("strLifting_VerticalT", Culture) ?? "Vertical travel distance (cm):";
     public static string Lifting_VM => StringRM.GetString("strLifting_VM", Culture) ?? "Vertical multiplier (VM):";
