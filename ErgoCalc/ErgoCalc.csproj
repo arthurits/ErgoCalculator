@@ -98,9 +98,9 @@
     <Compile Update="frmDataCLM.Designer.cs">
       <DependentUpon>frmDataCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataNIOSH.cs" />
-    <Compile Update="frmDataNIOSH.Designer.cs">
-      <DependentUpon>frmDataNIOSH.cs</DependentUpon>
+    <Compile Update="frmDataLifting.cs" />
+    <Compile Update="frmDataLifting.Designer.cs">
+      <DependentUpon>frmDataLifting.cs</DependentUpon>
     </Compile>
     <Compile Update="frmMain.cs" />
     <Compile Update="frmMain.Designer.cs">
@@ -114,9 +114,9 @@
     <Compile Update="frmNew.Designer.cs">
       <DependentUpon>frmNew.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultNIOSH.cs" />
-    <Compile Update="frmResultNIOSH.Designer.cs">
-      <DependentUpon>frmResultNIOSH.cs</DependentUpon>
+    <Compile Update="frmResultsLifting.cs" />
+    <Compile Update="frmResultsLifting.Designer.cs">
+      <DependentUpon>frmResultsLifting.cs</DependentUpon>
     </Compile>
     <Compile Update="frmResultsWR.cs" />
     <Compile Update="frmResultsWR.Designer.cs">
@@ -154,8 +154,8 @@
       <DependentUpon>frmDataCLM.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataNIOSH.resx">
-      <DependentUpon>frmDataNIOSH.cs</DependentUpon>
+    <EmbeddedResource Update="frmDataLifting.resx">
+      <DependentUpon>frmDataLifting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="frmMain.resx">
@@ -168,8 +168,8 @@
     <EmbeddedResource Update="frmNew.resx">
       <DependentUpon>frmNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultNIOSH.resx">
-      <DependentUpon>frmResultNIOSH.cs</DependentUpon>
+    <EmbeddedResource Update="frmResultsLifting.resx">
+      <DependentUpon>frmResultsLifting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="frmResultsWR.resx">

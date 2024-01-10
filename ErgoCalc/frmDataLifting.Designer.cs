@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class FrmDataNIOSH
+    partial class frmDataLifting
     {
         /// <summary>
         /// Required designer variable.

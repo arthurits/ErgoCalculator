@@ -28,7 +28,7 @@ partial class FrmMain
         {
             ModelType.WorkRest => new FrmDataWR(culture: _settings.AppCulture),
             ModelType.CumulativeLifting => new FrmDataCLM(culture: _settings.AppCulture),
-            ModelType.LiftingLowering => new FrmDataNIOSH(culture: _settings.AppCulture),
+            ModelType.LiftingLowering => new frmDataLifting(culture: _settings.AppCulture),
             ModelType.StrainIndex => new FrmDataStrainIndex(culture: _settings.AppCulture),
             ModelType.OcraCheck => new FrmDataOCRAcheck(culture: _settings.AppCulture),
             ModelType.MetabolicRate => new FrmDataMet(culture: _settings.AppCulture),
@@ -45,7 +45,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData, _settings.AppCulture),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.AppCulture),
-                    ModelType.LiftingLowering => new FrmResultNIOSH(frm.GetData, _settings.AppCulture),
+                    ModelType.LiftingLowering => new frmResultsLifting(frm.GetData, _settings.AppCulture),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.AppCulture),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData, _settings.AppCulture),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData, _settings.AppCulture),
@@ -131,7 +131,7 @@ partial class FrmMain
             Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(),
-                "NIOSH lifting equation" => new FrmResultNIOSH(culture: _settings.AppCulture),
+                "NIOSH lifting equation" => new frmResultsLifting(culture: _settings.AppCulture),
                 "Strain index" => new FrmResultsStrainIndex(culture: _settings.AppCulture),
                 "Thermal comfort model" => new FrmResultsTC(culture: _settings.AppCulture),
                 "LM-MMH model" => new FrmResultsLiberty(culture: _settings.AppCulture),

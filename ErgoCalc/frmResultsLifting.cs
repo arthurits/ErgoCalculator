@@ -3,20 +3,20 @@
 using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
-public partial class FrmResultNIOSH : Form, IChildResults
+public partial class frmResultsLifting : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
     private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
-    public FrmResultNIOSH()
+    public frmResultsLifting()
     {
         InitializeComponent();
         this.ActiveControl = this.rtbShowResult;
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public frmResultsLifting(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
         if (data is not null && data.GetType() == typeof(Job))
@@ -318,7 +318,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new FrmDataNIOSH(_job, _culture);
+        using var frm = new frmDataLifting(_job, _culture);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
@@ -336,7 +336,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job, _culture)
+        frmResultsLifting frmResults = new frmResultsLifting(_job, _culture)
         {
             MdiParent = this.MdiParent
         };

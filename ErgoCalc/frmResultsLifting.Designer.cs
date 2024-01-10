@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class FrmResultNIOSH
+    partial class frmResultsLifting
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmResultNIOSH));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmResultsLifting));
             this.toolStripNIOSH = new System.Windows.Forms.ToolStrip();
             this.toolStripNIOSH_Save = new System.Windows.Forms.ToolStripButton();
             this.toolStripNIOSH_Settings = new System.Windows.Forms.ToolStripButton();

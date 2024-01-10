@@ -5,7 +5,7 @@ using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
 
-public partial class FrmDataNIOSH : Form, IChildData
+public partial class frmDataLifting : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private IndexType _index;
@@ -14,7 +14,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     public object GetData => _job;
 
     // Default constructor
-    public FrmDataNIOSH()
+    public frmDataLifting()
     {
         // VS Designer initialization routine
         InitializeComponent();
@@ -31,7 +31,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
     /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
-    public FrmDataNIOSH(Job? job = null, CultureInfo? culture = null)
+    public frmDataLifting(Job? job = null, CultureInfo? culture = null)
         : this() // Call the base constructor
     {
         // Update the UI language first
