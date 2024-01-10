@@ -25,7 +25,7 @@ public partial class frmResultsLifting : Form, IChildResults
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
-    private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
+    private void FrmResultsLifting_Shown(object sender, EventArgs e)
     {
         ShowResults();
     }
@@ -66,7 +66,7 @@ public partial class frmResultsLifting : Form, IChildResults
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WriteString("Document type", "NIOSH lifting equation");
+        writer.WriteString("Document type", StringResources.DocumentTypeLifting);
 
         writer.WriteNumber("Model", (int)_job.Model);
         writer.WriteNumber("Index", _job.Index);
@@ -170,7 +170,7 @@ public partial class frmResultsLifting : Form, IChildResults
                 IndexType.IndexSLI => "SLI results",
                 _ => "Results",
             },
-            Title = "Save NIOSH model results",
+            Title = "Save lifting model results",
             OverwritePrompt = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
@@ -208,7 +208,7 @@ public partial class frmResultsLifting : Form, IChildResults
                         break;
                 }
 
-                FrmMain.SetFormTitle(this, StringResources.FormResultsNIOSH, SaveDlg.FileName);
+                FrmMain.SetFormTitle(this, StringResources.FormResultsLifting, SaveDlg.FileName);
 
                 using (new CenterWinDialog(this.MdiParent))
                 {
@@ -342,7 +342,7 @@ public partial class frmResultsLifting : Form, IChildResults
         };
 
         int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
-        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsNIOSH, this.Text[index..]);
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsLifting, this.Text[index..]);
 
         frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
         frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
@@ -361,8 +361,8 @@ public partial class frmResultsLifting : Form, IChildResults
 
     public ToolStrip ChildToolStrip
     {
-        get => toolStripNIOSH;
-        set => toolStripNIOSH = value;
+        get => toolStripLifting;
+        set => toolStripLifting = value;
     }
 
     public void FormatText()

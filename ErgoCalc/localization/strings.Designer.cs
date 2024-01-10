@@ -746,20 +746,20 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lifting and lowering model parameters.
+        /// </summary>
+        internal static string strFormDataLifting {
+            get {
+                return ResourceManager.GetString("strFormDataLifting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metabolic rate model parameters.
         /// </summary>
         internal static string strFormDataMetabolic {
             get {
                 return ResourceManager.GetString("strFormDataMetabolic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lifting and lowering model parameters.
-        /// </summary>
-        internal static string strFormDataNIOSH {
-            get {
-                return ResourceManager.GetString("strFormDataNIOSH", resourceCulture);
             }
         }
         
@@ -845,20 +845,20 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lifting model results.
+        /// </summary>
+        internal static string strFormResultsLifting {
+            get {
+                return ResourceManager.GetString("strFormResultsLifting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metabolic rate results.
         /// </summary>
         internal static string strFormResultsMetabolic {
             get {
                 return ResourceManager.GetString("strFormResultsMetabolic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lifting model results.
-        /// </summary>
-        internal static string strFormResultsNIOSH {
-            get {
-                return ResourceManager.GetString("strFormResultsNIOSH", resourceCulture);
             }
         }
         
@@ -1881,20 +1881,20 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lifting and lowering model (LI, CLI, SLI, VLI).
+        /// </summary>
+        internal static string strRadModelLifting {
+            get {
+                return ResourceManager.GetString("strRadModelLifting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metabolic rate.
         /// </summary>
         internal static string strRadModelMetabolic {
             get {
                 return ResourceManager.GetString("strRadModelMetabolic", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lifting and lowering model (LI, CLI, SLI, VLI).
-        /// </summary>
-        internal static string strRadModelNIOSH {
-            get {
-                return ResourceManager.GetString("strRadModelNIOSH", resourceCulture);
             }
         }
         

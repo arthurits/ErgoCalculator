@@ -147,7 +147,7 @@ namespace ErgoCalc
             this.Name = "FrmResultsTC";
             this.Text = "Thermal comfort results";
             this.Activated += new System.EventHandler(this.FrmResultsTC_Activated);
-            this.Shown += new System.EventHandler(this.frmResultsTC_Shown);
+            this.Shown += new System.EventHandler(this.FrmResultsTC_Shown);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();

@@ -183,7 +183,7 @@ namespace ErgoCalc
             this.Name = "FrmResultsLiberty";
             this.Text = "LM-MMH results";
             this.Activated += new System.EventHandler(this.FrmResultsLiberty_Activated);
-            this.Shown += new System.EventHandler(this.frmResultsLiberty_Shown);
+            this.Shown += new System.EventHandler(this.FrmResultsLiberty_Shown);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();

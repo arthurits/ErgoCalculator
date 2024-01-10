@@ -27,7 +27,7 @@ public partial class FrmNew : Form
                     case "radModelCLM":
                         Model = ModelType.CumulativeLifting;
                         break;
-                    case "radModelNIOSH":
+                    case "radModelLifting":
                         Model = ModelType.LiftingLowering;
                         break;
                     case "radModelStrain":
@@ -66,7 +66,7 @@ public partial class FrmNew : Form
         this.lblSelect.Text = StringResources.LblSelect;
         this.radModelWR.Text = StringResources.RadModelWR;
         this.radModelCLM.Text = StringResources.RadModelCLM;
-        this.radModelNIOSH.Text = StringResources.RadModelNIOSH;
+        this.radModelLifting.Text = StringResources.RadModelLifting;
         this.radModelStrain.Text = StringResources.RadModelStrain;
         this.radModelOCRA.Text = StringResources.RadModelOCRA;
         this.radModelMetabolic.Text = StringResources.RadModelMetabolic;

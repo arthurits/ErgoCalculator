@@ -29,45 +29,45 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmResultsLifting));
-            this.toolStripNIOSH = new System.Windows.Forms.ToolStrip();
-            this.toolStripNIOSH_Save = new System.Windows.Forms.ToolStripButton();
-            this.toolStripNIOSH_Settings = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLifting = new System.Windows.Forms.ToolStrip();
+            this.toolStripLifting_Save = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLifting_Settings = new System.Windows.Forms.ToolStripButton();
             this.rtbShowResult = new System.Windows.Forms.RichTextBox();
-            this.toolStripNIOSH.SuspendLayout();
+            this.toolStripLifting.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripNIOSH
             // 
-            this.toolStripNIOSH.ImageScalingSize = new System.Drawing.Size(48, 48);
-            this.toolStripNIOSH.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripNIOSH_Save,
-            this.toolStripNIOSH_Settings});
-            this.toolStripNIOSH.Location = new System.Drawing.Point(0, 0);
-            this.toolStripNIOSH.Name = "toolStripNIOSH";
-            this.toolStripNIOSH.Size = new System.Drawing.Size(975, 70);
-            this.toolStripNIOSH.TabIndex = 2;
-            this.toolStripNIOSH.Text = "toolStrip1";
-            this.toolStripNIOSH.Visible = false;
+            this.toolStripLifting.ImageScalingSize = new System.Drawing.Size(48, 48);
+            this.toolStripLifting.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLifting_Save,
+            this.toolStripLifting_Settings});
+            this.toolStripLifting.Location = new System.Drawing.Point(0, 0);
+            this.toolStripLifting.Name = "toolStripNIOSH";
+            this.toolStripLifting.Size = new System.Drawing.Size(975, 70);
+            this.toolStripLifting.TabIndex = 2;
+            this.toolStripLifting.Text = "toolStrip1";
+            this.toolStripLifting.Visible = false;
             // 
             // toolStripNIOSH_Save
             // 
-            this.toolStripNIOSH_Save.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNIOSH_Save.Image")));
-            this.toolStripNIOSH_Save.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripNIOSH_Save.MergeAction = System.Windows.Forms.MergeAction.Replace;
-            this.toolStripNIOSH_Save.Name = "toolStripNIOSH_Save";
-            this.toolStripNIOSH_Save.Size = new System.Drawing.Size(52, 67);
-            this.toolStripNIOSH_Save.Text = "Save";
-            this.toolStripNIOSH_Save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripLifting_Save.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNIOSH_Save.Image")));
+            this.toolStripLifting_Save.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripLifting_Save.MergeAction = System.Windows.Forms.MergeAction.Replace;
+            this.toolStripLifting_Save.Name = "toolStripNIOSH_Save";
+            this.toolStripLifting_Save.Size = new System.Drawing.Size(52, 67);
+            this.toolStripLifting_Save.Text = "Save";
+            this.toolStripLifting_Save.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripNIOSH_Settings
             // 
-            this.toolStripNIOSH_Settings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNIOSH_Settings.Image")));
-            this.toolStripNIOSH_Settings.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripNIOSH_Settings.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
-            this.toolStripNIOSH_Settings.Name = "toolStripNIOSH_Settings";
-            this.toolStripNIOSH_Settings.Size = new System.Drawing.Size(53, 67);
-            this.toolStripNIOSH_Settings.Text = "Settings";
-            this.toolStripNIOSH_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripLifting_Settings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripNIOSH_Settings.Image")));
+            this.toolStripLifting_Settings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripLifting_Settings.MergeAction = System.Windows.Forms.MergeAction.MatchOnly;
+            this.toolStripLifting_Settings.Name = "toolStripNIOSH_Settings";
+            this.toolStripLifting_Settings.Size = new System.Drawing.Size(53, 67);
+            this.toolStripLifting_Settings.Text = "Settings";
+            this.toolStripLifting_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // rtbShowResult
             // 
@@ -84,28 +84,28 @@
             this.rtbShowResult.Text = "";
             this.rtbShowResult.WordWrap = false;
             // 
-            // FrmResultNIOSH
+            // FrmResultsLifting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 538);
             this.Controls.Add(this.rtbShowResult);
-            this.Controls.Add(this.toolStripNIOSH);
+            this.Controls.Add(this.toolStripLifting);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.Name = "FrmResultNIOSH";
-            this.Text = "NIOSH model results";
-            this.Shown += new System.EventHandler(this.frmResultNIOSHModel_Shown);
-            this.toolStripNIOSH.ResumeLayout(false);
-            this.toolStripNIOSH.PerformLayout();
+            this.Name = "FrmResultsLifting";
+            this.Text = "Lifting model results";
+            this.Shown += new System.EventHandler(this.FrmResultsLifting_Shown);
+            this.toolStripLifting.ResumeLayout(false);
+            this.toolStripLifting.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ToolStrip toolStripNIOSH;
-        private System.Windows.Forms.ToolStripButton toolStripNIOSH_Save;
-        private System.Windows.Forms.ToolStripButton toolStripNIOSH_Settings;
+        private System.Windows.Forms.ToolStrip toolStripLifting;
+        private System.Windows.Forms.ToolStripButton toolStripLifting_Save;
+        private System.Windows.Forms.ToolStripButton toolStripLifting_Settings;
         private RichTextBox rtbShowResult;
     }
 }

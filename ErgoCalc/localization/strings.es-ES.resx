@@ -253,7 +253,7 @@ los campos a sus valores por defecto?</value>
   <data name="strFormResultsMetabolic" xml:space="preserve">
     <value>Resultados de consumo metabólico</value>
   </data>
-  <data name="strFormResultsNIOSH" xml:space="preserve">
+  <data name="strFormResultsLifting" xml:space="preserve">
     <value>Resultados del levantamiento manual de cargas</value>
   </data>
   <data name="strFormResultsStrainIndex" xml:space="preserve">
@@ -572,7 +572,7 @@ salir de la aplicación?</value>
   <data name="strRadModelMetabolic" xml:space="preserve">
     <value>Consumo metabólico</value>
   </data>
-  <data name="strRadModelNIOSH" xml:space="preserve">
+  <data name="strRadModelLifting" xml:space="preserve">
     <value>Levantamiento de cargas (LI, CLI, SLI, VLI)</value>
   </data>
   <data name="strRadModelOCRA" xml:space="preserve">
@@ -863,7 +863,7 @@ salir de la aplicación?</value>
   <data name="strFormDataWR" xml:space="preserve">
     <value>Parámetros del modelo WR</value>
   </data>
-  <data name="strFormDataNIOSH" xml:space="preserve">
+  <data name="strFormDataLifting" xml:space="preserve">
     <value>Parámetros de la manipulación manual de cargas</value>
   </data>
   <data name="strFormDataCLM" xml:space="preserve">

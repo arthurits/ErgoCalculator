@@ -34,7 +34,7 @@ public partial class FrmResultsTC : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    private void frmResultsTC_Shown(object sender, EventArgs e)
+    private void FrmResultsTC_Shown(object sender, EventArgs e)
     {
         ShowResults();
     }
@@ -172,7 +172,7 @@ public partial class FrmResultsTC : Form, IChildResults
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WriteString("Document type", "Thermal comfort model");
+        writer.WriteString("Document type", StringResources.DocumentTypeTC);
         writer.WriteNumber("Number of tasks", _job.NumberTasks);
 
         writer.WritePropertyName("Tasks");

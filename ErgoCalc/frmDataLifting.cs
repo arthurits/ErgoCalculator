@@ -582,7 +582,7 @@ public partial class frmDataLifting : Form, IChildData
     {
         StringResources.Culture = culture;
 
-        this.Text = StringResources.FormDataNIOSH;
+        this.Text = StringResources.FormDataLifting;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;

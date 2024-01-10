@@ -55,7 +55,7 @@ public partial class FrmResultsCLM : Form, IChildResults
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WriteString("Document type", "Comprehensive lifting model");
+        writer.WriteString("Document type", StringResources.DocumentTypeCLM);
         writer.WriteNumber("Number of tasks", _job.NumberTasks);
 
         writer.WritePropertyName("Tasks");

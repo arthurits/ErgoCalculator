@@ -58,7 +58,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => StringResources.FormResultsWR,
                     ModelType.CumulativeLifting => StringResources.FormResultsCLM,
-                    ModelType.LiftingLowering => StringResources.FormResultsNIOSH,
+                    ModelType.LiftingLowering => StringResources.FormResultsLifting,
                     ModelType.StrainIndex => StringResources.FormResultsStrainIndex,
                     ModelType.OcraCheck => StringResources.FormResultsOCRAchecklist,
                     ModelType.MetabolicRate => StringResources.FormResultsMetabolic,
@@ -131,7 +131,7 @@ partial class FrmMain
             Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(),
-                "NIOSH lifting equation" => new frmResultsLifting(culture: _settings.AppCulture),
+                "Lifting model" => new frmResultsLifting(culture: _settings.AppCulture),
                 "Strain index" => new FrmResultsStrainIndex(culture: _settings.AppCulture),
                 "Thermal comfort model" => new FrmResultsTC(culture: _settings.AppCulture),
                 "LM-MMH model" => new FrmResultsLiberty(culture: _settings.AppCulture),
@@ -149,7 +149,7 @@ partial class FrmMain
                     string strTextTitle = strType switch
                     {
                         "Work-Rest model" => StringResources.FormResultsWR,
-                        "NIOSH lifting equation" => StringResources.FormResultsNIOSH,
+                        "Lifting model" => StringResources.FormResultsLifting,
                         "Strain index" => StringResources.FormResultsStrainIndex,
                         "Thermal comfort model" => StringResources.FormResultsTC,
                         "LM-MMH model" => StringResources.FormResultsLiberty,

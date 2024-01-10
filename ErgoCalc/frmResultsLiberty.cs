@@ -34,7 +34,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    private void frmResultsLiberty_Shown(object sender, EventArgs e)
+    private void FrmResultsLiberty_Shown(object sender, EventArgs e)
     {
         ShowResults();
     }
@@ -190,7 +190,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WriteString("Document type", "LM-MMH model");
+        writer.WriteString("Document type", StringResources.DocumentTypeLiberty);
         writer.WriteNumber("Number of tasks", _job.NumberTasks);
         
         writer.WritePropertyName("Tasks");

@@ -19,6 +19,13 @@ public static class StringResources
     public static string BtnExample => StringRM.GetString("strBtnExample", Culture) ?? "&Example";
     public static string BtnReset => StringRM.GetString("strBtnReset", Culture) ?? "&Reset";
 
+    // Document type saving
+    public static string DocumentTypeLifting => "Lifting model";
+    public static string DocumentTypeCLM => "Comprehensive lifting model";
+    public static string DocumentTypeLiberty => "LM-MMH model";
+    public static string DocumentTypeStrainIndex => "Strain index";
+    public static string DocumentTypeTC => "Thermal comfort model";
+    public static string DocumentTypeWR => "Work-Rest model";
 
     public static string Case => StringRM.GetString("strCase", Culture) ?? "Case";
     public static string NumberOfCases => StringRM.GetString("strNumberCases", Culture) ?? "Number of cases";
@@ -36,7 +43,7 @@ public static class StringResources
     public static string FormLanguageTitle => StringRM.GetString("strFormLanguageTitle", Culture) ?? "Select culture";
     public static string FormNewTitle => StringRM.GetString("strFormNewTitle", Culture) ?? "New model";
 
-    public static string FormDataNIOSH => StringRM.GetString("strFormDataNIOSH", Culture) ?? "NIOSH model parameters";
+    public static string FormDataLifting => StringRM.GetString("strFormDataLifting", Culture) ?? "Lifting and lowering model parameters";
     public static string FormDataCLM => StringRM.GetString("strFormDataCLM", Culture) ?? "CLM model parameters";
     public static string FormDataLiberty => StringRM.GetString("strFormDataLiberty", Culture) ?? "LM-MMH model parameters";
     public static string FormDataStrainIndex => StringRM.GetString("strFormDataStrainIndex", Culture) ?? "Strain Index model parameters";
@@ -44,7 +51,7 @@ public static class StringResources
     public static string FormDataWR => StringRM.GetString("strFormDataWR", Culture) ?? "WR model parameters";
     public static string FormDataMetabolic => StringRM.GetString("strFormDataMetabolic", Culture) ?? "Metabolic rate model parameters";
     public static string FormDataOCRAchecklist => StringRM.GetString("strFormDataOCRAcheck", Culture) ?? "OCRA checklist model parameters";
-    public static string FormResultsNIOSH => StringRM.GetString("strFormResultsNIOSH", Culture) ?? "NIOSH model results";
+    public static string FormResultsLifting => StringRM.GetString("strFormResultsLifting", Culture) ?? "Lifting model results";
     public static string FormResultsCLM => StringRM.GetString("strFormResultsCLM", Culture) ?? "CLM model results";
     public static string FormResultsLiberty => StringRM.GetString("strFormResultsLiberty", Culture) ?? "LM-MMH results";
     public static string FormResultsStrainIndex => StringRM.GetString("strFormResultsStrainIndex", Culture) ?? "Strain Index results";
@@ -98,7 +105,7 @@ public static class StringResources
     public static string LblSelect => StringRM.GetString("strLblSelect", Culture) ?? "Please, select a model to start working with:";
     public static string RadModelWR => StringRM.GetString("strRadModelWR", Culture) ?? "WorkRest model (1991)";
     public static string RadModelCLM => StringRM.GetString("strRadModelCLM", Culture) ?? "Comprehensive lifting model (CLM)";
-    public static string RadModelNIOSH => StringRM.GetString("strRadModelNIOSH", Culture) ?? "NIOSH lifting equation (LI, CLI, SLI, VLI)";
+    public static string RadModelLifting => StringRM.GetString("strRadModelLifting", Culture) ?? "Lifting equation (LI, CLI, SLI, VLI)";
     public static string RadModelStrain => StringRM.GetString("strRadModelStrain", Culture) ?? "Revised strain index (RSI, COSI, CUSI)";
     public static string RadModelOCRA => StringRM.GetString("strRadModelOCRA", Culture) ?? "OCRA checklist";
     public static string RadModelMetabolic => StringRM.GetString("strRadModelMetabolic", Culture) ?? "Metabolic rate";
@@ -134,7 +141,7 @@ public static class StringResources
     public static string MsgBoxExit => StringRM.GetString("strMsgBoxExit", Culture) ?? "Are you sure you want to exit" + Environment.NewLine + "the application?";
     public static string MsgBoxExitTitle => StringRM.GetString("strMsgBoxExitTitle", Culture) ?? "Exit?";
 
-    // NIOSH lifting model
+    // Lifting model
     public static string NIOSH_AM => StringRM.GetString("strNIOSH_AM", Culture) ?? "Twisting angle multiplier (AM):";
     public static string NIOSH_Angle => StringRM.GetString("strNIOSH_Angle", Culture) ?? "Twisting angle (°):";
     public static string NIOSH_CM => StringRM.GetString("strNIOSH_CM", Culture) ?? "Coupling multiplier (CM):";

@@ -253,7 +253,7 @@ to their default values?</value>
   <data name="strFormResultsMetabolic" xml:space="preserve">
     <value>Metabolic rate results</value>
   </data>
-  <data name="strFormResultsNIOSH" xml:space="preserve">
+  <data name="strFormResultsLifting" xml:space="preserve">
     <value>Lifting model results</value>
   </data>
   <data name="strFormResultsOCRAcheck" xml:space="preserve">
@@ -575,7 +575,7 @@ the application?</value>
   <data name="strRadModelMetabolic" xml:space="preserve">
     <value>Metabolic rate</value>
   </data>
-  <data name="strRadModelNIOSH" xml:space="preserve">
+  <data name="strRadModelLifting" xml:space="preserve">
     <value>Lifting and lowering model (LI, CLI, SLI, VLI)</value>
   </data>
   <data name="strRadModelOCRA" xml:space="preserve">
@@ -863,7 +863,7 @@ the application?</value>
   <data name="strFormDataWR" xml:space="preserve">
     <value>WR model parameters</value>
   </data>
-  <data name="strFormDataNIOSH" xml:space="preserve">
+  <data name="strFormDataLifting" xml:space="preserve">
     <value>Lifting and lowering model parameters</value>
   </data>
   <data name="strFormDataCLM" xml:space="preserve">
