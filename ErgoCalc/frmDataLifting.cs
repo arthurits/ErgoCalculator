@@ -299,7 +299,7 @@ public partial class frmDataLifting : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.NIOSH_DataInputHeaders);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.Lifting_DataInputHeaders);
     }
 
     /// <summary>
@@ -308,7 +308,7 @@ public partial class frmDataLifting : Form, IChildData
     private void FormatRows()
     {
         // Get the couplig type texts
-        string[] strGender = StringResources.NIOSH_GenderType.Split(", ");
+        string[] strGender = StringResources.Lifting_GenderType.Split(", ");
         DataTable tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
@@ -324,7 +324,7 @@ public partial class frmDataLifting : Form, IChildData
 
 
         // Get the couplig type texts
-        string[] strCoupling = StringResources.NIOSH_CouplingType.Split(", ");
+        string[] strCoupling = StringResources.Lifting_CouplingType.Split(", ");
         
         // Create custom cells with combobox display
         tableC = new();
@@ -342,7 +342,7 @@ public partial class frmDataLifting : Form, IChildData
         gridVariables.Rows[9].Cells[0] = celdaC;
 
         // Get the additional multiplier texts
-        string[] strTrueFalse = StringResources.NIOSH_OneHandedValue.Split(", ");
+        string[] strTrueFalse = StringResources.Lifting_OneHandedValue.Split(", ");
         tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));

@@ -55,7 +55,7 @@ public partial class frmResultsLifting : Form, IChildResults
 
         // Show results
         //rtbShowResult.Clear();
-        rtbShowResult.Text = _job.ToString(StringResources.NIOSH_ResultsHeaders, _culture);
+        rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, _culture);
         FormatText();
     }
 
@@ -373,8 +373,8 @@ public partial class frmResultsLifting : Form, IChildResults
         rtbShowResult.SelectionTabs = (this as IChildResults).ComputeTabs(g,
                                                                         rtbShowResult.Font,
                                                                         _job.NumberSubTasks,
-                                                                        StringResources.NIOSH_RowHeaders,
-                                                                        StringResources.NIOSH_ColumnHeaders);
+                                                                        StringResources.Lifting_RowHeaders,
+                                                                        StringResources.Lifting_ColumnHeaders);
         rtbShowResult.DeselectAll();
 
         // Formats (font, size, and style) the text
@@ -382,13 +382,13 @@ public partial class frmResultsLifting : Form, IChildResults
         while (true)
         {
             // Underline
-            nStart = rtbShowResult.Find(StringResources.NIOSH_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
             rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
 
-            nStart = rtbShowResult.Find(StringResources.NIOSH_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
@@ -400,7 +400,7 @@ public partial class frmResultsLifting : Form, IChildResults
 
         if (_job.Model == IndexType.IndexLI)
         {
-            nStart = rtbShowResult.Find(StringResources.NIOSH_LI, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_LI, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart > -1)
             {//nEnd = rtbShowResult.Text.Length;
                 nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
@@ -411,7 +411,7 @@ public partial class frmResultsLifting : Form, IChildResults
 
         while (true)
         {
-            nStart = rtbShowResult.Find(StringResources.NIOSH_Index, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_Index, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             //nEnd = rtbShowResult.Text.Length;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);

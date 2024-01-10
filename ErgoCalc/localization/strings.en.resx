@@ -461,94 +461,94 @@ the application?</value>
   <data name="strMsgBoxExitTitle" xml:space="preserve">
     <value>Exit?</value>
   </data>
-  <data name="strNIOSH_AM" xml:space="preserve">
+  <data name="strLifting_AM" xml:space="preserve">
     <value>Twisting angle multiplier (AM):</value>
   </data>
-  <data name="strNIOSH_Angle" xml:space="preserve">
+  <data name="strLifting_Angle" xml:space="preserve">
     <value>Twisting angle (°):</value>
   </data>
-  <data name="strNIOSH_CM" xml:space="preserve">
+  <data name="strLifting_CM" xml:space="preserve">
     <value>Coupling multiplier (CM):</value>
   </data>
-  <data name="strNIOSH_Coupling" xml:space="preserve">
+  <data name="strLifting_Coupling" xml:space="preserve">
     <value>Coupling:</value>
   </data>
-  <data name="strNIOSH_CouplingType" xml:space="preserve">
+  <data name="strLifting_CouplingType" xml:space="preserve">
     <value>Poor, Fair, Good</value>
   </data>
-  <data name="strNIOSH_Data" xml:space="preserve">
+  <data name="strLifting_Data" xml:space="preserve">
     <value>Initial data</value>
   </data>
-  <data name="strNIOSH_DM" xml:space="preserve">
+  <data name="strLifting_DM" xml:space="preserve">
     <value>Distance multiplier (DM):</value>
   </data>
-  <data name="strNIOSH_Duration" xml:space="preserve">
+  <data name="strLifting_Duration" xml:space="preserve">
     <value>Task duration (hours):</value>
   </data>
-  <data name="strNIOSH_Equation" xml:space="preserve">
+  <data name="strLifting_Equation" xml:space="preserve">
     <value>The lifting index (LI) is computed as follows:</value>
   </data>
-  <data name="strNIOSH_EquationIndex" xml:space="preserve">
+  <data name="strLifting_EquationIndex" xml:space="preserve">
     <value>Index</value>
   </data>
-  <data name="strNIOSH_EquationWeight" xml:space="preserve">
+  <data name="strLifting_EquationWeight" xml:space="preserve">
     <value>Weight</value>
   </data>
-  <data name="strNIOSH_FM" xml:space="preserve">
+  <data name="strLifting_FM" xml:space="preserve">
     <value>Frequency multiplier (FM):</value>
   </data>
-  <data name="strNIOSH_FMa" xml:space="preserve">
+  <data name="strLifting_FMa" xml:space="preserve">
     <value>Frequency A multiplier (FMa):</value>
   </data>
-  <data name="strNIOSH_FMb" xml:space="preserve">
+  <data name="strLifting_FMb" xml:space="preserve">
     <value>Frequency B multiplier (FMb):</value>
   </data>
-  <data name="strNIOSH_Frequency" xml:space="preserve">
+  <data name="strLifting_Frequency" xml:space="preserve">
     <value>Lifting frequency (times/min):</value>
   </data>
-  <data name="strNIOSH_FrequencyA" xml:space="preserve">
+  <data name="strLifting_FrequencyA" xml:space="preserve">
     <value>Lifting frequency A (times/min):</value>
   </data>
-  <data name="strNIOSH_FrequencyB" xml:space="preserve">
+  <data name="strLifting_FrequencyB" xml:space="preserve">
     <value>Lifting frequency B (times/min):</value>
   </data>
-  <data name="strNIOSH_HM" xml:space="preserve">
+  <data name="strLifting_HM" xml:space="preserve">
     <value>Horizontal multiplier (HM):</value>
   </data>
-  <data name="strNIOSH_HorizontalD" xml:space="preserve">
+  <data name="strLifting_HorizontalD" xml:space="preserve">
     <value>Horizontal distance (cm):</value>
   </data>
-  <data name="strNIOSH_IF" xml:space="preserve">
+  <data name="strLifting_IF" xml:space="preserve">
     <value>Freq-indep lifting index (FILI):</value>
   </data>
-  <data name="strNIOSH_Index" xml:space="preserve">
+  <data name="strLifting_Index" xml:space="preserve">
     <value>The lifting index is:</value>
   </data>
-  <data name="strNIOSH_MassRef" xml:space="preserve">
+  <data name="strLifting_MassRef" xml:space="preserve">
     <value>Mass reference (kg):</value>
   </data>
-  <data name="strNIOSH_LI" xml:space="preserve">
+  <data name="strLifting_LI" xml:space="preserve">
     <value>Lifting index (LI):</value>
   </data>
-  <data name="strNIOSH_Multipliers" xml:space="preserve">
+  <data name="strLifting_Multipliers" xml:space="preserve">
     <value>Multipliers</value>
   </data>
-  <data name="strNIOSH_Order" xml:space="preserve">
+  <data name="strLifting_Order" xml:space="preserve">
     <value>Subtask order:</value>
   </data>
-  <data name="strNIOSH_Results" xml:space="preserve">
+  <data name="strLifting_Results" xml:space="preserve">
     <value>These are the results obtained from the ISO 11228-1:2021 norm model:</value>
   </data>
-  <data name="strNIOSH_VerticalD" xml:space="preserve">
+  <data name="strLifting_VerticalD" xml:space="preserve">
     <value>Vertical distance (cm):</value>
   </data>
-  <data name="strNIOSH_VerticalT" xml:space="preserve">
+  <data name="strLifting_VerticalT" xml:space="preserve">
     <value>Vertical travel distance (cm):</value>
   </data>
-  <data name="strNIOSH_VM" xml:space="preserve">
+  <data name="strLifting_VM" xml:space="preserve">
     <value>Vertical multiplier (VM):</value>
   </data>
-  <data name="strNIOSH_Weight" xml:space="preserve">
+  <data name="strLifting_Weight" xml:space="preserve">
     <value>Weight lifted (kg):</value>
   </data>
   <data name="strNumberCases" xml:space="preserve">
@@ -1010,28 +1010,28 @@ the application?</value>
   <data name="OCRA_Index" xml:space="preserve">
     <value>The OCRA checklist index is:</value>
   </data>
-  <data name="strNIOSH_OneHanded" xml:space="preserve">
+  <data name="strLifting_OneHanded" xml:space="preserve">
     <value>One-handed?</value>
   </data>
-  <data name="strNIOSH_OneHandedValue" xml:space="preserve">
+  <data name="strLifting_OneHandedValue" xml:space="preserve">
     <value>False, True</value>
   </data>
-  <data name="strNIOSH_OM" xml:space="preserve">
+  <data name="strLifting_OM" xml:space="preserve">
     <value>One-handed multiplier (OM):</value>
   </data>
-  <data name="strNIOSH_TwoPerson" xml:space="preserve">
+  <data name="strLifting_TwoPerson" xml:space="preserve">
     <value>Two or more persons?</value>
   </data>
-  <data name="strNIOSH_PM" xml:space="preserve">
+  <data name="strLifting_PM" xml:space="preserve">
     <value>Two-person multiplier (PM):</value>
   </data>
-  <data name="strNIOSH_EM" xml:space="preserve">
+  <data name="strLifting_EM" xml:space="preserve">
     <value>Extended time multiplier (EM):</value>
   </data>
-  <data name="strNIOSH_Gender" xml:space="preserve">
+  <data name="strLifting_Gender" xml:space="preserve">
     <value>Gender:</value>
   </data>
-  <data name="strNIOSH_Age" xml:space="preserve">
+  <data name="strLifting_Age" xml:space="preserve">
     <value>Age (years):</value>
   </data>
 </root>

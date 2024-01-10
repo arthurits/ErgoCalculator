@@ -142,149 +142,147 @@ public static class StringResources
     public static string MsgBoxExitTitle => StringRM.GetString("strMsgBoxExitTitle", Culture) ?? "Exit?";
 
     // Lifting model
-    public static string NIOSH_AM => StringRM.GetString("strNIOSH_AM", Culture) ?? "Twisting angle multiplier (AM):";
-    public static string NIOSH_Angle => StringRM.GetString("strNIOSH_Angle", Culture) ?? "Twisting angle (°):";
-    public static string NIOSH_CM => StringRM.GetString("strNIOSH_CM", Culture) ?? "Coupling multiplier (CM):";
-    public static string NIOSH_Coupling => StringRM.GetString("strNIOSH_Coupling", Culture) ?? "Coupling:";
-    public static string NIOSH_Data => StringRM.GetString("strNIOSH_Data", Culture) ?? "Initial data";
-    public static string NIOSH_DM => StringRM.GetString("strNIOSH_DM", Culture) ?? "Distance multiplier (DM):";
-    public static string NIOSH_Duration => StringRM.GetString("strNIOSH_Duration", Culture) ?? "Task duration (hours):";
-    public static string NIOSH_Equation => StringRM.GetString("strNIOSH_Equation", Culture) ?? "The NIOSH lifting index is computed as follows:";
-    public static string NIOSH_EquationIndex => StringRM.GetString("strNIOSH_EquationIndex", Culture) ?? "Index";
-    public static string NIOSH_EquationWeight => StringRM.GetString("strNIOSH_EquationWeight", Culture) ?? "Weight";
-    public static string NIOSH_FM => StringRM.GetString("strNIOSH_FM", Culture) ?? "Frequency multiplier (FM):";
-    public static string NIOSH_FMa => StringRM.GetString("strNIOSH_FMa", Culture) ?? "Frequency A multiplier (FMa):";
-    public static string NIOSH_FMb => StringRM.GetString("strNIOSH_FMb", Culture) ?? "Frequency B multiplier (FMb):";
-    public static string NIOSH_Frequency => StringRM.GetString("strNIOSH_Frequency", Culture) ?? "Lifting frequency (times / min):";
-    public static string NIOSH_FrequencyA => StringRM.GetString("strNIOSH_FrequencyA", Culture) ?? "Lifting frequency A (times / min):";
-    public static string NIOSH_FrequencyB => StringRM.GetString("strNIOSH_FrequencyB", Culture) ?? "Lifting frequency B (times / min):";
-    public static string NIOSH_HM => StringRM.GetString("strNIOSH_HM", Culture) ?? "Horizontal multiplier (HM):";
-    public static string NIOSH_HorizontalD => StringRM.GetString("strNIOSH_HorizontalD", Culture) ?? "Horizontal distance (cm):";
-    public static string NIOSH_IF => StringRM.GetString("strNIOSH_IF", Culture) ?? "Freq-indep lifting index (FILI):";
-    public static string NIOSH_Index => StringRM.GetString("strNIOSH_Index", Culture) ?? "The NIOSH lifting index is:";
-    public static string NIOSH_MassRef => StringRM.GetString("strNIOSH_MassRef", Culture) ?? "Mass reference (kg):";
-    public static string NIOSH_LI => StringRM.GetString("strNIOSH_LI", Culture) ?? "Lifting index (LI):";
-    public static string NIOSH_Multipliers => StringRM.GetString("strNIOSH_Multipliers", Culture) ?? "Multipliers";
-    public static string NIOSH_SubtasksOrder => StringRM.GetString("strNIOSH_Order", Culture) ?? "Subtask order:";
-    public static string NIOSH_Results => StringRM.GetString("strNIOSH_Results", Culture) ?? "These are the results obtained from the NIOSH lifting model:";
-    public static string NIOSH_VerticalD => StringRM.GetString("strNIOSH_VerticalD", Culture) ?? "Vertical distance (cm):";
-    public static string NIOSH_VerticalT => StringRM.GetString("strNIOSH_VerticalT", Culture) ?? "Vertical travel distance (cm):";
-    public static string NIOSH_VM => StringRM.GetString("strNIOSH_VM", Culture) ?? "Vertical multiplier (VM):";
-    public static string NIOSH_Weight => StringRM.GetString("strNIOSH_Weight", Culture) ?? "Weight lifted (kg):";
-    public static string NIOSH_CouplingType => StringRM.GetString("strNIOSH_CouplingType", Culture) ?? "Poor, Fair, Good";
-    public static string NIOSH_OneHanded => StringRM.GetString("strNIOSH_OneHanded", Culture) ?? "One-handed?";
-    public static string NIOSH_OneHandedValue => StringRM.GetString("strNIOSH_OneHandedValue", Culture) ?? "false, true";
-    public static string NIOSH_OM => StringRM.GetString("strNIOSH_OM", Culture) ?? "One-handed multiplier (OM):";
-    public static string NIOSH_TwoPerson => StringRM.GetString("strNIOSH_TwoPerson", Culture) ?? "Two person?";
-    public static string NIOSH_PM => StringRM.GetString("strNIOSH_PM", Culture) ?? "Two person multiplier (PM):";
-    public static string NIOSH_EM => StringRM.GetString("strNIOSH_EM", Culture) ?? "Extended time multiplier (EM):";
-    public static string NIOSH_GenderType => Gender;
-    public static string NIOSH_Gender => StringRM.GetString("strNIOSH_Gender", Culture) ?? "Gender:";
-    public static string NIOSH_Age => StringRM.GetString("strNIOSH_Age", Culture) ?? "Age:";
-    public static string[] NIOSH_RowHeaders => new[] {
-        NIOSH_Data,
-        NIOSH_Gender,
-        NIOSH_Age,
-        NIOSH_Weight,
-        NIOSH_HorizontalD,
-        NIOSH_VerticalD,
-        NIOSH_VerticalT,
-        NIOSH_Frequency,
-        NIOSH_FrequencyA,
-        NIOSH_FrequencyB,
-        NIOSH_Duration,
-        NIOSH_Angle,
-        NIOSH_Coupling,
-        NIOSH_OneHanded,
-        NIOSH_TwoPerson,
-        NIOSH_Multipliers,
-        NIOSH_MassRef,
-        NIOSH_HM,
-        NIOSH_VM,
-        NIOSH_DM,
-        NIOSH_FM,
-        NIOSH_FMa,
-        NIOSH_FMb,
-        NIOSH_AM,
-        NIOSH_CM,
-        NIOSH_OM,
-        NIOSH_PM,
-        NIOSH_EM,
-        NIOSH_IF,
-        NIOSH_LI,
-        NIOSH_SubtasksOrder
-    };
-    public static string[] NIOSH_ColumnHeaders => new[]
-    {
+    public static string Lifting_AM => StringRM.GetString("strLifting_AM", Culture) ?? "Twisting angle multiplier (AM):";
+    public static string Lifting_Angle => StringRM.GetString("strLifting_Angle", Culture) ?? "Twisting angle (°):";
+    public static string Lifting_CM => StringRM.GetString("strLifting_CM", Culture) ?? "Coupling multiplier (CM):";
+    public static string Lifting_Coupling => StringRM.GetString("strLifting_Coupling", Culture) ?? "Coupling:";
+    public static string Lifting_CouplingType => StringRM.GetString("strLifting_CouplingType", Culture) ?? "Poor, Fair, Good";
+    public static string Lifting_Data => StringRM.GetString("strLifting_Data", Culture) ?? "Initial data";
+    public static string Lifting_DM => StringRM.GetString("strLifting_DM", Culture) ?? "Distance multiplier (DM):";
+    public static string Lifting_Duration => StringRM.GetString("strLifting_Duration", Culture) ?? "Task duration (hours):";
+    public static string Lifting_Equation => StringRM.GetString("strLifting_Equation", Culture) ?? "The lifting index (LI) is computed as follows:";
+    public static string Lifting_EquationIndex => StringRM.GetString("strLifting_EquationIndex", Culture) ?? "Index";
+    public static string Lifting_EquationWeight => StringRM.GetString("strLifting_EquationWeight", Culture) ?? "Weight";
+    public static string Lifting_FM => StringRM.GetString("strLifting_FM", Culture) ?? "Frequency multiplier (FM):";
+    public static string Lifting_FMa => StringRM.GetString("strLifting_FMa", Culture) ?? "Frequency A multiplier (FMa):";
+    public static string Lifting_FMb => StringRM.GetString("strLifting_FMb", Culture) ?? "Frequency B multiplier (FMb):";
+    public static string Lifting_Frequency => StringRM.GetString("strLifting_Frequency", Culture) ?? "Lifting frequency (times / min):";
+    public static string Lifting_FrequencyA => StringRM.GetString("strLifting_FrequencyA", Culture) ?? "Lifting frequency A (times / min):";
+    public static string Lifting_FrequencyB => StringRM.GetString("strLifting_FrequencyB", Culture) ?? "Lifting frequency B (times / min):";
+    public static string Lifting_HM => StringRM.GetString("strLifting_HM", Culture) ?? "Horizontal multiplier (HM):";
+    public static string Lifting_HorizontalD => StringRM.GetString("strLifting_HorizontalD", Culture) ?? "Horizontal distance (cm):";
+    public static string Lifting_IF => StringRM.GetString("strLifting_IF", Culture) ?? "Freq-indep lifting index (FILI):";
+    public static string Lifting_Index => StringRM.GetString("strLifting_Index", Culture) ?? "The NIOSH lifting index is:";
+    public static string Lifting_MassRef => StringRM.GetString("strLifting_MassRef", Culture) ?? "Mass reference (kg):";
+    public static string Lifting_LI => StringRM.GetString("strLifting_LI", Culture) ?? "Lifting index (LI):";
+    public static string Lifting_Multipliers => StringRM.GetString("strLifting_Multipliers", Culture) ?? "Multipliers";
+    public static string Lifting_SubtasksOrder => StringRM.GetString("strLifting_Order", Culture) ?? "Subtask order:";
+    public static string Lifting_Results => StringRM.GetString("strLifting_Results", Culture) ?? "These are the results obtained from the NIOSH lifting model:";
+    public static string Lifting_VerticalD => StringRM.GetString("strLifting_VerticalD", Culture) ?? "Vertical distance (cm):";
+    public static string Lifting_VerticalT => StringRM.GetString("strLifting_VerticalT", Culture) ?? "Vertical travel distance (cm):";
+    public static string Lifting_VM => StringRM.GetString("strLifting_VM", Culture) ?? "Vertical multiplier (VM):";
+    public static string Lifting_Weight => StringRM.GetString("strLifting_Weight", Culture) ?? "Weight lifted (kg):";
+    
+    public static string Lifting_OneHanded => StringRM.GetString("strLifting_OneHanded", Culture) ?? "One-handed?";
+    public static string Lifting_OneHandedValue => StringRM.GetString("strLifting_OneHandedValue", Culture) ?? "false, true";
+    public static string Lifting_OM => StringRM.GetString("strLifting_OM", Culture) ?? "One-handed multiplier (OM):";
+    public static string Lifting_TwoPerson => StringRM.GetString("strLifting_TwoPerson", Culture) ?? "Two person?";
+    public static string Lifting_PM => StringRM.GetString("strLifting_PM", Culture) ?? "Two person multiplier (PM):";
+    public static string Lifting_EM => StringRM.GetString("strLifting_EM", Culture) ?? "Extended time multiplier (EM):";
+    public static string Lifting_GenderType => Gender;
+    public static string Lifting_Gender => StringRM.GetString("strLifting_Gender", Culture) ?? "Gender:";
+    public static string Lifting_Age => StringRM.GetString("strLifting_Age", Culture) ?? "Age:";
+    public static string[] Lifting_RowHeaders => [
+        Lifting_Data,
+        Lifting_Gender,
+        Lifting_Age,
+        Lifting_Weight,
+        Lifting_HorizontalD,
+        Lifting_VerticalD,
+        Lifting_VerticalT,
+        Lifting_Frequency,
+        Lifting_FrequencyA,
+        Lifting_FrequencyB,
+        Lifting_Duration,
+        Lifting_Angle,
+        Lifting_Coupling,
+        Lifting_OneHanded,
+        Lifting_TwoPerson,
+        Lifting_Multipliers,
+        Lifting_MassRef,
+        Lifting_HM,
+        Lifting_VM,
+        Lifting_DM,
+        Lifting_FM,
+        Lifting_FMa,
+        Lifting_FMb,
+        Lifting_AM,
+        Lifting_CM,
+        Lifting_OM,
+        Lifting_PM,
+        Lifting_EM,
+        Lifting_IF,
+        Lifting_LI,
+        Lifting_SubtasksOrder
+    ];
+    public static string[] Lifting_ColumnHeaders => [
         $"{Task} A",
         $"{Subtask} A",
-        NIOSH_CouplingType.Split(", ")[0],
-        NIOSH_CouplingType.Split(", ")[1],
-        NIOSH_CouplingType.Split(", ")[2],
-        NIOSH_OneHandedValue.Split(", ")[0],
-        NIOSH_OneHandedValue.Split(", ")[1],
-        NIOSH_GenderType.Split(", ")[0],
-        NIOSH_GenderType.Split(", ")[1]
-    };
-    public static string[] NIOSH_ResultsHeaders => new[]
-    {
+        Lifting_CouplingType.Split(", ")[0],
+        Lifting_CouplingType.Split(", ")[1],
+        Lifting_CouplingType.Split(", ")[2],
+        Lifting_OneHandedValue.Split(", ")[0],
+        Lifting_OneHandedValue.Split(", ")[1],
+        Lifting_GenderType.Split(", ")[0],
+        Lifting_GenderType.Split(", ")[1]
+    ];
+    public static string[] Lifting_ResultsHeaders => [
         Task,                   // 0
         Subtask,
-        NIOSH_Results,
-        NIOSH_Data,
-        NIOSH_Weight,
-        NIOSH_HorizontalD,      // 5
-        NIOSH_VerticalD,
-        NIOSH_VerticalT,
-        NIOSH_Frequency,
-        NIOSH_FrequencyA,
-        NIOSH_FrequencyB,       // 10
-        NIOSH_Duration,
-        NIOSH_Angle,
-        NIOSH_Coupling,
-        NIOSH_Multipliers,
-        NIOSH_MassRef,          // 15
-        NIOSH_HM,
-        NIOSH_VM,
-        NIOSH_DM,
-        NIOSH_FM,
-        NIOSH_FMa,              // 20
-        NIOSH_FMb,
-        NIOSH_AM,
-        NIOSH_CM,
-        NIOSH_IF,
-        NIOSH_LI,               // 25
-        NIOSH_SubtasksOrder,
-        NIOSH_Equation,
-        NIOSH_EquationIndex,
-        NIOSH_EquationWeight,
-        NIOSH_Index,            // 30
-        NIOSH_CouplingType,
-        NIOSH_OneHanded,
-        NIOSH_TwoPerson,
-        NIOSH_OM,
-        NIOSH_PM,               // 35
-        NIOSH_EM,
-        NIOSH_OneHandedValue,
-        NIOSH_GenderType,
-        NIOSH_Gender,
-        NIOSH_Age               // 40
-    };
-    public static string[] NIOSH_DataInputHeaders => new[]
-    {
-        NIOSH_Gender,
-        NIOSH_Age,
-        NIOSH_Weight,
-        NIOSH_HorizontalD,
-        NIOSH_VerticalD,
-        NIOSH_VerticalT,
-        NIOSH_Frequency,
-        NIOSH_Duration,
-        NIOSH_Angle,
-        NIOSH_Coupling,
-        NIOSH_OneHanded,
-        NIOSH_TwoPerson
-    };
+        Lifting_Results,
+        Lifting_Data,
+        Lifting_Weight,
+        Lifting_HorizontalD,      // 5
+        Lifting_VerticalD,
+        Lifting_VerticalT,
+        Lifting_Frequency,
+        Lifting_FrequencyA,
+        Lifting_FrequencyB,       // 10
+        Lifting_Duration,
+        Lifting_Angle,
+        Lifting_Coupling,
+        Lifting_Multipliers,
+        Lifting_MassRef,          // 15
+        Lifting_HM,
+        Lifting_VM,
+        Lifting_DM,
+        Lifting_FM,
+        Lifting_FMa,              // 20
+        Lifting_FMb,
+        Lifting_AM,
+        Lifting_CM,
+        Lifting_IF,
+        Lifting_LI,               // 25
+        Lifting_SubtasksOrder,
+        Lifting_Equation,
+        Lifting_EquationIndex,
+        Lifting_EquationWeight,
+        Lifting_Index,            // 30
+        Lifting_CouplingType,
+        Lifting_OneHanded,
+        Lifting_TwoPerson,
+        Lifting_OM,
+        Lifting_PM,               // 35
+        Lifting_EM,
+        Lifting_OneHandedValue,
+        Lifting_GenderType,
+        Lifting_Gender,
+        Lifting_Age               // 40
+    ];
+    public static string[] Lifting_DataInputHeaders => [
+        Lifting_Gender,
+        Lifting_Age,
+        Lifting_Weight,
+        Lifting_HorizontalD,
+        Lifting_VerticalD,
+        Lifting_VerticalT,
+        Lifting_Frequency,
+        Lifting_Duration,
+        Lifting_Angle,
+        Lifting_Coupling,
+        Lifting_OneHanded,
+        Lifting_TwoPerson
+    ];
 
     // Strain index
     public static string StrainIndex_COSI => StringRM.GetString("strStrainIndex_COSI", Culture) ?? "The COSI index is:";
@@ -321,8 +319,7 @@ public static class StringResources
     public static string StrainIndex_TasksRSI => StringRM.GetString("strStrainIndex_TasksRSI", Culture) ?? "Task RSI index:";
     public static string StrainIndex_TasksCOSI => StringRM.GetString("strStrainIndex_TasksCOSI", Culture) ?? "Task COSI index:";
     public static string StrainIndex_TasksOrder => StringRM.GetString("strStrainIndex_TasksOrder", Culture) ?? "Task order:";
-    public static string[] StrainIndex_RowHeaders => new[]
-    {
+    public static string[] StrainIndex_RowHeaders => [
         StrainIndex_Data,
         StrainIndex_Intensity,
         StrainIndex_Efforts,
@@ -350,14 +347,12 @@ public static class StringResources
         StrainIndex_HMbTask,
         StrainIndex_TasksCOSI,
         StrainIndex_TasksOrder
-    };
-    public static string[] StrainIndex_ColumnHeaders => new[]
-    {
+    ];
+    public static string[] StrainIndex_ColumnHeaders => [
         $"{Task} A",
-        $"{Subtask} A",
-    };
-    public static string[] StrainIndex_ResultsHeaders => new[]
-    {
+        $"{Subtask} A"
+    ];
+    public static string[] StrainIndex_ResultsHeaders => [
         Task,                       // 0
         Subtask,
         StrainIndex_Results,
@@ -396,15 +391,14 @@ public static class StringResources
         StrainIndex_TasksOrder,     // 35
         StrainIndex_CUSIequation,
         StrainIndex_CUSI
-    };
-    public static string[] StrainIndex_DataInputHeaders => new[]
-    {
+    ];
+    public static string[] StrainIndex_DataInputHeaders => [
         StrainIndex_Intensity,
         StrainIndex_Efforts,
         StrainIndex_Duration,
         StrainIndex_Posture,
         StrainIndex_HoursTask
-    };
+    ];
 
     // Liberty Mutual
     public static string LibertyMutual_Data => StringRM.GetString("strLibertyMutual_Data", Culture) ?? "Initial data";
@@ -448,8 +442,7 @@ public static class StringResources
     public static string LibertyMutual_PlotInitialF => StringRM.GetString("strLibertyMutual_PlotInitialF", Culture) ?? "Initial force / kg-f";
     public static string LibertyMutual_PlotSustainedF => StringRM.GetString("strLibertyMutual_PlotSustainedF", Culture) ?? "Sustained force / kg-f";
     public static string LibertyMutual_PlotWeight => StringRM.GetString("strLibertyMutual_PlotWeight", Culture) ?? "Weight / kg";
-    public static string[] LibertyMutual_RowHeaders => new[]
-    {
+    public static string[] LibertyMutual_RowHeaders => [
         LibertyMutual_Data,
         LibertyMutual_HandlingType,
         LibertyMutual_HorizontalReach,
@@ -484,9 +477,8 @@ public static class StringResources
         LibertyMutual_WeightMAL50,
         LibertyMutual_WeightMAL75,
         LibertyMutual_WeightMAL90
-    };
-    public static string[] LibertyMutual_ColumnHeaders => new[]
-    {
+    ];
+    public static string[] LibertyMutual_ColumnHeaders => [
         $"{Task} A",
         LibertyMutual_TaskType.Split(", ")[0],
         LibertyMutual_TaskType.Split(", ")[1],
@@ -495,9 +487,8 @@ public static class StringResources
         LibertyMutual_TaskType.Split(", ")[4],
         LibertyMutual_GenderType.Split(", ")[0],
         LibertyMutual_GenderType.Split(", ")[1]
-    };
-    public static string[] LibertyMutual_ResultsHeaders => new[]
-    {
+    ];
+    public static string[] LibertyMutual_ResultsHeaders => [
         Task,                               // 0
         LibertyMutual_Results,
         LibertyMutual_Data,
@@ -537,9 +528,8 @@ public static class StringResources
         LibertyMutual_Empty,
         LibertyMutual_GenderType,
         LibertyMutual_TaskType
-    };
-    public static string[] LibertyMutual_DataInputHeaders => new[]
-    {
+    ];
+    public static string[] LibertyMutual_DataInputHeaders => [
         LibertyMutual_HandlingType,
         LibertyMutual_HorizontalReach,
         LibertyMutual_VerticalRange,
@@ -548,7 +538,7 @@ public static class StringResources
         LibertyMutual_VerticalHeight,
         LibertyMutual_Frequency,
         LibertyMutual_Gender
-    };
+    ];
 
     // Thermal comfort
     public static string ThermalComfort_AirTemp => StringRM.GetString("strThermalComfort_AirTemp", Culture) ?? "Air temperature (°C)";
@@ -572,8 +562,7 @@ public static class StringResources
     public static string ThermalComfort_PlotAbscissa => StringRM.GetString("strThermalComfort_PlotAbscissa", Culture) ?? "Air temperature (°C)";
     public static string ThermalComfort_PlotOrdinate => StringRM.GetString("strThermalComfort_PlotOrdinate", Culture) ?? "g water / kg dry air";
     public static string ThermalComfort_PlotLegend => StringRM.GetString("strThermalComfort_PlotLegend", Culture) ?? "Convection, Radiation, Dry resp., Latent resp., Sweating, Skin";
-    public static string[] ThermalComfort_RowHeaders => new[]
-    {
+    public static string[] ThermalComfort_RowHeaders => [
         ThermalComfort_Data,
         ThermalComfort_AirTemp,
         ThermalComfort_RadiantTemp,
@@ -591,13 +580,11 @@ public static class StringResources
         ThermalComfort_LossConvection,
         ThermalComfort_PMVindex,
         ThermalComfort_PPDindex
-    };
-    public static string[] ThermalComfort_ColumnHeaders => new[]
-    {
+    ];
+    public static string[] ThermalComfort_ColumnHeaders => [
         $"{Case} A"
-    };
-    public static string[] ThermalComfort_ResultsHeaders => new[]
-    {
+    ];
+    public static string[] ThermalComfort_ResultsHeaders => [
         Case,                           // 0
         ThermalComfort_Results,
         ThermalComfort_Data,
@@ -617,9 +604,8 @@ public static class StringResources
         ThermalComfort_LossConvection,
         ThermalComfort_PMVindex,
         ThermalComfort_PPDindex
-    };
-    public static string[] ThermalComfort_DataInputHeaders => new[]
-    {
+    ];
+    public static string[] ThermalComfort_DataInputHeaders => [
         ThermalComfort_AirTemp,
         ThermalComfort_RadiantTemp,
         ThermalComfort_AirVel,
@@ -627,7 +613,7 @@ public static class StringResources
         ThermalComfort_Clothing,
         ThermalComfort_MetabolicRate,
         ThermalComfort_ExternalWork
-    };
+    ];
 
     // Comprehensive lifting index
     public static string CLM_Age => StringRM.GetString("strCLM_Age", Culture) ?? "Age (years)";
@@ -660,8 +646,7 @@ public static class StringResources
     public static string CLM_YM => StringRM.GetString("strCLM_YM", Culture) ?? "Age multiplier (YM)";
     public static string CLM_CouplingType => StringRM.GetString("strCLM_CouplingType", Culture) ?? "No handles, Poor, Good";
     public static string CLM_GenderType => Gender;
-    public static string[] CLM_RowHeaders => new[]
-    {
+    public static string[] CLM_RowHeaders => [
         CLM_Data,
         CLM_Gender,
         CLM_Weight,
@@ -688,18 +673,16 @@ public static class StringResources
         CLM_BM,
         CLM_BaseWeight,
         CLM_PopPercentage
-    };  // This is used for tabs calculation
-    public static string[] CLM_ColumnHeaders => new[]
-    {
+    ];  // This is used for tabs calculation
+    public static string[] CLM_ColumnHeaders => [
         $"{Case} A",
         CLM_CouplingType.Split(", ")[0],
         CLM_CouplingType.Split(", ")[1],
         CLM_CouplingType.Split(", ")[2],
         CLM_GenderType.Split(", ")[0],
         CLM_GenderType.Split(", ")[1]
-    };
-    public static string[] CLM_ResultsHeaders => new[]
-    {
+    ];
+    public static string[] CLM_ResultsHeaders => [
         Task,               // 0
         CLM_Results,
         CLM_Data,
@@ -731,9 +714,8 @@ public static class StringResources
         CLM_LSIindex,
         CLM_CouplingType,
         CLM_GenderType      // 30
-    };
-    public static string[] CLM_DataInputHeaders => new[]
-    {
+    ];
+    public static string[] CLM_DataInputHeaders => [
         CLM_Gender,
         CLM_Weight,
         CLM_HorizontalD,
@@ -746,7 +728,7 @@ public static class StringResources
         CLM_Temperature,
         CLM_Age,
         CLM_BodyWeight
-    };
+    ];
 
 
     // Work-rest static postures
@@ -758,12 +740,10 @@ public static class StringResources
     public static string WR_NumberCycles => StringRM.GetString("WR_NumberCycles", Culture) ?? "Number of cycles";
     public static string WR_Step => StringRM.GetString("WR_Step", Culture) ?? "Numeric step";
 
-    public static string[] WR_ColumnHeaders => new[]
-    {
+    public static string[] WR_ColumnHeaders => [
         $"{Case} A"
-    };
-    public static string[] WR_DataInputHeaders => new[]
-    {
+    ];
+    public static string[] WR_DataInputHeaders => [
         WR_SeriesName,
         WR_MVC,
         WR_MHT,
@@ -771,7 +751,7 @@ public static class StringResources
         WR_RestTimes,
         WR_NumberCycles,
         WR_Step
-    };
+    ];
 
 
     // OCRA check
@@ -816,8 +796,7 @@ public static class StringResources
     public static string OCRA_Data => StringRM.GetString("OCRA_Data", Culture) ?? "Initial data";
     public static string OCRA_Multipliers => StringRM.GetString("OCRA_Multipliers", Culture) ?? "Multipliers";
     public static string OCRA_Index => StringRM.GetString("OCRA_Index", Culture) ?? "The OCRA checklist index is:";
-    public static string[] OCRA_ResultsHeaders => new[]
-    {
+    public static string[] OCRA_ResultsHeaders => [
         Task,                       // 0
         OCRA_Results,
         OCRA_Data,
@@ -844,13 +823,11 @@ public static class StringResources
         OCRA_ForceM,
         OCRA_PostureM,
         OCRA_Index
-    };
-    public static string[] OCRA_ColumnHeaders => new[]
-    {
+    ];
+    public static string[] OCRA_ColumnHeaders => [
         $"{Task} A"
-    };
-    public static string[] OCRA_DataInputHeaders => new[]
-    {
+    ];
+    public static string[] OCRA_DataInputHeaders => [
         OCRA_ShiftDuration,
         OCRA_NonRepetitive,
         OCRA_OfficialPauses,
@@ -864,6 +841,6 @@ public static class StringResources
         OCRA_Elbow,
         OCRA_Wrist,
         OCRA_Grip,
-        OCRA_Stereotypy,
-    };
+        OCRA_Stereotypy
+    ];
 }
