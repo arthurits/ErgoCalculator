@@ -5,7 +5,7 @@ using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
 
-public partial class FrmDataNIOSH : Form, IChildData
+public partial class frmDataLifting : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     private IndexType _index;
@@ -14,7 +14,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     public object GetData => _job;
 
     // Default constructor
-    public FrmDataNIOSH()
+    public frmDataLifting()
     {
         // VS Designer initialization routine
         InitializeComponent();
@@ -31,7 +31,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     /// <param name="job"><see cref="Job"/> object containing data to be shown in the form</param>
     /// <param name="culture">Culture information to be used when showing the form's UI texts</param>
-    public FrmDataNIOSH(Job? job = null, CultureInfo? culture = null)
+    public frmDataLifting(Job? job = null, CultureInfo? culture = null)
         : this() // Call the base constructor
     {
         // Update the UI language first
@@ -155,12 +155,15 @@ public partial class FrmDataNIOSH : Form, IChildData
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
 
-        // Validate input before getting the values
-        if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
-        //double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
-
+        // Make sure there aren't more subtasks than the number set in the UpDown control
+        // Maybe this should be moved in the UpDown value changed event? Not sure since here we first delete any "Dummy" subtask.
         listViewTasks.RemoveEmptyGroups();
         listViewTasks.RemoveEmptyItems();
+        if (listViewTasks.Items.Count > updSubTasks.Value)
+        {
+            for (int i = listViewTasks.Items.Count; i > updSubTasks.Value; i--)
+                listViewTasks.Items.RemoveAt(i - 1);
+        }
 
         // New test
         int ItemIndex;
@@ -296,7 +299,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// </summary>
     private void AddRows()
     {
-        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.NIOSH_DataInputHeaders);
+        (this as IChildData).AddGridRowHeaders(this.gridVariables, StringResources.Lifting_DataInputHeaders);
     }
 
     /// <summary>
@@ -305,7 +308,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     private void FormatRows()
     {
         // Get the couplig type texts
-        string[] strGender = StringResources.NIOSH_GenderType.Split(", ");
+        string[] strGender = StringResources.Lifting_GenderType.Split(", ");
         DataTable tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
@@ -321,7 +324,7 @@ public partial class FrmDataNIOSH : Form, IChildData
 
 
         // Get the couplig type texts
-        string[] strCoupling = StringResources.NIOSH_CouplingType.Split(", ");
+        string[] strCoupling = StringResources.Lifting_CouplingType.Split(", ");
         
         // Create custom cells with combobox display
         tableC = new();
@@ -339,7 +342,7 @@ public partial class FrmDataNIOSH : Form, IChildData
         gridVariables.Rows[9].Cells[0] = celdaC;
 
         // Get the additional multiplier texts
-        string[] strTrueFalse = StringResources.NIOSH_OneHandedValue.Split(", ");
+        string[] strTrueFalse = StringResources.Lifting_OneHandedValue.Split(", ");
         tableC = new();
         tableC.Columns.Add("Display", typeof(String));
         tableC.Columns.Add("Value", typeof(Int32));
@@ -491,7 +494,6 @@ public partial class FrmDataNIOSH : Form, IChildData
     /// <summary>
     /// Shows the data into the grid control
     /// </summary>
-    /// <param name="data">Array of Model NIOSH data</param>
     private void DataToGrid()
     {
         switch ((int)_job.Model)
@@ -582,7 +584,7 @@ public partial class FrmDataNIOSH : Form, IChildData
     {
         StringResources.Culture = culture;
 
-        this.Text = StringResources.FormDataNIOSH;
+        this.Text = StringResources.FormDataLifting;
         this.btnAccept.Text = StringResources.BtnAccept;
         this.btnCancel.Text = StringResources.BtnCancel;
         this.btnExample.Text = StringResources.BtnExample;

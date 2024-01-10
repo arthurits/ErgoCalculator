@@ -26,7 +26,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
-    private void frmResultsStrainIndex_Shown(object sender, EventArgs e)
+    private void FrmResultsStrainIndex_Shown(object sender, EventArgs e)
     {
         ShowResults();
     }
@@ -251,7 +251,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         //using FileStream createStream = File.Create(strFileName);
         //using var writer = new Utf8JsonWriter(createStream, options: writerOptions);
         writer.WriteStartObject();
-        writer.WriteString("Document type", "Strain index");
+        writer.WriteString("Document type", StringResources.DocumentTypeStrainIndex);
         writer.WriteNumber("Index type", (int)_job.Model);
         writer.WriteNumber("CUSI index", _job.IndexCUSI);
         writer.WriteNumber("Number of tasks", _job.NumberTasks);

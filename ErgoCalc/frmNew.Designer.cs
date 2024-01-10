@@ -34,7 +34,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.radModelWR = new System.Windows.Forms.RadioButtonClick();
             this.radModelCLM = new System.Windows.Forms.RadioButtonClick();
-            this.radModelNIOSH = new System.Windows.Forms.RadioButtonClick();
+            this.radModelLifting = new System.Windows.Forms.RadioButtonClick();
             this.radModelStrain = new System.Windows.Forms.RadioButtonClick();
             this.radModelOCRA = new System.Windows.Forms.RadioButtonClick();
             this.radModelMetabolic = new System.Windows.Forms.RadioButtonClick();
@@ -111,18 +111,18 @@
             this.radModelCLM.UseVisualStyleBackColor = true;
             this.radModelCLM.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
             // 
-            // radModelNIOSH
+            // radModelLifting
             // 
-            this.radModelNIOSH.AutoSize = true;
-            this.radModelNIOSH.Location = new System.Drawing.Point(53, 176);
-            this.radModelNIOSH.Name = "radModelNIOSH";
-            this.radModelNIOSH.Size = new System.Drawing.Size(237, 21);
-            this.radModelNIOSH.TabIndex = 9;
-            this.radModelNIOSH.TabStop = true;
-            this.radModelNIOSH.Tag = "3";
-            this.radModelNIOSH.Text = "NIOSH equation (LI, CLI, SLI, VLI)";
-            this.radModelNIOSH.UseVisualStyleBackColor = true;
-            this.radModelNIOSH.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelLifting.AutoSize = true;
+            this.radModelLifting.Location = new System.Drawing.Point(53, 176);
+            this.radModelLifting.Name = "radModelLifting";
+            this.radModelLifting.Size = new System.Drawing.Size(237, 21);
+            this.radModelLifting.TabIndex = 9;
+            this.radModelLifting.TabStop = true;
+            this.radModelLifting.Tag = "3";
+            this.radModelLifting.Text = "Lifting and lowering model (LI, CLI, SLI, VLI)";
+            this.radModelLifting.UseVisualStyleBackColor = true;
+            this.radModelLifting.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
             // 
             // radModelStrain
             // 
@@ -201,7 +201,7 @@
             this.Controls.Add(this.radModelMetabolic);
             this.Controls.Add(this.radModelOCRA);
             this.Controls.Add(this.radModelStrain);
-            this.Controls.Add(this.radModelNIOSH);
+            this.Controls.Add(this.radModelLifting);
             this.Controls.Add(this.radModelCLM);
             this.Controls.Add(this.radModelWR);
             this.Controls.Add(this.btnCancel);
@@ -228,7 +228,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.RadioButtonClick radModelWR;
         private System.Windows.Forms.RadioButtonClick radModelCLM;
-        private System.Windows.Forms.RadioButtonClick radModelNIOSH;
+        private System.Windows.Forms.RadioButtonClick radModelLifting;
         private System.Windows.Forms.RadioButtonClick radModelStrain;
         private System.Windows.Forms.RadioButtonClick radModelOCRA;
         private System.Windows.Forms.RadioButtonClick radModelMetabolic;

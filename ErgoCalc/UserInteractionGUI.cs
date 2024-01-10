@@ -7,7 +7,7 @@ public enum ModelType
 {
     WorkRest,
     CumulativeLifting,
-    NioshLifting,
+    LiftingLowering,
     StrainIndex,
     OcraCheck,
     MetabolicRate,
@@ -28,7 +28,7 @@ partial class FrmMain
         {
             ModelType.WorkRest => new FrmDataWR(culture: _settings.AppCulture),
             ModelType.CumulativeLifting => new FrmDataCLM(culture: _settings.AppCulture),
-            ModelType.NioshLifting => new FrmDataNIOSH(culture: _settings.AppCulture),
+            ModelType.LiftingLowering => new frmDataLifting(culture: _settings.AppCulture),
             ModelType.StrainIndex => new FrmDataStrainIndex(culture: _settings.AppCulture),
             ModelType.OcraCheck => new FrmDataOCRAcheck(culture: _settings.AppCulture),
             ModelType.MetabolicRate => new FrmDataMet(culture: _settings.AppCulture),
@@ -45,7 +45,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData, _settings.AppCulture),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.AppCulture),
-                    ModelType.NioshLifting => new FrmResultNIOSH(frm.GetData, _settings.AppCulture),
+                    ModelType.LiftingLowering => new frmResultsLifting(frm.GetData, _settings.AppCulture),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.AppCulture),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData, _settings.AppCulture),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData, _settings.AppCulture),
@@ -54,7 +54,19 @@ partial class FrmMain
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
-                SetFormTitle(frmResults, frmResults.Text);
+                string strTextTitle = frmNew.Model switch
+                {
+                    ModelType.WorkRest => StringResources.FormResultsWR,
+                    ModelType.CumulativeLifting => StringResources.FormResultsCLM,
+                    ModelType.LiftingLowering => StringResources.FormResultsLifting,
+                    ModelType.StrainIndex => StringResources.FormResultsStrainIndex,
+                    ModelType.OcraCheck => StringResources.FormResultsOCRAchecklist,
+                    ModelType.MetabolicRate => StringResources.FormResultsMetabolic,
+                    ModelType.ThermalComfort => StringResources.FormResultsTC,
+                    ModelType.LibertyMutual => StringResources.FormResultsLiberty,
+                    _ => String.Empty
+                };
+                SetFormTitle(frmResults, strTextTitle);
                 FormatRichText(frmResults.ActiveControl,
                     _settings.FontFamilyName,
                     _settings.FontSize,
@@ -119,7 +131,7 @@ partial class FrmMain
             Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(),
-                "NIOSH lifting equation" => new FrmResultNIOSH(culture: _settings.AppCulture),
+                "Lifting model" => new frmResultsLifting(culture: _settings.AppCulture),
                 "Strain index" => new FrmResultsStrainIndex(culture: _settings.AppCulture),
                 "Thermal comfort model" => new FrmResultsTC(culture: _settings.AppCulture),
                 "LM-MMH model" => new FrmResultsLiberty(culture: _settings.AppCulture),
@@ -137,7 +149,7 @@ partial class FrmMain
                     string strTextTitle = strType switch
                     {
                         "Work-Rest model" => StringResources.FormResultsWR,
-                        "NIOSH lifting equation" => StringResources.FormResultsNIOSH,
+                        "Lifting model" => StringResources.FormResultsLifting,
                         "Strain index" => StringResources.FormResultsStrainIndex,
                         "Thermal comfort model" => StringResources.FormResultsTC,
                         "LM-MMH model" => StringResources.FormResultsLiberty,

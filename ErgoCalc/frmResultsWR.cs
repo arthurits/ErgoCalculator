@@ -5,7 +5,6 @@ using ErgoCalc.Models.WR;
 
 namespace ErgoCalc;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
 public partial class FrmResultsWR : Form, IChildResults
 {
     private Job _job;
@@ -203,7 +202,7 @@ public partial class FrmResultsWR : Form, IChildResults
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WriteString("Document type", "Work-Rest model");
+        writer.WriteString("Document type", StringResources.DocumentTypeWR);
         writer.WriteNumber("Number of tasks", _job.NumberTasks);
         
         writer.WritePropertyName("WR curves");

@@ -253,7 +253,7 @@ los campos a sus valores por defecto?</value>
   <data name="strFormResultsMetabolic" xml:space="preserve">
     <value>Resultados de consumo metabólico</value>
   </data>
-  <data name="strFormResultsNIOSH" xml:space="preserve">
+  <data name="strFormResultsLifting" xml:space="preserve">
     <value>Resultados del levantamiento manual de cargas</value>
   </data>
   <data name="strFormResultsStrainIndex" xml:space="preserve">
@@ -458,94 +458,94 @@ salir de la aplicación?</value>
   <data name="strMsgBoxExitTitle" xml:space="preserve">
     <value>¿Salir?</value>
   </data>
-  <data name="strNIOSH_AM" xml:space="preserve">
+  <data name="strLifting_AM" xml:space="preserve">
     <value>Factor de asimetría (AM):</value>
   </data>
-  <data name="strNIOSH_Angle" xml:space="preserve">
+  <data name="strLifting_Angle" xml:space="preserve">
     <value>Ángulo de giro (°):</value>
   </data>
-  <data name="strNIOSH_CM" xml:space="preserve">
+  <data name="strLifting_CM" xml:space="preserve">
     <value>Factor de agarre (CM):</value>
   </data>
-  <data name="strNIOSH_Coupling" xml:space="preserve">
+  <data name="strLifting_Coupling" xml:space="preserve">
     <value>Agarre:</value>
   </data>
-  <data name="strNIOSH_CouplingType" xml:space="preserve">
+  <data name="strLifting_CouplingType" xml:space="preserve">
     <value>Malo, Regular, Bueno</value>
   </data>
-  <data name="strNIOSH_Data" xml:space="preserve">
+  <data name="strLifting_Data" xml:space="preserve">
     <value>Datos iniciales</value>
   </data>
-  <data name="strNIOSH_DM" xml:space="preserve">
+  <data name="strLifting_DM" xml:space="preserve">
     <value>Factor de desplazamiento vertical (DM):</value>
   </data>
-  <data name="strNIOSH_Duration" xml:space="preserve">
+  <data name="strLifting_Duration" xml:space="preserve">
     <value>Duración de la tarea (horas):</value>
   </data>
-  <data name="strNIOSH_Equation" xml:space="preserve">
+  <data name="strLifting_Equation" xml:space="preserve">
     <value>El índice de levantamiento (LI) se calcula mediante la siguiente expresión:</value>
   </data>
-  <data name="strNIOSH_EquationIndex" xml:space="preserve">
+  <data name="strLifting_EquationIndex" xml:space="preserve">
     <value>Índice</value>
   </data>
-  <data name="strNIOSH_EquationWeight" xml:space="preserve">
+  <data name="strLifting_EquationWeight" xml:space="preserve">
     <value>Peso</value>
   </data>
-  <data name="strNIOSH_FM" xml:space="preserve">
+  <data name="strLifting_FM" xml:space="preserve">
     <value>Factor de frecuencia (FM):</value>
   </data>
-  <data name="strNIOSH_FMa" xml:space="preserve">
+  <data name="strLifting_FMa" xml:space="preserve">
     <value>Factor de frecuencia A (FMa):</value>
   </data>
-  <data name="strNIOSH_FMb" xml:space="preserve">
+  <data name="strLifting_FMb" xml:space="preserve">
     <value>Factor de frecuencia B (FMb):</value>
   </data>
-  <data name="strNIOSH_Frequency" xml:space="preserve">
+  <data name="strLifting_Frequency" xml:space="preserve">
     <value>Frecuencia (acciones/min):</value>
   </data>
-  <data name="strNIOSH_FrequencyA" xml:space="preserve">
+  <data name="strLifting_FrequencyA" xml:space="preserve">
     <value>Frecuencia A (acciones/min):</value>
   </data>
-  <data name="strNIOSH_FrequencyB" xml:space="preserve">
+  <data name="strLifting_FrequencyB" xml:space="preserve">
     <value>Frecuencia B (acciones/min):</value>
   </data>
-  <data name="strNIOSH_HM" xml:space="preserve">
+  <data name="strLifting_HM" xml:space="preserve">
     <value>Factor horizontal (HM):</value>
   </data>
-  <data name="strNIOSH_HorizontalD" xml:space="preserve">
+  <data name="strLifting_HorizontalD" xml:space="preserve">
     <value>Distancia horizontal (cm):</value>
   </data>
-  <data name="strNIOSH_IF" xml:space="preserve">
+  <data name="strLifting_IF" xml:space="preserve">
     <value>Índice independiente frecuencia (FILI):</value>
   </data>
-  <data name="strNIOSH_Index" xml:space="preserve">
+  <data name="strLifting_Index" xml:space="preserve">
     <value>El índice de levantamiento es:</value>
   </data>
-  <data name="strNIOSH_MassRef" xml:space="preserve">
+  <data name="strLifting_MassRef" xml:space="preserve">
     <value>Masa de referencia (kg):</value>
   </data>
-  <data name="strNIOSH_LI" xml:space="preserve">
+  <data name="strLifting_LI" xml:space="preserve">
     <value>Índice de levantamiento (LI):</value>
   </data>
-  <data name="strNIOSH_Multipliers" xml:space="preserve">
+  <data name="strLifting_Multipliers" xml:space="preserve">
     <value>Factores</value>
   </data>
-  <data name="strNIOSH_Order" xml:space="preserve">
+  <data name="strLifting_Order" xml:space="preserve">
     <value>Orden de las subtareas:</value>
   </data>
-  <data name="strNIOSH_Results" xml:space="preserve">
+  <data name="strLifting_Results" xml:space="preserve">
     <value>Estos son los resultados obtenidos mediante el modelo de la norma ISO 11228-1:2021:</value>
   </data>
-  <data name="strNIOSH_VerticalD" xml:space="preserve">
+  <data name="strLifting_VerticalD" xml:space="preserve">
     <value>Distancia vertical (cm):</value>
   </data>
-  <data name="strNIOSH_VerticalT" xml:space="preserve">
+  <data name="strLifting_VerticalT" xml:space="preserve">
     <value>Desplazamiento vertical (cm):</value>
   </data>
-  <data name="strNIOSH_VM" xml:space="preserve">
+  <data name="strLifting_VM" xml:space="preserve">
     <value>Factor de altura (VM):</value>
   </data>
-  <data name="strNIOSH_Weight" xml:space="preserve">
+  <data name="strLifting_Weight" xml:space="preserve">
     <value>Peso manipulado (kg):</value>
   </data>
   <data name="strNumberCases" xml:space="preserve">
@@ -572,7 +572,7 @@ salir de la aplicación?</value>
   <data name="strRadModelMetabolic" xml:space="preserve">
     <value>Consumo metabólico</value>
   </data>
-  <data name="strRadModelNIOSH" xml:space="preserve">
+  <data name="strRadModelLifting" xml:space="preserve">
     <value>Levantamiento de cargas (LI, CLI, SLI, VLI)</value>
   </data>
   <data name="strRadModelOCRA" xml:space="preserve">
@@ -863,7 +863,7 @@ salir de la aplicación?</value>
   <data name="strFormDataWR" xml:space="preserve">
     <value>Parámetros del modelo WR</value>
   </data>
-  <data name="strFormDataNIOSH" xml:space="preserve">
+  <data name="strFormDataLifting" xml:space="preserve">
     <value>Parámetros de la manipulación manual de cargas</value>
   </data>
   <data name="strFormDataCLM" xml:space="preserve">
@@ -1010,28 +1010,28 @@ salir de la aplicación?</value>
   <data name="OCRA_Index" xml:space="preserve">
     <value>El índice «OCRA checklist» es:</value>
   </data>
-  <data name="strNIOSH_OneHanded" xml:space="preserve">
+  <data name="strLifting_OneHanded" xml:space="preserve">
     <value>¿Manipulación con una mano?</value>
   </data>
-  <data name="strNIOSH_OneHandedValue" xml:space="preserve">
+  <data name="strLifting_OneHandedValue" xml:space="preserve">
     <value>No, Sí</value>
   </data>
-  <data name="strNIOSH_OM" xml:space="preserve">
+  <data name="strLifting_OM" xml:space="preserve">
     <value>Factor de mano (OM):</value>
   </data>
-  <data name="strNIOSH_TwoPerson" xml:space="preserve">
+  <data name="strLifting_TwoPerson" xml:space="preserve">
     <value>¿Dos o más personas?</value>
   </data>
-  <data name="strNIOSH_PM" xml:space="preserve">
+  <data name="strLifting_PM" xml:space="preserve">
     <value>Factor de persona (PM):</value>
   </data>
-  <data name="strNIOSH_EM" xml:space="preserve">
+  <data name="strLifting_EM" xml:space="preserve">
     <value>Factor de tiempo (EM):</value>
   </data>
-  <data name="strNIOSH_Gender" xml:space="preserve">
+  <data name="strLifting_Gender" xml:space="preserve">
     <value>Sexo:</value>
   </data>
-  <data name="strNIOSH_Age" xml:space="preserve">
+  <data name="strLifting_Age" xml:space="preserve">
     <value>Edad (años):</value>
   </data>
 </root>

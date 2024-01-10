@@ -3,20 +3,20 @@
 using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
-public partial class FrmResultNIOSH : Form, IChildResults
+public partial class frmResultsLifting : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
     private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
-    public FrmResultNIOSH()
+    public frmResultsLifting()
     {
         InitializeComponent();
         this.ActiveControl = this.rtbShowResult;
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultNIOSH(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public frmResultsLifting(object? data = null, System.Globalization.CultureInfo? culture = null)
         : this()
     {
         if (data is not null && data.GetType() == typeof(Job))
@@ -25,7 +25,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
     }
 
-    private void frmResultNIOSHModel_Shown(object sender, EventArgs e)
+    private void FrmResultsLifting_Shown(object sender, EventArgs e)
     {
         ShowResults();
     }
@@ -42,20 +42,20 @@ public partial class FrmResultNIOSH : Form, IChildResults
         {
             foreach (TaskModel task in _job.Tasks)
             {
-                NIOSHLifting.ComputeLI(task.SubTasks);
+                Lifting.ComputeLI(task.SubTasks);
             }
         }
         else if (_job.Model == IndexType.IndexCLI)
         {
             foreach (TaskModel task in _job.Tasks)
             {
-                NIOSHLifting.ComputeCLI(task);
+                Lifting.ComputeCLI(task);
             }
         }
 
         // Show results
         //rtbShowResult.Clear();
-        rtbShowResult.Text = _job.ToString(StringResources.NIOSH_ResultsHeaders, _culture);
+        rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, _culture);
         FormatText();
     }
 
@@ -66,7 +66,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
         writer.WriteStartObject();
-        writer.WriteString("Document type", "NIOSH lifting equation");
+        writer.WriteString("Document type", StringResources.DocumentTypeLifting);
 
         writer.WriteNumber("Model", (int)_job.Model);
         writer.WriteNumber("Index", _job.Index);
@@ -170,7 +170,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
                 IndexType.IndexSLI => "SLI results",
                 _ => "Results",
             },
-            Title = "Save NIOSH model results",
+            Title = "Save lifting model results",
             OverwritePrompt = true,
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
         };
@@ -208,7 +208,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
                         break;
                 }
 
-                FrmMain.SetFormTitle(this, StringResources.FormResultsNIOSH, SaveDlg.FileName);
+                FrmMain.SetFormTitle(this, StringResources.FormResultsLifting, SaveDlg.FileName);
 
                 using (new CenterWinDialog(this.MdiParent))
                 {
@@ -318,7 +318,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new FrmDataNIOSH(_job, _culture);
+        using var frm = new frmDataLifting(_job, _culture);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
@@ -336,13 +336,13 @@ public partial class FrmResultNIOSH : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        FrmResultNIOSH frmResults = new FrmResultNIOSH(_job, _culture)
+        frmResultsLifting frmResults = new frmResultsLifting(_job, _culture)
         {
             MdiParent = this.MdiParent
         };
 
         int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
-        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsNIOSH, this.Text[index..]);
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsLifting, this.Text[index..]);
 
         frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
         frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
@@ -361,8 +361,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
     public ToolStrip ChildToolStrip
     {
-        get => toolStripNIOSH;
-        set => toolStripNIOSH = value;
+        get => toolStripLifting;
+        set => toolStripLifting = value;
     }
 
     public void FormatText()
@@ -373,8 +373,8 @@ public partial class FrmResultNIOSH : Form, IChildResults
         rtbShowResult.SelectionTabs = (this as IChildResults).ComputeTabs(g,
                                                                         rtbShowResult.Font,
                                                                         _job.NumberSubTasks,
-                                                                        StringResources.NIOSH_RowHeaders,
-                                                                        StringResources.NIOSH_ColumnHeaders);
+                                                                        StringResources.Lifting_RowHeaders,
+                                                                        StringResources.Lifting_ColumnHeaders);
         rtbShowResult.DeselectAll();
 
         // Formats (font, size, and style) the text
@@ -382,13 +382,13 @@ public partial class FrmResultNIOSH : Form, IChildResults
         while (true)
         {
             // Underline
-            nStart = rtbShowResult.Find(StringResources.NIOSH_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
             rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
 
-            nStart = rtbShowResult.Find(StringResources.NIOSH_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
@@ -400,7 +400,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
         if (_job.Model == IndexType.IndexLI)
         {
-            nStart = rtbShowResult.Find(StringResources.NIOSH_LI, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_LI, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart > -1)
             {//nEnd = rtbShowResult.Text.Length;
                 nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
@@ -411,7 +411,7 @@ public partial class FrmResultNIOSH : Form, IChildResults
 
         while (true)
         {
-            nStart = rtbShowResult.Find(StringResources.NIOSH_Index, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            nStart = rtbShowResult.Find(StringResources.Lifting_Index, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             //nEnd = rtbShowResult.Text.Length;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
