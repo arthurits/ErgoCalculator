@@ -155,12 +155,15 @@ public partial class frmDataLifting : Form, IChildData
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
 
-        // Validate input before getting the values
-        if (!Validation.IsValidRange(txtConstanteLC.Text, 0, 25, true, this)) { txtConstanteLC.Focus(); txtConstanteLC.SelectAll(); return; }
-        //double LC = String.IsNullOrEmpty(txtConstanteLC.Text) ? 0.0 : Convert.ToDouble(txtConstanteLC.Text);
-
+        // Make sure there aren't more subtasks than the number set in the UpDown control
+        // Maybe this should be moved in the UpDown value changed event? Not sure since here we first delete any "Dummy" subtask.
         listViewTasks.RemoveEmptyGroups();
         listViewTasks.RemoveEmptyItems();
+        if (listViewTasks.Items.Count > updSubTasks.Value)
+        {
+            for (int i = listViewTasks.Items.Count; i > updSubTasks.Value; i--)
+                listViewTasks.Items.RemoveAt(i - 1);
+        }
 
         // New test
         int ItemIndex;

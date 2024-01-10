@@ -1,7 +1,4 @@
-﻿using ErgoCalc.Models.StrainIndex;
-using System;
-using System.Security.Permissions;
-using System.Text;
+﻿using System.Text;
 
 namespace ErgoCalc.Models.Lifting;
 
@@ -350,7 +347,7 @@ public class TaskModel
             }
             else
             {
-                strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM * OM * PM * EM)";
+                strEquationT = $"LI = {strRows[29]} / (MR * HM * VM * DM * FM * AM * CM * OM * PM * EM)";
                 strResult.Append(strEquationT + System.Environment.NewLine);
                 for (int i = 0; i < SubTasks.Length; i++)
                 {
@@ -373,7 +370,7 @@ public class TaskModel
         }
         else
         {
-            strEquationT = $"LI = {strRows[29]} / (LC * HM * VM * DM * FM * AM * CM * OM * PM * EM)";
+            strEquationT = $"LI = {strRows[29]} / (MR * HM * VM * DM * FM * AM * CM * OM * PM * EM)";
             strEquationN = $"LI = {SubTasks[0].Data.Weight.ToString("0.####", culture)} / (";
             strEquationN += $"{SubTasks[0].Factors.MassRef.ToString("0.####", culture)} * ";
             strEquationN += $"{SubTasks[0].Factors.HM.ToString("0.####", culture)} * ";
