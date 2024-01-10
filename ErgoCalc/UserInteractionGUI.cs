@@ -54,7 +54,19 @@ partial class FrmMain
                     _ => new Form()
                 };
                 frmResults.MdiParent = this;
-                SetFormTitle(frmResults, frmResults.Text);
+                string strTextTitle = frmNew.Model switch
+                {
+                    ModelType.WorkRest => StringResources.FormResultsWR,
+                    ModelType.CumulativeLifting => StringResources.FormResultsCLM,
+                    ModelType.NioshLifting => StringResources.FormResultsNIOSH,
+                    ModelType.StrainIndex => StringResources.FormResultsStrainIndex,
+                    ModelType.OcraCheck => StringResources.FormResultsOCRAchecklist,
+                    ModelType.MetabolicRate => StringResources.FormResultsMetabolic,
+                    ModelType.ThermalComfort => StringResources.FormResultsTC,
+                    ModelType.LibertyMutual => StringResources.FormResultsLiberty,
+                    _ => String.Empty
+                };
+                SetFormTitle(frmResults, strTextTitle);
                 FormatRichText(frmResults.ActiveControl,
                     _settings.FontFamilyName,
                     _settings.FontSize,
