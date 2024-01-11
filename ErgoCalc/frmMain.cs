@@ -12,9 +12,6 @@ public partial class FrmMain : Form
 
     public FrmMain()
     {
-        // Load settings
-        LoadProgramSettingsJSON();
-
         // Initilizate components and GUI
         InitializeComponent();
         InitializeToolStripPanel();
@@ -23,6 +20,9 @@ public partial class FrmMain : Form
 
         // Set form icon
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
+
+        // Load settings (this can modify ClientSize, so it should be run afther InitializeComponent)
+        LoadProgramSettingsJSON();
 
         // Other settings
         StatusStripFormat_SetValues(wordWrap: _settings.WordWrap, backColor: Color.FromArgb(_settings.TextBackColor), zoomFactor: _settings.TextZoom / 100);
