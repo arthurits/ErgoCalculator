@@ -21,7 +21,7 @@ This download is a portable software. Please follow this instructions:
 ![WR model](/Media/WRmodel.png?raw=true "WR model")
 * [Comprehensive lifting model (CLM)](https://doi.org/10.1080/001401397187748) by Jorge Hidalgo, Ashraf Genaidy, Waldemar Karwowski, Doran Christensen, Ronald Huston, and Jefferey Stambough
 * Lifting and lowering, inluding LI, CLI, SLI (not yet implemented), and VLI (not yet implemented) indices as suggested in [ISO 11228-1:2021 Ergonomics — Manual handling — Part 1: Lifting and carrying](https://www.iso.org/standard/26520.html)
-![NIOSH model](/Media/Niosh.png?raw=true "RSI model")
+![NIOSH model](/Media/Lifting.png?raw=true "Lifting model")
 * Revised strain index, including [RSI](https://doi.org/10.1080/00140139.2016.1237678), [COSI](https://doi.org/10.1080/00140139.2016.1246675), and [CUSI](https://doi.org/10.1080/00140139.2016.1246675) indices
 ![RSI model](/Media/RevisedStrainIndex.png?raw=true "RSI model")
 * OCRA checklist (not yet implemented)
