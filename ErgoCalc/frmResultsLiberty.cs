@@ -131,7 +131,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     /// <param name="strLegend">Text to show in the legend</param>
     private void CreatePlot(double mean, double std, int nPlot, string strLegend)
     {
-        Random rand = new Random(0);
+        Random rand = new(0);
         var pop = new ScottPlot.Statistics.Population(rand, pointCount: 1000, mean: mean, stdDev: std);
         double[] curveXs = ScottPlot.DataGen.Range(pop.minus3stDev, pop.plus3stDev, 0.1);
         double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
