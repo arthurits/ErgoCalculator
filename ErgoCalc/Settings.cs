@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace ErgoCalc;
 
@@ -8,15 +9,13 @@ public partial class FrmMain
     /// Loads all settings from file _settings.FileName into instance <see cref="AppSettings">_settings</see>.
     /// Shows MessageBox error if unsuccessful.
     /// </summary>
-    /// <returns><see langword="True"/> if successful, <see langword="false"/> otherwise</returns>
     private void LoadProgramSettingsJSON()
     {
         try
         {
             var jsonString = File.ReadAllText(_settings.SettingsFileName);
-            _settings = JsonSerializer.Deserialize<AppSettings>(jsonString);
-
-            ApplySettingsJSON(_settings.WindowPosition);
+            _settings = JsonSerializer.Deserialize<AppSettings>(jsonString) ?? _settings;
+            //SetWindowPos(_settings.WindowPosition);
         }
         catch (FileNotFoundException)
         {
@@ -52,16 +51,12 @@ public partial class FrmMain
     }
 
     /// <summary>
-    /// Update UI with settings
+    /// Modifies window size and position to the values in <see cref="AppSettings">_settings</see>
     /// </summary>
-    /// <param name="WindowSettings"><see langword="True"/> if the window position and size should be applied. <see langword="False"/> if omitted</param>
-    private void ApplySettingsJSON(bool WindowPosition = false)
+    private void SetWindowPos()
     {
-        if (WindowPosition)
-        {
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.DesktopLocation = new Point(_settings.Left, _settings.Top);
-            this.ClientSize = new Size(_settings.Width, _settings.Height);
-        }
+        this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+        this.DesktopLocation = new Point(_settings.Left, _settings.Top);
+        this.ClientSize = new Size(_settings.Width, _settings.Height);
     }
 }
