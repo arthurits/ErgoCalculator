@@ -255,7 +255,6 @@
             txtDataFormat.Name = "txtDataFormat";
             txtDataFormat.Size = new Size(74, 25);
             txtDataFormat.TabIndex = 3;
-            txtDataFormat.TextChanged += this.txtDataFormat_TextChanged;
             // 
             // lblDataFormat
             // 
@@ -266,7 +265,6 @@
             lblDataFormat.Size = new Size(201, 19);
             lblDataFormat.TabIndex = 2;
             lblDataFormat.Text = "Numeric data-formatting string";
-            lblDataFormat.Click += this.lblDataFormat_Click;
             // 
             // grpCulture
             // 
