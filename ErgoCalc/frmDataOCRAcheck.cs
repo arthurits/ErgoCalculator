@@ -1,11 +1,6 @@
-﻿using System;
-using System.Data;
-using System.Globalization;
-using System.Reflection;
-using System.Windows.Forms;
-using ErgoCalc.controls;
+﻿using ErgoCalc.controls;
 using ErgoCalc.Models.OCRA;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Globalization;
 
 namespace ErgoCalc;
 

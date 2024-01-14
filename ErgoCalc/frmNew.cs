@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace ErgoCalc;
+﻿namespace ErgoCalc;
 
 public partial class FrmNew : Form
 {

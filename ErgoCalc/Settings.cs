@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace ErgoCalc;
 
@@ -19,6 +18,7 @@ public partial class FrmMain
         }
         catch (FileNotFoundException)
         {
+            _settingsFileExist = false;
         }
         catch (Exception ex)
         {

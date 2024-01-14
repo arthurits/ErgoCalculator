@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Drawing;
-using System.Security.Policy;
 
 namespace ErgoCalc;
 
