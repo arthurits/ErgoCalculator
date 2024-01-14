@@ -121,7 +121,7 @@
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.LightGray;
-            pictureBox1.Location = new Point(42, 106);
+            pictureBox1.Location = new Point(42, 109);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(350, 1);
             pictureBox1.TabIndex = 13;
@@ -130,7 +130,7 @@
             // trackZoomFactor
             // 
             trackZoomFactor.BackColor = Color.White;
-            trackZoomFactor.Location = new Point(38, 201);
+            trackZoomFactor.Location = new Point(38, 215);
             trackZoomFactor.Maximum = 500;
             trackZoomFactor.Name = "trackZoomFactor";
             trackZoomFactor.Size = new Size(363, 45);
@@ -141,7 +141,7 @@
             // 
             // updZoomFactor
             // 
-            updZoomFactor.Location = new Point(152, 170);
+            updZoomFactor.Location = new Point(152, 184);
             updZoomFactor.Maximum = new decimal(new int[] { 500, 0, 0, 0 });
             updZoomFactor.Name = "updZoomFactor";
             updZoomFactor.Size = new Size(55, 25);
@@ -151,7 +151,7 @@
             // lblZoomFactor
             // 
             lblZoomFactor.AutoSize = true;
-            lblZoomFactor.Location = new Point(42, 172);
+            lblZoomFactor.Location = new Point(42, 186);
             lblZoomFactor.Name = "lblZoomFactor";
             lblZoomFactor.Size = new Size(84, 19);
             lblZoomFactor.TabIndex = 10;
@@ -160,7 +160,7 @@
             // pctBackColor
             // 
             pctBackColor.BorderStyle = BorderStyle.FixedSingle;
-            pctBackColor.Location = new Point(115, 138);
+            pctBackColor.Location = new Point(115, 147);
             pctBackColor.Name = "pctBackColor";
             pctBackColor.Size = new Size(26, 26);
             pctBackColor.TabIndex = 9;
@@ -170,7 +170,7 @@
             // lblBackColor
             // 
             lblBackColor.AutoSize = true;
-            lblBackColor.Location = new Point(42, 143);
+            lblBackColor.Location = new Point(42, 152);
             lblBackColor.Name = "lblBackColor";
             lblBackColor.Size = new Size(71, 19);
             lblBackColor.TabIndex = 8;
@@ -180,7 +180,7 @@
             // 
             chkWordWrap.AutoSize = true;
             chkWordWrap.CheckAlign = ContentAlignment.MiddleRight;
-            chkWordWrap.Location = new Point(42, 113);
+            chkWordWrap.Location = new Point(42, 118);
             chkWordWrap.Name = "chkWordWrap";
             chkWordWrap.Size = new Size(95, 23);
             chkWordWrap.TabIndex = 7;
@@ -199,7 +199,7 @@
             // pctFontColor
             // 
             pctFontColor.BorderStyle = BorderStyle.FixedSingle;
-            pctFontColor.Location = new Point(87, 72);
+            pctFontColor.Location = new Point(87, 74);
             pctFontColor.Name = "pctFontColor";
             pctFontColor.Size = new Size(26, 26);
             pctFontColor.TabIndex = 6;
@@ -209,7 +209,7 @@
             // lblFontColor
             // 
             lblFontColor.AutoSize = true;
-            lblFontColor.Location = new Point(42, 77);
+            lblFontColor.Location = new Point(42, 79);
             lblFontColor.Name = "lblFontColor";
             lblFontColor.Size = new Size(42, 19);
             lblFontColor.TabIndex = 5;
@@ -228,7 +228,7 @@
             // lblFontStyle
             // 
             lblFontStyle.AutoSize = true;
-            lblFontStyle.Location = new Point(42, 48);
+            lblFontStyle.Location = new Point(42, 49);
             lblFontStyle.Name = "lblFontStyle";
             lblFontStyle.Size = new Size(38, 19);
             lblFontStyle.TabIndex = 3;
