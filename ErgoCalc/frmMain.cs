@@ -1,14 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms;
-
-namespace ErgoCalc;
+﻿namespace ErgoCalc;
 
 public partial class FrmMain : Form
 {
     // For loading and saving program settings;
     private AppSettings _settings = new();
+    private bool _settingsFileExist = true;
 
     public FrmMain()
     {
@@ -28,7 +24,7 @@ public partial class FrmMain : Form
         StatusStripFormat_SetValues(wordWrap: _settings.WordWrap, backColor: Color.FromArgb(_settings.TextBackColor), zoomFactor: _settings.TextZoom / 100);
 
         UpdateUI_Language();
-        if (_settings.WindowPosition) SetWindowPos();
+        if (_settings.WindowPosition && _settingsFileExist) SetWindowPos();
     }
 
     #region Form events

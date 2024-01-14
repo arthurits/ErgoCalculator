@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Windows.Forms;
 
 namespace ErgoCalc;
 
@@ -43,7 +42,7 @@ public partial class FrmSettings : Form
 
         if (fontDlg.ShowDialog() != DialogResult.Cancel)
         {
-            Settings.FontFamilyName= fontDlg.Font.Name;
+            Settings.FontFamilyName = fontDlg.Font.Name;
             Settings.FontStyle = fontDlg.Font.Style;
             Settings.FontSize = fontDlg.Font.Size;
 
@@ -62,8 +61,9 @@ public partial class FrmSettings : Form
         if (Settings is null) return;
 
         Settings.WordWrap = chkWordWrap.Checked;
-        Settings.TextZoom= (int)updZoomFactor.Value;
+        Settings.TextZoom = (int)updZoomFactor.Value;
         Settings.RememberFileDialogPath = chkDlgPath.Checked;
+        Settings.WindowPosition = chkWindowPos.Checked;
         Settings.AppCulture = _culture;
 
         DialogResult = DialogResult.OK;
@@ -138,6 +138,7 @@ public partial class FrmSettings : Form
     private void UpdateControls(AppSettings settings)
     {
         chkDlgPath.Checked = settings.RememberFileDialogPath;
+        chkWindowPos.Checked = settings.WindowPosition;
 
         if (_culture.Name == string.Empty)
             radInvariantCulture.Checked = true;
@@ -189,7 +190,7 @@ public partial class FrmSettings : Form
         this.tabPlot.Text = StringResources.TabPlot;
         this.tabGUI.Text = StringResources.TabGUI;
 
-        this.btnDlgFont.Text=StringResources.BtnDlgFont;
+        this.btnDlgFont.Text = StringResources.BtnDlgFont;
         this.lblFont.Text = String.Format(StringResources.LblFontName, Settings?.FontFamilyName, Settings?.FontSize);
         this.lblFontStyle.Text = String.Format(StringResources.LblFontStyle, Settings?.FontStyle.ToString());
         this.lblFontColor.Text = String.Format(StringResources.LblFontColor, Settings?.FontColor.ToString("X"));
@@ -202,6 +203,7 @@ public partial class FrmSettings : Form
         this.radInvariantCulture.Text = StringResources.RadInvariantCulture;
         this.radUserCulture.Text = StringResources.RadUserCulture;
         this.chkDlgPath.Text = StringResources.ChkDlgPath;
+        this.chkWindowPos.Text = StringResources.ChkWindowPos;
         this.lblDataFormat.Text = StringResources.LblDataFormat;
 
         this.btnReset.Text = StringResources.BtnReset;
@@ -264,5 +266,10 @@ public partial class FrmSettings : Form
             pctBackColor.BackColor = colorDlg.Color;
             Settings.TextBackColor = colorDlg.Color.ToArgb();
         }
+    }
+
+    private void chkDlgPath_CheckedChanged(object sender, EventArgs e)
+    {
+
     }
 }
