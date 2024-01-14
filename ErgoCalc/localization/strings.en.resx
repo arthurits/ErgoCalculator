@@ -117,6 +117,111 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="OCRA_Arm" xml:space="preserve">
+    <value>Arm posture</value>
+  </data>
+  <data name="OCRA_Arm_Types" xml:space="preserve">
+    <value>Slightly uplifted for 1/2 of the time, shoulder height for 10% of the time, shoulder height for 1/3 of the time, shoulder height for 1/2 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_BorgCR10" xml:space="preserve">
+    <value>Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10</value>
+  </data>
+  <data name="OCRA_Data" xml:space="preserve">
+    <value>Initial data</value>
+  </data>
+  <data name="OCRA_Elbow" xml:space="preserve">
+    <value>Elbow posture</value>
+  </data>
+  <data name="OCRA_Elbow_Types" xml:space="preserve">
+    <value>Wide or sudden movs for 1/3 of the time, Wide or sudden movs for 1/2 of the time, Allmost all the time</value>
+  </data>
+  <data name="OCRA_Force" xml:space="preserve">
+    <value>Force type and frequency</value>
+  </data>
+  <data name="OCRA_ForceLight" xml:space="preserve">
+    <value>1/3 of the time, 50% of the time, &gt; 50% of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_ForceM" xml:space="preserve">
+    <value>Force score</value>
+  </data>
+  <data name="OCRA_ForceMax" xml:space="preserve">
+    <value>2 sec every 10 min, 1% of the time, 5% of the time, &gt; 10% of the time</value>
+  </data>
+  <data name="OCRA_FrequencyM" xml:space="preserve">
+    <value>Frequency score</value>
+  </data>
+  <data name="OCRA_Grip" xml:space="preserve">
+    <value>Grip posture</value>
+  </data>
+  <data name="OCRA_Grip_Types" xml:space="preserve">
+    <value>Grip for 1/3 of the time, Grip for 1/2 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_Index" xml:space="preserve">
+    <value>The OCRA checklist index is:</value>
+  </data>
+  <data name="OCRA_LunchBreak" xml:space="preserve">
+    <value>Lunch break (min)</value>
+  </data>
+  <data name="OCRA_Multipliers" xml:space="preserve">
+    <value>Multipliers</value>
+  </data>
+  <data name="OCRA_NonRepetitive" xml:space="preserve">
+    <value>No repetitive work (min)</value>
+  </data>
+  <data name="OCRA_NumberCycles" xml:space="preserve">
+    <value>Number of cycles</value>
+  </data>
+  <data name="OCRA_OfficialPauses" xml:space="preserve">
+    <value>Official pauses (min)</value>
+  </data>
+  <data name="OCRA_PostureM" xml:space="preserve">
+    <value>Posture score</value>
+  </data>
+  <data name="OCRA_RecoveryM" xml:space="preserve">
+    <value>Recovery score</value>
+  </data>
+  <data name="OCRA_Results" xml:space="preserve">
+    <value>These are the results from the OCRA checklist model:</value>
+  </data>
+  <data name="OCRA_ShiftDuration" xml:space="preserve">
+    <value>Shift duration (min)</value>
+  </data>
+  <data name="OCRA_Stereotypy" xml:space="preserve">
+    <value>Lack of variation or stereotypy</value>
+  </data>
+  <data name="OCRA_Stereotypy_Types" xml:space="preserve">
+    <value>Same movs for 2/3 of the time, Almost all the time</value>
+  </data>
+  <data name="OCRA_TaskATD" xml:space="preserve">
+    <value>Arm dynamic actions</value>
+  </data>
+  <data name="OCRA_TaskATD_Types" xml:space="preserve">
+    <value>20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min</value>
+  </data>
+  <data name="OCRA_TaskATE" xml:space="preserve">
+    <value>Arm static actions</value>
+  </data>
+  <data name="OCRA_TaskATE_Types" xml:space="preserve">
+    <value>5 sec for 2/3 cycle, 5 sec for 3/3 cycle</value>
+  </data>
+  <data name="OCRA_TaskBreaks" xml:space="preserve">
+    <value>Work interruptions</value>
+  </data>
+  <data name="OCRA_TaskBreaks_Types" xml:space="preserve">
+    <value>8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift</value>
+  </data>
+  <data name="OCRA_TNC" xml:space="preserve">
+    <value>Net cycle time (sec)</value>
+  </data>
+  <data name="OCRA_TNTR" xml:space="preserve">
+    <value>Repetitive net cycle time (sec)</value>
+  </data>
+  <data name="OCRA_Wrist" xml:space="preserve">
+    <value>Wrist posture</value>
+  </data>
+  <data name="OCRA_Wrist_Types" xml:space="preserve">
+    <value>Extreme for 1/3 of the time, Extreme for 1/2 of the time, Almost all the time</value>
+  </data>
   <data name="strBtnAccept" xml:space="preserve">
     <value>&amp;Accept</value>
   </data>
@@ -137,6 +242,9 @@
   </data>
   <data name="strChkDlgPath" xml:space="preserve">
     <value>Remember open/save dialog previous path</value>
+  </data>
+  <data name="strChkWindowPos" xml:space="preserve">
+    <value>Remember window position and size on startup</value>
   </data>
   <data name="strChkWordWrap" xml:space="preserve">
     <value>Word wrap</value>
@@ -235,6 +343,30 @@ to their default values?</value>
   <data name="strDlgResetTitle" xml:space="preserve">
     <value>Reset settings?</value>
   </data>
+  <data name="strFormDataCLM" xml:space="preserve">
+    <value>CLM model parameters</value>
+  </data>
+  <data name="strFormDataLiberty" xml:space="preserve">
+    <value>LM-MMH model parameters</value>
+  </data>
+  <data name="strFormDataLifting" xml:space="preserve">
+    <value>Lifting and lowering model parameters</value>
+  </data>
+  <data name="strFormDataMetabolic" xml:space="preserve">
+    <value>Metabolic rate model parameters</value>
+  </data>
+  <data name="strFormDataOCRAcheck" xml:space="preserve">
+    <value>OCRA checklist model parameters</value>
+  </data>
+  <data name="strFormDataStrainIndex" xml:space="preserve">
+    <value>Strain Index model parameters</value>
+  </data>
+  <data name="strFormDataTC" xml:space="preserve">
+    <value>Thermal comfort parameters</value>
+  </data>
+  <data name="strFormDataWR" xml:space="preserve">
+    <value>WR model parameters</value>
+  </data>
   <data name="strFormLanguageTitle" xml:space="preserve">
     <value>Select culture</value>
   </data>
@@ -250,11 +382,11 @@ to their default values?</value>
   <data name="strFormResultsLiberty" xml:space="preserve">
     <value>LM-MMH model results</value>
   </data>
-  <data name="strFormResultsMetabolic" xml:space="preserve">
-    <value>Metabolic rate results</value>
-  </data>
   <data name="strFormResultsLifting" xml:space="preserve">
     <value>Lifting model results</value>
+  </data>
+  <data name="strFormResultsMetabolic" xml:space="preserve">
+    <value>Metabolic rate results</value>
   </data>
   <data name="strFormResultsOCRAcheck" xml:space="preserve">
     <value>OCRA checklist model results</value>
@@ -436,30 +568,8 @@ to their default values?</value>
   <data name="strLibertyMutual_WeightMAL90" xml:space="preserve">
     <value>MAL weight (kg) for 90%</value>
   </data>
-  <data name="strMenuMainFile" xml:space="preserve">
-    <value>&amp;File</value>
-  </data>
-  <data name="strMenuMainFileExit" xml:space="preserve">
-    <value>&amp;Exit...</value>
-  </data>
-  <data name="strMenuMainFileNew" xml:space="preserve">
-    <value>&amp;New...</value>
-  </data>
-  <data name="strMenuMainHelp" xml:space="preserve">
-    <value>&amp;Help</value>
-  </data>
-  <data name="strMenuMainHelpAbout" xml:space="preserve">
-    <value>&amp;About...</value>
-  </data>
-  <data name="strMenuMainWindow" xml:space="preserve">
-    <value>&amp;Window</value>
-  </data>
-  <data name="strMsgBoxExit" xml:space="preserve">
-    <value>Are you sure you want to exit
-the application?</value>
-  </data>
-  <data name="strMsgBoxExitTitle" xml:space="preserve">
-    <value>Exit?</value>
+  <data name="strLifting_Age" xml:space="preserve">
+    <value>Age (years):</value>
   </data>
   <data name="strLifting_AM" xml:space="preserve">
     <value>Twisting angle multiplier (AM):</value>
@@ -484,6 +594,9 @@ the application?</value>
   </data>
   <data name="strLifting_Duration" xml:space="preserve">
     <value>Task duration (hours):</value>
+  </data>
+  <data name="strLifting_EM" xml:space="preserve">
+    <value>Extended time multiplier (EM):</value>
   </data>
   <data name="strLifting_Equation" xml:space="preserve">
     <value>The lifting index (LI) is computed as follows:</value>
@@ -512,6 +625,9 @@ the application?</value>
   <data name="strLifting_FrequencyB" xml:space="preserve">
     <value>Lifting frequency B (times/min):</value>
   </data>
+  <data name="strLifting_Gender" xml:space="preserve">
+    <value>Gender:</value>
+  </data>
   <data name="strLifting_HM" xml:space="preserve">
     <value>Horizontal multiplier (HM):</value>
   </data>
@@ -524,20 +640,35 @@ the application?</value>
   <data name="strLifting_Index" xml:space="preserve">
     <value>The lifting index is:</value>
   </data>
-  <data name="strLifting_MassRef" xml:space="preserve">
-    <value>Mass reference (kg):</value>
-  </data>
   <data name="strLifting_LI" xml:space="preserve">
     <value>Lifting index (LI):</value>
+  </data>
+  <data name="strLifting_MassRef" xml:space="preserve">
+    <value>Mass reference (kg):</value>
   </data>
   <data name="strLifting_Multipliers" xml:space="preserve">
     <value>Multipliers</value>
   </data>
+  <data name="strLifting_OM" xml:space="preserve">
+    <value>One-handed multiplier (OM):</value>
+  </data>
+  <data name="strLifting_OneHanded" xml:space="preserve">
+    <value>One-handed?</value>
+  </data>
+  <data name="strLifting_OneHandedValue" xml:space="preserve">
+    <value>False, True</value>
+  </data>
   <data name="strLifting_Order" xml:space="preserve">
     <value>Subtask order:</value>
   </data>
+  <data name="strLifting_PM" xml:space="preserve">
+    <value>Two-person multiplier (PM):</value>
+  </data>
   <data name="strLifting_Results" xml:space="preserve">
     <value>These are the results obtained from the ISO 11228-1:2021 norm model:</value>
+  </data>
+  <data name="strLifting_TwoPerson" xml:space="preserve">
+    <value>Two or more persons?</value>
   </data>
   <data name="strLifting_VerticalD" xml:space="preserve">
     <value>Vertical distance (cm):</value>
@@ -550,6 +681,31 @@ the application?</value>
   </data>
   <data name="strLifting_Weight" xml:space="preserve">
     <value>Weight lifted (kg):</value>
+  </data>
+  <data name="strMenuMainFile" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="strMenuMainFileExit" xml:space="preserve">
+    <value>&amp;Exit...</value>
+  </data>
+  <data name="strMenuMainFileNew" xml:space="preserve">
+    <value>&amp;New...</value>
+  </data>
+  <data name="strMenuMainHelp" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="strMenuMainHelpAbout" xml:space="preserve">
+    <value>&amp;About...</value>
+  </data>
+  <data name="strMenuMainWindow" xml:space="preserve">
+    <value>&amp;Window</value>
+  </data>
+  <data name="strMsgBoxExit" xml:space="preserve">
+    <value>Are you sure you want to exit
+the application?</value>
+  </data>
+  <data name="strMsgBoxExitTitle" xml:space="preserve">
+    <value>Exit?</value>
   </data>
   <data name="strNumberCases" xml:space="preserve">
     <value>Number of cases</value>
@@ -572,11 +728,11 @@ the application?</value>
   <data name="strRadModelLiberty" xml:space="preserve">
     <value>Liberty Mutual manual handling</value>
   </data>
-  <data name="strRadModelMetabolic" xml:space="preserve">
-    <value>Metabolic rate</value>
-  </data>
   <data name="strRadModelLifting" xml:space="preserve">
     <value>Lifting and lowering model (LI, CLI, SLI, VLI)</value>
+  </data>
+  <data name="strRadModelMetabolic" xml:space="preserve">
+    <value>Metabolic rate</value>
   </data>
   <data name="strRadModelOCRA" xml:space="preserve">
     <value>OCRA checklist</value>
@@ -860,178 +1016,25 @@ the application?</value>
   <data name="strToolTipZoom" xml:space="preserve">
     <value>Select zoom factor</value>
   </data>
-  <data name="strFormDataWR" xml:space="preserve">
-    <value>WR model parameters</value>
-  </data>
-  <data name="strFormDataLifting" xml:space="preserve">
-    <value>Lifting and lowering model parameters</value>
-  </data>
-  <data name="strFormDataCLM" xml:space="preserve">
-    <value>CLM model parameters</value>
-  </data>
-  <data name="strFormDataLiberty" xml:space="preserve">
-    <value>LM-MMH model parameters</value>
-  </data>
-  <data name="strFormDataStrainIndex" xml:space="preserve">
-    <value>Strain Index model parameters</value>
-  </data>
-  <data name="strFormDataTC" xml:space="preserve">
-    <value>Thermal comfort parameters</value>
-  </data>
-  <data name="strFormDataMetabolic" xml:space="preserve">
-    <value>Metabolic rate model parameters</value>
-  </data>
-  <data name="strFormDataOCRAcheck" xml:space="preserve">
-    <value>OCRA checklist model parameters</value>
-  </data>
-  <data name="WR_SeriesName" xml:space="preserve">
-    <value>Name</value>
+  <data name="WR_MHT" xml:space="preserve">
+    <value>Maximum holding time (min)</value>
   </data>
   <data name="WR_MVC" xml:space="preserve">
     <value>Maximum voluntary contraction (%)</value>
   </data>
-  <data name="WR_MHT" xml:space="preserve">
-    <value>Maximum holding time (min)</value>
-  </data>
-  <data name="WR_WorkingTimes" xml:space="preserve">
-    <value>Working times (min)</value>
+  <data name="WR_NumberCycles" xml:space="preserve">
+    <value>Number of cycles</value>
   </data>
   <data name="WR_RestTimes" xml:space="preserve">
     <value>Rest times (min)</value>
   </data>
-  <data name="WR_NumberCycles" xml:space="preserve">
-    <value>Number of cycles</value>
+  <data name="WR_SeriesName" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="WR_Step" xml:space="preserve">
     <value>Numeric step</value>
   </data>
-  <data name="OCRA_ShiftDuration" xml:space="preserve">
-    <value>Shift duration (min)</value>
-  </data>
-  <data name="OCRA_OfficialPauses" xml:space="preserve">
-    <value>Official pauses (min)</value>
-  </data>
-  <data name="OCRA_LunchBreak" xml:space="preserve">
-    <value>Lunch break (min)</value>
-  </data>
-  <data name="OCRA_NonRepetitive" xml:space="preserve">
-    <value>No repetitive work (min)</value>
-  </data>
-  <data name="OCRA_NumberCycles" xml:space="preserve">
-    <value>Number of cycles</value>
-  </data>
-  <data name="OCRA_TNTR" xml:space="preserve">
-    <value>Repetitive net cycle time (sec)</value>
-  </data>
-  <data name="OCRA_TNC" xml:space="preserve">
-    <value>Net cycle time (sec)</value>
-  </data>
-  <data name="OCRA_TaskBreaks_Types" xml:space="preserve">
-    <value>8 min per hour or 1:5, 4x 8 min per 7-8 h shift, 3x 8 min per 7-8 h shift, 2x 8 min per 7-8 h shift, 1x 8 min per 7-8 h shift, Less than 5 min per 7-8 h shift</value>
-  </data>
-  <data name="OCRA_TaskATD_Types" xml:space="preserve">
-    <value>20 actions/min, 30 actions/min, 40 actions/min, 40 actions/min irregular breaks, 50 actions/min, 60 actions/min, 70 actions/min</value>
-  </data>
-  <data name="OCRA_TaskATE_Types" xml:space="preserve">
-    <value>5 sec for 2/3 cycle, 5 sec for 3/3 cycle</value>
-  </data>
-  <data name="OCRA_BorgCR10" xml:space="preserve">
-    <value>Nothing 0, Weak 1, Light 2, Moderate 3, Strong 4, Strong-Heavy 5, Very strong 6, Very strong 7, Very strong 8, Extremely strong 9, Maximal 10</value>
-  </data>
-  <data name="OCRA_ForceLight" xml:space="preserve">
-    <value>1/3 of the time, 50% of the time, &gt; 50% of the time, Almost all the time</value>
-  </data>
-  <data name="OCRA_ForceMax" xml:space="preserve">
-    <value>2 sec every 10 min, 1% of the time, 5% of the time, &gt; 10% of the time</value>
-  </data>
-  <data name="OCRA_TaskBreaks" xml:space="preserve">
-    <value>Work interruptions</value>
-  </data>
-  <data name="OCRA_RecoveryM" xml:space="preserve">
-    <value>Recovery score</value>
-  </data>
-  <data name="OCRA_FrequencyM" xml:space="preserve">
-    <value>Frequency score</value>
-  </data>
-  <data name="OCRA_TaskATD" xml:space="preserve">
-    <value>Arm dynamic actions</value>
-  </data>
-  <data name="OCRA_TaskATE" xml:space="preserve">
-    <value>Arm static actions</value>
-  </data>
-  <data name="OCRA_Force" xml:space="preserve">
-    <value>Force type and frequency</value>
-  </data>
-  <data name="OCRA_ForceM" xml:space="preserve">
-    <value>Force score</value>
-  </data>
-  <data name="OCRA_PostureM" xml:space="preserve">
-    <value>Posture score</value>
-  </data>
-  <data name="OCRA_Arm" xml:space="preserve">
-    <value>Arm posture</value>
-  </data>
-  <data name="OCRA_Arm_Types" xml:space="preserve">
-    <value>Slightly uplifted for 1/2 of the time, shoulder height for 10% of the time, shoulder height for 1/3 of the time, shoulder height for 1/2 of the time, Almost all the time</value>
-  </data>
-  <data name="OCRA_Elbow" xml:space="preserve">
-    <value>Elbow posture</value>
-  </data>
-  <data name="OCRA_Elbow_Types" xml:space="preserve">
-    <value>Wide or sudden movs for 1/3 of the time, Wide or sudden movs for 1/2 of the time, Allmost all the time</value>
-  </data>
-  <data name="OCRA_Wrist_Types" xml:space="preserve">
-    <value>Extreme for 1/3 of the time, Extreme for 1/2 of the time, Almost all the time</value>
-  </data>
-  <data name="OCRA_Wrist" xml:space="preserve">
-    <value>Wrist posture</value>
-  </data>
-  <data name="OCRA_Grip_Types" xml:space="preserve">
-    <value>Grip for 1/3 of the time, Grip for 1/2 of the time, Almost all the time</value>
-  </data>
-  <data name="OCRA_Grip" xml:space="preserve">
-    <value>Grip posture</value>
-  </data>
-  <data name="OCRA_Stereotypy" xml:space="preserve">
-    <value>Lack of variation or stereotypy</value>
-  </data>
-  <data name="OCRA_Stereotypy_Types" xml:space="preserve">
-    <value>Same movs for 2/3 of the time, Almost all the time</value>
-  </data>
-  <data name="OCRA_Results" xml:space="preserve">
-    <value>These are the results from the OCRA checklist model:</value>
-  </data>
-  <data name="OCRA_Data" xml:space="preserve">
-    <value>Initial data</value>
-  </data>
-  <data name="OCRA_Multipliers" xml:space="preserve">
-    <value>Multipliers</value>
-  </data>
-  <data name="OCRA_Index" xml:space="preserve">
-    <value>The OCRA checklist index is:</value>
-  </data>
-  <data name="strLifting_OneHanded" xml:space="preserve">
-    <value>One-handed?</value>
-  </data>
-  <data name="strLifting_OneHandedValue" xml:space="preserve">
-    <value>False, True</value>
-  </data>
-  <data name="strLifting_OM" xml:space="preserve">
-    <value>One-handed multiplier (OM):</value>
-  </data>
-  <data name="strLifting_TwoPerson" xml:space="preserve">
-    <value>Two or more persons?</value>
-  </data>
-  <data name="strLifting_PM" xml:space="preserve">
-    <value>Two-person multiplier (PM):</value>
-  </data>
-  <data name="strLifting_EM" xml:space="preserve">
-    <value>Extended time multiplier (EM):</value>
-  </data>
-  <data name="strLifting_Gender" xml:space="preserve">
-    <value>Gender:</value>
-  </data>
-  <data name="strLifting_Age" xml:space="preserve">
-    <value>Age (years):</value>
+  <data name="WR_WorkingTimes" xml:space="preserve">
+    <value>Working times (min)</value>
   </data>
 </root>

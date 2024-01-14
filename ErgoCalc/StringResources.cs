@@ -121,6 +121,7 @@ public static class StringResources
     public static string TabGUI => StringRM.GetString("strTabGUI", Culture) ?? "User interface";
     public static string GrpCulture => StringRM.GetString("strGrpCulture", Culture) ?? "Select language";
     public static string ChkDlgPath => StringRM.GetString("strChkDlgPath", Culture) ?? "Remember open/save dialog previous path";
+    public static string ChkWindowPos => StringRM.GetString("strChkWindowPos", Culture) ?? "Remember window position and size on startup";
     public static string LblDataFormat => StringRM.GetString("strLblDataFormat", Culture) ?? "Numeric data-formatting string";
 
     public static string LblDlgFont => StringRM.GetString("strLblDlgFont", Culture) ?? "Change current font";
