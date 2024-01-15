@@ -1881,7 +1881,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Liberty Mutual manual handling.
+        ///   Looks up a localized string similar to Liberty Mutual manual materials handling.
         /// </summary>
         internal static string strRadModelLiberty {
             get {

@@ -70,11 +70,11 @@ namespace ErgoCalc
             // 
             tableLayoutPanel1.ColumnCount = 6;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33444F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 96F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33444F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 96F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.33112F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 96F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98F));
             tableLayoutPanel1.Controls.Add(formsPlot1, 0, 0);
             tableLayoutPanel1.Controls.Add(formsPlot3, 4, 0);
             tableLayoutPanel1.Controls.Add(formsPlot2, 2, 0);
@@ -96,7 +96,7 @@ namespace ErgoCalc
             formsPlot1.Location = new Point(4, 3);
             formsPlot1.Margin = new Padding(4, 3, 4, 3);
             formsPlot1.Name = "formsPlot1";
-            formsPlot1.Size = new Size(193, 192);
+            formsPlot1.Size = new Size(191, 192);
             formsPlot1.TabIndex = 0;
             formsPlot1.TabStop = false;
             // 
@@ -107,7 +107,7 @@ namespace ErgoCalc
             formsPlot3.Location = new Point(598, 3);
             formsPlot3.Margin = new Padding(4, 3, 4, 3);
             formsPlot3.Name = "formsPlot3";
-            formsPlot3.Size = new Size(193, 192);
+            formsPlot3.Size = new Size(191, 192);
             formsPlot3.TabIndex = 6;
             formsPlot3.TabStop = false;
             // 
@@ -118,16 +118,16 @@ namespace ErgoCalc
             formsPlot2.Location = new Point(301, 3);
             formsPlot2.Margin = new Padding(4, 3, 4, 3);
             formsPlot2.Name = "formsPlot2";
-            formsPlot2.Size = new Size(193, 192);
+            formsPlot2.Size = new Size(191, 192);
             formsPlot2.TabIndex = 2;
             formsPlot2.TabStop = false;
             // 
             // pictureBox1
             // 
             pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Location = new Point(204, 3);
+            pictureBox1.Location = new Point(202, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(90, 192);
+            pictureBox1.Size = new Size(92, 192);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 7;
             pictureBox1.TabStop = false;
@@ -135,9 +135,9 @@ namespace ErgoCalc
             // pictureBox2
             // 
             pictureBox2.Dock = DockStyle.Fill;
-            pictureBox2.Location = new Point(501, 3);
+            pictureBox2.Location = new Point(499, 3);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(90, 192);
+            pictureBox2.Size = new Size(92, 192);
             pictureBox2.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox2.TabIndex = 8;
             pictureBox2.TabStop = false;
@@ -145,9 +145,9 @@ namespace ErgoCalc
             // pictureBox3
             // 
             pictureBox3.Dock = DockStyle.Fill;
-            pictureBox3.Location = new Point(798, 3);
+            pictureBox3.Location = new Point(796, 3);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(91, 192);
+            pictureBox3.Size = new Size(93, 192);
             pictureBox3.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox3.TabIndex = 9;
             pictureBox3.TabStop = false;
