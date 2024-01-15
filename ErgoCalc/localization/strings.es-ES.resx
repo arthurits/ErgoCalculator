@@ -726,7 +726,7 @@ salir de la aplicación?</value>
     <value>Modelo CLM para el levantamiento</value>
   </data>
   <data name="strRadModelLiberty" xml:space="preserve">
-    <value>Método de la Liberty Mutual para la manipulación</value>
+    <value>Ecuaciones LM-MMH para la manipulación</value>
   </data>
   <data name="strRadModelLifting" xml:space="preserve">
     <value>Levantamiento de cargas (LI, CLI, SLI, VLI)</value>

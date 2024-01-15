@@ -726,7 +726,7 @@ the application?</value>
     <value>Comprehensive lifting model (CLM)</value>
   </data>
   <data name="strRadModelLiberty" xml:space="preserve">
-    <value>Liberty Mutual manual handling</value>
+    <value>Liberty Mutual manual materials handling</value>
   </data>
   <data name="strRadModelLifting" xml:space="preserve">
     <value>Lifting and lowering model (LI, CLI, SLI, VLI)</value>
