@@ -29,16 +29,16 @@ public partial class FrmSettings : Form
 
     private void DlgFont(object sender, EventArgs e)
     {
-        FontDialog fontDlg = new();
-
-        fontDlg.ShowApply = false;
-        fontDlg.ShowColor = false;
-        fontDlg.ShowEffects = true;
-        fontDlg.ShowHelp = false;
-        fontDlg.FontMustExist = true;
-
-        fontDlg.Font = new(Settings.FontFamilyName, Settings.FontSize, Settings.FontStyle);
-        fontDlg.Color = Color.FromArgb(Settings.FontColor);
+        FontDialog fontDlg = new()
+        {
+            ShowApply = false,
+            ShowColor = false,
+            ShowEffects = true,
+            ShowHelp = false,
+            FontMustExist = true,
+            Font = new(Settings.FontFamilyName, Settings.FontSize, Settings.FontStyle),
+            Color = Color.FromArgb(Settings.FontColor)
+        };
 
         if (fontDlg.ShowDialog() != DialogResult.Cancel)
         {
