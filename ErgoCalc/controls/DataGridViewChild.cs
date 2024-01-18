@@ -58,7 +58,9 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
     {
         // Set the value of the editing control to the current cell value.
         base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
-        DataGridViewEditingControl? ctl = DataGridView?.EditingControl as DataGridViewEditingControl;
+
+        if (DataGridView?.EditingControl is not DataGridViewEditingControl ctl) return;
+
         ctl.ComboTexts = editControl.ComboTexts;
         
         // Use the default row value when Value property is null.
@@ -91,12 +93,12 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
 
     public override void PositionEditingControl(bool setLocation, bool setSize, Rectangle cellBounds, Rectangle cellClip, DataGridViewCellStyle cellStyle, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded, bool isFirstDisplayedColumn, bool isFirstDisplayedRow)
     {
-        Rectangle ctlSize = new Rectangle(new Point(cellBounds.Location.X + cellBounds.Width / 2, cellBounds.Location.Y + cellBounds.Height / 2), new Size(cellBounds.Width + 350, 150));
+        Rectangle ctlSize = new(new Point(cellBounds.Location.X + cellBounds.Width / 2, cellBounds.Location.Y + cellBounds.Height / 2), new Size(cellBounds.Width + 350, 150));
         base.PositionEditingControl(setLocation, setSize, ctlSize, ctlSize, cellStyle, singleVerticalBorderAdded, singleHorizontalBorderAdded, isFirstDisplayedColumn, isFirstDisplayedRow);
         if (editControl is not null)
         {
-            Point pos = new Point(cellBounds.Location.X + cellBounds.Width / 2, cellBounds.Location.Y + cellBounds.Height / 2);
-            pos.Offset(DataGridView.Location);
+            Point pos = new(cellBounds.Location.X + cellBounds.Width / 2, cellBounds.Location.Y + cellBounds.Height / 2);
+            pos.Offset(DataGridView?.Location ?? new(0,0));
             editControl.Location = pos;
         }
     }
@@ -138,14 +140,14 @@ public class DataGridViewChildCell : DataGridViewTextBoxCell
 
 public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingControl
 {
-    private DataGridView dataGridView;
+    private DataGridView? dataGridView;
     private bool valueChanged = false;
     private int rowIndex;
 
-    private DataGridViewComboBoxColumn comboBorg;
-    private DataGridViewComboBoxCell comboModerate;
-    private DataGridViewComboBoxCell comboIntense;
-    private DataGridViewComboBoxCell comboMax;
+    private DataGridViewComboBoxColumn? comboBorg;
+    private DataGridViewComboBoxCell? comboModerate;
+    private DataGridViewComboBoxCell? comboIntense;
+    private DataGridViewComboBoxCell? comboMax;
 
     public List<string[]>? ComboTexts { get; set; } = null;
 
@@ -176,13 +178,13 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
         }
         set
         {
-            if (value is String)
+            if (value is String v)
             {
                 try
                 {
                     // This will throw an exception of the string is
                     // null, empty, or not in the format of a date.
-                    this.Value = ((String)value);
+                    this.Value = v;
                 }
                 catch
                 {
@@ -213,7 +215,7 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
         }
         set
         {
-            if (value is String)
+            if (value is not null)
                 ToGrid(value);
 
         }
@@ -301,38 +303,46 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
         for (int i = 0; i < ComboTexts[3].Length; i++)
             tableMax.Rows.Add(ComboTexts[3][i], i);
 
-        comboBorg = new DataGridViewComboBoxColumn();
-        comboBorg.HeaderText = "Borg CR-10";
-        comboBorg.DataSource = tableBorg;
-        comboBorg.DisplayMember = "Type";
-        comboBorg.ValueMember = "TypeValue";
-        comboBorg.Name = "BorgScale";
-        
+        comboBorg = new DataGridViewComboBoxColumn
+        {
+            HeaderText = "Borg CR-10",
+            DataSource = tableBorg,
+            DisplayMember = "Type",
+            ValueMember = "TypeValue",
+            Name = "BorgScale"
+        };
+
         this.Columns.Add(comboBorg);
         this.Columns[1].Width = 135;
         this.Columns.Add("Force", "Force");
         this.Columns[2].Width = 140;
 
-        comboModerate = new DataGridViewComboBoxCell();
-        //comboModerate.HeaderText = "Force";
-        comboModerate.DataSource = tableModerate;
-        comboModerate.DisplayMember = "Type";
-        comboModerate.ValueMember = "TypeValue";
-        //comboModerate.Name = "ForceModerate";
+        comboModerate = new DataGridViewComboBoxCell
+        {
+            //comboModerate.HeaderText = "Force";
+            DataSource = tableModerate,
+            DisplayMember = "Type",
+            ValueMember = "TypeValue"
+            //comboModerate.Name = "ForceModerate";
+        };
 
-        comboIntense = new DataGridViewComboBoxCell();
-        //comboIntense.HeaderText = "Force";
-        comboIntense.DataSource = tableIntense;
-        comboIntense.DisplayMember = "Type";
-        comboIntense.ValueMember = "TypeValue";
-        //comboIntense.Name = "ForceIntense";
+        comboIntense = new DataGridViewComboBoxCell
+        {
+            //comboIntense.HeaderText = "Force";
+            DataSource = tableIntense,
+            DisplayMember = "Type",
+            ValueMember = "TypeValue"
+            //comboIntense.Name = "ForceIntense";
+        };
 
-        comboMax = new DataGridViewComboBoxCell();
-        //comboMax.HeaderText = "Force";
-        comboMax.DataSource = tableMax;
-        comboMax.DisplayMember = "Type";
-        comboMax.ValueMember = "TypeValue";
-        //comboMax.Name = "ForceMax";
+        comboMax = new DataGridViewComboBoxCell
+        {
+            //comboMax.HeaderText = "Force";
+            DataSource = tableMax,
+            DisplayMember = "Type",
+            ValueMember = "TypeValue"
+            //comboMax.Name = "ForceMax";
+        };
     }
 
     private void Variables_CurrentCellDirtyStateChanged(object? sender, EventArgs? e)
@@ -365,17 +375,17 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
                 break;
             case 3:     // Pulling
             case 4:     // Pushing
-                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell)comboModerate.Clone();
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell?)comboModerate?.Clone();
                 break;
             case 5:
             case 6:
             case 7:
-                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell)comboIntense.Clone();
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell?)comboIntense?.Clone();
                 break;
             case 8:
             case 9:
             case 10:
-                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell)comboMax.Clone();
+                this.Rows[CurrentCell.RowIndex].Cells[CurrentCell.ColumnIndex + 1] = (DataGridViewCell?)comboMax?.Clone();
                 break;
             default:
                 break;
@@ -417,24 +427,14 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
 
     // Implements the IDataGridViewEditingControl.EditingControlWantsInputKey
     // method.
-    public bool EditingControlWantsInputKey(
-        Keys key, bool dataGridViewWantsInputKey)
+    public bool EditingControlWantsInputKey(Keys key, bool dataGridViewWantsInputKey)
     {
         // Let the DateTimePicker handle the keys listed.
-        switch (key & Keys.KeyCode)
+        return (key & Keys.KeyCode) switch
         {
-            case Keys.Left:
-            case Keys.Up:
-            case Keys.Down:
-            case Keys.Right:
-            case Keys.Home:
-            case Keys.End:
-            case Keys.PageDown:
-            case Keys.PageUp:
-                return true;
-            default:
-                return !dataGridViewWantsInputKey;
-        }
+            Keys.Left or Keys.Up or Keys.Down or Keys.Right or Keys.Home or Keys.End or Keys.PageDown or Keys.PageUp => true,
+            _ => !dataGridViewWantsInputKey,
+        };
     }
 
     // Implements the IDataGridViewEditingControl
@@ -449,7 +449,7 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
 
     // Implements the IDataGridViewEditingControl
     // .EditingControlDataGridView property.
-    public DataGridView EditingControlDataGridView
+    public DataGridView? EditingControlDataGridView
     {
         get
         {
@@ -457,7 +457,7 @@ public class DataGridViewEditingControl : DataGridView, IDataGridViewEditingCont
         }
         set
         {
-            dataGridView = value;
+            dataGridView = value ?? new();
         }
     }
 

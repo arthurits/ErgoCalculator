@@ -54,11 +54,7 @@ public partial class FrmResultsTC : Form, IChildResults
             result = ThermalComfort.ComfortPMV(_job);
 
         if (result == true)
-        {
-            rtbShowResult.Text = _job.ToString(StringResources.ThermalComfort_ResultsHeaders, _culture);
-            CreatePlots();
-            FormatText();
-        }
+            UpdateLanguage(_culture);
     }
 
     private void InitializePlot()
@@ -313,10 +309,14 @@ public partial class FrmResultsTC : Form, IChildResults
         rtbShowResult.SelectionLength = 0;
     }
 
-    public bool[] GetToolbarEnabledState()
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
     {
-        return new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true };
+        rtbShowResult.Text = _job.ToString(StringResources.ThermalComfort_ResultsHeaders, _culture);
+        CreatePlots();
+        FormatText();
     }
+
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
 
     public bool OpenFile(JsonDocument document)
     {

@@ -1,9 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace System.Windows.Forms;
+﻿namespace System.Windows.Forms;
 
 //[System.ComponentModel.Designer("System.Windows.Forms.Design.DocumentDesigner, System.Windows.Forms.Design",
 //typeof(System.ComponentModel.Design.IRootDesigner)),
@@ -12,9 +7,9 @@ namespace System.Windows.Forms;
 public partial class ListViewEx : System.Windows.Forms.ListView
 {
     public string DummyName { get; set; } = "Dummy";
-    private System.Windows.Forms.ListViewItem heldDownItem;
+    private System.Windows.Forms.ListViewItem? heldDownItem;
     //private System.Windows.Forms.ListViewGroup heldDownGroup;
-    private System.Drawing.Point heldDownPoint;
+    private System.Drawing.Point heldDownPoint = new(0, 0);
 
     public ListViewEx()
     {
@@ -43,8 +38,8 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     {
         var localPoint = this.PointToClient(new System.Drawing.Point(e.X, e.Y));
         var group = this.GetItemAt(localPoint.X, localPoint.Y);
-        var item = e.Data.GetData(DataFormats.Text).ToString();
-        this.Items.Add(new System.Windows.Forms.ListViewItem { Group = group.Group, Text = item });
+        var item = e.Data?.GetData(DataFormats.Text)?.ToString();
+        this.Items.Add(new System.Windows.Forms.ListViewItem { Group = group?.Group, Text = item });
     }
 
     protected override void OnDragEnter(DragEventArgs e)
@@ -61,7 +56,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
         heldDownItem = this.GetItemAt(e.X, e.Y);
 
         //heldDownGroup = this.gett
-        if (heldDownItem != null)
+        if (heldDownItem is not null)
         {
             heldDownPoint = new System.Drawing.Point(e.X - heldDownItem.Position.X,
                                       e.Y - heldDownItem.Position.Y);
@@ -70,7 +65,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        if (heldDownItem != null)
+        if (heldDownItem is not null)
         {
             heldDownItem.Position = new System.Drawing.Point(e.Location.X - heldDownPoint.X,
                                               e.Location.Y - heldDownPoint.Y);
@@ -80,12 +75,12 @@ public partial class ListViewEx : System.Windows.Forms.ListView
     protected override void OnMouseUp(MouseEventArgs e)
     {
         //var localPoint = listViewA.PointToClient(new Point(e.X, e.Y));
-        if (heldDownItem != null && heldDownItem.Name != DummyName)
+        if (heldDownItem is not null && heldDownItem.Name != DummyName)
         {
             var group = this.GetItemAt(e.X, e.Y);
-            if (group != null)
+            if (group is not null)
             {
-                if (this.Groups[heldDownItem.Group.Header].Items.Count == 1)
+                if (this.Groups[heldDownItem.Group?.Header ?? string.Empty]?.Items.Count == 1)
                 {
                     var emptyItem = new System.Windows.Forms.ListViewItem(String.Empty)
                     {
@@ -96,7 +91,7 @@ public partial class ListViewEx : System.Windows.Forms.ListView
                     this.Items.Add(emptyItem);
                 }
                 heldDownItem.Group = group.Group;
-                this.RemoveEmptyItems(group.Group.Header);
+                this.RemoveEmptyItems(group.Group?.Header ?? string.Empty);
 
                 //heldDownItem.Group.Items.RemoveByKey(System.String.Empty);
                 //listViewA.Groups[listViewA.Groups.Count - 1].Items.RemoveByKey(String.Empty);

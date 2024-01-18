@@ -1,4 +1,6 @@
-﻿namespace ErgoCalc;
+﻿using System.Text.RegularExpressions;
+
+namespace ErgoCalc;
 
 public partial class FrmMain : Form
 {
@@ -52,7 +54,9 @@ public partial class FrmMain : Form
         {
             if (this.MdiChildren.Length == 0)
             {
-                toolStripMain.Items["Save"].Enabled = false;
+                var item = toolStripMain.Items["Save"];
+                if (item is not null) item.Enabled = false;
+                //toolStripMain.Items["Save"].Enabled = false;
                 //Reset toolbar visibility
             }
         }
@@ -143,7 +147,7 @@ public partial class FrmMain : Form
         this.statusStripLabelFontColor.BackColor = foreColor ?? Color.Transparent;
         this.statusStripLabelWordWrap.Checked = wordWrap;
         this.statusStripLabelBackColor.BackColor = backColor ?? Color.Transparent;
-        this.statusStripLabelZoom.Text = $"{zoomFactor.ToString("0.##")}x";
+        this.statusStripLabelZoom.Text = $"{zoomFactor:0.##}x";
     }
 
     #region Private routines
@@ -159,7 +163,7 @@ public partial class FrmMain : Form
     private void ToolBarEnable()
     {
         // This is the default ToolBar enable status
-        ToolBarEnable(new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true });
+        ToolBarEnable([true, true, false, false, true, true, false, false, true, false, false, true, true, true]);
     }
 
     /// <summary>
@@ -212,6 +216,7 @@ public partial class FrmMain : Form
         // Update the form's tittle
         SetFormTitle(this, StringResources.FormMainTitle, String.Empty);
 
+        // Update menu texts
         mnuMainFrm_File.Text = StringResources.MenuMainFile;
         mnuMainFrm_File_Exit.Text = StringResources.MenuMainFileExit;
         mnuMainFrm_File_New.Text = StringResources.MenuMainFileNew;
@@ -219,6 +224,7 @@ public partial class FrmMain : Form
         mnuMainFrm_Help.Text=StringResources.MenuMainHelp;
         mnuMainFrm_Help_About.Text = StringResources.MenuMainHelpAbout;
 
+        // Update toolstrip texts
         toolStripMain_About.Text=StringResources.ToolStripAbout;
         toolStripMain_AddLine.Text=StringResources.ToolStripAddLine;
         toolStripMain_Copy.Text = StringResources.ToolStripDuplicate;
@@ -243,6 +249,7 @@ public partial class FrmMain : Form
         toolStripMain_SaveChart.ToolTipText = StringResources.ToolTipSaveChart;
         toolStripMain_Settings.ToolTipText = StringResources.ToolTipSettings;
 
+        // Update status strip texts
         statusStripLabelCulture.Text = _settings.AppCulture.Name == String.Empty ? "Invariant" : _settings.AppCulture.Name;
         statusStripLabelCulture.ToolTipText = StringResources.ToolTipUILanguage + ":" + Environment.NewLine + _settings.AppCulture.NativeName;
 
@@ -251,6 +258,10 @@ public partial class FrmMain : Form
         statusStripLabelWordWrap.ToolTipText= StringResources.ToolTipWordWrap;
         statusStripLabelBackColor.ToolTipText= StringResources.ToolTipBackColor;
         statusStripLabelZoom.ToolTipText= StringResources.ToolTipZoom;
+
+        // Update all child windows
+        foreach (var form in this.MdiChildren)
+            (form as IChildResults)?.UpdateLanguage(_settings.AppCulture);
 
         this.ResumeLayout();
     }

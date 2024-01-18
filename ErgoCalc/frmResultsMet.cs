@@ -47,12 +47,9 @@ public partial class FrmResultsMet : Form, IChildResults
 
         if (Compute) MetabolicRate.CalculateMetRate(_job);
 
+        // Show results in GUI
         if (error == false)
-        {
-            // Escribir los resultados en la ventana
-            rtbShowResult.Text = _job.ToString();
-            FormatText();
-        }
+            UpdateLanguage(_culture);
     }
 
     public void Save(string path)
@@ -65,9 +62,13 @@ public partial class FrmResultsMet : Form, IChildResults
         return false;
     }
 
-    public bool[] GetToolbarEnabledState()
+    public bool[] GetToolbarEnabledState() => [true, true, false, false, true, true, false, false, true, false, false, true, true, true];
+
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
     {
-        return new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true };
+        rtbShowResult.Text = _job.ToString();
+        FormatText();
     }
 
     public void FormatText()

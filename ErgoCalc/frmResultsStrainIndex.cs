@@ -58,11 +58,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 
         // Call the routine that shows the results
         if (error == false)
-        {
-            rtbShowResult.Text = _job.ToString(StringResources.StrainIndex_ResultsHeaders, _culture);
-            CreatePlots();
-            FormatText();
-        }
+            UpdateLanguage(_culture);
     }
 
     /// <summary>
@@ -519,15 +515,19 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         frmResults.Show();
     }
 
-    public bool[] GetToolbarEnabledState()
-    {
-        return new bool[] { true, true, true, false, true, true, false, true, true, false, false, true, true, true };
-    }
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, false, true, true, false, false, true, true, true];
 
     public ToolStrip ChildToolStrip
     {
         get => null;
         set { }
+    }
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        rtbShowResult.Text = _job.ToString(StringResources.StrainIndex_ResultsHeaders, _culture);
+        CreatePlots();
+        FormatText();
     }
 
     public void FormatText()

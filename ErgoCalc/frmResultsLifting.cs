@@ -54,9 +54,7 @@ public partial class frmResultsLifting : Form, IChildResults
         }
 
         // Show results
-        //rtbShowResult.Clear();
-        rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, _culture);
-        FormatText();
+        UpdateLanguage(_culture);
     }
 
     /// <summary>
@@ -353,16 +351,19 @@ public partial class frmResultsLifting : Form, IChildResults
         frmResults.Show();
     }
 
-    public bool[] GetToolbarEnabledState()
-    {
-        bool[] toolbar = new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true };
-        return toolbar;
-    }
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
 
     public ToolStrip ChildToolStrip
     {
         get => toolStripLifting;
         set => toolStripLifting = value;
+    }
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        //rtbShowResult.Clear();
+        rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, _culture);
+        FormatText();
     }
 
     public void FormatText()

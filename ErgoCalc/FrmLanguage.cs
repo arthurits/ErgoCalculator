@@ -73,7 +73,7 @@ public partial class FrmLanguage : Form
         cboAllCultures.Enabled = radUserCulture.Checked;
         if (cboAllCultures.Enabled)
         {
-            _culture = new((string)cboAllCultures.SelectedValue ?? String.Empty);
+            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
         }
     }
@@ -83,7 +83,7 @@ public partial class FrmLanguage : Form
         cboAllCultures.Enabled = radUserCulture.Checked;
         if (cboAllCultures.Enabled)
         {
-            _culture = new((string)cboAllCultures.SelectedValue ?? String.Empty);
+            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
         }
     }
@@ -149,9 +149,9 @@ public partial class FrmLanguage : Form
         this.lblUserCulture.Top = this.radUserCulture.Top + (this.radUserCulture.Height - this.lblUserCulture.Height) / 2;
     }
 
-    private static System.Collections.Generic.IEnumerable<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)
+    private static System.Collections.Generic.List<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)
     {
-        System.Collections.Generic.List<CultureInfo> result = new();
+        System.Collections.Generic.List<CultureInfo> result = [];
 
         ResourceManager rm = new(baseName, assembly);
 

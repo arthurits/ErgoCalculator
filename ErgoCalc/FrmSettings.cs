@@ -5,7 +5,7 @@ namespace ErgoCalc;
 public partial class FrmSettings : Form
 {
     private CultureInfo _culture = CultureInfo.CurrentCulture;
-    private AppSettings Settings = new();
+    private readonly AppSettings Settings = new();
 
     public FrmSettings()
     {
@@ -29,16 +29,16 @@ public partial class FrmSettings : Form
 
     private void DlgFont(object sender, EventArgs e)
     {
-        FontDialog fontDlg = new();
-
-        fontDlg.ShowApply = false;
-        fontDlg.ShowColor = false;
-        fontDlg.ShowEffects = true;
-        fontDlg.ShowHelp = false;
-        fontDlg.FontMustExist = true;
-
-        fontDlg.Font = new(Settings.FontFamilyName, Settings.FontSize, Settings.FontStyle);
-        fontDlg.Color = Color.FromArgb(Settings.FontColor);
+        FontDialog fontDlg = new()
+        {
+            ShowApply = false,
+            ShowColor = false,
+            ShowEffects = true,
+            ShowHelp = false,
+            FontMustExist = true,
+            Font = new(Settings.FontFamilyName, Settings.FontSize, Settings.FontStyle),
+            Color = Color.FromArgb(Settings.FontColor)
+        };
 
         if (fontDlg.ShowDialog() != DialogResult.Cancel)
         {
@@ -116,7 +116,7 @@ public partial class FrmSettings : Form
         cboAllCultures.Enabled = radUserCulture.Checked;
         if (cboAllCultures.Enabled)
         {
-            _culture = new((string)cboAllCultures.SelectedValue ?? String.Empty);
+            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
         }
     }
@@ -228,25 +228,27 @@ public partial class FrmSettings : Form
         this.lblDataFormat.Top = this.txtDataFormat.Top + (txtDataFormat.Height - lblDataFormat.Height) / 2;
     }
 
-    private void updZoomFactor_ValueChanged(object sender, EventArgs e)
+    private void UpdZoomFactor_ValueChanged(object sender, EventArgs e)
     {
         int ratio = Convert.ToInt32(updZoomFactor.Value);
         if (trackZoomFactor.Value != ratio) trackZoomFactor.Value = ratio;
     }
 
-    private void trackZoomFactor_ValueChanged(object sender, EventArgs e)
+    private void TrackZoomFactor_ValueChanged(object sender, EventArgs e)
     {
         decimal ratio = (decimal)trackZoomFactor.Value;
         if (updZoomFactor.Value != ratio) updZoomFactor.Value = ratio;
     }
 
-    private void pctFontColor_Click(object sender, EventArgs e)
+    private void FontColor_Click(object sender, EventArgs e)
     {
-        ColorDialog colorDlg = new();
-        colorDlg.AllowFullOpen = true;
-        colorDlg.FullOpen = true;
-        colorDlg.AnyColor = true;
-        colorDlg.Color = Color.FromArgb(Settings.FontColor);
+        ColorDialog colorDlg = new()
+        {
+            AllowFullOpen = true,
+            FullOpen = true,
+            AnyColor = true,
+            Color = Color.FromArgb(Settings.FontColor)
+        };
         if (colorDlg.ShowDialog(this) == DialogResult.OK)
         {
             pctFontColor.BackColor = colorDlg.Color;
@@ -254,22 +256,19 @@ public partial class FrmSettings : Form
         }
     }
 
-    private void pctBackColor_Click(object sender, EventArgs e)
+    private void BackColor_Click(object sender, EventArgs e)
     {
-        ColorDialog colorDlg = new();
-        colorDlg.AllowFullOpen = true;
-        colorDlg.FullOpen = true;
-        colorDlg.AnyColor = true;
-        colorDlg.Color = Color.FromArgb(Settings.TextBackColor);
+        ColorDialog colorDlg = new()
+        {
+            AllowFullOpen = true,
+            FullOpen = true,
+            AnyColor = true,
+            Color = Color.FromArgb(Settings.TextBackColor)
+        };
         if (colorDlg.ShowDialog(this) == DialogResult.OK)
         {
             pctBackColor.BackColor = colorDlg.Color;
             Settings.TextBackColor = colorDlg.Color.ToArgb();
         }
-    }
-
-    private void chkDlgPath_CheckedChanged(object sender, EventArgs e)
-    {
-
     }
 }

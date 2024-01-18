@@ -14,7 +14,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     public FrmResultsLiberty()
     {
         InitializeComponent();
-        InitializePlot();
+        InitializePlots();
 
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         this.ActiveControl = this.rtbShowResult;
@@ -40,7 +40,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     }
 
     #region Private routines
-    private void InitializePlot()
+    private void InitializePlots()
     {
         formsPlot1.Plot.XLabel(StringResources.LibertyMutual_PlotInitialF);
         //formsPlot1.plt.YLabel("Frequency?");
@@ -76,12 +76,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
         // Call the routine that shows the results
         if (result == true)
-        {
-            rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, _culture);
-            FormatText();
-            ClearPlots();
-            CreatePlots();
-        }
+            UpdateLanguage(_culture);
     }
 
     /// <summary>
@@ -101,6 +96,9 @@ public partial class FrmResultsLiberty : Form, IChildResults
     {
         string strLegend;
         int i = 0;
+
+        InitializePlots();
+
         foreach (ModelLiberty task in _job.Tasks)
         {
             strLegend = $"{StringResources.Task} {((char)('A' + i)).ToString(_culture)}";
@@ -404,7 +402,15 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public bool[] GetToolbarEnabledState()
     {
-        return new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true }; ;
+        return [true, true, true, false, true, true, true, true, true, false, false, true, true, true]; ;
+    }
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
+        FormatText();
+        ClearPlots();
+        CreatePlots();
     }
 
     public void FormatText()
