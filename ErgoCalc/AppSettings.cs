@@ -14,11 +14,6 @@ public class AppSettings
     /// </summary>
     [JsonIgnore]
     public string AppPath { get; set; } = System.IO.Path.GetDirectoryName(System.Environment.ProcessPath) ?? String.Empty;
-    /// <summary>
-    /// The root name of the resource file without its extension but including any fully qualified namespace name
-    /// </summary>
-    [JsonIgnore]
-    public string RootResourceStrings { get; } = "ErgoCalc.localization.strings";
 
     /// <summary>
     /// Remember window position on start up

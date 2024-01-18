@@ -10,7 +10,7 @@ public partial class FrmSettings : Form
     public FrmSettings()
     {
         InitializeComponent();
-        FillDefinedCultures(Settings.RootResourceStrings, typeof(FrmSettings).Assembly);
+        FillDefinedCultures(StringResources.StringRM.BaseName, typeof(FrmSettings).Assembly);
     }
 
     public FrmSettings(AppSettings settings)
