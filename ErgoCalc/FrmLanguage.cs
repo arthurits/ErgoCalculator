@@ -149,7 +149,7 @@ public partial class FrmLanguage : Form
         this.lblUserCulture.Top = this.radUserCulture.Top + (this.radUserCulture.Height - this.lblUserCulture.Height) / 2;
     }
 
-    private static System.Collections.Generic.IEnumerable<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)
+    private static System.Collections.Generic.List<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)
     {
         System.Collections.Generic.List<CultureInfo> result = [];
 
