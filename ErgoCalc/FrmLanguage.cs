@@ -73,7 +73,7 @@ public partial class FrmLanguage : Form
         cboAllCultures.Enabled = radUserCulture.Checked;
         if (cboAllCultures.Enabled)
         {
-            _culture = new((string)cboAllCultures.SelectedValue ?? String.Empty);
+            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
         }
     }
@@ -83,7 +83,7 @@ public partial class FrmLanguage : Form
         cboAllCultures.Enabled = radUserCulture.Checked;
         if (cboAllCultures.Enabled)
         {
-            _culture = new((string)cboAllCultures.SelectedValue ?? String.Empty);
+            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
         }
     }
