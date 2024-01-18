@@ -10,7 +10,7 @@ public partial class FrmSettings : Form
     public FrmSettings()
     {
         InitializeComponent();
-        FillDefinedCultures("ErgoCalc.localization.strings", typeof(FrmSettings).Assembly);
+        FillDefinedCultures(Settings.RootResourceStrings, typeof(FrmSettings).Assembly);
     }
 
     public FrmSettings(AppSettings settings)
