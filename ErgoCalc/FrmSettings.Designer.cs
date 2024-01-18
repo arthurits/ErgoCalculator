@@ -137,7 +137,7 @@
             trackZoomFactor.SmallChange = 10;
             trackZoomFactor.TabIndex = 12;
             trackZoomFactor.TickFrequency = 10;
-            trackZoomFactor.ValueChanged += trackZoomFactor_ValueChanged;
+            trackZoomFactor.ValueChanged += TrackZoomFactor_ValueChanged;
             // 
             // updZoomFactor
             // 
@@ -146,7 +146,7 @@
             updZoomFactor.Name = "updZoomFactor";
             updZoomFactor.Size = new Size(55, 25);
             updZoomFactor.TabIndex = 11;
-            updZoomFactor.ValueChanged += updZoomFactor_ValueChanged;
+            updZoomFactor.ValueChanged += UpdZoomFactor_ValueChanged;
             // 
             // lblZoomFactor
             // 
@@ -165,7 +165,7 @@
             pctBackColor.Size = new Size(26, 26);
             pctBackColor.TabIndex = 9;
             pctBackColor.TabStop = false;
-            pctBackColor.Click += pctBackColor_Click;
+            pctBackColor.Click += BackColor_Click;
             // 
             // lblBackColor
             // 
@@ -204,7 +204,7 @@
             pctFontColor.Size = new Size(26, 26);
             pctFontColor.TabIndex = 6;
             pctFontColor.TabStop = false;
-            pctFontColor.Click += pctFontColor_Click;
+            pctFontColor.Click += FontColor_Click;
             // 
             // lblFontColor
             // 
@@ -335,7 +335,6 @@
             chkDlgPath.TabIndex = 0;
             chkDlgPath.Text = "Remember open/save dialog previous path";
             chkDlgPath.UseVisualStyleBackColor = true;
-            chkDlgPath.CheckedChanged += chkDlgPath_CheckedChanged;
             // 
             // chkWindowPos
             // 
