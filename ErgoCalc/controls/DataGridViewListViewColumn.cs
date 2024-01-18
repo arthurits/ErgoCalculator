@@ -34,8 +34,7 @@ public class CustomViewColumn : DataGridViewColumn
 /// </summary>
 public class CustomViewCell : DataGridViewTextBoxCell
 {
-    private CustomViewControl
-            m_control;
+    private CustomViewControl? m_control;
 
     //-----------------------------------------------------------------------------------------
 
@@ -44,12 +43,12 @@ public class CustomViewCell : DataGridViewTextBoxCell
     {
     }
 
-    public override object Clone()
+    public override object? Clone()
     {
-        CustomViewCell
-            cell = base.Clone() as CustomViewCell;
-        if (cell != null)
+        CustomViewCell? cell = base.Clone() as CustomViewCell;
+        if (cell is not null)
             cell.m_control = this.m_control;
+
         return cell;
     }
 
@@ -59,20 +58,19 @@ public class CustomViewCell : DataGridViewTextBoxCell
     {
         base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
 
-        m_control = DataGridView.EditingControl as CustomViewControl;
+        m_control = DataGridView?.EditingControl as CustomViewControl;
     }
 
     public override void DetachEditingControl()
     {
         base.DetachEditingControl();
 
-        DataGridView dataGridView = this.DataGridView;
+        DataGridView? dataGridView = this.DataGridView;
 
-        if (dataGridView == null || dataGridView.EditingControl == null)
+        if (dataGridView is null || dataGridView.EditingControl is null)
             throw new InvalidOperationException("Cell is detached or its grid has no editing control.");
 
-        CustomViewControl ctl = DataGridView.EditingControl as CustomViewControl;
-        if (ctl != null && ctl.SelectedItems.Count > 0)
+        if (DataGridView?.EditingControl is CustomViewControl ctl && ctl.SelectedItems.Count > 0)
         {
             this.Value = ctl.SelectedItems[0].SubItems[0].ToString();
             ctl.EditingControlFormattedValue = String.Empty;
@@ -84,13 +82,13 @@ public class CustomViewCell : DataGridViewTextBoxCell
     public override void PositionEditingControl(bool setLocation, bool setSize, Rectangle cellBounds, Rectangle cellClip, DataGridViewCellStyle cellStyle, bool singleVerticalBorderAdded, bool singleHorizontalBorderAdded, bool isFirstDisplayedColumn, bool isFirstDisplayedRow)
     {
         Rectangle
-            ctlSize = new Rectangle(new Point(cellBounds.Location.X + 20, cellBounds.Location.Y + 20), new Size(cellBounds.Width + 100, 100));
+            ctlSize = new(new Point(cellBounds.Location.X + 20, cellBounds.Location.Y + 20), new Size(cellBounds.Width + 100, 100));
         base.PositionEditingControl(setLocation, setSize, ctlSize, ctlSize, cellStyle, singleVerticalBorderAdded, singleHorizontalBorderAdded, isFirstDisplayedColumn, isFirstDisplayedRow);
-        if (m_control != null)
+        if (m_control is not null)
         {
             Point
-                pos = new Point(cellBounds.Location.X + 20, cellBounds.Location.Y + 20);
-            pos.Offset(DataGridView.Location);
+                pos = new(cellBounds.Location.X + 20, cellBounds.Location.Y + 20);
+            pos.Offset(DataGridView?.Location ?? new Point(0, 0));
             m_control.Location = pos;
         }
     }
@@ -126,7 +124,7 @@ public class CustomViewCell : DataGridViewTextBoxCell
     protected override void Paint(Graphics graphics,
                             Rectangle clipBounds, Rectangle cellBounds, int rowIndex,
                             DataGridViewElementStates elementState, object value,
-                            object formattedValue, string errorText,
+                            object? formattedValue, string errorText,
                             DataGridViewCellStyle cellStyle,
                             DataGridViewAdvancedBorderStyle advancedBorderStyle,
                             DataGridViewPaintParts paintParts)
@@ -139,7 +137,7 @@ public class CustomViewCell : DataGridViewTextBoxCell
         // Draw the cell background, if specified. 
         if ((paintParts & DataGridViewPaintParts.Background) == DataGridViewPaintParts.Background)
         {
-            SolidBrush cellBackground = new SolidBrush(cellStyle.BackColor);
+            SolidBrush cellBackground = new(cellStyle.BackColor);
             graphics.FillRectangle(cellBackground, cellBounds);
             cellBackground.Dispose();
         }
@@ -151,16 +149,16 @@ public class CustomViewCell : DataGridViewTextBoxCell
         Rectangle
             drawRect = cellBounds;
         // Set format of string.
-        StringFormat drawFormat = new StringFormat();
+        StringFormat drawFormat = new();
         drawFormat.LineAlignment = StringAlignment.Center;
 
-        if (Value != null)
+        if (Value is not null)
             graphics.DrawString(Value.ToString(), cellStyle.Font, Brushes.Black, drawRect, drawFormat);
     }
 
     protected override void OnClick(DataGridViewCellEventArgs e)
     {
-        this.DataGridView.BeginEdit(false);
+        this.DataGridView?.BeginEdit(false);
         base.OnClick(e);
     }
 }
@@ -170,17 +168,11 @@ public class CustomViewCell : DataGridViewTextBoxCell
 /// </summary>
 public class CustomViewControl : CustomListView, IDataGridViewEditingControl
 {
-    DataGridView
-            m_dataGridView;
-    private bool
-        m_boValueChanged = false;
-    int
-        m_iIndex;                           // Index of chosen element in listview
-    public int
-        m_iRowIndex
-    { get; private set; }   // Row in datagridview
-    private bool
-        m_boEnded = false;                  // Tells if edit has been ended
+    DataGridView? m_dataGridView;
+    private bool m_boValueChanged = false;
+    int m_iIndex;                           // Index of chosen element in listview
+    public int m_iRowIndex { get; private set; }   // Row in datagridview
+    private bool m_boEnded = false;                  // Tells if edit has been ended
 
     //-----------------------------------------------------------------------------------------
 
@@ -206,7 +198,7 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
     {
         get
         {
-            return this.Tag;
+            return this.Tag ?? string.Empty;
         }
         set
         {
@@ -251,21 +243,11 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
         Keys key, bool dataGridViewWantsInputKey)
     {
         // Let the DateTimePicker handle the keys listed.
-        switch (key & Keys.KeyCode)
+        return (key & Keys.KeyCode) switch
         {
-            case Keys.Left:
-            case Keys.Up:
-            case Keys.Down:
-            case Keys.Right:
-            case Keys.Home:
-            case Keys.End:
-            case Keys.PageDown:
-            case Keys.PageUp:
-            case Keys.Enter:
-                return true;
-            default:
-                return !dataGridViewWantsInputKey;
-        }
+            Keys.Left or Keys.Up or Keys.Down or Keys.Right or Keys.Home or Keys.End or Keys.PageDown or Keys.PageUp or Keys.Enter => true,
+            _ => !dataGridViewWantsInputKey,
+        };
     }
 
     /// <summary>
@@ -291,7 +273,7 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
     /// <summary>
     /// Implements the IDataGridViewEditingControl.EditingControlDataGridView property.
     /// </summary>
-    public DataGridView EditingControlDataGridView
+    public DataGridView? EditingControlDataGridView
     {
         get
         {
@@ -334,10 +316,7 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
     protected virtual void NotifyDataGridViewOfValueChange()
     {
         this.m_boValueChanged = true;
-        if (this.m_dataGridView != null)
-        {
-            this.m_dataGridView.NotifyCurrentCellDirty(true);
-        }
+        this.m_dataGridView?.NotifyCurrentCellDirty(true);
     }
 
     protected override bool ProcessDialogKey(Keys keyData)
@@ -349,7 +328,7 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
             m_boValueChanged = true;
             if (this.SelectedItems.Count == 1)
                 m_iIndex = this.SelectedItems[0].Index;
-            if (m_dataGridView.IsCurrentCellInEditMode)
+            if (m_dataGridView?.IsCurrentCellInEditMode ?? false)
             {
                 m_boEnded = true;
                 m_dataGridView.EndEdit();
@@ -370,7 +349,7 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
 
         base.OnDoubleClick(e);
 
-        if (m_dataGridView.IsCurrentCellInEditMode)
+        if (m_dataGridView?.IsCurrentCellInEditMode ?? false)
         {
             m_boEnded = true;
             m_dataGridView.EndEdit();
@@ -381,11 +360,10 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
     {
         base.OnCreateControl();
         // Need to add controll to parent ui to get it floating outside of gridview
-        FrmDataOCRAcheck topLevel = this.TopLevelControl as FrmDataOCRAcheck;
-        if (topLevel != null && this.Parent != topLevel)
+        if (this.TopLevelControl is FrmDataOCRAcheck topLevel && this.Parent != topLevel)
         {
             topLevel.Controls.Add(this);
-            m_dataGridView.Controls.Remove(this);
+            m_dataGridView?.Controls.Remove(this);
             this.BringToFront();
         }
     }
@@ -395,45 +373,44 @@ public class CustomViewControl : CustomListView, IDataGridViewEditingControl
         // Notify the DataGridView that the contents of the cell
         // have changed.
         base.OnLeave(e);
-        if (m_dataGridView.IsCurrentCellInEditMode && !m_boEnded)
+        if ((m_dataGridView?.IsCurrentCellInEditMode ?? false) && !m_boEnded)
             m_dataGridView.EndEdit(); // Ending edit twice will make the program crash.
 
         // Remove control from parent ui after edit is done.
-        FrmDataOCRAcheck parent = this.Parent as FrmDataOCRAcheck;
-        if (parent != null)
+        if (this.Parent is FrmDataOCRAcheck parent)
         {
             parent.Controls.Remove(this);
-            m_dataGridView.ClearSelection();
+            m_dataGridView?.ClearSelection();
         }
     }
 }
 
 public class CustomListView : ListView
 {
-    private ListViewItem m_item;
-    List<String> sourceList = new List<String>();
+    private ListViewItem? m_item;
+    readonly List<String> sourceList = [];
     private int m_selectedSubItem = 0;
     private string m_subItemText = "";
-    public String m_sValue { get; set; }
+    public string? m_sValue { get; set; }
     private int m_iX = 0, m_iY = 0;
-    private System.Windows.Forms.ColumnHeader columnHeader1;
+    private readonly System.Windows.Forms.ColumnHeader columnHeader1;
 
     //---------------------------------------------------------------------------------------
 
     public CustomListView()
     {
         // Create three items and three sets of subitems for each item.
-        ListViewItem item1 = new ListViewItem("item1", 0);
+        ListViewItem item1 = new ("item1", 0);
         // Place a check mark next to the item.
         item1.Checked = true;
         item1.SubItems.Add("1");
         item1.SubItems.Add("2");
         item1.SubItems.Add("3");
-        ListViewItem item2 = new ListViewItem("item2", 1);
+        ListViewItem item2 = new("item2", 1);
         item2.SubItems.Add("4");
         item2.SubItems.Add("5");
         item2.SubItems.Add("6");
-        ListViewItem item3 = new ListViewItem("item3", 0);
+        ListViewItem item3 = new("item3", 0);
         // Place a check mark next to the item.
         item3.Checked = true;
         item3.SubItems.Add("7");
@@ -463,12 +440,12 @@ public class CustomListView : ListView
         // columnHeader1
         // 
         this.columnHeader1 = new ColumnHeader();
-        this.Columns.AddRange(new ColumnHeader[] { this.columnHeader1 });
+        this.Columns.AddRange([this.columnHeader1]);
         this.columnHeader1.Text = "Widths";
         this.columnHeader1.Width = 100;
     }
 
-    public void ListViewDoubleClick(object sender, System.EventArgs e)
+    public void ListViewDoubleClick(object? sender, System.EventArgs e)
     {
         // Check whether the subitem was clicked
         int start = m_iX;
@@ -486,11 +463,11 @@ public class CustomListView : ListView
             end += this.Columns[i].Width;
         }
 
-        m_subItemText = m_item.SubItems[m_selectedSubItem].Text;
+        m_subItemText = m_item?.SubItems[m_selectedSubItem].Text ?? string.Empty;
 
     }
 
-    public void ListViewMouseDown(object sender, MouseEventArgs e)
+    public void ListViewMouseDown(object? sender, MouseEventArgs e)
     {
         m_item = this.GetItemAt(e.X, e.Y);
         m_iX = e.X;

@@ -52,7 +52,9 @@ public partial class FrmMain : Form
         {
             if (this.MdiChildren.Length == 0)
             {
-                toolStripMain.Items["Save"].Enabled = false;
+                var item = toolStripMain.Items["Save"];
+                if (item is not null) item.Enabled = false;
+                //toolStripMain.Items["Save"].Enabled = false;
                 //Reset toolbar visibility
             }
         }
