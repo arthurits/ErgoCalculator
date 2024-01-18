@@ -123,6 +123,12 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
         throw new NotImplementedException();
     }
 
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        //rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
+        //FormatText();
+    }
+
     public void FormatText()
     {
         int nStart = 0, nEnd = 0;
@@ -154,10 +160,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
         rtbShowResult.SelectionLength = 0;
     }
 
-    public bool[] GetToolbarEnabledState()
-    {
-        return new bool[] { true, true, true, false, true, true, false, true, true, false, false, true, true, true };
-    }
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, false, true, true, false, false, true, true, true];
 
     public bool OpenFile(JsonDocument document)
     {

@@ -418,16 +418,17 @@ public partial class FrmResultsWR : Form, IChildResults
         frmResults.Show();
     }
 
-    public bool[] GetToolbarEnabledState()
-    {
-        bool[] toolbar = new bool[] { true, true, true, true, true, true, true, true, true, false, false, true, true, true };
-        return toolbar;
-    }
+    public bool[] GetToolbarEnabledState() => [true, true, true, true, true, true, true, true, true, false, false, true, true, true];
 
     public ToolStrip ChildToolStrip
     {
         get => toolStripWR;
         set => toolStripWR = value;
+    }
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        FormatText();
     }
 
     public void FormatText()

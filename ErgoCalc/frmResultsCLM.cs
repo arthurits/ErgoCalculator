@@ -43,8 +43,7 @@ public partial class FrmResultsCLM : Form, IChildResults
         if (Compute) ComprehensiveLifting.CalculateLSI(_job.Tasks);
         if (error == false)
         {
-            rtbShowResult.Text = _job.ToString(StringResources.CLM_ResultsHeaders, _culture);
-            FormatText();
+            UpdateLanguage(_culture);
         }
     }
 
@@ -262,15 +261,18 @@ public partial class FrmResultsCLM : Form, IChildResults
         frmResults.Show();
     }
 
-    public bool[] GetToolbarEnabledState()
-    {
-        return new bool[] { true, true, true, false, true, true, true, true, true, false, false, true, true, true };
-    }
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
 
     public ToolStrip ChildToolStrip
     {
         get => null;
         set { }
+    }
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        rtbShowResult.Text = _job.ToString(StringResources.CLM_ResultsHeaders, _culture);
+        FormatText();
     }
 
     public void FormatText()

@@ -289,6 +289,11 @@ public interface IChildResults
     ToolStrip ChildToolStrip { get; set; }
 
     /// <summary>
+    /// Updates the text output to the active culture
+    /// </summary>
+    void UpdateLanguage(System.Globalization.CultureInfo culture);
+
+    /// <summary>
     /// Formats the text shown in the RichtTextBox
     /// </summary>
     void FormatText();
