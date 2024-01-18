@@ -143,7 +143,7 @@ public partial class FrmMain : Form
         this.statusStripLabelFontColor.BackColor = foreColor ?? Color.Transparent;
         this.statusStripLabelWordWrap.Checked = wordWrap;
         this.statusStripLabelBackColor.BackColor = backColor ?? Color.Transparent;
-        this.statusStripLabelZoom.Text = $"{zoomFactor.ToString("0.##")}x";
+        this.statusStripLabelZoom.Text = $"{zoomFactor:0.##}x";
     }
 
     #region Private routines
@@ -159,7 +159,7 @@ public partial class FrmMain : Form
     private void ToolBarEnable()
     {
         // This is the default ToolBar enable status
-        ToolBarEnable(new bool[] { true, true, false, false, true, true, false, false, true, false, false, true, true, true });
+        ToolBarEnable([true, true, false, false, true, true, false, false, true, false, false, true, true, true]);
     }
 
     /// <summary>

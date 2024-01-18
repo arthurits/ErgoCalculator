@@ -151,7 +151,7 @@ public partial class FrmLanguage : Form
 
     private static System.Collections.Generic.IEnumerable<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)
     {
-        System.Collections.Generic.List<CultureInfo> result = new();
+        System.Collections.Generic.List<CultureInfo> result = [];
 
         ResourceManager rm = new(baseName, assembly);
 
