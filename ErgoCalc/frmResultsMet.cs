@@ -44,7 +44,7 @@ public partial class FrmResultsMet : Form, IChildResults
 
         // If computation is OK, then call the routine that shows the results
         if (result)
-            UpdateLanguage(_culture);
+            UpdateOutput(_culture);
     }
 
     #region IChildResults inferface
@@ -65,7 +65,7 @@ public partial class FrmResultsMet : Form, IChildResults
         return false;
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString();
         FormatText();

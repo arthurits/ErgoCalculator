@@ -277,7 +277,7 @@ public partial class FrmMain : Form
         {
             if (child is IChildResults form)
             {
-                form.UpdateLanguage(_settings.AppCulture);
+                form.UpdateOutput(_settings.AppCulture);
 
                 string strTextTitle = form.Model switch
                 {

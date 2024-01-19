@@ -64,7 +64,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
 
         // If computation is OK, then call the routine that shows the results
         if (result)
-            UpdateLanguage(_culture);
+            UpdateOutput(_culture);
 
     }
 
@@ -120,7 +120,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
         throw new NotImplementedException();
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         //rtbShowResult.Text = _job.ToString();
         //CreatePlots();

@@ -75,7 +75,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
         // If computation is OK, then call the routine that shows the results
         if (result == true)
-            UpdateLanguage(_culture);
+            UpdateOutput(_culture);
     }
 
     /// <summary>
@@ -400,7 +400,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
         return result;
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
         FormatText();

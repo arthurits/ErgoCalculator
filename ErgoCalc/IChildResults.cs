@@ -34,7 +34,7 @@ public interface IChildResults
     /// <summary>
     /// Updates the text output to the active culture
     /// </summary>
-    void UpdateLanguage(System.Globalization.CultureInfo culture);
+    void UpdateOutput(System.Globalization.CultureInfo culture);
 
     /// <summary>
     /// Formats the text shown in the RichtTextBox

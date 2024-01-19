@@ -45,7 +45,7 @@ public partial class FrmResultsCLM : Form, IChildResults
 
         // If computation is OK, then call the routine that shows the results
         if (result)
-            UpdateLanguage(_culture);
+            UpdateOutput(_culture);
     }
 
     /// <summary>
@@ -268,7 +268,7 @@ public partial class FrmResultsCLM : Form, IChildResults
         frmResults.Show();
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString(StringResources.CLM_ResultsHeaders, _culture);
         FormatText();
