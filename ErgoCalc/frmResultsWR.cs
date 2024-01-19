@@ -7,8 +7,8 @@ namespace ErgoCalc;
 
 public partial class FrmResultsWR : Form, IChildResults
 {
-    private Job _job;
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
+    private Job _job = new();
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
     private readonly ChartOptions _plotOptions;
 
     public FrmResultsWR()
@@ -39,7 +39,7 @@ public partial class FrmResultsWR : Form, IChildResults
 
     }
 
-    public FrmResultsWR(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public FrmResultsWR(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this()
     {
         if (data is not null && data.GetType() == typeof(Job))
@@ -50,7 +50,10 @@ public partial class FrmResultsWR : Form, IChildResults
         }
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
+
+    #region Private routines
 
     /// <summary>
     /// Initializes the chart objets
@@ -100,7 +103,7 @@ public partial class FrmResultsWR : Form, IChildResults
         plot.Render();
     }
 
-    private void chart_MouseClick(object sender, MouseEventArgs e)
+    private void chart_MouseClick(object? sender, MouseEventArgs e)
     {
         // https://github.com/ScottPlot/ScottPlot/discussions/645
         //double x = chart.plt.CoordinateFromPixelX(e.X);
@@ -123,26 +126,26 @@ public partial class FrmResultsWR : Form, IChildResults
         
     }
 
-    private void chart_Click(object sender, EventArgs e)
+    private void chart_Click(object? sender, EventArgs e)
     {
 
     }
 
-    private void chart_DoubleClick(object sender, EventArgs e)
+    private void chart_DoubleClick(object? sender, EventArgs e)
     {
 
     }
 
-    public void algoToolStripMenuItem_Click(object sender, EventArgs e)
+    public void algoToolStripMenuItem_Click(object? sender, EventArgs e)
     {
     }
 
-    private void toolStripMain_Settings_CheckedChanged(object sender, EventArgs e)
+    private void toolStripMain_Settings_CheckedChanged(object? sender, EventArgs e)
     {
 
     }
 
-    private void toolStripWR_SaveChart_Click(object sender, EventArgs e)
+    private void toolStripWR_SaveChart_Click(object? sender, EventArgs e)
     {
         // Displays a SaveFileDialog so the user can save the Image  
         SaveFileDialog SaveDlg = new()
@@ -171,7 +174,8 @@ public partial class FrmResultsWR : Form, IChildResults
             }
         }
     }
-    private void toolStripWR_AddLine_Click(object sender, EventArgs e)
+    
+    private void toolStripWR_AddLine_Click(object? sender, EventArgs e)
     {
         // Llamar al formulario para introducir los datos
         FrmDataWR frmDatosWR = new FrmDataWR(_job, _culture);
@@ -187,7 +191,7 @@ public partial class FrmResultsWR : Form, IChildResults
         frmDatosWR.Dispose();
     }
 
-    private void toolStripWR_RemoveLine_Click(object sender, EventArgs e)
+    private void toolStripWR_RemoveLine_Click(object? sender, EventArgs e)
     {
         var i = plot.Plot.GetPlottables().Length;
         if (i > 0)
@@ -245,7 +249,19 @@ public partial class FrmResultsWR : Form, IChildResults
         writer.Flush();
     }
 
+    #endregion Private routines
+
     #region IChildResults interface
+
+    public ModelType? Model { get; set; }
+
+    public ToolStrip? ChildToolStrip
+    {
+        get => toolStripWR;
+        set => toolStripWR = value;
+    }
+
+    public bool[] GetToolbarEnabledState() => [true, true, true, true, true, true, true, true, true, false, false, true, true, true];
 
     public void Save(string path)
     {   
@@ -388,10 +404,21 @@ public partial class FrmResultsWR : Form, IChildResults
         return result;
     }
 
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        FormatText();
+    }
+
+    public void FormatText()
+    {
+        return;
+    }
+
     public void EditData()
     {
         // Show the form with the data in order to edit it
-        FrmDataWR frmDatosWR = new FrmDataWR(_job, _culture);
+        using FrmDataWR frmDatosWR = new(_job, _culture);
+
         if (frmDatosWR.ShowDialog(this) == DialogResult.OK)
         {
             // Get the edited input data
@@ -407,7 +434,7 @@ public partial class FrmResultsWR : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsWR frmResults = new FrmResultsWR(_job, _culture)
+        FrmResultsWR frmResults = new(_job, _culture, Model)
         {
             MdiParent = this.MdiParent
         };
@@ -416,24 +443,6 @@ public partial class FrmResultsWR : Form, IChildResults
         FrmMain.SetFormTitle(frmResults, StringResources.FormResultsWR, this.Text[index..]);
 
         frmResults.Show();
-    }
-
-    public bool[] GetToolbarEnabledState() => [true, true, true, true, true, true, true, true, true, false, false, true, true, true];
-
-    public ToolStrip ChildToolStrip
-    {
-        get => toolStripWR;
-        set => toolStripWR = value;
-    }
-
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
-    {
-        FormatText();
-    }
-
-    public void FormatText()
-    {
-        return;
     }
 
     #endregion IChildResults interface

@@ -264,6 +264,8 @@ public class ChartOptions
 /// </summary>
 public interface IChildResults
 {
+    ModelType? Model { get; set; }
+
     /// <summary>
     /// Saves the data shown in the child window into a file
     /// </summary>
@@ -286,7 +288,7 @@ public interface IChildResults
     /// <summary>
     /// Gets and set the child's ToolStrip control in order to be merged with the parent's
     /// </summary>
-    ToolStrip ChildToolStrip { get; set; }
+    ToolStrip? ChildToolStrip { get; set; }
 
     /// <summary>
     /// Updates the text output to the active culture

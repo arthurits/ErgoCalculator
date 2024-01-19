@@ -7,7 +7,7 @@ public partial class frmResultsLifting : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public frmResultsLifting()
     {
@@ -16,13 +16,14 @@ public partial class frmResultsLifting : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public frmResultsLifting(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public frmResultsLifting(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this()
     {
         if (data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
 
     private void FrmResultsLifting_Shown(object sender, EventArgs e)
@@ -151,6 +152,15 @@ public partial class frmResultsLifting : Form, IChildResults
     #endregion Private routines
 
     #region IChild interface
+
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
+
+    public ToolStrip? ChildToolStrip
+    {
+        get => toolStripLifting;
+        set => toolStripLifting = value;
+    }
+    public ModelType? Model { get; set; }
 
     public void Save(string path)
     {
@@ -316,7 +326,7 @@ public partial class frmResultsLifting : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new frmDataLifting(_job, _culture);
+        using FrmDataLifting frm = new (_job, _culture);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
@@ -334,7 +344,7 @@ public partial class frmResultsLifting : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        frmResultsLifting frmResults = new frmResultsLifting(_job, _culture)
+        frmResultsLifting frmResults = new(_job, _culture, Model)
         {
             MdiParent = this.MdiParent
         };
@@ -349,14 +359,6 @@ public partial class frmResultsLifting : Form, IChildResults
         frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
 
         frmResults.Show();
-    }
-
-    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
-
-    public ToolStrip ChildToolStrip
-    {
-        get => toolStripLifting;
-        set => toolStripLifting = value;
     }
 
     public void UpdateLanguage(System.Globalization.CultureInfo culture)

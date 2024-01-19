@@ -7,9 +7,7 @@ namespace ErgoCalc;
 public partial class FrmResultsLiberty : Form, IChildResults
 {
     private Job _job = new();
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
-
-    public ToolStrip ChildToolStrip { get => null; set { } }
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultsLiberty()
     {
@@ -20,13 +18,14 @@ public partial class FrmResultsLiberty : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    public FrmResultsLiberty(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public FrmResultsLiberty(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this()
     {
         if (data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
 
     private void FrmResultsLiberty_Activated(object sender, EventArgs e)
@@ -261,6 +260,12 @@ public partial class FrmResultsLiberty : Form, IChildResults
     #endregion Private routines
 
     #region IChildResults inferface
+    public ModelType? Model { get ; set ; }
+
+    public ToolStrip? ChildToolStrip { get => null; set { } }
+
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
+
     public void Save(string path)
     {
         // Displays a SaveFileDialog so the user can save the Image  
@@ -400,11 +405,6 @@ public partial class FrmResultsLiberty : Form, IChildResults
         return result;
     }
 
-    public bool[] GetToolbarEnabledState()
-    {
-        return [true, true, true, false, true, true, true, true, true, false, false, true, true, true]; ;
-    }
-
     public void UpdateLanguage(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
@@ -435,14 +435,14 @@ public partial class FrmResultsLiberty : Form, IChildResults
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
 
             // Underline
             nStart = rtbShowResult.Find(StringResources.LibertyMutual_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
             if (nStart == -1) break;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
         }
 
         // Bold results
@@ -454,7 +454,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
             //nEnd = rtbShowResult.Text.Length;
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size, FontStyle.Underline | FontStyle.Bold);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size, FontStyle.Underline | FontStyle.Bold);
         }
 
         // Subindex in kgf
@@ -465,7 +465,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
             if (nStart == -1) break;
             rtbShowResult.Select(nStart + 3, 1);
             rtbShowResult.SelectionCharOffset = -(int)(rtbShowResult.Font.Size / 2);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, (float)(rtbShowResult.Font.Size * 0.8));
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, (float)(rtbShowResult.Font.Size * 0.8));
         }
 
         // Set the cursor at the beginning of the text
@@ -475,7 +475,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public void EditData()
     {
-        using var frm = new FrmDataLiberty(_job);
+        using FrmDataLiberty frm = new(_job);
 
         if (frm.ShowDialog(this) == DialogResult.OK)
         {
@@ -491,7 +491,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsLiberty frmResults = new FrmResultsLiberty(_job, _culture)
+        FrmResultsLiberty frmResults = new(_job, _culture, Model)
         {
             MdiParent = this.MdiParent,
         };
@@ -507,6 +507,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
         frmResults.Show();
     }
+    
     #endregion IChildResults inferface
 
 }

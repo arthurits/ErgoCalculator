@@ -17,13 +17,14 @@ public partial class FrmResultsCLM : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsCLM(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public FrmResultsCLM(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this()
     {
         if (data is not null && data?.GetType() == typeof(Job))
             _job = (Job)data;
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
 
     private void frmCLMmodel_Shown(object sender, EventArgs e)
@@ -108,6 +109,12 @@ public partial class FrmResultsCLM : Form, IChildResults
     }
 
     #region IChildResults
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
+
+    public ToolStrip? ChildToolStrip { get => null; set { } }
+
+    public ModelType? Model { get; set; }
+
     public void Save(string path)
     {
         // Displays a SaveFileDialog so the user can save the Image  
@@ -244,7 +251,7 @@ public partial class FrmResultsCLM : Form, IChildResults
     public void Duplicate()
     {
         // Show the results window
-        FrmResultsCLM frmResults = new FrmResultsCLM(_job, _culture)
+        FrmResultsCLM frmResults = new(_job, _culture, Model)
         {
             MdiParent = this.MdiParent
         };
@@ -259,14 +266,6 @@ public partial class FrmResultsCLM : Form, IChildResults
         frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
 
         frmResults.Show();
-    }
-
-    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
-
-    public ToolStrip ChildToolStrip
-    {
-        get => null;
-        set { }
     }
 
     public void UpdateLanguage(System.Globalization.CultureInfo culture)
