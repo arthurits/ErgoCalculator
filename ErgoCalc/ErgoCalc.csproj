@@ -70,57 +70,57 @@
     <Compile Update="controls\TablessTabControl.Designer.cs">
       <DependentUpon>TablessTabControl.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsStrainIndex.cs" />
-    <Compile Update="frmResultsStrainIndex.Designer.cs">
-      <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>
+    <Compile Update="FrmResultsStrainIndex.cs" />
+    <Compile Update="FrmResultsStrainIndex.Designer.cs">
+      <DependentUpon>FrmResultsStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataStrainIndex.cs" />
-    <Compile Update="frmDataStrainIndex.Designer.cs">
-      <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
+    <Compile Update="FrmDataStrainIndex.cs" />
+    <Compile Update="FrmDataStrainIndex.Designer.cs">
+      <DependentUpon>FrmDataStrainIndex.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataWR.cs" />
-    <Compile Update="frmDataWR.Designer.cs">
-      <DependentUpon>frmDataWR.cs</DependentUpon>
+    <Compile Update="FrmDataWR.cs" />
+    <Compile Update="FrmDataWR.Designer.cs">
+      <DependentUpon>FrmDataWR.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataMet.cs" />
-    <Compile Update="frmDataMet.Designer.cs">
-      <DependentUpon>frmDataMet.cs</DependentUpon>
+    <Compile Update="FrmDataMet.cs" />
+    <Compile Update="FrmDataMet.Designer.cs">
+      <DependentUpon>FrmDataMet.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmAbout.cs" />
-    <Compile Update="frmAbout.Designer.cs">
-      <DependentUpon>frmAbout.cs</DependentUpon>
+    <Compile Update="FrmAbout.cs" />
+    <Compile Update="FrmAbout.Designer.cs">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsCLM.cs" />
-    <Compile Update="frmResultsCLM.Designer.cs">
-      <DependentUpon>frmResultsCLM.cs</DependentUpon>
+    <Compile Update="FrmResultsCLM.cs" />
+    <Compile Update="FrmResultsCLM.Designer.cs">
+      <DependentUpon>FrmResultsCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataCLM.cs" />
-    <Compile Update="frmDataCLM.Designer.cs">
-      <DependentUpon>frmDataCLM.cs</DependentUpon>
+    <Compile Update="FrmDataCLM.cs" />
+    <Compile Update="FrmDataCLM.Designer.cs">
+      <DependentUpon>FrmDataCLM.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmDataLifting.cs" />
-    <Compile Update="frmDataLifting.Designer.cs">
-      <DependentUpon>frmDataLifting.cs</DependentUpon>
+    <Compile Update="FrmDataLifting.cs" />
+    <Compile Update="FrmDataLifting.Designer.cs">
+      <DependentUpon>FrmDataLifting.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmMain.cs" />
-    <Compile Update="frmMain.Designer.cs">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <Compile Update="FrmMain.cs" />
+    <Compile Update="FrmMain.Designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsMet.cs" />
-    <Compile Update="frmResultsMet.Designer.cs">
-      <DependentUpon>frmResultsMet.cs</DependentUpon>
+    <Compile Update="FrmResultsMet.cs" />
+    <Compile Update="FrmResultsMet.Designer.cs">
+      <DependentUpon>FrmResultsMet.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmNew.cs" />
-    <Compile Update="frmNew.Designer.cs">
-      <DependentUpon>frmNew.cs</DependentUpon>
+    <Compile Update="FrmNew.cs" />
+    <Compile Update="FrmNew.Designer.cs">
+      <DependentUpon>FrmNew.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsLifting.cs" />
-    <Compile Update="frmResultsLifting.Designer.cs">
-      <DependentUpon>frmResultsLifting.cs</DependentUpon>
+    <Compile Update="FrmResultsLifting.cs" />
+    <Compile Update="FrmResultsLifting.Designer.cs">
+      <DependentUpon>FrmResultsLifting.cs</DependentUpon>
     </Compile>
-    <Compile Update="frmResultsWR.cs" />
-    <Compile Update="frmResultsWR.Designer.cs">
-      <DependentUpon>frmResultsWR.cs</DependentUpon>
+    <Compile Update="FrmResultsWR.cs" />
+    <Compile Update="FrmResultsWR.Designer.cs">
+      <DependentUpon>FrmResultsWR.cs</DependentUpon>
     </Compile>
     <Compile Update="controls\RadioButtonClick.cs" />
     <Compile Update="localization\strings.Designer.cs">
@@ -128,52 +128,52 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>strings.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Update="frmResultsStrainIndex.resx">
-      <DependentUpon>frmResultsStrainIndex.cs</DependentUpon>
+    <EmbeddedResource Update="FrmResultsStrainIndex.resx">
+      <DependentUpon>FrmResultsStrainIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataStrainIndex.resx">
-      <DependentUpon>frmDataStrainIndex.cs</DependentUpon>
+    <EmbeddedResource Update="FrmDataStrainIndex.resx">
+      <DependentUpon>FrmDataStrainIndex.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataWR.resx">
-      <DependentUpon>frmDataWR.cs</DependentUpon>
+    <EmbeddedResource Update="FrmDataWR.resx">
+      <DependentUpon>FrmDataWR.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataMet.resx">
-      <DependentUpon>frmDataMet.cs</DependentUpon>
+    <EmbeddedResource Update="FrmDataMet.resx">
+      <DependentUpon>FrmDataMet.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmAbout.resx">
-      <DependentUpon>frmAbout.cs</DependentUpon>
+    <EmbeddedResource Update="FrmAbout.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultsCLM.resx">
-      <DependentUpon>frmResultsCLM.cs</DependentUpon>
+    <EmbeddedResource Update="FrmResultsCLM.resx">
+      <DependentUpon>FrmResultsCLM.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataCLM.resx">
-      <DependentUpon>frmDataCLM.cs</DependentUpon>
+    <EmbeddedResource Update="FrmDataCLM.resx">
+      <DependentUpon>FrmDataCLM.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmDataLifting.resx">
-      <DependentUpon>frmDataLifting.cs</DependentUpon>
+    <EmbeddedResource Update="FrmDataLifting.resx">
+      <DependentUpon>FrmDataLifting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmMain.resx">
-      <DependentUpon>frmMain.cs</DependentUpon>
+    <EmbeddedResource Update="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultsMet.resx">
-      <DependentUpon>frmResultsMet.cs</DependentUpon>
+    <EmbeddedResource Update="FrmResultsMet.resx">
+      <DependentUpon>FrmResultsMet.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmNew.resx">
-      <DependentUpon>frmNew.cs</DependentUpon>
+    <EmbeddedResource Update="FrmNew.resx">
+      <DependentUpon>FrmNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultsLifting.resx">
-      <DependentUpon>frmResultsLifting.cs</DependentUpon>
+    <EmbeddedResource Update="FrmResultsLifting.resx">
+      <DependentUpon>FrmResultsLifting.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Update="frmResultsWR.resx">
-      <DependentUpon>frmResultsWR.cs</DependentUpon>
+    <EmbeddedResource Update="FrmResultsWR.resx">
+      <DependentUpon>FrmResultsWR.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="localization\strings.resx">
