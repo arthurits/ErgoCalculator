@@ -130,7 +130,7 @@ partial class FrmMain
 
             Form? frm = strType switch
             {
-                "Work-Rest model" => new FrmResultsWR(),
+                "Work-Rest model" => new FrmResultsWR(culture: _settings.AppCulture, model: ModelType.WorkRest),
                 "Lifting model" => new frmResultsLifting(culture: _settings.AppCulture, model:ModelType.LiftingLowering),
                 "Strain index" => new FrmResultsStrainIndex(culture: _settings.AppCulture, model:ModelType.StrainIndex),
                 "Thermal comfort model" => new FrmResultsTC(culture: _settings.AppCulture, model:ModelType.ThermalComfort),
