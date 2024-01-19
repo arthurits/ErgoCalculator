@@ -27,7 +27,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
 
     private void frmResultsOCRAcheck_Shown(object sender, EventArgs e)
     {
-        Boolean error = false;
+        bool result = true;
         // Call the DLL function
         try
         {
@@ -36,7 +36,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
         }
         catch (EntryPointNotFoundException)
         {
-            error = true;
+            result = false;
             MessageBox.Show(
                 "The program calculation kernel's been tampered with.\nThe RSI could not be computed.",
                 "RSI index error",
@@ -45,7 +45,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
         }
         catch (DllNotFoundException)
         {
-            error = true;
+            result = false;
             MessageBox.Show(
                 "DLL files are missing. Please\nreinstall the application.",
                 "RSI index error",
@@ -54,7 +54,7 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
         }
         catch (Exception ex)
         {
-            error = true;
+            result = false;
             MessageBox.Show(
                 "Error in the calculation kernel:\n" + ex.ToString(),
                 "Unexpected error",
@@ -62,18 +62,10 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
                 MessageBoxIcon.Error);
         }
 
-        // Call the routine that shows the results
-        if (error == false)
-        {
-            //rtbShowResult.Text = _job.ToString();
-            //CreatePlots();
-            //FormatText();
-        }
+        // If computation is OK, then call the routine that shows the results
+        if (result)
+            UpdateLanguage(_culture);
 
-        //}
-        //else
-        // When this method is called artificially from code, don't do anything
-        //if (sender != null) this.Close();
     }
 
     #endregion Events
@@ -130,7 +122,8 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
 
     public void UpdateLanguage(System.Globalization.CultureInfo culture)
     {
-        //rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
+        //rtbShowResult.Text = _job.ToString();
+        //CreatePlots();
         //FormatText();
     }
 

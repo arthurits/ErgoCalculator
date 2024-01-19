@@ -173,7 +173,7 @@ public partial class FrmMain : Form
     /// <param name="strTextTitle">Base text to be shown as the form's title</param>
     /// <param name="strFileName">String to be added at the default title in 'strFormTitle' string.
     /// If <see langword="null"/>, no string is added.
-    /// If <see cref="String.Empty"/>, the current added text is mantained.
+    /// If <see cref="String.Empty"/>, the current added text is mantained (use this to change the language UI).
     /// Other values are added to the default title.</param>
     public static void SetFormTitle(System.Windows.Forms.Form frm, string strTextTitle, string? strFileName = null)
     {
@@ -217,6 +217,9 @@ public partial class FrmMain : Form
             frm.Text = $"{strTextTitle}{strText}";
     }
 
+    /// <summary>
+    /// Updates the text language GUI of the main window app as well as the text output of the <see cref="IChildResults"/> windows.
+    /// </summary>
     private void UpdateUI_Language()
     {
         this.SuspendLayout();

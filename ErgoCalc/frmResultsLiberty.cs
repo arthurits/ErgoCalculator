@@ -65,15 +65,15 @@ public partial class FrmResultsLiberty : Form, IChildResults
     /// <summary>
     /// Computes the Liberty Mutual equations and shows the results in the RichTextBox control
     /// </summary>
-    /// <param name="Compute">False if the index is already computed, true otherwise</param>
-    private void ShowResults(bool Compute = true)
+    /// <param name="compute">False if the index is already computed, true otherwise</param>
+    private void ShowResults(bool compute = true)
     {
         bool result = false;
 
-        if (Compute)
+        if (compute)
             result = LibertyMutual.LibertyMutualMMH(_job);
 
-        // Call the routine that shows the results
+        // If computation is OK, then call the routine that shows the results
         if (result == true)
             UpdateLanguage(_culture);
     }
@@ -395,11 +395,6 @@ public partial class FrmResultsLiberty : Form, IChildResults
         catch (Exception)
         {
             result = false;
-        }
-
-        if (result)
-        {
-            ShowResults(false);
         }
 
         return result;
