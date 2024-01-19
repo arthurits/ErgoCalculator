@@ -4,18 +4,15 @@ namespace ErgoCalc
 {
     partial class FrmAbout : Form
     {
-
-        
-
         public FrmAbout()
         {
             InitializeComponent();
             // this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.labelProductName.Text = AssemblyAttributes.AssemblyProduct;
+            this.labelVersion.Text = $"Version {AssemblyAttributes.AssemblyVersion}";
+            this.labelCopyright.Text = AssemblyAttributes.AssemblyCopyright;
+            this.labelCompanyName.Text = AssemblyAttributes.AssemblyCompany;
+            this.textBoxDescription.Text = AssemblyAttributes.AssemblyDescription;
             
             // Set form icons and images
             this.logoPictureBox.Image = GraphicsResources.Load<Image>(GraphicsResources.AppLogo256);
