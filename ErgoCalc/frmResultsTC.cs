@@ -9,7 +9,7 @@ public partial class FrmResultsTC : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultsTC()
     {
@@ -20,13 +20,14 @@ public partial class FrmResultsTC : Form, IChildResults
         this.ActiveControl = this.rtbShowResult;
     }
 
-    public FrmResultsTC(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public FrmResultsTC(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         :this()
     {
         if (data is not null && data?.GetType() == typeof(Job))
             _job = (Job)data;
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
 
     private void FrmResultsTC_Activated(object sender, EventArgs e)
@@ -213,108 +214,9 @@ public partial class FrmResultsTC : Form, IChildResults
     #endregion Private routines
 
     #region IChildResults interface
-    public ToolStrip ChildToolStrip
-    {
-        get => null;
-        set { }
-    }
+    public ToolStrip? ChildToolStrip { get => null; set { } }
 
-    public void Duplicate()
-    {
-        // Mostrar la ventana de resultados
-        FrmResultsTC frmResults = new FrmResultsTC(_job, _culture)
-        {
-            MdiParent = this.MdiParent
-        };
-
-        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
-        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsTC, this.Text[index..]);
-
-        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
-        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
-        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
-        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
-        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
-
-        frmResults.Show();
-    }
-
-    public void EditData()
-    {
-        using var frm = new FrmDataTC(_job, _culture);
-
-        if (frm.ShowDialog(this) == DialogResult.OK)
-        {
-            object data = frm.GetData;
-            if (data.GetType() == typeof(Job))
-                _job = (Job)data;
-            else
-                _job = new();
-
-            ShowResults();
-        }
-    }
-
-    public void FormatText()
-    {
-        // Set the control's tabs
-        rtbShowResult.SelectAll();
-        using var g = rtbShowResult.CreateGraphics();
-        rtbShowResult.SelectionTabs = (this as IChildResults).ComputeTabs(g,
-                                                                        rtbShowResult.Font,
-                                                                        _job.NumberTasks,
-                                                                        StringResources.ThermalComfort_RowHeaders,
-                                                                        StringResources.ThermalComfort_ColumnHeaders);
-        rtbShowResult.DeselectAll();
-
-        // Format (font, size, and style) the text
-        int nStart = 0, nEnd = 0;
-        while (true)
-        {
-            // Underline
-            nStart = rtbShowResult.Find(StringResources.ThermalComfort_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
-            if (nStart == -1) break;
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
-
-            nStart = rtbShowResult.Find(StringResources.ThermalComfort_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
-            if (nStart == -1) break;
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont, FontStyle.Underline | FontStyle.Bold);
-        }
-
-        // Bold results
-        nStart = 0;
-        while (true)
-        {
-            nStart = rtbShowResult.Find(StringResources.ThermalComfort_PMVindex, nStart + 1, -1, RichTextBoxFinds.MatchCase);
-            if (nStart == -1) break;
-            //nEnd = rtbShowResult.Text.Length;
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
-
-            nStart = rtbShowResult.Find(StringResources.ThermalComfort_PPDindex, nStart + 1, -1, RichTextBoxFinds.MatchCase);
-            if (nStart == -1) break;
-            //nEnd = rtbShowResult.Text.Length;
-            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
-            rtbShowResult.Select(nStart, nEnd - nStart);
-            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
-        }
-
-        // Set the cursor at the beginning of the text
-        rtbShowResult.SelectionStart = 0;
-        rtbShowResult.SelectionLength = 0;
-    }
-
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
-    {
-        rtbShowResult.Text = _job.ToString(StringResources.ThermalComfort_ResultsHeaders, _culture);
-        CreatePlots();
-        FormatText();
-    }
+    public ModelType? Model { get; set; }
 
     public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
 
@@ -325,7 +227,7 @@ public partial class FrmResultsTC : Form, IChildResults
         JsonElement root = document.RootElement;
         job.NumberTasks = root.GetProperty("Number of tasks").GetInt32();
         job.Tasks = new TaskModel[job.NumberTasks];
-        
+
         int i = 0;
         try
         {
@@ -348,7 +250,7 @@ public partial class FrmResultsTC : Form, IChildResults
                 job.Tasks[i].Variables.HL_Dry = curve.GetProperty("Variables").GetProperty("Heat loss - Dry").GetDouble();
                 job.Tasks[i].Variables.HL_Radiation = curve.GetProperty("Variables").GetProperty("Heat loss - Radiation").GetDouble();
                 job.Tasks[i].Variables.HL_Convection = curve.GetProperty("Variables").GetProperty("Heat loss - Convection").GetDouble();
-                
+
                 i++;
             }
 
@@ -421,6 +323,103 @@ public partial class FrmResultsTC : Form, IChildResults
         }
 
         return;
+    }
+
+    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    {
+        rtbShowResult.Text = _job.ToString(StringResources.ThermalComfort_ResultsHeaders, _culture);
+        CreatePlots();
+        FormatText();
+    }
+
+    public void FormatText()
+    {
+        // Set the control's tabs
+        rtbShowResult.SelectAll();
+        using var g = rtbShowResult.CreateGraphics();
+        rtbShowResult.SelectionTabs = (this as IChildResults).ComputeTabs(g,
+                                                                        rtbShowResult.Font,
+                                                                        _job.NumberTasks,
+                                                                        StringResources.ThermalComfort_RowHeaders,
+                                                                        StringResources.ThermalComfort_ColumnHeaders);
+        rtbShowResult.DeselectAll();
+
+        // Format (font, size, and style) the text
+        int nStart = 0, nEnd = 0;
+        while (true)
+        {
+            // Underline
+            nStart = rtbShowResult.Find(StringResources.ThermalComfort_Data, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
+
+            nStart = rtbShowResult.Find(StringResources.ThermalComfort_Multipliers, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
+        }
+
+        // Bold results
+        nStart = 0;
+        while (true)
+        {
+            nStart = rtbShowResult.Find(StringResources.ThermalComfort_PMVindex, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            //nEnd = rtbShowResult.Text.Length;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+
+            nStart = rtbShowResult.Find(StringResources.ThermalComfort_PPDindex, nStart + 1, -1, RichTextBoxFinds.MatchCase);
+            if (nStart == -1) break;
+            //nEnd = rtbShowResult.Text.Length;
+            nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
+            rtbShowResult.Select(nStart, nEnd - nStart);
+            rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont?.FontFamily ?? rtbShowResult.Font.FontFamily, rtbShowResult.Font.Size + 1, FontStyle.Bold);
+        }
+
+        // Set the cursor at the beginning of the text
+        rtbShowResult.SelectionStart = 0;
+        rtbShowResult.SelectionLength = 0;
+    }
+
+    public void EditData()
+    {
+        using FrmDataTC frm = new(_job, _culture);
+
+        if (frm.ShowDialog(this) == DialogResult.OK)
+        {
+            object data = frm.GetData;
+            if (data.GetType() == typeof(Job))
+                _job = (Job)data;
+            else
+                _job = new();
+
+            ShowResults();
+        }
+    }
+
+    public void Duplicate()
+    {
+        // Mostrar la ventana de resultados
+        FrmResultsTC frmResults = new(_job, _culture, Model)
+        {
+            MdiParent = this.MdiParent
+        };
+
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsTC, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
+
+        frmResults.Show();
     }
 
     #endregion IChildResults interface

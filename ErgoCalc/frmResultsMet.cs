@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text.Json;
-using System.Windows.Forms;
+﻿using System.Text.Json;
 
 using ErgoCalc.Models.MetabolicRate;
 
@@ -9,10 +7,8 @@ namespace ErgoCalc;
 public partial class FrmResultsMet : Form, IChildResults
 {
     // Variable definition
-    private Job _job;
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
-
-    public ToolStrip ChildToolStrip { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    private Job _job = new();
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     // Default constructor
     public FrmResultsMet()
@@ -21,21 +17,20 @@ public partial class FrmResultsMet : Form, IChildResults
         InitializeComponent();
     }
 
-    public FrmResultsMet(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public FrmResultsMet(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this() // Call the base constructor
     {
         if (data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
     
     private void frmMetResult_Shown(object sender, EventArgs e)
     {
         ShowResults();
     }
-
-    #region Private routines
 
     /// <summary>
     /// Computes the metabolic rate and shows the results in the RichTextBox control
@@ -52,18 +47,23 @@ public partial class FrmResultsMet : Form, IChildResults
             UpdateLanguage(_culture);
     }
 
+    #region IChildResults inferface
+
+    public ModelType? Model { get; set; }
+
+    public ToolStrip? ChildToolStrip { get; set; }
+
+    public bool[] GetToolbarEnabledState() => [true, true, false, false, true, true, false, false, true, false, false, true, true, true];
+
     public void Save(string path)
     {
-        
+
     }
 
     public bool OpenFile(JsonDocument document)
     {
         return false;
     }
-
-    public bool[] GetToolbarEnabledState() => [true, true, false, false, true, true, false, false, true, false, false, true, true, true];
-
 
     public void UpdateLanguage(System.Globalization.CultureInfo culture)
     {
@@ -73,13 +73,13 @@ public partial class FrmResultsMet : Form, IChildResults
 
     public void FormatText()
     {
-        
+
     }
 
     public void EditData()
     {
         // Llamar al formulario para introducir los datos
-        FrmDataMet frmData = new FrmDataMet(_job);
+        FrmDataMet frmData = new(_job);
 
         if (frmData.ShowDialog(this) == DialogResult.OK)
         {
@@ -95,7 +95,7 @@ public partial class FrmResultsMet : Form, IChildResults
     public void Duplicate()
     {
         // Show results window
-        FrmResultsMet frmResults = new FrmResultsMet(_job, _culture)
+        FrmResultsMet frmResults = new(_job, _culture, Model)
         {
             MdiParent = this.MdiParent
         };
@@ -111,7 +111,7 @@ public partial class FrmResultsMet : Form, IChildResults
 
         frmResults.Show();
     }
-    #endregion
 
+    #endregion IChildResults inferface
 
 }

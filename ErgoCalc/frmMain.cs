@@ -191,13 +191,23 @@ public partial class FrmMain : Form
         }
 
         // Check to see if there are other windows with the same title
+        int strStart = frm.Text.IndexOf('(');
+        int strEnd = frm.Text.IndexOf(')');
         int nCount = 0;
-        if (frm.MdiParent is Form frmParent)
+
+        if (strStart > -1 && strEnd >= strStart)
         {
-            foreach (Form form in frmParent.MdiChildren)
+            _ = int.TryParse(frm.Text[(strStart + 1)..strEnd], out nCount);
+        }
+        else
+        {
+            if (strFileName != string.Empty && frm.MdiParent is Form frmParent)
             {
-                if (frm.GetType() == form.GetType() && frm != form)
-                    nCount++;
+                foreach (Form form in frmParent.MdiChildren)
+                {
+                    if (frm.GetType() == form.GetType() && frm != form)
+                        nCount++;
+                }
             }
         }
 
@@ -260,8 +270,29 @@ public partial class FrmMain : Form
         statusStripLabelZoom.ToolTipText= StringResources.ToolTipZoom;
 
         // Update all child windows
-        foreach (var form in this.MdiChildren)
-            (form as IChildResults)?.UpdateLanguage(_settings.AppCulture);
+        foreach (var child in this.MdiChildren)
+        {
+            if (child is IChildResults form)
+            {
+                form.UpdateLanguage(_settings.AppCulture);
+
+                string strTextTitle = form.Model switch
+                {
+                    ModelType.WorkRest => StringResources.FormResultsWR,
+                    ModelType.CumulativeLifting => StringResources.FormResultsCLM,
+                    ModelType.LiftingLowering => StringResources.FormResultsLifting,
+                    ModelType.StrainIndex => StringResources.FormResultsStrainIndex,
+                    ModelType.OcraCheck => StringResources.FormResultsOCRAchecklist,
+                    ModelType.MetabolicRate => StringResources.FormResultsMetabolic,
+                    ModelType.ThermalComfort => StringResources.FormResultsTC,
+                    ModelType.LibertyMutual => StringResources.FormResultsLiberty,
+                    _ => String.Empty
+                };
+
+                SetFormTitle(child, strTextTitle, string.Empty);
+            }
+            
+        }
 
         this.ResumeLayout();
     }

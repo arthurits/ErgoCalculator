@@ -8,7 +8,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
-    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
+    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultsStrainIndex()
     {
@@ -17,13 +17,14 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public FrmResultsStrainIndex(object? data = null, System.Globalization.CultureInfo? culture = null)
+    public FrmResultsStrainIndex(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this()
     {
         if(data is not null && data.GetType() == typeof(Job))
             _job = (Job)data;
         
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        Model = model;
     }
 
     private void FrmResultsStrainIndex_Shown(object sender, EventArgs e)
@@ -325,7 +326,13 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     #endregion Private routines
 
     #region IChildResults
-    
+
+    public ModelType? Model { get; set; }
+
+    public ToolStrip? ChildToolStrip { get => null; set { } }
+
+    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, false, true, true, false, false, true, true, true];
+
     public bool OpenFile(JsonDocument document)
     {
         bool result = true;
@@ -476,53 +483,6 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         return;
     }
 
-    public void EditData()
-    {
-        // Llamar al formulario para introducir los datos
-        using FrmDataStrainIndex frmDataStrain = new(_job, _culture);
-
-        if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
-        {
-            object data = frmDataStrain.GetData;
-            if (data.GetType() == typeof(Job))
-                _job = (Job)data;
-            else
-                _job = new();
-
-            ShowResults();
-        }
-
-        return;
-    }
-
-    public void Duplicate()
-    {
-        // Mostrar la ventana de resultados
-        FrmResultsStrainIndex frmResults = new FrmResultsStrainIndex(_job, _culture)
-        {
-            MdiParent = this.MdiParent
-        };
-
-        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
-        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsStrainIndex, this.Text[index..]);
-
-        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
-        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
-        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
-        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
-        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
-
-        frmResults.Show();
-    }
-
-    public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, false, true, true, false, false, true, true, true];
-
-    public ToolStrip ChildToolStrip
-    {
-        get => null;
-        set { }
-    }
-
     public void UpdateLanguage(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString(StringResources.StrainIndex_ResultsHeaders, _culture);
@@ -558,7 +518,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             nEnd = rtbShowResult.Find(Environment.NewLine.ToCharArray(), nStart + 1);
             rtbShowResult.Select(nStart, nEnd - nStart);
             rtbShowResult.SelectionFont = new Font(rtbShowResult.SelectionFont ?? rtbShowResult.Font, FontStyle.Underline | FontStyle.Bold);
-        } 
+        }
 
         // Bold results
         nStart = 0;
@@ -619,6 +579,45 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         // Set the cursor at the beginning of the text
         rtbShowResult.SelectionStart = 0;
         rtbShowResult.SelectionLength = 0;
+    }
+
+    public void EditData()
+    {
+        // Llamar al formulario para introducir los datos
+        using FrmDataStrainIndex frmDataStrain = new(_job, _culture);
+
+        if (frmDataStrain.ShowDialog(this) == DialogResult.OK)
+        {
+            object data = frmDataStrain.GetData;
+            if (data.GetType() == typeof(Job))
+                _job = (Job)data;
+            else
+                _job = new();
+
+            ShowResults();
+        }
+
+        return;
+    }
+
+    public void Duplicate()
+    {
+        // Mostrar la ventana de resultados
+        FrmResultsStrainIndex frmResults = new(_job, _culture, Model)
+        {
+            MdiParent = this.MdiParent
+        };
+
+        int index = this.Text.IndexOf(StringResources.FormTitleUnion) > -1 ? this.Text.IndexOf(StringResources.FormTitleUnion) + StringResources.FormTitleUnion.Length : this.Text.Length;
+        FrmMain.SetFormTitle(frmResults, StringResources.FormResultsStrainIndex, this.Text[index..]);
+
+        frmResults.rtbShowResult.Font = this.rtbShowResult.Font;
+        frmResults.rtbShowResult.ForeColor = this.rtbShowResult.ForeColor;
+        frmResults.rtbShowResult.BackColor = this.rtbShowResult.BackColor;
+        frmResults.rtbShowResult.ZoomFactor = this.rtbShowResult.ZoomFactor;
+        frmResults.rtbShowResult.WordWrap = this.rtbShowResult.WordWrap;
+
+        frmResults.Show();
     }
 
     #endregion IChildResults
