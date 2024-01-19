@@ -404,7 +404,7 @@ public partial class FrmResultsWR : Form, IChildResults
         return result;
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         FormatText();
     }

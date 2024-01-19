@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-
 using ErgoCalc.Models.MetabolicRate;
 
 namespace ErgoCalc;
@@ -36,15 +35,16 @@ public partial class FrmResultsMet : Form, IChildResults
     /// Computes the metabolic rate and shows the results in the RichTextBox control
     /// </summary>
     /// <param name="Compute">False if the index is already computed, true otherwise</param>
-    private void ShowResults(bool Compute = true)
+    private void ShowResults(bool compute = true)
     {
-        bool error = false;
+        bool result = false;
 
-        if (Compute) MetabolicRate.CalculateMetRate(_job);
+        if (compute)
+            result = MetabolicRate.CalculateMetRate(_job);
 
-        // Show results in GUI
-        if (error == false)
-            UpdateLanguage(_culture);
+        // If computation is OK, then call the routine that shows the results
+        if (result)
+            UpdateOutput(_culture);
     }
 
     #region IChildResults inferface
@@ -65,7 +65,7 @@ public partial class FrmResultsMet : Form, IChildResults
         return false;
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString();
         FormatText();

@@ -199,8 +199,10 @@ public static class ComprehensiveLifting
     /// Computes the factor values and the LSI index from the CLM model
     /// </summary>
     /// <param name="model"></param>
-    public static void CalculateLSI(TaskModel[] model)
+    public static bool CalculateLSI(TaskModel[] model)
     {
+        bool result = true;
+
         /* Realizar los cálculos para cada tarea */
         for (int i = 0; i < model.Length; i++)
         {
@@ -227,7 +229,7 @@ public static class ComprehensiveLifting
             }
         }
 
-        return;
+        return result;
     }
 
     private static double Factor(double[][] data, double value, Gender gender = Gender.Male)

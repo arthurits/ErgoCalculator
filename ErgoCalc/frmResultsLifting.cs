@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-
 using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
@@ -36,26 +35,33 @@ public partial class frmResultsLifting : Form, IChildResults
     /// <summary>
     /// Computes the numerical results and shows them in the RichTextBox
     /// </summary>
-    private void ShowResults()
+    private void ShowResults(bool compute = true)
     {
+        bool result = false;
+
         // Make computations
-        if (_job.Model == IndexType.IndexLI)
+        if (compute)
         {
-            foreach (TaskModel task in _job.Tasks)
+            if (_job.Model == IndexType.IndexLI)
             {
-                Lifting.ComputeLI(task.SubTasks);
+                foreach (TaskModel task in _job.Tasks)
+                {
+                    Lifting.ComputeLI(task.SubTasks);
+                }
             }
-        }
-        else if (_job.Model == IndexType.IndexCLI)
-        {
-            foreach (TaskModel task in _job.Tasks)
+            else if (_job.Model == IndexType.IndexCLI)
             {
-                Lifting.ComputeCLI(task);
+                foreach (TaskModel task in _job.Tasks)
+                {
+                    Lifting.ComputeCLI(task);
+                }
             }
+            result = true;
         }
 
-        // Show results
-        UpdateLanguage(_culture);
+        // If computation is OK, then call the routine that shows the results
+        if (result)
+            UpdateOutput(_culture);
     }
 
     /// <summary>
@@ -361,7 +367,7 @@ public partial class frmResultsLifting : Form, IChildResults
         frmResults.Show();
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         //rtbShowResult.Clear();
         rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, _culture);

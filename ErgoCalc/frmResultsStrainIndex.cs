@@ -37,29 +37,33 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
     /// <summary>
     /// Computes the numerical results and shows them in the RichTextBox
     /// </summary>
-    private void ShowResults()
+    private void ShowResults(bool compute = true)
     {
-        Boolean error = false;
+        bool result = false;
 
         // Make computations
-        if (_job.Model == IndexType.RSI)
+        if (compute)
         {
-            foreach (TaskModel task in _job.Tasks)
-                StrainIndex.IndexRSI(task.SubTasks);
-        }
-        else if (_job.Model == IndexType.COSI)
-        {
-            foreach (TaskModel task in _job.Tasks)
-                StrainIndex.IndexCOSI(task);
-        }
-        else if (_job.Model == IndexType.CUSI)
-        {
-            StrainIndex.IndexCUSI(_job);
+            if (_job.Model == IndexType.RSI)
+            {
+                foreach (TaskModel task in _job.Tasks)
+                    StrainIndex.IndexRSI(task.SubTasks);
+            }
+            else if (_job.Model == IndexType.COSI)
+            {
+                foreach (TaskModel task in _job.Tasks)
+                    StrainIndex.IndexCOSI(task);
+            }
+            else if (_job.Model == IndexType.CUSI)
+            {
+                StrainIndex.IndexCUSI(_job);
+            }
+            result = true;
         }
 
-        // Call the routine that shows the results
-        if (error == false)
-            UpdateLanguage(_culture);
+        // If computation is OK, then call the routine that shows the results
+        if (result)
+            UpdateOutput(_culture);
     }
 
     /// <summary>
@@ -483,7 +487,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         return;
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString(StringResources.StrainIndex_ResultsHeaders, _culture);
         CreatePlots();

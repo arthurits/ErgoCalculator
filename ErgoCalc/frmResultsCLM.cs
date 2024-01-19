@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-
 using ErgoCalc.Models.CLM;
 
 namespace ErgoCalc;
@@ -35,17 +34,18 @@ public partial class FrmResultsCLM : Form, IChildResults
     /// <summary>
     /// Computes the LSI index and shows the results in the RichTextBox control
     /// </summary>
-    /// <param name="Compute">False if the index is already computed, true otherwise</param>
-    private void ShowResults(bool Compute = true)
+    /// <param name="compute">False if the index is already computed, true otherwise</param>
+    private void ShowResults(bool compute = true)
     {
         // Variable definition
-        Boolean error = false;
+        bool result = false;
 
-        if (Compute) ComprehensiveLifting.CalculateLSI(_job.Tasks);
-        if (error == false)
-        {
-            UpdateLanguage(_culture);
-        }
+        if (compute)
+            result = ComprehensiveLifting.CalculateLSI(_job.Tasks);
+
+        // If computation is OK, then call the routine that shows the results
+        if (result)
+            UpdateOutput(_culture);
     }
 
     /// <summary>
@@ -268,7 +268,7 @@ public partial class FrmResultsCLM : Form, IChildResults
         frmResults.Show();
     }
 
-    public void UpdateLanguage(System.Globalization.CultureInfo culture)
+    public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         rtbShowResult.Text = _job.ToString(StringResources.CLM_ResultsHeaders, _culture);
         FormatText();
