@@ -7,11 +7,12 @@ public partial class FrmLanguage : Form
 {
     private CultureInfo _culture = CultureInfo.CurrentCulture;
     private readonly AppSettings? Settings;
+    private readonly string _baseName = StringResources.StringRM.BaseName;
 
     public FrmLanguage()
     {
         InitializeComponent();
-        FillDefinedCultures(StringResources.StringRM.BaseName, typeof(FrmMain).Assembly);
+        FillDefinedCultures(_baseName, typeof(FrmMain).Assembly);
     }
 
     public FrmLanguage(AppSettings settings)
@@ -56,6 +57,10 @@ public partial class FrmLanguage : Form
         {
             _culture = System.Globalization.CultureInfo.CurrentCulture;
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -65,6 +70,10 @@ public partial class FrmLanguage : Form
         {
             _culture = System.Globalization.CultureInfo.InvariantCulture;
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -75,6 +84,10 @@ public partial class FrmLanguage : Form
         {
             _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -85,6 +98,10 @@ public partial class FrmLanguage : Form
         {
             _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -112,11 +129,19 @@ public partial class FrmLanguage : Form
     private void FillDefinedCultures(string baseName, System.Reflection.Assembly assembly)
     {
         string cultureName = _culture.Name;
-        var cultures = GetAvailableCultures(baseName, assembly);
+        //string _cultureUI = CultureInfo.CurrentUICulture.Name;
+
+        // Retrieve the culture list using the culture currently selected. The UI culture needs to be temporarily changed
+        CultureInfo.CurrentUICulture = new CultureInfo(cultureName);
+        var cultures = System.Globalization.GlobalizationUtilities.GetAvailableCultures(baseName, assembly);
+
         cboAllCultures.DisplayMember = "DisplayName";
         cboAllCultures.ValueMember = "Name";
         cboAllCultures.DataSource = cultures.ToArray();
         cboAllCultures.SelectedValue = cultureName;
+
+        // Reset the UI culture to its previous value
+        //CultureInfo.CurrentUICulture = new(_cultureUI);
     }
 
     /// <summary>
@@ -149,28 +174,4 @@ public partial class FrmLanguage : Form
         this.lblUserCulture.Top = this.radUserCulture.Top + (this.radUserCulture.Height - this.lblUserCulture.Height) / 2;
     }
 
-    private static System.Collections.Generic.List<CultureInfo> GetAvailableCultures(string baseName, System.Reflection.Assembly assembly)
-    {
-        System.Collections.Generic.List<CultureInfo> result = [];
-
-        ResourceManager rm = new(baseName, assembly);
-
-        CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
-        foreach (CultureInfo culture in cultures)
-        {
-            try
-            {
-                if (culture.Equals(CultureInfo.InvariantCulture)) continue; //do not use "==", won't work
-
-                ResourceSet? rs = rm.GetResourceSet(culture, true, false);
-                if (rs is not null)
-                    result.Add(culture);
-            }
-            catch (CultureNotFoundException)
-            {
-                //NOP
-            }
-        }
-        return result;
-    }
 }

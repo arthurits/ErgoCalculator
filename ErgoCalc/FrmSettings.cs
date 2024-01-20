@@ -6,11 +6,12 @@ public partial class FrmSettings : Form
 {
     private CultureInfo _culture = CultureInfo.CurrentCulture;
     private readonly AppSettings Settings = new();
+    private readonly string _baseName = StringResources.StringRM.BaseName;
 
     public FrmSettings()
     {
         InitializeComponent();
-        FillDefinedCultures(StringResources.StringRM.BaseName, typeof(FrmSettings).Assembly);
+        FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
     }
 
     public FrmSettings(AppSettings settings)
@@ -99,6 +100,10 @@ public partial class FrmSettings : Form
         {
             _culture = System.Globalization.CultureInfo.CurrentCulture;
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -108,6 +113,10 @@ public partial class FrmSettings : Form
         {
             _culture = System.Globalization.CultureInfo.InvariantCulture;
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -118,6 +127,10 @@ public partial class FrmSettings : Form
         {
             _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
             UpdateUI_Language();
+
+            int index = cboAllCultures.SelectedIndex;
+            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
+            cboAllCultures.SelectedIndex = index;
         }
     }
 
@@ -128,6 +141,10 @@ public partial class FrmSettings : Form
         {
             _culture = new((string)cbo.SelectedValue);
             UpdateUI_Language();
+
+            _culture = new((string)cbo.SelectedValue);
+            UpdateUI_Language();
+            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
         }
     }
 
@@ -161,11 +178,18 @@ public partial class FrmSettings : Form
     private void FillDefinedCultures(string baseName, System.Reflection.Assembly assembly)
     {
         string cultureName = _culture.Name;
+
+        // Retrieve the culture list using the culture currently selected. The UI culture needs to be temporarily changed
+        CultureInfo.CurrentUICulture = new CultureInfo(cultureName);
         var cultures = System.Globalization.GlobalizationUtilities.GetAvailableCultures(baseName, assembly);
+        
         cboAllCultures.DisplayMember = "DisplayName";
         cboAllCultures.ValueMember = "Name";
         cboAllCultures.DataSource = cultures.ToArray();
         cboAllCultures.SelectedValue = cultureName;
+
+        // Reset the UI culture to its previous value
+        //CultureInfo.CurrentUICulture = new(_cultureUI);
     }
 
     /// <summary>

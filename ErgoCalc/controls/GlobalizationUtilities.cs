@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Resources;
+﻿using System.Resources;
 
 namespace System.Globalization;
 
@@ -19,7 +18,7 @@ public static class GlobalizationUtilities
     /// <seealso cref="https://stackoverflow.com/questions/553244/programmatic-way-to-get-all-the-available-languages-in-satellite-assemblies"/>
     public static IEnumerable<CultureInfo> GetAvailableCultures(string baseName, Reflection.Assembly assembly)
     {
-        List<CultureInfo> result = new();
+        List<CultureInfo> result = [];
 
         ResourceManager rm = new(baseName, assembly);
 
