@@ -11,7 +11,7 @@ public static class AssemblyAttributes
             if (attributes.Length > 0)
             {
                 AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                if (titleAttribute.Title != "")
+                if (titleAttribute.Title != string.Empty)
                 {
                     return titleAttribute.Title;
                 }
@@ -24,7 +24,7 @@ public static class AssemblyAttributes
     {
         get
         {
-            return $"{Assembly.GetExecutingAssembly().GetName().Version}";
+            return Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "?";
         }
     }
 
