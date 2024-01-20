@@ -65,7 +65,7 @@ class Validation
             if (showMsgBox.HasValue && showMsgBox.Value)
             {
                 System.Windows.Forms.MessageBox.Show(
-                  $"The input data is off-limits. Please, check the highlighted field{Environment.NewLine}and make sure it is equal or below {upperBound}".,
+                  $"The input data is off-limits. Please, check the highlighted field{Environment.NewLine}and make sure it is equal or below {upperBound}.",
                   $"Data error",
                   System.Windows.Forms.MessageBoxButtons.OK,
                   System.Windows.Forms.MessageBoxIcon.Error);
