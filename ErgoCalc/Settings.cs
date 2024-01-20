@@ -25,8 +25,8 @@ public partial class FrmMain
             using (new CenterWinDialog(this))
             {
                 MessageBox.Show(this,
-                    "Error loading settings file\n\n" + ex.Message,
-                    "Error",
+                    $"Error loading settings file{Environment.NewLine}{Environment.NewLine}{ex.Message}",
+                    $"Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
