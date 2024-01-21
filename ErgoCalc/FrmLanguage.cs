@@ -51,58 +51,36 @@ public partial class FrmLanguage : Form
         }
     }
 
-    private void CurrentCulture_CheckedChanged(object sender, EventArgs e)
+    /// <summary>
+    /// Event handler for <see cref="RadioButton.CheckedChanged"/> and <see cref="ComboBox.SelectionChangeCommitted"/>.
+    /// </summary>
+    /// <param name="sender">The source of the event</param>
+    /// <param name="e">Object that contains event data, and provides a value to use for events that do not include event data</param>
+    private void CultureChanged(object sender, EventArgs e)
     {
+        // Dismiss events due to RadioButton.Checked set to false
+        if (sender is RadioButton radioButton)
+            if (!radioButton.Checked) return;
+
+        // Set the culture value as a function of the button selected
         if (radCurrentCulture.Checked)
-        {
             _culture = System.Globalization.CultureInfo.CurrentCulture;
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
-    }
-
-    private void InvariantCulture_CheckedChanged(object sender, EventArgs e)
-    {
-        if (radInvariantCulture.Checked)
-        {
+        else if (radInvariantCulture.Checked)
             _culture = System.Globalization.CultureInfo.InvariantCulture;
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
-    }
-
-    private void UserCulture_CheckedChanged(object sender, EventArgs e)
-    {
-        cboAllCultures.Enabled = radUserCulture.Checked;
-        if (cboAllCultures.Enabled)
+        else if(radUserCulture.Checked)
         {
-            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
+            cboAllCultures.Enabled = radUserCulture.Checked;
+            if (cboAllCultures.Enabled)
+                _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
         }
-    }
 
-    private void AllCultures_SelectedValueChanged(object sender, EventArgs e)
-    {
-        cboAllCultures.Enabled = radUserCulture.Checked;
-        if (cboAllCultures.Enabled)
-        {
-            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
-            UpdateUI_Language();
+        // Update the GUI with the current language
+        UpdateUI_Language();
 
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
+        // Fill the combo box with the culture names in the selected language
+        int index = cboAllCultures.SelectedIndex;
+        FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+        cboAllCultures.SelectedIndex = index;
     }
 
     /// <summary>

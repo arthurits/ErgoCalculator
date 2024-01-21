@@ -28,145 +28,144 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cboAllCultures = new System.Windows.Forms.ComboBox();
-            this.radCurrentCulture = new System.Windows.Forms.RadioButton();
-            this.radInvariantCulture = new System.Windows.Forms.RadioButton();
-            this.radUserCulture = new System.Windows.Forms.RadioButton();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnAccept = new System.Windows.Forms.Button();
-            this.lblCurrentCulture = new System.Windows.Forms.Label();
-            this.lblInvariantCulture = new System.Windows.Forms.Label();
-            this.lblUserCulture = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            cboAllCultures = new ComboBox();
+            radCurrentCulture = new RadioButton();
+            radInvariantCulture = new RadioButton();
+            radUserCulture = new RadioButton();
+            btnCancel = new Button();
+            btnAccept = new Button();
+            lblCurrentCulture = new Label();
+            lblInvariantCulture = new Label();
+            lblUserCulture = new Label();
+            SuspendLayout();
             // 
             // cboAllCultures
             // 
-            this.cboAllCultures.FormattingEnabled = true;
-            this.cboAllCultures.Location = new System.Drawing.Point(45, 141);
-            this.cboAllCultures.Name = "cboAllCultures";
-            this.cboAllCultures.Size = new System.Drawing.Size(190, 25);
-            this.cboAllCultures.TabIndex = 0;
-            this.cboAllCultures.SelectedValueChanged += new System.EventHandler(this.AllCultures_SelectedValueChanged);
+            cboAllCultures.FormattingEnabled = true;
+            cboAllCultures.Location = new Point(45, 141);
+            cboAllCultures.Name = "cboAllCultures";
+            cboAllCultures.Size = new Size(190, 25);
+            cboAllCultures.TabIndex = 0;
+            cboAllCultures.SelectionChangeCommitted += CultureChanged;
             // 
             // radCurrentCulture
             // 
-            this.radCurrentCulture.AutoSize = true;
-            this.radCurrentCulture.Location = new System.Drawing.Point(23, 27);
-            this.radCurrentCulture.Name = "radCurrentCulture";
-            this.radCurrentCulture.Size = new System.Drawing.Size(120, 23);
-            this.radCurrentCulture.TabIndex = 1;
-            this.radCurrentCulture.TabStop = true;
-            this.radCurrentCulture.Text = "Current culture";
-            this.radCurrentCulture.UseVisualStyleBackColor = true;
-            this.radCurrentCulture.CheckedChanged += new System.EventHandler(this.CurrentCulture_CheckedChanged);
+            radCurrentCulture.AutoSize = true;
+            radCurrentCulture.Location = new Point(23, 27);
+            radCurrentCulture.Name = "radCurrentCulture";
+            radCurrentCulture.Size = new Size(120, 23);
+            radCurrentCulture.TabIndex = 1;
+            radCurrentCulture.TabStop = true;
+            radCurrentCulture.Text = "Current culture";
+            radCurrentCulture.UseVisualStyleBackColor = true;
+            radCurrentCulture.CheckedChanged += CultureChanged;
             // 
             // radInvariantCulture
             // 
-            this.radInvariantCulture.AutoSize = true;
-            this.radInvariantCulture.Location = new System.Drawing.Point(23, 68);
-            this.radInvariantCulture.Name = "radInvariantCulture";
-            this.radInvariantCulture.Size = new System.Drawing.Size(127, 23);
-            this.radInvariantCulture.TabIndex = 2;
-            this.radInvariantCulture.TabStop = true;
-            this.radInvariantCulture.Text = "Invariant culture";
-            this.radInvariantCulture.UseVisualStyleBackColor = true;
-            this.radInvariantCulture.CheckedChanged += new System.EventHandler(this.InvariantCulture_CheckedChanged);
+            radInvariantCulture.AutoSize = true;
+            radInvariantCulture.Location = new Point(23, 68);
+            radInvariantCulture.Name = "radInvariantCulture";
+            radInvariantCulture.Size = new Size(127, 23);
+            radInvariantCulture.TabIndex = 2;
+            radInvariantCulture.TabStop = true;
+            radInvariantCulture.Text = "Invariant culture";
+            radInvariantCulture.UseVisualStyleBackColor = true;
+            radInvariantCulture.CheckedChanged += CultureChanged;
             // 
             // radUserCulture
             // 
-            this.radUserCulture.AutoSize = true;
-            this.radUserCulture.Location = new System.Drawing.Point(23, 109);
-            this.radUserCulture.Name = "radUserCulture";
-            this.radUserCulture.Size = new System.Drawing.Size(108, 23);
-            this.radUserCulture.TabIndex = 3;
-            this.radUserCulture.TabStop = true;
-            this.radUserCulture.Text = "Select culture";
-            this.radUserCulture.UseVisualStyleBackColor = true;
-            this.radUserCulture.CheckedChanged += new System.EventHandler(this.UserCulture_CheckedChanged);
+            radUserCulture.AutoSize = true;
+            radUserCulture.Location = new Point(23, 109);
+            radUserCulture.Name = "radUserCulture";
+            radUserCulture.Size = new Size(108, 23);
+            radUserCulture.TabIndex = 3;
+            radUserCulture.TabStop = true;
+            radUserCulture.Text = "Select culture";
+            radUserCulture.UseVisualStyleBackColor = true;
+            radUserCulture.CheckedChanged += CultureChanged;
             // 
             // btnCancel
             // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(117, 190);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(90, 30);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "&Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.Cancel_Click);
+            btnCancel.DialogResult = DialogResult.Cancel;
+            btnCancel.Location = new Point(117, 190);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(90, 30);
+            btnCancel.TabIndex = 4;
+            btnCancel.Text = "&Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += Cancel_Click;
             // 
             // btnAccept
             // 
-            this.btnAccept.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnAccept.Location = new System.Drawing.Point(213, 190);
-            this.btnAccept.Name = "btnAccept";
-            this.btnAccept.Size = new System.Drawing.Size(90, 30);
-            this.btnAccept.TabIndex = 5;
-            this.btnAccept.Text = "&Accept";
-            this.btnAccept.UseVisualStyleBackColor = true;
-            this.btnAccept.Click += new System.EventHandler(this.Accept_Click);
+            btnAccept.DialogResult = DialogResult.OK;
+            btnAccept.Location = new Point(213, 190);
+            btnAccept.Name = "btnAccept";
+            btnAccept.Size = new Size(90, 30);
+            btnAccept.TabIndex = 5;
+            btnAccept.Text = "&Accept";
+            btnAccept.UseVisualStyleBackColor = true;
+            btnAccept.Click += Accept_Click;
             // 
             // lblCurrentCulture
             // 
-            this.lblCurrentCulture.AutoSize = true;
-            this.lblCurrentCulture.BackColor = System.Drawing.Color.Transparent;
-            this.lblCurrentCulture.Location = new System.Drawing.Point(39, 29);
-            this.lblCurrentCulture.MaximumSize = new System.Drawing.Size(275, 0);
-            this.lblCurrentCulture.Name = "lblCurrentCulture";
-            this.lblCurrentCulture.Size = new System.Drawing.Size(102, 19);
-            this.lblCurrentCulture.TabIndex = 6;
-            this.lblCurrentCulture.Text = "Current culture";
-            this.lblCurrentCulture.Click += new System.EventHandler(this.LabelCulture_Click);
+            lblCurrentCulture.AutoSize = true;
+            lblCurrentCulture.BackColor = Color.Transparent;
+            lblCurrentCulture.Location = new Point(39, 29);
+            lblCurrentCulture.MaximumSize = new Size(275, 0);
+            lblCurrentCulture.Name = "lblCurrentCulture";
+            lblCurrentCulture.Size = new Size(102, 19);
+            lblCurrentCulture.TabIndex = 6;
+            lblCurrentCulture.Text = "Current culture";
+            lblCurrentCulture.Click += LabelCulture_Click;
             // 
             // lblInvariantCulture
             // 
-            this.lblInvariantCulture.AutoSize = true;
-            this.lblInvariantCulture.Location = new System.Drawing.Point(39, 70);
-            this.lblInvariantCulture.MaximumSize = new System.Drawing.Size(275, 0);
-            this.lblInvariantCulture.Name = "lblInvariantCulture";
-            this.lblInvariantCulture.Size = new System.Drawing.Size(109, 19);
-            this.lblInvariantCulture.TabIndex = 7;
-            this.lblInvariantCulture.Text = "Invariant culture";
-            this.lblInvariantCulture.Click += new System.EventHandler(this.LabelCulture_Click);
+            lblInvariantCulture.AutoSize = true;
+            lblInvariantCulture.Location = new Point(39, 70);
+            lblInvariantCulture.MaximumSize = new Size(275, 0);
+            lblInvariantCulture.Name = "lblInvariantCulture";
+            lblInvariantCulture.Size = new Size(109, 19);
+            lblInvariantCulture.TabIndex = 7;
+            lblInvariantCulture.Text = "Invariant culture";
+            lblInvariantCulture.Click += LabelCulture_Click;
             // 
             // lblUserCulture
             // 
-            this.lblUserCulture.AutoSize = true;
-            this.lblUserCulture.Location = new System.Drawing.Point(39, 111);
-            this.lblUserCulture.MaximumSize = new System.Drawing.Size(275, 0);
-            this.lblUserCulture.Name = "lblUserCulture";
-            this.lblUserCulture.Size = new System.Drawing.Size(90, 19);
-            this.lblUserCulture.TabIndex = 8;
-            this.lblUserCulture.Text = "Select culture";
-            this.lblUserCulture.Click += new System.EventHandler(this.LabelCulture_Click);
+            lblUserCulture.AutoSize = true;
+            lblUserCulture.Location = new Point(39, 111);
+            lblUserCulture.MaximumSize = new Size(275, 0);
+            lblUserCulture.Name = "lblUserCulture";
+            lblUserCulture.Size = new Size(90, 19);
+            lblUserCulture.TabIndex = 8;
+            lblUserCulture.Text = "Select culture";
+            lblUserCulture.Click += LabelCulture_Click;
             // 
             // FrmLanguage
             // 
-            this.AcceptButton = this.btnAccept;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(315, 232);
-            this.Controls.Add(this.lblUserCulture);
-            this.Controls.Add(this.lblInvariantCulture);
-            this.Controls.Add(this.lblCurrentCulture);
-            this.Controls.Add(this.btnAccept);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.radUserCulture);
-            this.Controls.Add(this.radInvariantCulture);
-            this.Controls.Add(this.radCurrentCulture);
-            this.Controls.Add(this.cboAllCultures);
-            this.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "FrmLanguage";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Select language";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AcceptButton = btnAccept;
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = btnCancel;
+            ClientSize = new Size(315, 232);
+            Controls.Add(lblUserCulture);
+            Controls.Add(lblInvariantCulture);
+            Controls.Add(lblCurrentCulture);
+            Controls.Add(btnAccept);
+            Controls.Add(btnCancel);
+            Controls.Add(radUserCulture);
+            Controls.Add(radInvariantCulture);
+            Controls.Add(radCurrentCulture);
+            Controls.Add(cboAllCultures);
+            Font = new Font("Segoe UI", 10F);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FrmLanguage";
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Select language";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
