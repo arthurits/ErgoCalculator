@@ -46,7 +46,7 @@
             cboAllCultures.Name = "cboAllCultures";
             cboAllCultures.Size = new Size(190, 25);
             cboAllCultures.TabIndex = 0;
-            cboAllCultures.SelectionChangeCommitted += CurrentCulture_CheckedChanged;
+            cboAllCultures.SelectionChangeCommitted += CultureChanged;
             // 
             // radCurrentCulture
             // 
@@ -58,7 +58,7 @@
             radCurrentCulture.TabStop = true;
             radCurrentCulture.Text = "Current culture";
             radCurrentCulture.UseVisualStyleBackColor = true;
-            radCurrentCulture.CheckedChanged += CurrentCulture_CheckedChanged;
+            radCurrentCulture.CheckedChanged += CultureChanged;
             // 
             // radInvariantCulture
             // 
@@ -70,7 +70,7 @@
             radInvariantCulture.TabStop = true;
             radInvariantCulture.Text = "Invariant culture";
             radInvariantCulture.UseVisualStyleBackColor = true;
-            radInvariantCulture.CheckedChanged += CurrentCulture_CheckedChanged;
+            radInvariantCulture.CheckedChanged += CultureChanged;
             // 
             // radUserCulture
             // 
@@ -82,7 +82,7 @@
             radUserCulture.TabStop = true;
             radUserCulture.Text = "Select culture";
             radUserCulture.UseVisualStyleBackColor = true;
-            radUserCulture.CheckedChanged += CurrentCulture_CheckedChanged;
+            radUserCulture.CheckedChanged += CultureChanged;
             // 
             // btnCancel
             // 

@@ -51,7 +51,7 @@ public partial class FrmLanguage : Form
         }
     }
 
-    private void CurrentCulture_CheckedChanged(object sender, EventArgs e)
+    private void CultureChanged(object sender, EventArgs e)
     {
         if (radCurrentCulture.Checked)
             _culture = System.Globalization.CultureInfo.CurrentCulture;
