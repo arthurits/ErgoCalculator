@@ -51,13 +51,23 @@ public partial class FrmLanguage : Form
         }
     }
 
+    /// <summary>
+    /// Event handler for <see cref="RadioButton.CheckedChanged"/> and <see cref="ComboBox.SelectionChangeCommitted"/>.
+    /// </summary>
+    /// <param name="sender">The source of the event</param>
+    /// <param name="e">Object that contains event data, and provides a value to use for events that do not include event data</param>
     private void CultureChanged(object sender, EventArgs e)
     {
+        // Dismiss events due to RadioButton.Checked set to false
+        if (sender is RadioButton radioButton)
+            if (!radioButton.Checked) return;
+
+        // Set the culture value as a function of the button selected
         if (radCurrentCulture.Checked)
             _culture = System.Globalization.CultureInfo.CurrentCulture;
         else if (radInvariantCulture.Checked)
             _culture = System.Globalization.CultureInfo.InvariantCulture;
-        else
+        else if(radUserCulture.Checked)
         {
             cboAllCultures.Enabled = radUserCulture.Checked;
             if (cboAllCultures.Enabled)
