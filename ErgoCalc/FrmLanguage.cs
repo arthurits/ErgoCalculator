@@ -54,55 +54,23 @@ public partial class FrmLanguage : Form
     private void CurrentCulture_CheckedChanged(object sender, EventArgs e)
     {
         if (radCurrentCulture.Checked)
-        {
             _culture = System.Globalization.CultureInfo.CurrentCulture;
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
-    }
-
-    private void InvariantCulture_CheckedChanged(object sender, EventArgs e)
-    {
-        if (radInvariantCulture.Checked)
-        {
+        else if (radInvariantCulture.Checked)
             _culture = System.Globalization.CultureInfo.InvariantCulture;
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
-    }
-
-    private void UserCulture_CheckedChanged(object sender, EventArgs e)
-    {
-        cboAllCultures.Enabled = radUserCulture.Checked;
-        if (cboAllCultures.Enabled)
+        else
         {
-            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
+            cboAllCultures.Enabled = radUserCulture.Checked;
+            if (cboAllCultures.Enabled)
+                _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
         }
-    }
 
-    private void AllCultures_SelectedValueChanged(object sender, EventArgs e)
-    {
-        cboAllCultures.Enabled = radUserCulture.Checked;
-        if (cboAllCultures.Enabled)
-        {
-            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
-            UpdateUI_Language();
+        // Update the GUI with the current language
+        UpdateUI_Language();
 
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
+        // Fill the combo box with the culture names in the selected language
+        int index = cboAllCultures.SelectedIndex;
+        FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+        cboAllCultures.SelectedIndex = index;
     }
 
     /// <summary>
