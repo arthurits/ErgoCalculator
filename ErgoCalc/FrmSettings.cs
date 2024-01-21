@@ -107,47 +107,6 @@ public partial class FrmSettings : Form
         }
     }
 
-    private void InvariantCulture_CheckedChanged(object sender, EventArgs e)
-    {
-        if (radInvariantCulture.Checked)
-        {
-            _culture = System.Globalization.CultureInfo.InvariantCulture;
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
-    }
-
-    private void UserCulture_CheckedChanged(object sender, EventArgs e)
-    {
-        cboAllCultures.Enabled = radUserCulture.Checked;
-        if (cboAllCultures.Enabled)
-        {
-            _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
-            UpdateUI_Language();
-
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
-            cboAllCultures.SelectedIndex = index;
-        }
-    }
-
-    private void AllCultures_SelectedValueChanged(object sender, EventArgs e)
-    {
-        var cbo = sender as ComboBox;
-        if (cbo is not null && cbo.Items.Count > 0 && cbo.SelectedValue is not null)
-        {
-            _culture = new((string)cbo.SelectedValue);
-            UpdateUI_Language();
-
-            _culture = new((string)cbo.SelectedValue);
-            UpdateUI_Language();
-            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
-        }
-    }
-
     /// <summary>
     /// Updates the form's controls with values from the settings class
     /// </summary>
