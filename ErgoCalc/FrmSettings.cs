@@ -99,7 +99,7 @@ public partial class FrmSettings : Form
     /// </summary>
     /// <param name="sender">The source of the event</param>
     /// <param name="e">Object that contains event data, and provides a value to use for events that do not include event data</param>
-    private void CurrentCulture_CheckedChanged(object sender, EventArgs e)
+    private void CultureChanged(object sender, EventArgs e)
     {
         // Dismiss events due to RadioButton.Checked set to false
         if (sender is RadioButton radioButton)
