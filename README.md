@@ -14,7 +14,8 @@ Sponsor this project!
 This download is a portable software. Please follow this instructions:
 * Dowload the zip file.
 * Unzip the contents to your desired folder.
-* Execute (or create a direct link to) `ErgoCalcLauncher.exe`.
+* Make sure that .NET 8 is installed in your PC. The `.NET 8 Desktop Runtime` can be downloaded from the [Microsoft .NET website] (https://dotnet.microsoft.com/download/dotnet/8.0).
+* Execute (or create a direct link to) `ErgoCalc.exe`.
 
 ## Functionalities
 * Work-rest model developed by J. Dul, M. Douwes, M., and P Smitt in 1991 and suggested in [ISO 11226:2000 — Evaluation of static working postures](https://www.iso.org/standard/25573.html)
