@@ -5,7 +5,7 @@
 * Improve culture selection logic.
 * Change child windows output on culture change.
 * Modify and improve code related lifting and LM-MMH models.
-* Update code to incorporate new `.NET 8` features.
+* Update code incorporating new `.NET 8` features.
 * Refactor and simplify internal code.
 
 ## ErgoCalculator 1.7.6
