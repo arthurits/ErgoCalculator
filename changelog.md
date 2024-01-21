@@ -1,5 +1,13 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.7
+* Improve window app initial position and size logic.
+* Improve culture selection logic.
+* Change child windows output on culture change.
+* Modify and improve code related lifting and LM-MMH models.
+* Update code to incorporate new `.NET 8` features.
+* Refactor and simplify internal code.
+
 ## ErgoCalculator 1.7.6
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.70.
 * Drop NIOSH lifting model.
