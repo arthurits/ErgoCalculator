@@ -96,15 +96,29 @@ public partial class FrmSettings : Form
 
     private void CurrentCulture_CheckedChanged(object sender, EventArgs e)
     {
-        if (radCurrentCulture.Checked)
-        {
-            _culture = System.Globalization.CultureInfo.CurrentCulture;
-            UpdateUI_Language();
+        // Dismiss events due to RadioButton.Checked set to false
+        if (sender is RadioButton radioButton)
+            if (!radioButton.Checked) return;
 
-            int index = cboAllCultures.SelectedIndex;
-            FillDefinedCultures(_baseName, typeof(FrmSettings).Assembly);
-            cboAllCultures.SelectedIndex = index;
+        // Set the culture value as a function of the button selected
+        if (radCurrentCulture.Checked)
+            _culture = System.Globalization.CultureInfo.CurrentCulture;
+        else if (radInvariantCulture.Checked)
+            _culture = System.Globalization.CultureInfo.InvariantCulture;
+        else if (radUserCulture.Checked)
+        {
+            cboAllCultures.Enabled = radUserCulture.Checked;
+            if (cboAllCultures.Enabled)
+                _culture = new((string?)cboAllCultures.SelectedValue ?? String.Empty);
         }
+
+        // Update the GUI with the current language
+        UpdateUI_Language();
+
+        // Fill the combo box with the culture names in the selected language
+        int index = cboAllCultures.SelectedIndex;
+        FillDefinedCultures(_baseName, typeof(FrmLanguage).Assembly);
+        cboAllCultures.SelectedIndex = index;
     }
 
     /// <summary>
