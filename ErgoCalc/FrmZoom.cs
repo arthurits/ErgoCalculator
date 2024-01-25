@@ -4,7 +4,7 @@ namespace ErgoCalc;
 
 public partial class FrmZoom : Form
 {
-    private CultureInfo _culture;
+    private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
     public int ZoomLevel { get; private set; } = 100;
 
     public FrmZoom()
