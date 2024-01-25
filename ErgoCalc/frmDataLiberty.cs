@@ -172,11 +172,6 @@ public partial class FrmDataLiberty : Form, IChildData
 
     }
 
-    private void RadioButton_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-
     #endregion Form events
 
     #region Private routines
