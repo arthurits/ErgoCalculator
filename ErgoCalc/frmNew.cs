@@ -51,7 +51,7 @@ public partial class FrmNew : Form
     }
 
     // https://www.cyotek.com/blog/creating-a-windows-forms-radiobutton-that-supports-the-double-click-event
-    private void radioButtons_DoubleClick(object sender, MouseEventArgs e)
+    private void Rad_DoubleClick(object sender, MouseEventArgs e)
     {
         this.Accept_Click(btnAccept, EventArgs.Empty);
         this.DialogResult = DialogResult.OK;
