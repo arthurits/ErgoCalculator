@@ -269,7 +269,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     public void Save(string path)
     {
         // Displays a SaveFileDialog so the user can save the Image  
-        SaveFileDialog SaveDlg = new SaveFileDialog
+        SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.csv",
             Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
