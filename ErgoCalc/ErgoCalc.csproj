@@ -344,7 +344,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ScottPlot" Version="4.1.71" />
-    <PackageReference Include="ScottPlot.WinForms" Version="4.1.70" />
+    <PackageReference Include="ScottPlot.WinForms" Version="4.1.71" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
