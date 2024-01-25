@@ -7,7 +7,7 @@ namespace ErgoCalc;
 public partial class FrmDataLiberty : Form, IChildData
 {
     private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
-    private Job _job;
+    private Job _job = new();
 
     public object GetData => _job;
 
@@ -46,9 +46,12 @@ public partial class FrmDataLiberty : Form, IChildData
         this.DialogResult = DialogResult.None;
 
         // Validate each data starting from column 0
-        _job = new();
-        _job.NumberTasks = gridVariables.ColumnCount;
-        _job.Tasks = new ModelLiberty[_job.NumberTasks];
+        _job = new()
+        {
+            NumberTasks = gridVariables.ColumnCount,
+            Tasks = new ModelLiberty[gridVariables.ColumnCount]
+        };
+
         for (int i = 0; i < gridVariables.ColumnCount; i++)
         {
             _job.Tasks[i] = new();
@@ -142,7 +145,7 @@ public partial class FrmDataLiberty : Form, IChildData
 
         gridVariables.EndEdit();
 
-        DataGridViewColumn col = gridVariables.Columns[gridVariables.CurrentCell.ColumnIndex];
+        //DataGridViewColumn col = gridVariables.Columns[gridVariables.CurrentCell.ColumnIndex];
 
         switch (CurrentCell.Value)
         {
@@ -169,7 +172,7 @@ public partial class FrmDataLiberty : Form, IChildData
 
     }
 
-    private void radioButton_CheckedChanged(object sender, EventArgs e)
+    private void RadioButton_CheckedChanged(object sender, EventArgs e)
     {
 
     }
@@ -186,7 +189,7 @@ public partial class FrmDataLiberty : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
+        if (gridVariables.Columns.Contains($"Column {col}")) return;
 
         // Create the new column
         (this as IChildData).AddColumnBasic(gridVariables, col, StringResources.Task, 90);
@@ -297,9 +300,11 @@ public partial class FrmDataLiberty : Form, IChildData
 
     private void DataExample()
     {
-        _job = new Job();
-        _job.NumberTasks = 2;
-        _job.Tasks = new ModelLiberty[_job.NumberTasks];
+        _job = new Job
+        {
+            NumberTasks = 2,
+            Tasks = new ModelLiberty[2]
+        };
 
         _job.Tasks[0] = new();
         _job.Tasks[0].Data.Type = TaskType.Lifting;

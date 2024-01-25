@@ -97,7 +97,7 @@ namespace ErgoCalc
             this.radCarr.TabStop = true;
             this.radCarr.Text = "Carrying";
             this.radCarr.UseVisualStyleBackColor = true;
-            this.radCarr.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radCarr.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // radPush
             // 
@@ -109,7 +109,7 @@ namespace ErgoCalc
             this.radPush.TabIndex = 3;
             this.radPush.Text = "Pushing";
             this.radPush.UseVisualStyleBackColor = true;
-            this.radPush.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radPush.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // radPull
             // 
@@ -121,7 +121,7 @@ namespace ErgoCalc
             this.radPull.TabIndex = 2;
             this.radPull.Text = "Pulling";
             this.radPull.UseVisualStyleBackColor = true;
-            this.radPull.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radPull.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // radLow
             // 
@@ -133,7 +133,7 @@ namespace ErgoCalc
             this.radLow.TabIndex = 1;
             this.radLow.Text = "Lowering";
             this.radLow.UseVisualStyleBackColor = true;
-            this.radLow.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radLow.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // radLift
             // 
@@ -145,7 +145,7 @@ namespace ErgoCalc
             this.radLift.TabIndex = 0;
             this.radLift.Text = "Lifting";
             this.radLift.UseVisualStyleBackColor = true;
-            this.radLift.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radLift.CheckedChanged += new System.EventHandler(this.RadioButton_CheckedChanged);
             // 
             // lblSubtasks
             // 
