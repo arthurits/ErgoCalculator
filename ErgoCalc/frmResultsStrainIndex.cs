@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-
 using ErgoCalc.Models.StrainIndex;
 
 namespace ErgoCalc;
@@ -83,134 +82,135 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 
         try
         {
-            var orgdata = Clipboard.GetDataObject();
-
-            for (int j = 0; j < _job.NumberTasks; j++)
+            if (Clipboard.GetDataObject() is IDataObject clipboardData)
             {
-                dataX = new double[_job.Tasks[j].NumberSubTasks];
-                dataRSI = new double[_job.Tasks[j].NumberSubTasks];
-                dataCOSI = new double[_job.Tasks[j].NumberSubTasks];
-                labels = new string[_job.Tasks[j].NumberSubTasks];
-
-                if (_job.Model == IndexType.RSI)
+                for (int j = 0; j < _job.NumberTasks; j++)
                 {
-                    strTaskText = "Tasks";
-                    strPlotTitle = "RSI results";
-                }
-                else
-                {
-                    strTaskText = "SubTasks";
-                    strPlotTitle = string.Concat("RSI & COSI results for Task ", ((char)('A' + j)).ToString());
-                }
+                    dataX = new double[_job.Tasks[j].NumberSubTasks];
+                    dataRSI = new double[_job.Tasks[j].NumberSubTasks];
+                    dataCOSI = new double[_job.Tasks[j].NumberSubTasks];
+                    labels = new string[_job.Tasks[j].NumberSubTasks];
 
-                for (int i = 0; i < _job.Tasks[j].NumberSubTasks; i++)
-                {
-
-                    nOrder = _job.Tasks[j].Order[i];
-
-                    dataX[i] = i + 1;
-                    dataRSI[i] = _job.Tasks[j].SubTasks[nOrder].IndexRSI;
-                    if (i == 0)
-                        nCOSI = _job.Tasks[j].SubTasks[nOrder].IndexRSI;
+                    if (_job.Model == IndexType.RSI)
+                    {
+                        strTaskText = "Tasks";
+                        strPlotTitle = "RSI results";
+                    }
                     else
-                        nCOSI += _job.Tasks[j].SubTasks[nOrder].IndexRSI * (_job.Tasks[j].SubTasks[nOrder].Factors.EMa - _job.Tasks[j].SubTasks[nOrder].Factors.EMb) / _job.Tasks[j].SubTasks[nOrder].Factors.EM;
-                    dataCOSI[i] = nCOSI;
-                    //labels[i] = string.Concat(strTaskText, ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
-                    labels[i] = ((char)('A' + _job.Tasks[j].SubTasks[nOrder].ItemIndex)).ToString();
+                    {
+                        strTaskText = "SubTasks";
+                        strPlotTitle = $"RSI & COSI results for Task {(char)('A' + j)}";
+                    }
+
+                    for (int i = 0; i < _job.Tasks[j].NumberSubTasks; i++)
+                    {
+
+                        nOrder = _job.Tasks[j].Order[i];
+
+                        dataX[i] = i + 1;
+                        dataRSI[i] = _job.Tasks[j].SubTasks[nOrder].IndexRSI;
+                        if (i == 0)
+                            nCOSI = _job.Tasks[j].SubTasks[nOrder].IndexRSI;
+                        else
+                            nCOSI += _job.Tasks[j].SubTasks[nOrder].IndexRSI * (_job.Tasks[j].SubTasks[nOrder].Factors.EMa - _job.Tasks[j].SubTasks[nOrder].Factors.EMb) / _job.Tasks[j].SubTasks[nOrder].Factors.EM;
+                        dataCOSI[i] = nCOSI;
+                        //labels[i] = string.Concat(strTaskText, ((char)('A' + _job.JobTasks[j].SubTasks[nOrder].ItemIndex)).ToString());
+                        labels[i] = ((char)('A' + _job.Tasks[j].SubTasks[nOrder].ItemIndex)).ToString();
+                    }
+
+                    var plot = new ScottPlot.Plot(600, 450);
+
+                    plot.XAxis2.Label(strPlotTitle, size: 22);
+                    plot.YAxis.Label("Index value", size: 22);
+                    plot.XAxis.Label(strTaskText, size: 22);
+
+                    plot.AddBar(dataRSI, dataX).Label = "RSI";
+                    if (_job.Tasks[j].IndexCOSI != -1)
+                        plot.AddScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                    plot.AxisAuto();
+                    plot.XTicks(dataX, labels);
+                    plot.XAxis.Grid(false);
+                    plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
+
+                    //plot.CoordinateFromPixel();
+
+                    using (var plotImage = plot.Render())
+                    {
+                        Clipboard.SetImage(plotImage);
+                    }
+                    plot.Clear();
+                    rtbShowResult.AppendText(Environment.NewLine);
+                    var read = rtbShowResult.ReadOnly;
+                    rtbShowResult.ReadOnly = false;
+                    rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+                    rtbShowResult.Paste();
+                    Clipboard.SetDataObject(clipboardData);
+                    rtbShowResult.ReadOnly = read;
+                    rtbShowResult.SelectionStart = 0;
+                    string? code = rtbShowResult.Rtf;
                 }
 
-                var plot = new ScottPlot.Plot(600, 450);
-
-                plot.XAxis2.Label(strPlotTitle, size: 22);
-                plot.YAxis.Label("Index value", size: 22);
-                plot.XAxis.Label(strTaskText, size: 22);
-
-                plot.AddBar(dataRSI, dataX).Label = "RSI";
-                if (_job.Tasks[j].IndexCOSI != -1)
-                    plot.AddScatter(dataX, dataCOSI, label: "COSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
-                plot.AxisAuto();
-                plot.XTicks(dataX, labels);
-                plot.XAxis.Grid(false);
-                plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
-
-                //plot.CoordinateFromPixel();
-
-                using (var plotImage = plot.Render())
+                if (_job.Model == IndexType.CUSI)
                 {
-                    Clipboard.SetImage(plotImage);
+                    dataX = new double[_job.NumberTasks];
+                    dataRSI = new double[_job.NumberTasks];
+                    dataCOSI = new double[_job.NumberTasks];
+                    labels = new string[_job.NumberTasks];
+                    strPlotTitle = string.Empty;
+
+                    for (int i = 0; i < _job.NumberTasks; i++)
+                    {
+                        nOrder = _job.Order[i];
+                        dataX[i] = i + 1;
+                        dataRSI[i] = _job.Tasks[nOrder].IndexCOSI;
+                        if (i == 0)
+                            nCOSI = _job.Tasks[nOrder].IndexCOSI;
+                        else
+                            nCOSI += _job.Tasks[nOrder].IndexCOSI * (_job.Tasks[nOrder].HMa - _job.Tasks[nOrder].HMb) / _job.Tasks[nOrder].HM;
+                        dataCOSI[i] = nCOSI;
+                        //labels[i] = string.Concat("Task ", ((char)('A' + nOrder)).ToString());
+                        labels[i] = ((char)('A' + nOrder)).ToString();
+                        strPlotTitle += string.Concat(((char)('A' + i)).ToString(), " & ");
+                    }
+                    strPlotTitle = strPlotTitle.Remove(strPlotTitle.Length - 3, 3);
+
+                    var plot = new ScottPlot.Plot(600, 450);
+                    //plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
+                    plot.XAxis2.Label(string.Concat("CUSI results for Tasks ", strPlotTitle), size: 22);
+                    plot.YAxis.Label("Index value", size: 22);
+                    plot.XAxis.Label("Tasks", size: 22); ;
+
+                    plot.AddBar(dataRSI, dataX).Label = "COSI";
+                    plot.AddScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
+                    plot.AxisAuto();
+                    plot.XTicks(dataX, labels);
+                    plot.XAxis.TickLabelStyle(fontSize: 18);
+                    //plot.Ticks(fontSize: 18);
+                    plot.XAxis.Grid(false);
+                    plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
+
+                    using (var plotImage = plot.Render())
+                    {
+                        Clipboard.SetImage(plotImage);
+                    }
+                    plot.Clear();
+                    rtbShowResult.AppendText(Environment.NewLine);
+                    var read = rtbShowResult.ReadOnly;
+                    rtbShowResult.ReadOnly = false;
+                    rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
+                    rtbShowResult.Paste();
+                    Clipboard.SetDataObject(clipboardData);
+                    rtbShowResult.ReadOnly = read;
+                    rtbShowResult.SelectionStart = 0;
+
                 }
-                plot.Clear();
-                rtbShowResult.AppendText(Environment.NewLine);
-                var read = rtbShowResult.ReadOnly;
-                rtbShowResult.ReadOnly = false;
-                rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
-                rtbShowResult.Paste();
-                Clipboard.SetDataObject(orgdata);
-                rtbShowResult.ReadOnly = read;
-                rtbShowResult.SelectionStart = 0;
-                string code = rtbShowResult.Rtf;
-            }
-
-            if (_job.Model == IndexType.CUSI)
-            {
-                dataX = new double[_job.NumberTasks];
-                dataRSI = new double[_job.NumberTasks];
-                dataCOSI = new double[_job.NumberTasks];
-                labels = new string[_job.NumberTasks];
-                strPlotTitle = string.Empty;
-
-                for (int i = 0; i < _job.NumberTasks; i++)
-                {
-                    nOrder = _job.Order[i];
-                    dataX[i] = i + 1;
-                    dataRSI[i] = _job.Tasks[nOrder].IndexCOSI;
-                    if (i == 0)
-                        nCOSI = _job.Tasks[nOrder].IndexCOSI;
-                    else
-                        nCOSI += _job.Tasks[nOrder].IndexCOSI * (_job.Tasks[nOrder].HMa - _job.Tasks[nOrder].HMb) / _job.Tasks[nOrder].HM;
-                    dataCOSI[i] = nCOSI;
-                    //labels[i] = string.Concat("Task ", ((char)('A' + nOrder)).ToString());
-                    labels[i] = ((char)('A' + nOrder)).ToString();
-                    strPlotTitle += string.Concat(((char)('A' + i)).ToString(), " & ");
-                }
-                strPlotTitle = strPlotTitle.Remove(strPlotTitle.Length - 3, 3);
-
-                var plot = new ScottPlot.Plot(600, 450);
-                //plot.Title(string.Concat("CUSI results for Tasks ", strPlotTitle), fontSize: 22);
-                plot.XAxis2.Label(string.Concat("CUSI results for Tasks ", strPlotTitle), size: 22);
-                plot.YAxis.Label("Index value", size: 22);
-                plot.XAxis.Label("Tasks", size: 22); ;
-
-                plot.AddBar(dataRSI, dataX).Label = "COSI";
-                plot.AddScatter(dataX, dataCOSI, label: "CUSI", markerSize: 10, markerShape: ScottPlot.MarkerShape.filledCircle, lineWidth: 5);
-                plot.AxisAuto();
-                plot.XTicks(dataX, labels);
-                plot.XAxis.TickLabelStyle(fontSize: 18);
-                //plot.Ticks(fontSize: 18);
-                plot.XAxis.Grid(false);
-                plot.Grid(lineStyle: ScottPlot.LineStyle.Dot);
-
-                using (var plotImage = plot.Render())
-                {
-                    Clipboard.SetImage(plotImage);
-                }
-                plot.Clear();
-                rtbShowResult.AppendText(Environment.NewLine);
-                var read = rtbShowResult.ReadOnly;
-                rtbShowResult.ReadOnly = false;
-                rtbShowResult.SelectionStart = rtbShowResult.Text.Length;
-                rtbShowResult.Paste();
-                Clipboard.SetDataObject(orgdata);
-                rtbShowResult.ReadOnly = read;
-                rtbShowResult.SelectionStart = 0;
-
             }
         }
         catch (System.Runtime.InteropServices.ExternalException)
         {
 
         }
-        catch (Exception exception) when (!(exception is System.Runtime.InteropServices.ExternalException))
+        catch (Exception exception) when (exception is not System.Runtime.InteropServices.ExternalException)
         {
             MessageBox.Show("Unexpected error while plotting results", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
@@ -360,7 +360,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
 
             int Length = root.GetProperty("Tasks order").GetArrayLength();
             job.Order = new int[Length];
-            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString()) ?? Array.Empty<int>();
+            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString()) ?? [];
 
             job.Tasks = new TaskModel[job.NumberTasks];
             int i = 0;
@@ -372,7 +372,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
                 job.Tasks[i].NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
                 job.Tasks[i].SubTasks = new SubTask[job.Tasks[i].NumberSubTasks];
                 job.Tasks[i].Order = new int[job.Tasks[i].NumberSubTasks];
-                job.Tasks[i].Order = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString()) ?? Array.Empty<int>();
+                job.Tasks[i].Order = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString()) ?? [];
 
                 SubTasks = Task.GetProperty("Sub-tasks");
                 //Order = Task.GetProperty("Sub-tasks order");
