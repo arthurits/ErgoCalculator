@@ -87,7 +87,7 @@
             this.tabDataStrain.SelectedIndex = 0;
             this.tabDataStrain.Size = new System.Drawing.Size(745, 454);
             this.tabDataStrain.TabIndex = 7;
-            this.tabDataStrain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabDataStrain_Selected);
+            this.tabDataStrain.Selected += new System.Windows.Forms.TabControlEventHandler(this.TabDataStrain_Selected);
             // 
             // tabSubtasks
             // 
@@ -127,7 +127,7 @@
             this.radCUSI.TabStop = true;
             this.radCUSI.Text = "CUSI";
             this.radCUSI.UseVisualStyleBackColor = true;
-            this.radCUSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radCUSI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // radCOSI
             // 
@@ -141,7 +141,7 @@
             this.radCOSI.TabStop = true;
             this.radCOSI.Text = "COSI";
             this.radCOSI.UseVisualStyleBackColor = true;
-            this.radCOSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radCOSI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // radRSI
             // 
@@ -155,7 +155,7 @@
             this.radRSI.TabStop = true;
             this.radRSI.Text = "RSI";
             this.radRSI.UseVisualStyleBackColor = true;
-            this.radRSI.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            this.radRSI.CheckedChanged += new System.EventHandler(this.Rad_CheckedChanged);
             // 
             // lblSubtasks
             // 

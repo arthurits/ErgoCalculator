@@ -7,7 +7,7 @@ namespace ErgoCalc;
 public partial class FrmDataStrainIndex : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
-    private Job _job;
+    private Job _job = new();
     private IndexType _index = IndexType.RSI;
 
     public object GetData => _job;
@@ -19,7 +19,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         InitializeComponent();
 
         // Simulate a click on radRSI
-        radioButton_CheckedChanged(radRSI, EventArgs.Empty);
+        Rad_CheckedChanged(radRSI, EventArgs.Empty);
 
         listViewTasks.AddGroup(StringResources.Task);
     }
@@ -44,7 +44,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         }
     }
 
-    private void radioButton_CheckedChanged(object sender, EventArgs e)
+    private void Rad_CheckedChanged(object sender, EventArgs e)
     {
         // Check of the raiser of the event is a checked Checkbox.
         // Of course we also need to to cast it first.
@@ -163,13 +163,15 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
         // Save the job definition
         int ItemIndex;
-        _job = new();
-        _job.NumberSubTasks = gridVariables.ColumnCount;
-        _job.NumberTasks = _index == IndexType.RSI ? 1 : listViewTasks.Groups.Count;
-        _job.Order = new int[_job.NumberTasks];
-        _job.Tasks = new TaskModel[_job.NumberTasks];
-        _job.IndexCUSI = -1;
-        _job.Model = radRSI.Checked ? IndexType.RSI : (radCOSI.Checked ? IndexType.COSI : IndexType.CUSI);
+        _job = new()
+        {
+            NumberSubTasks = gridVariables.ColumnCount,
+            NumberTasks = _index == IndexType.RSI ? 1 : listViewTasks.Groups.Count,
+            Order = new int[gridVariables.ColumnCount],
+            Tasks = new TaskModel[gridVariables.ColumnCount],
+            IndexCUSI = -1,
+            Model = radRSI.Checked ? IndexType.RSI : (radCOSI.Checked ? IndexType.COSI : IndexType.CUSI)
+        };
         //_job.model = (IndexType)Enum.Parse(typeof(IndexType), this.groupIndex.Handle.ToString());
 
         for (int i = 0; i < _job.NumberTasks; i++)
@@ -231,7 +233,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
+        if (gridVariables.Columns.Contains($"Column {col}")) return;
 
         // Create the new column
         string strName = $"{(_index == IndexType.RSI ? StringResources.Task : StringResources.Subtask)} ";
@@ -265,9 +267,11 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void DataExample()
     {
-        _job = new();
-        _job.NumberTasks = 1;
-        _job.Tasks = new TaskModel[_job.NumberTasks];
+        _job = new()
+        {
+            NumberTasks = 1,
+            Tasks = new TaskModel[1]
+        };
         _job.Tasks[0].NumberSubTasks = 8;
         _job.Tasks[0].SubTasks = new SubTask[_job.Tasks[0].NumberSubTasks];
         //_job.JobTasks[1].numberSubTasks = 2;
@@ -400,15 +404,15 @@ public partial class FrmDataStrainIndex : Form, IChildData
     /// </summary>
     private void DataToGrid()
     {
-        switch ((int)_job.Model)
+        switch (_job.Model)
         {
-            case 0:
+            case IndexType.RSI:
                 radRSI.Checked = true;
                 break;
-            case 1:
+            case IndexType.COSI:
                 radCOSI.Checked = true;
                 break;
-            case 2:
+            case IndexType.CUSI:
                 radCUSI.Checked = true;
                 break;
         }
@@ -421,7 +425,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
         for (int i = 0; i < _job.NumberSubTasks; i++)
             listViewTasks.AddEmptyItem(0);
 
-        int nCol = 0;
+        int nCol;
         for (var j = 0; j < _job.NumberTasks; j++)
         {
             for (var i = 0; i < _job.Tasks[j].SubTasks.Length; i++)
@@ -438,7 +442,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
                 // Classify
                 //listViewTasks.Items.Add(new ListViewItem("SubTask " + ((char)('A' + nCol)).ToString(), listViewTasks.Groups[j]));
                 // We can now insert into the desired position
-                ListViewItem test = new($"{StringResources.Subtask} {((char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)).ToString()}", listViewTasks.Groups[j]);
+                ListViewItem test = new($"{StringResources.Subtask} {(char)('A' + _job.Tasks[j].SubTasks[i].ItemIndex)}", listViewTasks.Groups[j]);
                 listViewTasks.Items.Insert(_job.Tasks[j].SubTasks[i].ItemIndex, test);
             }
         }
@@ -449,7 +453,7 @@ public partial class FrmDataStrainIndex : Form, IChildData
 
     #endregion
 
-    private void tabDataStrain_Selected(object sender, TabControlEventArgs e)
+    private void TabDataStrain_Selected(object sender, TabControlEventArgs e)
     {
         if (e.TabPageIndex == 1) // tabTasks
         {
