@@ -45,7 +45,7 @@ partial class FrmMain
                 {
                     ModelType.WorkRest => new FrmResultsWR(frm.GetData, _settings.AppCulture, frmNew.Model),
                     ModelType.CumulativeLifting => new FrmResultsCLM(frm.GetData, _settings.AppCulture, frmNew.Model),
-                    ModelType.LiftingLowering => new frmResultsLifting(frm.GetData, _settings.AppCulture, frmNew.Model),
+                    ModelType.LiftingLowering => new FrmResultsLifting(frm.GetData, _settings.AppCulture, frmNew.Model),
                     ModelType.StrainIndex => new FrmResultsStrainIndex(frm.GetData, _settings.AppCulture, frmNew.Model),
                     ModelType.OcraCheck => new FrmResultsOCRAcheck(frm.GetData, _settings.AppCulture, frmNew.Model),
                     ModelType.MetabolicRate => new FrmResultsMet(frm.GetData, _settings.AppCulture, frmNew.Model),
@@ -131,7 +131,7 @@ partial class FrmMain
             Form? frm = strType switch
             {
                 "Work-Rest model" => new FrmResultsWR(culture: _settings.AppCulture, model: ModelType.WorkRest),
-                "Lifting model" => new frmResultsLifting(culture: _settings.AppCulture, model:ModelType.LiftingLowering),
+                "Lifting model" => new FrmResultsLifting(culture: _settings.AppCulture, model:ModelType.LiftingLowering),
                 "Strain index" => new FrmResultsStrainIndex(culture: _settings.AppCulture, model:ModelType.StrainIndex),
                 "Thermal comfort model" => new FrmResultsTC(culture: _settings.AppCulture, model:ModelType.ThermalComfort),
                 "LM-MMH model" => new FrmResultsLiberty(culture: _settings.AppCulture, model:ModelType.LibertyMutual),

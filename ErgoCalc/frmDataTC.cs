@@ -7,7 +7,7 @@ namespace ErgoCalc;
 public partial class FrmDataTC : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
-    private Job _job;
+    private Job _job = new();
     public object GetData => _job;
 
     public FrmDataTC()
@@ -41,11 +41,13 @@ public partial class FrmDataTC : Form, IChildData
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
 
-        _job = new();
+        _job = new()
+        {
+            NumberTasks = Convert.ToInt32(updTasks.Value),
+            Tasks = new TaskModel[Convert.ToInt32(updTasks.Value)]
+        };
 
         // Save the values entered
-        _job.NumberTasks = Convert.ToInt32(updTasks.Value);
-        _job.Tasks = new TaskModel[_job.NumberTasks];
         for (int i = 0; i < _job.Tasks.Length; i++)
         {
             _job.Tasks[i] = new TaskModel();
@@ -118,9 +120,11 @@ public partial class FrmDataTC : Form, IChildData
 
     private void DataExample()
     {
-        _job = new Job();
-        _job.NumberTasks = 2;
-        _job.Tasks = new TaskModel[_job.NumberTasks];
+        _job = new Job
+        {
+            NumberTasks = 2,
+            Tasks = new TaskModel[2]
+        };
 
         _job.Tasks[0] = new TaskModel();
         _job.Tasks[0].Data.TempAir = 25;

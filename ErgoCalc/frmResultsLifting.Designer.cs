@@ -1,6 +1,6 @@
 ﻿namespace ErgoCalc
 {
-    partial class frmResultsLifting
+    partial class FrmResultsLifting
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmResultsLifting));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmResultsLifting));
             this.toolStripLifting = new System.Windows.Forms.ToolStrip();
             this.toolStripLifting_Save = new System.Windows.Forms.ToolStripButton();
             this.toolStripLifting_Settings = new System.Windows.Forms.ToolStripButton();

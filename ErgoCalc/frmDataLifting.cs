@@ -167,12 +167,14 @@ public partial class FrmDataLifting : Form, IChildData
 
         // New test
         int ItemIndex;
-        _job = new();
-        _job.NumberSubTasks = gridVariables.ColumnCount;
-        _job.NumberTasks = _index == IndexType.IndexLI ? 1 : listViewTasks.Groups.Count;
-        _job.Tasks = new TaskModel[_job.NumberTasks];
-        _job.Order = new int[_job.NumberTasks];
-        
+        _job = new()
+        {
+            NumberSubTasks = gridVariables.ColumnCount,
+            NumberTasks = _index == IndexType.IndexLI ? 1 : listViewTasks.Groups.Count,
+            Tasks = new TaskModel[gridVariables.ColumnCount],
+            Order = new int[gridVariables.ColumnCount]
+        };
+
         if (radLI.Checked) _job.Model = IndexType.IndexLI;
         if (radCLI.Checked) _job.Model = IndexType.IndexCLI;
         if (radVLI.Checked) _job.Model = IndexType.IndexVLI;
@@ -496,18 +498,18 @@ public partial class FrmDataLifting : Form, IChildData
     /// </summary>
     private void DataToGrid()
     {
-        switch ((int)_job.Model)
+        switch (_job.Model)
         {
-            case 0:
+            case IndexType.IndexLI:
                 radLI.Checked = true;
                 break;
-            case 1:
+            case IndexType.IndexCLI:
                 radCLI.Checked = true;
                 break;
-            case 2:
+            case IndexType.IndexSLI:
                 radVLI.Checked = true;
                 break;
-            case 3:
+            case IndexType.IndexVLI:
                 radSLI.Checked = true;
                 break;
             default:

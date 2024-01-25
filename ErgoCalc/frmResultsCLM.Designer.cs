@@ -54,7 +54,7 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Name = "FrmResultsCLM";
             this.Text = "CLM model results";
-            this.Shown += new System.EventHandler(this.frmCLMmodel_Shown);
+            this.Shown += new System.EventHandler(this.Form_Shown);
             this.ResumeLayout(false);
 
         }

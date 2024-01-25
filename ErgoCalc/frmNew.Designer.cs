@@ -96,7 +96,7 @@
             this.radModelWR.Tag = "1";
             this.radModelWR.Text = "WR model";
             this.radModelWR.UseVisualStyleBackColor = true;
-            this.radModelWR.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelWR.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelCLM
             // 
@@ -109,7 +109,7 @@
             this.radModelCLM.Tag = "2";
             this.radModelCLM.Text = "CLM model";
             this.radModelCLM.UseVisualStyleBackColor = true;
-            this.radModelCLM.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelCLM.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelLifting
             // 
@@ -122,7 +122,7 @@
             this.radModelLifting.Tag = "3";
             this.radModelLifting.Text = "Lifting and lowering model (LI, CLI, SLI, VLI)";
             this.radModelLifting.UseVisualStyleBackColor = true;
-            this.radModelLifting.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelLifting.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelStrain
             // 
@@ -135,7 +135,7 @@
             this.radModelStrain.Tag = "4";
             this.radModelStrain.Text = "Revised strain index (RSI, COSI, CUSI)";
             this.radModelStrain.UseVisualStyleBackColor = true;
-            this.radModelStrain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelStrain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelOCRA
             // 
@@ -148,7 +148,7 @@
             this.radModelOCRA.Tag = "5";
             this.radModelOCRA.Text = "OCRA checklist";
             this.radModelOCRA.UseVisualStyleBackColor = true;
-            this.radModelOCRA.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelOCRA.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelMetabolic
             // 
@@ -162,7 +162,7 @@
             this.radModelMetabolic.Tag = "6";
             this.radModelMetabolic.Text = "Metabolic rate";
             this.radModelMetabolic.UseVisualStyleBackColor = true;
-            this.radModelMetabolic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelMetabolic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelThermal
             // 
@@ -174,7 +174,7 @@
             this.radModelThermal.TabStop = true;
             this.radModelThermal.Text = "Thermal comfort (PMV, PPD)";
             this.radModelThermal.UseVisualStyleBackColor = true;
-            this.radModelThermal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelThermal.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // radModelLiberty
             // 
@@ -186,7 +186,7 @@
             this.radModelLiberty.TabStop = true;
             this.radModelLiberty.Text = "LM manual handling";
             this.radModelLiberty.UseVisualStyleBackColor = true;
-            this.radModelLiberty.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.radioButtons_DoubleClick);
+            this.radModelLiberty.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Rad_DoubleClick);
             // 
             // FrmNew
             // 

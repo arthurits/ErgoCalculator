@@ -9,8 +9,8 @@ public partial class FrmDataWR : Form, IChildData
 {
     // Propiedades de la clase
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
-    public Job _job;
-    private System.ComponentModel.ComponentResourceManager _resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmDataWR));
+    public Job _job = new();
+    private readonly System.ComponentModel.ComponentResourceManager _resources = new(typeof(FrmDataWR));
 
     public object GetData => _job;
 
@@ -45,31 +45,33 @@ public partial class FrmDataWR : Form, IChildData
         // The form does not return unless all fields are validated
         this.DialogResult = DialogResult.None;
 
-        _job = new();
-        _job.NumberTasks = gridVariables.ColumnCount;
-        _job.Tasks = new DataWR[_job.NumberTasks];
+        _job = new()
+        {
+            NumberTasks = gridVariables.ColumnCount,
+            Tasks = new DataWR[gridVariables.ColumnCount]
+        };
 
         for (int i = 0; i < _job.NumberTasks; i++)
         {
             _job.Tasks[i] = new();
-            _job.Tasks[i].Legend = gridVariables[i, 0].Value?.ToString();
+            _job.Tasks[i].Legend = gridVariables[i, 0].Value.ToString() ?? string.Empty;
             // Validation routines
             if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0, 100, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
             _job.Tasks[i].MVC = Validation.ValidateNumber(gridVariables[i, 1].Value);
             _job.Tasks[i].MHT = WorkRest.ComputeMHT(_job.Tasks[i].MVC);
             //gridVariables[i, 2].Value = item._dMHT;
 
-            if (gridVariables[i, 3].Value == null) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
+            if (gridVariables[i, 3].Value is null) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
             //item._dWorkRest = new double[2][];
-            string[] arr = gridVariables[i, 3].Value.ToString().Split(' ');
+            string[] arr = gridVariables[i, 3].Value.ToString()?.Split(' ') ?? [];
             foreach( var number in arr)
             {
                 if (!Validation.IsValidRange(number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
             }
             _job.Tasks[i].WorkingTimes = arr.Select(double.Parse).ToArray();
 
-            if (gridVariables[i, 4].Value == null) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
-            arr = gridVariables[i, 4].Value.ToString().Split(' ');
+            if (gridVariables[i, 4].Value is null) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+            arr = gridVariables[i, 4].Value.ToString()?.Split(' ') ?? [];
             foreach (var number in arr)
             {
                 if (!Validation.IsValidRange(number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
@@ -145,7 +147,7 @@ public partial class FrmDataWR : Form, IChildData
         // By default, the DataGrid always contains a single column
         //if (col == 0) return;
         // Check if the column already exists
-        if (gridVariables.Columns.Contains($"Column {(col).ToString()}")) return;
+        if (gridVariables.Columns.Contains($"Column {col}")) return;
 
         // Create the new column
         (this as IChildData).AddColumnBasic(gridVariables, col, StringResources.Task, 70);
@@ -221,45 +223,55 @@ public partial class FrmDataWR : Form, IChildData
 
     private void DataExample()
     {
-        _job = new();
-        _job.NumberTasks = 4;
-        _job.Tasks = new DataWR[_job.NumberTasks];
+        _job = new()
+        {
+            NumberTasks = 4,
+            Tasks = new DataWR[4]
+        };
 
-        _job.Tasks[0] = new();
-        _job.Tasks[0].Legend = "Case 2-1";
-        _job.Tasks[0].MVC = 20;
-        _job.Tasks[0].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
-        _job.Tasks[0].WorkingTimes = new double[] { 8 };
-        _job.Tasks[0].RestingTimes = new double[] { 8 };
-        _job.Tasks[0].Cycles = 2;
-        _job.Tasks[0].PlotStep = 0.01;
+        _job.Tasks[0] = new()
+        {
+            Legend = "Case 2-1",
+            MVC = 20,
+            MHT = WorkRest.ComputeMHT(_job.NumberTasks),
+            WorkingTimes = [8],
+            RestingTimes = [8],
+            Cycles = 2,
+            PlotStep = 0.01
+        };
 
-        _job.Tasks[1] = new();
-        _job.Tasks[1].Legend = "Case 2-2";
-        _job.Tasks[1].MVC = 20;
-        _job.Tasks[1].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
-        _job.Tasks[1].WorkingTimes = new double[] { 4 };
-        _job.Tasks[1].RestingTimes = new double[] { 4 };
-        _job.Tasks[1].Cycles = 4;
-        _job.Tasks[1].PlotStep = 0.01;
+        _job.Tasks[1] = new()
+        {
+            Legend = "Case 2-2",
+            MVC = 20,
+            MHT = WorkRest.ComputeMHT(_job.NumberTasks),
+            WorkingTimes = [4],
+            RestingTimes = [4],
+            Cycles = 4,
+            PlotStep = 0.01
+        };
 
-        _job.Tasks[2] = new();
-        _job.Tasks[2].Legend = "Case 2-3";
-        _job.Tasks[2].MVC = 20;
-        _job.Tasks[2].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
-        _job.Tasks[2].WorkingTimes = new double[] { 2 };
-        _job.Tasks[2].RestingTimes = new double[] { 2 };
-        _job.Tasks[2].Cycles = 8;
-        _job.Tasks[2].PlotStep = 0.01;
+        _job.Tasks[2] = new()
+        {
+            Legend = "Case 2-3",
+            MVC = 20,
+            MHT = WorkRest.ComputeMHT(_job.NumberTasks),
+            WorkingTimes = [2],
+            RestingTimes = [2],
+            Cycles = 8,
+            PlotStep = 0.01
+        };
 
-        _job.Tasks[3] = new();
-        _job.Tasks[3].Legend = "Case 2-4";
-        _job.Tasks[3].MVC = 20;
-        _job.Tasks[3].MHT = WorkRest.ComputeMHT(_job.NumberTasks);
-        _job.Tasks[3].WorkingTimes = new double[] { 1 };
-        _job.Tasks[3].RestingTimes = new double[] { 1 };
-        _job.Tasks[3].Cycles = 16;
-        _job.Tasks[3].PlotStep = 0.01;
+        _job.Tasks[3] = new()
+        {
+            Legend = "Case 2-4",
+            MVC = 20,
+            MHT = WorkRest.ComputeMHT(_job.NumberTasks),
+            WorkingTimes = [1],
+            RestingTimes = [1],
+            Cycles = 16,
+            PlotStep = 0.01
+        };
     }
 
     /// <summary>
