@@ -2,20 +2,20 @@
 using ErgoCalc.Models.Lifting;
 
 namespace ErgoCalc;
-public partial class frmResultsLifting : Form, IChildResults
+public partial class FrmResultsLifting : Form, IChildResults
 {
     // Variable definition
     private Job _job = new();
     private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
-    public frmResultsLifting()
+    public FrmResultsLifting()
     {
         InitializeComponent();
         this.ActiveControl = this.rtbShowResult;
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
     }
 
-    public frmResultsLifting(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
+    public FrmResultsLifting(object? data = null, System.Globalization.CultureInfo? culture = null, ModelType? model = null)
         : this()
     {
         if (data is not null && data.GetType() == typeof(Job))
@@ -257,7 +257,7 @@ public partial class frmResultsLifting : Form, IChildResults
 
             int Length = root.GetProperty("Tasks order").GetArrayLength();
             job.Order = new int[Length];
-            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString()) ?? Array.Empty<int>();
+            job.Order = JsonSerializer.Deserialize<int[]>(root.GetProperty("Tasks order").ToString()) ?? [];
 
             job.Tasks = new TaskModel[job.NumberTasks];
             int i = 0;
@@ -265,10 +265,12 @@ public partial class frmResultsLifting : Form, IChildResults
             //JsonElement Order;
             foreach (JsonElement Task in root.GetProperty("Tasks").EnumerateArray())
             {
-                job.Tasks[i] = new();
-                job.Tasks[i].Model = (IndexType)Task.GetProperty("Model").GetInt32();
-                job.Tasks[i].IndexCLI = Task.GetProperty("CLI").GetDouble();
-                job.Tasks[i].NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32();
+                job.Tasks[i] = new()
+                {
+                    Model = (IndexType)Task.GetProperty("Model").GetInt32(),
+                    IndexCLI = Task.GetProperty("CLI").GetDouble(),
+                    NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32()
+                };
                 job.Tasks[i].SubTasks = new SubTask[job.Tasks[i].NumberSubTasks];
                 job.Tasks[i].OrderCLI = new int[job.Tasks[i].NumberSubTasks];
                 
@@ -277,7 +279,7 @@ public partial class frmResultsLifting : Form, IChildResults
                 //    job.Tasks[i].OrderCLI[j] = Order[j].GetInt32();
 
                 //Length = Task.GetProperty("Sub-tasks order").GetArrayLength();
-                job.Tasks[i].OrderCLI = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString()) ?? Array.Empty<int>();
+                job.Tasks[i].OrderCLI = JsonSerializer.Deserialize<int[]>(Task.GetProperty("Sub-tasks order").ToString()) ?? [];
 
                 SubTasks = Task.GetProperty("Sub-tasks");
                 for (int j = 0; j < job.Tasks[i].NumberSubTasks; j++)
@@ -350,7 +352,7 @@ public partial class frmResultsLifting : Form, IChildResults
     public void Duplicate()
     {
         // Mostrar la ventana de resultados
-        frmResultsLifting frmResults = new(_job, _culture, Model)
+        FrmResultsLifting frmResults = new(_job, _culture, Model)
         {
             MdiParent = this.MdiParent
         };
