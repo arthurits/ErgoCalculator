@@ -8,7 +8,7 @@ namespace ErgoCalc;
 public partial class FrmDataCLM : Form, IChildData
 {
     private readonly CultureInfo _culture = CultureInfo.CurrentCulture;
-    private Job _job;
+    private Job _job = new();
     public object GetData => _job;
 
     public FrmDataCLM()
@@ -60,14 +60,16 @@ public partial class FrmDataCLM : Form, IChildData
         // The form does not return unless all fields are validated. This avoids closing the dialog
         this.DialogResult = DialogResult.None;
 
-        _job = new();
+        _job = new()
+        {    
+            NumberTasks = Convert.ToInt32(updTasks.Value),
+            Tasks = new TaskModel[Convert.ToInt32(updTasks.Value)]
+        };
 
         // Save the values entered
-        _job.NumberTasks = Convert.ToInt32(updTasks.Value);
-        _job.Tasks = new TaskModel[_job.NumberTasks];
         for (Int32 i = 0; i < _job.NumberTasks; i++)
         {
-            _job.Tasks[i] = new TaskModel();
+            _job.Tasks[i] = new();
             _job.Tasks[i].Data.Gender = (Gender)Convert.ToInt32(gridVariables[i, 0].Value);
             _job.Tasks[i].Data.Weight = Convert.ToDouble(gridVariables[i, 1].Value);
             _job.Tasks[i].Data.h = Convert.ToDouble(gridVariables[i, 2].Value);
@@ -182,11 +184,13 @@ public partial class FrmDataCLM : Form, IChildData
     /// </summary>
     private void DataExample()
     {
-        _job = new();
-        _job.NumberTasks = 2;
-        _job.Tasks = new TaskModel[_job.NumberTasks];
+        _job = new()
+        {
+            NumberTasks = 2,
+            Tasks = new TaskModel[2]
+        };
 
-        _job.Tasks[0] = new TaskModel();
+        _job.Tasks[0] = new();
         _job.Tasks[0].Data.Gender = Gender.Male;
         _job.Tasks[0].Data.Weight = 5;
         _job.Tasks[0].Data.h = 50;

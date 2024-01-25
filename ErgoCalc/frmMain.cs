@@ -89,7 +89,8 @@ public partial class FrmMain : Form
         ToolStripManager.RevertMerge(this.toolStripMain);
         if (ActiveMdiChild is FrmResultsWR form)
         {
-            ToolStripManager.Merge(form.ChildToolStrip, this.toolStripMain);
+            if (form.ChildToolStrip is ToolStrip toolStrip)
+                ToolStripManager.Merge(toolStrip, this.toolStripMain);
         }
 
         if (this.MdiChildren.Length == 1 && (this.MdiChildren[0].Disposing || this.MdiChildren[0].IsDisposed))   // If we are down to the last child window
