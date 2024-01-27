@@ -11,7 +11,7 @@ Sponsor this project!
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/paypalme/ArthuritsLtd)
 
 ## Use and installation
-This download is a portable software. Please follow this instructions:
+Please follow these steps to install and use this software:
 * Dowload the zip file.
 * Unzip the contents to your desired folder.
 * Make sure that .NET 8 is installed in your PC. The `.NET 8 Desktop Runtime` can be downloaded from the [Microsoft .NET website](https://dotnet.microsoft.com/download/dotnet/8.0).
