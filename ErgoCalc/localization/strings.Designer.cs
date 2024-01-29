@@ -1178,15 +1178,6 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reference load (LC).
-        /// </summary>
-        internal static string strLibertyMutual_LC {
-            get {
-                return ResourceManager.GetString("strLibertyMutual_LC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Maximum acceptable limit.
         /// </summary>
         internal static string strLibertyMutual_MAL {
@@ -1241,6 +1232,15 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reference load (RL).
+        /// </summary>
+        internal static string strLibertyMutual_RL {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_RL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sex.
         /// </summary>
         internal static string strLibertyMutual_Sex {
@@ -1277,15 +1277,6 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sustained LC factor.
-        /// </summary>
-        internal static string strLibertyMutual_SustainedLC {
-            get {
-                return ResourceManager.GetString("strLibertyMutual_SustainedLC", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to MAL sustained (kgf) for 50%.
         /// </summary>
         internal static string strLibertyMutual_SustainedMAL50 {
@@ -1309,6 +1300,15 @@ namespace ErgoCalc.localization {
         internal static string strLibertyMutual_SustainedMAL90 {
             get {
                 return ResourceManager.GetString("strLibertyMutual_SustainedMAL90", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sustained RL factor.
+        /// </summary>
+        internal static string strLibertyMutual_SustainedRL {
+            get {
+                return ResourceManager.GetString("strLibertyMutual_SustainedRL", resourceCulture);
             }
         }
         

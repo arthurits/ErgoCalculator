@@ -490,8 +490,8 @@ to their default values?</value>
   <data name="strLibertyMutual_InitialMAL90" xml:space="preserve">
     <value>MAL initial (kgf) for 90%</value>
   </data>
-  <data name="strLibertyMutual_LC" xml:space="preserve">
-    <value>Reference load (LC)</value>
+  <data name="strLibertyMutual_RL" xml:space="preserve">
+    <value>Reference load (RL)</value>
   </data>
   <data name="strLibertyMutual_MAL" xml:space="preserve">
     <value>Maximum acceptable limit</value>
@@ -523,8 +523,8 @@ to their default values?</value>
   <data name="strLibertyMutual_SustainedF" xml:space="preserve">
     <value>Sustained F factor</value>
   </data>
-  <data name="strLibertyMutual_SustainedLC" xml:space="preserve">
-    <value>Sustained LC factor</value>
+  <data name="strLibertyMutual_SustainedRL" xml:space="preserve">
+    <value>Sustained RL factor</value>
   </data>
   <data name="strLibertyMutual_SustainedMAL50" xml:space="preserve">
     <value>MAL sustained (kgf) for 50%</value>

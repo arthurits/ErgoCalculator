@@ -490,8 +490,8 @@ los campos a sus valores por defecto?</value>
   <data name="strLibertyMutual_InitialMAL90" xml:space="preserve">
     <value>MAL inicial (kgf) para el 90%</value>
   </data>
-  <data name="strLibertyMutual_LC" xml:space="preserve">
-    <value>Constante de carga (LC)</value>
+  <data name="strLibertyMutual_RL" xml:space="preserve">
+    <value>Carga de referencia (RL)</value>
   </data>
   <data name="strLibertyMutual_MAL" xml:space="preserve">
     <value>Límite máximo aceptable (MAL)</value>
@@ -509,7 +509,7 @@ los campos a sus valores por defecto?</value>
     <value>Peso / kg</value>
   </data>
   <data name="strLibertyMutual_Results" xml:space="preserve">
-    <value>Estos son los resultados ontenidos aplicando las ecuaciones de manipulación de cargas de «Liberty Mutual»:</value>
+    <value>Estos son los resultados obtenidos aplicando las ecuaciones de manipulación de cargas de «Liberty Mutual»:</value>
   </data>
   <data name="strLibertyMutual_Sex" xml:space="preserve">
     <value>Sexo</value>
@@ -523,8 +523,8 @@ los campos a sus valores por defecto?</value>
   <data name="strLibertyMutual_SustainedF" xml:space="preserve">
     <value>Factor F mantenido</value>
   </data>
-  <data name="strLibertyMutual_SustainedLC" xml:space="preserve">
-    <value>Factor LC mantenido</value>
+  <data name="strLibertyMutual_SustainedRL" xml:space="preserve">
+    <value>Factor RL mantenido</value>
   </data>
   <data name="strLibertyMutual_SustainedMAL50" xml:space="preserve">
     <value>MAL mantenido (kgf) para el 50%</value>
