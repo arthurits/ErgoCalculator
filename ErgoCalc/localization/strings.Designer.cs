@@ -1178,7 +1178,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reference load (LC).
+        ///   Looks up a localized string similar to Reference load (RL).
         /// </summary>
         internal static string strLibertyMutual_LC {
             get {
@@ -1277,7 +1277,7 @@ namespace ErgoCalc.localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sustained LC factor.
+        ///   Looks up a localized string similar to Sustained RL factor.
         /// </summary>
         internal static string strLibertyMutual_SustainedLC {
             get {
