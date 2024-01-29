@@ -415,7 +415,7 @@ public static class StringResources
     public static string LibertyMutual_InitialMAL50 => StringRM.GetString("strLibertyMutual_InitialMAL50", Culture) ?? "MAL initial (kgf) for 50%";
     public static string LibertyMutual_InitialMAL75 => StringRM.GetString("strLibertyMutual_InitialMAL75", Culture) ?? "MAL initial (kgf) for 75%";
     public static string LibertyMutual_InitialMAL90 => StringRM.GetString("strLibertyMutual_InitialMAL90", Culture) ?? "MAL initial (kgf) for 90%";
-    public static string LibertyMutual_LC => StringRM.GetString("strLibertyMutual_LC", Culture) ?? "Reference load (LC)";
+    public static string LibertyMutual_RL => StringRM.GetString("strLibertyMutual_RL", Culture) ?? "Reference load (RL)";
     public static string LibertyMutual_MAL => StringRM.GetString("strLibertyMutual_MAL", Culture) ?? "Maximum acceptable limit";
     public static string LibertyMutual_Multipliers => StringRM.GetString("strLibertyMutual_Multipliers", Culture) ?? "Scale factors";
     public static string LibertyMutual_Results => StringRM.GetString("strLibertyMutual_Results", Culture) ?? "These are the results from the Liberty Mutual manual materials handling equations";
@@ -423,7 +423,7 @@ public static class StringResources
     public static string LibertyMutual_SustainedCV => StringRM.GetString("strLibertyMutual_SustainedCV", Culture) ?? "CV sustained force";
     public static string LibertyMutual_SustainedDH => StringRM.GetString("strLibertyMutual_SustainedDH", Culture) ?? "Sustained DH factor";
     public static string LibertyMutual_SustainedF => StringRM.GetString("strLibertyMutual_SustainedF", Culture) ?? "Sustained F factor";
-    public static string LibertyMutual_SustainedLC => StringRM.GetString("strLibertyMutual_SustainedLC", Culture) ?? "Sustained LC factor";
+    public static string LibertyMutual_SustainedRL => StringRM.GetString("strLibertyMutual_SustainedRL", Culture) ?? "Sustained RL factor";
     public static string LibertyMutual_SustainedMAL50 => StringRM.GetString("strLibertyMutual_SustainedMAL50", Culture) ?? "MAL sustained (kgf) for 50%";
     public static string LibertyMutual_SustainedMAL75 => StringRM.GetString("strLibertyMutual_SustainedMAL75", Culture) ?? "MAL sustained (kgf) for 75%";
     public static string LibertyMutual_SustainedMAL90 => StringRM.GetString("strLibertyMutual_SustainedMAL90", Culture) ?? "MAL sustained (kgf) for 90%";
@@ -454,14 +454,14 @@ public static class StringResources
         LibertyMutual_Frequency,
         LibertyMutual_Gender,
         LibertyMutual_Multipliers,
-        LibertyMutual_LC,
+        LibertyMutual_RL,
         LibertyMutual_H,
         LibertyMutual_VRM,
         LibertyMutual_DH,
         LibertyMutual_DV,
         LibertyMutual_V,
         LibertyMutual_F,
-        LibertyMutual_SustainedLC,
+        LibertyMutual_SustainedRL,
         LibertyMutual_SustainedDH,
         LibertyMutual_SustainedV,
         LibertyMutual_SustainedF,
@@ -502,14 +502,14 @@ public static class StringResources
         LibertyMutual_Frequency,
         LibertyMutual_Gender,                  // 10
         LibertyMutual_Multipliers,
-        LibertyMutual_LC,
+        LibertyMutual_RL,
         LibertyMutual_H,
         LibertyMutual_VRM,
         LibertyMutual_DH,                   // 15
         LibertyMutual_DV,
         LibertyMutual_V,
         LibertyMutual_F,
-        LibertyMutual_SustainedLC,
+        LibertyMutual_SustainedRL,
         LibertyMutual_SustainedDH,          // 20
         LibertyMutual_SustainedV,
         LibertyMutual_SustainedF,
