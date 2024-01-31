@@ -1,5 +1,11 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.8
+* [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.71.
+* Correct minor bugs.
+* Improve internal code.
+* Improve translation.
+
 ## ErgoCalculator 1.7.7
 * Improve window app initial position and size logic.
 * Improve culture selection logic.
