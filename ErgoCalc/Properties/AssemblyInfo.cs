@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.7.7.0")]
-[assembly: AssemblyFileVersion("1.7.7.0")]
+[assembly: AssemblyVersion("1.7.8")]
+[assembly: AssemblyFileVersion("1.7.8")]
 
 // Needed to avoid warnings for ScottPlot 4.0.48
 //[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows7.0")]
