@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 
 namespace ErgoCalc.Models.LibertyMutual;
 
@@ -138,7 +137,7 @@ public class ModelLiberty
 
 public class Job
 {
-    public ModelLiberty[] Tasks { get; set; } = Array.Empty<ModelLiberty>();
+    public ModelLiberty[] Tasks { get; set; } = [];
     public int NumberTasks { get; set; } = 0;
 
     public string ToString(string[] strRows, System.Globalization.CultureInfo? culture = null)
@@ -193,7 +192,7 @@ public class Job
                 strThresholds[2] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL)).ToString("0.####", culture)}";
                 strThresholds[3] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL75)).ToString("0.####", culture)}";
                 strThresholds[4] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Initial.MAL90)).ToString("0.####", culture)}";
-                strThresholds[5] += $"\t{data.Sustained.CV.ToString("0.####")}";
+                strThresholds[5] += $"\t{data.Sustained.CV.ToString("0.####", culture)}";
                 strThresholds[6] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL)).ToString("0.####", culture)}";
                 strThresholds[7] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL75)).ToString("0.####", culture)}";
                 strThresholds[8] += $"\t{Convert.ToDouble(String.Format("{0:G5}", data.Sustained.MAL90)).ToString("0.####", culture)}";
@@ -312,8 +311,8 @@ public class Job
 
     public override string ToString()
     {
-        string[] strRows = new[]
-        {
+        string[] strRows =
+        [
             "Task",
             "These are the results from the Liberty Mutual manual materials handling equations",
             "Initial data",
@@ -353,17 +352,17 @@ public class Job
             "------",
             "Male, Female",
             "Carrying, Lifting, Lowering, Pulling, Pushing"
-        };
+        ];
         return ToString(strRows);
     }
 }
 
 public static class LibertyMutual
 {
-    private static double M_SQRT1_2 = 0.707106781186547524401;  // 1/sqrt(2)
-    private static double M_2_SQRTPI = 1.12837916709551257390;   // 2/sqrt(pi)
-    private static double zscore75 = 0.6744897501960818; // https://planetcalc.com/7803/
-    private static double zscore90 = 1.2815515655446008;	// https://planetcalc.com/7803/
+    //private static readonly double M_SQRT1_2 = 0.707106781186547524401;  // 1/sqrt(2)
+    //private static readonly double M_2_SQRTPI = 1.12837916709551257390;   // 2/sqrt(pi)
+    private static readonly double zscore75 = 0.6744897501960818; // https://planetcalc.com/7803/
+    private static readonly double zscore90 = 1.2815515655446008;	// https://planetcalc.com/7803/
 
     public static bool LibertyMutualMMH(Job job)
     {
@@ -399,7 +398,6 @@ public static class LibertyMutual
 
         return result;
     }
-
 
     private static void Lifting(ModelLiberty task)
     {
