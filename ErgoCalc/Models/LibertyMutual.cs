@@ -517,7 +517,7 @@ public static class LibertyMutual
             task.Sustained.DH = 1.1035 - Math.Log(DH) / 7.170;
             task.Sustained.F = 0.4896 - Math.Log(F) / 10.20 - Math.Pow(Math.Log(F), 2) / 403.9;
 
-            //resultS = 65.3 * (2.2940 - V / 0.3345 + Math.Pow(V, 2) / 0.6687) * (1.1035 - Math.Log(DH) / 7.170) * (0.4896 - Math.Log(F) / 10.20 - Math.Pow(Math.Log(F), 2) / 403.9);
+            //resultS = 65.3 * (2.2940 - V / 0.3345 + Math.Pow(V, 2) / 0.6887) * (1.1035 - Math.Log(DH) / 7.170) * (0.4896 - Math.Log(F) / 10.20 - Math.Pow(Math.Log(F), 2) / 403.9);
             cvS = 0.267;
         }
         else if (task.Data.Gender == Gender.Female)
