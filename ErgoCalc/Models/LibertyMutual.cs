@@ -402,9 +402,9 @@ public static class LibertyMutual
         double CoeffVar = -1.0;
         double H = task.Data.HorzReach;
         double VRM = task.Data.VertRangeM;
-        double DH = task.Data.DistHorz;
+        //double DH = task.Data.DistHorz;
         double DV = task.Data.DistVert;
-        double V = task.Data.VertHeight;
+        //double V = task.Data.VertHeight;
         double F = task.Data.Freq;
 
         if (task.Data.Gender == Gender.Male)
@@ -435,9 +435,6 @@ public static class LibertyMutual
         task.Initial.MAL = task.Initial.RL * task.Initial.H * task.Initial.VRM * task.Initial.DV * task.Initial.F;
         task.Initial.CV = CoeffVar;
 
-        //data.results.Weight = result;
-        //data.results.IniCoeffV = CoeffVar;
-
         return;
     }
 
@@ -446,9 +443,9 @@ public static class LibertyMutual
         double CoeffVar = -1.0;
         double H = task.Data.HorzReach;
         double VRM = task.Data.VertRangeM;
-        double DH = task.Data.DistHorz;
+        //double DH = task.Data.DistHorz;
         double DV = task.Data.DistVert;
-        double V = task.Data.VertHeight;
+        //double V = task.Data.VertHeight;
         double F = task.Data.Freq;
 
         if (task.Data.Gender == Gender.Male)
@@ -479,16 +476,11 @@ public static class LibertyMutual
         task.Initial.MAL = task.Initial.RL * task.Initial.H * task.Initial.VRM * task.Initial.DV * task.Initial.F;
         task.Initial.CV = CoeffVar;
 
-        //data.results.Weight = result;
-        //data.results.IniCoeffV = CoeffVar;
-
         return;
     }
 
     private static void Pushing(ModelLiberty task)
     {
-        //double resultI = -1.0;
-        //double resultS = -1.0;
         double cvI = -1.0;
         double cvS = -1.0;
 
@@ -547,19 +539,11 @@ public static class LibertyMutual
         task.Sustained.MAL = task.Sustained.RL * task.Sustained.V * task.Sustained.DH * task.Sustained.F;
         task.Sustained.CV = cvS;
 
-        //data.results.IniForce = resultI;
-        //data.results.SusForce = resultS;
-
-        //data.results.IniCoeffV = cvI;
-        //data.results.SusCoeffV = cvS;
-
         return;
     }
 
     private static void Pulling(ModelLiberty task)
     {
-        //double resultI = -1.0;
-        //double resultS = -1.0;
         double cvI = -1.0;
         double cvS = -1.0;
 
@@ -617,12 +601,6 @@ public static class LibertyMutual
 
         task.Sustained.MAL = task.Sustained.RL * task.Sustained.V * task.Sustained.DH * task.Sustained.F;
         task.Sustained.CV = cvS;
-
-        //data.results.IniForce = resultI;
-        //data.results.SusForce = resultS;
-
-        //data.results.IniCoeffV = cvI;
-        //data.results.SusCoeffV = cvS;
 
         return;
     }
