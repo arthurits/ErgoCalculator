@@ -1,5 +1,10 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.7.9
+* Modify wrong pushing coefficient.
+* Drop revision number in about form.
+* Improve internal code.
+
 ## ErgoCalculator 1.7.8
 * [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.71.
 * Correct minor bugs.
