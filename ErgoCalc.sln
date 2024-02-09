@@ -21,6 +21,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-ThermalC", "Dll-Thermal
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dll-Liberty", "Dll-Liberty\Dll-Liberty.vcxproj", "{5AB08561-DCC2-43C7-9698-084017960545}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErgoCalc.UnitTest", "ErgoCalc.UnitTest\ErgoCalc.UnitTest.csproj", "{93A6179D-E741-46BD-A859-EF5B73069A99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,18 @@ Global
 		{5AB08561-DCC2-43C7-9698-084017960545}.Release|x64.Build.0 = Release|x64
 		{5AB08561-DCC2-43C7-9698-084017960545}.Release|x86.ActiveCfg = Release|Win32
 		{5AB08561-DCC2-43C7-9698-084017960545}.Release|x86.Build.0 = Release|Win32
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Debug|x64.Build.0 = Debug|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Debug|x86.Build.0 = Debug|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Release|x64.ActiveCfg = Release|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Release|x64.Build.0 = Release|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Release|x86.ActiveCfg = Release|Any CPU
+		{93A6179D-E741-46BD-A859-EF5B73069A99}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
