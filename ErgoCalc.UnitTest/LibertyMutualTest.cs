@@ -2,6 +2,13 @@ using ErgoCalc.Models.LibertyMutual;
 
 namespace ErgoCalc.UnitTest;
 
+/// <summary>
+/// <seealso cref="https://www.c-sharpcorner.com/article/a-basic-introduction-of-unit-test-for-beginners/"/>
+/// <seealso cref="https://www.bytehide.com/blog/unit-testing-csharp"/>
+/// <seealso cref="https://medium.com/@gabrielkerekes/unit-testing-in-c-basics-8493d936dbff"/>
+/// <seealso cref="https://www.toptal.com/dot-net/dotnet-unit-testing-tutorial"/>
+/// </summary>
+
 [TestClass]
 public class LibertyMutualTest
 {
