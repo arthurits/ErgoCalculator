@@ -9,6 +9,9 @@ namespace ErgoCalc.UnitTest;
 /// <seealso cref="https://www.toptal.com/dot-net/dotnet-unit-testing-tutorial"/>
 /// </summary>
 
+// https://stackoverflow.com/questions/59892490/how-to-rotate-text-drawn-using-canvas-drawtextonpath
+// See some examples here: https://learn.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/graphics/skiasharp/curves/arcs
+
 [TestClass]
 public class LibertyMutualTest
 {
