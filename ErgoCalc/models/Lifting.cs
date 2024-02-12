@@ -177,7 +177,7 @@ public class SubTask
     public int Order { get; set; } = 0;
     public int ItemIndex { get; set; } = 0;
 
-    public override string ToString()
+    public override string? ToString()
     {
         return base.ToString();
     }
@@ -191,12 +191,12 @@ public class TaskModel
     /// <summary>
     /// Set of subtasks in the task
     /// </summary>
-    public SubTask[] SubTasks { get; set; } = Array.Empty<SubTask>();
+    public SubTask[] SubTasks { get; set; } = [];
 
     /// <summary>
     /// Reordering of the subtasks from lower LI to higher LI
     /// </summary>
-    public int[] OrderCLI { get; set; } = Array.Empty<int>();
+    public int[] OrderCLI { get; set; } = [];
 
     /// <summary>
     /// The composite lifting index for this task
@@ -401,12 +401,12 @@ public class Job
     /// <summary>
     /// Set of tasks in the job
     /// </summary>
-    public TaskModel[] Tasks { get; set; } = Array.Empty<TaskModel>();
+    public TaskModel[] Tasks { get; set; } = [];
 
     /// <summary>
     /// Reordering of the subtasks from lower CLI to higher CLI
     /// </summary>
-    public int[] Order { get; set; } = Array.Empty<int>();
+    public int[] Order { get; set; } = [];
 
     /// <summary>
     /// The global index for this job
@@ -511,8 +511,8 @@ public static class Lifting
     
     private static double MultiplyFactors(double weight, Multipliers factors)
     {
-        double product = 0.0;
-        double result = 0.0;
+        double product;
+        double result;
 
         product = factors.MassRef *
             factors.HM *
@@ -525,10 +525,12 @@ public static class Lifting
             factors.PM *
             factors.EM;
 
-        if (product == 0)    // División entre 0
-            result = 0;
-        else
-            result = weight / product;
+        //if (product == 0)    // Division by 0
+        //    result = 0;
+        //else
+        //    result = weight / product;
+
+        result = weight / product;
 
         return result;
     }
