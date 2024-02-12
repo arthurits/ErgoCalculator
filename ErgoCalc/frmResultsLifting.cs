@@ -70,6 +70,11 @@ public partial class FrmResultsLifting : Form, IChildResults
     /// <param name="writer">The already created writer</param>
     private void SerializeToJSON(Utf8JsonWriter writer)
     {
+        JsonSerializerOptions options = new ()
+        {
+            NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals
+        };
+
         writer.WriteStartObject();
         writer.WriteString("Document type", StringResources.DocumentTypeLifting);
 
@@ -94,7 +99,9 @@ public partial class FrmResultsLifting : Form, IChildResults
             writer.WriteStartObject();
 
             writer.WriteNumber("Model", (int)_job.Tasks[i].Model);
-            writer.WriteNumber("CLI", _job.Tasks[i].IndexCLI);
+            writer.WritePropertyName("CLI");
+            JsonSerializer.Serialize(writer, _job.Tasks[i].IndexCLI, options);
+            //writer.WriteNumber("CLI", _job.Tasks[i].IndexCLI);
             writer.WriteNumber("Number of sub-tasks", _job.Tasks[i].NumberSubTasks);
 
             //writer.WritePropertyName("Sub-tasks order");
@@ -138,8 +145,12 @@ public partial class FrmResultsLifting : Form, IChildResults
                 writer.WriteNumber("P multiplier", _job.Tasks[i].SubTasks[j].Factors.PM);
                 writer.WriteNumber("E multiplier", _job.Tasks[i].SubTasks[j].Factors.EM);
 
-                writer.WriteNumber("LI index", _job.Tasks[i].SubTasks[j].IndexLI);
-                writer.WriteNumber("IF index", _job.Tasks[i].SubTasks[j].IndexIF);
+                writer.WritePropertyName("LI index");
+                JsonSerializer.Serialize(writer, _job.Tasks[i].SubTasks[j].IndexLI, options);
+                //writer.WriteNumber("LI index", _job.Tasks[i].SubTasks[j].IndexLI);
+                writer.WritePropertyName("IF index");
+                JsonSerializer.Serialize(writer, _job.Tasks[i].SubTasks[j].IndexIF, options);
+                //writer.WriteNumber("IF index", _job.Tasks[i].SubTasks[j].IndexIF);
                 writer.WriteNumber("Item index", _job.Tasks[i].SubTasks[j].ItemIndex);
                 writer.WriteNumber("Task", _job.Tasks[i].SubTasks[j].Task);
                 writer.WriteNumber("Order", _job.Tasks[i].SubTasks[j].Order);
@@ -239,6 +250,10 @@ public partial class FrmResultsLifting : Form, IChildResults
         bool result = true;
         Job job = new();
         JsonElement root = document.RootElement;
+        JsonSerializerOptions options = new()
+        {
+            NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals
+        };
 
         try
         {
@@ -268,7 +283,7 @@ public partial class FrmResultsLifting : Form, IChildResults
                 job.Tasks[i] = new()
                 {
                     Model = (IndexType)Task.GetProperty("Model").GetInt32(),
-                    IndexCLI = Task.GetProperty("CLI").GetDouble(),
+                    IndexCLI = JsonSerializer.Deserialize<double>(Task.GetProperty("CLI"), options),
                     NumberSubTasks = Task.GetProperty("Number of sub-tasks").GetInt32()
                 };
                 job.Tasks[i].SubTasks = new SubTask[job.Tasks[i].NumberSubTasks];
@@ -312,8 +327,10 @@ public partial class FrmResultsLifting : Form, IChildResults
                     job.Tasks[i].SubTasks[j].Factors.PM = SubTasks[j].GetProperty("P multiplier").GetDouble();
                     job.Tasks[i].SubTasks[j].Factors.EM = SubTasks[j].GetProperty("E multiplier").GetDouble();
 
-                    job.Tasks[i].SubTasks[j].IndexLI = SubTasks[j].GetProperty("LI index").GetDouble();
-                    job.Tasks[i].SubTasks[j].IndexIF = SubTasks[j].GetProperty("IF index").GetDouble();
+                    job.Tasks[i].SubTasks[j].IndexLI = JsonSerializer.Deserialize<double>(SubTasks[j].GetProperty("LI index"), options);
+                    //job.Tasks[i].SubTasks[j].IndexLI = SubTasks[j].GetProperty("LI index").GetDouble();
+                    job.Tasks[i].SubTasks[j].IndexLI = JsonSerializer.Deserialize<double>(SubTasks[j].GetProperty("IF index"), options);
+                    //job.Tasks[i].SubTasks[j].IndexIF = SubTasks[j].GetProperty("IF index").GetDouble();
                     job.Tasks[i].SubTasks[j].ItemIndex = SubTasks[j].GetProperty("Item index").GetInt32();
                     job.Tasks[i].SubTasks[j].Task = SubTasks[j].GetProperty("Task").GetInt32();
                     job.Tasks[i].SubTasks[j].Order = SubTasks[j].GetProperty("Order").GetInt32();
@@ -372,7 +389,7 @@ public partial class FrmResultsLifting : Form, IChildResults
     public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         //rtbShowResult.Clear();
-        rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, _culture);
+        rtbShowResult.Text = _job.ToString(StringResources.Lifting_ResultsHeaders, culture);
         FormatText();
     }
 

@@ -166,13 +166,13 @@ public partial class FrmDataLifting : Form, IChildData
         }
 
         // New test
-        int ItemIndex;
+        int numTasks = _index == IndexType.IndexLI ? 1 : listViewTasks.Groups.Count;
         _job = new()
         {
             NumberSubTasks = gridVariables.ColumnCount,
-            NumberTasks = _index == IndexType.IndexLI ? 1 : listViewTasks.Groups.Count,
-            Tasks = new TaskModel[gridVariables.ColumnCount],
-            Order = new int[gridVariables.ColumnCount]
+            NumberTasks = numTasks,
+            Tasks = new TaskModel[numTasks],
+            Order = new int[numTasks]
         };
 
         if (radLI.Checked) _job.Model = IndexType.IndexLI;
@@ -180,7 +180,7 @@ public partial class FrmDataLifting : Form, IChildData
         if (radVLI.Checked) _job.Model = IndexType.IndexVLI;
         if (radSLI.Checked) _job.Model = IndexType.IndexSLI;
 
-
+        int itemIndex;
         for (int i = 0; i < _job.NumberTasks; i++)
         {
             _job.Tasks[i] = new();
@@ -195,33 +195,33 @@ public partial class FrmDataLifting : Form, IChildData
             for (int j = 0; j < _job.Tasks[i].NumberSubTasks; j++)
             {
                 _job.Tasks[i].SubTasks[j] = new();
-                ItemIndex = _job.Model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
-                _job.Tasks[i].SubTasks[j].ItemIndex = ItemIndex;
+                itemIndex = _job.Model == IndexType.IndexLI ? j : listViewTasks.Groups[i].Items[j].Index;
+                _job.Tasks[i].SubTasks[j].ItemIndex = itemIndex;
                 _job.Tasks[i].SubTasks[j].Task = i;
 
                 //if (!Validation.IsValidRange(gridVariables[ItemIndex, 0].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 0]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 1].Value, 0, 90, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 1]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 2].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 2]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 3].Value, 0, 150, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 3]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 4].Value, 0, 250, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 4]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 5].Value, 0, 175, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 5]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 6].Value, 0, 60, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 6]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 7].Value, 0, 12, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 7]; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[ItemIndex, 8].Value, -180, 180, true, this)) { gridVariables.CurrentCell = gridVariables[ItemIndex, 8]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 1].Value, 0, 90, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 1]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 2].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 2]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 3].Value, 0, null, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 3]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 3].Value, 0, 150, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 3]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 4].Value, 0, 250, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 4]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 5].Value, 0, 175, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 5]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 6].Value, 0, 60, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 6]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 7].Value, 0, 12, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 7]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(gridVariables[itemIndex, 8].Value, -180, 180, true, this)) { gridVariables.CurrentCell = gridVariables[itemIndex, 8]; gridVariables.BeginEdit(true); return; }
 
-                _job.Tasks[i].SubTasks[j].Data.gender = (Gender)gridVariables[ItemIndex, 0].Value;
-                _job.Tasks[i].SubTasks[j].Data.age = Convert.ToDouble(gridVariables[ItemIndex, 1].Value);
-                _job.Tasks[i].SubTasks[j].Data.Weight = Convert.ToDouble(gridVariables[ItemIndex, 2].Value);
-                _job.Tasks[i].SubTasks[j].Data.h = Convert.ToDouble(gridVariables[ItemIndex, 3].Value);
-                _job.Tasks[i].SubTasks[j].Data.v = Convert.ToDouble(gridVariables[ItemIndex, 4].Value);
-                _job.Tasks[i].SubTasks[j].Data.d = Convert.ToDouble(gridVariables[ItemIndex, 5].Value);
-                _job.Tasks[i].SubTasks[j].Data.f = Convert.ToDouble(gridVariables[ItemIndex, 6].Value);
-                _job.Tasks[i].SubTasks[j].Data.td = Convert.ToDouble(gridVariables[ItemIndex, 7].Value);
-                _job.Tasks[i].SubTasks[j].Data.a = Convert.ToDouble(gridVariables[ItemIndex, 8].Value);
-                _job.Tasks[i].SubTasks[j].Data.c = (Coupling)gridVariables[ItemIndex, 9].Value;
-                _job.Tasks[i].SubTasks[j].Data.o = Convert.ToBoolean(gridVariables[ItemIndex, 10].Value);
-                _job.Tasks[i].SubTasks[j].Data.p = Convert.ToBoolean(gridVariables[ItemIndex, 11].Value);
+                _job.Tasks[i].SubTasks[j].Data.gender = (Gender)gridVariables[itemIndex, 0].Value;
+                _job.Tasks[i].SubTasks[j].Data.age = Convert.ToDouble(gridVariables[itemIndex, 1].Value);
+                _job.Tasks[i].SubTasks[j].Data.Weight = Convert.ToDouble(gridVariables[itemIndex, 2].Value);
+                _job.Tasks[i].SubTasks[j].Data.h = Convert.ToDouble(gridVariables[itemIndex, 3].Value);
+                _job.Tasks[i].SubTasks[j].Data.v = Convert.ToDouble(gridVariables[itemIndex, 4].Value);
+                _job.Tasks[i].SubTasks[j].Data.d = Convert.ToDouble(gridVariables[itemIndex, 5].Value);
+                _job.Tasks[i].SubTasks[j].Data.f = Convert.ToDouble(gridVariables[itemIndex, 6].Value);
+                _job.Tasks[i].SubTasks[j].Data.td = Convert.ToDouble(gridVariables[itemIndex, 7].Value);
+                _job.Tasks[i].SubTasks[j].Data.a = Convert.ToDouble(gridVariables[itemIndex, 8].Value);
+                _job.Tasks[i].SubTasks[j].Data.c = (Coupling)gridVariables[itemIndex, 9].Value;
+                _job.Tasks[i].SubTasks[j].Data.o = Convert.ToBoolean(gridVariables[itemIndex, 10].Value);
+                _job.Tasks[i].SubTasks[j].Data.p = Convert.ToBoolean(gridVariables[itemIndex, 11].Value);
                 
                 //_job.Tasks[i].SubTasks[j].Data.LC = LC;
 
