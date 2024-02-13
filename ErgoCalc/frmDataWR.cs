@@ -56,8 +56,8 @@ public partial class FrmDataWR : Form, IChildData
             _job.Tasks[i] = new();
             _job.Tasks[i].Legend = gridVariables[i, 0].Value.ToString() ?? string.Empty;
             // Validation routines
-            if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0, 100, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
-            _job.Tasks[i].MVC = Validation.ValidateNumber(gridVariables[i, 1].Value);
+            if (!Validation.IsValidRange(_culture, gridVariables[i, 1].Value, 0, 100, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+            _job.Tasks[i].MVC = Validation.ValidateNumber(_culture, gridVariables[i, 1].Value);
             _job.Tasks[i].MHT = WorkRest.ComputeMHT(_job.Tasks[i].MVC);
             //gridVariables[i, 2].Value = item._dMHT;
 
@@ -66,7 +66,7 @@ public partial class FrmDataWR : Form, IChildData
             string[] arr = gridVariables[i, 3].Value.ToString()?.Split(' ') ?? [];
             foreach( var number in arr)
             {
-                if (!Validation.IsValidRange(number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 3]; gridVariables.BeginEdit(true); return; }
             }
             _job.Tasks[i].WorkingTimes = arr.Select(double.Parse).ToArray();
 
@@ -74,17 +74,17 @@ public partial class FrmDataWR : Form, IChildData
             arr = gridVariables[i, 4].Value.ToString()?.Split(' ') ?? [];
             foreach (var number in arr)
             {
-                if (!Validation.IsValidRange(number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, number, 0, _job.Tasks[i].MHT, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
             }
             _job.Tasks[i].RestingTimes = arr.Select(double.Parse).ToArray();
 
             //if (ValidarTT(item) != true) { return; }
-            if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0, 24, true, this)) { gridVariables.CurrentCell = gridVariables[i, 5]; gridVariables.BeginEdit(true); return; }
-            if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.001, 0.1, true, this)) { gridVariables.CurrentCell = gridVariables[i, 6]; gridVariables.BeginEdit(true); return; }
+            if (!Validation.IsValidRange(_culture, gridVariables[i, 5].Value, 0, 24, true, this)) { gridVariables.CurrentCell = gridVariables[i, 5]; gridVariables.BeginEdit(true); return; }
+            if (!Validation.IsValidRange(_culture, gridVariables[i, 6].Value, 0.001, 0.1, true, this)) { gridVariables.CurrentCell = gridVariables[i, 6]; gridVariables.BeginEdit(true); return; }
 
             //item._dWorkRest[0];
-            _job.Tasks[i].Cycles = (byte)Validation.ValidateNumber(gridVariables[i, 5].Value);
-            _job.Tasks[i].PlotStep = Validation.ValidateNumber(gridVariables[i, 6].Value);
+            _job.Tasks[i].Cycles = (byte)Validation.ValidateNumber(_culture, gridVariables[i, 5].Value);
+            _job.Tasks[i].PlotStep = Validation.ValidateNumber(_culture, gridVariables[i, 6].Value);
 
             _job.Tasks[i].Points = ComputeNumberOfPoints(_job.Tasks[i]);
             //item._dPoints = new double[2][];
@@ -116,7 +116,7 @@ public partial class FrmDataWR : Form, IChildData
         {
             var dgv = (DataGridView)sender;
             //var cell = dgv?.Rows?[rowIdx.Value]?.Cells?[colIdx.Value]?.Value;
-            dgv.Rows[2].Cells[colIdx.Value].Value = WorkRest.ComputeMHT(Validation.ValidateNumber(dgv.Rows[1].Cells[colIdx.Value].Value)).ToString("0.##");
+            dgv.Rows[2].Cells[colIdx.Value].Value = WorkRest.ComputeMHT(Validation.ValidateNumber(_culture, dgv.Rows[1].Cells[colIdx.Value].Value)).ToString("0.##");
 
             //if (dgv.Columns[colIdx.Value].Name == "Maximum voluntary contraction (%)")
             //{
