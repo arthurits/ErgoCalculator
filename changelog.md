@@ -1,5 +1,12 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.8.0
+* Update data adquisition code in lifting form.
+* Allow and handle `NaN` and infinity values in lifting module.
+* Update internal validation routines.
+* Add unit tests.
+* Improve internal code.
+
 ## ErgoCalculator 1.7.9
 * Modify wrong pushing coefficient.
 * Drop revision number in about form.
