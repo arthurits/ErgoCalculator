@@ -62,51 +62,51 @@ public partial class FrmDataLiberty : Form, IChildData
             {
                 if (_job.Tasks[i].Data.Gender == Gender.Male)
                 {
-                    if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.25, 0.73, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
-                    if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 2.14, true, this)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
-                    if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 2.14, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 1].Value, 0.25, 0.73, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 2].Value, 0.25, 2.14, true, this)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 4].Value, 0.25, 2.14, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
                 }
                 else
                 {
-                    if (!Validation.IsValidRange(gridVariables[i, 1].Value, 0.20, 0.68, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
-                    if (!Validation.IsValidRange(gridVariables[i, 2].Value, 0.25, 1.96, true, this)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
-                    if (!Validation.IsValidRange(gridVariables[i, 4].Value, 0.25, 1.96, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 1].Value, 0.20, 0.68, true, this)) { gridVariables.CurrentCell = gridVariables[i, 1]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 2].Value, 0.25, 1.96, true, this)) { gridVariables.CurrentCell = gridVariables[i, 2]; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 4].Value, 0.25, 1.96, true, this)) { gridVariables.CurrentCell = gridVariables[i, 4]; gridVariables.BeginEdit(true); return; }
                 }
-                if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 20.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, gridVariables[i, 6].Value, 0.0021, 20.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
             }
             else if (_job.Tasks[i].Data.Type == TaskType.Pulling || _job.Tasks[i].Data.Type == TaskType.Pushing)
             {
                 if (_job.Tasks[i].Data.Gender == Gender.Male)
                 {
-                    if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.63, 1.44, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 5].Value, 0.63, 1.44, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
                 else
                 {
-                    if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.58, 1.33, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 5].Value, 0.58, 1.33, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
-                if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 61.0, true, this)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, gridVariables[i, 3].Value, 2.1, 61.0, true, this)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, gridVariables[i, 6].Value, 0.0021, 10.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
             }
             else if (_job.Tasks[i].Data.Type == TaskType.Carrying)
             {
                 if (_job.Tasks[i].Data.Gender == Gender.Male)
                 {
-                    if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.78, 1.10, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 5].Value, 0.78, 1.10, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
                 else
                 {
-                    if (!Validation.IsValidRange(gridVariables[i, 5].Value, 0.71, 1.03, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
+                    if (!Validation.IsValidRange(_culture, gridVariables[i, 5].Value, 0.71, 1.03, true, this)) { gridVariables[i, 5].Selected = true; gridVariables.BeginEdit(true); return; }
                 }
-                if (!Validation.IsValidRange(gridVariables[i, 3].Value, 2.1, 10.0, true, this)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
-                if (!Validation.IsValidRange(gridVariables[i, 6].Value, 0.0021, 10.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, gridVariables[i, 3].Value, 2.1, 10.0, true, this)) { gridVariables[i, 3].Selected = true; gridVariables.BeginEdit(true); return; }
+                if (!Validation.IsValidRange(_culture, gridVariables[i, 6].Value, 0.0021, 10.0, true, this)) { gridVariables[i, 6].Selected = true; gridVariables.BeginEdit(true); return; }
             }
 
-            _job.Tasks[i].Data.HorzReach = Validation.ValidateNumber(gridVariables[i, 1].Value);
-            _job.Tasks[i].Data.VertRangeM = Validation.ValidateNumber(gridVariables[i, 2].Value);
-            _job.Tasks[i].Data.DistHorz = Validation.ValidateNumber(gridVariables[i, 3].Value);
-            _job.Tasks[i].Data.DistVert = Validation.ValidateNumber(gridVariables[i, 4].Value);
-            _job.Tasks[i].Data.VertHeight = Validation.ValidateNumber(gridVariables[i, 5].Value);
-            _job.Tasks[i].Data.Freq = Validation.ValidateNumber(gridVariables[i, 6].Value); 
+            _job.Tasks[i].Data.HorzReach = Validation.ValidateNumber(_culture, gridVariables[i, 1].Value);
+            _job.Tasks[i].Data.VertRangeM = Validation.ValidateNumber(_culture, gridVariables[i, 2].Value);
+            _job.Tasks[i].Data.DistHorz = Validation.ValidateNumber(_culture, gridVariables[i, 3].Value);
+            _job.Tasks[i].Data.DistVert = Validation.ValidateNumber(_culture, gridVariables[i, 4].Value);
+            _job.Tasks[i].Data.VertHeight = Validation.ValidateNumber(_culture, gridVariables[i, 5].Value);
+            _job.Tasks[i].Data.Freq = Validation.ValidateNumber(_culture, gridVariables[i, 6].Value); 
         }
 
         // Return OK thus closing the dialog
