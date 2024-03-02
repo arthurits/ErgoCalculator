@@ -266,7 +266,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="ErgoCalcLauncher.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Content>
     <Content Include="images\about 1.ico" />
     <Content Include="images\about.ico">
