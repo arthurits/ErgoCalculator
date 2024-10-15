@@ -149,40 +149,32 @@ partial class FrmMain
                 _ => default
             };
 
-            if (frm != default)
+            if (frm != default && ((IChildResults)frm).OpenFile(document))
             {
+                frm.MdiParent = this;
 
-                if (((IChildResults)frm).OpenFile(document))
+                string strTextTitle = strType switch
                 {
-                    frm.MdiParent = this;
+                    "Work-Rest model" => StringResources.FormResultsWR,
+                    "Lifting model" => StringResources.FormResultsLifting,
+                    "Strain index" => StringResources.FormResultsStrainIndex,
+                    "Thermal comfort model" => StringResources.FormResultsTC,
+                    "LM-MMH model" => StringResources.FormResultsLiberty,
+                    "Comprehensive lifting model" => StringResources.FormResultsCLM,
+                    _ => String.Empty
+                };
+                SetFormTitle(frm, strTextTitle, openDlg.FileName);
 
-                    string strTextTitle = strType switch
-                    {
-                        "Work-Rest model" => StringResources.FormResultsWR,
-                        "Lifting model" => StringResources.FormResultsLifting,
-                        "Strain index" => StringResources.FormResultsStrainIndex,
-                        "Thermal comfort model" => StringResources.FormResultsTC,
-                        "LM-MMH model" => StringResources.FormResultsLiberty,
-                        "Comprehensive lifting model" => StringResources.FormResultsCLM,
-                        _ => String.Empty
-                    };
-                    SetFormTitle(frm, strTextTitle, openDlg.FileName);
+                FormatRichText(frm.ActiveControl,
+                    _settings.FontFamilyName,
+                    _settings.FontSize,
+                    _settings.FontStyle,
+                    _settings.FontColor,
+                    _settings.TextBackColor,
+                    _settings.TextZoom,
+                    _settings.WordWrap);
 
-                    FormatRichText(frm.ActiveControl,
-                        _settings.FontFamilyName,
-                        _settings.FontSize,
-                        _settings.FontStyle,
-                        _settings.FontColor,
-                        _settings.TextBackColor,
-                        _settings.TextZoom,
-                        _settings.WordWrap);
-
-                    frm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                frm.Show();
             }
             else
             {
