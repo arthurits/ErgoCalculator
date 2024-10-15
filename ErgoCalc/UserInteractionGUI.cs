@@ -116,6 +116,10 @@ partial class FrmMain
         // If the file name is not an empty string open it for saving.  
         if (result == DialogResult.OK && openDlg.FileName != "")
         {
+            // Show a waiting cursor
+            var cursor = Cursor.Current;
+            Cursor.Current = Cursors.WaitCursor;
+
             //Get the path of specified file and store the directory for future calls
             fileName = openDlg.FileName;
             if (_settings.RememberFileDialogPath) _settings.UserOpenPath = Path.GetDirectoryName(fileName) ?? string.Empty;
@@ -181,6 +185,8 @@ partial class FrmMain
                 }
             }
 
+            // Restore the cursor
+            Cursor.Current = cursor;
         }
 
         return;
