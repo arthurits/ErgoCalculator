@@ -96,6 +96,8 @@ partial class FrmMain
 
     private void Open_Click(object sender, EventArgs e)
     {
+        string fileName;
+
         OpenFileDialog openDlg = new()
         {
             DefaultExt = "*.ergo",
@@ -114,8 +116,12 @@ partial class FrmMain
         // If the file name is not an empty string open it for saving.  
         if (result == DialogResult.OK && openDlg.FileName != "")
         {
+            //Get the path of specified file and store the directory for future calls
+            fileName = openDlg.FileName;
+            if (_settings.RememberFileDialogPath) _settings.UserOpenPath = Path.GetDirectoryName(fileName) ?? string.Empty;
+
             // https://stackoverflow.com/questions/897796/how-do-i-open-an-already-opened-file-with-a-net-streamreader
-            using var fs = File.Open(openDlg.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var fs = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using var sr = new StreamReader(fs, Encoding.UTF8);
 
             string jsonString = sr.ReadToEnd();
