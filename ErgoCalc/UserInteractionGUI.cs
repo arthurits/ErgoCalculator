@@ -96,6 +96,9 @@ partial class FrmMain
 
     private void Open_Click(object sender, EventArgs e)
     {
+        DialogResult result;
+        string fileName;
+
         OpenFileDialog openDlg = new()
         {
             DefaultExt = "*.ergo",
@@ -105,7 +108,6 @@ partial class FrmMain
             InitialDirectory = _settings.RememberFileDialogPath ? _settings.UserOpenPath : _settings.DefaultOpenPath
         };
 
-        DialogResult result;
         using (new CenterWinDialog(this))
         {
             result = openDlg.ShowDialog(this);
@@ -114,8 +116,16 @@ partial class FrmMain
         // If the file name is not an empty string open it for saving.  
         if (result == DialogResult.OK && openDlg.FileName != "")
         {
+            // Show a waiting cursor
+            var cursor = Cursor.Current;
+            Cursor.Current = Cursors.WaitCursor;
+
+            //Get the path of specified file and store the directory for future calls
+            fileName = openDlg.FileName;
+            if (_settings.RememberFileDialogPath) _settings.UserOpenPath = Path.GetDirectoryName(fileName) ?? string.Empty;
+
             // https://stackoverflow.com/questions/897796/how-do-i-open-an-already-opened-file-with-a-net-streamreader
-            using var fs = File.Open(openDlg.FileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var fs = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
             using var sr = new StreamReader(fs, Encoding.UTF8);
 
             string jsonString = sr.ReadToEnd();
@@ -139,42 +149,40 @@ partial class FrmMain
                 _ => default
             };
 
-            if (frm != default)
+            if (frm != default && ((IChildResults)frm).OpenFile(document))
             {
+                frm.MdiParent = this;
 
-                if (((IChildResults)frm).OpenFile(document))
+                string strTextTitle = strType switch
                 {
-                    frm.MdiParent = this;
+                    "Work-Rest model" => StringResources.FormResultsWR,
+                    "Lifting model" => StringResources.FormResultsLifting,
+                    "Strain index" => StringResources.FormResultsStrainIndex,
+                    "Thermal comfort model" => StringResources.FormResultsTC,
+                    "LM-MMH model" => StringResources.FormResultsLiberty,
+                    "Comprehensive lifting model" => StringResources.FormResultsCLM,
+                    _ => String.Empty
+                };
+                SetFormTitle(frm, strTextTitle, openDlg.FileName);
 
-                    string strTextTitle = strType switch
-                    {
-                        "Work-Rest model" => StringResources.FormResultsWR,
-                        "Lifting model" => StringResources.FormResultsLifting,
-                        "Strain index" => StringResources.FormResultsStrainIndex,
-                        "Thermal comfort model" => StringResources.FormResultsTC,
-                        "LM-MMH model" => StringResources.FormResultsLiberty,
-                        "Comprehensive lifting model" => StringResources.FormResultsCLM,
-                        _ => String.Empty
-                    };
-                    SetFormTitle(frm, strTextTitle, openDlg.FileName);
+                FormatRichText(frm.ActiveControl,
+                    _settings.FontFamilyName,
+                    _settings.FontSize,
+                    _settings.FontStyle,
+                    _settings.FontColor,
+                    _settings.TextBackColor,
+                    _settings.TextZoom,
+                    _settings.WordWrap);
 
-                    FormatRichText(frm.ActiveControl,
-                        _settings.FontFamilyName,
-                        _settings.FontSize,
-                        _settings.FontStyle,
-                        _settings.FontColor,
-                        _settings.TextBackColor,
-                        _settings.TextZoom,
-                        _settings.WordWrap);
-
-                    frm.Show();
-                }
-                else
-                {
-                    MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            // Restore the cursor
+            Cursor.Current = cursor;
         }
 
         return;
