@@ -184,6 +184,10 @@ partial class FrmMain
                     MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+            else
+            {
+                MessageBox.Show("The document cannot be opened by this application", "Format mismatch", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             // Restore the cursor
             Cursor.Current = cursor;
