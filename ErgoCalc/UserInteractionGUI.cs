@@ -96,6 +96,7 @@ partial class FrmMain
 
     private void Open_Click(object sender, EventArgs e)
     {
+        DialogResult result;
         string fileName;
 
         OpenFileDialog openDlg = new()
@@ -107,7 +108,6 @@ partial class FrmMain
             InitialDirectory = _settings.RememberFileDialogPath ? _settings.UserOpenPath : _settings.DefaultOpenPath
         };
 
-        DialogResult result;
         using (new CenterWinDialog(this))
         {
             result = openDlg.ShowDialog(this);
