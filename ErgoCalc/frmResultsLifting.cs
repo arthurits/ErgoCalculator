@@ -179,7 +179,7 @@ public partial class FrmResultsLifting : Form, IChildResults
     }
     public ModelType? Model { get; set; }
 
-    public void Save(string directoryPath)
+    public string Save(string directoryPath)
     {
         // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         SaveFileDialog SaveDlg = new()
@@ -242,7 +242,7 @@ public partial class FrmResultsLifting : Form, IChildResults
             }
         }
 
-        return;
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public bool OpenFile(JsonDocument document)

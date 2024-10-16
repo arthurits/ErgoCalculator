@@ -263,7 +263,7 @@ public partial class FrmResultsWR : Form, IChildResults
 
     public bool[] GetToolbarEnabledState() => [true, true, true, true, true, true, true, true, true, false, false, true, true, true];
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {   
         // Displays a SaveFileDialog so the user can save the Image  
         SaveFileDialog SaveDlg = new ()
@@ -274,7 +274,7 @@ public partial class FrmResultsWR : Form, IChildResults
             FileName = "WorkRest results",
             Title = "Save scatter-plot data",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
         
         DialogResult result;
@@ -338,7 +338,7 @@ public partial class FrmResultsWR : Form, IChildResults
             }
         }
 
-        return;
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public bool OpenFile(JsonDocument document)

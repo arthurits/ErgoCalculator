@@ -266,7 +266,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, true, true, true, false, false, true, true, true];
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
         // Displays a SaveFileDialog so the user can save the Image  
         SaveFileDialog SaveDlg = new()
@@ -276,7 +276,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
             FilterIndex = 1,
             Title = "Save LM-MMH data",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
         DialogResult result;
@@ -318,6 +318,8 @@ public partial class FrmResultsLiberty : Form, IChildResults
                 MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public bool OpenFile(JsonDocument document)

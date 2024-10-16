@@ -420,7 +420,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         return result;
     }
     
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
         // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         SaveFileDialog SaveDlg = new()
@@ -437,7 +437,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             },
             Title = "Save Strain Index results",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
         DialogResult result;
@@ -484,7 +484,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             }
         }
 
-        return;
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public void UpdateOutput(System.Globalization.CultureInfo culture)

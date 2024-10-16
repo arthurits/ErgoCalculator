@@ -191,7 +191,10 @@ partial class FrmMain
     private void Save_Click(object sender, EventArgs e)
     {
         if (this.ActiveMdiChild != null)
-            ((IChildResults)this.ActiveMdiChild).Save(_settings.RememberFileDialogPath ? _settings.UserSavePath : _settings.DefaultSavePath);
+        {
+            string path = ((IChildResults)this.ActiveMdiChild).Save(_settings.RememberFileDialogPath ? _settings.UserSavePath : _settings.DefaultSavePath);
+            if (_settings.RememberFileDialogPath) _settings.UserSavePath = path;
+        }
     }
 
     private void Copy_Click(object sender, EventArgs e)

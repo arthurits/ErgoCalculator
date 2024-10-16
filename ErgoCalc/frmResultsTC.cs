@@ -265,7 +265,7 @@ public partial class FrmResultsTC : Form, IChildResults
         return result;
     }
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
         // Displays a SaveFileDialog so the user can save the Image  
         SaveFileDialog SaveDlg = new SaveFileDialog
@@ -275,7 +275,7 @@ public partial class FrmResultsTC : Form, IChildResults
             FilterIndex = 1,
             Title = "Save thermal comfort data",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
         DialogResult result;
@@ -318,7 +318,7 @@ public partial class FrmResultsTC : Form, IChildResults
             }
         }
 
-        return;
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public void UpdateOutput(System.Globalization.CultureInfo culture)

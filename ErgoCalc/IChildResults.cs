@@ -21,8 +21,9 @@ public interface IChildResults
     /// <summary>
     /// Saves the data shown in the child window into a file
     /// </summary>
-    /// <param name="path">Path where the data should be saved</param>
-    void Save(string directoryPath);
+    /// <param name="directoryPath">Initial directory to be set in <see langword="SaveFileDialog"/></param>
+    /// <returns>Path selected by the user in <see langword="SaveFileDialog"/> to save the data</returns>
+    string Save(string directoryPath);
 
     /// <summary>
     /// Opens a document

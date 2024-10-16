@@ -55,9 +55,9 @@ public partial class FrmResultsMet : Form, IChildResults
 
     public bool[] GetToolbarEnabledState() => [true, true, false, false, true, true, false, false, true, false, false, true, true, true];
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
-
+        return string.Empty;
     }
 
     public bool OpenFile(JsonDocument document)

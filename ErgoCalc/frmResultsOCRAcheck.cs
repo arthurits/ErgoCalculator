@@ -91,28 +91,30 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
 
     public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, false, true, true, false, false, true, true, true];
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
-        SaveFileDialog saveFileDialog1 = new SaveFileDialog
+        SaveFileDialog SaveDlg = new SaveFileDialog
         {
             DefaultExt = "*.rtf",
             Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 2,
             Title = "Save OCRA checklist results",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
         DialogResult result;
         using (new CenterWinDialog(this))
         {
-            result = saveFileDialog1.ShowDialog();
+            result = SaveDlg.ShowDialog();
         }
 
         // If the file name is not an empty string open it for saving.  
-        if (result == DialogResult.OK && saveFileDialog1.FileName != "")
+        if (result == DialogResult.OK && SaveDlg.FileName != "")
         {
         }
+
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public bool OpenFile(JsonDocument document)

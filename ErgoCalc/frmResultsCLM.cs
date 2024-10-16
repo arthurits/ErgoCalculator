@@ -115,7 +115,7 @@ public partial class FrmResultsCLM : Form, IChildResults
 
     public ModelType? Model { get; set; }
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
         // Displays a SaveFileDialog so the user can save the Image  
         SaveFileDialog SaveDlg = new()
@@ -125,7 +125,7 @@ public partial class FrmResultsCLM : Form, IChildResults
             FilterIndex = 1,
             Title = "Save CLM data",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
         DialogResult result;
@@ -167,6 +167,7 @@ public partial class FrmResultsCLM : Form, IChildResults
                 MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
     }
 
     public bool OpenFile(JsonDocument document)
