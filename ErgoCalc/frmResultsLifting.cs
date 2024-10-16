@@ -179,7 +179,7 @@ public partial class FrmResultsLifting : Form, IChildResults
     }
     public ModelType? Model { get; set; }
 
-    public void Save(string path)
+    public void Save(string directoryPath)
     {
         // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         SaveFileDialog SaveDlg = new()
@@ -197,7 +197,7 @@ public partial class FrmResultsLifting : Form, IChildResults
             },
             Title = "Save lifting model results",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
         DialogResult result;
