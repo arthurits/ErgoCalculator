@@ -181,6 +181,9 @@ public partial class FrmResultsLifting : Form, IChildResults
 
     public string Save(string directoryPath)
     {
+        DialogResult result;
+        string userPath = string.Empty;
+
         // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         SaveFileDialog SaveDlg = new()
         {
@@ -197,10 +200,9 @@ public partial class FrmResultsLifting : Form, IChildResults
             },
             Title = "Save lifting model results",
             OverwritePrompt = true,
-            InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
+            InitialDirectory = string.IsNullOrWhiteSpace(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
-        DialogResult result;
         using (new CenterWinDialog(this.MdiParent))
         {
             result = SaveDlg.ShowDialog(this);
@@ -212,15 +214,20 @@ public partial class FrmResultsLifting : Form, IChildResults
             using var fs = SaveDlg.OpenFile();
 
             // Saves the text via a FileStream created by the OpenFile method.  
-            if (fs != null)
+            if (fs is not null)
             {
+                // Get the actual directory path selected by the user in order to store it later in the settings
+                userPath = Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
+
                 // Saves the text in the appropriate TextFormat based upon the File type selected in the dialog box.  
                 // NOTE that the FilterIndex property is one-based. 
                 switch (SaveDlg.FilterIndex)
                 {
                     case 1:
-                        using (var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true }))
+                        {
+                            using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
                             SerializeToJSON(writer);
+                        }
                         break;
                     case 2:
                         rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
@@ -242,7 +249,7 @@ public partial class FrmResultsLifting : Form, IChildResults
             }
         }
 
-        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
+        return userPath;
     }
 
     public bool OpenFile(JsonDocument document)

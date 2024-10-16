@@ -264,9 +264,12 @@ public partial class FrmResultsWR : Form, IChildResults
     public bool[] GetToolbarEnabledState() => [true, true, true, true, true, true, true, true, true, false, false, true, true, true];
 
     public string Save(string directoryPath)
-    {   
+    {
+        DialogResult result;
+        string userPath = string.Empty;
+
         // Displays a SaveFileDialog so the user can save the Image  
-        SaveFileDialog SaveDlg = new ()
+        SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.csv",
             Filter = "ERGO file (*.ergo)|*.ergo|CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt|All files (*.*)|*.*",
@@ -277,7 +280,6 @@ public partial class FrmResultsWR : Form, IChildResults
             InitialDirectory = string.IsNullOrEmpty(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
         
-        DialogResult result;
         using (new CenterWinDialog(this))
         {
             result = SaveDlg.ShowDialog(this.Parent);
@@ -286,59 +288,66 @@ public partial class FrmResultsWR : Form, IChildResults
         // If the file name is not an empty string open it for saving.  
         if (result == DialogResult.OK && SaveDlg.FileName != "")
         {
-            switch (SaveDlg.FilterIndex)
+            using var fs = SaveDlg.OpenFile();
+
+            // Saves the text via a FileStream created by the OpenFile method.  
+            if (fs is not null)
             {
-                case 1:
-                    {
-                        using var fs = SaveDlg.OpenFile();
-                        if (fs != null)
+                // Get the actual directory path selected by the user in order to store it later in the settings
+                userPath = Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
+
+                // Saves the text in the appropriate TextFormat based upon the File type selected in the dialog box.  
+                // NOTE that the FilterIndex property is one-based. 
+                switch (SaveDlg.FilterIndex)
+                {
+                    case 1:
                         {
                             using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
                             SerializeToJSON(writer);
                             //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
                         }
-                    }
-                    break;
-                case 2:
-                    foreach (var plot in plot.Plot.GetPlottables())
-                    {
-                        if (plot.GetType() == typeof(ScottPlot.Plottable.ScatterPlot))
+                        break;
+                    case 2:
+                        foreach (var plot in plot.Plot.GetPlottables())
                         {
-                            //((ScottPlot.Plottable.ScatterPlot)plot).SaveCSV(SaveDlg.FileName);
-                            var chart = (ScottPlot.Plottable.ScatterPlot)plot;
-                            StringBuilder csv = new();
-                            for (int i = 0; i < chart.Ys.Length; i++)
-                                csv.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}{2}{3}", chart.Xs[i], ", ", chart.Ys[i], "\n");
-                            File.WriteAllText(SaveDlg.FileName, csv.ToString());
+                            if (plot.GetType() == typeof(ScottPlot.Plottable.ScatterPlot))
+                            {
+                                //((ScottPlot.Plottable.ScatterPlot)plot).SaveCSV(SaveDlg.FileName);
+                                var chart = (ScottPlot.Plottable.ScatterPlot)plot;
+                                StringBuilder csv = new();
+                                for (int i = 0; i < chart.Ys.Length; i++)
+                                    csv.AppendFormat(System.Globalization.CultureInfo.InvariantCulture, "{0}{1}{2}{3}", chart.Xs[i], ", ", chart.Ys[i], "\n");
+                                File.WriteAllText(SaveDlg.FileName, csv.ToString());
+                            }
+
+                            /*
+                            public void SaveCSV(string filePath, string delimiter = ", ", string separator = "\n")
+                            {
+                                System.IO.File.WriteAllText(filePath, GetCSV(delimiter, separator));
+                            }
+
+                            public string GetCSV(string delimiter = ", ", string separator = "\n")
+                            {
+                                StringBuilder csv = new StringBuilder();
+                                for (int i = 0; i < ys.Length; i++)
+                                    csv.AppendFormat("{0}{1}{2}{3}", xs[i], delimiter, ys[i], separator);
+                                return csv.ToString();
+                            }
+                            */
                         }
+                        break;
+                }
 
-                        /*
-                        public void SaveCSV(string filePath, string delimiter = ", ", string separator = "\n")
-                        {
-                            System.IO.File.WriteAllText(filePath, GetCSV(delimiter, separator));
-                        }
+                FrmMain.SetFormTitle(this, StringResources.FormResultsWR, SaveDlg.FileName);
 
-                        public string GetCSV(string delimiter = ", ", string separator = "\n")
-                        {
-                            StringBuilder csv = new StringBuilder();
-                            for (int i = 0; i < ys.Length; i++)
-                                csv.AppendFormat("{0}{1}{2}{3}", xs[i], delimiter, ys[i], separator);
-                            return csv.ToString();
-                        }
-                        */
-                    }
-                    break;
-            }
-
-            FrmMain.SetFormTitle(this, StringResources.FormResultsWR, SaveDlg.FileName);
-
-            using (new CenterWinDialog(this.MdiParent))
-            {
-                MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                using (new CenterWinDialog(this.MdiParent))
+                {
+                    MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
-        return Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
+        return userPath;
     }
 
     public bool OpenFile(JsonDocument document)
