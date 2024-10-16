@@ -91,28 +91,41 @@ public partial class FrmResultsOCRAcheck : Form, IChildResults
 
     public bool[] GetToolbarEnabledState() => [true, true, true, false, true, true, false, true, true, false, false, true, true, true];
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
-        SaveFileDialog saveFileDialog1 = new SaveFileDialog
+        DialogResult result;
+        string userPath = string.Empty;
+
+        SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.rtf",
             Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 2,
+            FileName = "OCRA checklist results",
             Title = "Save OCRA checklist results",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrWhiteSpace(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
-        DialogResult result;
         using (new CenterWinDialog(this))
         {
-            result = saveFileDialog1.ShowDialog();
+            result = SaveDlg.ShowDialog();
         }
 
         // If the file name is not an empty string open it for saving.  
-        if (result == DialogResult.OK && saveFileDialog1.FileName != "")
+        if (result == DialogResult.OK && SaveDlg.FileName != "")
         {
+            using var fs = SaveDlg.OpenFile();
+
+            // Saves the text via a FileStream created by the OpenFile method.  
+            if (fs is not null)
+            {
+                // Get the actual directory path selected by the user in order to store it later in the settings
+                userPath = Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
+            }
         }
+
+        return userPath;
     }
 
     public bool OpenFile(JsonDocument document)

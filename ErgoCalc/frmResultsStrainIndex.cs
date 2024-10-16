@@ -420,8 +420,11 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
         return result;
     }
     
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
+        DialogResult result;
+        string userPath = string.Empty;
+
         // Displays a SaveFileDialog so the user can save the results. More information here: https://msdn.microsoft.com/en-us/library/ms160336(v=vs.110).aspx
         SaveFileDialog SaveDlg = new()
         {
@@ -437,10 +440,9 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             },
             Title = "Save Strain Index results",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrWhiteSpace(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
-        DialogResult result;
         using (new CenterWinDialog(this.MdiParent))
         {
             result = SaveDlg.ShowDialog(this);
@@ -452,15 +454,18 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             using var fs = SaveDlg.OpenFile();
 
             // Saves the text via a FileStream created by the OpenFile method.  
-            if ( fs != null)
+            if ( fs is not null)
             {
+                // Get the actual directory path selected by the user in order to store it later in the settings
+                userPath = Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
+
                 // Saves the text in the appropriate TextFormat based upon the File type selected in the dialog box.  
                 // NOTE that the FilterIndex property is one-based. 
                 switch (SaveDlg.FilterIndex)
                 {
                     case 1:
-                        using (var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true }))
                         {
+                            using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
                             SerializeToJSON(writer);
                         }
                         break;
@@ -484,7 +489,7 @@ public partial class FrmResultsStrainIndex : Form, IChildResults
             }
         }
 
-        return;
+        return userPath;
     }
 
     public void UpdateOutput(System.Globalization.CultureInfo culture)

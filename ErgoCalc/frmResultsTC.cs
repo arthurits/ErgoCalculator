@@ -265,20 +265,23 @@ public partial class FrmResultsTC : Form, IChildResults
         return result;
     }
 
-    public void Save(string path)
+    public string Save(string directoryPath)
     {
+        DialogResult result;
+        string userPath = string.Empty;
+
         // Displays a SaveFileDialog so the user can save the Image  
-        SaveFileDialog SaveDlg = new SaveFileDialog
+        SaveFileDialog SaveDlg = new()
         {
             DefaultExt = "*.csv",
             Filter = "ERGO file (*.ergo)|*.ergo|RTF file (*.rtf)|*.rtf|Text file (*.txt)|*.txt|All files (*.*)|*.*",
             FilterIndex = 1,
-            Title = "Save thermal comfort data",
+            FileName = "Thermal comfort",
+            Title = "Save thermal comfort results",
             OverwritePrompt = true,
-            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            InitialDirectory = string.IsNullOrWhiteSpace(directoryPath) ? Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) : directoryPath
         };
 
-        DialogResult result;
         using (new CenterWinDialog(this))
         {
             result = SaveDlg.ShowDialog(this.Parent);
@@ -289,36 +292,44 @@ public partial class FrmResultsTC : Form, IChildResults
         {
             using var fs = SaveDlg.OpenFile();
 
-            switch (SaveDlg.FilterIndex)
+            // Saves the text via a FileStream created by the OpenFile method.  
+            if (fs is not null)
             {
-                case 1:
-                    if (fs != null)
-                    {
-                        using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
-                        SerializeToJSON(writer);
-                        //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
-                    }
-                    break;
-                case 2:
-                    rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
-                    break;
-                case 3:
-                    rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
-                    break;
-                case 4:
-                    rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
-                    break;
-            }
+                // Get the actual directory path selected by the user in order to store it later in the settings
+                userPath = Path.GetDirectoryName(SaveDlg.FileName) ?? string.Empty;
 
-            FrmMain.SetFormTitle(this, StringResources.FormResultsTC, SaveDlg.FileName);
+                // Saves the text in the appropriate TextFormat based upon the File type selected in the dialog box.  
+                // NOTE that the FilterIndex property is one-based. 
+                switch (SaveDlg.FilterIndex)
+                {
+                    case 1:
+                        {
+                            using var writer = new Utf8JsonWriter(fs, options: new JsonWriterOptions { Indented = true });
+                            SerializeToJSON(writer);
+                            //var jsonString = JsonSerializer.Serialize(_datos[0]._points[0], new JsonSerializerOptions { WriteIndented = true });
+                        }
+                        break;
+                    case 2:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.RichText);
+                        break;
+                    case 3:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.PlainText);
+                        break;
+                    case 4:
+                        rtbShowResult.SaveFile(fs, RichTextBoxStreamType.UnicodePlainText);
+                        break;
+                }
 
-            using (new CenterWinDialog(this.MdiParent))
-            {
-                MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                FrmMain.SetFormTitle(this, StringResources.FormResultsTC, SaveDlg.FileName);
+
+                using (new CenterWinDialog(this.MdiParent))
+                {
+                    MessageBox.Show(this, "The file was successfully saved", "File saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
-        return;
+        return userPath;
     }
 
     public void UpdateOutput(System.Globalization.CultureInfo culture)
