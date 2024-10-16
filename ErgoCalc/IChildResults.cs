@@ -22,7 +22,7 @@ public interface IChildResults
     /// Saves the data shown in the child window into a file
     /// </summary>
     /// <param name="path">Path where the data should be saved</param>
-    void Save(string path);
+    void Save(string directoryPath);
 
     /// <summary>
     /// Opens a document
