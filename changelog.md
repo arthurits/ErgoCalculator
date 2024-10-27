@@ -1,5 +1,11 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.8.1
+* Splash screen launcher is removed from output directory.
+* Implement user selected directory path in open and save dialogs.
+* [ScottPlott](https://github.com/ScottPlot/ScottPlot) control has been updated to version 4.1.74.
+* [System.Drawing.Control](https://github.com/dotnet/winforms) control has been updated to version 8.0.10.
+
 ## ErgoCalculator 1.8.0
 * Update data adquisition code in lifting form.
 * Allow and handle `NaN` and infinity values in lifting module.
