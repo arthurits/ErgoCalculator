@@ -15,7 +15,7 @@ public partial class FrmResultsTC : Form, IChildResults
     public FrmResultsTC()
     {
         InitializeComponent();
-        InitializePlot();
+        InitializePlots();
 
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         this.ActiveControl = this.rtbShowResult;
@@ -60,7 +60,7 @@ public partial class FrmResultsTC : Form, IChildResults
             UpdateOutput(_culture);
     }
 
-    private void InitializePlot()
+    private void InitializePlots()
     {
         // Draw the basic lines
         var CPsy = new Psychrometrics(UnitSystem.SI);
@@ -91,6 +91,8 @@ public partial class FrmResultsTC : Form, IChildResults
         // Set plots's culture
         formsPlot1.CultureUI = culture ?? _culture;
         formsPlot2.CultureUI = culture ?? _culture;
+
+        InitializePlots();
 
         // Delete any poits if any
         // https://github.com/ScottPlot/ScottPlot/discussions/673
