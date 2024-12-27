@@ -38,16 +38,12 @@ public class FormsPlotCulture : ScottPlot.FormsPlot
         string strResource;
         foreach (ToolStripItem menuItem in ContextMenu.Items)
         {
-            strResource = $"strMenu{menuItem.Name}";
-            menuItem.Text = StringsRM.GetString(strResource, CultureUI);
+            if (menuItem is ToolStripMenuItem)
+            {
+                strResource = $"strMenu{menuItem.Name}";
+                menuItem.Text = StringsRM.GetString(strResource, CultureUI);
+            }
         }
-
-        //ContextMenu.Items["Copy"].Text = StringsRM.GetString("strMenuCopy", CultureUI) ?? "Copy image";
-        //ContextMenu.Items["Save"].Text = StringsRM.GetString("strMenuSave", CultureUI) ?? "Save image as...";
-        //ContextMenu.Items["Zoom"].Text = StringsRM.GetString("strMenuZoom", CultureUI) ?? "Zoom to fit data";
-        //ContextMenu.Items["Help"].Text = StringsRM.GetString("strMenuHelp", CultureUI) ?? "Help";
-        //ContextMenu.Items["Open"].Text = StringsRM.GetString("strMenuOpen", CultureUI) ?? "Open in new window";
-        //ContextMenu.Items["Detach"].Text = StringsRM.GetString("strMenuDetach", CultureUI) ?? "Detach legend";
     }
 
     /// <summary>
@@ -105,7 +101,7 @@ public class FormsPlotCulture : ScottPlot.FormsPlot
     protected virtual void RightClickMenu_DetachLegend(object? sender, EventArgs e) => new FormsPlotLegendViewer(this);
     protected virtual void RightClickMenu_SaveImage(object? sender, EventArgs e)
     {
-        SaveFileDialog fileDialog = new()
+        System.Windows.Forms.SaveFileDialog fileDialog = new()
         {
             FileName = StringsRM.GetString("strFileDlgFileName", CultureUI) ?? "Plot.png",
             Filter = StringsRM.GetString("strFileDlgFilter", CultureUI) ?? "PNG Files (*.png)|*.png;*.png" +

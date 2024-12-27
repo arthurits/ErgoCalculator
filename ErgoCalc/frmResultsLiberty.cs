@@ -7,7 +7,7 @@ namespace ErgoCalc;
 public partial class FrmResultsLiberty : Form, IChildResults
 {
     private Job _job = new();
-    private readonly System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
+    private System.Globalization.CultureInfo _culture = System.Globalization.CultureInfo.CurrentCulture;
 
     public FrmResultsLiberty()
     {
@@ -133,19 +133,22 @@ public partial class FrmResultsLiberty : Form, IChildResults
         double[] curveXs = ScottPlot.DataGen.Range(pop.minus3stDev, pop.plus3stDev, 0.1);
         double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 
-        ScottPlot.FormsPlot plot = formsPlot1;
+        ScottPlot.FormsPlotCulture plot = formsPlot1;
         PictureBox pctLegend = pictureBox1;
         switch (nPlot)
         {
             case 1:
+                formsPlot1.CultureUI = _culture;
                 plot = formsPlot1;  // Initial force plot
                 pctLegend = pictureBox1;
                 break;
             case 2:
+                formsPlot2.CultureUI = _culture;
                 plot = formsPlot2;  // Sustained force plot
                 pctLegend = pictureBox2;
                 break;
             case 3:
+                formsPlot3.CultureUI = _culture;
                 plot = formsPlot3;  // Weight plot
                 pctLegend = pictureBox3;
                 break;
@@ -415,6 +418,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
     public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
+        _culture = culture;
         rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
         FormatText();
         ClearPlots();
