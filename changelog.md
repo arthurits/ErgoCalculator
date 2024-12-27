@@ -1,5 +1,10 @@
 # ErgoCalculator Changelog
 
+## ErgoCalculator 1.8.2
+* Target .NET 9.
+* Add custom culture context menu in form plots
+* [System.Drawing.Control](https://github.com/dotnet/winforms) control has been updated to version 9.0.0.
+
 ## ErgoCalculator 1.8.1
 * Splash screen launcher is removed from output directory.
 * Implement user selected directory path in open and save dialogs.
