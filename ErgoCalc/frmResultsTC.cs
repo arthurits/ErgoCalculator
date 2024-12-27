@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 
 using ErgoCalc.Models.ThermalComfort;
 using PsychroLib;
@@ -14,7 +15,7 @@ public partial class FrmResultsTC : Form, IChildResults
     public FrmResultsTC()
     {
         InitializeComponent();
-        InitializePlot();
+        InitializePlots();
 
         this.Icon = GraphicsResources.Load<Icon>(GraphicsResources.AppLogo);
         this.ActiveControl = this.rtbShowResult;
@@ -59,7 +60,7 @@ public partial class FrmResultsTC : Form, IChildResults
             UpdateOutput(_culture);
     }
 
-    private void InitializePlot()
+    private void InitializePlots()
     {
         // Draw the basic lines
         var CPsy = new Psychrometrics(UnitSystem.SI);
@@ -85,8 +86,14 @@ public partial class FrmResultsTC : Form, IChildResults
         formsPlot1.Plot.YLabel(StringResources.ThermalComfort_PlotOrdinate);
     }
 
-    private void CreatePlots()
+    private void CreatePlots(CultureInfo? culture)
     {
+        // Set plots's culture
+        formsPlot1.CultureUI = culture ?? _culture;
+        formsPlot2.CultureUI = culture ?? _culture;
+
+        InitializePlots();
+
         // Delete any poits if any
         // https://github.com/ScottPlot/ScottPlot/discussions/673
         foreach (var chart in formsPlot1.Plot.GetPlottables().Where(x => x is ScottPlot.Plottable.ScatterPlot && ((ScottPlot.Plottable.ScatterPlot)x).Ys.Length == 1))
@@ -334,8 +341,8 @@ public partial class FrmResultsTC : Form, IChildResults
 
     public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
-        rtbShowResult.Text = _job.ToString(StringResources.ThermalComfort_ResultsHeaders, _culture);
-        CreatePlots();
+        rtbShowResult.Text = _job.ToString(StringResources.ThermalComfort_ResultsHeaders, culture);
+        CreatePlots(culture);
         FormatText();
     }
 

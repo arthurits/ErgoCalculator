@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 
 using ErgoCalc.Models.LibertyMutual;
 
@@ -91,7 +92,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
     /// <summary>
     /// Manages the drawing of the 3 plots and the corresponding legends
     /// </summary>
-    private void CreatePlots()
+    private void CreatePlots(CultureInfo? culture)
     {
         string strLegend;
         int i = 0;
@@ -100,18 +101,18 @@ public partial class FrmResultsLiberty : Form, IChildResults
 
         foreach (ModelLiberty task in _job.Tasks)
         {
-            strLegend = $"{StringResources.Task} {((char)('A' + i)).ToString(_culture)}";
+            strLegend = $"{StringResources.Task} {((char)('A' + i)).ToString(culture)}";
             switch (task.Data.Type)
             {
                 case TaskType.Pulling:
                 case TaskType.Pushing:
-                    CreatePlot(task.Initial.MAL, task.Initial.MAL * task.Initial.CV, 1, strLegend);        // Initial force plot
-                    CreatePlot(task.Sustained.MAL, task.Sustained.MAL * task.Sustained.CV, 2, strLegend);    // Sustained force plot
+                    CreatePlot(task.Initial.MAL, task.Initial.MAL * task.Initial.CV, 1, strLegend, culture);        // Initial force plot
+                    CreatePlot(task.Sustained.MAL, task.Sustained.MAL * task.Sustained.CV, 2, strLegend, culture);    // Sustained force plot
                     break;
                 case TaskType.Carrying:
                 case TaskType.Lifting:
                 case TaskType.Lowering:
-                    CreatePlot(task.Initial.MAL, task.Initial.MAL * task.Initial.CV, 3, strLegend);        // Weight plot
+                    CreatePlot(task.Initial.MAL, task.Initial.MAL * task.Initial.CV, 3, strLegend, culture);        // Weight plot
                     break;
             }
             ++i;
@@ -126,26 +127,29 @@ public partial class FrmResultsLiberty : Form, IChildResults
     /// <param name="std">Standard deviation</param>
     /// <param name="nPlot">Number of plot control: 1 for Initial force, 2 for sustained force, and 3 for weight</param>
     /// <param name="strLegend">Text to show in the legend</param>
-    private void CreatePlot(double mean, double std, int nPlot, string strLegend)
+    private void CreatePlot(double mean, double std, int nPlot, string strLegend, CultureInfo? culture)
     {
         Random rand = new(0);
         var pop = new ScottPlot.Statistics.Population(rand, pointCount: 1000, mean: mean, stdDev: std);
         double[] curveXs = ScottPlot.DataGen.Range(pop.minus3stDev, pop.plus3stDev, 0.1);
         double[] curveYs = pop.GetDistribution(curveXs, normalize: false);
 
-        ScottPlot.FormsPlot plot = formsPlot1;
+        ScottPlot.FormsPlotCulture plot = formsPlot1;
         PictureBox pctLegend = pictureBox1;
         switch (nPlot)
         {
             case 1:
+                formsPlot1.CultureUI = culture ?? _culture;
                 plot = formsPlot1;  // Initial force plot
                 pctLegend = pictureBox1;
                 break;
             case 2:
+                formsPlot2.CultureUI = culture ?? _culture;
                 plot = formsPlot2;  // Sustained force plot
                 pctLegend = pictureBox2;
                 break;
             case 3:
+                formsPlot3.CultureUI = culture ?? _culture;
                 plot = formsPlot3;  // Weight plot
                 pctLegend = pictureBox3;
                 break;
@@ -418,7 +422,7 @@ public partial class FrmResultsLiberty : Form, IChildResults
         rtbShowResult.Text = _job.ToString(StringResources.LibertyMutual_ResultsHeaders, culture);
         FormatText();
         ClearPlots();
-        CreatePlots();
+        CreatePlots(culture);
     }
 
     public void FormatText()

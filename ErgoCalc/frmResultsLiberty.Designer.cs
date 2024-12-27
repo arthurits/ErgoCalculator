@@ -31,9 +31,9 @@ namespace ErgoCalc
         {
             splitContainer2 = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
-            formsPlot1 = new ScottPlot.FormsPlot();
-            formsPlot3 = new ScottPlot.FormsPlot();
-            formsPlot2 = new ScottPlot.FormsPlot();
+            formsPlot1 = new ScottPlot.FormsPlotCulture();
+            formsPlot3 = new ScottPlot.FormsPlotCulture();
+            formsPlot2 = new ScottPlot.FormsPlotCulture();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
@@ -193,9 +193,9 @@ namespace ErgoCalc
 
         private SplitContainer splitContainer2;
         private TableLayoutPanel tableLayoutPanel1;
-        private ScottPlot.FormsPlot formsPlot1;
-        private ScottPlot.FormsPlot formsPlot3;
-        private ScottPlot.FormsPlot formsPlot2;
+        private ScottPlot.FormsPlotCulture formsPlot1;
+        private ScottPlot.FormsPlotCulture formsPlot3;
+        private ScottPlot.FormsPlotCulture formsPlot2;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;

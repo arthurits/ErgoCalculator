@@ -31,9 +31,9 @@ namespace ErgoCalc
         {
             splitContainer2 = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
-            formsPlot2 = new ScottPlot.FormsPlot();
+            formsPlot2 = new ScottPlot.FormsPlotCulture();
             pictureBox1 = new PictureBox();
-            formsPlot1 = new ScottPlot.FormsPlot();
+            formsPlot1 = new ScottPlot.FormsPlotCulture();
             pictureBox2 = new PictureBox();
             rtbShowResult = new RichTextBox();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
@@ -162,9 +162,9 @@ namespace ErgoCalc
 
         private SplitContainer splitContainer2;
         private TableLayoutPanel tableLayoutPanel1;
-        private ScottPlot.FormsPlot formsPlot2;
+        private ScottPlot.FormsPlotCulture formsPlot2;
         private PictureBox pictureBox1;
-        private ScottPlot.FormsPlot formsPlot1;
+        private ScottPlot.FormsPlotCulture formsPlot1;
         private PictureBox pictureBox2;
         private RichTextBox rtbShowResult;
     }

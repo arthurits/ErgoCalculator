@@ -50,6 +50,7 @@ public partial class FrmResultsWR : Form, IChildResults
         }
 
         _culture = culture ?? System.Globalization.CultureInfo.CurrentCulture;
+        plot.CultureUI = _culture;
         Model = model;
     }
 
@@ -416,6 +417,7 @@ public partial class FrmResultsWR : Form, IChildResults
     public void UpdateOutput(System.Globalization.CultureInfo culture)
     {
         FormatText();
+        plot.CultureUI = culture;
     }
 
     public void FormatText()

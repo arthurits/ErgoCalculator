@@ -40,7 +40,7 @@
             this.toolStripWR_AddLine = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_RemoveLine = new System.Windows.Forms.ToolStripButton();
             this.toolStripWR_Settings = new System.Windows.Forms.ToolStripButton();
-            this.plot = new ScottPlot.FormsPlot();
+            this.plot = new ScottPlot.FormsPlotCulture();
             this.mnuSub.SuspendLayout();
             this.toolStripWR.SuspendLayout();
             this.SuspendLayout();
@@ -208,6 +208,6 @@
         private System.Windows.Forms.ToolStripButton toolStripWR_AddLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_RemoveLine;
         private System.Windows.Forms.ToolStripButton toolStripWR_SaveChart;
-        private ScottPlot.FormsPlot plot;
+        private ScottPlot.FormsPlotCulture plot;
     }
 }
