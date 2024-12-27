@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Arthurits Ltd.")]
 [assembly: AssemblyProduct("ErgoCalc")]
-[assembly: AssemblyCopyright("Copyright © 2009-2024")]
+[assembly: AssemblyCopyright("Copyright © 2009-2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
